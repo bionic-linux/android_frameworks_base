@@ -67,6 +67,23 @@
       "message": "update",
       "revId": "a2de4f64fad39dd27fc612d3f227744c570ecb66",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "854d0c4a_98ad052a",
+        "filename": "services/core/java/com/android/server/display/DisplayPowerController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2022-08-02T11:48:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand the change, do we want to show the dimmed state only when the device is in low-power mode?",
+      "revId": "a2de4f64fad39dd27fc612d3f227744c570ecb66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
