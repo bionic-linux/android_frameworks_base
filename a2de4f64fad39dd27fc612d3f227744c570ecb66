@@ -102,6 +102,24 @@
       "parentUuid": "854d0c4a_98ad052a",
       "revId": "a2de4f64fad39dd27fc612d3f227744c570ecb66",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c755c313_9d97ffcd",
+        "filename": "services/core/java/com/android/server/display/DisplayPowerController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2022-08-02T13:45:16Z",
+      "side": 1,
+      "message": "Oh I see, we don\u0027t want to brighten the device if it\u0027s in dimmed state or low power state. I can\u0027t reproduce this bug though, even if the body of the `if` statement is executed, the device is dimmed correctly. Are you able to reproduce it and share a bug report? You can create a bug report by executing `adb bugreport`.",
+      "parentUuid": "3844800f_4ce10b9d",
+      "revId": "a2de4f64fad39dd27fc612d3f227744c570ecb66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
