@@ -120,6 +120,24 @@
       "parentUuid": "3844800f_4ce10b9d",
       "revId": "a2de4f64fad39dd27fc612d3f227744c570ecb66",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab816a6b_81f5cc9d",
+        "filename": "services/core/java/com/android/server/display/DisplayPowerController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1870086
+      },
+      "writtenOn": "2022-08-02T14:00:58Z",
+      "side": 1,
+      "message": "Please see the bug tracker link:\nhttps://issuetracker.google.com/issues/239122393\nThanks !",
+      "parentUuid": "c755c313_9d97ffcd",
+      "revId": "a2de4f64fad39dd27fc612d3f227744c570ecb66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
