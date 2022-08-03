@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1dc7b48_eca07be5",
+        "filename": "tools/stringslint/stringslint_sha.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-08-03T19:58:48Z",
+      "side": 1,
+      "message": "We keep this script around as a no-op for now, since there are likely internal PREUPLOAD.cfg scripts relying on this filesystem path.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 88
+      },
+      "revId": "6e2c566316fa94af877e1b7a8676a16951911c40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
