@@ -22,6 +22,30 @@
       },
       "revId": "777d649a62eb925616b88fb1c141c381d62f0119",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "646f0a77_019cba09",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1954750
+      },
+      "writtenOn": "2022-08-03T15:13:37Z",
+      "side": 1,
+      "message": "I actually tested this and all the NetworkRecommendationProviderTests passed. I think this is because the permissions check is still happening, just through the annotation.",
+      "parentUuid": "7bae115e_da6eaf2d",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 45
+      },
+      "revId": "777d649a62eb925616b88fb1c141c381d62f0119",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
