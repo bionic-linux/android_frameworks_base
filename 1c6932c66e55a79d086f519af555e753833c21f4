@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8417b16d_c9291038",
+        "filename": "PREUPLOAD.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-08-03T19:57:43Z",
+      "side": 0,
+      "message": "Already enforced via existing AyeAye rules.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 95
+      },
+      "revId": "1c6932c66e55a79d086f519af555e753833c21f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
