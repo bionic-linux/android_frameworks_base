@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bae115e_da6eaf2d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-08-03T07:32:16Z",
+      "side": 1,
+      "message": "You may need to update how the test verify it. It seems that NetworkRecommendationProviderTest#testScoreRequest_permissionsEnforced will fail.",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 45
+      },
+      "revId": "777d649a62eb925616b88fb1c141c381d62f0119",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
