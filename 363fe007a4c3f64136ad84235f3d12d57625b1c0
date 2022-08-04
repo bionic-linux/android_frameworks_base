@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eef476f2_1d816db7",
+        "filename": "services/core/java/com/android/server/wm/TaskDisplayArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2022-08-04T12:55:23Z",
+      "side": 1,
+      "message": "The logic seems to be for `Android 12L`? Does branch `android12-gsi` need it?",
+      "revId": "363fe007a4c3f64136ad84235f3d12d57625b1c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
