@@ -16,6 +16,24 @@
       "message": "The logic seems to be for `Android 12L`? Does branch `android12-gsi` need it?",
       "revId": "363fe007a4c3f64136ad84235f3d12d57625b1c0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e2c8138_6ed421b4",
+        "filename": "services/core/java/com/android/server/wm/TaskDisplayArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1360706
+      },
+      "writtenOn": "2022-08-04T13:05:06Z",
+      "side": 1,
+      "message": "By MTK\u0027s comment, it seems for their devices is landscape default and need this patch.\nIf I mentioned something wrong, please help correct.",
+      "parentUuid": "eef476f2_1d816db7",
+      "revId": "363fe007a4c3f64136ad84235f3d12d57625b1c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
