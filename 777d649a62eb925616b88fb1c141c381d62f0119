@@ -46,6 +46,30 @@
       },
       "revId": "777d649a62eb925616b88fb1c141c381d62f0119",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f173804_79230dfc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-08-04T03:03:14Z",
+      "side": 1,
+      "message": "I cherry-picked this commit to my AOSP/internal master codebase. The permission check part will fail. Did I miss something that may be required in my codebase?\n\n[1/4] android.net.NetworkRecommendationProviderTest#testScoreRequest_nullInput: PASSED (302ms)\n[2/4] android.net.NetworkRecommendationProviderTest#testScoreRequestReceived: PASSED (25ms)\n[3/4] android.net.NetworkRecommendationProviderTest#testScoreRequest_emptyInput: PASSED (202ms)\n[4/4] android.net.NetworkRecommendationProviderTest#testScoreRequest_permissionsEnforced: FAILED (115ms)\n\nSTACKTRACE:\njunit.framework.AssertionFailedError: SecurityException expected.\n\tat junit.framework.Assert.fail(Assert.java:50)\n\tat android.net.NetworkRecommendationProviderTest.testScoreRequest_permissionsEnforced(NetworkRecommendationProviderTest.java:101)",
+      "parentUuid": "646f0a77_019cba09",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 45
+      },
+      "revId": "777d649a62eb925616b88fb1c141c381d62f0119",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
