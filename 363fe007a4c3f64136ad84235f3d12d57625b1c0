@@ -34,6 +34,24 @@
       "parentUuid": "eef476f2_1d816db7",
       "revId": "363fe007a4c3f64136ad84235f3d12d57625b1c0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a80b52b_bbd8de27",
+        "filename": "services/core/java/com/android/server/wm/TaskDisplayArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2022-08-05T09:03:46Z",
+      "side": 1,
+      "message": "I see. Just saw the reply on b/234079601#comment24.\nMaybe also add the bug id to commit message.",
+      "parentUuid": "6e2c8138_6ed421b4",
+      "revId": "363fe007a4c3f64136ad84235f3d12d57625b1c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
