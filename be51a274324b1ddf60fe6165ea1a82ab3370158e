@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6a3ae9f_833efc02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2022-08-09T18:57:34Z",
+      "side": 1,
+      "message": "Commit messages are in the form of\n\n```\nSummary\n\nDescription\n\nTags:\n\nChange-ID:\n```\n\nSo you probably want something like\n\n```\nRemove extraneous help text for pm set-app-links-allowed command\n\nTwo additional fields, \"enabled\" and \"domains\", are referenced which are not\napplicable. Likely a copy-paste error.\n\nTest: none, help text change\n\nChange-Id: Ibfeefa1815ecb04a5858e3f3519ebac07b062961\n```\n\nOr at least that\u0027s how I\u0027d write it. Feel free to adjust how you see fit.",
+      "revId": "be51a274324b1ddf60fe6165ea1a82ab3370158e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
