@@ -16,6 +16,23 @@
       "message": "I think we should fix this or delete it. I believe this does the former. Suggestions for how to compile and exercise this code are welcome.",
       "revId": "0f8fc9a0c985a0418d13fd8026df55e12253aed9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b5a1c69_ddf82b81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2022-08-09T15:43:30Z",
+      "side": 1,
+      "message": "Ping. There doesn\u0027t seem to be a real owner here. I still think this code should be fixed or removed.",
+      "revId": "0f8fc9a0c985a0418d13fd8026df55e12253aed9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
