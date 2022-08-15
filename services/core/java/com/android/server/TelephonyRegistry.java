@@ -2978,8 +2978,10 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                 pw.println("mBarringInfo=" + mBarringInfo.get(i));
                 pw.println("mCarrierNetworkChangeState=" + mCarrierNetworkChangeState[i]);
                 pw.println("mTelephonyDisplayInfo=" + mTelephonyDisplayInfos[i]);
-                pw.println("mIsDataEnabled=" + mIsDataEnabled);
-                pw.println("mDataEnabledReason=" + mDataEnabledReason);
+                // should this be mIsDataEnabled[i] instead?
+                pw.println("mIsDataEnabled=" + Arrays.toString(mIsDataEnabled));
+                // should this be mDataEnabledReason[i] instead?
+                pw.println("mDataEnabledReason=" + Arrays.toString(mDataEnabledReason));
                 pw.println("mAllowedNetworkTypeReason=" + mAllowedNetworkTypeReason[i]);
                 pw.println("mAllowedNetworkTypeValue=" + mAllowedNetworkTypeValue[i]);
                 pw.println("mPhysicalChannelConfigs=" + mPhysicalChannelConfigs.get(i));
