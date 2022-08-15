@@ -21,6 +21,7 @@ import android.util.LongArray;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 /**
  * Class to read to a protobuf stream.
@@ -980,12 +981,7 @@ public final class ProtoInputStream extends ProtoStream {
             sb.append(mExpectedObjectTokenStack);
         }
         sb.append("\nmDepth : 0x" + Integer.toHexString(mDepth));
-        sb.append("\nmBuffer : ");
-        if (mBuffer == null) {
-            sb.append("null");
-        } else {
-            sb.append(mBuffer);
-        }
+        sb.append("\nmBuffer : " + Arrays.toString(mBuffer));
         sb.append("\nmBufferSize : 0x" + Integer.toHexString(mBufferSize));
         sb.append("\nmEnd : 0x" + Integer.toHexString(mEnd));
 

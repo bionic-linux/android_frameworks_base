@@ -20,6 +20,7 @@ import android.util.AggStats;
 import android.util.Duration;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * This class contains a list of helper functions to write common proto in
@@ -111,7 +112,7 @@ public class ProtoUtils {
                 sb.append("length delimited");
                 fieldConstant = ProtoStream.makeFieldId(fieldNumber,
                         ProtoStream.FIELD_COUNT_SINGLE | ProtoStream.FIELD_TYPE_BYTES);
-                sb.append("\nField Bytes : " + proto.readBytes(fieldConstant));
+                sb.append("\nField Bytes : " + Arrays.toString(proto.readBytes(fieldConstant)));
                 break;
             case ProtoStream.WIRE_TYPE_START_GROUP:
                 sb.append("start group");
