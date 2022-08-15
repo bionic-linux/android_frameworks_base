@@ -50,6 +50,7 @@ import com.android.internal.util.Preconditions;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -2407,7 +2408,7 @@ public final class ShortcutInfo implements Parcelable {
         addIndentOrComma(sb, indent);
 
         sb.append("persons=");
-        sb.append(mPersons);
+        sb.append(Arrays.toString(mPersons));
 
         addIndentOrComma(sb, indent);
 

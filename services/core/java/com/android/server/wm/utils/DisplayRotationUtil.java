@@ -30,6 +30,8 @@ import android.graphics.RectF;
 
 import com.android.internal.annotations.VisibleForTesting;
 
+import java.util.Arrays;
+
 /**
  * Utility to compute bounds after rotating the screen.
  */
@@ -73,7 +75,7 @@ public class DisplayRotationUtil {
             Rect[] bounds, int rotation, int initialDisplayWidth, int initialDisplayHeight) {
         if (bounds.length != BOUNDS_POSITION_LENGTH) {
             throw new IllegalArgumentException(
-                    "bounds must have exactly 4 elements: bounds=" + bounds);
+                    "bounds must have exactly 4 elements: bounds=" + Arrays.toString(bounds));
         }
         if (rotation == ROTATION_0) {
             return bounds;

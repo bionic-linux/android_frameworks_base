@@ -23,6 +23,7 @@ import android.compat.annotation.UnsupportedAppUsage;
 import libcore.util.EmptyArray;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -193,8 +194,8 @@ public final class ArraySet<E> implements Collection<E>, Set<E> {
                             array[0] = array[1] = null;
                             sTwiceBaseCacheSize--;
                             if (DEBUG) {
-                                Log.d(TAG, "Retrieving 2x cache " + mHashes + " now have "
-                                        + sTwiceBaseCacheSize + " entries");
+                                Log.d(TAG, "Retrieving 2x cache " + Arrays.toString(mHashes)
+                                        + " now have " + sTwiceBaseCacheSize + " entries");
                             }
                             return;
                         }
@@ -220,8 +221,8 @@ public final class ArraySet<E> implements Collection<E>, Set<E> {
                             array[0] = array[1] = null;
                             sBaseCacheSize--;
                             if (DEBUG) {
-                                Log.d(TAG, "Retrieving 1x cache " + mHashes + " now have "
-                                        + sBaseCacheSize + " entries");
+                                Log.d(TAG, "Retrieving 1x cache " + Arrays.toString(mHashes)
+                                        + " now have " + sBaseCacheSize + " entries");
                             }
                             return;
                         }
@@ -258,8 +259,8 @@ public final class ArraySet<E> implements Collection<E>, Set<E> {
                     sTwiceBaseCache = array;
                     sTwiceBaseCacheSize++;
                     if (DEBUG) {
-                        Log.d(TAG, "Storing 2x cache " + array + " now have " + sTwiceBaseCacheSize
-                                + " entries");
+                        Log.d(TAG, "Storing 2x cache " + Arrays.toString(array) + " now have "
+                                + sTwiceBaseCacheSize + " entries");
                     }
                 }
             }
@@ -274,7 +275,7 @@ public final class ArraySet<E> implements Collection<E>, Set<E> {
                     sBaseCache = array;
                     sBaseCacheSize++;
                     if (DEBUG) {
-                        Log.d(TAG, "Storing 1x cache " + array + " now have "
+                        Log.d(TAG, "Storing 1x cache " + Arrays.toString(array) + " now have "
                                 + sBaseCacheSize + " entries");
                     }
                 }

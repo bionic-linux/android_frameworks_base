@@ -912,7 +912,7 @@ final class LocalDisplayAdapter extends DisplayAdapter {
 
         public boolean updateFrameRateOverridesLocked(
                 DisplayEventReceiver.FrameRateOverride[] overrides) {
-            if (overrides.equals(mFrameRateOverrides)) {
+            if (Arrays.equals(overrides, mFrameRateOverrides)) {
                 return false;
             }
 

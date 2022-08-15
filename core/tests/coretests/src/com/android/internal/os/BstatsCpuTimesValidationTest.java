@@ -596,7 +596,8 @@ public class BstatsCpuTimesValidationTest {
     private void assertCpuTimesEqual(long[] actual, long[] expected, long delta, String errMsg) {
         for (int i = actual.length - 1; i >= 0; --i) {
             if (actual[i] > expected[i] + delta || actual[i] < expected[i]) {
-                fail(errMsg + ", actual=" + actual + ", expected=" + expected + ", delta=" + delta);
+                fail(errMsg + ", actual=" + Arrays.toString(actual)
+                        + ", expected=" + Arrays.toString(expected) + ", delta=" + delta);
             }
         }
     }
