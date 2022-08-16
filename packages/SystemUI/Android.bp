@@ -173,6 +173,9 @@ java_library {
         "tests/src/com/android/systemui/util/time/FakeSystemClock.java",
     ],
     jarjar_rules: ":jarjar-rules-shared",
+    lint: {
+        test: true,
+    },
 }
 
 android_library {
@@ -247,6 +250,9 @@ android_library {
         "com.android.systemui",
     ],
     plugins: ["dagger2-compiler"],
+    lint: {
+        test: true,
+    },
 }
 
 // Opt-in config for optimizing the SystemUI target using R8.
