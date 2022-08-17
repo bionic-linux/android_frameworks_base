@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79b889e3_25c4efe5",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2984,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2022-08-17T18:55:41Z",
+      "side": 1,
+      "message": "Calling this out for clarification",
+      "revId": "12cc4113116473ec0f4b6d93048e6bfc43389315",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
