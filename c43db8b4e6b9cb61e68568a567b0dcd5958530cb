@@ -22,6 +22,30 @@
       },
       "revId": "c43db8b4e6b9cb61e68568a567b0dcd5958530cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a1053dc_a3abde24",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3996,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-08-18T10:36:16Z",
+      "side": 1,
+      "message": "The fields list below are the fileds of VpnConfig which are not set in startVpnProfilePrivileged().\nI listed them and search them and add a comment below.\n- searchDomains -\u003e IKEv2 VPN doesn\u0027t have this field can config.\n- allowedApplications -\u003e VpnManager only supports disallowedApplications.\n- configureIntent -\u003e VpnProfile doesn\u0027t have this field can convert to VpnConfig.\n- blocking -\u003e VpnProfile doesn\u0027t have this field can convert to VpnConfig.\n- allowIPv4 -\u003e This will be used in makeLinkProperties, and there is no need to pre-config it because makeLinkProperties will refer to addresses, routes and dnsServers to determine its value.\n- allowIPv6 -\u003e This will be used in makeLinkProperties, and there is no need to pre-config it because makeLinkProperties will refer to addresses, routes and dnsServers to determine its value.\n\nSo, I think there is nothing missing here.",
+      "parentUuid": "0441785a_31754b8a",
+      "range": {
+        "startLine": 3996,
+        "startChar": 20,
+        "endLine": 3996,
+        "endChar": 31
+      },
+      "revId": "c43db8b4e6b9cb61e68568a567b0dcd5958530cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
