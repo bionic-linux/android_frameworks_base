@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4e88f8b_5e09f910",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1414712
+      },
+      "writtenOn": "2022-08-18T07:48:31Z",
+      "side": 1,
+      "message": "Hello, we meet process crash during some app operations then app exits.\nThis CL adds null pointer check to avoid system crash. \nCould you please review? Thanks for your time!",
+      "revId": "ee37651e7f84a02d998050b0da83e7d7d92294b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
