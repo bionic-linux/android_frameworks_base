@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0441785a_31754b8a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3996,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-08-18T04:26:58Z",
+      "side": 1,
+      "message": "Can we use this time to also double check that we aren\u0027t missing anything else from the Ikev2VpnProfile?",
+      "range": {
+        "startLine": 3996,
+        "startChar": 20,
+        "endLine": 3996,
+        "endChar": 31
+      },
+      "revId": "c43db8b4e6b9cb61e68568a567b0dcd5958530cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
