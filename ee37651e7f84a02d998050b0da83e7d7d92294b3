@@ -16,6 +16,23 @@
       "message": "Hello, we meet process crash during some app operations then app exits.\nThis CL adds null pointer check to avoid system crash. \nCould you please review? Thanks for your time!",
       "revId": "ee37651e7f84a02d998050b0da83e7d7d92294b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d10d9271_28699f07",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2022-08-19T18:35:49Z",
+      "side": 1,
+      "message": "Do you know how a null layer got added to the list in the first place? That seems like the real bug",
+      "revId": "ee37651e7f84a02d998050b0da83e7d7d92294b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
