@@ -33,6 +33,24 @@
       "message": "Do you know how a null layer got added to the list in the first place? That seems like the real bug",
       "revId": "ee37651e7f84a02d998050b0da83e7d7d92294b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "081043a0_f8203cc4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1414712
+      },
+      "writtenOn": "2022-08-22T03:07:18Z",
+      "side": 1,
+      "message": "Hi John,\nThanks for your reply. We detect this when run tflitecamerademo app a few hours.\nI put the detail steps and logs in the below link. Could you please have a check?\nhttps://issuetracker.google.com/issues/243310920\n\nAlthough a null layer should not add to the list, I think it is safe to add null pointer check, this can avoid system crash.\n\nThanks",
+      "parentUuid": "d10d9271_28699f07",
+      "revId": "ee37651e7f84a02d998050b0da83e7d7d92294b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
