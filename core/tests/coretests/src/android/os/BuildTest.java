@@ -67,9 +67,36 @@ public class BuildTest extends TestCase {
         Assert.assertTrue("TIME", Build.TIME > 0);
         assertNotEmpty("USER", Build.USER);
         assertNotEmpty("HOST", Build.HOST);
+        assertEquals(0, Build.DDR_SIZE);
 
         // TODO: if any of the android.os.Build fields have additional constraints
         // (e.g., must be a C identifier, must be a valid filename, must not contain any spaces)
         // add tests for them.
+    }
+
+    @SmallTest
+    public void testGetDdrSizeInBytes() {
+        assertEquals(1_000L, Build.getDdrSizeInBytes("1KB"));
+        assertEquals(10_000L, Build.getDdrSizeInBytes("10KB"));
+        assertEquals(100_000L, Build.getDdrSizeInBytes("100KB"));
+        assertEquals(1_000_000L, Build.getDdrSizeInBytes("1000KB"));
+        assertEquals(200_000_000L, Build.getDdrSizeInBytes("200MB"));
+        assertEquals(1_000_000_000L, Build.getDdrSizeInBytes("1000MB"));
+        assertEquals(600_000_000_000L, Build.getDdrSizeInBytes("600GB"));
+        assertEquals(999_000_000_000L, Build.getDdrSizeInBytes("999GB"));
+        assertEquals(9_000_000_000_000L, Build.getDdrSizeInBytes("9000GB"));
+        assertEquals(9_999_000_000_000L, Build.getDdrSizeInBytes("9999GB"));
+    }
+
+    @SmallTest
+    public void testGetDdrSizeInBytes_invalidArguments() {
+        assertEquals(0L, Build.getDdrSizeInBytes(""));
+        assertEquals(0L, Build.getDdrSizeInBytes("KB"));
+        assertEquals(0L, Build.getDdrSizeInBytes("10K"));
+        assertEquals(0L, Build.getDdrSizeInBytes("070MB"));
+        assertEquals(0L, Build.getDdrSizeInBytes("0MB"));
+        assertEquals(0L, Build.getDdrSizeInBytes("10K"));
+        assertEquals(0L, Build.getDdrSizeInBytes("70000KB"));
+        assertEquals(0L, Build.getDdrSizeInBytes("Invalid"));
     }
 }
