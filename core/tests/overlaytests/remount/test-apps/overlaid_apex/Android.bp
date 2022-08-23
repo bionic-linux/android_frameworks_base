@@ -24,17 +24,17 @@ package {
 }
 
 genrule {
-  name: "com.android.overlaytest.overlaid.pem",
-  out: ["com.android.overlaytest.overlaid.pem"],
-  cmd: "openssl genrsa -out $(out) 4096",
+    name: "com.android.overlaytest.overlaid.pem",
+    out: ["com.android.overlaytest.overlaid.pem"],
+    cmd: "openssl genrsa -out $(out) 4096",
 }
 
 genrule {
-  name: "com.android.overlaytest.overlaid.pubkey",
-  srcs: [":com.android.overlaytest.overlaid.pem"],
-  out: ["com.android.overlaytest.overlaid.pubkey"],
-  tools: ["avbtool"],
-  cmd: "$(location avbtool) extract_public_key --key $(in) --output $(out)",
+    name: "com.android.overlaytest.overlaid.pubkey",
+    srcs: [":com.android.overlaytest.overlaid.pem"],
+    out: ["com.android.overlaytest.overlaid.pubkey"],
+    tools: ["avbtool_lib"],
+    cmd: "$(location avbtool_lib) extract_public_key --key $(in) --output $(out)",
 }
 
 apex_key {

@@ -1,4 +1,3 @@
-
 package {
     default_applicable_licenses: ["frameworks_base_cmds_abx_license"],
 }
@@ -17,7 +16,7 @@ license {
 }
 
 java_binary {
-    name: "abx",
+    name: "abx_lib",
     wrapper: "abx",
     srcs: ["**/*.java"],
     required: [

@@ -19,7 +19,7 @@ license {
 }
 
 java_binary {
-    name: "bu",
+    name: "bu_lib",
     wrapper: "bu",
     srcs: ["**/*.java"],
 }

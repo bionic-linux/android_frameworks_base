@@ -32,7 +32,7 @@ android_app {
 
     static_libs: [
         "bmgr",
-        "bu",
+        "bu_lib",
         "services.backup",
         "services.core",
         "services.net",

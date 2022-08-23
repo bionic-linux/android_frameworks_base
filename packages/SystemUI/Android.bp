@@ -118,7 +118,7 @@ android_library {
         "monet",
         "dagger2",
         "jsr330",
-        "lottie",
+        "lottie_lib",
     ],
     manifest: "AndroidManifest.xml",
 
