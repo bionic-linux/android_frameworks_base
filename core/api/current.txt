@@ -4416,6 +4416,7 @@ package android.app {
     method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.app.ActivityManager.MemoryInfo> CREATOR;
     field public long availMem;
+    field public long ddrSize;
     field public boolean lowMemory;
     field public long threshold;
     field public long totalMem;
