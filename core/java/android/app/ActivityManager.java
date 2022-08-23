@@ -2813,6 +2813,16 @@ public class ActivityManager {
      */
     public static class MemoryInfo implements Parcelable {
         /**
+         * The DDR memory size. This value comes from the kernel command line and
+         * it is set by the original design manufacturer (ODM).
+         *
+         * <p> This value might be different from {@code totalMem}. This could be due
+         * the ODM reserved part of the memory for the Trusted Execution Environment,
+         * which the kernel doesn't have access or knowledge about it.
+         */
+        public long ddrMem = Build.DDR_SIZE;
+
+        /**
          * The available memory on the system.  This number should not
          * be considered absolute: due to the nature of the kernel, a significant
          * portion of this memory is actually in use and needed for the overall

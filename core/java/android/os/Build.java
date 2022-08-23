@@ -28,12 +28,16 @@ import android.app.Application;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.sysprop.DeviceProperties;
+import android.sysprop.MemoryProperties;
 import android.sysprop.SocProperties;
 import android.sysprop.TelephonyProperties;
 import android.text.TextUtils;
 import android.util.ArraySet;
+import android.util.DataUnit;
 import android.util.Slog;
 import android.view.View;
+
+import com.android.internal.annotations.VisibleForTesting;
 
 import dalvik.system.VMRuntime;
 
@@ -41,6 +45,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -123,7 +129,6 @@ public class Build {
      *
      * <p>The SKU is reported by the bootloader to configure system software features.
      * If no value is supplied by the bootloader, this is reported as {@link #UNKNOWN}.
-
      */
     @NonNull
     public static final String SKU = getString("ro.boot.hardware.sku");
@@ -140,6 +145,41 @@ public class Build {
      */
     @NonNull
     public static final String ODM_SKU = getString("ro.boot.product.hardware.sku");
+
+    /**
+     * The DDR size of the device in bytes. The value returned by
+     * {@code MemoryProperties#memory_ddr_size()} comes from the Kernel command line. The value is
+     * set by the original design manufacturer (ODM).
+     *
+     * <p>The format of the string set by the ODM is in {@code DDR_SIZE_PATTERN}.
+     */
+    public static final long DDR_SIZE = getDdrSizeInBytes(
+            MemoryProperties.memory_ddr_size().orElse(UNKNOWN));
+
+    /**
+     * Parses {@code ddrSize} to extract the units and value and convert it to bytes.
+     *
+     * <p> The expected format for {@code ddrSize} contains at most 5 digits and the units
+     * could be KB, MB and GB.
+     *
+     * <p> For example: 900MB, 124GB, 256GB.
+     *
+     * @hide
+     */
+    @VisibleForTesting
+    public static long getDdrSizeInBytes(@NonNull String ddrSize) {
+        Pattern pattern =
+                Pattern.compile("^(([1-9]{1}[0-9]{0,3})(KB|MB|GB))$");
+        Matcher matcher = pattern.matcher(ddrSize);
+        if (matcher.matches()) {
+            long size = Long.parseLong(matcher.group(2));
+            DataUnit du = DataUnit.fromShortName(matcher.group(3));
+
+            return du.toBytes(size);
+        }
+
+        return 0;
+    }
 
     /**
      * Whether this build was for an emulator device.
