@@ -56,6 +56,7 @@ import android.system.StructStat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Slog;
+import android.util.StorageUnit;
 import android.webkit.MimeTypeMap;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -1307,6 +1308,45 @@ public final class FileUtils {
             }
         }
         return val * pow;
+    }
+
+    /**
+     * @param fmtSize The string that contains the size to be parsed. The
+     *   expected format is:
+     *
+     *   <p>"^(([0-9]+)(K|KB|M|MB|G|GB|Ki|KiB|Mi|MiB|Gi|GiB))$"
+     *
+     *   <p>For example: 10Kb, 500GiB, 100mb. The unit is not case sensitive.
+     *
+     * @return the size in bytes. If {@code fmtSize} has invalid format, it
+     *   returns 0.
+     * @hide
+     */
+    public static long parseSize(@Nullable String fmtSize) {
+        if (fmtSize == null || fmtSize.isBlank()) {
+            return 0;
+        }
+
+        int index = 0;
+        fmtSize = fmtSize.trim();
+        // Find the last index of the value in fmtSize.
+        while (index < fmtSize.length() && Character.isDigit(fmtSize.charAt(index))) {
+            index++;
+        }
+
+        // Check if number and units are present.
+        if (index == 0 || index == fmtSize.length()) {
+            return 0;
+        }
+
+        String unit = fmtSize.substring(index).trim();
+        StorageUnit su = StorageUnit.fromName(unit);
+        if (su == null) {
+            return 0;
+        }
+
+        long value = Long.valueOf(fmtSize.substring(0, index));
+        return su.getDataUnit().toBytes(value);
     }
 
     /**
