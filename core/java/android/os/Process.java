@@ -26,6 +26,7 @@ import android.annotation.TestApi;
 import android.annotation.UptimeMillisLong;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build.VERSION_CODES;
+import android.sysprop.MemoryProperties;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.OsConstants;
@@ -1335,6 +1336,14 @@ public class Process {
      */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public static final native void sendSignalQuiet(int pid, int signal);
+
+    /** @hide */
+    @UnsupportedAppUsage
+    public static final long getAdvertisedMem() {
+        String formatSize = MemoryProperties.memory_ddr_size().orElse("0KB");
+
+        return FileUtils.parseSize(formatSize);
+    }
 
     /** @hide */
     @UnsupportedAppUsage
