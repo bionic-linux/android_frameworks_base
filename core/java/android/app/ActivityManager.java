@@ -2813,6 +2813,14 @@ public class ActivityManager {
      */
     public static class MemoryInfo implements Parcelable {
         /**
+         * The DDR size of the device in bytes. This value might be different from {@code totalMem}.
+         * This could be due the ODM reserved part of the memory for the Trusted Execution
+         * Environment (TEE) which the kernel doesn't have access or knowledge about it.
+         */
+        @SuppressLint("MutableBareField")
+        public long ddrSize;
+
+        /**
          * The available memory on the system.  This number should not
          * be considered absolute: due to the nature of the kernel, a significant
          * portion of this memory is actually in use and needed for the overall
@@ -2861,6 +2869,7 @@ public class ActivityManager {
         }
 
         public void writeToParcel(Parcel dest, int flags) {
+            dest.writeLong(ddrSize);
             dest.writeLong(availMem);
             dest.writeLong(totalMem);
             dest.writeLong(threshold);
@@ -2872,6 +2881,7 @@ public class ActivityManager {
         }
 
         public void readFromParcel(Parcel source) {
+            ddrSize = source.readLong();
             availMem = source.readLong();
             totalMem = source.readLong();
             threshold = source.readLong();
