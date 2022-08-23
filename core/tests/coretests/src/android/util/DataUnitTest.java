@@ -33,4 +33,18 @@ public class DataUnitTest extends TestCase {
         assertEquals(12_582_912L, DataUnit.MEBIBYTES.toBytes(12));
         assertEquals(12_884_901_888L, DataUnit.GIBIBYTES.toBytes(12));
     }
+
+    public void testFromShortName() {
+        for (DataUnit du : DataUnit.values()) {
+            assertEquals(du, DataUnit.fromShortName(du.getShortName()));
+        }
+    }
+
+    public void testFromShortNameNullResult() {
+        assertNull(DataUnit.fromShortName("NO FOUND"));
+    }
+
+    public void testFromShortNameNullResultNullValue() {
+        assertNull(DataUnit.fromShortName(null));
+    }
 }
