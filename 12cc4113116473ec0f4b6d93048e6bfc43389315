@@ -16,6 +16,24 @@
       "message": "Calling this out for clarification",
       "revId": "12cc4113116473ec0f4b6d93048e6bfc43389315",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4305e4d0_3e247f1d",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2984,
+      "author": {
+        "id": 1468646
+      },
+      "writtenOn": "2022-08-24T06:03:16Z",
+      "side": 1,
+      "message": "mIsDataEnabled[i] should be correct. I fix it in the aosp/2193055 already, thanks",
+      "parentUuid": "79b889e3_25c4efe5",
+      "revId": "12cc4113116473ec0f4b6d93048e6bfc43389315",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
