@@ -70,6 +70,30 @@
       },
       "revId": "777d649a62eb925616b88fb1c141c381d62f0119",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dae88d1e_a54596cb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1954750
+      },
+      "writtenOn": "2022-08-25T20:22:25Z",
+      "side": 1,
+      "message": "Sorry, this was my bad, I didn\u0027t run the test properly. Thank you so much for catching this!\n\nI\u0027ve updated this commit to remove the test.",
+      "parentUuid": "7f173804_79230dfc",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 45
+      },
+      "revId": "777d649a62eb925616b88fb1c141c381d62f0119",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
