@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "453870dd_5503a20d",
+        "filename": "cmds/screencap/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2022-08-26T19:08:40Z",
+      "side": 1,
+      "message": "Should we limit this to wm and graphics for now? Is there a reason why we want to add the other groups here",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 6,
+        "endChar": 50
+      },
+      "revId": "c6bc6129af427ba109c31a573cfe449d3146bb79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
