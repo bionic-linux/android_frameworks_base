@@ -1,0 +1,6 @@
+include /services/accessibility/OWNERS
+include /core/java/android/service/autofill/OWNERS
+include /graphics/java/android/graphics/OWNERS
+include /services/core/java/com/android/server/input/OWNERS
+include /services/core/java/com/android/server/wm/OWNERS
+include /core/java/android/view/inputmethod/OWNERS
