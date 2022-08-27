@@ -188,7 +188,7 @@ constructor(
             UserSwitcherPopupMenu(this).apply {
                 setAnchorView(addButton)
                 setAdapter(popupMenuAdapter)
-                setOnItemClickListener { parent: AdapterView<*>, view: View, pos: Int, id: Long ->
+                setOnItemClickListener { _: AdapterView<*>, view: View, pos: Int, _: Long ->
                     if (falsingManager.isFalseTap(LOW_PENALTY) || !view.isEnabled()) {
                         return@setOnItemClickListener
                     }
