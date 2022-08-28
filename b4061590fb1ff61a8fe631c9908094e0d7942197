@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3228ac1_d58b577b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1309980
+      },
+      "writtenOn": "2022-08-28T09:40:28Z",
+      "side": 1,
+      "message": "hi Yurii\n\nBecause I would upload the patches to change JNI interface in com.android.content.om, it needs the owners of android resources to review ag/19009467.",
+      "revId": "b4061590fb1ff61a8fe631c9908094e0d7942197",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
