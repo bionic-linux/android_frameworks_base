@@ -87,6 +87,30 @@
       },
       "revId": "9089675c0b2242629181d9ed776d58df6c01881d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c542de9_8860fc2c",
+        "filename": "services/core/java/com/android/server/wm/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1955350
+      },
+      "writtenOn": "2022-08-29T15:16:08Z",
+      "side": 1,
+      "message": "Got it. Removed myself from OWNERS here.",
+      "parentUuid": "7a167bfc_9b8b03dd",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 21
+      },
+      "revId": "9089675c0b2242629181d9ed776d58df6c01881d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
