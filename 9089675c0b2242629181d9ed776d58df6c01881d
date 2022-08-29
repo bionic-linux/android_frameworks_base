@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64ba0a20_5ba4f5f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1955350
+      },
+      "writtenOn": "2022-08-29T14:22:35Z",
+      "side": 1,
+      "message": "+ Wale for owners approval on screencap",
+      "revId": "9089675c0b2242629181d9ed776d58df6c01881d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
