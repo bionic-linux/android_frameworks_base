@@ -39,6 +39,30 @@
       },
       "revId": "9089675c0b2242629181d9ed776d58df6c01881d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06a95867_1ae51b6c",
+        "filename": "services/core/java/com/android/server/wm/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1955350
+      },
+      "writtenOn": "2022-08-29T14:29:49Z",
+      "side": 1,
+      "message": "Added myself to owners here and in aosp/2199001 after discussing with Chavi. I don\u0027t intend to +2 anything I\u0027m not familiar with but can revert this and that CL if you think we should wait.",
+      "parentUuid": "839849ec_bf985f95",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 21
+      },
+      "revId": "9089675c0b2242629181d9ed776d58df6c01881d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
