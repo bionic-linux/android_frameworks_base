@@ -16,6 +16,29 @@
       "message": "+ Wale for owners approval on screencap",
       "revId": "9089675c0b2242629181d9ed776d58df6c01881d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "839849ec_bf985f95",
+        "filename": "services/core/java/com/android/server/wm/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2022-08-29T14:25:08Z",
+      "side": 1,
+      "message": "Can we wait until you get more familiarity with the codebase before adding you here?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 21
+      },
+      "revId": "9089675c0b2242629181d9ed776d58df6c01881d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
