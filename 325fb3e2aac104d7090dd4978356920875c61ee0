@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed20743b_6ecf6263",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1430712
+      },
+      "writtenOn": "2022-08-30T01:56:09Z",
+      "side": 1,
+      "message": "Hi\n\nThanks for the change. I am removing myself from reviewers as I am not working on Android anymore\n\nThanks",
+      "revId": "325fb3e2aac104d7090dd4978356920875c61ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
