@@ -16,6 +16,24 @@
       "message": "You\u0027re about to give me so many merge conflicts XD ",
       "revId": "f9d737bd129560b373d0a1cdc275876eeee72027",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42871772_19730ebf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2022-08-30T00:28:41Z",
+      "side": 1,
+      "message": "lol sorry. Hopefully with some of these changes like the avbtool one you will need fewer cls because you don\u0027t have to change the name of avbtool everywhere.",
+      "parentUuid": "6a085016_47b7ba95",
+      "revId": "f9d737bd129560b373d0a1cdc275876eeee72027",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
