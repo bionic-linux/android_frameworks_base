@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2c7f1aa_457a59ac",
+        "filename": "core/java/android/app/ActivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2817,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-09-01T01:37:26Z",
+      "side": 1,
+      "message": "Hmm, DDR feels like it\u0027s specific to the current concept of memory, which has evolved in the past:\n\n* https://en.wikipedia.org/wiki/Synchronous_dynamic_random-access_memory\n\nWhat are your thoughts about the suggested `marketingMem` in the linked bug?  It feels like that\u0027s really what we\u0027re getting at here: we\u0027re letting the OEM communicate a value that will match the specs that the user sees on their retail packaging.",
+      "range": {
+        "startLine": 2817,
+        "startChar": 15,
+        "endLine": 2817,
+        "endChar": 18
+      },
+      "revId": "478b17c6744797d296345af346d2d9bfc645205a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
