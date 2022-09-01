@@ -74,6 +74,30 @@
       },
       "revId": "e6484fdf14c4b9957d5d468ef8218f771bb61c95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e332bca_1f1a1930",
+        "filename": "media/jni/audioeffect/Visualizer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2022-09-01T23:51:10Z",
+      "side": 1,
+      "message": "WDYM? In practice, offloaded visualizers can use 48 or 96 kHz depending on the DSP. That was the reason to make this change.",
+      "parentUuid": "ccbfdc56_c004780d",
+      "range": {
+        "startLine": 422,
+        "startChar": 46,
+        "endLine": 422,
+        "endChar": 53
+      },
+      "revId": "e6484fdf14c4b9957d5d468ef8218f771bb61c95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
