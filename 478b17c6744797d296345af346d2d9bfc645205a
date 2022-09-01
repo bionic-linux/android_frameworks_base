@@ -22,6 +22,30 @@
       },
       "revId": "478b17c6744797d296345af346d2d9bfc645205a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dacd2fd5_a48a5142",
+        "filename": "core/java/android/app/ActivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2817,
+      "author": {
+        "id": 1889140
+      },
+      "writtenOn": "2022-09-01T05:17:38Z",
+      "side": 1,
+      "message": "I think that when OEMs talk about DDR size, they mostly refer to the RAM size. In the new SoCs, it is becoming more common that the RAM memory is shared between several software components. For example, the new Google and Intel Network card, has 16 ARM Neoverse cores and a Management module. These 2 hardware blocks share the DDR memory and the 2 Linux running there see different memory sizes.\n\nhttps://www.intel.com/content/www/us/en/products/network-io/infrastructure-processing-units/asic/es2000asic.html\n\nIt is also common that the phones share the DDR memory between Linux and the TEE OS. https://source.android.com/docs/security/trusty\n\nIn my opinion, ddr_size or physical_ram_size would be a more accurate and hardware oriented term.\n\nLet me know if that sounds reasonable.",
+      "parentUuid": "d2c7f1aa_457a59ac",
+      "range": {
+        "startLine": 2817,
+        "startChar": 15,
+        "endLine": 2817,
+        "endChar": 18
+      },
+      "revId": "478b17c6744797d296345af346d2d9bfc645205a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
