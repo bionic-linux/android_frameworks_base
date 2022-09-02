@@ -70,6 +70,30 @@
       },
       "revId": "478b17c6744797d296345af346d2d9bfc645205a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f83e4e3_6d6749e0",
+        "filename": "core/java/android/app/ActivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2817,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2022-09-02T21:16:07Z",
+      "side": 1,
+      "message": "`advertisedMem` sounds better to me TBH. Other suggestion is `specMemSize`.",
+      "parentUuid": "ab662a5b_bdf72538",
+      "range": {
+        "startLine": 2817,
+        "startChar": 15,
+        "endLine": 2817,
+        "endChar": 18
+      },
+      "revId": "478b17c6744797d296345af346d2d9bfc645205a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
