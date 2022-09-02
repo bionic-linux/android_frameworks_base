@@ -122,6 +122,30 @@
       },
       "revId": "e6484fdf14c4b9957d5d468ef8218f771bb61c95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3037d9b1_bad51f6e",
+        "filename": "media/jni/audioeffect/Visualizer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2022-09-02T00:52:12Z",
+      "side": 1,
+      "message": "That\u0027s what Visualizer SDK API uses: https://developer.android.com/reference/android/media/audiofx/Visualizer#getMaxCaptureRate(). We should ask Eric why he prefers milliHz (ag/56743) 😊",
+      "parentUuid": "2746a0f8_e4cc20b7",
+      "range": {
+        "startLine": 422,
+        "startChar": 46,
+        "endLine": 422,
+        "endChar": 53
+      },
+      "revId": "e6484fdf14c4b9957d5d468ef8218f771bb61c95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
