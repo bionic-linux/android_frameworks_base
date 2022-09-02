@@ -46,6 +46,30 @@
       },
       "revId": "478b17c6744797d296345af346d2d9bfc645205a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab662a5b_bdf72538",
+        "filename": "core/java/android/app/ActivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2817,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-09-02T21:02:24Z",
+      "side": 1,
+      "message": "Hm, I understand the case you\u0027re making for those names, but there\u0027s still a risk that they\u0027ll be misinterpreted again at some point in the future.\n\nIf I zoom out, the problem it feels like you\u0027re trying to solve is that apps are trying to show a number that will match what the user saw at the point-of-sale retail packaging.  (That is, we\u0027re not solving a hardware-oriented problem, but instead a marketing-oriented problem.)\n\nThat\u0027s why I suggested naming like `marketingMem` which matches what the marketing team expects their device to claim.  Other names in this vein would be `advertisedMem`.",
+      "parentUuid": "dacd2fd5_a48a5142",
+      "range": {
+        "startLine": 2817,
+        "startChar": 15,
+        "endLine": 2817,
+        "endChar": 18
+      },
+      "revId": "478b17c6744797d296345af346d2d9bfc645205a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
