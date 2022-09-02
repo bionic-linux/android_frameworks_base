@@ -94,6 +94,30 @@
       },
       "revId": "478b17c6744797d296345af346d2d9bfc645205a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f34a350c_f0ba389b",
+        "filename": "core/java/android/app/ActivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2817,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-09-02T21:17:40Z",
+      "side": 1,
+      "message": "Cool, let\u0027s use `advertisedMem`.",
+      "parentUuid": "9f83e4e3_6d6749e0",
+      "range": {
+        "startLine": 2817,
+        "startChar": 15,
+        "endLine": 2817,
+        "endChar": 18
+      },
+      "revId": "478b17c6744797d296345af346d2d9bfc645205a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
