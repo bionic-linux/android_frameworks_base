@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6abf181_aaa2ff98",
+        "filename": "core/java/android/app/ActivityManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2819,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2022-09-05T18:39:16Z",
+      "side": 1,
+      "message": "nit: There could be many other cases, i.e. the modem could have a cut too. So maybe describe it more generic?",
+      "range": {
+        "startLine": 2818,
+        "startChar": 73,
+        "endLine": 2819,
+        "endChar": 28
+      },
+      "revId": "040ca16f8be1868137dd8ebfa48d97eca0478109",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
