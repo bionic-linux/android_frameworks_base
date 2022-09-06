@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ff75b96_983f10de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1870086
+      },
+      "writtenOn": "2022-09-06T11:01:41Z",
+      "side": 1,
+      "message": "I have updated the change base on Android T, please help review change, thanks!",
+      "revId": "091d5ee0d322103c79b639ca774effcccf623eb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
