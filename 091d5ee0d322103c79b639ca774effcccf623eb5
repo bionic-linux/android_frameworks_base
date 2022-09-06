@@ -33,6 +33,24 @@
       "message": "Could you please help me check \u0027Presubmit-Verified-1\u0027? Thanks!",
       "revId": "091d5ee0d322103c79b639ca774effcccf623eb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c05c1f06_6d328fee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2022-09-06T13:29:54Z",
+      "side": 1,
+      "message": "It looks like there are still conflicts with the `master` branch, did you rebase the branch on the latest `master`?",
+      "parentUuid": "8e69567c_7b80d05a",
+      "revId": "091d5ee0d322103c79b639ca774effcccf623eb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
