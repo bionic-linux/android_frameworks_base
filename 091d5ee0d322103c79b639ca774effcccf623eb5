@@ -51,6 +51,24 @@
       "parentUuid": "8e69567c_7b80d05a",
       "revId": "091d5ee0d322103c79b639ca774effcccf623eb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b09578b_6058ed08",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1870086
+      },
+      "writtenOn": "2022-09-06T15:00:54Z",
+      "side": 1,
+      "message": "Yes, current change is already base on the latest master.",
+      "parentUuid": "c05c1f06_6d328fee",
+      "revId": "091d5ee0d322103c79b639ca774effcccf623eb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
