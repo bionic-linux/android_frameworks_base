@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b9d61276_b305f538",
+        "filename": "core/java/android/app/ActivityManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 2817,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-09-07T23:33:06Z",
+      "side": 1,
+      "message": "Could you also improve these docs to better describe the intention?\n\nThe value isn\u0027t telling the consumer the \"DDR size of the device\", it\u0027s telling the consumer something like this instead:\n\n\u003e \"The advertised memory of the system, as the end user would encounter in a retail display environment. This value might be different...\"",
+      "range": {
+        "startLine": 2817,
+        "startChar": 0,
+        "endLine": 2817,
+        "endChar": 100
+      },
+      "revId": "3d062c79cb9ac4ca2848a3465e4457315c28f0ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2a7e90dc_10467ff9",
         "filename": "core/java/android/os/Process.java",
         "patchSetId": 15
