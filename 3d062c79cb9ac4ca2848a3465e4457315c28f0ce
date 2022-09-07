@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a7e90dc_10467ff9",
+        "filename": "core/java/android/os/Process.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-09-07T23:30:56Z",
+      "side": 1,
+      "message": "Since you\u0027re adding a new API, there\u0027s no chance for an app to be using it in an \"unsupported\" way, so please omit the `@UnsupportedAppUsage` annotation.",
+      "range": {
+        "startLine": 1341,
+        "startChar": 5,
+        "endLine": 1341,
+        "endChar": 24
+      },
+      "revId": "3d062c79cb9ac4ca2848a3465e4457315c28f0ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e44c49b_c5bfc919",
+        "filename": "core/java/android/os/Process.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-09-07T23:30:56Z",
+      "side": 1,
+      "message": "If the value isn\u0027t well-defined, perhaps default to using a value like `FileUtils.roundStorageSize(getTotalMemory())`, so it\u0027s at least in the ballpark of what a caller might expect?\n\nOr document that it\u0027d return \"0\" when unknown, and then consider having the caller of this method handle that unknown case.",
+      "range": {
+        "startLine": 1343,
+        "startChar": 0,
+        "endLine": 1343,
+        "endChar": 77
+      },
+      "revId": "3d062c79cb9ac4ca2848a3465e4457315c28f0ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
