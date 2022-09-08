@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fb95ddb_47f1db0f",
+        "filename": "core/java/android/app/ActivityManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 2817,
+      "author": {
+        "id": 1889140
+      },
+      "writtenOn": "2022-09-08T01:17:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9d61276_b305f538",
+      "range": {
+        "startLine": 2817,
+        "startChar": 0,
+        "endLine": 2817,
+        "endChar": 100
+      },
+      "revId": "3d062c79cb9ac4ca2848a3465e4457315c28f0ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2a7e90dc_10467ff9",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0867e080_817b5e4e",
+        "filename": "core/java/android/os/Process.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1889140
+      },
+      "writtenOn": "2022-09-08T01:17:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a7e90dc_10467ff9",
+      "range": {
+        "startLine": 1341,
+        "startChar": 5,
+        "endLine": 1341,
+        "endChar": 24
+      },
+      "revId": "3d062c79cb9ac4ca2848a3465e4457315c28f0ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4e44c49b_c5bfc919",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-09-07T23:30:56Z",
       "side": 1,
       "message": "If the value isn\u0027t well-defined, perhaps default to using a value like `FileUtils.roundStorageSize(getTotalMemory())`, so it\u0027s at least in the ballpark of what a caller might expect?\n\nOr document that it\u0027d return \"0\" when unknown, and then consider having the caller of this method handle that unknown case.",
+      "range": {
+        "startLine": 1343,
+        "startChar": 0,
+        "endLine": 1343,
+        "endChar": 77
+      },
+      "revId": "3d062c79cb9ac4ca2848a3465e4457315c28f0ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "169582fc_7297c139",
+        "filename": "core/java/android/os/Process.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1889140
+      },
+      "writtenOn": "2022-09-08T01:17:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e44c49b_c5bfc919",
       "range": {
         "startLine": 1343,
         "startChar": 0,
