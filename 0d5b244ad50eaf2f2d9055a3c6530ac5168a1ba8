@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0edc5b4f_288ec6a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-09-08T18:37:37Z",
+      "side": 1,
+      "message": "Looks like there\u0027s some drift between aosp and master, I think I\u0027ll just go ahead and land in the latter for now to avoid conflicts later on. Sorry for the noise!",
+      "revId": "0d5b244ad50eaf2f2d9055a3c6530ac5168a1ba8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
