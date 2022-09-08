@@ -273,10 +273,12 @@ systemui_optimized_java_defaults {
                 enabled: true,
                 optimize: true,
                 shrink: true,
+                ignore_warnings: false,
                 proguard_flags_files: ["proguard.flags"],
             },
             conditions_default: {
                 optimize: {
+                    ignore_warnings: false,
                     proguard_flags_files: ["proguard.flags"],
                 },
             },
