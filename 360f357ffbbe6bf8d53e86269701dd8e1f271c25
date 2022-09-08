@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "678e9044_7df8445f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2022-09-08T17:46:37Z",
+      "side": 1,
+      "message": "Also, can you rebase on top of Android 13?",
+      "revId": "360f357ffbbe6bf8d53e86269701dd8e1f271c25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6e06e471_331b500e",
         "filename": "core/res/res/values/doze_parameters.xml",
         "patchSetId": 2
