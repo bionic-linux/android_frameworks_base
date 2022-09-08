@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6f7fc13_714111e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2022-09-08T19:02:26Z",
+      "side": 1,
+      "message": "Hey Vania, would you mind taking a look at this CL?",
+      "revId": "00b7871466257f7435237be49f4e2cfc5bd667a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
