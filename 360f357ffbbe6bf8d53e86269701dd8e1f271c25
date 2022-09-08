@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7426aba3_1f45d0d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2022-09-08T17:46:13Z",
+      "side": 1,
+      "message": "Add the following to frameworks/base/core/res/OWNERS:\n\n# Device Idle\nper-file res/values/config_device_idle.xml \u003d file:/apex/jobscheduler/OWNERS",
+      "revId": "360f357ffbbe6bf8d53e86269701dd8e1f271c25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e06e471_331b500e",
+        "filename": "core/res/res/values/doze_parameters.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2022-09-08T17:46:13Z",
+      "side": 1,
+      "message": "Rename file to config_device_idle.xml",
+      "revId": "360f357ffbbe6bf8d53e86269701dd8e1f271c25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34e7dbfd_e4d441bd",
+        "filename": "core/res/res/values/doze_parameters.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2022-09-08T17:46:13Z",
+      "side": 1,
+      "message": "Please follow the same formatting as in frameworks/base/core/res/res/values/config.xml.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 5
+      },
+      "revId": "360f357ffbbe6bf8d53e86269701dd8e1f271c25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8b048a7_4fa96ac3",
+        "filename": "core/res/res/values/doze_parameters.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2022-09-08T17:46:13Z",
+      "side": 1,
+      "message": "Prefix all of these with device_idle_",
+      "range": {
+        "startLine": 19,
+        "startChar": 19,
+        "endLine": 121,
+        "endChar": 50
+      },
+      "revId": "360f357ffbbe6bf8d53e86269701dd8e1f271c25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
