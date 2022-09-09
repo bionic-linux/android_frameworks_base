@@ -37,6 +37,42 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "79ee097d_fa99c4b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2022-09-09T09:58:29Z",
+      "side": 1,
+      "message": "I\u0027ve got error like below while repo upload.\nremote: ERROR: commit 5f9c8bf: [code-owners] invalid per-file import in \u0027/core/res/OWNERS\u0027: project \u0027/platform/frameworks/opt/wear\u0027 not found\n\nIt returns an error that is not related with added line for device idle.\nDo you have any idea to solve it?",
+      "parentUuid": "7426aba3_1f45d0d8",
+      "revId": "360f357ffbbe6bf8d53e86269701dd8e1f271c25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28e69806_45d4b7de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2022-09-09T09:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "678e9044_7df8445f",
+      "revId": "360f357ffbbe6bf8d53e86269701dd8e1f271c25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6e06e471_331b500e",
         "filename": "core/res/res/values/doze_parameters.xml",
         "patchSetId": 2
@@ -48,6 +84,24 @@
       "writtenOn": "2022-09-08T17:46:13Z",
       "side": 1,
       "message": "Rename file to config_device_idle.xml",
+      "revId": "360f357ffbbe6bf8d53e86269701dd8e1f271c25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53ca000d_01a290c3",
+        "filename": "core/res/res/values/doze_parameters.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2022-09-09T09:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e06e471_331b500e",
       "revId": "360f357ffbbe6bf8d53e86269701dd8e1f271c25",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -75,6 +129,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "adb892f8_6c4f2188",
+        "filename": "core/res/res/values/doze_parameters.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2022-09-09T09:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34e7dbfd_e4d441bd",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 5
+      },
+      "revId": "360f357ffbbe6bf8d53e86269701dd8e1f271c25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8b048a7_4fa96ac3",
@@ -88,6 +166,30 @@
       "writtenOn": "2022-09-08T17:46:13Z",
       "side": 1,
       "message": "Prefix all of these with device_idle_",
+      "range": {
+        "startLine": 19,
+        "startChar": 19,
+        "endLine": 121,
+        "endChar": 50
+      },
+      "revId": "360f357ffbbe6bf8d53e86269701dd8e1f271c25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08f9cb04_661637ed",
+        "filename": "core/res/res/values/doze_parameters.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2022-09-09T09:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8b048a7_4fa96ac3",
       "range": {
         "startLine": 19,
         "startChar": 19,
