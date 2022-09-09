@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "146c8e2e_90bb2527",
+        "filename": "core/res/res/values/config_device_idle.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2022-09-09T13:59:39Z",
+      "side": 1,
+      "message": "Sorry, last thing: can you add \"_ms\" as a suffix to all the duration values so it\u0027s clear they\u0027re denoted in milliseconds? For example: device_idle_min_time_to_alarm_ms",
+      "range": {
+        "startLine": 28,
+        "startChar": 45,
+        "endLine": 97,
+        "endChar": 67
+      },
+      "revId": "84f2cfae264c54945f1fd4b1b8e128ec44fa44cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

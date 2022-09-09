@@ -71,6 +71,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb452464_78d409aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2022-09-09T13:59:39Z",
+      "side": 1,
+      "message": "Hmm, I\u0027m not sure. If it keeps failing, then just leave it out. I\u0027ll try to modify the OWNERS file in a separate CL.",
+      "parentUuid": "79ee097d_fa99c4b5",
+      "revId": "360f357ffbbe6bf8d53e86269701dd8e1f271c25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e06e471_331b500e",
