@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdca35e1_dd332e0c",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2022-09-12T18:14:09Z",
+      "side": 1,
+      "message": "Not clear why there\u0027s a limitation that it needs to be less than.\n\nAlso, what does \"comp\" mean here?\n\nSome comments will help.",
+      "range": {
+        "startLine": 1424,
+        "startChar": 38,
+        "endLine": 1424,
+        "endChar": 62
+      },
+      "revId": "82f2f96e1661dc958f96299379c6672de74ad391",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
