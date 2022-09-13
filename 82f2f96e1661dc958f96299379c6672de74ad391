@@ -22,6 +22,30 @@
       },
       "revId": "82f2f96e1661dc958f96299379c6672de74ad391",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dda93615_a3f3b369",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2022-09-13T02:53:18Z",
+      "side": 1,
+      "message": "if COMPRESS_TIME is false (if true, it seems for debugging).\nthen returns the defTimeout.\n\nif COMPRESS_TIME is true, it means developers may want to check with compressed time. defTimeout is adjusted if a shorter timeout was set in resource.\n\n\u003e Also, what does \"comp\" mean here?\nit means compress time out.",
+      "parentUuid": "cdca35e1_dd332e0c",
+      "range": {
+        "startLine": 1424,
+        "startChar": 38,
+        "endLine": 1424,
+        "endChar": 62
+      },
+      "revId": "82f2f96e1661dc958f96299379c6672de74ad391",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
