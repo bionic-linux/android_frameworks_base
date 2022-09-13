@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f3ddb94_f7063022",
+        "filename": "core/java/android/os/Process.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-09-13T16:36:43Z",
+      "side": 1,
+      "message": "Erm, no, please keep this method `@hide`.\n\nDevelopers should obtain the value via the new ActivityManager API you\u0027re adding; the implementation detail just happens to be here on Process for the moment.",
+      "range": {
+        "startLine": 1345,
+        "startChar": 29,
+        "endLine": 1345,
+        "endChar": 45
+      },
+      "revId": "4466f20f5aa11ed7e4412cff4eb99fec18cde5c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
