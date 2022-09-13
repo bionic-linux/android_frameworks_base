@@ -16,6 +16,23 @@
       "message": "Thanks Louis.",
       "revId": "415c4b415c7e5d052e9afe4e8d7c524d220c3214",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a5143bf_04f916c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2022-09-13T16:38:56Z",
+      "side": 1,
+      "message": "Presubmit failure:\n\n```\nUnknown test error.\nAttempt 192beb67-2e69-474f-9c4f-dff010a80607:  java.lang.IllegalArgumentException: No enum constant com.android.tradefed.testtype.suite.params.ModuleParameters.NO_SECONDARY_USER\n```",
+      "revId": "415c4b415c7e5d052e9afe4e8d7c524d220c3214",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
