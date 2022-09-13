@@ -33,6 +33,24 @@
       "message": "Presubmit failure:\n\n```\nUnknown test error.\nAttempt 192beb67-2e69-474f-9c4f-dff010a80607:  java.lang.IllegalArgumentException: No enum constant com.android.tradefed.testtype.suite.params.ModuleParameters.NO_SECONDARY_USER\n```",
       "revId": "415c4b415c7e5d052e9afe4e8d7c524d220c3214",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "709d5b3f_89056c9b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1088076
+      },
+      "writtenOn": "2022-09-13T17:02:13Z",
+      "side": 1,
+      "message": "b/246535377\nplease retry. btw, starting around next week, test suite will not load such config as the broken test is not part of your presubmit check.",
+      "parentUuid": "4a5143bf_04f916c1",
+      "revId": "415c4b415c7e5d052e9afe4e8d7c524d220c3214",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
