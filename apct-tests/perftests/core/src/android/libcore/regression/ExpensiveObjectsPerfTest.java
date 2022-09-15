@@ -31,7 +31,6 @@ import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -154,15 +153,6 @@ public class ExpensiveObjectsPerfTest {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
             nf.format(1024.0);
-        }
-    }
-
-    @Test
-    public void timeClonedSimpleDateFormat() {
-        SimpleDateFormat sdf = new SimpleDateFormat();
-        BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
-        while (state.keepRunning()) {
-            sdf.clone();
         }
     }
 
