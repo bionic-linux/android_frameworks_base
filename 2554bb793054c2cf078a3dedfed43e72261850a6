@@ -16,6 +16,24 @@
       "message": "Hey Yichi, is this something you could take a look at? Is this fixed in android-internal?",
       "revId": "2554bb793054c2cf078a3dedfed43e72261850a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cd6af78_de693407",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1423402
+      },
+      "writtenOn": "2022-09-19T22:42:35Z",
+      "side": 1,
+      "message": "In Android-internal design, we use the new HWC API to control boot display configuration. (Please refer to https://source.android.com/docs/core/graphics/aidl-hwc and search BOOT_DISPLAY_CONFIG).\n\nRegarding the store of the user preferred resolution here, my understanding here is that it is by intention not to save user preferred resolution. The restoration of the configuration is now controlled by their clients - Settings, SurfaceFlinger, etc.\nIt may create a conflict if we get multiple sources to restore the resolution configuration. Do you mind sharing us more content about which case we may miss to restore the resolution config?",
+      "parentUuid": "ec033387_3b57d61a",
+      "revId": "2554bb793054c2cf078a3dedfed43e72261850a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
