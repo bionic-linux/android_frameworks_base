@@ -34,6 +34,24 @@
       "parentUuid": "ec033387_3b57d61a",
       "revId": "2554bb793054c2cf078a3dedfed43e72261850a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1961b50f_a2ffe75b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1090594
+      },
+      "writtenOn": "2022-09-19T22:48:32Z",
+      "side": 1,
+      "message": "I was just testing screen resolution preference in Settings and it just seemed kinda weird that my preference got reset after a reboot. You can see code handling this preference here: https://cs.android.com/android/platform/superproject/+/master:packages/apps/Settings/src/com/android/settings/display/ScreenResolutionFragment.java;l\u003d155",
+      "parentUuid": "7cd6af78_de693407",
+      "revId": "2554bb793054c2cf078a3dedfed43e72261850a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
