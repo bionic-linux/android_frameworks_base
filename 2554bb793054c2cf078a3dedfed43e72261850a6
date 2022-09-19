@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec033387_3b57d61a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1278152
+      },
+      "writtenOn": "2022-09-19T14:42:25Z",
+      "side": 1,
+      "message": "Hey Yichi, is this something you could take a look at? Is this fixed in android-internal?",
+      "revId": "2554bb793054c2cf078a3dedfed43e72261850a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
