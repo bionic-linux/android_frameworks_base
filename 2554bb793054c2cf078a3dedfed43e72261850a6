@@ -52,6 +52,24 @@
       "parentUuid": "7cd6af78_de693407",
       "revId": "2554bb793054c2cf078a3dedfed43e72261850a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d509bf3b_e9525f49",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1423402
+      },
+      "writtenOn": "2022-09-20T00:29:09Z",
+      "side": 1,
+      "message": "Thanks for the feedback. I believe you are right here.\nI am discussing the design internally and will get back to you soon.",
+      "parentUuid": "1961b50f_a2ffe75b",
+      "revId": "2554bb793054c2cf078a3dedfed43e72261850a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
