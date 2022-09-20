@@ -16,6 +16,23 @@
       "message": "PTAL. Thanks!",
       "revId": "0fc653c307807c41fbc876b3c117427de687e1c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b4b406f_0f3c3824",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1894735
+      },
+      "writtenOn": "2022-09-20T16:09:08Z",
+      "side": 1,
+      "message": "Wessam, PTAL at apct-tests/perftests/core/AndroidManifest.xml. I have to park the test as profileable so we have correct permissions to be able to read from /proc/\u003cpid\u003e/io. This CL changes the behaviour of userdebug builds to not enable jdwp threads by default. This is needed for hiding root detection (b/240410400).\n\nThanks!",
+      "revId": "0fc653c307807c41fbc876b3c117427de687e1c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
