@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d21bef79_eeec2501",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-09-20T05:22:59Z",
+      "side": 1,
+      "message": "com.android.server.connectivity.VpnTest#testStartPlatformVpnHandlesNetworkLoss_mobikeEnabled\ncom.android.server.connectivity.VpnTest#testStartPlatformVpnHandlesNetworkLoss_mobikeDisabled\ncom.android.server.connectivity.VpnTest#testStartPlatformVpnFailedWithIkeNetworkLostException\ncom.android.server.connectivity.VpnTest#testStartPlatformVpnReestablishes_mobikeDisabled\n\nAbove unit tests are borken by this commit, I\u0027ll try to upload a patch to fix them later.",
+      "revId": "8cd04c577238ada568b00d056542ba60d2bee639",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
