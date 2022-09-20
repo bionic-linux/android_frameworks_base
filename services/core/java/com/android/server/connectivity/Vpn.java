@@ -3226,7 +3226,16 @@ public class Vpn {
                         mExecutor.schedule(
                                 () -> {
                                     if (isActiveToken(token)) {
-                                        handleSessionLost(null /* exception */, network);
+                                        handleSessionLost(new IkeNetworkLostException(network),
+                                                network);
+
+                                        synchronized (Vpn.this) {
+                                            // Ignore stale runner.
+                                            if (mVpnRunner != this) return;
+
+                                            updateState(DetailedState.DISCONNECTED,
+                                                    "Network lost");
+                                        }
                                     } else {
                                         Log.d(
                                                 TAG,
@@ -3243,7 +3252,7 @@ public class Vpn {
                                 TimeUnit.MILLISECONDS);
             } else {
                 Log.d(TAG, "Call handleSessionLost for losing network " + network);
-                handleSessionLost(null /* exception */, network);
+                handleSessionLost(new IkeNetworkLostException(network), network);
             }
         }
 
