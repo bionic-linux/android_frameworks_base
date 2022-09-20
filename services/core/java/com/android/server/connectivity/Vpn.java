@@ -3226,7 +3226,8 @@ public class Vpn {
                         mExecutor.schedule(
                                 () -> {
                                     if (isActiveToken(token)) {
-                                        handleSessionLost(null /* exception */, network);
+                                        handleSessionLost(new IkeNetworkLostException(network),
+                                                network);
                                     } else {
                                         Log.d(
                                                 TAG,
@@ -3243,7 +3244,7 @@ public class Vpn {
                                 TimeUnit.MILLISECONDS);
             } else {
                 Log.d(TAG, "Call handleSessionLost for losing network " + network);
-                handleSessionLost(null /* exception */, network);
+                handleSessionLost(new IkeNetworkLostException(network), network);
             }
         }
 
@@ -3378,6 +3379,16 @@ public class Vpn {
             if (errorClass == VpnManager.ERROR_CLASS_NOT_RECOVERABLE) {
                 markFailedAndDisconnect(exception);
                 return;
+            } else if (errorCode == VpnManager.ERROR_CODE_NETWORK_LOST) {
+                // ERROR_CODE_NETWORK_LOST is a recoverable error, but there is no need to retry a
+                // new IKE session because the new IKE session will be established when the new
+                // underlying network is brought up.
+                synchronized (Vpn.this) {
+                    // Ignore stale runner.
+                    if (mVpnRunner != this) return;
+
+                    updateState(DetailedState.DISCONNECTED, "Network lost");
+                }
             } else {
                 scheduleRetryNewIkeSession();
             }
