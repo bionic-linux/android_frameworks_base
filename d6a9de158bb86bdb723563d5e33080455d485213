@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2842b51c_da67aeb1",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3382,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-20T18:24:39Z",
+      "side": 0,
+      "message": "Hmm, seems like we should just reuse this infrastructure here? There\u0027s no need to update the routes in the synchronized block below if we are going to tear down anyways.",
+      "range": {
+        "startLine": 3382,
+        "startChar": 16,
+        "endLine": 3382,
+        "endChar": 42
+      },
+      "revId": "d6a9de158bb86bdb723563d5e33080455d485213",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

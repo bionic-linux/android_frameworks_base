@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fdfcd4e_2ade44b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-20T18:24:39Z",
+      "side": 1,
+      "message": "Will resolve comments myself, just documenting so I don\u0027t forget.",
+      "revId": "a66fb4a9a7e61a23437101095f6db6d8f2104582",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e0637cd_47ee5af1",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3427,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-20T18:24:39Z",
+      "side": 1,
+      "message": "Any reason we don\u0027t use agentDisconnect()?",
+      "range": {
+        "startLine": 3427,
+        "startChar": 20,
+        "endLine": 3427,
+        "endChar": 76
+      },
+      "revId": "a66fb4a9a7e61a23437101095f6db6d8f2104582",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
