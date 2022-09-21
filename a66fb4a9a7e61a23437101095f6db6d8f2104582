@@ -39,6 +39,30 @@
       },
       "revId": "a66fb4a9a7e61a23437101095f6db6d8f2104582",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9297b20_e021927e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3427,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-09-21T06:15:53Z",
+      "side": 1,
+      "message": "It will be good to provide to precise reason for this disconnect.",
+      "parentUuid": "2e0637cd_47ee5af1",
+      "range": {
+        "startLine": 3427,
+        "startChar": 20,
+        "endLine": 3427,
+        "endChar": 76
+      },
+      "revId": "a66fb4a9a7e61a23437101095f6db6d8f2104582",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
