@@ -71,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fc8a804_977d85f6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3390,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-09-21T11:38:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c90771fb_707daf74",
+      "range": {
+        "startLine": 3390,
+        "startChar": 20,
+        "endLine": 3390,
+        "endChar": 76
+      },
+      "revId": "8f983d1ac81928260361b3f9adc15c42963203d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4cb1e4cf_3609d060",
