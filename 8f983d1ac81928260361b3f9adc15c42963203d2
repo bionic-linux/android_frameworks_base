@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bda5cd7d_9c88be28",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3382,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-09-21T11:38:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "556e13e0_e259ca0e",
+      "range": {
+        "startLine": 3382,
+        "startChar": 47,
+        "endLine": 3382,
+        "endChar": 70
+      },
+      "revId": "8f983d1ac81928260361b3f9adc15c42963203d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c90771fb_707daf74",
@@ -60,6 +84,30 @@
       "writtenOn": "2022-09-21T10:04:00Z",
       "side": 1,
       "message": "Unless there is a bug, let\u0027s not change this here; there\u0027s always a potential that mConfig.interfaze is used by something special or odd",
+      "range": {
+        "startLine": 3412,
+        "startChar": 39,
+        "endLine": 3412,
+        "endChar": 60
+      },
+      "revId": "8f983d1ac81928260361b3f9adc15c42963203d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a7def7c_f1910a0b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3412,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-09-21T11:38:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cb1e4cf_3609d060",
       "range": {
         "startLine": 3412,
         "startChar": 39,

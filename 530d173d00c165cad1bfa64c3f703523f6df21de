@@ -22,6 +22,30 @@
       },
       "revId": "530d173d00c165cad1bfa64c3f703523f6df21de",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "118de5cf_6af485ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-09-21T11:38:33Z",
+      "side": 1,
+      "message": "Tested and update in the commit message",
+      "parentUuid": "5d4a0b54_3ebfd840",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 4
+      },
+      "revId": "530d173d00c165cad1bfa64c3f703523f6df21de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
