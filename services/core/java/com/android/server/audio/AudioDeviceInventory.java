@@ -376,7 +376,8 @@ public class AudioDeviceInventory {
                         makeLeAudioDeviceUnavailable(address, btInfo.mAudioSystemDevice);
                     } else if (switchToAvailable) {
                         makeLeAudioDeviceAvailable(address, BtHelper.getName(btInfo.mDevice),
-                                streamType, btInfo.mVolume, btInfo.mAudioSystemDevice,
+                                streamType, btInfo.mVolume == -1 ? -1 : btInfo.mVolume * 10,
+                                btInfo.mAudioSystemDevice,
                                 "onSetBtActiveDevice");
                     }
                     break;
@@ -1176,9 +1177,11 @@ public class AudioDeviceInventory {
         }
     }
 
+    private static final int BT_LE_AUDIO_MAX_VOL = 255;
+
     @GuardedBy("mDevicesLock")
     private void makeLeAudioDeviceAvailable(String address, String name, int streamType,
-            int volumeIndex, int device, String eventSource) {
+            int volume, int device, String eventSource) {
         if (device != AudioSystem.DEVICE_NONE) {
             /* Audio Policy sees Le Audio similar to A2DP. Let's make sure
              * AUDIO_POLICY_FORCE_NO_BT_A2DP is not set
@@ -1199,10 +1202,10 @@ public class AudioDeviceInventory {
             return;
         }
 
-        final int leAudioVolIndex = (volumeIndex == -1)
-                ? mDeviceBroker.getVssVolumeForDevice(streamType, device)
-                : volumeIndex;
         final int maxIndex = mDeviceBroker.getMaxVssVolumeForStream(streamType);
+        final int leAudioVolIndex = (volume == -1)
+                ? mDeviceBroker.getVssVolumeForDevice(streamType, device)
+                : (int) Math.round((double) (volume * maxIndex) / BT_LE_AUDIO_MAX_VOL);
         mDeviceBroker.postSetLeAudioVolumeIndex(leAudioVolIndex, maxIndex, streamType);
         mDeviceBroker.postApplyVolumeOnDevice(streamType, device, "makeLeAudioDeviceAvailable");
     }
