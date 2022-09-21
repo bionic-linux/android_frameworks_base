@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "556e13e0_e259ca0e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3382,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-21T10:04:00Z",
+      "side": 1,
+      "message": "This will trigger the VPN network to be torn down any time the network dies before we attempt to migrate to a new one (eg Wifi -\u003e Cell transition).\n\nSuggest just allowing retries; it\u0027ll just skip the retry because there is no underlying network.",
+      "range": {
+        "startLine": 3382,
+        "startChar": 47,
+        "endLine": 3382,
+        "endChar": 70
+      },
+      "revId": "8f983d1ac81928260361b3f9adc15c42963203d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c90771fb_707daf74",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3390,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-21T10:04:00Z",
+      "side": 1,
+      "message": "THis probably just needs to move to the future handling in l.3230, otherwise we /always/ disconnect whenever IKE fires a NETWORK_LOST exception",
+      "range": {
+        "startLine": 3390,
+        "startChar": 20,
+        "endLine": 3390,
+        "endChar": 76
+      },
+      "revId": "8f983d1ac81928260361b3f9adc15c42963203d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cb1e4cf_3609d060",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3412,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-21T10:04:00Z",
+      "side": 1,
+      "message": "Unless there is a bug, let\u0027s not change this here; there\u0027s always a potential that mConfig.interfaze is used by something special or odd",
+      "range": {
+        "startLine": 3412,
+        "startChar": 39,
+        "endLine": 3412,
+        "endChar": 60
+      },
+      "revId": "8f983d1ac81928260361b3f9adc15c42963203d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
