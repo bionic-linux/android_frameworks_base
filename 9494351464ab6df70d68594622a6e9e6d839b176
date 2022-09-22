@@ -16,6 +16,23 @@
       "message": "This addresses some errors introduced by the move to errorprone 2.15.0 (Icc3e16854ec8e738f51a94880d0eac7b27db897e)",
       "revId": "9494351464ab6df70d68594622a6e9e6d839b176",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a2247d9_290266f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2022-09-22T12:00:44Z",
+      "side": 1,
+      "message": "Approving for trivial changes.",
+      "revId": "9494351464ab6df70d68594622a6e9e6d839b176",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
