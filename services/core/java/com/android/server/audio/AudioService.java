@@ -347,6 +347,7 @@ public class AudioService extends IAudioService.Stub
     private static final int MSG_UPDATE_ACTIVE_ASSISTANT_SERVICE_UID = 46;
     private static final int MSG_DISPATCH_DEVICE_VOLUME_BEHAVIOR = 47;
     private static final int MSG_RESET_SPATIALIZER = 50;
+    private static final int MSG_UNREGISTER_PLAYBACK_CALLBACK = 51;
 
     // start of messages handled under wakelock
     //   these messages can only be queued, i.e. sent with queueMsgUnderWakeLock(),
@@ -8181,6 +8182,10 @@ public class AudioService extends IAudioService.Stub
                     mSpatializerHelper.reset(/* featureEnabled */ mHasSpatializerEffect);
                     break;
 
+                case MSG_UNREGISTER_PLAYBACK_CALLBACK:
+                    mPlaybackMonitor.unregisterPlaybackCallback((IPlaybackConfigDispatcher) msg.obj);
+                    break;
+
                 case MSG_CHECK_MUSIC_ACTIVE:
                     onCheckMusicActive((String) msg.obj);
                     break;
@@ -10962,7 +10967,8 @@ public class AudioService extends IAudioService.Stub
     }
 
     public void unregisterPlaybackCallback(IPlaybackConfigDispatcher pcdb) {
-        mPlaybackMonitor.unregisterPlaybackCallback(pcdb);
+        sendMsg(mAudioHandler, MSG_UNREGISTER_PLAYBACK_CALLBACK,
+                SENDMSG_QUEUE, 0, 0, pcdb, 0);
     }
 
     public List<AudioPlaybackConfiguration> getActivePlaybackConfigurations() {
