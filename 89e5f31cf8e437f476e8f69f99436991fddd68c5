@@ -33,6 +33,23 @@
       "message": "Could you please kindly help to review the patch? Thank you in advance!",
       "revId": "89e5f31cf8e437f476e8f69f99436991fddd68c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "506478a5_27de8a99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1377660
+      },
+      "writtenOn": "2022-09-22T15:46:01Z",
+      "side": 1,
+      "message": "hi: could you please help to review the patch? or add the correct owner for review?  Thank you in advance!",
+      "revId": "89e5f31cf8e437f476e8f69f99436991fddd68c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
