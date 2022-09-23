@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1de00116_7fab0aea",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2022-09-23T20:41:42Z",
+      "side": 1,
+      "message": "shouldn\u0027t volume be expressed in audio volume range to be consistent with A2DP? then what we need to do is multiply by 10 before calling makeLeAudioDeviceAvailable()",
+      "range": {
+        "startLine": 1206,
+        "startChar": 45,
+        "endLine": 1206,
+        "endChar": 51
+      },
+      "revId": "ca6071ab404dc25850068efba3e0ff5b8641d61b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
