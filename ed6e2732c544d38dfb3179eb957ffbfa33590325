@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "707bf656_3ba11a58",
+        "filename": "services/tests/servicestests/src/com/android/server/hdmi/HdmiCecLocalDeviceTvTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-09-23T13:04:22Z",
+      "side": 1,
+      "message": "Could you explain why this CL made this change in the test necessary? I don\u0027t see the reason.\n\nI just want to make sure that we\u0027re not masking an actual issue with the CL (which may also be the reason for the other test failures).",
+      "range": {
+        "startLine": 201,
+        "startChar": 30,
+        "endLine": 201,
+        "endChar": 65
+      },
+      "revId": "ed6e2732c544d38dfb3179eb957ffbfa33590325",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
