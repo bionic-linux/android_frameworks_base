@@ -46,6 +46,30 @@
       },
       "revId": "ca6071ab404dc25850068efba3e0ff5b8641d61b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d3c4047_0492ead7",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1928988
+      },
+      "writtenOn": "2022-09-26T13:56:49Z",
+      "side": 1,
+      "message": "Calculations were moved to the service, but still we need to handle the special value of -1.",
+      "parentUuid": "6eba7451_7742696d",
+      "range": {
+        "startLine": 1206,
+        "startChar": 45,
+        "endLine": 1206,
+        "endChar": 51
+      },
+      "revId": "ca6071ab404dc25850068efba3e0ff5b8641d61b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
