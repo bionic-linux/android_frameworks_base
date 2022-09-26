@@ -22,6 +22,30 @@
       },
       "revId": "ca6071ab404dc25850068efba3e0ff5b8641d61b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6eba7451_7742696d",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1928988
+      },
+      "writtenOn": "2022-09-26T10:08:42Z",
+      "side": 1,
+      "message": "We could probably do it in the LE Audio service and multiply by 10 here, but that way we loose additional precision so that the restored value could be different than the original value set by the earbuds side. That might be ok, but I\u0027m not sure.",
+      "parentUuid": "1de00116_7fab0aea",
+      "range": {
+        "startLine": 1206,
+        "startChar": 45,
+        "endLine": 1206,
+        "endChar": 51
+      },
+      "revId": "ca6071ab404dc25850068efba3e0ff5b8641d61b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
