@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7cd2618_fe7569fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2022-09-26T22:21:26Z",
+      "side": 1,
+      "message": "So you confirm that the volume received from the BT stack is already in the audio framework range?",
+      "revId": "10a365a768d6397c7912b01f3172fd416f0808ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "012f2e10_3842be43",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5246,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2022-09-26T22:21:26Z",
+      "side": 1,
+      "message": "you have the arguments in the wrong order: streamType, device, mode",
+      "range": {
+        "startLine": 5246,
+        "startChar": 45,
+        "endLine": 5246,
+        "endChar": 49
+      },
+      "revId": "10a365a768d6397c7912b01f3172fd416f0808ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
