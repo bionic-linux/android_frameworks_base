@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7b612c6e_907c42b4",
+        "filename": "services/core/java/com/android/server/hdmi/SystemAudioAutoInitiationAction.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2022-09-26T02:51:54Z",
+      "side": 1,
+      "message": "With this modification, TV sends \u003cSystem Audio Mode Request\u003e [On] or [Off] according to TV\u0027s system audio mode setting.\nThat is why we should call setSystemAudioControlFeatureEnabled(ON) before testing \n any test that requires SAM to be ON, e.g. : handleReportAudioStatus_SamOnArcOff_setStreamVolumeNotCalled",
+      "revId": "ed6e2732c544d38dfb3179eb957ffbfa33590325",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "707bf656_3ba11a58",
         "filename": "services/tests/servicestests/src/com/android/server/hdmi/HdmiCecLocalDeviceTvTest.java",
         "patchSetId": 6
