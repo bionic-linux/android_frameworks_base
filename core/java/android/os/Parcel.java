@@ -579,6 +579,7 @@ public final class Parcel {
                     mPoolNext = sOwnedPool;
                     sOwnedPool = this;
                     sOwnedPoolSize++;
+                    return;
                 }
             }
         } else {
@@ -588,9 +589,13 @@ public final class Parcel {
                     mPoolNext = sHolderPool;
                     sHolderPool = this;
                     sHolderPoolSize++;
+                    return;
                 }
             }
         }
+
+        // Cleanup here rather than inside finalize method.
+        destroy();
     }
 
     /**
@@ -5187,13 +5192,23 @@ public final class Parcel {
 
     @Override
     protected void finalize() throws Throwable {
-        if (DEBUG_RECYCLE) {
+        try {
+            if (DEBUG_RECYCLE) {
             // we could always have this log on, but it's spammy
             if (!mRecycled) {
-                Log.w(TAG, "Client did not call Parcel.recycle()", mStack);
+                    Log.w(TAG, "Client did not call Parcel.recycle()", mStack);
+                }
             }
+
+            // We intentionally avoid cleanup here, because:
+            // (1) it actually cannot fix the possible leak(caused by client did not call
+            //     Parcel.recycle()) because there is no guarantee when or whether finalize
+            //     will be executed.  We may indeed have already run out of resources
+            //     before that time.
+            // (2) it will result in race condition issue which is even worse than a leak.
+        } finally {
+            super.finalize();
         }
-        destroy();
     }
 
     /**
