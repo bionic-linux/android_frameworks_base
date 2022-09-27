@@ -16,6 +16,23 @@
       "message": "Invoking \"destroy()\" in the following code snippet, is actually problematic.\n\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/android/os/Parcel.java;l\u003d5194;drc\u003d92ef431ce0a697016275becdd28ed0065889c65c\n\n        // core/java/android/os/Parcel.java\n        public final class Parcel {\n            @Override\n            protected void finalize() throws Throwable {\n                if (DEBUG_RECYCLE) {\n                    // we could always have this log on, but it\u0027s spammy\n                    if (!mRecycled) {\n                        Log.w(TAG, \"Client did not call Parcel.recycle()\", mStack);\n                    }\n                }\n                destroy(); //### This \"cleanup\" is problematic ###\n            }\n        }\n\n\nSummary:\n In one sentence: \"It is trying to fix a leak issue but eventually fails and results in an even worse race condition issue.\"\n\n\nAnalysis:\n(1) It cannot fix the leak issue because there is no guarantee when or whether finalize will be executed. We may indeed have already run out of resources before that time.\n    For more details, please see references: R1, R2.\n\n(2) It will result in race condition issue which is even worse than a leak issue.\n    The root cause for the race condition is covered in: https://android-review.googlesource.com/c/platform/frameworks/base/+/1519196\n\n\nReferences:\n\nR1.\n   \u003c\u003cGoogle Java Style Guide\u003e\u003e Finalizers: not used\n   https://google.github.io/styleguide/javaguide.html\n\nR2.\n   \u003c\u003cEffective Java\u003e\u003e Item 8, \"Avoid finalizers and cleaners\"",
       "revId": "8b81fad4b32e28d447d6ac66acb1724076e7f298",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4bada86_9591cc03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1377660
+      },
+      "writtenOn": "2022-09-27T13:21:46Z",
+      "side": 1,
+      "message": "For details, please see my comments.  Thanks.",
+      "revId": "8b81fad4b32e28d447d6ac66acb1724076e7f298",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
