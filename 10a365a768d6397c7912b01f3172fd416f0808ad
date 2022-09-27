@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45833b76_f7ac99f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1928988
+      },
+      "writtenOn": "2022-09-27T07:59:00Z",
+      "side": 1,
+      "message": "2229630 is now needed on the BT stack side.",
+      "parentUuid": "a7cd2618_fe7569fc",
+      "revId": "10a365a768d6397c7912b01f3172fd416f0808ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "012f2e10_3842be43",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-09-26T22:21:26Z",
       "side": 1,
       "message": "you have the arguments in the wrong order: streamType, device, mode",
+      "range": {
+        "startLine": 5246,
+        "startChar": 45,
+        "endLine": 5246,
+        "endChar": 49
+      },
+      "revId": "10a365a768d6397c7912b01f3172fd416f0808ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fcf78b4_0b2efb88",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5246,
+      "author": {
+        "id": 1928988
+      },
+      "writtenOn": "2022-09-27T07:59:00Z",
+      "side": 1,
+      "message": "Oh shoot. Thanks. I\u0027ll do the manual tests again.",
+      "parentUuid": "012f2e10_3842be43",
       "range": {
         "startLine": 5246,
         "startChar": 45,
