@@ -61,6 +61,13 @@ public class Build {
     /** The name of the overall product. */
     public static final String PRODUCT = getString("ro.product.name");
 
+    /** The product name for attestation.
+     * @hide
+     */
+    @Nullable
+    public static final String PRODUCT_FOR_ATTESTATION = getString(
+                                                    "ro.product.name_for_attestation");
+
     /** The name of the industrial design. */
     public static final String DEVICE = getString("ro.product.device");
 
@@ -89,8 +96,22 @@ public class Build {
     /** The consumer-visible brand with which the product/hardware will be associated, if any. */
     public static final String BRAND = getString("ro.product.brand");
 
+    /** The product brand for attestation.
+     * @hide
+     */
+    @Nullable
+    public static final String BRAND_FOR_ATTESTATION = getString(
+                                                    "ro.product.brand_for_attestation");
+
     /** The end-user-visible name for the end product. */
     public static final String MODEL = getString("ro.product.model");
+
+    /** The product model for attestation.
+     * @hide
+     */
+    @Nullable
+    public static final String MODEL_FOR_ATTESTATION = getString(
+                                                    "ro.product.model_for_attestation");
 
     /** The manufacturer of the device's primary system-on-chip. */
     @NonNull

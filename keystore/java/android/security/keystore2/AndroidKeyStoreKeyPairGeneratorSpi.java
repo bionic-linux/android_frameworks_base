@@ -799,26 +799,51 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
             ));
 
             if (mSpec.isDevicePropertiesAttestationIncluded()) {
-                params.add(KeyStore2ParameterUtils.makeBytes(
-                        KeymasterDefs.KM_TAG_ATTESTATION_ID_BRAND,
-                        Build.BRAND.getBytes(StandardCharsets.UTF_8)
-                ));
+                if (Build.BRAND_FOR_ATTESTATION != null && !Build.BRAND_FOR_ATTESTATION.isEmpty()
+                        && !Build.BRAND_FOR_ATTESTATION.equals(Build.BRAND)) {
+                    params.add(KeyStore2ParameterUtils.makeBytes(
+                            KeymasterDefs.KM_TAG_ATTESTATION_ID_BRAND,
+                            Build.BRAND_FOR_ATTESTATION.getBytes(StandardCharsets.UTF_8)
+                    ));
+                } else {
+                    params.add(KeyStore2ParameterUtils.makeBytes(
+                            KeymasterDefs.KM_TAG_ATTESTATION_ID_BRAND,
+                            Build.BRAND.getBytes(StandardCharsets.UTF_8)
+                    ));
+                }
                 params.add(KeyStore2ParameterUtils.makeBytes(
                         KeymasterDefs.KM_TAG_ATTESTATION_ID_DEVICE,
                         Build.DEVICE.getBytes(StandardCharsets.UTF_8)
                 ));
-                params.add(KeyStore2ParameterUtils.makeBytes(
-                        KeymasterDefs.KM_TAG_ATTESTATION_ID_PRODUCT,
-                        Build.PRODUCT.getBytes(StandardCharsets.UTF_8)
-                ));
+                if (Build.PRODUCT_FOR_ATTESTATION != null
+                        && !Build.PRODUCT_FOR_ATTESTATION.isEmpty()
+                        && !Build.PRODUCT_FOR_ATTESTATION.equals(Build.PRODUCT)) {
+                    params.add(KeyStore2ParameterUtils.makeBytes(
+                            KeymasterDefs.KM_TAG_ATTESTATION_ID_PRODUCT,
+                            Build.PRODUCT_FOR_ATTESTATION.getBytes(StandardCharsets.UTF_8)
+                    ));
+                } else {
+                    params.add(KeyStore2ParameterUtils.makeBytes(
+                            KeymasterDefs.KM_TAG_ATTESTATION_ID_PRODUCT,
+                            Build.PRODUCT.getBytes(StandardCharsets.UTF_8)
+                    ));
+                }
                 params.add(KeyStore2ParameterUtils.makeBytes(
                         KeymasterDefs.KM_TAG_ATTESTATION_ID_MANUFACTURER,
                         Build.MANUFACTURER.getBytes(StandardCharsets.UTF_8)
                 ));
-                params.add(KeyStore2ParameterUtils.makeBytes(
-                        KeymasterDefs.KM_TAG_ATTESTATION_ID_MODEL,
-                        Build.MODEL.getBytes(StandardCharsets.UTF_8)
-                ));
+                if (Build.MODEL_FOR_ATTESTATION != null && !Build.MODEL_FOR_ATTESTATION.isEmpty()
+                        && !Build.MODEL_FOR_ATTESTATION.equals(Build.MODEL)) {
+                    params.add(KeyStore2ParameterUtils.makeBytes(
+                            KeymasterDefs.KM_TAG_ATTESTATION_ID_MODEL,
+                            Build.MODEL_FOR_ATTESTATION.getBytes(StandardCharsets.UTF_8)
+                    ));
+                } else {
+                    params.add(KeyStore2ParameterUtils.makeBytes(
+                            KeymasterDefs.KM_TAG_ATTESTATION_ID_MODEL,
+                            Build.MODEL.getBytes(StandardCharsets.UTF_8)
+                    ));
+                }
             }
 
             int[] idTypes = mSpec.getAttestationIds();
