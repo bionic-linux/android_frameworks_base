@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b64005f_ab964540",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1946892
+      },
+      "writtenOn": "2022-09-28T04:30:43Z",
+      "side": 1,
+      "message": "Hi Shubhangi,\n\nCould you grant DrNo approval? This CL will unblock https://android-review.googlesource.com/c/platform/cts/+/2233206.\n\nThank you!",
+      "revId": "1f6323ddfbafacfbcda9e1b8a32214211db35728",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
