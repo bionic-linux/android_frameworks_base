@@ -1,6 +1,52 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "32e3ddf7_8a0cad6c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-09-28T20:47:55Z",
+      "side": 1,
+      "message": "though it\u0027s not recommended, using Parcel without a manual \u0027recycle\u0027 call is allowed in the current API. We can\u0027t change this.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 38
+      },
+      "revId": "8b81fad4b32e28d447d6ac66acb1724076e7f298",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce917d9c_b2210fd8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-09-28T20:47:55Z",
+      "side": 1,
+      "message": "what is this issue referring to?",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 42
+      },
+      "revId": "8b81fad4b32e28d447d6ac66acb1724076e7f298",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "fa460660_2b8a189f",
