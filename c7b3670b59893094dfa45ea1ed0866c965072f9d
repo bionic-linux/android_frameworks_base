@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "71fd2b81_0bfe8b55",
+        "filename": "core/java/android/accessibilityservice/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2022-09-28T16:18:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7556f446_dffa7105",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 14
+      },
+      "revId": "c7b3670b59893094dfa45ea1ed0866c965072f9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b273011c_d8f7c798",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e4d3e89_91dcb874",
+        "filename": "core/java/android/accessibilityservice/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2022-09-28T16:18:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b273011c_d8f7c798",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 18
+      },
+      "revId": "c7b3670b59893094dfa45ea1ed0866c965072f9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d280afe0_d30c371f",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-09-27T23:57:42Z",
       "side": 1,
       "message": "Svet and Qasid cen be removed.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 14
+      },
+      "revId": "c7b3670b59893094dfa45ea1ed0866c965072f9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5352b3d_186aab99",
+        "filename": "core/java/com/android/internal/accessibility/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2022-09-28T16:18:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d280afe0_d30c371f",
       "range": {
         "startLine": 2,
         "startChar": 0,
