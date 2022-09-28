@@ -33,6 +33,23 @@
       "message": "Ping. There doesn\u0027t seem to be a real owner here. I still think this code should be fixed or removed.",
       "revId": "0f8fc9a0c985a0418d13fd8026df55e12253aed9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69f8390b_e71906fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2022-09-28T16:51:29Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be a popular piece of code. But unless someone can authoritatively say this is unused, I think we should just fix it.",
+      "revId": "0f8fc9a0c985a0418d13fd8026df55e12253aed9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
