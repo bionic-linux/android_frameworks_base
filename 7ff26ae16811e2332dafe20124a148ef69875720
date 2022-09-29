@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "671b84be_32d84e4f",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1902460
+      },
+      "writtenOn": "2022-09-29T13:57:32Z",
+      "side": 1,
+      "message": "The flow is the following:\n\n1. wallpaper dies\n2. onServiceDisconnected -\u003e mDisconnectRunnable is scheduled\n\n3. race of two events, the bug if onServiceConnected comes first\n\nonServiceConnected (service was restarted by someone else)\n  reattach occurs, connection remains the same\n  \nmDisconnectRunnable -\u003e tryToRebind -\u003e bindWallpaperComponentLocked (forced \u003d true)\n  rebind occurs, then reattach (second in a row)",
+      "revId": "7ff26ae16811e2332dafe20124a148ef69875720",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
