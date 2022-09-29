@@ -763,6 +763,14 @@ public final class DeviceConfig {
      */
     public static final String NAMESPACE_VENDOR_SYSTEM_NATIVE = "vendor_system_native";
 
+    /**
+     * Namespace for Remote Key Provisioning related features.
+     *
+     * @hide
+     */
+    public static final String NAMESPACE_REMOTE_KEY_PROVISIONING_NATIVE =
+            "remote_key_provisioning_native";
+
     private static final Object sLock = new Object();
     @GuardedBy("sLock")
     private static ArrayMap<OnPropertiesChangedListener, Pair<String, Executor>> sListeners =
