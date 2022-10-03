@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ecdabcc_a7372bec",
+        "filename": "tools/owners/experts.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1099348
+      },
+      "writtenOn": "2022-10-03T22:56:06Z",
+      "side": 1,
+      "message": "instead of needing to parse these files manually you can call this API \nhttps://gerrit.googlesource.com/plugins/code-owners/+/refs/heads/master/resources/Documentation/rest-api.md#list-code-owners-for-path-in-branch",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 15
+      },
+      "revId": "f8f3f44556c3438539b45fc4e60e1b46b8c40185",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
