@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "213efc8e_548b656a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1377660
+      },
+      "writtenOn": "2022-10-05T14:32:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "32e3ddf7_8a0cad6c",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 38
+      },
+      "revId": "8b81fad4b32e28d447d6ac66acb1724076e7f298",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce917d9c_b2210fd8",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-09-28T20:47:55Z",
       "side": 1,
       "message": "what is this issue referring to?",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 42
+      },
+      "revId": "8b81fad4b32e28d447d6ac66acb1724076e7f298",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9818b99_98fca5c9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1377660
+      },
+      "writtenOn": "2022-10-05T14:32:17Z",
+      "side": 1,
+      "message": "Please see the updated \"commit message\".",
+      "parentUuid": "ce917d9c_b2210fd8",
       "range": {
         "startLine": 14,
         "startChar": 11,
