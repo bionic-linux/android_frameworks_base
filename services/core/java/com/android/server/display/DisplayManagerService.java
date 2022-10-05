@@ -1488,14 +1488,15 @@ public final class DisplayManagerService extends SystemService {
     }
 
     private void registerWifiDisplayAdapterLocked() {
-        if (mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_enableWifiDisplay)
-                || SystemProperties.getInt(FORCE_WIFI_DISPLAY_ENABLE, -1) == 1) {
+        // REPRO: always register WifiDisplayAdapter.
+        // if (mContext.getResources().getBoolean(
+        //         com.android.internal.R.bool.config_enableWifiDisplay)
+        //         || SystemProperties.getInt(FORCE_WIFI_DISPLAY_ENABLE, -1) == 1) {
             mWifiDisplayAdapter = new WifiDisplayAdapter(
                     mSyncRoot, mContext, mHandler, mDisplayDeviceRepo,
                     mPersistentDataStore);
             registerDisplayAdapterLocked(mWifiDisplayAdapter);
-        }
+        // }
     }
 
     private boolean shouldRegisterNonEssentialDisplayAdaptersLocked() {

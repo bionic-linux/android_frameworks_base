@@ -36,10 +36,8 @@ import android.view.Display;
 import android.view.DisplayAddress;
 import android.view.Surface;
 import android.view.SurfaceControl;
-
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.IndentingPrintWriter;
-
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -106,6 +104,9 @@ final class WifiDisplayAdapter extends DisplayAdapter {
         mPersistentDataStore = persistentDataStore;
         mSupportsProtectedBuffers = context.getResources().getBoolean(
                 com.android.internal.R.bool.config_wifiDisplaySupportsProtectedBuffers);
+
+        // REPRO:
+        addMockWifiDisplayAsActiveDisplay();
     }
 
     @Override
@@ -285,6 +286,14 @@ final class WifiDisplayAdapter extends DisplayAdapter {
         if (mActiveDisplay != null && mActiveDisplay.getDeviceAddress().equals(address)) {
             requestDisconnectLocked();
         }
+    }
+
+  // REPRO:
+  private void addMockWifiDisplayAsActiveDisplay() {
+    WifiDisplay disp =
+        new WifiDisplay(
+            "41-42-43-44-45-46", "MockWifiDisplay", "MockWifiDisplayAlias", true, true, true);
+        mActiveDisplay = disp;
     }
 
     public WifiDisplayStatus getWifiDisplayStatusLocked() {
