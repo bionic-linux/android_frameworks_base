@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eceeb077_ba8c59a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2022-10-06T01:26:43Z",
+      "side": 1,
+      "message": "Slightly modified AOSP port of https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/20110735.",
+      "revId": "d0ac4e1a0df39ca5c382967148a18e789a098c3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
