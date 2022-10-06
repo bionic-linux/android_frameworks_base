@@ -67,6 +67,23 @@
       "message": "I don\u0027t think we want to leave broken code in the tree, even if it\u0027s obscure. Adding more reviewers ...",
       "revId": "0f8fc9a0c985a0418d13fd8026df55e12253aed9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a958810_f925170a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2022-10-06T17:40:03Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "0f8fc9a0c985a0418d13fd8026df55e12253aed9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
