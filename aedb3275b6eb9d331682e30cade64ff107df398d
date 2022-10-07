@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a590fd01_3ecdca44",
+        "filename": "services/core/java/com/android/server/audio/RecordingActivityMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1964627
+      },
+      "writtenOn": "2022-10-07T13:31:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f78dd0c_c113b93e",
+      "range": {
+        "startLine": 647,
+        "startChar": 12,
+        "endLine": 647,
+        "endChar": 24
+      },
+      "revId": "aedb3275b6eb9d331682e30cade64ff107df398d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9fa8adf1_eb729f9b",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-10-07T13:24:29Z",
       "side": 1,
       "message": "Formatting got messed up here.\n\nAre you using https://g3doc.corp.google.com/third_party/java_src/google_java_format/project/README.md?cl\u003dhead google-java-format-diff.py?",
+      "range": {
+        "startLine": 79,
+        "startChar": 12,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "aedb3275b6eb9d331682e30cade64ff107df398d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3ab34ac_97967f92",
+        "filename": "services/core/java/com/android/server/audio/SoundEffectsHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1964627
+      },
+      "writtenOn": "2022-10-07T13:31:50Z",
+      "side": 1,
+      "message": "no, it was autoformatted by IDE",
+      "parentUuid": "9fa8adf1_eb729f9b",
       "range": {
         "startLine": 79,
         "startChar": 12,
