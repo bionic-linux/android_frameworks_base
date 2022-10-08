@@ -560,7 +560,9 @@ public final class Parcel {
      */
     public final void recycle() {
         if (mRecycled) {
-            Log.w(TAG, "Recycle called on unowned Parcel. (recycle twice?)", mStack);
+            Log.w(TAG, "Recycle called on unowned Parcel. (recycle twice?) Here: "
+                    + Log.getStackTraceString(new Throwable())
+                    + " Original recycle call (if DEBUG_RECYCLE): ", mStack);
         }
         mRecycled = true;
 
@@ -1007,11 +1009,15 @@ public final class Parcel {
     /**
      * Write a blob of data into the parcel at the current {@link #dataPosition},
      * growing {@link #dataCapacity} if needed.
+     *
+     * <p> If the blob is small, then it is stored in-place, otherwise it is transferred by way of
+     * an anonymous shared memory region. If you prefer send in-place, please use
+     * {@link #writeByteArray(byte[])}.
+     *
      * @param b Bytes to place into the parcel.
-     * {@hide}
-     * {@SystemApi}
+     *
+     * @see #readBlob()
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public final void writeBlob(@Nullable byte[] b) {
         writeBlob(b, 0, (b != null) ? b.length : 0);
     }
@@ -1019,11 +1025,16 @@ public final class Parcel {
     /**
      * Write a blob of data into the parcel at the current {@link #dataPosition},
      * growing {@link #dataCapacity} if needed.
+     *
+     * <p> If the blob is small, then it is stored in-place, otherwise it is transferred by way of
+     * an anonymous shared memory region. If you prefer send in-place, please use
+     * {@link #writeByteArray(byte[], int, int)}.
+     *
      * @param b Bytes to place into the parcel.
      * @param offset Index of first byte to be written.
      * @param len Number of bytes to write.
-     * {@hide}
-     * {@SystemApi}
+     *
+     * @see #readBlob()
      */
     public final void writeBlob(@Nullable byte[] b, int offset, int len) {
         if (b == null) {
@@ -3405,10 +3416,8 @@ public final class Parcel {
 
     /**
      * Read a blob of data from the parcel and return it as a byte array.
-     * {@hide}
-     * {@SystemApi}
+     * @see #writeBlob(byte[], int, int)
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     @Nullable
     public final byte[] readBlob() {
         return nativeReadBlob(mNativePtr);

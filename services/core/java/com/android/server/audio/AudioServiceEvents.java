@@ -116,10 +116,11 @@ public class AudioServiceEvents {
         @Override
         public String eventToString() {
             return new StringBuilder("setWiredDeviceConnectionState(")
-                    .append(" type:").append(Integer.toHexString(mState.mType))
+                    .append(" type:").append(
+                            Integer.toHexString(mState.mAttributes.getInternalType()))
                     .append(" state:").append(AudioSystem.deviceStateToString(mState.mState))
-                    .append(" addr:").append(mState.mAddress)
-                    .append(" name:").append(mState.mName)
+                    .append(" addr:").append(mState.mAttributes.getAddress())
+                    .append(" name:").append(mState.mAttributes.getName())
                     .append(") from ").append(mState.mCaller).toString();
         }
     }
@@ -393,7 +394,7 @@ public class AudioServiceEvents {
                 case VOL_SET_LE_AUDIO_VOL:
                     return new StringBuilder("setLeAudioVolume:")
                             .append(" index:").append(mVal1)
-                            .append(" gain dB:").append(mVal2)
+                            .append(" maxIndex:").append(mVal2)
                             .toString();
                 case VOL_SET_AVRCP_VOL:
                     return new StringBuilder("setAvrcpVolume:")

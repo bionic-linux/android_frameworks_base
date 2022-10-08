@@ -79,18 +79,23 @@ stubs_defaults {
         ":conscrypt.module.public.api{.public.stubs.source}",
         ":i18n.module.public.api{.public.stubs.source}",
 
+        ":framework-adservices-sources",
         ":framework-appsearch-sources",
         ":framework-connectivity-sources",
         ":framework-bluetooth-sources",
         ":framework-connectivity-tiramisu-updatable-sources",
         ":framework-graphics-srcs",
         ":framework-mediaprovider-sources",
+        ":framework-nearby-sources",
+        ":framework-ondevicepersonalization-sources",
         ":framework-permission-sources",
         ":framework-permission-s-sources",
         ":framework-scheduling-sources",
         ":framework-sdkextensions-sources",
         ":framework-statsd-sources",
+        ":framework-sdksandbox-sources",
         ":framework-tethering-srcs",
+        ":framework-uwb-updatable-sources",
         ":framework-wifi-updatable-sources",
         ":ike-srcs",
         ":updatable-media-srcs",
@@ -127,6 +132,7 @@ droidstubs {
         "api-versions-jars-dir",
     ],
     api_levels_sdk_type: "system",
+    extensions_info_file: ":sdk-extensions-info",
 }
 
 droidstubs {
@@ -141,6 +147,7 @@ droidstubs {
             "packages/modules/Media/apex/aidl/stable",
         ],
     },
+    extensions_info_file: ":sdk-extensions-info",
 }
 
 /////////////////////////////////////////////////////////////////////

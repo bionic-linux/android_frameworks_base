@@ -82,6 +82,7 @@ import com.android.server.FgThread;
 import com.android.server.LocalServices;
 import com.android.server.SystemConfig;
 import com.android.server.SystemService;
+import com.android.server.pm.KnownPackages;
 import com.android.server.pm.UserManagerService;
 import com.android.server.pm.parsing.pkg.AndroidPackage;
 
@@ -1008,7 +1009,9 @@ public final class OverlayManagerService extends SystemService {
                 }
                 opti++;
 
-                if ("-h".equals(opt)) {
+                if ("-a".equals(opt)) {
+                    // dumpsys will pass in -a; silently ignore it
+                } else if ("-h".equals(opt)) {
                     pw.println("dump [-h] [--verbose] [--user USER_ID] [[FIELD] PACKAGE]");
                     pw.println("  Print debugging information about the overlay manager.");
                     pw.println("  With optional parameter PACKAGE, limit output to the specified");
@@ -1264,7 +1267,7 @@ public final class OverlayManagerService extends SystemService {
         @Override
         public String getConfigSignaturePackage() {
             final String[] pkgs = mPackageManagerInternal.getKnownPackageNames(
-                    PackageManagerInternal.PACKAGE_OVERLAY_CONFIG_SIGNATURE,
+                    KnownPackages.PACKAGE_OVERLAY_CONFIG_SIGNATURE,
                     UserHandle.USER_SYSTEM);
             return (pkgs.length == 0) ? null : pkgs[0];
         }

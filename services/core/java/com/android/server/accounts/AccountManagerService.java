@@ -60,11 +60,11 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.PackageManagerInternal;
-import android.content.pm.PackageParser;
 import android.content.pm.RegisteredServicesCache;
 import android.content.pm.RegisteredServicesCacheListener;
 import android.content.pm.ResolveInfo;
 import android.content.pm.Signature;
+import android.content.pm.SigningDetails.CertCapabilities;
 import android.content.pm.UserInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteFullException;
@@ -1820,6 +1820,14 @@ public class AccountManagerService
         if (account == null) {
             return false;
         }
+        if (account.name != null && account.name.length() > 200) {
+            Log.w(TAG, "Account cannot be added - Name longer than 200 chars");
+            return false;
+        }
+        if (account.type != null && account.type.length() > 200) {
+            Log.w(TAG, "Account cannot be added - Name longer than 200 chars");
+            return false;
+        }
         if (!isLocalUnlockedUser(accounts.userId)) {
             Log.w(TAG, "Account " + account.toSafeString() + " cannot be added - user "
                     + accounts.userId + " is locked. callingUid=" + callingUid);
@@ -2065,6 +2073,10 @@ public class AccountManagerService
                 + ", pid " + Binder.getCallingPid());
         }
         if (accountToRename == null) throw new IllegalArgumentException("account is null");
+        if (newName != null && newName.length() > 200) {
+            Log.e(TAG, "renameAccount failed - account name longer than 200");
+            throw new IllegalArgumentException("account name longer than 200");
+        }
         int userId = UserHandle.getCallingUserId();
         if (!isAccountManagedByCaller(accountToRename.type, callingUid, userId)) {
             String msg = String.format(
@@ -2977,19 +2989,21 @@ public class AccountManagerService
                  * outside of those expected to be injected by the AccountManager, e.g.
                  * ANDORID_PACKAGE_NAME.
                  */
-                String token = readCachedTokenInternal(
+                TokenCache.Value cachedToken = readCachedTokenInternal(
                         accounts,
                         account,
                         authTokenType,
                         callerPkg,
                         callerPkgSigDigest);
-                if (token != null) {
+                if (cachedToken != null) {
                     logGetAuthTokenMetrics(callerPkg, account.type);
                     if (Log.isLoggable(TAG, Log.VERBOSE)) {
                         Log.v(TAG, "getAuthToken: cache hit ofr custom token authenticator.");
                     }
                     Bundle result = new Bundle();
-                    result.putString(AccountManager.KEY_AUTHTOKEN, token);
+                    result.putString(AccountManager.KEY_AUTHTOKEN, cachedToken.token);
+                    result.putLong(AbstractAccountAuthenticator.KEY_CUSTOM_TOKEN_EXPIRY,
+                            cachedToken.expiryEpochMillis);
                     result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
                     result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
                     onResult(response, result);
@@ -3143,7 +3157,7 @@ public class AccountManagerService
                 GrantCredentialsPermissionActivity.EXTRAS_AUTH_TOKEN_TYPE);
         final String titleAndSubtitle =
                 mContext.getString(R.string.permission_request_notification_for_app_with_subtitle,
-                getApplicationLabel(packageName), account.name);
+                getApplicationLabel(packageName, userId), account.name);
         final int index = titleAndSubtitle.indexOf('\n');
         String title = titleAndSubtitle;
         String subtitle = "";
@@ -3169,10 +3183,10 @@ public class AccountManagerService
                 account, authTokenType, uid), n, "android", user.getIdentifier());
     }
 
-    private String getApplicationLabel(String packageName) {
+    private String getApplicationLabel(String packageName, int userId) {
         try {
             return mPackageManager.getApplicationLabel(
-                    mPackageManager.getApplicationInfo(packageName, 0)).toString();
+                    mPackageManager.getApplicationInfoAsUser(packageName, 0, userId)).toString();
         } catch (PackageManager.NameNotFoundException e) {
             return packageName;
         }
@@ -4877,9 +4891,7 @@ public class AccountManagerService
                 int targetUid = targetActivityInfo.applicationInfo.uid;
                 PackageManagerInternal pmi = LocalServices.getService(PackageManagerInternal.class);
                 if (!isExportedSystemActivity(targetActivityInfo)
-                        && !pmi.hasSignatureCapability(
-                                targetUid, authUid,
-                                PackageParser.SigningDetails.CertCapabilities.AUTH)) {
+                        && !pmi.hasSignatureCapability(targetUid, authUid, CertCapabilities.AUTH)) {
                     String pkgName = targetActivityInfo.packageName;
                     String activityName = targetActivityInfo.name;
                     String tmpl = "KEY_INTENT resolved to an Activity (%s) in a package (%s) that "
@@ -5632,8 +5644,7 @@ public class AccountManagerService
                     return SIGNATURE_CHECK_UID_MATCH;
                 }
                 if (pmi.hasSignatureCapability(
-                        serviceInfo.uid, callingUid,
-                        PackageParser.SigningDetails.CertCapabilities.AUTH)) {
+                        serviceInfo.uid, callingUid, CertCapabilities.AUTH)) {
                     return SIGNATURE_CHECK_MATCH;
                 }
             }
@@ -5674,8 +5685,7 @@ public class AccountManagerService
         for (RegisteredServicesCache.ServiceInfo<AuthenticatorDescription> serviceInfo :
                 serviceInfos) {
             if (isOtherwisePermitted || pmi.hasSignatureCapability(
-                    serviceInfo.uid, callingUid,
-                    PackageParser.SigningDetails.CertCapabilities.AUTH)) {
+                    serviceInfo.uid, callingUid, CertCapabilities.AUTH)) {
                 managedAccountTypes.add(serviceInfo.type.type);
             }
         }
@@ -6125,7 +6135,7 @@ public class AccountManagerService
         }
     }
 
-    protected String readCachedTokenInternal(
+    protected TokenCache.Value readCachedTokenInternal(
             UserAccounts accounts,
             Account account,
             String tokenType,
