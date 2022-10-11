@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c6efcbd_afa4f0ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2022-10-11T17:13:43Z",
+      "side": 1,
+      "message": "There\u0027s a few differences between this CL and the internal CL, is there a reason for that?",
+      "revId": "9ebce52ce1d0101ed6595c25a466f083d5821c8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
