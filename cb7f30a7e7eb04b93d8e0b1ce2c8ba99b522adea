@@ -16,6 +16,24 @@
       "message": "Please remind me to discuss the merge conflict to define the path forward.",
       "revId": "cb7f30a7e7eb04b93d8e0b1ce2c8ba99b522adea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94fab5cf_28031611",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1964627
+      },
+      "writtenOn": "2022-10-11T09:53:41Z",
+      "side": 1,
+      "message": "Done. Merged in ag/20150743",
+      "parentUuid": "a4413061_198790c1",
+      "revId": "cb7f30a7e7eb04b93d8e0b1ce2c8ba99b522adea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
