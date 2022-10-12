@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "085fa871_8e7ed2c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1960065
+      },
+      "writtenOn": "2022-10-12T18:49:47Z",
+      "side": 1,
+      "message": "I\u0027m very sorry for my long absence(\n\nYes, it can be done, but now I\u0027m thinking about your comment. I guess you mean getAppUid#Vpn.java call which will filter out inaccessible packages. Ok, let\u0027s clean up verifyApp method. let me make a new patch when I get some free time.",
+      "parentUuid": "d2f38430_499aa0b5",
+      "revId": "b14608c91db8edd38bbd37682b1496cea4ab6fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ea700491_ae749793",
         "filename": "core/java/android/net/VpnService.java",
         "patchSetId": 1
