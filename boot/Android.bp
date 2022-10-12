@@ -120,6 +120,11 @@ platform_bootclasspath {
             apex: "com.android.car.framework",
             module: "com.android.car.framework-bootclasspath-fragment",
         },
+        // only used for products that support Android Virtualization Framework (AVF)
+        {
+            apex: "com.android.virt",
+            module: "com.android.virt-bootclasspath-fragment",
+        },
     ],
 
     // Additional information needed by hidden api processing.
