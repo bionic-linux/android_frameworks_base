@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80b26b50_a28bfd84",
+        "filename": "packages/SystemUI/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1888670
+      },
+      "writtenOn": "2022-10-13T15:44:54Z",
+      "side": 1,
+      "message": "justinkoh@ and wleshner@ below are still in systemui, and shouldn\u0027t be removed",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 10
+      },
+      "revId": "4b1d65924f922c34e151b49ea65d1adcce3eaf8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
