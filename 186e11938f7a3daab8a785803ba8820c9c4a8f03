@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bb9fd6b_706f7fb7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1960065
+      },
+      "writtenOn": "2022-10-14T10:06:18Z",
+      "side": 1,
+      "message": "So, as we decided:\n\n* \"verifyApp\" method has been removed and its calls in methods addAllowedApplication/addDisallowedApplication;\n\n* dependencies that it previously required have been removed (PackageManager/IPackageManager);\n\n* addAllowedApplication/addDisallowedApplication themselves no longer throw exceptions\n\n* slightly updated annotation comments for these calls",
+      "revId": "186e11938f7a3daab8a785803ba8820c9c4a8f03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
