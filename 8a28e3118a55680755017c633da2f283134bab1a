@@ -38,6 +38,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d9bce6e1_222bfe8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2022-10-15T01:05:56Z",
+      "side": 1,
+      "message": "Fixes should get amended into the same change.  In this case I meant to amend the commit message, I don\u0027t see much value in adding the comment to the code.",
+      "parentUuid": "2581c3d2_d310da9f",
+      "revId": "8a28e3118a55680755017c633da2f283134bab1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "db0c469e_b8bc3d5d",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
