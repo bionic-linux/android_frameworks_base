@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a7b03334_e09064a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1965996
+      },
+      "writtenOn": "2022-10-17T13:13:56Z",
+      "side": 1,
+      "message": "Not yet, could you point me to how to verify that?",
+      "parentUuid": "0229b3d2_6b644885",
+      "revId": "1a3e49b619ead6665a0d7bf6896732038b9aa138",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2fb8ef47_d91108e7",
         "filename": "core/java/com/android/internal/os/ZygoteInit.java",
         "patchSetId": 1
@@ -31,6 +49,30 @@
       "writtenOn": "2022-10-17T13:00:13Z",
       "side": 1,
       "message": "Rename this to \"systemServerPaths\" ? and then rename the argument of prepareSystemServerProfile with that same name?",
+      "range": {
+        "startLine": 522,
+        "startChar": 33,
+        "endLine": 522,
+        "endChar": 56
+      },
+      "revId": "1a3e49b619ead6665a0d7bf6896732038b9aa138",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd095c26_ec16eab4",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1965996
+      },
+      "writtenOn": "2022-10-17T13:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fb8ef47_d91108e7",
       "range": {
         "startLine": 522,
         "startChar": 33,
@@ -54,6 +96,30 @@
       "writtenOn": "2022-10-17T13:02:22Z",
       "side": 1,
       "message": "What if this is null?",
+      "range": {
+        "startLine": 340,
+        "startChar": 52,
+        "endLine": 340,
+        "endChar": 93
+      },
+      "revId": "1a3e49b619ead6665a0d7bf6896732038b9aa138",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0569ab09_d783b309",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1965996
+      },
+      "writtenOn": "2022-10-17T13:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c9e2d66_14abb374",
       "range": {
         "startLine": 340,
         "startChar": 52,
