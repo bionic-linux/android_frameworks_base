@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4cfb1a6f_651c6ded",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2022-10-17T13:24:41Z",
+      "side": 1,
+      "message": "standaloneSystemServerJars",
+      "range": {
+        "startLine": 520,
+        "startChar": 33,
+        "endLine": 520,
+        "endChar": 64
+      },
+      "revId": "ea04eac29334f56fe214834473f5aacef235c1c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a39eafd9_e2c6aa21",
         "filename": "services/core/java/com/android/server/pm/dex/ArtManagerService.java",
         "patchSetId": 3
