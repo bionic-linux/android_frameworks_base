@@ -339,6 +339,10 @@ public class ArtManagerService extends android.content.pm.dex.IArtManager.Stub {
         String classpath = String.join(":", Os.getenv("BOOTCLASSPATH"),
                 Os.getenv("SYSTEMSERVERCLASSPATH"));
 
+        if (Os.getenv("STANDALONE_SYSTEMSERVER_JARS") != null) {
+            classpath = String.join(":", classpath, Os.getenv("STANDALONE_SYSTEMSERVER_JARS"));
+        }
+
         // Create the snapshot.
         createProfileSnapshot(BOOT_IMAGE_ANDROID_PACKAGE, BOOT_IMAGE_PROFILE_NAME, classpath,
                 /*appId*/ -1, callback);
