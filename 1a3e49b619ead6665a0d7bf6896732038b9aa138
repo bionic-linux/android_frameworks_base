@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18b2b969_a2b234ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1965996
+      },
+      "writtenOn": "2022-10-17T15:55:16Z",
+      "side": 1,
+      "message": "Many thanks for guiding me Jiakai.\n\nClearly I can see the new jars in the profile snapshot\n```\nservice-bluetooth.jar:android [index\u003d20] [checksum\u003d6fa16735] [num_type_ids\u003d323] [num_method_ids\u003d790]\n\thot methods: 300[], 302[], 305[], 334[], 336[], 338[], 342[], 348[], 351[], 352[], 435[], 436[], 479[], 491[], 500[], 514[], 554[], 562[], 565[], \n\tstartup methods: 300, 302, 305, 334, 336, 338, 342, 348, 351, 352, 435, 436, 479, 491, 500, 514, 554, 562, 565, \n\tpost startup methods: 300, 302, 305, 314, 315, 316, 319, 321, 331, 333, 334, 335, 336, 337, 338, 339, 340, 342, 344, 345, 348, 349, 351, 352, 353, 358, 359, 363, 364, 365, 368, 372, 374, 375, 376, 380, 381, 382, 383, 384, 385, 386, 388, 389, 390, 391, 392, 393, 396, 399, 403, 405, 409, 411, 412, 413, 416, 419, 421, 424, 427, 432, 435, 436, 437, 439, 440, 443, 444, 446, 448, 452, 458, 459, 462, 465, 466, 468, 469, 471, 478, 479, 481, 486, 487, 491, 495, 496, 497, 499, 500, 501, 502, 503, 504, 506, 507, 510, 511, 513, 514, 516, 518, 519, 521, 522, 531, 533, 534, 536, 537, 538, 539, 541, 554, 562, 563, 564, 565, 566, 568, \n\tclasses: 165,172,173,174,179,180,181,182,183,184,186,188,191,194,195,202,\nservice-sdksandbox.jar:android [index\u003d41] [checksum\u003d77d0eb6] [num_type_ids\u003d119] [num_method_ids\u003d322]\n\thot methods: \n\tstartup methods: \n\tpost startup methods: 180, 185, 203, 205, 207, 208, 219, 220, 233, 239, 253, 267, \n\tclasses: \nservice-adservices.jar:android [index\u003d42] [checksum\u003d1b4553d5] [num_type_ids\u003d13] [num_method_ids\u003d8]\n\thot methods: \n\tstartup methods: \n\tpost startup methods: 2, 4, 5, 6, \n\tclasses: \n\n```",
+      "parentUuid": "708d3d86_bc9c2d40",
+      "revId": "1a3e49b619ead6665a0d7bf6896732038b9aa138",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2fb8ef47_d91108e7",
