@@ -337,7 +337,7 @@ public class ArtManagerService extends android.content.pm.dex.IArtManager.Stub {
         // Combine the profiles for boot classpath and system server classpath.
         // This avoids having yet another type of profiles and simplifies the processing.
         String classpath = String.join(":", Os.getenv("BOOTCLASSPATH"),
-                Os.getenv("SYSTEMSERVERCLASSPATH"));
+                Os.getenv("SYSTEMSERVERCLASSPATH"), Os.getenv("STANDALONE_SYSTEMSERVER_JARS"));
 
         // Create the snapshot.
         createProfileSnapshot(BOOT_IMAGE_ANDROID_PACKAGE, BOOT_IMAGE_PROFILE_NAME, classpath,
