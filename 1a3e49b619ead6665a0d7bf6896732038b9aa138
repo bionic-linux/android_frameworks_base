@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "708d3d86_bc9c2d40",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-10-17T13:20:07Z",
+      "side": 1,
+      "message": "Try `adb shell pm snapshot-profile android` (http://cs/android-internal/frameworks/base/services/core/java/com/android/server/pm/PackageManagerShellCommand.java;l\u003d4284;rcl\u003db3370acc279c39e98823a2dbb9835fe0db615579)?",
+      "parentUuid": "a7b03334_e09064a3",
+      "revId": "1a3e49b619ead6665a0d7bf6896732038b9aa138",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2fb8ef47_d91108e7",
         "filename": "core/java/com/android/internal/os/ZygoteInit.java",
         "patchSetId": 1

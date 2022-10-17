@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a39eafd9_e2c6aa21",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-10-17T13:20:07Z",
+      "side": 1,
+      "message": "Define a variable for this to avoid an extra call.",
+      "range": {
+        "startLine": 342,
+        "startChar": 12,
+        "endLine": 342,
+        "endChar": 53
+      },
+      "revId": "ea04eac29334f56fe214834473f5aacef235c1c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
