@@ -517,7 +517,13 @@ public class ZygoteInit {
             if (shouldProfileSystemServer() && (Build.IS_USERDEBUG || Build.IS_ENG)) {
                 try {
                     Log.d(TAG, "Preparing system server profile");
-                    prepareSystemServerProfile(systemServerClasspath);
+                    final String standaloneSystemServerClasspath =
+                            Os.getenv("STANDALONE_SYSTEMSERVER_JARS");
+                    final String allSystemServerClaspath = standaloneSystemServerClasspath != null
+                            ? String.join(
+                                    ":", systemServerClasspath, standaloneSystemServerClasspath)
+                            : systemServerClasspath;
+                    prepareSystemServerProfile(allSystemServerClaspath);
                 } catch (Exception e) {
                     Log.wtf(TAG, "Failed to set up system server profile", e);
                 }
