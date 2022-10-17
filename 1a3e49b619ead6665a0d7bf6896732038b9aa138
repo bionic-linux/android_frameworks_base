@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fb8ef47_d91108e7",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2022-10-17T13:00:13Z",
+      "side": 1,
+      "message": "Rename this to \"systemServerPaths\" ? and then rename the argument of prepareSystemServerProfile with that same name?",
+      "range": {
+        "startLine": 522,
+        "startChar": 33,
+        "endLine": 522,
+        "endChar": 56
+      },
+      "revId": "1a3e49b619ead6665a0d7bf6896732038b9aa138",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
