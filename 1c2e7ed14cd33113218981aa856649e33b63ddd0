@@ -33,6 +33,24 @@
       "message": "Is anyone relying on the denial of classloader creation in the system server as some sort of security guarantee ? If so, it\u0027s concerning that the setting of an RW system property can up-end that. Martijn, do you know ?\n\nAnyway, please do check. LGTM otherwise",
       "revId": "1c2e7ed14cd33113218981aa856649e33b63ddd0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca737036_6bab42fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2022-10-18T13:31:16Z",
+      "side": 1,
+      "message": "No, it\u0027s more of a correctness check that we want to catch during development, to ensure that owners of the jars being loaded also declare them as being standalone jars in their mainline manifest.",
+      "parentUuid": "4e9761ba_711cb111",
+      "revId": "1c2e7ed14cd33113218981aa856649e33b63ddd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
