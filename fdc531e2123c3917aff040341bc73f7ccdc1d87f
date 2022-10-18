@@ -33,6 +33,29 @@
       "message": "Narayan, could you help owner approve?",
       "revId": "fdc531e2123c3917aff040341bc73f7ccdc1d87f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "300b4972_ca8fdbc6",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2022-10-18T12:37:14Z",
+      "side": 1,
+      "message": "nit: spelling",
+      "range": {
+        "startLine": 582,
+        "startChar": 57,
+        "endLine": 582,
+        "endChar": 66
+      },
+      "revId": "fdc531e2123c3917aff040341bc73f7ccdc1d87f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
