@@ -16,6 +16,24 @@
       "message": "what does it mean that this apex is optional, but this bootclasspathfragment is not?",
       "revId": "7a5e89ccf31c3e9196a8c3db076f2fb9652f0158",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "764828d5_9c7486f2",
+        "filename": "boot/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2022-10-19T12:03:05Z",
+      "side": 1,
+      "message": "This BCP fragment is going to expose APIs for apps, so it can\u0027t be optional. However, the virtualization framework (AVF) is not mandated, and given that com.android.virt APEX is quite big (~70 MBs) we don\u0027t want to force OEMs to preload it, hence this trick - on devices that don\u0027t have support for AVF the BCP jar will be put onto /system_ext partition.",
+      "parentUuid": "fdf7f878_8a4ff903",
+      "revId": "7a5e89ccf31c3e9196a8c3db076f2fb9652f0158",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
