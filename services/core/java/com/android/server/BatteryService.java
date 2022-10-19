@@ -1162,6 +1162,11 @@ public final class BatteryService extends SystemService {
     }
 
     private final class Led {
+        // must match: config_notificationsBatteryLowBehavior in config.xml
+        static final int LOW_BATTERY_BEHAVIOR_DEFAULT = 0;
+        static final int LOW_BATTERY_BEHAVIOR_SOLID = 1;
+        static final int LOW_BATTERY_BEHAVIOR_FLASHING = 2;
+
         private final LogicalLight mBatteryLight;
 
         private final int mBatteryLowARGB;
@@ -1169,6 +1174,7 @@ public final class BatteryService extends SystemService {
         private final int mBatteryFullARGB;
         private final int mBatteryLedOn;
         private final int mBatteryLedOff;
+        private final int mBatteryLowBehavior;
 
         public Led(Context context, LightsManager lights) {
             mBatteryLight = lights.getLight(LightsManager.LIGHT_ID_BATTERY);
@@ -1183,6 +1189,8 @@ public final class BatteryService extends SystemService {
                     com.android.internal.R.integer.config_notificationsBatteryLedOn);
             mBatteryLedOff = context.getResources().getInteger(
                     com.android.internal.R.integer.config_notificationsBatteryLedOff);
+            mBatteryLowBehavior = context.getResources().getInteger(
+                    com.android.internal.R.integer.config_notificationsBatteryLowBehavior);
         }
 
         /**
@@ -1195,11 +1203,15 @@ public final class BatteryService extends SystemService {
             final int level = mHealthInfo.batteryLevel;
             final int status = mHealthInfo.batteryStatus;
             if (level < mLowBatteryWarningLevel) {
-                if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
-                    // Solid red when battery is charging
+                if (mBatteryLowBehavior == LOW_BATTERY_BEHAVIOR_SOLID) {
+                    // Solid red when low battery
+                    mBatteryLight.setColor(mBatteryLowARGB);
+                } else if (mBatteryLowBehavior == LOW_BATTERY_BEHAVIOR_DEFAULT
+                           && status == BatteryManager.BATTERY_STATUS_CHARGING) {
+                    // Solid red when low battery and charging
                     mBatteryLight.setColor(mBatteryLowARGB);
                 } else {
-                    // Flash red when battery is low and not charging
+                    // Flash red otherwise
                     mBatteryLight.setFlashing(mBatteryLowARGB, LogicalLight.LIGHT_FLASH_TIMED,
                             mBatteryLedOn, mBatteryLedOff);
                 }
