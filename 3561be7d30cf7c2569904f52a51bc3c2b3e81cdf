@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4450066_ce58e7b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1957215
+      },
+      "writtenOn": "2022-10-20T19:30:49Z",
+      "side": 1,
+      "message": "Enabling a new robolectric location, to eventually deprecate the older.   please take a moment to review.",
+      "revId": "3561be7d30cf7c2569904f52a51bc3c2b3e81cdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
