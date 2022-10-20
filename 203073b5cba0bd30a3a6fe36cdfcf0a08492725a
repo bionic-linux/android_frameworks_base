@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3b8d273_43e63efe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2022-10-20T14:39:28Z",
+      "side": 1,
+      "message": "Commit message bodies should be wrapped to 72 characters.",
+      "revId": "203073b5cba0bd30a3a6fe36cdfcf0a08492725a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12fdfb1d_8a27345a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2022-10-20T14:39:28Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure the `Signed-off-by` trailer only takes one name per line, so this should be two separate `Signed-off-by` lines.",
+      "revId": "203073b5cba0bd30a3a6fe36cdfcf0a08492725a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f77682e_35f332ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2022-10-20T14:39:28Z",
+      "side": 1,
+      "message": "LGTM with a couple of commit message fixes. There\u0027s some room for improvement in the code touched by the CL, but the CL doesn\u0027t make any of those issues worse, so just things to consider addressing in future.",
+      "revId": "203073b5cba0bd30a3a6fe36cdfcf0a08492725a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

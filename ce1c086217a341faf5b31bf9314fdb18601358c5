@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df4df7bf_a9003fe8",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2022-10-20T14:39:28Z",
+      "side": 0,
+      "message": "Aside: this is a confusing name for this key. When first reading I assumed it meant muting the sound output, not the input, since that\u0027s by far the more common key to have. We should consider renaming this to something like `KEYCODE_MICROPHONE_MUTE` and making `KEYCODE_MUTE` a deprecated alias of `KEYCODE_MICROPHONE_MUTE`. Anyway, something for a separate CL.",
+      "range": {
+        "startLine": 1978,
+        "startChar": 26,
+        "endLine": 1978,
+        "endChar": 38
+      },
+      "revId": "ce1c086217a341faf5b31bf9314fdb18601358c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e86d1d8d_59165066",
+        "filename": "core/java/com/android/internal/policy/PhoneFallbackEventHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2022-10-20T14:39:28Z",
+      "side": 0,
+      "message": "Instead of duplicating this list of media keys between here and `KeyEvent.isMediaSessionKey`, maybe we should just call `KeyEvent.isMediaSessionKey` before the `switch`:\n\n```java\nif (KeyEvent.isMediaSessionKey(keyCode)) {\n    handleMediaKeyEvent(event);\n    return true;\n}\n\nswitch (keyCode) {\n    ...\n```\n\nAnother tidy-up that can be done in another CL, though.",
+      "revId": "ce1c086217a341faf5b31bf9314fdb18601358c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ffee367_3278141f",
+        "filename": "core/java/com/android/internal/policy/PhoneFallbackEventHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2022-10-20T14:39:28Z",
+      "side": 0,
+      "message": "Ditto",
+      "revId": "ce1c086217a341faf5b31bf9314fdb18601358c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
