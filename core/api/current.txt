@@ -9846,6 +9846,7 @@ package android.content {
     field public static final int RECEIVER_EXPORTED = 2; // 0x2
     field public static final int RECEIVER_NOT_EXPORTED = 4; // 0x4
     field public static final int RECEIVER_VISIBLE_TO_INSTANT_APPS = 1; // 0x1
+    field public static final String REMOTE_PROVISIONING_SERVICE = "remote_provisioning";
     field public static final String RESTRICTIONS_SERVICE = "restrictions";
     field public static final String ROLE_SERVICE = "role";
     field public static final String SEARCH_SERVICE = "search";
