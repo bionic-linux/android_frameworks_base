@@ -376,6 +376,23 @@ aidl_interface {
     },
 }
 
+// Build native bindings for remote provisioning. Needed by keystore2 and identity.
+aidl_interface {
+    name: "com.android.server.security.remoteprovisioning_aidl",
+    unstable: true,
+    srcs: [
+        "com/android/server/security/remoteprovisioning/*.aidl",
+    ],
+    backend: {
+        cpp: {
+            enabled: true,
+        },
+        rust: {
+            enabled: true,
+        },
+    },
+}
+
 aidl_interface {
     name: "android.debug_aidl",
     unstable: true,
