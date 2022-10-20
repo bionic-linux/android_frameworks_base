@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ae66876_d68fc189",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1895425
+      },
+      "writtenOn": "2022-10-20T15:39:54Z",
+      "side": 1,
+      "message": "Hey Eric, ptal? Feel to reject and I\u0027ll delete this CL if you expect the linked bug will be fixed in a different way soon (or if there\u0027s a better way to fix this, as I don\u0027t actually have the AOSP codebase downloaded).\n\nIf the underlying bug won\u0027t be fixed soon, I think this can be a quicker way to reduce log spam.\n\nThanks!",
+      "revId": "e1e45c37a6a76450857f2af100515f8c74bede5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
