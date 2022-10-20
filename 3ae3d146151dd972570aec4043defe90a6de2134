@@ -16,6 +16,24 @@
       "message": "Nit: please wrap the commit message to 72 characters",
       "revId": "3ae3d146151dd972570aec4043defe90a6de2134",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cee9ce0_fc318383",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1950315
+      },
+      "writtenOn": "2022-10-20T14:52:39Z",
+      "side": 1,
+      "message": "Changed; thanks!",
+      "parentUuid": "3d1ddae2_19ea59e5",
+      "revId": "3ae3d146151dd972570aec4043defe90a6de2134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
