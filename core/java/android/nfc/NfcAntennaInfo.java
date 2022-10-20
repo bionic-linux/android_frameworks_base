@@ -29,7 +29,6 @@ import java.util.List;
  * antennas on an Android device as well as information
  * on the device itself in relation positioning of the
  * antennas.
- * @hide
  */
 public final class NfcAntennaInfo implements Parcelable {
     // Width of the device in millimeters.

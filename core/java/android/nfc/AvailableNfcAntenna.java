@@ -24,7 +24,6 @@ import android.os.Parcelable;
 /**
  * Class that represents a single available Nfc antenna
  * on an Android device.
- * @hide
  */
 public final class AvailableNfcAntenna implements Parcelable {
     // Location of the antenna on the X axis in millimeters.
