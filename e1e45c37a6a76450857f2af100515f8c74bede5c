@@ -16,6 +16,29 @@
       "message": "Hey Eric, ptal? Feel to reject and I\u0027ll delete this CL if you expect the linked bug will be fixed in a different way soon (or if there\u0027s a better way to fix this, as I don\u0027t actually have the AOSP codebase downloaded).\n\nIf the underlying bug won\u0027t be fixed soon, I think this can be a quicker way to reduce log spam.\n\nThanks!",
       "revId": "e1e45c37a6a76450857f2af100515f8c74bede5c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f11529f_8bad6f8b",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6604,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2022-10-20T18:16:20Z",
+      "side": 1,
+      "message": "Looking again at how this method is used, it is perfectly possible that we don\u0027t find a matching port in the provided list and this is handled by the caller.\nSo we can even completely remove this warning and update the comment:\n// This can happen in case of stale audio patch referring to a removed device and is handled by the caller.",
+      "range": {
+        "startLine": 6604,
+        "startChar": 0,
+        "endLine": 6604,
+        "endChar": 92
+      },
+      "revId": "e1e45c37a6a76450857f2af100515f8c74bede5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
