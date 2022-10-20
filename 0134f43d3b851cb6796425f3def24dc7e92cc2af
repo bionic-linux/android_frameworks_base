@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06052f96_e2e262d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1765766
+      },
+      "writtenOn": "2022-10-20T14:44:44Z",
+      "side": 1,
+      "message": "Thank you!\n\nPS After the CL automerges to intrenal master it might be easier to CP to tm-mainline-prod (go/android-cherrypicker might even let you do it without additional code review)",
+      "revId": "0134f43d3b851cb6796425f3def24dc7e92cc2af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "133a6f0d_8b48c5b0",
+        "filename": "core/java/android/os/storage/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1765766
+      },
+      "writtenOn": "2022-10-20T14:44:44Z",
+      "side": 1,
+      "message": "Mhh maybe keep me under \"# Android Storage Team\" too, I don\u0027t want to encourage people to contact 1 person from owners file 😄",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 13
+      },
+      "revId": "0134f43d3b851cb6796425f3def24dc7e92cc2af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd76dcb5_afcc0c23",
+        "filename": "core/java/android/os/storage/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1765766
+      },
+      "writtenOn": "2022-10-20T14:44:44Z",
+      "side": 1,
+      "message": "I think we can remove, no longer working on storage",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 18
+      },
+      "revId": "0134f43d3b851cb6796425f3def24dc7e92cc2af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab63cf19_6150ee54",
+        "filename": "core/java/android/os/storage/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1765766
+      },
+      "writtenOn": "2022-10-20T14:44:44Z",
+      "side": 1,
+      "message": "I think we can remove, no longer working on storage",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 19
+      },
+      "revId": "0134f43d3b851cb6796425f3def24dc7e92cc2af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
