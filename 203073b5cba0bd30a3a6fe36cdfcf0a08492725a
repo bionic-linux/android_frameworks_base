@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b87d2bc_b56108ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1950315
+      },
+      "writtenOn": "2022-10-20T15:04:13Z",
+      "side": 1,
+      "message": "Changed; thanks!",
+      "parentUuid": "b3b8d273_43e63efe",
+      "revId": "203073b5cba0bd30a3a6fe36cdfcf0a08492725a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "12fdfb1d_8a27345a",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-10-20T14:39:28Z",
       "side": 1,
       "message": "I\u0027m pretty sure the `Signed-off-by` trailer only takes one name per line, so this should be two separate `Signed-off-by` lines.",
+      "revId": "203073b5cba0bd30a3a6fe36cdfcf0a08492725a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "488e2e3d_4c322eda",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1950315
+      },
+      "writtenOn": "2022-10-20T15:04:13Z",
+      "side": 1,
+      "message": "This was automatically generated, so it\u0027s a bit worrisome it\u0027s incorrect; it\u0027s likely a grey area, but the change you propose is something that people use, and likely the best practice, so changed!",
+      "parentUuid": "12fdfb1d_8a27345a",
       "revId": "203073b5cba0bd30a3a6fe36cdfcf0a08492725a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
