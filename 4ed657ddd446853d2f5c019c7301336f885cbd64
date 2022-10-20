@@ -16,6 +16,23 @@
       "message": "please have a look",
       "revId": "4ed657ddd446853d2f5c019c7301336f885cbd64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3a8fefb_5473b5f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2022-10-20T00:48:02Z",
+      "side": 1,
+      "message": "Hey Mattias,\nThanks for the CL.\n\nHawk is refactoring the area for the next release.\nI believe this code changed considerably.",
+      "revId": "4ed657ddd446853d2f5c019c7301336f885cbd64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
