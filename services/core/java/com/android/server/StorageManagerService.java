@@ -734,6 +734,7 @@ class StorageManagerService extends IStorageManager.Stub
     private static final int H_COMPLETE_UNLOCK_USER = 14;
     private static final int H_VOLUME_STATE_CHANGED = 15;
     private static final int H_CLOUD_MEDIA_PROVIDER_CHANGED = 16;
+    private static final int H_SECURE_KEYGUARD_STATE_CHANGED = 17;
 
     class StorageManagerServiceHandler extends Handler {
         public StorageManagerServiceHandler(Looper looper) {
@@ -872,6 +873,9 @@ class StorageManagerService extends IStorageManager.Stub
                         onCloudMediaProviderChangedAsync(msg.arg1);
                     }
                     break;
+                }
+                case H_SECURE_KEYGUARD_STATE_CHANGED: {
+                    mVold.onSecureKeyguardStateChanged((boolean) msg.obj);
                 }
             }
         }
@@ -1146,7 +1150,8 @@ class StorageManagerService extends IStorageManager.Stub
                     mStoraged.onUserStarted(userId);
                 }
                 restoreSystemUnlockedUsers(userManager, users, systemUnlockedUsers);
-                mVold.onSecureKeyguardStateChanged(mSecureKeyguardShowing);
+                mHandler.obtainMessage(H_SECURE_KEYGUARD_STATE_CHANGED, mSecureKeyguardShowing)
+                        .sendToTarget();
                 mStorageManagerInternal.onReset(mVold);
             } catch (Exception e) {
                 Slog.wtf(TAG, e);
@@ -1335,7 +1340,8 @@ class StorageManagerService extends IStorageManager.Stub
         mSecureKeyguardShowing = isShowing
                 && mContext.getSystemService(KeyguardManager.class).isDeviceSecure(mCurrentUserId);
         try {
-            mVold.onSecureKeyguardStateChanged(mSecureKeyguardShowing);
+            mHandler.obtainMessage(H_SECURE_KEYGUARD_STATE_CHANGED, mSecureKeyguardShowing)
+                    .sendToTarget();
         } catch (Exception e) {
             Slog.wtf(TAG, e);
         }
