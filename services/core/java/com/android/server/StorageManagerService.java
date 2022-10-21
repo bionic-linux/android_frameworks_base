@@ -873,6 +873,9 @@ class StorageManagerService extends IStorageManager.Stub
                     }
                     break;
                 }
+                case H_SECURE_KEYGUARD_STATE_CHANGED: {
+                    mVold.onSecureKeyguardStateChanged((boolean) msg.obj);
+                }
             }
         }
     }
@@ -1146,7 +1149,8 @@ class StorageManagerService extends IStorageManager.Stub
                     mStoraged.onUserStarted(userId);
                 }
                 restoreSystemUnlockedUsers(userManager, users, systemUnlockedUsers);
-                mVold.onSecureKeyguardStateChanged(mSecureKeyguardShowing);
+                mHandler.obtainMessage(H_SECURE_KEYGUARD_STATE_CHANGED, mSecureKeyguardShowing)
+                        .sendToTarget();
                 mStorageManagerInternal.onReset(mVold);
             } catch (Exception e) {
                 Slog.wtf(TAG, e);
@@ -1335,7 +1339,8 @@ class StorageManagerService extends IStorageManager.Stub
         mSecureKeyguardShowing = isShowing
                 && mContext.getSystemService(KeyguardManager.class).isDeviceSecure(mCurrentUserId);
         try {
-            mVold.onSecureKeyguardStateChanged(mSecureKeyguardShowing);
+            mHandler.obtainMessage(H_SECURE_KEYGUARD_STATE_CHANGED, mSecureKeyguardShowing)
+                    .sendToTarget();
         } catch (Exception e) {
             Slog.wtf(TAG, e);
         }
