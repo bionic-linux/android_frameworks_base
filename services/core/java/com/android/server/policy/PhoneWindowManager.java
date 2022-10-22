@@ -117,7 +117,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Rect;
-import android.hardware.SensorPrivacyManager;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.DisplayManagerInternal;
 import android.hardware.hdmi.HdmiAudioSystemClient;
@@ -396,7 +395,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     IStatusBarService mStatusBarService;
     StatusBarManagerInternal mStatusBarManagerInternal;
     AudioManagerInternal mAudioManagerInternal;
-    SensorPrivacyManager mSensorPrivacyManager;
     DisplayManager mDisplayManager;
     DisplayManagerInternal mDisplayManagerInternal;
     boolean mPreloadedRecentApps;
@@ -1884,7 +1882,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mDreamManagerInternal = LocalServices.getService(DreamManagerInternal.class);
         mPowerManagerInternal = LocalServices.getService(PowerManagerInternal.class);
         mAppOpsManager = mContext.getSystemService(AppOpsManager.class);
-        mSensorPrivacyManager = mContext.getSystemService(SensorPrivacyManager.class);
         mDisplayManager = mContext.getSystemService(DisplayManager.class);
         mDisplayManagerInternal = LocalServices.getService(DisplayManagerInternal.class);
         mPackageManager = mContext.getPackageManager();
@@ -3022,18 +3019,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         return key_not_consumed;
     }
 
-    private void toggleMicrophoneMuteFromKey() {
-        if (mSensorPrivacyManager.supportsSensorToggle(
-                SensorPrivacyManager.TOGGLE_TYPE_SOFTWARE,
-                SensorPrivacyManager.Sensors.MICROPHONE)) {
-            boolean isEnabled = mSensorPrivacyManager.isSensorPrivacyEnabled(
-                    SensorPrivacyManager.TOGGLE_TYPE_SOFTWARE,
-                    SensorPrivacyManager.Sensors.MICROPHONE);
-            mSensorPrivacyManager.setSensorPrivacy(SensorPrivacyManager.Sensors.MICROPHONE,
-                    !isEnabled);
-        }
-    }
-
     /**
      * TV only: recognizes a remote control gesture for capturing a bug report.
      */
@@ -3969,16 +3954,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 break;
             }
 
-            case KeyEvent.KEYCODE_MUTE:
-                result &= ~ACTION_PASS_TO_USER;
-                if (down && event.getRepeatCount() == 0) {
-                    toggleMicrophoneMuteFromKey();
-                }
-                break;
             case KeyEvent.KEYCODE_MEDIA_PLAY:
             case KeyEvent.KEYCODE_MEDIA_PAUSE:
             case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
             case KeyEvent.KEYCODE_HEADSETHOOK:
+            case KeyEvent.KEYCODE_MUTE:
             case KeyEvent.KEYCODE_MEDIA_STOP:
             case KeyEvent.KEYCODE_MEDIA_NEXT:
             case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
