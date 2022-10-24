@@ -16,6 +16,23 @@
       "message": "hello, please help me review this patch,thanks",
       "revId": "d02a6d889c6b0d68546f9b3c3c2466c848e3fd83",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69765af4_c2168593",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2022-10-24T02:02:28Z",
+      "side": 1,
+      "message": "hello， it seems can not atuo submit, but I have no permission to check the error, please help me to submit, thanks",
+      "revId": "d02a6d889c6b0d68546f9b3c3c2466c848e3fd83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
