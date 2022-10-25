@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "196506ba_2518752a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2022-10-25T08:44:43Z",
+      "side": 1,
+      "message": "This isn\u0027t actually related to the bug. But while adding a new method to IServiceManager, I found that this class can be removed. I might be wrong or miss something.",
+      "range": {
+        "startLine": 11,
+        "startChar": 9,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "c73fd3d7484f9c2e400bf816a054afee6bf9e99c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
