@@ -125,7 +125,7 @@ public final class ServiceManager {
         }
 
         // Find the service manager
-        sServiceManager = ServiceManagerNative
+        sServiceManager = IServiceManager.Stub
                 .asInterface(Binder.allowBlocking(BinderInternal.getContextObject()));
         return sServiceManager;
     }
