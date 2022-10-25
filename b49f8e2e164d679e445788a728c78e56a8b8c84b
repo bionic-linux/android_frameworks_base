@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bed9e3a_395ea696",
+        "filename": "core/java/android/os/ServiceManagerNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-10-25T18:15:36Z",
+      "side": 0,
+      "message": "?",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "b49f8e2e164d679e445788a728c78e56a8b8c84b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
