@@ -119,7 +119,7 @@ static status_t notifyMediaScanner(const char* fileName) {
     return NO_ERROR;
 }
 
-int main(int argc, char** argv)
+int screencap(int argc, char** argv)
 {
     std::optional<DisplayId> displayId = SurfaceComposerClient::getInternalDisplayId();
     if (!displayId) {
@@ -136,6 +136,15 @@ int main(int argc, char** argv)
                 png = true;
                 break;
             case 'd':
+                // Check that we have a valid
+//                char* end;
+//                long id = strtoll (*displayId, &end, 10);
+//                if (*end) {
+//                  fprintf(stderr, "Invalid -d parameter\n");
+//                  return 1;
+//                }
+//                displayId = DisplayId::fromValue(atoll(optarg));
+printf("FABICAKE  %lld\n", atoll(optarg));
                 displayId = DisplayId::fromValue(atoll(optarg));
                 if (!displayId) {
                     fprintf(stderr, "Invalid display ID\n");
