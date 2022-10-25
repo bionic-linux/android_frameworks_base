@@ -5823,8 +5823,6 @@ android.os.ResultReceiver
 android.os.SELinux
 android.os.ServiceManager$ServiceNotFoundException
 android.os.ServiceManager
-android.os.ServiceManagerNative
-android.os.ServiceManagerProxy
 android.os.ServiceSpecificException
 android.os.SharedMemory$1
 android.os.SharedMemory$Closer

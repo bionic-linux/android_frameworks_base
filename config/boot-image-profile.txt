@@ -38176,8 +38176,6 @@ Landroid/os/ResultReceiver;
 Landroid/os/SELinux;
 Landroid/os/ServiceManager$ServiceNotFoundException;
 Landroid/os/ServiceManager;
-Landroid/os/ServiceManagerNative;
-Landroid/os/ServiceManagerProxy;
 Landroid/os/ServiceSpecificException;
 Landroid/os/SharedMemory$1;
 Landroid/os/SharedMemory$Closer;
