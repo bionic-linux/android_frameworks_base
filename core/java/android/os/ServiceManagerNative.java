@@ -98,6 +98,10 @@ class ServiceManagerProxy implements IServiceManager {
         return mServiceManager.updatableViaApex(name);
     }
 
+    public String[] getUpdatableInstances(String apexName) throws RemoteException {
+        return mServiceManager.getUpdatableInstances(apexName);
+    }
+
     public ConnectionInfo getConnectionInfo(String name) throws RemoteException {
         return mServiceManager.getConnectionInfo(name);
     }
