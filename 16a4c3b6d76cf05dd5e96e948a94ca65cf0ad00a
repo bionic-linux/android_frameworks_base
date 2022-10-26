@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c49ee84_5f4e9a43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-10-26T00:12:21Z",
+      "side": 1,
+      "message": "This is why I never removed this class - what issue are you hitting that needs it removed?",
+      "revId": "16a4c3b6d76cf05dd5e96e948a94ca65cf0ad00a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
