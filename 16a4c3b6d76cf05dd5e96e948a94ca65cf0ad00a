@@ -16,6 +16,24 @@
       "message": "This is why I never removed this class - what issue are you hitting that needs it removed?",
       "revId": "16a4c3b6d76cf05dd5e96e948a94ca65cf0ad00a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7d2c868_0f314ea3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2022-10-26T00:15:09Z",
+      "side": 1,
+      "message": "Sorry, I thought I checked if there\u0027s other UnsupportedAppUsage. (What\u0027s wrong with my sight today!)\nJust wanted to avoid adding a delegation impl when adding a new method to IServiceManager.\nI\u0027ll just add one. ;-)",
+      "parentUuid": "3c49ee84_5f4e9a43",
+      "revId": "16a4c3b6d76cf05dd5e96e948a94ca65cf0ad00a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
