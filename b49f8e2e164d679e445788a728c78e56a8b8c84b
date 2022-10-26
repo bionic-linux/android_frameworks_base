@@ -71,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60eae855_1dbfc55b",
+        "filename": "core/java/android/os/ServiceManagerNative.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2022-10-26T00:19:04Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "6d0d0c8e_aa15febc",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 24
+      },
+      "revId": "b49f8e2e164d679e445788a728c78e56a8b8c84b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "244f25fd_e6e413ef",
@@ -84,6 +108,30 @@
       "writtenOn": "2022-10-26T00:12:21Z",
       "side": 0,
       "message": "and this",
+      "range": {
+        "startLine": 123,
+        "startChar": 5,
+        "endLine": 123,
+        "endChar": 24
+      },
+      "revId": "b49f8e2e164d679e445788a728c78e56a8b8c84b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59ec3018_75ac5ae6",
+        "filename": "core/java/android/os/ServiceManagerNative.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2022-10-26T00:19:04Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "244f25fd_e6e413ef",
       "range": {
         "startLine": 123,
         "startChar": 5,
