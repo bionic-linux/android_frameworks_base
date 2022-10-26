@@ -231,7 +231,7 @@ android_library {
         "androidx.test.uiautomator_uiautomator",
         "mockito-target-extended-minus-junit4",
         "testables",
-        "truth-prebuilt",
+        "truth",
         "monet",
         "dagger2",
         "jsr330",
