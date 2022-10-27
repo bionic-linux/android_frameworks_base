@@ -15,7 +15,12 @@
  */
 package android.net.vcn;
 
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+
 import static com.android.internal.annotations.VisibleForTesting.Visibility;
+import static com.android.server.vcn.util.PersistableBundleUtils.INTEGER_DESERIALIZER;
+import static com.android.server.vcn.util.PersistableBundleUtils.INTEGER_SERIALIZER;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -25,6 +30,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.util.ArraySet;
+import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
@@ -46,11 +52,21 @@ import java.util.Set;
 public final class VcnConfig implements Parcelable {
     @NonNull private static final String TAG = VcnConfig.class.getSimpleName();
 
+    private static final Set<Integer> ALLOWED_TRANSPORTS = new ArraySet<>();
+
+    {
+        ALLOWED_TRANSPORTS.add(TRANSPORT_WIFI);
+        ALLOWED_TRANSPORTS.add(TRANSPORT_CELLULAR);
+    }
+
     private static final String PACKAGE_NAME_KEY = "mPackageName";
     @NonNull private final String mPackageName;
 
     private static final String GATEWAY_CONNECTION_CONFIGS_KEY = "mGatewayConnectionConfigs";
     @NonNull private final Set<VcnGatewayConnectionConfig> mGatewayConnectionConfigs;
+
+    private static final String RESTRICTED_TRANSPORTS_KEY = "mRestrictedTransports";
+    @NonNull private final Set<Integer> mRestrictedTransports;
 
     private static final String IS_TEST_MODE_PROFILE_KEY = "mIsTestModeProfile";
     private final boolean mIsTestModeProfile;
@@ -58,10 +74,12 @@ public final class VcnConfig implements Parcelable {
     private VcnConfig(
             @NonNull String packageName,
             @NonNull Set<VcnGatewayConnectionConfig> gatewayConnectionConfigs,
+            @NonNull Set<Integer> restrictedTransports,
             boolean isTestModeProfile) {
         mPackageName = packageName;
         mGatewayConnectionConfigs =
                 Collections.unmodifiableSet(new ArraySet<>(gatewayConnectionConfigs));
+        mRestrictedTransports = Collections.unmodifiableSet(new ArraySet<>(restrictedTransports));
         mIsTestModeProfile = isTestModeProfile;
 
         validate();
@@ -82,6 +100,14 @@ public final class VcnConfig implements Parcelable {
                 new ArraySet<>(
                         PersistableBundleUtils.toList(
                                 gatewayConnectionConfigsBundle, VcnGatewayConnectionConfig::new));
+
+        final PersistableBundle restrictedTransportsBundle =
+                in.getPersistableBundle(RESTRICTED_TRANSPORTS_KEY);
+        mRestrictedTransports =
+                new ArraySet<Integer>(
+                        PersistableBundleUtils.toList(
+                                restrictedTransportsBundle, INTEGER_DESERIALIZER));
+
         mIsTestModeProfile = in.getBoolean(IS_TEST_MODE_PROFILE_KEY);
 
         validate();
@@ -91,6 +117,17 @@ public final class VcnConfig implements Parcelable {
         Objects.requireNonNull(mPackageName, "packageName was null");
         Preconditions.checkCollectionNotEmpty(
                 mGatewayConnectionConfigs, "gatewayConnectionConfigs was empty");
+
+        for (int transport : mRestrictedTransports) {
+            if (!ALLOWED_TRANSPORTS.contains(transport)) {
+                mRestrictedTransports.remove(transport);
+                Log.w(
+                        TAG,
+                        "Found invalid transport "
+                                + transport
+                                + " which might be from a new version of VcnConfig");
+            }
+        }
     }
 
     /**
@@ -107,6 +144,16 @@ public final class VcnConfig implements Parcelable {
     @NonNull
     public Set<VcnGatewayConnectionConfig> getGatewayConnectionConfigs() {
         return Collections.unmodifiableSet(mGatewayConnectionConfigs);
+    }
+
+    /**
+     * Retrieve the transports that need to be restricted.
+     *
+     * @hide
+     */
+    @NonNull
+    public Set<Integer> getRestrictedUnderlyingNetworkTransports() {
+        return Collections.unmodifiableSet(mRestrictedTransports);
     }
 
     /**
@@ -134,6 +181,12 @@ public final class VcnConfig implements Parcelable {
                         new ArrayList<>(mGatewayConnectionConfigs),
                         VcnGatewayConnectionConfig::toPersistableBundle);
         result.putPersistableBundle(GATEWAY_CONNECTION_CONFIGS_KEY, gatewayConnectionConfigsBundle);
+
+        final PersistableBundle restrictedTransportsBundle =
+                PersistableBundleUtils.fromList(
+                        new ArrayList<>(mRestrictedTransports), INTEGER_SERIALIZER);
+        result.putPersistableBundle(RESTRICTED_TRANSPORTS_KEY, restrictedTransportsBundle);
+
         result.putBoolean(IS_TEST_MODE_PROFILE_KEY, mIsTestModeProfile);
 
         return result;
@@ -141,7 +194,8 @@ public final class VcnConfig implements Parcelable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(mPackageName, mGatewayConnectionConfigs, mIsTestModeProfile);
+        return Objects.hash(
+                mPackageName, mGatewayConnectionConfigs, mRestrictedTransports, mIsTestModeProfile);
     }
 
     @Override
@@ -153,6 +207,7 @@ public final class VcnConfig implements Parcelable {
         final VcnConfig rhs = (VcnConfig) other;
         return mPackageName.equals(rhs.mPackageName)
                 && mGatewayConnectionConfigs.equals(rhs.mGatewayConnectionConfigs)
+                && mRestrictedTransports.equals(rhs.mRestrictedTransports)
                 && mIsTestModeProfile == rhs.mIsTestModeProfile;
     }
 
@@ -189,12 +244,15 @@ public final class VcnConfig implements Parcelable {
         @NonNull
         private final Set<VcnGatewayConnectionConfig> mGatewayConnectionConfigs = new ArraySet<>();
 
+        @NonNull private final Set<Integer> mRestrictedTransports = new ArraySet<>();
+
         private boolean mIsTestModeProfile = false;
 
         public Builder(@NonNull Context context) {
             Objects.requireNonNull(context, "context was null");
 
             mPackageName = context.getOpPackageName();
+            mRestrictedTransports.add(TRANSPORT_WIFI);
         }
 
         /**
@@ -225,6 +283,36 @@ public final class VcnConfig implements Parcelable {
             return this;
         }
 
+        private void validateTransportOrThrow(int transport) {
+            if (!ALLOWED_TRANSPORTS.contains(transport)) {
+                throw new IllegalArgumentException("Invalid transport " + transport);
+            }
+        }
+
+        /**
+         * Adds a transport that should be restricted
+         *
+         * @hide
+         */
+        @NonNull
+        public Builder addRestrictedUnderlyingNetworkTransport(int transport) {
+            validateTransportOrThrow(transport);
+            mRestrictedTransports.add(transport);
+            return this;
+        }
+
+        /**
+         * Removes the requirement for making a transport restricted
+         *
+         * @hide
+         */
+        @NonNull
+        public Builder removeRestrictedUnderlyingNetworkTransport(int transport) {
+            validateTransportOrThrow(transport);
+            mRestrictedTransports.add(transport);
+            return this;
+        }
+
         /**
          * Restricts this VcnConfig to matching with test networks (only).
          *
@@ -248,7 +336,11 @@ public final class VcnConfig implements Parcelable {
          */
         @NonNull
         public VcnConfig build() {
-            return new VcnConfig(mPackageName, mGatewayConnectionConfigs, mIsTestModeProfile);
+            return new VcnConfig(
+                    mPackageName,
+                    mGatewayConnectionConfigs,
+                    mRestrictedTransports,
+                    mIsTestModeProfile);
         }
     }
 }

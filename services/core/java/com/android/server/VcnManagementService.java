@@ -68,6 +68,7 @@ import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.util.ArrayMap;
+import android.util.ArraySet;
 import android.util.LocalLog;
 import android.util.Log;
 import android.util.Slog;
@@ -360,6 +361,20 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         /** Creates a new LocationPermissionChecker for the provided Context. */
         public LocationPermissionChecker newLocationPermissionChecker(@NonNull Context context) {
             return new LocationPermissionChecker(context);
+        }
+
+        // This method MUST call under mLock protection
+        public Set<Integer> getRestrictedTransports(
+                ParcelUuid subGrp,
+                Map<ParcelUuid, VcnConfig> vcnConfigs,
+                TelephonySubscriptionSnapshot lastSnapshot) {
+            android.util.Log.i("TEST", "mConfigs.get(subGrp) " + vcnConfigs.get(subGrp));
+            android.util.Log.i(
+                    "TEST",
+                    "mConfigs.get(subGrp).getRestrictedUnderlyingNetworkTransports() "
+                            + vcnConfigs.get(subGrp).getRestrictedUnderlyingNetworkTransports());
+            return Collections.unmodifiableSet(
+                    vcnConfigs.get(subGrp).getRestrictedUnderlyingNetworkTransports());
         }
     }
 
@@ -673,6 +688,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         if (mVcns.containsKey(subscriptionGroup)) {
             final Vcn vcn = mVcns.get(subscriptionGroup);
             vcn.updateConfig(config);
+            notifyAllPolicyListenersLocked();
         } else {
             // TODO(b/193687515): Support multiple VCNs active at the same time
             if (isActiveSubGroup(subscriptionGroup, mLastSnapshot)) {
@@ -993,50 +1009,76 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                             + " MANAGE_TEST_NETWORKS");
         }
 
-        return Binder.withCleanCallingIdentity(() -> {
-            // Defensive copy in case this call is in-process and the given NetworkCapabilities
-            // mutates
-            final NetworkCapabilities ncCopy = new NetworkCapabilities(networkCapabilities);
+        return Binder.withCleanCallingIdentity(
+                () -> {
+                    // Defensive copy in case this call is in-process and the given
+                    // NetworkCapabilities
+                    // mutates
+                    final NetworkCapabilities ncCopy = new NetworkCapabilities(networkCapabilities);
 
-            final ParcelUuid subGrp = getSubGroupForNetworkCapabilities(ncCopy);
-            boolean isVcnManagedNetwork = false;
-            boolean isRestrictedCarrierWifi = false;
-            synchronized (mLock) {
-                final Vcn vcn = mVcns.get(subGrp);
-                if (vcn != null) {
-                    if (vcn.getStatus() == VCN_STATUS_CODE_ACTIVE) {
-                        isVcnManagedNetwork = true;
+                    final ParcelUuid subGrp = getSubGroupForNetworkCapabilities(ncCopy);
+                    boolean isVcnManagedNetwork = false;
+                    boolean isRestricted = false;
+
+                    // Defensive copy that will be used in #requiresRestartForAddingRestriction to
+                    // avoid a large lock block
+                    final Set<Integer> restrcitedTransports = new ArraySet();
+                    android.util.Log.i("TEST", "mConfigs.size " + mConfigs.size());
+                    synchronized (mLock) {
+                        final Vcn vcn = mVcns.get(subGrp);
+                        if (vcn != null) {
+                            if (vcn.getStatus() == VCN_STATUS_CODE_ACTIVE) {
+                                isVcnManagedNetwork = true;
+                            }
+
+                            restrcitedTransports.addAll(
+                                    mDeps.getRestrictedTransports(subGrp, mConfigs, mLastSnapshot));
+                            for (int restrcitedTransport : restrcitedTransports) {
+                                if (ncCopy.hasTransport(restrcitedTransport)) {
+                                    isRestricted |= (vcn.getStatus() == VCN_STATUS_CODE_ACTIVE);
+
+                                    if (restrcitedTransport == TRANSPORT_WIFI) {
+                                        // If Carrier WiFi is configured to be restricted, it always
+                                        // needs to be restricted if VCN exists (even in safe mode).
+                                        isRestricted = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
                     }
 
-                    if (ncCopy.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                        // Carrier WiFi always restricted if VCN exists (even in safe mode).
-                        isRestrictedCarrierWifi = true;
+                    final NetworkCapabilities.Builder ncBuilder =
+                            new NetworkCapabilities.Builder(ncCopy);
+
+                    if (isVcnManagedNetwork) {
+                        ncBuilder.removeCapability(
+                                NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
+                    } else {
+                        ncBuilder.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
                     }
-                }
-            }
 
-            final NetworkCapabilities.Builder ncBuilder = new NetworkCapabilities.Builder(ncCopy);
+                    if (isRestricted) {
+                        ncBuilder.removeCapability(
+                                NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
+                    }
 
-            if (isVcnManagedNetwork) {
-                ncBuilder.removeCapability(
-                        NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
-            } else {
-                ncBuilder.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
-            }
+                    final NetworkCapabilities result = ncBuilder.build();
+                    final VcnUnderlyingNetworkPolicy policy =
+                            new VcnUnderlyingNetworkPolicy(
+                                    mTrackingNetworkCallback.requiresRestartForAddingRestriction(
+                                            restrcitedTransports, result),
+                                    result);
 
-            if (isRestrictedCarrierWifi) {
-                ncBuilder.removeCapability(
-                        NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
-            }
-
-            final NetworkCapabilities result = ncBuilder.build();
-            final VcnUnderlyingNetworkPolicy policy = new VcnUnderlyingNetworkPolicy(
-                    mTrackingNetworkCallback.requiresRestartForCarrierWifi(result), result);
-
-            logVdbg("getUnderlyingNetworkPolicy() called for caps: " + networkCapabilities
-                        + "; and lp: " + linkProperties + "; result = " + policy);
-            return policy;
-        });
+                    logInfo(
+                            "getUnderlyingNetworkPolicy() called for caps: "
+                                    + networkCapabilities
+                                    + "; and lp: "
+                                    + linkProperties
+                                    + "; result = "
+                                    + policy);
+                    return policy;
+                });
     }
 
     /** Binder death recipient used to remove registered VcnStatusCallbacks. */
@@ -1296,15 +1338,32 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             }
         }
 
-        private boolean requiresRestartForCarrierWifi(NetworkCapabilities caps) {
-            if (!caps.hasTransport(TRANSPORT_WIFI) || caps.getSubscriptionIds() == null) {
+        private boolean hasSameRestrictedTransport(
+                Set<Integer> restrcitedTransports,
+                NetworkCapabilities caps,
+                NetworkCapabilities capsOther) {
+            for (int restrcitedTransport : restrcitedTransports) {
+                if (caps.hasTransport(restrcitedTransport)
+                        && capsOther.hasTransport(restrcitedTransport)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private boolean requiresRestartForAddingRestriction(
+                Set<Integer> restrcitedTransports, NetworkCapabilities caps) {
+            if (caps.getSubscriptionIds() == null) {
                 return false;
             }
+            android.util.Log.i("TEST", "restrcitedTransports " + restrcitedTransports);
 
             synchronized (mCaps) {
                 for (NetworkCapabilities existing : mCaps.values()) {
-                    if (existing.hasTransport(TRANSPORT_WIFI)
-                            && caps.getSubscriptionIds().equals(existing.getSubscriptionIds())) {
+                    android.util.Log.i("TEST", "existing " + existing);
+                    android.util.Log.i("TEST", "caps " + caps);
+                    if (caps.getSubscriptionIds().equals(existing.getSubscriptionIds())
+                            && hasSameRestrictedTransport(restrcitedTransports, caps, existing)) {
                         // Restart if any immutable capabilities have changed
                         return existing.hasCapability(NET_CAPABILITY_NOT_RESTRICTED)
                                 != caps.hasCapability(NET_CAPABILITY_NOT_RESTRICTED);
