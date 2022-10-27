@@ -424,7 +424,8 @@ public class CarrierConfigManager {
      * platforms, even the ones with hard SEND/END keys, but for maximum flexibility it's controlled
      * by a flag here (which can be overridden on a per-product basis.)
      */
-    public static final String KEY_SHOW_ONSCREEN_DIAL_BUTTON_BOOL = "show_onscreen_dial_button_bool";
+    public static final String KEY_SHOW_ONSCREEN_DIAL_BUTTON_BOOL =
+            "show_onscreen_dial_button_bool";
 
     /** Determines if device implements a noise suppression device for in call audio. */
     public static final String
@@ -436,8 +437,8 @@ public class CarrierConfigManager {
      * accidental redialing from the call log UI. This is a good idea, so the default here is
      * false.)
      */
-    public static final String
-            KEY_ALLOW_EMERGENCY_NUMBERS_IN_CALL_LOG_BOOL = "allow_emergency_numbers_in_call_log_bool";
+    public static final String KEY_ALLOW_EMERGENCY_NUMBERS_IN_CALL_LOG_BOOL =
+            "allow_emergency_numbers_in_call_log_bool";
 
     /**
      * A string array containing numbers that shouldn't be included in the call log.
@@ -502,7 +503,8 @@ public class CarrierConfigManager {
     public static final String KEY_APN_EXPAND_BOOL = "apn_expand_bool";
 
     /** Control whether users can choose a network operator. */
-    public static final String KEY_OPERATOR_SELECTION_EXPAND_BOOL = "operator_selection_expand_bool";
+    public static final String KEY_OPERATOR_SELECTION_EXPAND_BOOL =
+            "operator_selection_expand_bool";
 
     /**
      * Used in the Preferred Network Types menu to determine if the 2G option is displayed.
@@ -526,11 +528,12 @@ public class CarrierConfigManager {
 
     /**
      * CDMA activation goes through OTASP.
-     * <p>
-     * TODO: This should be combined with config_use_hfa_for_provisioning and implemented as an enum
-     * (NONE, HFA, OTASP).
+     *
+     * <p>TODO: This should be combined with config_use_hfa_for_provisioning and implemented as an
+     * enum (NONE, HFA, OTASP).
      */
-    public static final String KEY_USE_OTASP_FOR_PROVISIONING_BOOL = "use_otasp_for_provisioning_bool";
+    public static final String KEY_USE_OTASP_FOR_PROVISIONING_BOOL =
+            "use_otasp_for_provisioning_bool";
 
     /** Display carrier settings menu if true */
     public static final String KEY_CARRIER_SETTINGS_ENABLE_BOOL = "carrier_settings_enable_bool";
@@ -810,11 +813,12 @@ public class CarrierConfigManager {
     public static final String KEY_VILTE_DATA_IS_METERED_BOOL = "vilte_data_is_metered_bool";
 
     /**
-     * Flag specifying whether WFC over IMS should be available for carrier: independent of
-     * carrier provisioning. If false: hard disabled. If true: then depends on carrier
-     * provisioning, availability etc.
+     * Flag specifying whether WFC over IMS should be available for carrier: independent of carrier
+     * provisioning. If false: hard disabled. If true: then depends on carrier provisioning,
+     * availability etc.
      */
-    public static final String KEY_CARRIER_WFC_IMS_AVAILABLE_BOOL = "carrier_wfc_ims_available_bool";
+    public static final String KEY_CARRIER_WFC_IMS_AVAILABLE_BOOL =
+            "carrier_wfc_ims_available_bool";
 
     /**
      * Flag specifying whether Cross SIM over IMS should be available for carrier.
@@ -1105,10 +1109,11 @@ public class CarrierConfigManager {
 
     /**
      * The default sim call manager to use when the default dialer doesn't implement one. A sim call
-     * manager can control and route outgoing and incoming phone calls, even if they're placed
-     * using another connection service (PSTN, for example).
+     * manager can control and route outgoing and incoming phone calls, even if they're placed using
+     * another connection service (PSTN, for example).
      */
-    public static final String KEY_DEFAULT_SIM_CALL_MANAGER_STRING = "default_sim_call_manager_string";
+    public static final String KEY_DEFAULT_SIM_CALL_MANAGER_STRING =
+            "default_sim_call_manager_string";
 
     /**
      * The default flag specifying whether ETWS/CMAS test setting is forcibly disabled in
@@ -1290,7 +1295,8 @@ public class CarrierConfigManager {
      * @deprecated use {@link #KEY_CARRIER_VVM_PACKAGE_NAME_STRING_ARRAY}.
      */
     @Deprecated
-    public static final String KEY_CARRIER_VVM_PACKAGE_NAME_STRING = "carrier_vvm_package_name_string";
+    public static final String KEY_CARRIER_VVM_PACKAGE_NAME_STRING =
+            "carrier_vvm_package_name_string";
 
     /**
      * A list of the carrier's visual voicemail app package names to ensure that dialer visual
@@ -1567,10 +1573,9 @@ public class CarrierConfigManager {
      */
     public static final String KEY_HIDE_IMS_APN_BOOL = "hide_ims_apn_bool";
 
-    /**
-     * Determine whether preferred network type can be shown.
-     */
-    public static final String KEY_HIDE_PREFERRED_NETWORK_TYPE_BOOL = "hide_preferred_network_type_bool";
+    /** Determine whether preferred network type can be shown. */
+    public static final String KEY_HIDE_PREFERRED_NETWORK_TYPE_BOOL =
+            "hide_preferred_network_type_bool";
 
     /**
      * String array for package names that need to be enabled for this carrier.
@@ -2080,16 +2085,22 @@ public class CarrierConfigManager {
     public static final String KEY_MMS_ALLOW_ATTACH_AUDIO_BOOL = "allowAttachAudio";
     public static final String KEY_MMS_APPEND_TRANSACTION_ID_BOOL = "enabledTransID";
     public static final String KEY_MMS_GROUP_MMS_ENABLED_BOOL = "enableGroupMms";
-    public static final String KEY_MMS_MMS_DELIVERY_REPORT_ENABLED_BOOL = "enableMMSDeliveryReports";
+    public static final String KEY_MMS_MMS_DELIVERY_REPORT_ENABLED_BOOL =
+            "enableMMSDeliveryReports";
     public static final String KEY_MMS_MMS_ENABLED_BOOL = "enabledMMS";
     public static final String KEY_MMS_MMS_READ_REPORT_ENABLED_BOOL = "enableMMSReadReports";
     public static final String KEY_MMS_MULTIPART_SMS_ENABLED_BOOL = "enableMultipartSMS";
     public static final String KEY_MMS_NOTIFY_WAP_MMSC_ENABLED_BOOL = "enabledNotifyWapMMSC";
-    public static final String KEY_MMS_SEND_MULTIPART_SMS_AS_SEPARATE_MESSAGES_BOOL = "sendMultipartSmsAsSeparateMessages";
-    public static final String KEY_MMS_SHOW_CELL_BROADCAST_APP_LINKS_BOOL = "config_cellBroadcastAppLinks";
-    public static final String KEY_MMS_SMS_DELIVERY_REPORT_ENABLED_BOOL = "enableSMSDeliveryReports";
-    public static final String KEY_MMS_SUPPORT_HTTP_CHARSET_HEADER_BOOL = "supportHttpCharsetHeader";
-    public static final String KEY_MMS_SUPPORT_MMS_CONTENT_DISPOSITION_BOOL = "supportMmsContentDisposition";
+    public static final String KEY_MMS_SEND_MULTIPART_SMS_AS_SEPARATE_MESSAGES_BOOL =
+            "sendMultipartSmsAsSeparateMessages";
+    public static final String KEY_MMS_SHOW_CELL_BROADCAST_APP_LINKS_BOOL =
+            "config_cellBroadcastAppLinks";
+    public static final String KEY_MMS_SMS_DELIVERY_REPORT_ENABLED_BOOL =
+            "enableSMSDeliveryReports";
+    public static final String KEY_MMS_SUPPORT_HTTP_CHARSET_HEADER_BOOL =
+            "supportHttpCharsetHeader";
+    public static final String KEY_MMS_SUPPORT_MMS_CONTENT_DISPOSITION_BOOL =
+            "supportMmsContentDisposition";
     public static final String KEY_MMS_ALIAS_MAX_CHARS_INT = "aliasMaxChars";
     public static final String KEY_MMS_ALIAS_MIN_CHARS_INT = "aliasMinChars";
     public static final String KEY_MMS_HTTP_SOCKET_TIMEOUT_INT = "httpSocketTimeout";
@@ -2098,7 +2109,8 @@ public class CarrierConfigManager {
     public static final String KEY_MMS_MAX_MESSAGE_SIZE_INT = "maxMessageSize";
     public static final String KEY_MMS_MESSAGE_TEXT_MAX_SIZE_INT = "maxMessageTextSize";
     public static final String KEY_MMS_RECIPIENT_LIMIT_INT = "recipientLimit";
-    public static final String KEY_MMS_SMS_TO_MMS_TEXT_LENGTH_THRESHOLD_INT = "smsToMmsTextLengthThreshold";
+    public static final String KEY_MMS_SMS_TO_MMS_TEXT_LENGTH_THRESHOLD_INT =
+            "smsToMmsTextLengthThreshold";
     public static final String KEY_MMS_SMS_TO_MMS_TEXT_THRESHOLD_INT = "smsToMmsTextThreshold";
     public static final String KEY_MMS_SUBJECT_MAX_LENGTH_INT = "maxSubjectLength";
     public static final String KEY_MMS_EMAIL_GATEWAY_NUMBER_STRING = "emailGatewayNumber";
@@ -2118,7 +2130,7 @@ public class CarrierConfigManager {
      * continues between all parties in the conversation since the same data connection can be
      * reused for further messages.
      *
-     * This timer will control how long the data call will be kept alive before being torn down.
+     * <p>This timer will control how long the data call will be kept alive before being torn down.
      */
     public static final String KEY_MMS_NETWORK_RELEASE_TIMEOUT_MILLIS_INT =
             "mms_network_release_timeout_millis_int";
@@ -2618,9 +2630,11 @@ public class CarrierConfigManager {
      * should be filtered out of the CNAP information. This includes CNAP names such as "WIRELESS
      * CALLER" or "UNKNOWN NAME". By default, if there are no filtered names for this carrier, null
      * is returned.
+     *
      * @hide
      */
-    public static final String KEY_FILTERED_CNAP_NAMES_STRING_ARRAY = "filtered_cnap_names_string_array";
+    public static final String KEY_FILTERED_CNAP_NAMES_STRING_ARRAY =
+            "filtered_cnap_names_string_array";
 
     /**
      * The RCS configuration server URL. This URL is used to initiate RCS provisioning.

@@ -420,6 +420,7 @@ public class UnderlyingNetworkController {
 
         @Override
         public void onLost(@NonNull Network network) {
+            logInfo("onLost " + network);
             mUnderlyingNetworkRecordBuilders.remove(network);
 
             reevaluateNetworks();
@@ -428,6 +429,11 @@ public class UnderlyingNetworkController {
         @Override
         public void onCapabilitiesChanged(
                 @NonNull Network network, @NonNull NetworkCapabilities networkCapabilities) {
+            logInfo(
+                    "onCapabilitiesChanged "
+                            + network
+                            + " networkCapabilities "
+                            + networkCapabilities);
             final UnderlyingNetworkRecord.Builder builder =
                     mUnderlyingNetworkRecordBuilders.get(network);
             if (builder == null) {
