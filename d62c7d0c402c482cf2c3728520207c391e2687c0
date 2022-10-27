@@ -16,6 +16,24 @@
       "message": "Could you please move this line above the line that adds our team? I think bug triaging etc will prefer the first entry, and you are the author/owner for this.",
       "revId": "d62c7d0c402c482cf2c3728520207c391e2687c0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78e4b57b_c5c6fc8e",
+        "filename": "core/java/android/os/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2022-10-27T02:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "639e9d4e_c1c82855",
+      "revId": "d62c7d0c402c482cf2c3728520207c391e2687c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
