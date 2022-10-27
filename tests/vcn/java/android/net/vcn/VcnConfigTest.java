@@ -16,6 +16,8 @@
 
 package android.net.vcn;
 
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.doReturn;
@@ -50,6 +52,20 @@ public class VcnConfigTest {
 
         for (VcnGatewayConnectionConfig gatewayConnectionConfig : GATEWAY_CONNECTION_CONFIGS) {
             builder.addGatewayConnectionConfig(gatewayConnectionConfig);
+        }
+
+        return builder.build();
+    }
+
+    public static VcnConfig buildTestConfig(@NonNull Context context, boolean restrictCell) {
+        VcnConfig.Builder builder = new VcnConfig.Builder(context);
+
+        for (VcnGatewayConnectionConfig gatewayConnectionConfig : GATEWAY_CONNECTION_CONFIGS) {
+            builder.addGatewayConnectionConfig(gatewayConnectionConfig);
+        }
+
+        if (restrictCell) {
+            builder.addRestrictedUnderlyingNetworkTransport(TRANSPORT_CELLULAR);
         }
 
         return builder.build();

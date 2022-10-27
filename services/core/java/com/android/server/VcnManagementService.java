@@ -673,6 +673,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         if (mVcns.containsKey(subscriptionGroup)) {
             final Vcn vcn = mVcns.get(subscriptionGroup);
             vcn.updateConfig(config);
+            notifyAllPolicyListenersLocked();
         } else {
             // TODO(b/193687515): Support multiple VCNs active at the same time
             if (isActiveSubGroup(subscriptionGroup, mLastSnapshot)) {
@@ -1000,7 +1001,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
             final ParcelUuid subGrp = getSubGroupForNetworkCapabilities(ncCopy);
             boolean isVcnManagedNetwork = false;
-            boolean isRestrictedCarrierWifi = false;
+            boolean isRestricted = false;
             synchronized (mLock) {
                 final Vcn vcn = mVcns.get(subGrp);
                 if (vcn != null) {
@@ -1008,9 +1009,19 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                         isVcnManagedNetwork = true;
                     }
 
-                    if (ncCopy.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                        // Carrier WiFi always restricted if VCN exists (even in safe mode).
-                        isRestrictedCarrierWifi = true;
+                    final VcnConfig vcnConfig = mConfigs.get(subGrp);
+                    for (int restrcitedTransport :
+                            vcnConfig.getRestrictedUnderlyingNetworkTransports()) {
+                        if (ncCopy.hasTransport(restrcitedTransport)) {
+                            isRestricted = vcn.getStatus() == VCN_STATUS_CODE_ACTIVE;
+
+                            if (restrcitedTransport == TRANSPORT_WIFI) {
+                                // If Carrier WiFi is configured to be restricted, it always
+                                // needs to be restricted if VCN exists (even in safe mode).
+                                isRestricted = true;
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -1024,7 +1035,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 ncBuilder.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
             }
 
-            if (isRestrictedCarrierWifi) {
+            if (isRestricted) {
                 ncBuilder.removeCapability(
                         NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
             }
