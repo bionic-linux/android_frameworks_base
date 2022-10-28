@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8e1632a_31d9bd58",
+        "filename": "core/java/android/os/Parcelable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-10-28T01:09:27Z",
+      "side": 1,
+      "message": "note - the values this returns already are in the API",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 57
+      },
+      "revId": "558ba131f962b8e1016f19d74d073d89ad4e0315",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
