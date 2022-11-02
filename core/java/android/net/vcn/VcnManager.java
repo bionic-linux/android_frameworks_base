@@ -102,6 +102,18 @@ public class VcnManager {
     public static final String VCN_NETWORK_SELECTION_WIFI_EXIT_RSSI_THRESHOLD_KEY =
             "vcn_network_selection_wifi_exit_rssi_threshold";
 
+    /**
+     * Key for maximum number of parallel SAs for tunnel aggregation
+     *
+     * <p>If set to a value > 1, multiple tunnels will be set up, and inbound traffic will be
+     * aggregated over the various tunnels.
+     *
+     * @hide
+     */
+    @NonNull
+    public static final String VCN_TUNNEL_AGGREGATION_SA_COUNT_MAX_KEY =
+            "vcn_tunnel_aggregation_sa_count_max";
+
     // TODO: Add separate signal strength thresholds for 2.4 GHz and 5GHz
 
     /**
