@@ -159,6 +159,20 @@ public class ResourcesImpl {
     }
 
     /**
+     * Clear the cache when the framework resources packages is changed.
+     */
+    static void resetDrawableStateCache() {
+        sPreloadedDrawables[0].clear();
+        sPreloadedDrawables[1].clear();
+        sPreloadedColorDrawables.clear();
+        sPreloadedComplexColors.clear();
+
+        synchronized (sSync) {
+            sPreloaded = false;
+        }
+    }
+
+    /**
      * Creates a new ResourcesImpl object with CompatibilityInfo.
      *
      * @param assets Previously created AssetManager.
