@@ -489,9 +489,16 @@ public final class OverlayManagerService extends SystemService {
                         final AndroidPackage pkg = mPackageManager.onPackageUpdated(
                                 packageName, userId);
                         if (pkg != null && !mPackageManager.isInstantApp(packageName, userId)) {
+                            final OverlayPaths frameworkOverlays =
+                                    mImpl.getEnabledOverlayPaths("android", userId);
+                            Set<PackageAndUser> updatedTargets;
                             try {
-                                updateTargetPackagesLocked(
-                                        mImpl.onPackageReplaced(packageName, userId));
+                                if (!frameworkOverlays.isEmpty() && pkg.isSystem()) {
+                                    updatedTargets = mImpl.onPackageAdded(packageName, userId);
+                                } else {
+                                    updatedTargets = mImpl.onPackageReplaced(packageName, userId);
+                                }
+                                updateTargetPackagesLocked(updatedTargets);
                             } catch (OperationFailedException e) {
                                 Slog.e(TAG, "onPackageReplaced internal error", e);
                             }
