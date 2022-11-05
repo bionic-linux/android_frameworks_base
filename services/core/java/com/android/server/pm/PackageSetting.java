@@ -652,12 +652,14 @@ public class PackageSetting extends SettingBase implements PackageStateInternal 
                 other.usesStaticLibrariesVersions.length) : null;
         mUserStates.clear();
         for (int i = 0; i < other.mUserStates.size(); i++) {
+            PackageUserStateImpl state;
             if (sealedSnapshot) {
-                mUserStates.put(other.mUserStates.keyAt(i),
-                        other.mUserStates.valueAt(i).snapshot());
+                state = other.mUserStates.valueAt(i).snapshot();
             } else {
-                mUserStates.put(other.mUserStates.keyAt(i), other.mUserStates.valueAt(i));
+                state = other.mUserStates.valueAt(i);
             }
+            state.setWatchable(this);
+            mUserStates.put(other.mUserStates.keyAt(i), state);
         }
 
         if (mOldCodePaths != null) {

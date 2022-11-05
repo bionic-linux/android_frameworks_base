@@ -92,7 +92,11 @@ public class PackageUserStateImpl extends WatchableImpl implements PackageUserSt
     private long mFirstInstallTime;
 
     @Nullable
-    private final Watchable mWatchable;
+    private Watchable mWatchable;
+
+    public void setWatchable(Watchable watchable) {
+        mWatchable = watchable;
+    }
 
     @NonNull
     final SnapshotCache<PackageUserStateImpl> mSnapshot;
