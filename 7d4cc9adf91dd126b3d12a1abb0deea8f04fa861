@@ -72,6 +72,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4714dd7d_0db64586",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-07T23:21:57Z",
+      "side": 1,
+      "message": "Remember to update equals and hash code",
+      "range": {
+        "startLine": 180,
+        "startChar": 15,
+        "endLine": 180,
+        "endChar": 23
+      },
+      "revId": "7d4cc9adf91dd126b3d12a1abb0deea8f04fa861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c4e0ec5f_3299d771",
         "filename": "core/java/android/net/vcn/VcnConfig.java",
         "patchSetId": 2
@@ -134,6 +157,52 @@
         "startChar": 43,
         "endLine": 1016,
         "endChar": 84
+      },
+      "revId": "7d4cc9adf91dd126b3d12a1abb0deea8f04fa861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6749a0df_8b5b5d17",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-07T23:21:57Z",
+      "side": 1,
+      "message": "Normally this would be a |\u003d or \u0026\u003d; since you\u0027re looping, so the next evaluation might clear your previous state.",
+      "range": {
+        "startLine": 1016,
+        "startChar": 41,
+        "endLine": 1016,
+        "endChar": 42
+      },
+      "revId": "7d4cc9adf91dd126b3d12a1abb0deea8f04fa861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0e1993a_fe97b164",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-07T23:21:57Z",
+      "side": 1,
+      "message": "This probably needs updates too",
+      "range": {
+        "startLine": 1045,
+        "startChar": 45,
+        "endLine": 1045,
+        "endChar": 74
       },
       "revId": "7d4cc9adf91dd126b3d12a1abb0deea8f04fa861",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
