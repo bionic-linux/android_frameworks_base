@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0c51fcf_f22af6f2",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-07T23:17:16Z",
+      "side": 1,
+      "message": "Hmm, just thinking ahead; what happens if we have different capabilities per transport? How does our disk-stable format change? or how would we do migration in the roll-forward and roll-back case?",
+      "range": {
+        "startLine": 60,
+        "startChar": 27,
+        "endLine": 60,
+        "endChar": 30
+      },
+      "revId": "7d4cc9adf91dd126b3d12a1abb0deea8f04fa861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af0224aa_f750199b",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-07T23:17:16Z",
+      "side": 1,
+      "message": "Oooh, do we not allow unrestricting wifi?",
+      "range": {
+        "startLine": 113,
+        "startChar": 22,
+        "endLine": 113,
+        "endChar": 46
+      },
+      "revId": "7d4cc9adf91dd126b3d12a1abb0deea8f04fa861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64d75e9e_b1199e0a",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-07T23:17:16Z",
+      "side": 1,
+      "message": "restricted",
+      "range": {
+        "startLine": 113,
+        "startChar": 68,
+        "endLine": 113,
+        "endChar": 78
+      },
+      "revId": "7d4cc9adf91dd126b3d12a1abb0deea8f04fa861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4e0ec5f_3299d771",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-07T23:17:16Z",
+      "side": 1,
+      "message": "spelling",
+      "range": {
+        "startLine": 277,
+        "startChar": 72,
+        "endLine": 277,
+        "endChar": 82
+      },
+      "revId": "7d4cc9adf91dd126b3d12a1abb0deea8f04fa861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd797ece_4c268661",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-07T23:17:16Z",
+      "side": 1,
+      "message": "restricted",
+      "range": {
+        "startLine": 307,
+        "startChar": 72,
+        "endLine": 307,
+        "endChar": 82
+      },
+      "revId": "7d4cc9adf91dd126b3d12a1abb0deea8f04fa861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0425f76c_86ba50ad",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-07T23:17:16Z",
+      "side": 1,
+      "message": "Nit if we\u0027re doing assignments with booleans, suggest putting the boolean in a parentheses so it\u0027s clear it\u0027s the output that gets stored.",
+      "range": {
+        "startLine": 1016,
+        "startChar": 43,
+        "endLine": 1016,
+        "endChar": 84
+      },
+      "revId": "7d4cc9adf91dd126b3d12a1abb0deea8f04fa861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
