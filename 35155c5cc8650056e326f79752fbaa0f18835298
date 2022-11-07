@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02444597_c8f9eec4",
+        "filename": "services/core/java/com/android/server/security/RegistrationBinder.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-11-07T18:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f21fb75e_834877fc",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "35155c5cc8650056e326f79752fbaa0f18835298",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "94adc4ea_8c956d2e",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af4d9ab8_3fae3974",
+        "filename": "services/core/java/com/android/server/security/RemoteProvisioningService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-11-07T18:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94adc4ea_8c956d2e",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 5
+      },
+      "revId": "35155c5cc8650056e326f79752fbaa0f18835298",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "273ed1ef_ff2f1ef5",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-11-03T21:08:34Z",
       "side": 1,
       "message": "Will there be a path by which onCancel() would be called?",
+      "range": {
+        "startLine": 44,
+        "startChar": 74,
+        "endLine": 44,
+        "endChar": 82
+      },
+      "revId": "35155c5cc8650056e326f79752fbaa0f18835298",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dd237ca_d75ff7e9",
+        "filename": "services/core/java/com/android/server/security/RemoteProvisioningService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-11-07T18:35:12Z",
+      "side": 1,
+      "message": "Yeah, that will have to come later.\n\nI think we\u0027ll probably end up wiring up a `CancellationSignal` to the Registration type -- that seems to be the preferred way to do this.",
+      "parentUuid": "273ed1ef_ff2f1ef5",
       "range": {
         "startLine": 44,
         "startChar": 74,
