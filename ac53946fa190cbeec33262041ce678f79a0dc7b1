@@ -16,6 +16,23 @@
       "message": "Hello, please help to review and modify.",
       "revId": "ac53946fa190cbeec33262041ce678f79a0dc7b1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e71fd8b_fd4f8306",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2022-11-08T22:33:47Z",
+      "side": 1,
+      "message": "View system as designed does not support multithreading. There are many parts that make assumptions about there being a UI thread. Sadly, this means that we do not want to take this patch.",
+      "revId": "ac53946fa190cbeec33262041ce678f79a0dc7b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
