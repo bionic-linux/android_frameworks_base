@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1fc5d936_4b9a2e84",
+        "filename": "Android.bp",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-11-09T19:12:20Z",
+      "side": 1,
+      "message": "There\u0027s only V1.\n\nI think perhaps you\u0027re confusing this with `android.hardware.security.rkp`.\n\nPerhaps that\u0027s an indication that `android.security.rkp` is confusingly named.",
+      "parentUuid": "ec486ecb_c400424d",
+      "range": {
+        "startLine": 108,
+        "startChar": 31,
+        "endLine": 108,
+        "endChar": 33
+      },
+      "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43279952_d87a9c5d",
         "filename": "services/core/java/com/android/server/security/RegistrationBinder.java",
         "patchSetId": 10
@@ -37,6 +61,24 @@
       "writtenOn": "2022-11-09T19:02:10Z",
       "side": 1,
       "message": "Can we add some comments on what we want this function to do?\nIIUC this implementation is more like a pass through which would pass getKey call on to the application.",
+      "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c871b52_80de39a7",
+        "filename": "services/core/java/com/android/server/security/RegistrationBinder.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-11-09T19:12:20Z",
+      "side": 1,
+      "message": "This implements whatever `IRegistration` says it should. I\u0027m not sure more comments would help (in fact, I think they\u0027d be harmful as the AIDL should document what this function does).",
+      "parentUuid": "43279952_d87a9c5d",
       "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -64,6 +106,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcf4917c_5c0ab76d",
+        "filename": "services/core/java/com/android/server/security/RemoteProvisioningService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-11-09T19:12:20Z",
+      "side": 1,
+      "message": "This won\u0027t crash system server.\n\nThe binder client will receive an exception.",
+      "parentUuid": "7c7d11d8_6796bce8",
+      "range": {
+        "startLine": 47,
+        "startChar": 37,
+        "endLine": 47,
+        "endChar": 57
+      },
+      "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d068e33e_ddbce491",
@@ -77,6 +143,24 @@
       "writtenOn": "2022-11-09T19:02:10Z",
       "side": 1,
       "message": "Comments on why we are clearing and then restoring identity here.",
+      "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03c24870_7e63a433",
+        "filename": "services/core/java/com/android/server/security/RemoteProvisioningService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-11-09T19:12:20Z",
+      "side": 1,
+      "message": "What comments would be helpful?\n\nWe don\u0027t want to make calls to the other service using the calling identity. That seems clear enough to me.",
+      "parentUuid": "d068e33e_ddbce491",
       "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
