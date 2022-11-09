@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec486ecb_c400424d",
+        "filename": "Android.bp",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1937166
+      },
+      "writtenOn": "2022-11-09T19:02:10Z",
+      "side": 1,
+      "message": "should we go with V3 here? or is there a reason we want to retain V1?",
+      "range": {
+        "startLine": 108,
+        "startChar": 31,
+        "endLine": 108,
+        "endChar": 33
+      },
+      "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43279952_d87a9c5d",
+        "filename": "services/core/java/com/android/server/security/RegistrationBinder.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1937166
+      },
+      "writtenOn": "2022-11-09T19:02:10Z",
+      "side": 1,
+      "message": "Can we add some comments on what we want this function to do?\nIIUC this implementation is more like a pass through which would pass getKey call on to the application.",
+      "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c7d11d8_6796bce8",
+        "filename": "services/core/java/com/android/server/security/RemoteProvisioningService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1937166
+      },
+      "writtenOn": "2022-11-09T19:02:10Z",
+      "side": 1,
+      "message": "Not sure whether we want to throw an exception in a system service. If this is being depended upon by system server then this could cause the system to restart. We could simply return callback error in this case.",
+      "range": {
+        "startLine": 47,
+        "startChar": 37,
+        "endLine": 47,
+        "endChar": 57
+      },
+      "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d068e33e_ddbce491",
+        "filename": "services/core/java/com/android/server/security/RemoteProvisioningService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1937166
+      },
+      "writtenOn": "2022-11-09T19:02:10Z",
+      "side": 1,
+      "message": "Comments on why we are clearing and then restoring identity here.",
+      "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
