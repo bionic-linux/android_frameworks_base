@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d776c7f_68b1a34f",
+        "filename": "Android.bp",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1937166
+      },
+      "writtenOn": "2022-11-09T20:14:36Z",
+      "side": 1,
+      "message": "ohh. right. I did mistake this with hardware.security.rkp.",
+      "parentUuid": "1fc5d936_4b9a2e84",
+      "range": {
+        "startLine": 108,
+        "startChar": 31,
+        "endLine": 108,
+        "endChar": 33
+      },
+      "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43279952_d87a9c5d",
@@ -161,6 +185,24 @@
       "side": 1,
       "message": "What comments would be helpful?\n\nWe don\u0027t want to make calls to the other service using the calling identity. That seems clear enough to me.",
       "parentUuid": "d068e33e_ddbce491",
+      "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb705867_f74ae3a5",
+        "filename": "services/core/java/com/android/server/security/RemoteProvisioningService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1937166
+      },
+      "writtenOn": "2022-11-09T20:14:36Z",
+      "side": 1,
+      "message": "yes. but why is the calling identity bad is what I would like to see commented here.",
+      "parentUuid": "03c24870_7e63a433",
       "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
