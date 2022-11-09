@@ -383,6 +383,7 @@ public class StartingSurfaceDrawer {
 
                                 @Override
                                 public void onViewDetachedFromWindow(View v) {
+                                    contentView.removeOnAttachStateChangeListener(this);
                                 }
                             });
                 }
@@ -429,7 +430,8 @@ public class StartingSurfaceDrawer {
         }
 
         @Override
-        public @Nullable SplashScreenView get() {
+        @Nullable
+        public SplashScreenView get() {
             synchronized (this) {
                 while (!mIsViewSet) {
                     try {
@@ -690,7 +692,7 @@ public class StartingSurfaceDrawer {
         private final TaskSnapshotWindow mTaskSnapshotWindow;
         private SplashScreenView mContentView;
         private boolean mSetSplashScreen;
-        private @StartingWindowType int mSuggestType;
+        @StartingWindowType private int mSuggestType;
         private int mBGColor;
         private final long mCreateTime;
         private int mSystemBarAppearance;
@@ -744,8 +746,11 @@ public class StartingSurfaceDrawer {
                 }
                 mDecorView.setLayoutParams(lp);
             }
-            mDecorView.getWindowInsetsController().setSystemBarsAppearance(
-                    mSystemBarAppearance, LIGHT_BARS_MASK);
+            // In case of mDecorView not attached in some rare situations.
+            if (mDecorView.getWindowInsetsController() != null) {
+                mDecorView.getWindowInsetsController().setSystemBarsAppearance(
+                        mSystemBarAppearance, LIGHT_BARS_MASK);
+            }
         }
     }
 }
