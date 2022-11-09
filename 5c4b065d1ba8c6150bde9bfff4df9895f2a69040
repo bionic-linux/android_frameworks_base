@@ -108,6 +108,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0db5bc82_5cc9f7a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2022-11-09T10:45:06Z",
+      "side": 1,
+      "message": "The concern is if it doesn\u0027t make any difference, then just keep as it was.\nSuch as if the view can be reused, and it doesn\u0027t expect to trigger the callback twice, then it makes sense to unregister the listener.",
+      "parentUuid": "19e95e3f_8ea751db",
+      "revId": "5c4b065d1ba8c6150bde9bfff4df9895f2a69040",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4fd6c7ba_39ec786f",
