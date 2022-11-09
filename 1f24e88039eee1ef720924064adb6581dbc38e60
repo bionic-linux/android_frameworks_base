@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c02d63b6_0be276c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1933945
+      },
+      "writtenOn": "2022-11-09T02:10:45Z",
+      "side": 1,
+      "message": "Another similar OWNER file update. Thanks ahead for review!",
+      "revId": "1f24e88039eee1ef720924064adb6581dbc38e60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
