@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1436828a_0a06490d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2022-11-09T18:56:41Z",
+      "side": 1,
+      "message": "Welcome to AOSP, Svet!",
+      "revId": "6cb129e92dd9eae384ac7d7b9b701b7187e3dc35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
