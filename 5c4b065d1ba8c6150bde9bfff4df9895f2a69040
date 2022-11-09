@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "501b71c0_c1fa3a51",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2022-11-09T10:10:47Z",
+      "side": 1,
+      "message": "Well I think it\u0027s always a good practise to call a `removeSomething` after calling `addSomething`.",
+      "parentUuid": "75d6c9b6_27a0accc",
+      "revId": "5c4b065d1ba8c6150bde9bfff4df9895f2a69040",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4fd6c7ba_39ec786f",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-11-09T09:57:08Z",
       "side": 1,
       "message": "Would it also work by adding `|| !mDecorView.isAttachedToWindow()` here?",
+      "range": {
+        "startLine": 736,
+        "startChar": 34,
+        "endLine": 736,
+        "endChar": 35
+      },
+      "revId": "5c4b065d1ba8c6150bde9bfff4df9895f2a69040",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ebcaf20_977b6dd4",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/startingsurface/StartingSurfaceDrawer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2022-11-09T10:10:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fd6c7ba_39ec786f",
       "range": {
         "startLine": 736,
         "startChar": 34,
