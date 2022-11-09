@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "19e95e3f_8ea751db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2022-11-09T10:33:01Z",
+      "side": 1,
+      "message": "What do you think if we remove this listener as soon as we done for `onViewAttachedToWindow()`? See: [codesaerch](https://cs.android.com/search?q\u003d%22removeOnAttachStateChangeListener(this)%22\u0026ss\u003dandroid%2Fplatform%2Fsuperproject:frameworks%2Fbase%2Fpackages%2FSystemUI%2F)",
+      "parentUuid": "16068dbc_7144a64f",
+      "revId": "5c4b065d1ba8c6150bde9bfff4df9895f2a69040",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4fd6c7ba_39ec786f",
         "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/startingsurface/StartingSurfaceDrawer.java",
         "patchSetId": 2
