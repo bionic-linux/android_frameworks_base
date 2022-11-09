@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "16068dbc_7144a64f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2022-11-09T10:26:54Z",
+      "side": 1,
+      "message": "This can be read as the listener is a part of the view.\nSuch as it is unneeceerary to set all fields of the object to null after the object is no longer used.\nYou can find almost all usages in SystemUI don\u0027t clear it: [codesearch](https://cs.android.com/search?q\u003d%22onViewDetachedFromWindow(%22\u0026ss\u003dandroid%2Fplatform%2Fsuperproject:frameworks%2Fbase%2Fpackages%2FSystemUI%2F)",
+      "parentUuid": "501b71c0_c1fa3a51",
+      "revId": "5c4b065d1ba8c6150bde9bfff4df9895f2a69040",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4fd6c7ba_39ec786f",
         "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/startingsurface/StartingSurfaceDrawer.java",
         "patchSetId": 2
