@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9bea768_9d901838",
+        "filename": "Android.bp",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-11-09T20:15:04Z",
+      "side": 1,
+      "message": "I\u0027m renaming `android.security.rkp` to `android.frameworks.rkp`. This will hopefully make it more obvious which AIDL is which.",
+      "parentUuid": "1fc5d936_4b9a2e84",
+      "range": {
+        "startLine": 108,
+        "startChar": 31,
+        "endLine": 108,
+        "endChar": 33
+      },
+      "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43279952_d87a9c5d",
