@@ -229,6 +229,24 @@
       "parentUuid": "03c24870_7e63a433",
       "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67510b07_1961a376",
+        "filename": "services/core/java/com/android/server/security/RemoteProvisioningService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2022-11-10T21:02:39Z",
+      "side": 1,
+      "message": "It\u0027s a very common pattern in this project so I personally don\u0027t feel the need for explanation. The documentation in the Binder class explains its purpose quite well.",
+      "parentUuid": "fb705867_f74ae3a5",
+      "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
