@@ -51,6 +51,24 @@
       "parentUuid": "6e71fd8b_fd4f8306",
       "revId": "ac53946fa190cbeec33262041ce678f79a0dc7b1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "616487de_951fddd4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2022-11-10T19:59:57Z",
+      "side": 1,
+      "message": "ViewConfiguration is a global and there is no concept of a \"ui thread\" at this level. There is no limitation of a single \"UI thread\" per process. So either this is missing an \"@MainThread\" annotation or, more likely, this fix is actually necessary \u0026 correct, but just needs to be adjusted to not use `synchronized` but instead an internal lock",
+      "parentUuid": "dcfc7dc8_ba9764ad",
+      "revId": "ac53946fa190cbeec33262041ce678f79a0dc7b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
