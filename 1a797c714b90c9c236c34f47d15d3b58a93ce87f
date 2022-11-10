@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "742b2aa7_81e772ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2022-11-10T07:24:19Z",
+      "side": 1,
+      "message": "Hi, PTAL the Presubmit CI error.",
+      "revId": "1a797c714b90c9c236c34f47d15d3b58a93ce87f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
