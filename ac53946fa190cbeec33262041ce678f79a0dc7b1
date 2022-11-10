@@ -33,6 +33,24 @@
       "message": "View system as designed does not support multithreading. There are many parts that make assumptions about there being a UI thread. Sadly, this means that we do not want to take this patch.",
       "revId": "ac53946fa190cbeec33262041ce678f79a0dc7b1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcfc7dc8_ba9764ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2022-11-10T18:09:25Z",
+      "side": 1,
+      "message": "Also we don\u0027t allow `synchronized` on public API.",
+      "parentUuid": "6e71fd8b_fd4f8306",
+      "revId": "ac53946fa190cbeec33262041ce678f79a0dc7b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
