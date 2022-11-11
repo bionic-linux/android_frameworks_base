@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f02f2dd8_e93255aa",
+        "filename": "core/java/android/os/ServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-11-11T21:29:33Z",
+      "side": 1,
+      "message": "It\u0027s not safe to be making behavioral changes. Who knows how many things are already depending on the nullable output behavior?\n\nWe should only be exposing this API to module callers.",
+      "range": {
+        "startLine": 262,
+        "startChar": 4,
+        "endLine": 262,
+        "endChar": 12
+      },
+      "revId": "dd4124d194a8e1208d2e4029001620f060a03826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
