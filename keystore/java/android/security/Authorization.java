@@ -73,7 +73,7 @@ public class Authorization {
      *
      * @param locked            - whether it is a lock (true) or unlock (false) event
      * @param syntheticPassword - if it is an unlock event with the password, pass the synthetic
-     *                            password provided by the LockSettingService
+     *                            password provided by the LockSettingsService
      * @param unlockingSids     - KeyMint secure user IDs that should be permitted to unlock
      *                            UNLOCKED_DEVICE_REQUIRED keys.
      *
