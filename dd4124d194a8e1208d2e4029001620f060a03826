@@ -94,6 +94,30 @@
       },
       "revId": "dd4124d194a8e1208d2e4029001620f060a03826",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86bdac5d_0d564572",
+        "filename": "core/java/android/os/ServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1937166
+      },
+      "writtenOn": "2022-11-11T22:10:34Z",
+      "side": 1,
+      "message": "even if we bubble up the exception, we\u0027ll still need @NonNull, else builder fails with this.\n\n```\nframeworks/base/core/java/android/os/ServiceManager.java:262: error: Missing nullability on method `getDeclaredInstances` return [MissingNullability]\n```\n\nI\u0027ll add the @NonNull annotation and rethrow the exception after logging it.\n\nWould that work for both of you? @smoreland@google.com @sethmo@google.com",
+      "parentUuid": "2fdeaf61_79c784af",
+      "range": {
+        "startLine": 262,
+        "startChar": 4,
+        "endLine": 262,
+        "endChar": 12
+      },
+      "revId": "dd4124d194a8e1208d2e4029001620f060a03826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
