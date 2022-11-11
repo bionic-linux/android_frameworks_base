@@ -92,6 +92,30 @@
       },
       "revId": "ac53946fa190cbeec33262041ce678f79a0dc7b1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "159e5f75_7429db4f",
+        "filename": "core/java/android/view/ViewConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2022-11-11T17:46:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b982b97a_889d066e",
+      "range": {
+        "startLine": 531,
+        "startChar": 42,
+        "endLine": 531,
+        "endChar": 57
+      },
+      "revId": "ac53946fa190cbeec33262041ce678f79a0dc7b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
