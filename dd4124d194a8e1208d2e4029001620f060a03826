@@ -70,6 +70,30 @@
       },
       "revId": "dd4124d194a8e1208d2e4029001620f060a03826",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fdeaf61_79c784af",
+        "filename": "core/java/android/os/ServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-11-11T21:54:10Z",
+      "side": 1,
+      "message": "Can we just bubble up the exception?\n\nMaybe that\u0027s what Steven means by \"crashing...would be ok\"",
+      "parentUuid": "aae0cf61_ef3b9be7",
+      "range": {
+        "startLine": 262,
+        "startChar": 4,
+        "endLine": 262,
+        "endChar": 12
+      },
+      "revId": "dd4124d194a8e1208d2e4029001620f060a03826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
