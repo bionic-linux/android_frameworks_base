@@ -22,6 +22,30 @@
       },
       "revId": "dd4124d194a8e1208d2e4029001620f060a03826",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b250c30_7a084193",
+        "filename": "core/java/android/os/ServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1937166
+      },
+      "writtenOn": "2022-11-11T21:41:57Z",
+      "side": 1,
+      "message": "Build will not let us have nullable collections 😅.\nI got compiler errors when trying to build without specifying nullability.\n\nI saw from Android search that there are 2 components dependent on this particular functionality. IFace and IFingerprint. Both have checks for null and 0 length.",
+      "parentUuid": "f02f2dd8_e93255aa",
+      "range": {
+        "startLine": 262,
+        "startChar": 4,
+        "endLine": 262,
+        "endChar": 12
+      },
+      "revId": "dd4124d194a8e1208d2e4029001620f060a03826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
