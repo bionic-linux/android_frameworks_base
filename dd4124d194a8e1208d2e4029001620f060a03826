@@ -46,6 +46,30 @@
       },
       "revId": "dd4124d194a8e1208d2e4029001620f060a03826",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aae0cf61_ef3b9be7",
+        "filename": "core/java/android/os/ServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-11-11T21:47:19Z",
+      "side": 1,
+      "message": "Also - this API - due to some default installed framework AIDL HALs - won\u0027t really ever return an empty list. Crashing in that case would be okay.",
+      "parentUuid": "8b250c30_7a084193",
+      "range": {
+        "startLine": 262,
+        "startChar": 4,
+        "endLine": 262,
+        "endChar": 12
+      },
+      "revId": "dd4124d194a8e1208d2e4029001620f060a03826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
