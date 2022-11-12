@@ -1722,3 +1722,8 @@ extern "C" jint registerFrameworkNatives(JNIEnv* env) {
     return register_jni_procs(gRegJNI, NELEM(gRegJNI), env);
 }
 }   // namespace android
+
+// API used by AIDL fuzzers to access to JNI functions from libandroid_runtime.
+extern "C" jint Java_FuzzBinder_registerNatives(JNIEnv* env) {
+    return register_jni_procs(gRegJNI, NELEM(gRegJNI), env);
+}
