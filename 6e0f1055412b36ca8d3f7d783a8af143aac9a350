@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "253c2fbe_f7a5562d",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-14T22:43:20Z",
+      "side": 1,
+      "message": "Do we need /all/ the configs? or can we just pass in the single config necessary?",
+      "range": {
+        "startLine": 369,
+        "startChar": 43,
+        "endLine": 369,
+        "endChar": 53
+      },
+      "revId": "6e0f1055412b36ca8d3f7d783a8af143aac9a350",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0cda7d7_a1059c17",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-14T22:43:20Z",
+      "side": 1,
+      "message": "Spelling",
+      "range": {
+        "startLine": 1024,
+        "startChar": 29,
+        "endLine": 1024,
+        "endChar": 48
+      },
+      "revId": "6e0f1055412b36ca8d3f7d783a8af143aac9a350",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2482614c_901cae4a",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-14T22:43:20Z",
+      "side": 1,
+      "message": "Suggest \"forImmutableCapabilityChanges\"\n\nWe can genericize this a bit to make it clear /why/ changing restrictions requires a restart.\n\nAlso, removing also requires a restart, so it\u0027s not just \"addingRestriction\"",
+      "range": {
+        "startLine": 1055,
+        "startChar": 45,
+        "endLine": 1055,
+        "endChar": 80
+      },
+      "revId": "6e0f1055412b36ca8d3f7d783a8af143aac9a350",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53bb7f13_d0dbc328",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-14T22:43:20Z",
+      "side": 1,
+      "message": "I suspect we\u0027ll also need to check the rest of the telephony capabilties; we should restart all cellular networks if one changes:\n\nConsider this case: `Restricted IMS + Restricted Cell -- SAFE MODE --\u003e Restricted IMS + Unrestricted Cell`\n- It probably shouldn\u0027t restart the RESTRICTED IMS, but it may accidentally do so.",
+      "range": {
+        "startLine": 1337,
+        "startChar": 31,
+        "endLine": 1337,
+        "endChar": 47
+      },
+      "revId": "6e0f1055412b36ca8d3f7d783a8af143aac9a350",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81ced77a_81f288b3",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-14T22:43:20Z",
+      "side": 1,
+      "message": "Spelling please :)",
+      "range": {
+        "startLine": 1048,
+        "startChar": 12,
+        "endLine": 1048,
+        "endChar": 33
+      },
+      "revId": "6e0f1055412b36ca8d3f7d783a8af143aac9a350",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
