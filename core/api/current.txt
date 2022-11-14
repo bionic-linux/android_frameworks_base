@@ -31117,6 +31117,7 @@ package android.os {
   public final class Debug {
     method public static void attachJvmtiAgent(@NonNull String, @Nullable String, @Nullable ClassLoader) throws java.io.IOException;
     method @Deprecated public static void changeDebugPort(int);
+    method public static boolean didSuspendAll();
     method public static void dumpHprofData(String) throws java.io.IOException;
     method public static boolean dumpService(String, java.io.FileDescriptor, String[]);
     method @Deprecated public static void enableEmulatorTraceOutput();

@@ -101,7 +101,7 @@ public final class Debug
     private static final int MIN_DEBUGGER_IDLE = 1300;      // msec
 
     /* how long to sleep when polling for activity */
-    private static final int SPIN_DELAY = 200;              // msec
+    private static final int SPIN_DELAY = 100;              // msec
 
     /**
      * Default trace file path and file
@@ -1001,39 +1001,13 @@ public final class Debug
         DdmServer.sendChunk(waitChunk);
 
         mWaiting = true;
-        while (!isDebuggerConnected()) {
+        while (!isDebuggerConnected() && !didSuspendAll()) {
             try { Thread.sleep(SPIN_DELAY); }
             catch (InterruptedException ie) {}
         }
         mWaiting = false;
 
         System.out.println("Debugger has connected");
-
-        /*
-         * There is no "ready to go" signal from the debugger, and we're
-         * not allowed to suspend ourselves -- the debugger expects us to
-         * be running happily, and gets confused if we aren't.  We need to
-         * allow the debugger a chance to set breakpoints before we start
-         * running again.
-         *
-         * Sit and spin until the debugger has been idle for a short while.
-         */
-        while (true) {
-            long delta = VMDebug.lastDebuggerActivity();
-            if (delta < 0) {
-                System.out.println("debugger detached?");
-                break;
-            }
-
-            if (delta < MIN_DEBUGGER_IDLE) {
-                System.out.println("waiting for debugger to settle...");
-                try { Thread.sleep(SPIN_DELAY); }
-                catch (InterruptedException ie) {}
-            } else {
-                System.out.println("debugger has settled (" + delta + ")");
-                break;
-            }
-        }
     }
 
     /**
@@ -1049,6 +1023,13 @@ public final class Debug
      */
     public static boolean isDebuggerConnected() {
         return VMDebug.isDebuggerConnected();
+    }
+
+    /**
+     * Determine if the initial suspendAll was issued.
+     */
+    public static boolean didSuspendAll() {
+        return VMDebug.didSuspendAll();
     }
 
     /**
