@@ -48,7 +48,7 @@ final class AppWaitingForDebuggerDialog extends BaseErrorDialog {
             text.append(app.processName);
         }
 
-        text.append(" is waiting for the debugger to attach.");
+        text.append(" is waiting for the debugger to attach and resume.");
 
         setMessage(text.toString());
         setButton(DialogInterface.BUTTON_POSITIVE, "Force Close", mHandler.obtainMessage(1, app));
