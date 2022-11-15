@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d00b0c9f_3367f086",
+        "filename": "core/java/android/os/Debug.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1047769
+      },
+      "writtenOn": "2022-11-15T18:17:49Z",
+      "side": 1,
+      "message": "We discussed this in the meeting a few days ago. I\u0027d suggest you replace this all with\n\n```\nwhile (!isDebuggerConnected()) {\n  sleep()\n}\n\nVMDebug.SuspendAllAndSendVMStart();\nreturn\n```\n\nMake the VMDebug function in libjdwp and steal it from art the same way as isDebuggerConnected. Have it suspend all and sent vmstart.",
+      "range": {
+        "startLine": 1003,
+        "startChar": 7,
+        "endLine": 1011,
+        "endChar": 0
+      },
+      "revId": "18b5f00b765cb35c903f99afac3194c01528a4a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
