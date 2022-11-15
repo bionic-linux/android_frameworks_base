@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29a73826_f7806fd3",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3683,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2022-11-15T08:36:54Z",
+      "side": 1,
+      "message": "Build is failing with these permissions deleted.",
+      "range": {
+        "startLine": 3670,
+        "startChar": 0,
+        "endLine": 3683,
+        "endChar": 57
+      },
+      "revId": "0a96c35042e9af4e2202766b82899f5a7531b8a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
