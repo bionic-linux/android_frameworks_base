@@ -3,6 +3,29 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "109a7fa2_99b0f71d",
+        "filename": "core/java/android/os/Debug.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1047769
+      },
+      "writtenOn": "2022-11-15T18:38:50Z",
+      "side": 1,
+      "message": "On a slightly larger note you might want to leave waitForDebugger alone and add a new (private) api that\u0027s only accessible to frameworks/base that sends the VM_START event and is only called when am starts the app waiting for a debugger.\n\nThis is a public api and you\u0027re changing its behavior in non-trivial ways.",
+      "range": {
+        "startLine": 989,
+        "startChar": 0,
+        "endLine": 989,
+        "endChar": 42
+      },
+      "revId": "18b5f00b765cb35c903f99afac3194c01528a4a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "d00b0c9f_3367f086",
         "filename": "core/java/android/os/Debug.java",
         "patchSetId": 4
