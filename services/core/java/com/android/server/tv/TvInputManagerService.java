@@ -1056,6 +1056,14 @@ public final class TvInputManagerService extends SystemService {
         if (DEBUG) {
             Slog.d(TAG, "updateTvInputInfoLocked(inputInfo=" + inputInfo + ")");
         }
+        HdmiDeviceInfo hdmiDeviceInfo = inputInfo.getHdmiDeviceInfo();
+        if (hdmiDeviceInfo != null && hdmiDeviceInfo.isCecDevice()) {
+            mTvInputHardwareManager.addHdmiInput(hdmiDeviceInfo.getId(), inputInfo);
+            ServiceState serviceState = userState.serviceStateMap.get(inputInfo.getComponent());
+            if (serviceState != null) {
+                serviceState.hardwareInputMap.put(inputInfo.getId(), inputInfo);
+            }
+        }
         String inputId = inputInfo.getId();
         TvInputState inputState = userState.inputMap.get(inputId);
         if (inputState == null) {
