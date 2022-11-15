@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b52ac7d3_98c6bed1",
+        "filename": "boot/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-11-15T14:50:20Z",
+      "side": 1,
+      "message": "So what is the setup now? Is an apex containing the jars backing this bootclasspath fragment going to be installed on device in both cases? How does that jar handle the rest of the feature not existing?",
+      "revId": "ceff6b8f1f150d498663d72574c63e9f01e231f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
