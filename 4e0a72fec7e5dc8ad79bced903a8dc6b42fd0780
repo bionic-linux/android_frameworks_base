@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "137ad09d_aecbcfe9",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3672,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2022-11-15T14:50:33Z",
+      "side": 1,
+      "message": "Nit: WS",
+      "range": {
+        "startLine": 3672,
+        "startChar": 0,
+        "endLine": 3672,
+        "endChar": 9
+      },
+      "revId": "4e0a72fec7e5dc8ad79bced903a8dc6b42fd0780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
