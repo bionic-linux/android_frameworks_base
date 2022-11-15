@@ -46,6 +46,30 @@
       },
       "revId": "0a96c35042e9af4e2202766b82899f5a7531b8a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4ecacd0_611c4d54",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3683,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2022-11-15T14:33:07Z",
+      "side": 1,
+      "message": "I\u0027ve added comment.\n\n\u003e In theory, QUERY_TIME_ZONE_RULES looks generic enough that it could be reused in future for mainline module update status, but probably not worth worrying about unless you have plans to use it immediately.\n\nI hope it will happen one day, but I have no idea how such implementation might looks like.\n\n\u003e The same kind of deprecation / docs updates should be made to comments associated with anything else that\u0027s left over in the System API surface.\n\nI think these strings will be used in prebuilts only after this CL.",
+      "parentUuid": "f1617db5_c86f33ea",
+      "range": {
+        "startLine": 3670,
+        "startChar": 0,
+        "endLine": 3683,
+        "endChar": 57
+      },
+      "revId": "0a96c35042e9af4e2202766b82899f5a7531b8a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
