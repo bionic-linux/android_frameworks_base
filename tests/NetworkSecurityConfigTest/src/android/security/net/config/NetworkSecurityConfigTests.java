@@ -46,9 +46,9 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
         super(Activity.class);
     }
 
-    // SHA-256 of the G2 intermediate CA for android.com (as of 10/2015).
+    // SHA-256 of the G2 intermediate CA for android.com (as of 11/2022).
     private static final byte[] G2_SPKI_SHA256
-            = hexToBytes("ec722969cb64200ab6638f68ac538e40abab5b19a6485661042a1061c4612776");
+        = hexToBytes("cc24e77cbc0b29b4bd4b6b1ba7eb85cf82993a8705bd7c64574e827bd3b9336c");
 
     private static final byte[] TEST_CA_BYTES
             = hexToBytes(
