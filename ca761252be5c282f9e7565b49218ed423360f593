@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc80822d_a2b08ebb",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-16T22:31:36Z",
+      "side": 1,
+      "message": "Can we make sure these are all spelled correctly?",
+      "range": {
+        "startLine": 1025,
+        "startChar": 29,
+        "endLine": 1025,
+        "endChar": 48
+      },
+      "revId": "ca761252be5c282f9e7565b49218ed423360f593",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0552af59_1d51e645",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1326,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-16T22:31:36Z",
+      "side": 1,
+      "message": "Why does this matter? And would this accidentally cross-match between wifi and cell?\n\nie:\ncaps \u003d TRANSPORT_CELLULAR + INTERNET\nother \u003d TRANSPORT_WIFI + INTERNET",
+      "range": {
+        "startLine": 1325,
+        "startChar": 0,
+        "endLine": 1326,
+        "endChar": 77
+      },
+      "revId": "ca761252be5c282f9e7565b49218ed423360f593",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
