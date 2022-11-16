@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "49e70a3f_c6496fc1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-16T22:37:19Z",
+      "side": 1,
+      "message": "This looks like it\u0027s not just a stub; it\u0027s all the logic for making sure underlying networks can be marked as restricted.\n\nAdding a stub is part of this, but we also implement the logic that if the stub returns some other value other than the current default, it will just (tm) work.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "ca761252be5c282f9e7565b49218ed423360f593",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dc80822d_a2b08ebb",
         "filename": "services/core/java/com/android/server/VcnManagementService.java",
         "patchSetId": 4
