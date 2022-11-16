@@ -52,7 +52,7 @@ public class XmlConfigTests extends AndroidTestCase {
         NetworkSecurityConfig config = appConfig.getConfigForHostname("");
         assertNotNull(config);
         // Check defaults.
-        assertTrue(config.isCleartextTrafficPermitted());
+        assertFalse(config.isCleartextTrafficPermitted());
         assertFalse(config.isHstsEnforced());
         assertFalse(config.getTrustAnchors().isEmpty());
         PinSet pinSet = config.getPins();
@@ -72,7 +72,7 @@ public class XmlConfigTests extends AndroidTestCase {
         NetworkSecurityConfig config = appConfig.getConfigForHostname("");
         assertNotNull(config);
         // Check defaults.
-        assertTrue(config.isCleartextTrafficPermitted());
+        assertFalse(config.isCleartextTrafficPermitted());
         assertFalse(config.isHstsEnforced());
         assertTrue(config.getTrustAnchors().isEmpty());
         PinSet pinSet = config.getPins();
@@ -91,14 +91,14 @@ public class XmlConfigTests extends AndroidTestCase {
         NetworkSecurityConfig config = appConfig.getConfigForHostname("");
         assertNotNull(config);
         // Check defaults.
-        assertTrue(config.isCleartextTrafficPermitted());
+        assertFalse(config.isCleartextTrafficPermitted());
         assertFalse(config.isHstsEnforced());
         assertTrue(config.getTrustAnchors().isEmpty());
         PinSet pinSet = config.getPins();
         assertTrue(pinSet.pins.isEmpty());
         // Check android.com.
         config = appConfig.getConfigForHostname("android.com");
-        assertTrue(config.isCleartextTrafficPermitted());
+        assertFalse(config.isCleartextTrafficPermitted());
         assertFalse(config.isHstsEnforced());
         assertFalse(config.getTrustAnchors().isEmpty());
         pinSet = config.getPins();
@@ -188,7 +188,7 @@ public class XmlConfigTests extends AndroidTestCase {
         ApplicationConfig appConfig = new ApplicationConfig(source);
         assertTrue(appConfig.hasPerDomainConfigs());
         NetworkSecurityConfig config = appConfig.getConfigForHostname("android.com");
-        assertTrue(config.isCleartextTrafficPermitted());
+        assertFalse(config.isCleartextTrafficPermitted());
         assertFalse(config.isHstsEnforced());
         assertFalse(config.getTrustAnchors().isEmpty());
         PinSet pinSet = config.getPins();
@@ -250,7 +250,7 @@ public class XmlConfigTests extends AndroidTestCase {
         ApplicationConfig appConfig = new ApplicationConfig(source);
         // Check android.com.
         NetworkSecurityConfig config = appConfig.getConfigForHostname("android.com");
-        assertTrue(config.isCleartextTrafficPermitted());
+        assertFalse(config.isCleartextTrafficPermitted());
         assertFalse(config.isHstsEnforced());
         assertEquals(2, config.getTrustAnchors().size());
         // Try connections.
@@ -267,7 +267,7 @@ public class XmlConfigTests extends AndroidTestCase {
         ApplicationConfig appConfig = new ApplicationConfig(source);
         // Check android.com.
         NetworkSecurityConfig config = appConfig.getConfigForHostname("android.com");
-        assertTrue(config.isCleartextTrafficPermitted());
+        assertFalse(config.isCleartextTrafficPermitted());
         assertFalse(config.isHstsEnforced());
         assertEquals(2, config.getTrustAnchors().size());
         // Try connections.
