@@ -252,10 +252,12 @@ public final class ServiceManager {
     }
 
     /**
-     * Returns the list of declared instances for an interface.
+     * Returns the list of declared service instances for an interface. The instances can be
+     * searched if they have been declared somewhere (eg. VINTF manifest). The instances returned
+     * are the individual instance names which would need to be appended to the interface name to
+     * get a fully qualified service name that can then be connected to using waitForService.
      *
-     * @return true if the service is declared somewhere (eg. VINTF manifest) and
-     * waitForService should always be able to return the service.
+     * @return array of declared service instances for the given interface.
      * @hide
      */
     @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
