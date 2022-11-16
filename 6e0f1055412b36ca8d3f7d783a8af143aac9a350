@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6f93e1c9_ff0c1508",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-11-16T22:19:15Z",
+      "side": 1,
+      "message": "hmm when I\u0027m defining this stub I want to make sure in the later CL I only need to change the code within this stub or at least just the stub signature. If I get the single VcnConfig before calling into the stub, I need to make changes outside this stub.",
+      "parentUuid": "253c2fbe_f7a5562d",
+      "range": {
+        "startLine": 369,
+        "startChar": 43,
+        "endLine": 369,
+        "endChar": 53
+      },
+      "revId": "6e0f1055412b36ca8d3f7d783a8af143aac9a350",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f0cda7d7_a1059c17",
         "filename": "services/core/java/com/android/server/VcnManagementService.java",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2022-11-14T22:43:20Z",
       "side": 1,
       "message": "Spelling",
+      "range": {
+        "startLine": 1024,
+        "startChar": 29,
+        "endLine": 1024,
+        "endChar": 48
+      },
+      "revId": "6e0f1055412b36ca8d3f7d783a8af143aac9a350",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d7711c9_728b00b1",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-11-16T22:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0cda7d7_a1059c17",
       "range": {
         "startLine": 1024,
         "startChar": 29,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5752aab_fe01c9d6",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-11-16T22:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2482614c_901cae4a",
+      "range": {
+        "startLine": 1055,
+        "startChar": 45,
+        "endLine": 1055,
+        "endChar": 80
+      },
+      "revId": "6e0f1055412b36ca8d3f7d783a8af143aac9a350",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "53bb7f13_d0dbc328",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7ec47cd_ba346c61",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-11-16T22:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53bb7f13_d0dbc328",
+      "range": {
+        "startLine": 1337,
+        "startChar": 31,
+        "endLine": 1337,
+        "endChar": 47
+      },
+      "revId": "6e0f1055412b36ca8d3f7d783a8af143aac9a350",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81ced77a_81f288b3",
@@ -106,6 +202,30 @@
       "writtenOn": "2022-11-14T22:43:20Z",
       "side": 1,
       "message": "Spelling please :)",
+      "range": {
+        "startLine": 1048,
+        "startChar": 12,
+        "endLine": 1048,
+        "endChar": 33
+      },
+      "revId": "6e0f1055412b36ca8d3f7d783a8af143aac9a350",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eadb8f97_458c5618",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-11-16T22:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81ced77a_81f288b3",
       "range": {
         "startLine": 1048,
         "startChar": 12,
