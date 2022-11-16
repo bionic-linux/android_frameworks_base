@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "afccd821_259107c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2022-11-16T09:40:01Z",
+      "side": 1,
+      "message": "Michael, can you please check API-Review part?\n\nThanks!",
+      "revId": "69a5f7df1a53f3e9cb6534ea8d069d629c8b0fee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
