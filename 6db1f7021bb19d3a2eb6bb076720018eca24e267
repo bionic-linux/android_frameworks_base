@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "506a428c_d564cf77",
+        "filename": "core/java/Android.bp",
+        "patchSetId": 16
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1124693
+      },
+      "writtenOn": "2022-11-16T18:19:08Z",
+      "side": 1,
+      "message": "Also, identity (which needs C++ bindings) right?",
+      "range": {
+        "startLine": 379,
+        "startChar": 58,
+        "endLine": 379,
+        "endChar": 67
+      },
+      "revId": "6db1f7021bb19d3a2eb6bb076720018eca24e267",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
