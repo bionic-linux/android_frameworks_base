@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05d964f0_6b7cd9fd",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2022-11-17T16:44:39Z",
+      "side": 0,
+      "message": "is it actually ever safe to remove protected-broadcasts and permissions?\n\nSeems like a badly written app might check callers against these permissions or listen for these broadcasts and rely on the fact that only the system can send / obtain them; but after this change that will no longer be the case.",
+      "range": {
+        "startLine": 674,
+        "startChar": 4,
+        "endLine": 676,
+        "endChar": 104
+      },
+      "revId": "60bcab93678eec400bbdaa53f1b7f3e3d9119165",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
