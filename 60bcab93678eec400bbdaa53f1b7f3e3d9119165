@@ -46,6 +46,30 @@
       },
       "revId": "60bcab93678eec400bbdaa53f1b7f3e3d9119165",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0f01ad6_d890de23",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2022-11-17T17:45:01Z",
+      "side": 0,
+      "message": "Is the advice to leave them present and mark them deprecated?",
+      "parentUuid": "02e21c54_e6a8abc9",
+      "range": {
+        "startLine": 674,
+        "startChar": 4,
+        "endLine": 676,
+        "endChar": 104
+      },
+      "revId": "60bcab93678eec400bbdaa53f1b7f3e3d9119165",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
