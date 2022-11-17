@@ -22,6 +22,30 @@
       },
       "revId": "60bcab93678eec400bbdaa53f1b7f3e3d9119165",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02e21c54_e6a8abc9",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2022-11-17T17:00:33Z",
+      "side": 0,
+      "message": "Permissions are there, they are just deprecated.\n\nThese broadcasts were probably fired just once in O-MR1 or P era. How serious these consequences for bad apps are?\n\nFYI it happened before: ag/14508381.",
+      "parentUuid": "05d964f0_6b7cd9fd",
+      "range": {
+        "startLine": 674,
+        "startChar": 4,
+        "endLine": 676,
+        "endChar": 104
+      },
+      "revId": "60bcab93678eec400bbdaa53f1b7f3e3d9119165",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
