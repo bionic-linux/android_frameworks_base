@@ -92,6 +92,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "04705f42_f25984fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1944185
+      },
+      "writtenOn": "2022-11-18T15:27:12Z",
+      "side": 1,
+      "message": "Yes it works locally on aosp branch, I see that this failure on git_tm-mainline-prod. Not sure what is the difference between the two branches that may produce this error.",
+      "parentUuid": "f11448ae_6c27be4d",
+      "revId": "c8e2c45cb2b43bdb01b9f278398c25ba125ea20c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2eb9724_9a5b7afa",
         "filename": "Android.bp",
         "patchSetId": 1
