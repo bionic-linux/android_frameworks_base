@@ -110,6 +110,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7ee92438_52852b5a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-11-18T16:08:42Z",
+      "side": 1,
+      "message": "ah, the statsd repository automerges into tm-mainline-prod, but this CL does not. So you need to land this CL in tm-mainline-prod first.",
+      "parentUuid": "04705f42_f25984fe",
+      "revId": "c8e2c45cb2b43bdb01b9f278398c25ba125ea20c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2eb9724_9a5b7afa",
         "filename": "Android.bp",
         "patchSetId": 1
