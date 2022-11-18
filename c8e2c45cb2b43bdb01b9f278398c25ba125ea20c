@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bfd5e7c5_c7826368",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1944185
+      },
+      "writtenOn": "2022-11-18T12:19:24Z",
+      "side": 1,
+      "message": "I already created a topic with all changes and tested it locally.",
+      "parentUuid": "ee189265_125780bd",
+      "revId": "c8e2c45cb2b43bdb01b9f278398c25ba125ea20c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2eb9724_9a5b7afa",
         "filename": "Android.bp",
         "patchSetId": 1
@@ -31,6 +49,30 @@
       "writtenOn": "2022-11-18T12:05:09Z",
       "side": 1,
       "message": "Please move to core/java/Android.bp",
+      "range": {
+        "startLine": 620,
+        "startChar": 0,
+        "endLine": 624,
+        "endChar": 1
+      },
+      "revId": "c8e2c45cb2b43bdb01b9f278398c25ba125ea20c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2670e70_1c937e63",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1944185
+      },
+      "writtenOn": "2022-11-18T12:19:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b2eb9724_9a5b7afa",
       "range": {
         "startLine": 620,
         "startChar": 0,
