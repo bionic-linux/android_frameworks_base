@@ -16,6 +16,29 @@
       "message": "have you tested this works for the use-case you want to enable? would be good to put it in a topic with such a change to verify it\u0027s working.",
       "revId": "c8e2c45cb2b43bdb01b9f278398c25ba125ea20c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2eb9724_9a5b7afa",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-11-18T12:05:09Z",
+      "side": 1,
+      "message": "Please move to core/java/Android.bp",
+      "range": {
+        "startLine": 620,
+        "startChar": 0,
+        "endLine": 624,
+        "endChar": 1
+      },
+      "revId": "c8e2c45cb2b43bdb01b9f278398c25ba125ea20c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
