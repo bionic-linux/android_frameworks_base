@@ -484,4 +484,9 @@ java_library {
     ],
 }
 
+java_library {
+    name: "framework-configinfrastructure",
+    sdk_version: "module_current",
+}
+
 // protolog end
