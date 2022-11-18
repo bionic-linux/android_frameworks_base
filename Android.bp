@@ -617,3 +617,8 @@ build = [
     "ProtoLibraries.bp",
     "TestProtoLibraries.bp",
 ]
+
+java_library {
+    name: "framework-configinfrastructure",
+    sdk_version: "module_current",
+}
