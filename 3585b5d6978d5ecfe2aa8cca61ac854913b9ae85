@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4426622b_d6806e5d",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-18T00:40:31Z",
+      "side": 1,
+      "message": "Suggest always phrasing in positive sense \"Only mark a cell network restricted...\"",
+      "range": {
+        "startLine": 1029,
+        "startChar": 35,
+        "endLine": 1029,
+        "endChar": 41
+      },
+      "revId": "3585b5d6978d5ecfe2aa8cca61ac854913b9ae85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b92536c6_78b42a1d",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-18T00:40:31Z",
+      "side": 1,
+      "message": "Duplicate duplicate",
+      "range": {
+        "startLine": 1058,
+        "startChar": 44,
+        "endLine": 1058,
+        "endChar": 50
+      },
+      "revId": "3585b5d6978d5ecfe2aa8cca61ac854913b9ae85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5b69627_046c2ff7",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-18T00:40:31Z",
+      "side": 1,
+      "message": "Suggest \"IgnoringTransportTest\" or \"getNonTestTransportTypes\"",
+      "range": {
+        "startLine": 1324,
+        "startChar": 46,
+        "endLine": 1324,
+        "endChar": 53
+      },
+      "revId": "3585b5d6978d5ecfe2aa8cca61ac854913b9ae85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
