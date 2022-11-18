@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8c3d429_540de895",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-18T23:36:31Z",
+      "side": 1,
+      "message": "just one question",
+      "revId": "1e91f8dbada6df090843699439c03fd25fb30969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "178d124c_52c8cf16",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-18T23:36:31Z",
+      "side": 1,
+      "message": "Does this break when a new networkcapability is added? for example, what happen if there is a \"BETTER_INTERNET\" capability? do we need to make changes?",
+      "range": {
+        "startLine": 1339,
+        "startChar": 34,
+        "endLine": 1339,
+        "endChar": 54
+      },
+      "revId": "1e91f8dbada6df090843699439c03fd25fb30969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
