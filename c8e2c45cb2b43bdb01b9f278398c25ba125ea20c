@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f11448ae_6c27be4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-11-18T15:01:30Z",
+      "side": 1,
+      "message": "looks like presubmit is faiilng:\n\nerror: packages/modules/StatsD/service/Android.bp:26:1: \"service-statsd\" depends on undefined module \"framework-configinfrastructure\"\n\ndoes it actually work locally for you?",
+      "parentUuid": "8dfb5bb5_04f2b3e6",
+      "revId": "c8e2c45cb2b43bdb01b9f278398c25ba125ea20c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2eb9724_9a5b7afa",
         "filename": "Android.bp",
         "patchSetId": 1
