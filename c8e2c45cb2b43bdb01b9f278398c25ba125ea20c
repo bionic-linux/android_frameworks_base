@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8dfb5bb5_04f2b3e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1944185
+      },
+      "writtenOn": "2022-11-18T14:39:03Z",
+      "side": 1,
+      "message": "There are more than 15 CL, I think it will be easier to submit them separately without a topic after this change, also i didn\u0027t get all the approvals yet.\n\nI\u0027ve attached one of them as poc that this changes works, what do you think?",
+      "parentUuid": "3c6cb7ed_ad59bb55",
+      "revId": "c8e2c45cb2b43bdb01b9f278398c25ba125ea20c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2eb9724_9a5b7afa",
         "filename": "Android.bp",
         "patchSetId": 1
@@ -115,6 +133,30 @@
       "side": 1,
       "message": "Just FYI, the convention is to \n- use \"Done\" when the change asked for is actually done\n- \"Ack\" when you\u0027re closing the comment with no action (if it\u0027s been resolved in a different way)\n- otherwise, leave it open until one of the two above occurs",
       "parentUuid": "a2670e70_1c937e63",
+      "range": {
+        "startLine": 620,
+        "startChar": 0,
+        "endLine": 624,
+        "endChar": 1
+      },
+      "revId": "c8e2c45cb2b43bdb01b9f278398c25ba125ea20c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83cdc7c8_5d64d97f",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1944185
+      },
+      "writtenOn": "2022-11-18T14:39:03Z",
+      "side": 1,
+      "message": "thank you for clarification, I thought \"ack\" means that I agree and will apply the change.\n\nDone, I\u0027ve moved the file.",
+      "parentUuid": "361eaf7b_6434bec3",
       "range": {
         "startLine": 620,
         "startChar": 0,
