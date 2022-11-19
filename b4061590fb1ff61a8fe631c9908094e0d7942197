@@ -33,6 +33,23 @@
       "message": "hi Narayan\n\nCould you please help to review this patch?\nIt makes the android resources owners to review the jni part of android resources overlay. I have another patch ag/19009467 needed to be reviewed by android resources.",
       "revId": "b4061590fb1ff61a8fe631c9908094e0d7942197",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3570279c_46d05b19",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1309980
+      },
+      "writtenOn": "2022-11-19T05:53:56Z",
+      "side": 1,
+      "message": "hi Narayan\n\nCould you please take a look at this patch to change the owner of com_android_internal_content_om_Overlay* to file:/core/java/android/content/res/OWNERS?\n\nThank you very much.",
+      "revId": "b4061590fb1ff61a8fe631c9908094e0d7942197",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
