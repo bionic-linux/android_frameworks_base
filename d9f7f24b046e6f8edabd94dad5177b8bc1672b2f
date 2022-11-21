@@ -33,6 +33,23 @@
       "message": "@Henry Fang",
       "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3972efc8_f29ed4f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2022-11-21T20:28:29Z",
+      "side": 1,
+      "message": "Can you consider adding supplementary\u0027s placement ( normal, left, right)  \nAnd \nsync up latest code to get presubmit ok ?",
+      "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
