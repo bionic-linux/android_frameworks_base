@@ -50,6 +50,24 @@
       "message": "Can you consider adding supplementary\u0027s placement ( normal, left, right)  \nAnd \nsync up latest code to get presubmit ok ?",
       "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24afa16b_3ec8ed01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133568
+      },
+      "writtenOn": "2022-11-21T23:02:17Z",
+      "side": 1,
+      "message": "Hi Henry, can you provide a reference to what you mean by \"supplementary placement\"? There are no audio channel rendering position references to \"supplementary\" in frameworks/base/media/java/* .\n\nPer https://dvb.org/wp-content/uploads/2019/08/A038r14_Specification-for-Service-Information-SI-in-DVB-Systems_Draft_EN_300-468-v1-17-1_Dec-2021.pdf Annex M.3,  there is no reference to rendering location in an audio preselection descriptor. So I\u0027m wondering what is the motivation / background for your request to add supplementary placement to these classes. Can you help provide this background information?",
+      "parentUuid": "3972efc8_f29ed4f1",
+      "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
