@@ -68,6 +68,24 @@
       "parentUuid": "3972efc8_f29ed4f1",
       "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b64177d_d8ee466a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2022-11-21T23:27:45Z",
+      "side": 1,
+      "message": "Hi Dean,\nIt\u0027s not from preselection descriptor.\nit\u0027s from user selection. \nUser may need supplementary audio to \nPLACEMENT_NORMAL, PLACEMENT_LEFT, PLACEMENT_RIGHT) like the configuration for main audio.\nI think put them together into media/java/android/media/AudioPresentation.java\nWhat\u0027s your thought ?",
+      "parentUuid": "24afa16b_3ec8ed01",
+      "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
