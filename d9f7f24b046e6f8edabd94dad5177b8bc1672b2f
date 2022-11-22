@@ -104,6 +104,24 @@
       "parentUuid": "7b64177d_d8ee466a",
       "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5270f6b2_77d65ff5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2022-11-22T19:05:25Z",
+      "side": 1,
+      "message": "In tvView, you add a selectAudioPresentation. It\u0027s for user to select.\nsupplementary\u0027s audio may have different setting from main audio.\nDo you see another way to specify placement info for supplementary\u0027s audio.\nIf not, I suggest to put it together with AudioPresentation.",
+      "parentUuid": "61ef67fe_beb25489",
+      "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
