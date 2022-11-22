@@ -4,6 +4,9 @@
             "name": "CtsMediaAudioTestCases",
             "options": [
                 {
+                    "include-filter": "android.media.audio.cts.AudioHalVersionInfo"
+                },
+                {
                     "include-filter": "android.media.audio.cts.AudioManagerTest"
                 },
                 {
