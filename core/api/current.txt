@@ -20045,6 +20045,20 @@ package android.media {
     method public android.media.AudioFormat.Builder setSampleRate(int) throws java.lang.IllegalArgumentException;
   }
 
+  public final class AudioHalVersionInfo implements android.os.Parcelable {
+    ctor public AudioHalVersionInfo(int, int, int);
+    method public int compareTo(@NonNull android.media.AudioHalVersionInfo);
+    method public int describeContents();
+    method public boolean isValid();
+    method public final void readFromParcel(android.os.Parcel);
+    method public final void writeToParcel(android.os.Parcel, int);
+    field @NonNull public static final java.util.List<android.util.Pair<java.lang.Integer,java.lang.Integer>> AIDL_VERSIONS;
+    field public static final int AUDIO_HAL_TYPE_AIDL = 1; // 0x1
+    field public static final int AUDIO_HAL_TYPE_HIDL = 0; // 0x0
+    field @NonNull public static final android.os.Parcelable.Creator<android.media.AudioHalVersionInfo> CREATOR;
+    field @NonNull public static final java.util.List<android.util.Pair<java.lang.Integer,java.lang.Integer>> HIDL_VERSIONS;
+  }
+
   public class AudioManager {
     method @Deprecated public int abandonAudioFocus(android.media.AudioManager.OnAudioFocusChangeListener);
     method public int abandonAudioFocusRequest(@NonNull android.media.AudioFocusRequest);
