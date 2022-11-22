@@ -86,6 +86,24 @@
       "parentUuid": "24afa16b_3ec8ed01",
       "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61ef67fe_beb25489",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133568
+      },
+      "writtenOn": "2022-11-22T00:24:06Z",
+      "side": 1,
+      "message": "Hi Henry, AudioPresentation.java is for encapsulating metadata about audio presentations within a transport stream or DASH stream. AudioPresentation.java shouldn\u0027t be used to carry user selection.\n\nDoes your question relate to the getDualMonoMode and setDualMonoMode HIDL audio APIs? If your requirement is for the user selection to be the same for main audio as well as supplementary audio (i.e. all audio contained in the selected preselection), then I would expect the setDualMonoMode API to apply to all audio preselections contained \u0026 decoded by the HW, and therefore an additional API is not needed.",
+      "parentUuid": "7b64177d_d8ee466a",
+      "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
