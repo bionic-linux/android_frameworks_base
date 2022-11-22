@@ -66,6 +66,7 @@ final class GlobalSaturationTintController extends TintController {
             mMatrixGlobalSaturation[8] = luminance[2];
             mMatrixGlobalSaturation[9] = luminance[2];
             mMatrixGlobalSaturation[10] = luminance[2] + saturation;
+            mMatrixGlobalSaturation[15] = 1.0f;
         }
     }
 
