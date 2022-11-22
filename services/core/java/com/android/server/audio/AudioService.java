@@ -82,6 +82,7 @@ import android.media.AudioDeviceVolumeManager;
 import android.media.AudioFocusInfo;
 import android.media.AudioFocusRequest;
 import android.media.AudioFormat;
+import android.media.AudioHalVersionInfo;
 import android.media.AudioManager;
 import android.media.AudioManagerInternal;
 import android.media.AudioPlaybackConfiguration;
@@ -6289,9 +6290,13 @@ public class AudioService extends IAudioService.Stub
                     return AudioSystem.STREAM_RING;
                 } else if (wasStreamActiveRecently(
                         AudioSystem.STREAM_NOTIFICATION, sStreamOverrideDelayMs)) {
-                    if (DEBUG_VOL)
-                        Log.v(TAG, "getActiveStreamType: Forcing STREAM_NOTIFICATION stream active");
-                    return AudioSystem.STREAM_NOTIFICATION;
+                        if (DEBUG_VOL) {
+                            Log.v(
+                                    TAG,
+                                    "getActiveStreamType: Forcing STREAM_NOTIFICATION stream"
+                                            + " active");
+                        }
+                        return AudioSystem.STREAM_NOTIFICATION;
                 } else {
                     if (DEBUG_VOL) {
                         Log.v(TAG, "getActiveStreamType: Forcing DEFAULT_VOL_STREAM_NO_PLAYBACK("
@@ -10825,17 +10830,30 @@ public class AudioService extends IAudioService.Stub
         return mMediaFocusControl.sendFocusLoss(focusLoser);
     }
 
-    private static final String[] HAL_VERSIONS =
-            new String[] {"7.1", "7.0", "6.0", "5.0", "4.0", "2.0"};
-
-    /** @see AudioManager#getHalVersion */
-    public @Nullable String getHalVersion() {
-        for (String version : HAL_VERSIONS) {
+    /**
+     * @see AudioManager#getHalVersion
+     */
+    public @Nullable AudioHalVersionInfo getHalVersion() {
+        for (List<Integer> version : AudioHalVersionInfo.VERSIONS) {
             try {
+                // TODO: check AIDL service.
+                Integer type = AudioHalVersionInfo.getHalType(version);
+                Integer major = AudioHalVersionInfo.getMajorVersion(version);
+                Integer minor = AudioHalVersionInfo.getMinorVersion(version);
+                if (type == AudioHalVersionInfo.INVALID
+                        || major == AudioHalVersionInfo.INVALID
+                        || minor == AudioHalVersionInfo.INVALID) {
+                    Log.e(
+                            TAG,
+                            "invalid version " + AudioHalVersionInfo.toString(type, major, minor));
+                    continue;
+                }
+                String versionStr = Integer.toString(major) + "." + Integer.toString(minor);
                 HwBinder.getService(
-                        String.format("android.hardware.audio@%s::IDevicesFactory", version),
+                        String.format("android.hardware.audio@%s::IDevicesFactory", versionStr),
                         "default");
-                return version;
+                AudioHalVersionInfo halVersion = new AudioHalVersionInfo(type, major, minor);
+                return halVersion.isValid() ? halVersion : null;
             } catch (NoSuchElementException e) {
                 // Ignore, the specified HAL interface is not found.
             } catch (RemoteException re) {
