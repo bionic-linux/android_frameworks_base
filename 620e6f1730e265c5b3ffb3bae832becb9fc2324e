@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "222df14c_421ef7b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1309980
+      },
+      "writtenOn": "2022-11-22T02:58:06Z",
+      "side": 1,
+      "message": "Change OWNER file should not trigger device health test fail.",
+      "revId": "620e6f1730e265c5b3ffb3bae832becb9fc2324e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
