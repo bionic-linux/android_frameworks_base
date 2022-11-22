@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cb3e86e_0b6763a3",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1348,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2022-11-22T07:32:41Z",
+      "side": 1,
+      "message": "not sure whether it\u0027s safe to make this async. Eric do you know? Otherwise I will have to dig a bit deeper.",
+      "range": {
+        "startLine": 1346,
+        "startChar": 6,
+        "endLine": 1348,
+        "endChar": 36
+      },
+      "revId": "d8093615bc4f0d287c00703b75b885ccd72ddd85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
