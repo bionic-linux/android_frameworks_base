@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dea77c8b_ae46bb1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1307979
+      },
+      "writtenOn": "2022-11-22T19:48:39Z",
+      "side": 1,
+      "message": "The test failure is unrelated - it\u0027s a SELinux denial in Health HAL and was already failing before this CL.",
+      "revId": "f346762e6f0970999454bc424ac2cbc7461ef841",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
