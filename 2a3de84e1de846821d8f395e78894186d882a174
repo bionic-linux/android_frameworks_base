@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9430485b_58422c68",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2781,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-11-23T02:30:46Z",
+      "side": 1,
+      "message": "Jean: Rename to setRequireVpnForUids with boolean for bypassable.",
+      "range": {
+        "startLine": 2781,
+        "startChar": 29,
+        "endLine": 2781,
+        "endChar": 52
+      },
+      "revId": "2a3de84e1de846821d8f395e78894186d882a174",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
