@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "570a2f7f_b3040ebd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1939396
+      },
+      "writtenOn": "2022-11-23T12:16:34Z",
+      "side": 1,
+      "message": "Yes, the above situation occurs when user 0 has been unlocked. the onKeyguardStateChanged method is called every time when the screen is lit or turned off. This is the stack\nat com.android.server.StorageManagerService.onKeyguardStateChanged(StorageManagerService.java:1405)\n\tat com.android.server.wm.ActivityTaskManagerService.lambda$setLockScreenShown$2$com-android-server-wm-ActivityTaskManagerService(ActivityTaskManagerService.java:3117)\n\tat com.android.server.wm.ActivityTaskManagerService$$ExternalSyntheticLambda18.run(D8$$SyntheticClass:-1)\n\tat android.os.Handler.handleCallback(Handler.java:942)\n\tat android.os.Handler.dispatchMessage(Handler.java:99)\n\tat android.os.Looper.loopOnce(Looper.java:210)\n\tat android.os.Looper.loop(Looper.java:299)\n\tat android.os.HandlerThread.run(HandlerThread.java:67)\n\tat com.android.server.ServiceThread.run(ServiceThread.java:46)",
+      "parentUuid": "239b7315_75ee984b",
+      "revId": "d8093615bc4f0d287c00703b75b885ccd72ddd85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff4010d6_9309e5d2",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 6
