@@ -158,6 +158,24 @@
       "parentUuid": "edab33f6_8eda143c",
       "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cf038a1_35227004",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133568
+      },
+      "writtenOn": "2022-11-23T10:54:12Z",
+      "side": 1,
+      "message": "https://developer.android.com/reference/android/media/AudioTrack#setDualMonoMode(int) and https://developer.android.com/reference/android/media/AudioTrack#setPresentation(android.media.AudioPresentation) can be set on the same track. The call to setDualMonoMode will affect the audio preselected via setPresentation. I don\u0027t see a need to introduce placement into the AudioPresentation.java class because it\u0027s already supported by the setDualMonoMode API (which will affect any audio selected by setPresentation).",
+      "parentUuid": "0532168f_4d7f48e6",
+      "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
