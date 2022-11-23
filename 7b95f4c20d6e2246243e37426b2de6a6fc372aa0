@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e021855d_e5a93477",
+        "filename": "core/tests/coretests/Fuzzers/FuzzService/Android.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-11-23T02:21:12Z",
+      "side": 1,
+      "message": "is this needed in the other CL if it\u0027s here?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "7b95f4c20d6e2246243e37426b2de6a6fc372aa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ac8284c_167a7c90",
+        "filename": "core/tests/coretests/Fuzzers/FuzzService/FuzzBinder.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-11-23T02:21:12Z",
+      "side": 1,
+      "message": "we\u0027ll want to make this part of the logic its own separate thing to re-use for other fuzzers. This is fine for now, but consider adding a comment to tell other people if they\u0027re copying this to let us know before it goes out of control, and file a bug - we can work on a solution with fuzzing team :D",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "7b95f4c20d6e2246243e37426b2de6a6fc372aa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
