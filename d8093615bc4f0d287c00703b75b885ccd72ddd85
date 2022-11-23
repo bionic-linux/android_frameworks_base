@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0d9a58e3_ff18db03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-11-23T19:47:22Z",
+      "side": 1,
+      "message": "\u003e Yes, the above situation occurs when user 0 has been unlocked. the onKeyguardStateChanged method is called every time when the screen is lit or turned off.\n\nThat is not what I am seeing.  Which version of Android are you seeing this on?\n\nHere\u0027s what I tried, on the master branch:\n\n- Flash a build with StorageManagerService.onKeyguardStateChanged patched to do `Slog.i(TAG, \"onSecureKeyguardStateChanged \" + mSecureKeyguardShowing);` just after `mSecureKeyguardShowing` is set.\n- Set a PIN\n- Go to Settings \u003d\u003e Security \u003d\u003e Screen lock (gear)\n- Set \"Lock after screen timeout\" to 30 seconds\n- Disable \"Power button instantly locks\"\n\nWhile the device is unlocked, the last call to `onKeyguardStateChanged` had passed `false`, as expected.  When I turn the screen on and off while the device is unlocked, the device stays unlocked, and no further calls to `onKeyguardStateChanged` are made.  If I wait 30 seconds with the screen off, then the device is locked and\n`onKeyguardStateChanged` is called with `true`.\n\nI think that\u0027s all as expected.  vold really wants to know whether the device is locked, not whether the screen is on.\n\nSo I am wondering whether the root cause of your issue is elsewhere.  Just to confirm, you are certain that the device is unlocked when you insert the SD card?  If so, then perhaps there is/was a bug in Keyguard where `onKeyguardStateChanged` was being called when it shouldn\u0027t be.",
+      "parentUuid": "570a2f7f_b3040ebd",
+      "revId": "d8093615bc4f0d287c00703b75b885ccd72ddd85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff4010d6_9309e5d2",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 6
