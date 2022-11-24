@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c99ea8c6_85afed1f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1604275
+      },
+      "writtenOn": "2022-11-24T10:27:28Z",
+      "side": 1,
+      "message": "Henry,\n\nCan you help to review this CLS?",
+      "revId": "8b3586cc3d58e070ceb501a4639e68f99e706762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
