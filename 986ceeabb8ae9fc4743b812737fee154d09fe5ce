@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "717c296a_0030797e",
+        "filename": "core/tests/fuzzers/java_service_fuzzer/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-11-24T02:27:24Z",
+      "side": 1,
+      "message": "nit - \u0027java_binder_service_fuzzer\u0027 - there are many places which use the term \u0027service\u0027",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "986ceeabb8ae9fc4743b812737fee154d09fe5ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
