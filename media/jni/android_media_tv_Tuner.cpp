@@ -392,6 +392,7 @@ jobjectArray FilterCallback::getSectionEvent(
                 env->NewObject(eventClazz, eventInit, tableId, version, sectionNum, dataLength);
         env->SetObjectArrayElement(arr, i, obj);
     }
+    env->DeleteLocalRef(eventClazz);
     return arr;
 }
 
@@ -455,6 +456,7 @@ jobjectArray FilterCallback::getMediaEvent(
 
         env->SetObjectArrayElement(arr, i, obj);
     }
+    env->DeleteLocalRef(eventClazz);
     return arr;
 }
 
@@ -476,6 +478,7 @@ jobjectArray FilterCallback::getPesEvent(
                 env->NewObject(eventClazz, eventInit, streamId, dataLength, mpuSequenceNumber);
         env->SetObjectArrayElement(arr, i, obj);
     }
+    env->DeleteLocalRef(eventClazz);
     return arr;
 }
 
@@ -516,6 +519,7 @@ jobjectArray FilterCallback::getTsRecordEvent(
                 env->NewObject(eventClazz, eventInit, jpid, ts, sc, byteNumber);
         env->SetObjectArrayElement(arr, i, obj);
     }
+    env->DeleteLocalRef(eventClazz);
     return arr;
 }
 
@@ -536,6 +540,7 @@ jobjectArray FilterCallback::getMmtpRecordEvent(
                 env->NewObject(eventClazz, eventInit, scHevcIndexMask, byteNumber);
         env->SetObjectArrayElement(arr, i, obj);
     }
+    env->DeleteLocalRef(eventClazz);
     return arr;
 }
 
@@ -560,6 +565,7 @@ jobjectArray FilterCallback::getDownloadEvent(
                         lastItemFragmentIndex, dataLength);
         env->SetObjectArrayElement(arr, i, obj);
     }
+    env->DeleteLocalRef(eventClazz);
     return arr;
 }
 
@@ -576,6 +582,7 @@ jobjectArray FilterCallback::getIpPayloadEvent(
         jobject obj = env->NewObject(eventClazz, eventInit, dataLength);
         env->SetObjectArrayElement(arr, i, obj);
     }
+    env->DeleteLocalRef(eventClazz);
     return arr;
 }
 
@@ -599,6 +606,7 @@ jobjectArray FilterCallback::getTemiEvent(
         jobject obj = env->NewObject(eventClazz, eventInit, pts, descrTag, array);
         env->SetObjectArrayElement(arr, i, obj);
     }
+    env->DeleteLocalRef(eventClazz);
     return arr;
 }
 
@@ -651,10 +659,18 @@ Return<void> FilterCallback::onFilterEvent(const DemuxFilterEvent& filterEvent) 
             }
         }
     }
-    env->CallVoidMethod(
-            mFilter,
-            gFields.onFilterEventID,
-            array);
+
+    jobject filter(env->NewLocalRef(mFilter));
+    if (!env->IsSameObject(filter, nullptr)) {
+        env->CallVoidMethod(
+                filter,
+                gFields.onFilterEventID,
+                array);
+    } else {
+        ALOGE("FilterCallback::onFilterEvent:"
+              "Filter object has been freed. Ignoring callback.");
+    }
+    env->DeleteLocalRef(eventClazz);
     return Void();
 }
 
@@ -662,10 +678,16 @@ Return<void> FilterCallback::onFilterEvent(const DemuxFilterEvent& filterEvent) 
 Return<void> FilterCallback::onFilterStatus(const DemuxFilterStatus status) {
     ALOGD("FilterCallback::onFilterStatus");
     JNIEnv *env = AndroidRuntime::getJNIEnv();
-    env->CallVoidMethod(
-            mFilter,
-            gFields.onFilterStatusID,
-            (jint)status);
+    jobject filter(env->NewLocalRef(mFilter));
+    if (!env->IsSameObject(filter, nullptr)) {
+        env->CallVoidMethod(
+                mFilter,
+                gFields.onFilterStatusID,
+                (jint)status);
+    } else {
+        ALOGE("FilterCallback::onFilterStatus:"
+              "Filter object has been freed. Ignoring callback.");
+    }
     return Void();
 }
 
