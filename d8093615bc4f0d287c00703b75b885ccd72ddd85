@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cb308b91_43daba8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1939396
+      },
+      "writtenOn": "2022-11-24T08:25:14Z",
+      "side": 1,
+      "message": "I see it in Android 13\n\nSorry, I don\u0027t think I explained the issue clearly. When using a PIN, pattern, or password to lock the device, because KeyguardManager#isDeviceSecure() \u003d\u003d true, mSecureKeyguardShowing \u003d true, the SD card or U disk cannot be mounted at this time.\n\nIf the user does not set the password, mSecureKeyguardShowing \u003d false. In this case, the SD card or U disk will be mounted, and the opening of screen may be blocked when mount or fsck takes too long.",
+      "parentUuid": "0d9a58e3_ff18db03",
+      "revId": "d8093615bc4f0d287c00703b75b885ccd72ddd85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff4010d6_9309e5d2",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 6
