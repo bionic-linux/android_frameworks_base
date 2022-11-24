@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe0552ce_162b7ef9",
+        "filename": "core/java/android/os/Build.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-11-24T16:49:04Z",
+      "side": 1,
+      "message": "Extend the comment to mention that in non-default builds (like the AOSP build) the value of the \u0027product\u0027 system property may be different to the one provisioned to KeyMint, and that attestation would still attest to the product it\u0027s running on.",
+      "range": {
+        "startLine": 64,
+        "startChar": 29,
+        "endLine": 64,
+        "endChar": 40
+      },
+      "revId": "1624f9c8c4e00c81e197e5cea4293b674d5a044d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b018634_c4272868",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-11-24T16:49:04Z",
+      "side": 1,
+      "message": "Use TextUtils.isEmpty()",
+      "range": {
+        "startLine": 802,
+        "startChar": 0,
+        "endLine": 802,
+        "endChar": 97
+      },
+      "revId": "1624f9c8c4e00c81e197e5cea4293b674d5a044d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
