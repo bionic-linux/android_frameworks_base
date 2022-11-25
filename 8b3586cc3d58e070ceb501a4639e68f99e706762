@@ -16,6 +16,23 @@
       "message": "Henry,\n\nCan you help to review this CLS?",
       "revId": "8b3586cc3d58e070ceb501a4639e68f99e706762",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "757377b6_e092dc85",
+        "filename": "media/jni/android_media_tv_Tuner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1947190
+      },
+      "writtenOn": "2022-11-25T07:13:32Z",
+      "side": 1,
+      "message": "This only make the reference count minus one for eventClazz object. Since eventClazz is hold by the classloader in JVM, I don\u0027t think this eventClazz will be garbage collected even thought we remove one reference here.\n\nThe actual part to remove reference manually is the object reference in line 391. I already have a patch fixed this problem in T and S. \n\n\\+ @hgchen@google.com @quxiangfang@google.com\nI think I should cherry-pick the patch to R as well. Can you confirm?",
+      "revId": "8b3586cc3d58e070ceb501a4639e68f99e706762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
