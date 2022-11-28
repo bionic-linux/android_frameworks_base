@@ -609,6 +609,24 @@ MissingNullability: android.util.FeatureFlagUtils#setEnabled(android.content.Con
     Missing nullability on parameter `context` in method `setEnabled`
 MissingNullability: android.util.FeatureFlagUtils#setEnabled(android.content.Context, String, boolean) parameter #1:
     Missing nullability on parameter `feature` in method `setEnabled`
+MissingNullability: android.util.SnoopLoggerFiltersUtils#getSnoopLoggerFilterTypes():
+    Missing nullability on method `getSnoopLoggerFilterTypes` return
+MissingNullability: android.util.SnoopLoggerFiltersUtils#getSnoopLoggerProfilesToFilter():
+    Missing nullability on method `getSnoopLoggerProfilesToFilter` return
+MissingNullability: android.util.SnoopLoggerFiltersUtils#isEnabled(android.content.Context, String) parameter #0:
+    Missing nullability on parameter `context` in method `isEnabled`
+MissingNullability: android.util.SnoopLoggerFiltersUtils#isEnabled(android.content.Context, String) parameter #1:
+    Missing nullability on parameter `feature` in method `isEnabled`
+MissingNullability: android.util.SnoopLoggerFiltersUtils#setEnabled(android.content.Context, String, boolean) parameter #0:
+    Missing nullability on parameter `context` in method `setEnabled`
+MissingNullability: android.util.SnoopLoggerFiltersUtils#setEnabled(android.content.Context, String, boolean) parameter #1:
+    Missing nullability on parameter `feature` in method `setEnabled`
+MissingNullability: android.util.SnoopLoggerFiltersUtils#setProfileFilterType(android.content.Context, String, String) parameter #0:
+    Missing nullability on parameter `context` in method `setProfileFilterType`
+MissingNullability: android.util.SnoopLoggerFiltersUtils#setProfileFilterType(android.content.Context, String, String) parameter #1:
+    Missing nullability on parameter `feature` in method `setProfileFilterType`
+MissingNullability: android.util.SnoopLoggerFiltersUtils#setProfileFilterType(android.content.Context, String, String) parameter #2:
+    Missing nullability on parameter `type` in method `setProfileFilterType`
 MissingNullability: android.util.TimeUtils#formatDuration(long):
     Missing nullability on method `formatDuration` return
 MissingNullability: android.util.proto.EncodedBuffer#dumpBuffers(String) parameter #0:
@@ -899,6 +917,8 @@ OnNameExpected: android.service.watchdog.ExplicitHealthCheckService#setCallback(
 
 PackageLayering: android.util.FeatureFlagUtils:
     Method parameter type `android.content.Context` violates package layering: nothing in `package android.util` should depend on `package android.content`
+PackageLayering: android.util.SnoopLoggerFiltersUtils:
+    Method parameter type `android.content.Context` violates package layering: nothing in `package android.util` should depend on `package android.content`
 
 
 ParcelConstructor: android.os.StrictMode.ViolationInfo#ViolationInfo(android.os.Parcel):
@@ -979,6 +999,8 @@ StaticUtils: android.service.autofill.InternalTransformation:
     Fully-static utility classes must not have constructor
 StaticUtils: android.util.FeatureFlagUtils:
     Fully-static utility classes must not have constructor
+StaticUtils: android.util.SnoopLoggerFiltersUtils:
+    Fully-static utility classes must not have constructor
 
 
 StreamFiles: android.os.Environment#buildPath(java.io.File, java.lang.String...):
@@ -1011,7 +1033,7 @@ UserHandleName: android.content.ContentCaptureOptions:
     Classes holding a set of parameters should be called `FooParams`, was `ContentCaptureOptions`
 
 
-VisiblySynchronized: PsiThisExpression:this:
+VisiblySynchronized: PsiThisExpression:
     Internal locks must not be exposed (synchronizing on this or class is still externally observable): method android.content.res.AssetManager.getApkPaths()
 VisiblySynchronized: android.content.res.AssetManager#getApkPaths():
     Internal locks must not be exposed (synchronizing on this or class is still externally observable): method android.content.res.AssetManager.getApkPaths()
