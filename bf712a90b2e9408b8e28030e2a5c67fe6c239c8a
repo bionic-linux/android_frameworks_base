@@ -16,6 +16,24 @@
       "message": "Hm, this actually looks like it may be intentional based on b/186050112.",
       "revId": "bf712a90b2e9408b8e28030e2a5c67fe6c239c8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8172c7b_3e8af8e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2022-11-28T16:06:14Z",
+      "side": 1,
+      "message": "Thanks for the comment. I created b/260568818 to be able to track this and discuss.",
+      "parentUuid": "0d3020fd_719ac760",
+      "revId": "bf712a90b2e9408b8e28030e2a5c67fe6c239c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
