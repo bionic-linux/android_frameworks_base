@@ -16,6 +16,24 @@
       "message": "+2 more owners, friendly ping for owners",
       "revId": "93068135f4890f816d641dff7f6dea2ad23e7b46",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2d500f1_ca472401",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2022-11-28T23:49:58Z",
+      "side": 1,
+      "message": "The build team are really only OWNERS here for build system maintenance tasks, which this is not.",
+      "parentUuid": "8906f229_00cb0cfc",
+      "revId": "93068135f4890f816d641dff7f6dea2ad23e7b46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
