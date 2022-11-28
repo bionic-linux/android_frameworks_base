@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d111ba96_71241cb3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1869780
+      },
+      "writtenOn": "2022-11-28T22:46:25Z",
+      "side": 1,
+      "message": "A bug has not yet been associated with this CL. Please let me know if you want me to create a bug for this CL and related CLs.",
+      "parentUuid": "fe41d428_28529469",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 6
+      },
+      "revId": "0a2353985ba02e26037fa81286db1537f3e64488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dbd9d55a_ba844a3b",
@@ -37,6 +61,24 @@
       "writtenOn": "2022-11-28T21:59:30Z",
       "side": 1,
       "message": "can you explain _why_? (link to the standard/what\u0027s changed?)",
+      "revId": "0a2353985ba02e26037fa81286db1537f3e64488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a835e7d1_063b4f46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1869780
+      },
+      "writtenOn": "2022-11-28T22:46:25Z",
+      "side": 1,
+      "message": "I think the following rule applies (from https://en.cppreference.com/w/cpp/language/aggregate_initialization): \"An aggregate is one of the following types [...] class type (struct or union) that has [...]          no user-declared or inherited constructors (since C++20)\". I think this implies that aggregate initialization can only be used if no user-declared or inherited constructors have been defined.",
+      "parentUuid": "dbd9d55a_ba844a3b",
       "revId": "0a2353985ba02e26037fa81286db1537f3e64488",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
