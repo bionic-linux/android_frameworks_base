@@ -16,6 +16,7 @@
 
 package android.nfc;
 
+import android.credential.CredentialDescription;
 import android.content.ComponentName;
 import android.nfc.cardemulation.AidGroup;
 import android.nfc.cardemulation.ApduServiceInfo;
@@ -41,4 +42,6 @@ interface INfcCardEmulation
     boolean supportsAidPrefixRegistration();
     ApduServiceInfo getPreferredPaymentService(int userHandle);
     boolean isDefaultPaymentRegistered();
+    void registerCredential(int userId, String aid, in CredentialDescription credentialDescription);
+    void unregisterCredential(int userId, String aid, in CredentialDescription credentialDescription);
 }
