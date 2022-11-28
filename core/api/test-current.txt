@@ -2743,6 +2743,25 @@ package android.util {
     field public static final String SETTINGS_WIFITRACKER2 = "settings_wifitracker2";
   }
 
+  public class SnoopLoggerFiltersUtils {
+    ctor public SnoopLoggerFiltersUtils();
+    method public static java.util.Map<java.lang.String,java.lang.String> getSnoopLoggerFilterTypes();
+    method public static boolean isEnabled(android.content.Context, String);
+    method public static boolean isProfilesFilteringEnabled();
+    method public static void setEnabled(android.content.Context, String, boolean);
+    field public static final String BLUETOOTH_BTSNOOP_LOG_FILTER_TYPES_PROPERTY = "persist.bluetooth.btsnooplogfilter.types";
+    field public static final String BLUETOOTH_BTSNOOP_LOG_FILTER_TYPE_A2DP_PKTS = "a2dppktsfiltered";
+    field public static final String BLUETOOTH_BTSNOOP_LOG_FILTER_TYPE_HEADERS = "snoopheadersfiltered";
+    field public static final String BLUETOOTH_BTSNOOP_LOG_FILTER_TYPE_PROFILES = "profilesfiltered";
+    field public static final String BLUETOOTH_BTSNOOP_LOG_FILTER_TYPE_RFCOMM_CHANNEL = "rfcommchannelfiltered";
+    field public static final String BLUETOOTH_BTSNOOP_LOG_MAP_FILTER_MODE_PROPERTY = "persist.bluetooth.btsnooplogfilter.profiles.map";
+    field public static final String BLUETOOTH_BTSNOOP_LOG_MODE_DISABLED = "disabled";
+    field public static final String BLUETOOTH_BTSNOOP_LOG_MODE_ENABLED_FILTERED = "filtered";
+    field public static final String BLUETOOTH_BTSNOOP_LOG_MODE_FULL = "full";
+    field public static final String BLUETOOTH_BTSNOOP_LOG_MODE_PROPERTY = "persist.bluetooth.btsnooplogmode";
+    field public static final String BLUETOOTH_BTSNOOP_LOG_PBAP_FILTER_MODE_PROPERTY = "persist.bluetooth.btsnooplogfilter.profiles.pbap";
+  }
+
   public class SparseArrayMap<K, V> {
     ctor public SparseArrayMap();
     method public void add(int, @NonNull K, @Nullable V);

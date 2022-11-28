@@ -7685,6 +7685,7 @@ android.util.ExceptionUtils
 android.util.FastImmutableArraySet$FastIterator
 android.util.FastImmutableArraySet
 android.util.FeatureFlagUtils
+android.util.SnoopLoggerFiltersUtils
 android.util.FloatProperty
 android.util.Half
 android.util.IconDrawableFactory
