@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d3020fd_719ac760",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1278152
+      },
+      "writtenOn": "2022-11-28T14:11:52Z",
+      "side": 1,
+      "message": "Hm, this actually looks like it may be intentional based on b/186050112.",
+      "revId": "bf712a90b2e9408b8e28030e2a5c67fe6c239c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
