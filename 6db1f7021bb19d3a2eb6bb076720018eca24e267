@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "69142641_0e26c003",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-11-29T20:02:33Z",
+      "side": 1,
+      "message": "Note: this CL is pending https://android-review.git.corp.google.com/q/topic:%22rkpd-systemserver%22\n\nOnce the rkpd system server classpath fragment is in, then this change can land.",
+      "revId": "6db1f7021bb19d3a2eb6bb076720018eca24e267",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "506a428c_d564cf77",
         "filename": "core/java/Android.bp",
         "patchSetId": 16
