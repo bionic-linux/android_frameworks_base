@@ -92,6 +92,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b9c44c5f_3f888cac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1939396
+      },
+      "writtenOn": "2022-11-29T12:27:17Z",
+      "side": 1,
+      "message": "Your suggestion is pertinent. It can avoid unnecessary binder call and will not block the light up of screen. But today I found that there is still a problem under this modification. when I set the password and in the unlocked state (the screen is lit), then insert the SD card (set a 10s suspension in mount()) and click the power button to turn off the screen. At this time, the screen will be blocked until the mount is completed.\nWhat do you think of using the new and old values of mSecureKeyguardShowing to determine whether a binder call is required, and when it is required, do it asynchronously.",
+      "parentUuid": "c0b79f9f_46ea58bb",
+      "revId": "d8093615bc4f0d287c00703b75b885ccd72ddd85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff4010d6_9309e5d2",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 6
