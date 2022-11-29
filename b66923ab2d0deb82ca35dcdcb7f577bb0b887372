@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "131991e9_49d1b5fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006692
+      },
+      "writtenOn": "2022-11-29T18:10:37Z",
+      "side": 1,
+      "message": "I don\u0027t see any red flags to using C++20 in the `libandroid_runtime` target, but I\u0027ll defer to John to confirm.",
+      "revId": "b66923ab2d0deb82ca35dcdcb7f577bb0b887372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
