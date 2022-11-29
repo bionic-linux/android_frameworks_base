@@ -99,6 +99,24 @@
       "parentUuid": "a835e7d1_063b4f46",
       "revId": "0a2353985ba02e26037fa81286db1537f3e64488",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94a38ea1_8e1ee50c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1869780
+      },
+      "writtenOn": "2022-11-29T00:09:56Z",
+      "side": 1,
+      "message": "The commit message has been updated. Please take another look.",
+      "parentUuid": "c550f631_ba8aaa8e",
+      "revId": "0a2353985ba02e26037fa81286db1537f3e64488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
