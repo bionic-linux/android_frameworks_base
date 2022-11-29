@@ -39,6 +39,30 @@
       },
       "revId": "b66923ab2d0deb82ca35dcdcb7f577bb0b887372",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0bf9dc7_4d9bab06",
+        "filename": "core/jni/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1869780
+      },
+      "writtenOn": "2022-11-29T18:24:33Z",
+      "side": 1,
+      "message": "enh@ prefers gnu++20. See also the comments on https://android-review.git.corp.google.com/c/platform/system/core/+/2178435.",
+      "parentUuid": "98c8eb00_e5d3968d",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 17
+      },
+      "revId": "b66923ab2d0deb82ca35dcdcb7f577bb0b887372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
