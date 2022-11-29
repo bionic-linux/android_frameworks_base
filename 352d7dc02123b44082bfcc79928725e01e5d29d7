@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c36e3ea_60c4f71d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2022-11-29T14:59:43Z",
+      "side": 1,
+      "message": "Could you report a bug for the issue?",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 9
+      },
+      "revId": "352d7dc02123b44082bfcc79928725e01e5d29d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
