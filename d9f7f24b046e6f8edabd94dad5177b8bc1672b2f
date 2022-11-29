@@ -176,6 +176,24 @@
       "parentUuid": "0532168f_4d7f48e6",
       "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81198f95_8e84ebe3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2022-11-29T00:16:13Z",
+      "side": 1,
+      "message": "Do you mean App need to call both\nTvView.selectAudioPresentation and AudioTrack.setPresentation to enable a supplementary\u0027s Audio ?",
+      "parentUuid": "4cf038a1_35227004",
+      "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
