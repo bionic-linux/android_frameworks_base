@@ -2776,6 +2776,18 @@ public class Vpn {
         return hasIPV6 && !hasIPV4;
     }
 
+    @GuardedBy("this")
+    private void setVpnNetworkPreferenceLocked() {
+        mConnectivityManager.setRequireVpnForUids(true /* requireVpn */, true /* isVpnPreference */,
+                createUserAndRestrictedProfilesRanges(mUserId, mConfig.allowedApplications,
+                        mConfig.disallowedApplications));
+    }
+
+    private void clearVpnNetworkPreference() {
+        mConnectivityManager.setRequireVpnForUids(false /* requireVpn */,
+                true /* isVpnPreference */, new ArraySet<>());
+    }
+
     /**
      * Internal class managing IKEv2/IPsec VPN connectivity
      *
@@ -2887,6 +2899,8 @@ public class Vpn {
                     (r, exe) -> {
                         Log.d(TAG, "Runnable " + r + " rejected by the mExecutor");
                     });
+            mConfig.disallowedApplications = getAppExclusionList(mPackage);
+            setVpnNetworkPreferenceLocked();
         }
 
         @Override
@@ -3040,6 +3054,7 @@ public class Vpn {
                     mConfig.dnsServers.addAll(dnsAddrStrings);
 
                     mConfig.underlyingNetworks = new Network[] {network};
+                    // TODO: To figure out why get app exclusion list here in the first place.
                     mConfig.disallowedApplications = getAppExclusionList(mPackage);
 
                     networkAgent = mNetworkAgent;
@@ -3744,6 +3759,7 @@ public class Vpn {
             mConnectivityManager.unregisterNetworkCallback(mNetworkCallback);
             mConnectivityDiagnosticsManager.unregisterConnectivityDiagnosticsCallback(
                     mDiagnosticsCallback);
+            clearVpnNetworkPreference();
 
             mExecutor.shutdown();
         }
@@ -4456,6 +4472,7 @@ public class Vpn {
                         .setUids(createUserAndRestrictedProfilesRanges(
                                 mUserId, null /* allowedApplications */, excludedApps))
                         .build();
+                setVpnNetworkPreferenceLocked();
                 doSendNetworkCapabilities(mNetworkAgent, mNetworkCapabilities);
             }
         }
