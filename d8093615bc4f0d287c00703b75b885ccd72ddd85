@@ -108,6 +108,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "accf33ab_59e655f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-11-29T19:01:07Z",
+      "side": 1,
+      "message": "\u003e What do you think of using the new and old values of mSecureKeyguardShowing to determine whether a binder call is required, and when it is required, do it asynchronously.\n\nI think that would be fine.",
+      "parentUuid": "b9c44c5f_3f888cac",
+      "revId": "d8093615bc4f0d287c00703b75b885ccd72ddd85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff4010d6_9309e5d2",
