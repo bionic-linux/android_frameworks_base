@@ -16,6 +16,29 @@
       "message": "I don\u0027t see any red flags to using C++20 in the `libandroid_runtime` target, but I\u0027ll defer to John to confirm.",
       "revId": "b66923ab2d0deb82ca35dcdcb7f577bb0b887372",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98c8eb00_e5d3968d",
+        "filename": "core/jni/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2022-11-29T18:18:14Z",
+      "side": 1,
+      "message": "nit, prefer \"c++20\"",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 17
+      },
+      "revId": "b66923ab2d0deb82ca35dcdcb7f577bb0b887372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
