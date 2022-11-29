@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c0b79f9f_46ea58bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-11-29T05:35:22Z",
+      "side": 1,
+      "message": "Okay, I see it now.  On a device that has a \"swipe\" or \"none\" lock screen, `mVold.onSecureKeyguardStateChanged()` is called with `false` every time the screen is turned on or off with the power button.\n\nIt might make sense to make it asynchronous, as you are proposing.  However, it doesn\u0027t make sense that `mVold.onSecureKeyguardStateChanged()` is repeatedly being called with `false`.  After all, nothing is actually changing.\n\nHow about making `StorageManagerService.onKeyguardStateChanged()` return early if the new and old values of `mSecureKeyguardShowing` are the same?  In my opinion that should be done first, before we consider making it asynchronous.",
+      "parentUuid": "cb308b91_43daba8f",
+      "revId": "d8093615bc4f0d287c00703b75b885ccd72ddd85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff4010d6_9309e5d2",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 6
@@ -103,6 +121,24 @@
       "side": 1,
       "message": "fixed",
       "parentUuid": "ff4010d6_9309e5d2",
+      "revId": "d8093615bc4f0d287c00703b75b885ccd72ddd85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71b2ad8a_c3a28221",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-11-29T05:35:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "28dcbd85_7e48f1fd",
       "revId": "d8093615bc4f0d287c00703b75b885ccd72ddd85",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
