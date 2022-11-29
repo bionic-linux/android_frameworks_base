@@ -105,6 +105,24 @@
       "parentUuid": "0526e7e7_d2da50a9",
       "revId": "8b3586cc3d58e070ceb501a4639e68f99e706762",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12280841_6a502b5e",
+        "filename": "media/jni/android_media_tv_Tuner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2022-11-29T23:40:15Z",
+      "side": 1,
+      "message": "Is it better to share our patch with amlogic to get positive feedback before merge ?",
+      "parentUuid": "65e30188_fd48a137",
+      "revId": "8b3586cc3d58e070ceb501a4639e68f99e706762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
