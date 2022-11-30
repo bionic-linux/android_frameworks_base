@@ -22,6 +22,30 @@
       },
       "revId": "352d7dc02123b44082bfcc79928725e01e5d29d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88e26b68_3bcf1d1b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1970337
+      },
+      "writtenOn": "2022-11-30T02:08:46Z",
+      "side": 1,
+      "message": "Bug has been submitted. ID: 2dad6cbe159e092f3709e3dc256db5c4e5777a34",
+      "parentUuid": "7c36e3ea_60c4f71d",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 9
+      },
+      "revId": "352d7dc02123b44082bfcc79928725e01e5d29d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
