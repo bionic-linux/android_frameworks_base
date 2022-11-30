@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5aa0fb6_a68927f6",
+        "filename": "core/java/android/security/rkp/IGetKeyCallback.aidl",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2022-11-30T15:52:12Z",
+      "side": 1,
+      "message": "nit: missing OWNERS for this directory?\n\nalso, let\u0027s reference existing OWNERS for packages/modules/RemoteKeyProvisioning/OWNERS",
+      "revId": "c623992699a47f96516e62625d18a1e1c463e4b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6124fa0_3e8a89b0",
+        "filename": "services/core/java/com/android/server/security/OWNERS",
+        "patchSetId": 17
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2022-11-30T15:52:12Z",
+      "side": 1,
+      "message": "can this reference an existing OWNERS? (e.g. the to-be-added `file:/core/java/android/security/rkp/OWNERS`",
+      "range": {
+        "startLine": 5,
+        "startChar": 32,
+        "endLine": 5,
+        "endChar": 91
+      },
+      "revId": "c623992699a47f96516e62625d18a1e1c463e4b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58d54cca_e791e930",
+        "filename": "services/core/java/com/android/server/security/RemoteProvisioningService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2022-11-30T15:52:12Z",
+      "side": 1,
+      "message": "nit: move into `rkp` subpackage?",
+      "revId": "c623992699a47f96516e62625d18a1e1c463e4b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
