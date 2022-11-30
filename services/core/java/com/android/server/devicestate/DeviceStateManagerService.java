@@ -17,6 +17,7 @@
 package com.android.server.devicestate;
 
 import static android.Manifest.permission.CONTROL_DEVICE_STATE;
+import static android.hardware.devicestate.DeviceStateManager.INVALID_DEVICE_STATE;
 import static android.hardware.devicestate.DeviceStateManager.MAXIMUM_DEVICE_STATE;
 import static android.hardware.devicestate.DeviceStateManager.MINIMUM_DEVICE_STATE;
 
@@ -263,13 +264,11 @@ public final class DeviceStateManagerService extends SystemService {
     @NonNull
     private DeviceStateInfo getDeviceStateInfoLocked() {
         if (!mBaseState.isPresent() || !mCommittedState.isPresent()) {
-            throw new IllegalStateException("Trying to get the current DeviceStateInfo before the"
-                    + " initial state has been committed.");
+            Slog.e(TAG, "Trying to get the current DeviceStateInfo before the initial state has been committed.");
         }
-
         final int[] supportedStates = getSupportedStateIdentifiersLocked();
-        final int baseState = mBaseState.get().getIdentifier();
-        final int currentState = mCommittedState.get().getIdentifier();
+        final int baseState = mBaseState.isPresent() ? mBaseState.get().getIdentifier() : INVALID_DEVICE_STATE;
+        final int currentState = mCommittedState.isPresent() ? mCommittedState.get().getIdentifier() : INVALID_DEVICE_STATE;
 
         return new DeviceStateInfo(supportedStates, baseState, currentState);
     }
