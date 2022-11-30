@@ -69,6 +69,24 @@
       "message": "Friendly ping for OWNER review",
       "revId": "93068135f4890f816d641dff7f6dea2ad23e7b46",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5328471_57362c3d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2022-11-30T00:59:15Z",
+      "side": 1,
+      "message": "Nobody on the attention list should be the OWNERS reviewer here, most of them are the build team, which only have the ability to approve the .bp change, yet that\u0027s supposed to be for build system maintenance in this project.\n\nFor the other files, it should probably be coming from this leads list (or find a different location for this): https://source.corp.google.com/android-internal/frameworks/base/OWNERS;rcl\u003db4f03e15ebe0a3a304d106ead0fd2929508d45d5;l\u003d1",
+      "parentUuid": "90802a6c_eeed4d96",
+      "revId": "93068135f4890f816d641dff7f6dea2ad23e7b46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
