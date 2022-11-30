@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8e1cae3_c73f2b57",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1868441
+      },
+      "writtenOn": "2022-11-30T20:40:36Z",
+      "side": 1,
+      "message": "Thank you for your change. Because of the coordination of NotificationCancellationEvent IDs required, we\u0027ll need to make the change upstream, so I\u0027ll be working on that shortly.",
+      "revId": "efb9d93864745e5b9a691a13ad421fb5826fa340",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
