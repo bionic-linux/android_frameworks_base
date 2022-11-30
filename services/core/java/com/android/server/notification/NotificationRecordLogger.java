@@ -18,6 +18,8 @@ package com.android.server.notification;
 
 import static android.service.notification.NotificationListenerService.REASON_ASSISTANT_CANCEL;
 import static android.service.notification.NotificationListenerService.REASON_CANCEL;
+import static android.service.notification.NotificationListenerService.REASON_CHANNEL_REMOVED;
+import static android.service.notification.NotificationListenerService.REASON_CLEAR_DATA;
 import static android.service.notification.NotificationListenerService.REASON_CLICK;
 import static android.service.notification.NotificationListenerService.REASON_TIMEOUT;
 
@@ -183,7 +185,11 @@ public interface NotificationRecordLogger {
         @UiEvent(doc = "Notification was canceled due to user dismissal from the lockscreen")
         NOTIFICATION_CANCEL_USER_LOCKSCREEN(193),
         @UiEvent(doc = "Notification was canceled due to an assistant adjustment update.")
-        NOTIFICATION_CANCEL_ASSISTANT(906);
+        NOTIFICATION_CANCEL_ASSISTANT(906),
+        @UiEvent(doc = "Notification was canceled due to the backing channel being deleted.")
+        NOTIFICATION_CANCEL_CHANNEL_REMOVED(907),
+        @UiEvent(doc = "Notification was canceled due to the app's storage being cleared.")
+        NOTIFICATION_CANCEL_CLEAR_DATA(908);
 
         private final int mId;
         NotificationCancelledEvent(int id) {
@@ -208,6 +214,12 @@ public interface NotificationRecordLogger {
             if (surface == NotificationStats.DISMISSAL_OTHER) {
                 if ((REASON_CLICK <= reason) && (reason <= REASON_TIMEOUT)) {
                     return NotificationCancelledEvent.values()[reason];
+                }
+                if (reason == REASON_CHANNEL_REMOVED) {
+                    return NotificationCancelledEvent.NOTIFICATION_CANCEL_CHANNEL_REMOVED;
+                }
+                if (reason == REASON_CLEAR_DATA) {
+                    return NotificationCancelledEvent.NOTIFICATION_CANCEL_CLEAR_DATA;
                 }
                 if (reason == REASON_ASSISTANT_CANCEL) {
                     return NotificationCancelledEvent.NOTIFICATION_CANCEL_ASSISTANT;
