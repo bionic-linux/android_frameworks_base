@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d472314_cdcffd28",
+        "filename": "core/java/android/security/rkp/IGetKeyCallback.aidl",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-11-30T17:27:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5aa0fb6_a68927f6",
+      "revId": "c623992699a47f96516e62625d18a1e1c463e4b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f6124fa0_3e8a89b0",
@@ -41,6 +59,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a211b82b_419b872f",
+        "filename": "services/core/java/com/android/server/security/OWNERS",
+        "patchSetId": 17
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-11-30T17:27:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6124fa0_3e8a89b0",
+      "range": {
+        "startLine": 5,
+        "startChar": 32,
+        "endLine": 5,
+        "endChar": 91
+      },
+      "revId": "c623992699a47f96516e62625d18a1e1c463e4b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58d54cca_e791e930",
@@ -54,6 +96,24 @@
       "writtenOn": "2022-11-30T15:52:12Z",
       "side": 1,
       "message": "nit: move into `rkp` subpackage?",
+      "revId": "c623992699a47f96516e62625d18a1e1c463e4b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ca9d354_b15cdd5a",
+        "filename": "services/core/java/com/android/server/security/RemoteProvisioningService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-11-30T17:27:38Z",
+      "side": 1,
+      "message": "I noticed that we were flat for the other services already here, despite having sub-packages in `core/java/android/security`. So I just followed that pattern. I\u0027m happy to make a subpackage here if that\u0027s preferred, though.",
+      "parentUuid": "58d54cca_e791e930",
       "revId": "c623992699a47f96516e62625d18a1e1c463e4b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
