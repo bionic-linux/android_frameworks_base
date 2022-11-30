@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07b549a4_cccbd7e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2022-11-30T21:18:33Z",
+      "side": 1,
+      "message": "Kenneth, Jiaming, in this case should we default to one of the states in the list, so that DeviceStateManagerService returns a valid state when other system components request? Do we (or should we) have a concept of a fallback state for this case?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 77
+      },
+      "revId": "3df69537ba68c4666ef1b4c2dd2de86f22cd81df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bad2cc66_76e10b47",
+        "filename": "services/core/java/com/android/server/devicestate/DeviceStateManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2022-11-30T21:18:33Z",
+      "side": 1,
+      "message": "Please fix the Lint comments by removing the trailing whitespace here and reducing line length below.",
+      "revId": "3df69537ba68c4666ef1b4c2dd2de86f22cd81df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
