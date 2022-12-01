@@ -3054,6 +3054,19 @@
         <attr name="knownActivityEmbeddingCerts" />
     </declare-styleable>
 
+    <!-- The <code>customization</code> tag declares a customization to be performed.
+
+         <p>Exactly one {@link #AndroidManifestIntentFilter intent-filter}
+         tag must be included inside of a customization, specifying the
+         "com.android.settings.MANUFACTURER_APPLICATION_SETTING_CUSTOMIZATION" action.
+         The customization's details (e.g type, location, order etc.) are specified through
+         {@link #AndroidManifestMetaData meta-data} name/value pairs.
+         The customization tag appears as a child tag of the
+         {@link #AndroidManifestApplication application} tag. -->
+    <declare-styleable name="AndroidManifestCustomization" parent="AndroidManifestApplication">
+        <attr name="name" />
+    </declare-styleable>
+
     <!-- The <code>activity-alias</code> tag declares a new
          name for an existing {@link #AndroidManifestActivity activity}
          tag.

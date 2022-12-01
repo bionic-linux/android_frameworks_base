@@ -785,6 +785,8 @@ public class ParsingPackageUtils {
             boolean isActivity = false;
             switch (tagName) {
                 case "activity":
+                    // fall-through
+                case "customization":
                     isActivity = true;
                     // fall-through
                 case "receiver":
@@ -2087,6 +2089,8 @@ public class ParsingPackageUtils {
             boolean isActivity = false;
             switch (tagName) {
                 case "activity":
+                    // fall-through
+                case "customization":
                     isActivity = true;
                     // fall-through
                 case "receiver":

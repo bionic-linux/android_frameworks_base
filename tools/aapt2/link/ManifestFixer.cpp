@@ -551,6 +551,8 @@ bool ManifestFixer::BuildRules(xml::XmlActionExecutor* executor,
   application_action["receiver"] = component_action;
   application_action["apex-system-service"] = component_action;
 
+  application_action["customization"] = component_action;
+
   // Provider actions.
   application_action["provider"] = component_action;
   application_action["provider"]["grant-uri-permission"];
@@ -591,7 +593,7 @@ static bool RenameManifestPackage(const StringPiece& package_override, xml::Elem
       if (child_el->namespace_uri.empty()) {
         if (child_el->name == "activity" || child_el->name == "activity-alias" ||
             child_el->name == "provider" || child_el->name == "receiver" ||
-            child_el->name == "service") {
+            child_el->name == "service" || child_el->name == "customization") {
           FullyQualifyClassName(original_package, xml::kSchemaAndroid, "name", child_el);
           continue;
         }
