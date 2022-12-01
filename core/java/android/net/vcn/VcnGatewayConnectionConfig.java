@@ -42,6 +42,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -130,6 +131,29 @@ public final class VcnGatewayConnectionConfig {
             })
     public @interface VcnSupportedCapability {}
 
+    /**
+     * Perform MOBIKE to attempt recovering from suspected data stall.
+     *
+     * @hide
+     */
+    public static int VCN_GATEWAY_OPTION_RECOVER_FROM_DATA_STALL_WITH_MOBIKE = 0;
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(
+            prefix = {"VCN_GATEWAY_OPTION"},
+            value = {
+                // TODO: Add VCN_GATEWAY_OPTION_RECOVER_FROM_DATA_STALL_WITH_MOBIKE when it is
+                // exposed
+            })
+    public @interface VcnGatewayOption {}
+
+    private static final Set<Integer> ALLOWED_GATEWAY_OPTIONS = new ArraySet<>();
+
+    static {
+        ALLOWED_GATEWAY_OPTIONS.add(VCN_GATEWAY_OPTION_RECOVER_FROM_DATA_STALL_WITH_MOBIKE);
+    }
+
     private static final int DEFAULT_MAX_MTU = 1500;
 
     /**
@@ -201,6 +225,9 @@ public final class VcnGatewayConnectionConfig {
     private static final String RETRY_INTERVAL_MS_KEY = "mRetryIntervalsMs";
     @NonNull private final long[] mRetryIntervalsMs;
 
+    private static final String GATEWAY_OPTIONS_KEY = "mGatewayOptions";
+    @NonNull private final Set<Integer> mGatewayOptions;
+
     /** Builds a VcnGatewayConnectionConfig with the specified parameters. */
     private VcnGatewayConnectionConfig(
             @NonNull String gatewayConnectionName,
@@ -208,12 +235,14 @@ public final class VcnGatewayConnectionConfig {
             @NonNull Set<Integer> exposedCapabilities,
             @NonNull List<VcnUnderlyingNetworkTemplate> underlyingNetworkTemplates,
             @NonNull long[] retryIntervalsMs,
-            @IntRange(from = MIN_MTU_V6) int maxMtu) {
+            @IntRange(from = MIN_MTU_V6) int maxMtu,
+            @NonNull Set<Integer> gatewayOptions) {
         mGatewayConnectionName = gatewayConnectionName;
         mTunnelConnectionParams = tunnelConnectionParams;
         mExposedCapabilities = new TreeSet(exposedCapabilities);
         mRetryIntervalsMs = retryIntervalsMs;
         mMaxMtu = maxMtu;
+        mGatewayOptions = Collections.unmodifiableSet(new HashSet(gatewayOptions));
 
         mUnderlyingNetworkTemplates = new ArrayList<>(underlyingNetworkTemplates);
         if (mUnderlyingNetworkTemplates.isEmpty()) {
@@ -256,6 +285,22 @@ public final class VcnGatewayConnectionConfig {
                             VcnUnderlyingNetworkTemplate::fromPersistableBundle);
         }
 
+        final PersistableBundle gatewayOptionsBundle =
+                in.getPersistableBundle(GATEWAY_CONNECTION_NAME_KEY);
+
+        if (gatewayOptionsBundle == null) {
+            // GATEWAY_CONNECTION_NAME_KEY was added in Android U. Thus
+            // VcnGatewayConnectionConfig created on old platforms will not have this data and will
+            // be assigned with the default value
+            mGatewayOptions = Collections.emptySet();
+        } else {
+            mGatewayOptions =
+                    new HashSet<>(
+                            PersistableBundleUtils.toList(
+                                    gatewayOptionsBundle,
+                                    PersistableBundleUtils.INTEGER_DESERIALIZER));
+        }
+
         mRetryIntervalsMs = in.getLongArray(RETRY_INTERVAL_MS_KEY);
         mMaxMtu = in.getInt(MAX_MTU_KEY);
 
@@ -279,6 +324,10 @@ public final class VcnGatewayConnectionConfig {
 
         Preconditions.checkArgument(
                 mMaxMtu >= MIN_MTU_V6, "maxMtu must be at least IPv6 min MTU (1280)");
+
+        for (int option : mGatewayOptions) {
+            validateGatewayOption(option);
+        }
     }
 
     private static void checkValidCapability(int capability) {
@@ -312,6 +361,12 @@ public final class VcnGatewayConnectionConfig {
             if (!existingRules.add(rule)) {
                 throw new IllegalArgumentException("Found duplicate VcnUnderlyingNetworkTemplate");
             }
+        }
+    }
+
+    private static void validateGatewayOption(int option) {
+        if (!ALLOWED_GATEWAY_OPTIONS.contains(option)) {
+            throw new IllegalArgumentException("Invalid vcn gateway option: " + option);
         }
     }
 
@@ -399,6 +454,16 @@ public final class VcnGatewayConnectionConfig {
     }
 
     /**
+     * Checks if the option exists
+     *
+     * @hide
+     */
+    public boolean hasOption(@VcnGatewayOption int option) {
+        validateGatewayOption(option);
+        return mGatewayOptions.contains(option);
+    }
+
+    /**
      * Converts this config to a PersistableBundle.
      *
      * @hide
@@ -437,7 +502,8 @@ public final class VcnGatewayConnectionConfig {
                 mExposedCapabilities,
                 mUnderlyingNetworkTemplates,
                 Arrays.hashCode(mRetryIntervalsMs),
-                mMaxMtu);
+                mMaxMtu,
+                mGatewayOptions);
     }
 
     @Override
@@ -452,7 +518,8 @@ public final class VcnGatewayConnectionConfig {
                 && mExposedCapabilities.equals(rhs.mExposedCapabilities)
                 && mUnderlyingNetworkTemplates.equals(rhs.mUnderlyingNetworkTemplates)
                 && Arrays.equals(mRetryIntervalsMs, rhs.mRetryIntervalsMs)
-                && mMaxMtu == rhs.mMaxMtu;
+                && mMaxMtu == rhs.mMaxMtu
+                && mGatewayOptions.equals(rhs.mGatewayOptions);
     }
 
     /**
@@ -469,6 +536,8 @@ public final class VcnGatewayConnectionConfig {
 
         @NonNull private long[] mRetryIntervalsMs = DEFAULT_RETRY_INTERVALS_MS;
         private int mMaxMtu = DEFAULT_MAX_MTU;
+
+        @NonNull private final Set<Integer> mGatewayOptions = new ArraySet<>();
 
         // TODO: (b/175829816) Consider VCN-exposed capabilities that may be transport dependent.
         //       Consider the case where the VCN might only expose MMS on WiFi, but defer to MMS
@@ -628,6 +697,30 @@ public final class VcnGatewayConnectionConfig {
         }
 
         /**
+         * Adds a VCN gateway option
+         *
+         * @hide
+         */
+        @NonNull
+        public Builder addOption(@VcnGatewayOption int option) {
+            validateGatewayOption(option);
+            mGatewayOptions.add(option);
+            return this;
+        }
+
+        /**
+         * Adds a VCN gateway option
+         *
+         * @hide
+         */
+        @NonNull
+        public Builder removeOption(@VcnGatewayOption int option) {
+            validateGatewayOption(option);
+            mGatewayOptions.remove(option);
+            return this;
+        }
+
+        /**
          * Builds and validates the VcnGatewayConnectionConfig.
          *
          * @return an immutable VcnGatewayConnectionConfig instance
@@ -640,7 +733,8 @@ public final class VcnGatewayConnectionConfig {
                     mExposedCapabilities,
                     mUnderlyingNetworkTemplates,
                     mRetryIntervalsMs,
-                    mMaxMtu);
+                    mMaxMtu,
+                    mGatewayOptions);
         }
     }
 }
