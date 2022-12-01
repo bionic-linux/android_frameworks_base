@@ -98,6 +98,7 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
     private boolean mListening;
     private boolean mExternalChange;
     private boolean mControlValueInitialized;
+    private boolean mIsTracking;
     private float mBrightnessMin = PowerManager.BRIGHTNESS_MIN;
     private float mBrightnessMax = PowerManager.BRIGHTNESS_MAX;
 
@@ -326,6 +327,7 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
         final float minBacklight;
         final float maxBacklight;
         final int metric;
+        mIsTracking = tracking;
 
         if (mIsVrModeEnabled) {
             metric = MetricsEvent.ACTION_BRIGHTNESS_FOR_VR;
@@ -405,9 +407,9 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
         }
         // convertGammaToLinearFloat returns 0-1
         if (BrightnessSynchronizer.floatEquals(brightnessValue,
-                convertGammaToLinearFloat(mControl.getValue(), min, max))) {
+                convertGammaToLinearFloat(mControl.getValue(), min, max)) || mIsTracking) {
             // If the value in the slider is equal to the value on the current brightness
-            // then the slider does not need to animate, since the brightness will not change.
+            // or the slider is tracking then the slider does not need to animate.
             return;
         }
         // Returns GAMMA_SPACE_MIN - GAMMA_SPACE_MAX
