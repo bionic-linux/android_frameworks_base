@@ -194,6 +194,24 @@
       "parentUuid": "4cf038a1_35227004",
       "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9d0b073_4e4e74ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133568
+      },
+      "writtenOn": "2022-12-01T10:09:52Z",
+      "side": 1,
+      "message": "Our expectation is TV App interacting with TvView only needs to call TvView.selectAudioPresentation, and this will be notified to (Tuner) TV Input Service implementation via onSelectAudioPresentation callback: the (Tuner) TV Input Service shall have a handle to the AudioTrack and will call AudioTrack.setPresentation in its onSelectAudioPresentation callback.\n\nDo let us know if you see issues with this approach.",
+      "parentUuid": "81198f95_8e84ebe3",
+      "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
