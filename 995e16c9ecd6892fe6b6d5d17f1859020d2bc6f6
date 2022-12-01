@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53b038f7_88c19aa5",
+        "filename": "core/java/android/content/pm/PackageParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2022-12-01T18:13:49Z",
+      "side": 0,
+      "message": "No changes to PackageParser. It\u0027s unused except for a very old and unstable API.",
+      "revId": "995e16c9ecd6892fe6b6d5d17f1859020d2bc6f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

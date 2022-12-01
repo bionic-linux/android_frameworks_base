@@ -16,6 +16,23 @@
       "message": "please have a look",
       "revId": "30e5abd891daa216113a283c61645181de85f977",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cd6a57c_f0a68fe7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2022-12-01T18:13:49Z",
+      "side": 1,
+      "message": "Can I get a little more context on why we need a brand new tag?\n\nI\u0027m assuming the flow is that this new provided APK exposes these Activities for some other caller to start (system Settings?).\n\nIf that\u0027s the case, it seems like we can get away with a regular `activity` tag with a special `property` or `meta-data` tag which Settings can filter for to determine a preference category. Rather than using a new tag.\n\nNew tags are generally supposed to add entirely new component structures in the manifest that are not well supported by any other existing structure.",
+      "revId": "30e5abd891daa216113a283c61645181de85f977",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
