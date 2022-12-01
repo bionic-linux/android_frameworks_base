@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c34c891_b60d0f05",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2022-12-01T18:02:42Z",
+      "side": 1,
+      "message": "If we are actually listing only versions supported by the framework here, then the list should match the one in libaudiohal: https://cs.android.com/android/platform/superproject/+/master:frameworks/av/media/libaudiohal/FactoryHalHidl.cpp;l\u003d35;drc\u003d288a3436441bccc6de61750afba3160e074166f1\n\nAnd in this case it\u0027s worth adding a cross-reference between these files so we don\u0027t forget to update both places.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 57
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c31f1209_829255da",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2022-12-01T18:02:42Z",
+      "side": 1,
+      "message": "Design proposal: what if we use a tuple of \u003ctype, major, minor\u003e as the version representation, define one single array of supported versions, and define \"validity\" and ordering of versions solely based on the belonging of a version instance to this array and its position within it. This way, we will get rid of some code and concentrate our knowledge about versions in one single place—the array.\n\nFrom the performance side, iterating an array of about 10 elements for finding an element in it shouldn\u0027t be a problem.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 39
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a95ff4f7_90f780a8",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2022-12-01T18:02:42Z",
+      "side": 1,
+      "message": "Will this crash the caller? Perhaps for \u0027toString\u0027 we should be less fragile.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 24
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bd44f9a_5624b6e8",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2022-12-01T18:02:42Z",
+      "side": 1,
+      "message": "The concept of \"validity\" seems to be inconsistent with calling the *_VERSIONS arrays \"lists of supported versions.\" We should say either \"valid\" or \"supported\" in both cases.",
+      "range": {
+        "startLine": 123,
+        "startChar": 24,
+        "endLine": 123,
+        "endChar": 31
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da75f67d_400e9731",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2022-12-01T18:02:42Z",
+      "side": 1,
+      "message": "I think we need to mention that \"AIDL\" \u003e \"HIDL\" here.",
+      "range": {
+        "startLine": 131,
+        "startChar": 15,
+        "endLine": 133,
+        "endChar": 19
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
