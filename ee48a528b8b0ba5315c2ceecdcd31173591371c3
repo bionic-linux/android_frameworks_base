@@ -34,6 +34,24 @@
       "parentUuid": "505b0c76_eaf1d0e2",
       "revId": "ee48a528b8b0ba5315c2ceecdcd31173591371c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "619081fd_5520416f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-12-01T23:59:47Z",
+      "side": 1,
+      "message": "Also: we only want to expose a service binder to things like keystore2, credstore, and more in the future (e.g. widevine may use it).\n\nThat\u0027s why we\u0027re doing the addBinder. My understanding is that `publishBinderService` would also publish a framework service to java apps. But we don\u0027t really want that (I could be mistaken on this point, though).",
+      "parentUuid": "9ee5a2dc_ebf0a338",
+      "revId": "ee48a528b8b0ba5315c2ceecdcd31173591371c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
