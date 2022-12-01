@@ -456,7 +456,7 @@ public final class VcnGatewayConnectionConfig {
     }
 
     /**
-     * Checks if the given VCN gateway option is set
+     * Checks if the given VCN gateway option is enabled.
      *
      * @param option the option to check.
      * @throws IllegalArgumentException if the provided option is invalid.
