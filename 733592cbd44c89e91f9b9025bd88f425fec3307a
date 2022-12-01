@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "32aaa9e3_d6bd4cca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2022-12-01T18:49:50Z",
+      "side": 1,
+      "message": "Bug: 260761700",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9e84f0e4_3256171d",
         "filename": "media/java/android/media/AudioHalVersionInfo.java",
         "patchSetId": 6
@@ -275,6 +298,29 @@
         "startChar": 15,
         "endLine": 8468,
         "endChar": 71
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf97fed2_f18d529b",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 10838,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2022-12-01T18:49:50Z",
+      "side": 1,
+      "message": "Could you also add comment here to note that aidl version is not included here? If we forget to change the code here, after aidl HAL is active, the device is going to fail CTS.",
+      "range": {
+        "startLine": 10838,
+        "startChar": 7,
+        "endLine": 10838,
+        "endChar": 80
       },
       "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
