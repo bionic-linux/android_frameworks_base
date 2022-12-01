@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "505b0c76_eaf1d0e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-12-01T23:50:30Z",
+      "side": 1,
+      "message": "Okay, I believe you\u0027re trying to have a system service in a mainline module, right?\n\nBut this CL really doesn\u0027t look like that. e.g. `RemoteProvisioningService` should be inside an apex, and it should be extending `com.android.server.SystemService`, and it should be using `SystemService.publishBinderService()` to push a binder object, _not_ with `Service.addService()`.\n\n- If your architecture is unique and supposed to be different from other mainline modules, then I need to see the design doc to understand the design. Currently, even if it\u0027s not a mainline module, it\u0027s not doing it right -- e.g. again, your \"service\" should be extending `com.android.server.SystemService`.\n\n\n\n- If it\u0027s supposed to be similar to other mainline modules, then it\u0027s really not the right way, I suggest looking into how other mainline modules do it. Wifi is probably a good module to model after. See how they use startServiceFromJar() in SystemServer.",
+      "revId": "ee48a528b8b0ba5315c2ceecdcd31173591371c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
