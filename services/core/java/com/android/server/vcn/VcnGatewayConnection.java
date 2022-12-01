@@ -26,6 +26,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.ipsec.ike.exceptions.IkeProtocolException.ERROR_TYPE_AUTHENTICATION_FAILED;
+import static android.net.vcn.VcnGatewayConnectionConfig.VCN_GATEWAY_OPTION_RECOVER_FROM_DATA_STALL_WITH_MOBIKE;
 import static android.net.vcn.VcnManager.VCN_ERROR_CODE_CONFIG_ERROR;
 import static android.net.vcn.VcnManager.VCN_ERROR_CODE_INTERNAL_ERROR;
 import static android.net.vcn.VcnManager.VCN_ERROR_CODE_NETWORK_ERROR;
@@ -36,6 +37,8 @@ import static com.android.server.VcnManagementService.VDBG;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
+import android.net.ConnectivityDiagnosticsManager;
+import android.net.ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback;
 import android.net.ConnectivityManager;
 import android.net.InetAddresses;
 import android.net.IpPrefix;
@@ -50,6 +53,7 @@ import android.net.NetworkAgent;
 import android.net.NetworkAgentConfig;
 import android.net.NetworkCapabilities;
 import android.net.NetworkProvider;
+import android.net.NetworkRequest;
 import android.net.NetworkScore;
 import android.net.RouteInfo;
 import android.net.TelephonyNetworkSpecifier;
@@ -546,6 +550,15 @@ public class VcnGatewayConnection extends StateMachine {
         }
     }
 
+    /**
+     * Sent when there is a suspected data stall on the VCN network
+     *
+     * <p>Only relevant in the Connected state.
+     *
+     * @param arg1 The "all" token; this signal is always honored.
+     */
+    private static final int EVENT_DATA_STALL_SUSPECTED = 13;
+
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     @NonNull
     final DisconnectedState mDisconnectedState = new DisconnectedState();
@@ -578,10 +591,13 @@ public class VcnGatewayConnection extends StateMachine {
     @NonNull
     private final VcnUnderlyingNetworkControllerCallback mUnderlyingNetworkControllerCallback;
 
+    @NonNull private final VcnConnectivityDiagnosticsCallback mConnectivityDiagnosticsCallback;
+
     private final boolean mIsMobileDataEnabled;
 
     @NonNull private final IpSecManager mIpSecManager;
     @NonNull private final ConnectivityManager mConnectivityManager;
+    @NonNull private final ConnectivityDiagnosticsManager mConnectivityDiagnosticsManager;
 
     @Nullable private IpSecTunnelInterface mTunnelIface = null;
 
@@ -748,6 +764,25 @@ public class VcnGatewayConnection extends StateMachine {
                         mUnderlyingNetworkControllerCallback);
         mIpSecManager = mVcnContext.getContext().getSystemService(IpSecManager.class);
         mConnectivityManager = mVcnContext.getContext().getSystemService(ConnectivityManager.class);
+        mConnectivityDiagnosticsManager =
+                mVcnContext.getContext().getSystemService(ConnectivityDiagnosticsManager.class);
+
+        mConnectivityDiagnosticsCallback = new VcnConnectivityDiagnosticsCallback();
+
+        android.util.Log.i("TEST", "mConnectionConfig " + mConnectionConfig);
+        if (mConnectionConfig.hasGatewayOption(
+                VCN_GATEWAY_OPTION_RECOVER_FROM_DATA_STALL_WITH_MOBIKE)) {
+            android.util.Log.i("TEST", "hasGatewayOption(RECOVER_FROM_DATA_STALL_WITH_MOBIKE)");
+            final NetworkRequest diagRequest =
+                    new NetworkRequest.Builder().addTransportType(TRANSPORT_CELLULAR).build();
+            mConnectivityDiagnosticsManager.registerConnectivityDiagnosticsCallback(
+                    diagRequest,
+                    new HandlerExecutor(new Handler(vcnContext.getLooper())),
+                    mConnectivityDiagnosticsCallback);
+        } else {
+            android.util.Log.i(
+                    "TEST", "hasGatewayOption(RECOVER_FROM_DATA_STALL_WITH_MOBIKE) False");
+        }
 
         addState(mDisconnectedState);
         addState(mDisconnectingState);
@@ -810,6 +845,10 @@ public class VcnGatewayConnection extends StateMachine {
         mUnderlyingNetworkController.teardown();
 
         mGatewayStatusCallback.onQuit();
+
+        android.util.Log.i("TEST", "unregisterConnectivityDiagnosticsCallback");
+        mConnectivityDiagnosticsManager.unregisterConnectivityDiagnosticsCallback(
+                mConnectivityDiagnosticsCallback);
     }
 
     /**
@@ -826,6 +865,27 @@ public class VcnGatewayConnection extends StateMachine {
         mUnderlyingNetworkController.updateSubscriptionSnapshot(mLastSnapshot);
 
         sendMessageAndAcquireWakeLock(EVENT_SUBSCRIPTIONS_CHANGED, TOKEN_ALL);
+    }
+
+    private class VcnConnectivityDiagnosticsCallback extends ConnectivityDiagnosticsCallback {
+        @Override
+        public void onDataStallSuspected(ConnectivityDiagnosticsManager.DataStallReport report) {
+            mVcnContext.ensureRunningOnLooperThread();
+            android.util.Log.i("TEST", "onDataStallSuspected ");
+            android.util.Log.i(
+                    "TEST", "onDataStallSuspected report.getNetwork() " + report.getNetwork());
+            android.util.Log.i(
+                    "TEST",
+                    "onDataStallSuspected mNetworkAgent.getNetwork() "
+                            + mNetworkAgent.getNetwork());
+
+            if (mNetworkAgent != null && mNetworkAgent.getNetwork().equals(report.getNetwork())) {
+                logInfo("Data stall suspected");
+
+                android.util.Log.i("TEST", "onDataStallSuspected send EVENT_DATA_STALL_SUSPECTED");
+                sendMessageAndAcquireWakeLock(EVENT_DATA_STALL_SUSPECTED, TOKEN_ALL);
+            }
+        }
     }
 
     private class VcnUnderlyingNetworkControllerCallback
@@ -1367,7 +1427,8 @@ public class VcnGatewayConnection extends StateMachine {
                 case EVENT_SUBSCRIPTIONS_CHANGED: // Fallthrough
                 case EVENT_SAFE_MODE_TIMEOUT_EXCEEDED: // Fallthrough
                 case EVENT_MIGRATION_COMPLETED: // Fallthrough
-                case EVENT_IKE_CONNECTION_INFO_CHANGED:
+                case EVENT_IKE_CONNECTION_INFO_CHANGED: // Fallthrough
+                case EVENT_DATA_STALL_SUSPECTED:
                     logUnexpectedEvent(msg.what);
                     break;
                 default:
@@ -1925,6 +1986,10 @@ public class VcnGatewayConnection extends StateMachine {
                     mIkeConnectionInfo =
                             ((EventIkeConnectionInfoChangedInfo) msg.obj).ikeConnectionInfo;
                     break;
+                case EVENT_DATA_STALL_SUSPECTED:
+                    android.util.Log.i("TEST", "ConnectedState EVENT_DATA_STALL_SUSPECTED");
+                    handleDataStallSuspected(msg);
+                    break;
                 default:
                     logUnhandledMessage(msg);
                     break;
@@ -1982,6 +2047,20 @@ public class VcnGatewayConnection extends StateMachine {
                     updateNetworkAgent(
                             mTunnelIface, mNetworkAgent, mChildConfig, mIkeConnectionInfo);
                 }
+            }
+        }
+
+        private void handleDataStallSuspected(@NonNull Message msg) {
+            android.util.Log.i("TEST", "ConnectedState handleDataStallSuspected");
+            android.util.Log.i(
+                    "TEST",
+                    "ConnectedState handleDataStallSuspected mUnderlying.network "
+                            + mUnderlying.network);
+            if (mUnderlying != null) {
+                android.util.Log.i(
+                        "TEST", "ConnectedState handleDataStallSuspected Perform MOBIKE");
+                logInfo("Perform MOBIKE to recover from suspected data stall");
+                mIkeSession.setNetwork(mUnderlying.network);
             }
         }
 
@@ -2421,6 +2500,11 @@ public class VcnGatewayConnection extends StateMachine {
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     UnderlyingNetworkControllerCallback getUnderlyingNetworkControllerCallback() {
         return mUnderlyingNetworkControllerCallback;
+    }
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    ConnectivityDiagnosticsCallback getConnectivityDiagnosticsCallback() {
+        return mConnectivityDiagnosticsCallback;
     }
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)

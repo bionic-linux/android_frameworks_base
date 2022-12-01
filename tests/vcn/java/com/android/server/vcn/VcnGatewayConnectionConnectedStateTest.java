@@ -25,6 +25,7 @@ import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.ipsec.ike.exceptions.IkeProtocolException.ERROR_TYPE_AUTHENTICATION_FAILED;
 import static android.net.ipsec.ike.exceptions.IkeProtocolException.ERROR_TYPE_TEMPORARY_FAILURE;
+import static android.net.vcn.VcnGatewayConnectionConfig.VCN_GATEWAY_OPTION_RECOVER_FROM_DATA_STALL_WITH_MOBIKE;
 import static android.net.vcn.VcnManager.VCN_ERROR_CODE_CONFIG_ERROR;
 import static android.net.vcn.VcnManager.VCN_ERROR_CODE_INTERNAL_ERROR;
 import static android.net.vcn.VcnManager.VCN_ERROR_CODE_NETWORK_ERROR;
@@ -50,9 +51,11 @@ import static org.mockito.Mockito.when;
 
 import static java.util.Collections.singletonList;
 
+import android.net.ConnectivityDiagnosticsManager.DataStallReport;
 import android.net.ConnectivityManager;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
+import android.net.Network;
 import android.net.NetworkAgent;
 import android.net.NetworkCapabilities;
 import android.net.ipsec.ike.ChildSaProposal;
@@ -63,10 +66,12 @@ import android.net.ipsec.ike.exceptions.IkeProtocolException;
 import android.net.vcn.VcnGatewayConnectionConfig;
 import android.net.vcn.VcnGatewayConnectionConfigTest;
 import android.net.vcn.VcnManager.VcnErrorCode;
+import android.os.PersistableBundle;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.android.server.vcn.routeselection.UnderlyingNetworkRecord;
 import com.android.server.vcn.util.MtuUtils;
 
 import org.junit.Before;
@@ -88,6 +93,7 @@ import java.util.function.Consumer;
 public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnectionTestBase {
     private VcnIkeSession mIkeSession;
     private VcnNetworkAgent mNetworkAgent;
+    private Network mVcnNetwork;
 
     @Before
     public void setUp() throws Exception {
@@ -97,6 +103,9 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
         doReturn(mNetworkAgent)
                 .when(mDeps)
                 .newNetworkAgent(any(), any(), any(), any(), any(), any(), any(), any(), any());
+
+        mVcnNetwork = mock(Network.class);
+        doReturn(mVcnNetwork).when(mNetworkAgent).getNetwork();
 
         mGatewayConnection.setUnderlyingNetwork(TEST_UNDERLYING_NETWORK_RECORD_1);
 
@@ -164,6 +173,60 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
         mTestLooper.dispatchAll();
 
         assertEquals(mGatewayConnection.mConnectedState, mGatewayConnection.getCurrentState());
+    }
+
+    private void verifyDataStallTriggersMigration(
+            UnderlyingNetworkRecord underlyiNetworkRecord,
+            Network networkWithDataStall,
+            boolean expectMobike)
+            throws Exception {
+        mGatewayConnection.setUnderlyingNetwork(underlyiNetworkRecord);
+        triggerChildOpened();
+        mTestLooper.dispatchAll();
+
+        android.util.Log.i("TEST", "mNetworkAgent.getNetwork() " + mNetworkAgent.getNetwork());
+        android.util.Log.i(
+                "TEST",
+                "hasGatewayOption "
+                        + mConfig.hasGatewayOption(
+                                VCN_GATEWAY_OPTION_RECOVER_FROM_DATA_STALL_WITH_MOBIKE));
+        final DataStallReport report =
+                new DataStallReport(
+                        networkWithDataStall,
+                        1234 /* reportTimestamp */,
+                        1 /* detectionMethod */,
+                        new LinkProperties(),
+                        new NetworkCapabilities(),
+                        new PersistableBundle());
+
+        mGatewayConnection.getConnectivityDiagnosticsCallback().onDataStallSuspected(report);
+        mTestLooper.dispatchAll();
+
+        assertEquals(mGatewayConnection.mConnectedState, mGatewayConnection.getCurrentState());
+
+        if (expectMobike) {
+            verify(mIkeSession).setNetwork(underlyiNetworkRecord.network);
+        } else {
+            verify(mIkeSession, never()).setNetwork(any(Network.class));
+        }
+    }
+
+    @Test
+    public void testDataStallTriggersMigration() throws Exception {
+        verifyDataStallTriggersMigration(
+                TEST_UNDERLYING_NETWORK_RECORD_1, mVcnNetwork, true /* expectMobike */);
+    }
+
+    @Test
+    public void testDataStallWontTriggerMigrationWhenOnOtherNetwork() throws Exception {
+        verifyDataStallTriggersMigration(
+                TEST_UNDERLYING_NETWORK_RECORD_1, mock(Network.class), false /* expectMobike */);
+    }
+
+    @Test
+    public void testDataStallWontTriggerMigrationWhenUnderlyingNetworkLost() throws Exception {
+        verifyDataStallTriggersMigration(
+                null /* underlyiNetworkRecord */, mock(Network.class), false /* expectMobike */);
     }
 
     private void verifyVcnTransformsApplied(
