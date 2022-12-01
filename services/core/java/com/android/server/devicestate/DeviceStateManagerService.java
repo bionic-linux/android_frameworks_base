@@ -306,12 +306,8 @@ public final class DeviceStateManagerService extends SystemService {
             mOverrideRequestController.handleNewSupportedStates(newStateIdentifiers);
             updatePendingStateLocked();
 
-            if (!mPendingState.isPresent()) {
-                // If the change in the supported states didn't result in a change of the pending
-                // state commitPendingState() will never be called and the callbacks will never be
-                // notified of the change.
-                notifyDeviceStateInfoChangedAsync();
-            }
+            notifyDeviceStateInfoChangedAsync();
+
 
             mHandler.post(this::notifyPolicyIfNeeded);
         }
@@ -361,12 +357,7 @@ public final class DeviceStateManagerService extends SystemService {
             mOverrideRequestController.handleBaseStateChanged();
             updatePendingStateLocked();
 
-            if (!mPendingState.isPresent()) {
-                // If the change in base state didn't result in a change of the pending state
-                // commitPendingState() will never be called and the callbacks will never be
-                // notified of the change.
-                notifyDeviceStateInfoChangedAsync();
-            }
+            notifyDeviceStateInfoChangedAsync();
 
             mHandler.post(this::notifyPolicyIfNeeded);
         }
@@ -490,6 +481,13 @@ public final class DeviceStateManagerService extends SystemService {
 
     private void notifyDeviceStateInfoChangedAsync() {
         synchronized (mLock) {
+            // If the change in the supported states didn't result in a change of the pending
+            // state commitPendingState() will never be called and the callbacks will never be
+            // notified of the change.
+            if (!mBaseState.isPresent() || mPendingState.isPresent()) {
+                return;
+            }
+
             if (mProcessRecords.size() == 0) {
                 return;
             }
