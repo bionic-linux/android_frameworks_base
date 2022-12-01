@@ -16,6 +16,23 @@
       "message": "Please help review the change, thanks!",
       "revId": "6a3d446e0710d00ee603fda86ddd7c06a0a69968",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a0c284b_6f4a6e34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2022-12-01T14:23:24Z",
+      "side": 1,
+      "message": "Thanks for the patch. However, this has already been fixed internally and will be released in a future update.",
+      "revId": "6a3d446e0710d00ee603fda86ddd7c06a0a69968",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
