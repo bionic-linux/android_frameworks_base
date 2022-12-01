@@ -87,6 +87,24 @@
       "message": "Please fix the Lint comments by removing the trailing whitespace here and reducing line length below.",
       "revId": "3df69537ba68c4666ef1b4c2dd2de86f22cd81df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71ae8e44_da106d3f",
+        "filename": "services/core/java/com/android/server/devicestate/DeviceStateManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1746367
+      },
+      "writtenOn": "2022-12-01T02:37:14Z",
+      "side": 1,
+      "message": "Hi Andrii, the trailing whitespace has been deleted, please review it again, thanks.",
+      "parentUuid": "bad2cc66_76e10b47",
+      "revId": "3df69537ba68c4666ef1b4c2dd2de86f22cd81df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
