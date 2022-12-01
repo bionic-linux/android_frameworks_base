@@ -3772,6 +3772,17 @@ public class PackageParser {
                 hasActivityOrder |= (a.order != 0);
                 owner.activities.add(a);
 
+            } else if (tagName.equals("preference-category")) {
+                Activity a = parsePreferenceCategory(owner, res, parser, flags, outError,
+                        cachedArgs, owner.baseHardwareAccelerated);
+                if (a == null) {
+                    mParseError = PackageManager.INSTALL_PARSE_FAILED_MANIFEST_MALFORMED;
+                    return false;
+                }
+
+                hasActivityOrder |= (a.order != 0);
+                owner.activities.add(a);
+
             } else if (tagName.equals("receiver")) {
                 Activity a = parseActivity(owner, res, parser, flags, outError, cachedArgs,
                         true, false);
@@ -4053,6 +4064,17 @@ public class PackageParser {
             if (tagName.equals("activity")) {
                 Activity a = parseActivity(owner, res, parser, flags, outError, cachedArgs, false,
                         owner.baseHardwareAccelerated);
+                if (a == null) {
+                    mParseError = PackageManager.INSTALL_PARSE_FAILED_MANIFEST_MALFORMED;
+                    return false;
+                }
+
+                owner.activities.add(a);
+                parsedComponent = a.info;
+
+            } else if (tagName.equals("preference-category")) {
+                Activity a = parsePreferenceCategory(owner, res, parser, flags, outError,
+                        cachedArgs, owner.baseHardwareAccelerated);
                 if (a == null) {
                     mParseError = PackageManager.INSTALL_PARSE_FAILED_MANIFEST_MALFORMED;
                     return false;
@@ -4660,6 +4682,83 @@ public class PackageParser {
         if (!setExported) {
             a.info.exported = a.intents.size() > 0;
         }
+
+        return a;
+    }
+
+    private Activity parsePreferenceCategory(Package owner, Resources res,
+            XmlResourceParser parser, int flags, String[] outError, CachedComponentArgs cachedArgs,
+            boolean hardwareAccelerated) throws XmlPullParserException, IOException {
+        TypedArray sa = res.obtainAttributes(parser, R.styleable.AndroidManifestPreferenceCategory);
+
+        if (cachedArgs.mActivityArgs == null) {
+            cachedArgs.mActivityArgs = new ParseComponentArgs(owner, outError,
+                    R.styleable.AndroidManifestActivity_name,
+                    R.styleable.AndroidManifestActivity_label,
+                    R.styleable.AndroidManifestActivity_icon,
+                    R.styleable.AndroidManifestActivity_roundIcon,
+                    R.styleable.AndroidManifestActivity_logo,
+                    R.styleable.AndroidManifestActivity_banner,
+                    mSeparateProcesses,
+                    R.styleable.AndroidManifestActivity_process,
+                    R.styleable.AndroidManifestActivity_description,
+                    R.styleable.AndroidManifestActivity_enabled);
+        }
+
+        cachedArgs.mActivityArgs.tag = "<preference-category>";
+        cachedArgs.mActivityArgs.sa = sa;
+        cachedArgs.mActivityArgs.flags = flags;
+
+        Activity a = new Activity(cachedArgs.mActivityArgs, new ActivityInfo());
+        if (outError[0] != null) {
+            sa.recycle();
+            return null;
+        }
+
+        int outerDepth = parser.getDepth();
+        int type;
+        while ((type=parser.next()) != XmlPullParser.END_DOCUMENT
+               && (type != XmlPullParser.END_TAG
+                       || parser.getDepth() > outerDepth)) {
+            if (type == XmlPullParser.END_TAG || type == XmlPullParser.TEXT) {
+                continue;
+            }
+
+            if (parser.getName().equals("intent-filter")) {
+                ActivityIntentInfo intent = new ActivityIntentInfo(a);
+                if (!parseIntent(res, parser, true /*allowGlobs*/, true /*allowAutoVerify*/,
+                        intent, outError)) {
+                    return null;
+                }
+                if (intent.countActions() == 0) {
+                    Slog.w(TAG, "No actions in intent filter at "
+                            + mArchiveSourcePath + " "
+                            + parser.getPositionDescription());
+                } else {
+                    a.order = Math.max(intent.getOrder(), a.order);
+                    a.intents.add(intent);
+                }
+            } else if (parser.getName().equals("meta-data")) {
+                if ((a.metaData = parseMetaData(res, parser, a.metaData,
+                        outError)) == null) {
+                    return null;
+                }
+            } else {
+                if (!RIGID_PARSER) {
+                    Slog.w(TAG, "Problem in package " + mArchiveSourcePath + ":");
+                    Slog.w(TAG, "Unknown element under <preference-category>: " + parser.getName()
+                            + " at " + mArchiveSourcePath + " "
+                            + parser.getPositionDescription());
+                    XmlUtils.skipCurrentTag(parser);
+                    continue;
+                } else {
+                    outError[0] = "Bad element under <preference-category>: " + parser.getName();
+                    return null;
+                }
+            }
+        }
+
+        resolveWindowLayout(a);
 
         return a;
     }

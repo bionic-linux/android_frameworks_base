@@ -15,6 +15,8 @@
  */
 package com.android.settingslib.drawer;
 
+import static android.content.pm.PackageManager.CERT_INPUT_SHA256;
+
 import android.app.ActivityManager;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -22,12 +24,17 @@ import android.content.IContentProvider;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ComponentInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
+import android.content.pm.Signature;
+import android.content.pm.SigningInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings.Global;
@@ -38,7 +45,10 @@ import android.util.Pair;
 
 import androidx.annotation.VisibleForTesting;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +103,12 @@ public class TileUtils {
 
     private static final String MANUFACTURER_DEFAULT_CATEGORY =
             "com.android.settings.category.device";
+
+    /**
+     * IntentFilter action for injecting a PreferenceCategory
+     */
+    private static final String MANUFACTURER_SETTINGS_CATEGORY =
+            "com.android.settings.MANUFACTURER_APPLICATION_SETTING_CATEGORY";
 
     /**
      * The key used to get the category from metadata of activities of action
@@ -237,6 +253,40 @@ public class TileUtils {
     public static final String META_DATA_NEW_TASK = "com.android.settings.new_task";
 
     /**
+     * Name of the meta-data item that should be set in the AndroidManifest.xml
+     * to specify that the preference depends on a boolean resource.
+     * This should point to a boolean config value (e.g "@bool/config_some_boolean"), set using
+     * {@code android:value}.
+     * The preference will be added if the resource equates to {@code true}, otherwise the
+     * preference will be skipped.
+     */
+    public static final String META_DATA_DEPEND_ON_RESOURCE =
+            "com.android.settings.dependOn.resource";
+
+    /**
+     * Name of the meta-data item that should be set in the AndroidManifest.xml
+     * to specify that the preference depends on a system feature.
+     * This should be a system feature (e.g "android.hardware.camera"), set using
+     * {@code android:value}.
+     * The preference will be added if the device has the specified system feature, otherwise the
+     * preference will be skipped.
+     */
+    public static final String META_DATA_DEPEND_ON_SYSTEM_FEATURE =
+            "com.android.settings.dependOn.systemFeature";
+
+
+    /**
+     * Name of the meta-data item that should be set in the AndroidManifest.xml
+     * to specify that the preference depends on a system property.
+     * This should be a boolean system property (e.g "rw.device.property.supported"), set using
+     * {@code android:value}.
+     * The preference will be added if the device has the specified system property set to
+     * {@code true}, otherwise the preference will be skipped.
+     */
+    public static final String META_DATA_DEPEND_ON_SYSTEM_PROPERTY =
+            "com.android.settings.dependOn.systemProperty";
+
+    /**
      * Build a list of DashboardCategory.
      */
     public static List<DashboardCategory> getCategories(Context context,
@@ -255,6 +305,8 @@ public class TileUtils {
                 loadTilesForAction(context, user, OPERATOR_SETTINGS, cache,
                         OPERATOR_DEFAULT_CATEGORY, tiles, false);
                 loadTilesForAction(context, user, MANUFACTURER_SETTINGS, cache,
+                        MANUFACTURER_DEFAULT_CATEGORY, tiles, false);
+                loadPreferenceCategories(context, user, MANUFACTURER_SETTINGS_CATEGORY, cache,
                         MANUFACTURER_DEFAULT_CATEGORY, tiles, false);
             }
             if (setup) {
@@ -302,6 +354,30 @@ public class TileUtils {
         loadProviderTiles(context, user, addedCache, defaultCategory, outTiles, intent);
     }
 
+    static void loadPreferenceCategories(Context context, UserHandle user, String action,
+            Map<Pair<String, String>, Tile> addedCache, String defaultCategory, List<Tile> outTiles,
+            boolean requireSettings) {
+
+        final Intent intent = new Intent(action);
+        if (requireSettings) {
+            intent.setPackage(SETTING_PKG);
+        }
+
+        final PackageManager pm = context.getPackageManager();
+        final List<ResolveInfo> results = pm.queryIntentActivitiesAsUser(intent,
+                PackageManager.GET_META_DATA, user.getIdentifier());
+        for (ResolveInfo resolved : results) {
+            if (!resolved.system) {
+                // Do not allow any app to add to settings, only system ones.
+                continue;
+            }
+            final ActivityInfo activityInfo = resolved.activityInfo;
+            final Bundle metaData = activityInfo.metaData;
+            loadPreferenceCategory(context, user, addedCache, defaultCategory, outTiles, intent,
+                    metaData, activityInfo);
+        }
+    }
+
     private static void loadActivityTiles(Context context,
             UserHandle user, Map<Pair<String, String>, Tile> addedCache,
             String defaultCategory, List<Tile> outTiles, Intent intent) {
@@ -315,7 +391,8 @@ public class TileUtils {
             }
             final ActivityInfo activityInfo = resolved.activityInfo;
             final Bundle metaData = activityInfo.metaData;
-            loadTile(user, addedCache, defaultCategory, outTiles, intent, metaData, activityInfo);
+            loadTile(context, user, addedCache, defaultCategory, outTiles, intent, metaData,
+                    activityInfo);
         }
     }
 
@@ -337,15 +414,15 @@ public class TileUtils {
                 continue;
             }
             for (Bundle metaData : switchData) {
-                loadTile(user, addedCache, defaultCategory, outTiles, intent, metaData,
+                loadTile(context, user, addedCache, defaultCategory, outTiles, intent, metaData,
                         providerInfo);
             }
         }
     }
 
-    private static void loadTile(UserHandle user, Map<Pair<String, String>, Tile> addedCache,
-            String defaultCategory, List<Tile> outTiles, Intent intent, Bundle metaData,
-            ComponentInfo componentInfo) {
+    private static void loadTile(Context context, UserHandle user,
+            Map<Pair<String, String>, Tile> addedCache, String defaultCategory, List<Tile> outTiles,
+            Intent intent, Bundle metaData, ComponentInfo componentInfo) {
         // Skip loading tile if the component is tagged primary_profile_only but not running on
         // the current user.
         if (user.getIdentifier() != ActivityManager.getCurrentUser()
@@ -375,10 +452,15 @@ public class TileUtils {
                 : new Pair<>(componentInfo.packageName, componentInfo.name);
         Tile tile = addedCache.get(key);
         if (tile == null) {
-            tile = isProvider
-                    ? new ProviderTile((ProviderInfo) componentInfo, categoryKey, metaData)
-                    : new ActivityTile((ActivityInfo) componentInfo, categoryKey);
-            addedCache.put(key, tile);
+            if (checkDependencies(context, metaData, componentInfo)) {
+                tile = isProvider
+                        ? new ProviderTile((ProviderInfo) componentInfo, categoryKey, metaData)
+                        : new ActivityTile((ActivityInfo) componentInfo, categoryKey);
+                addedCache.put(key, tile);
+            } else {
+                // Dependency check failed
+                return;
+            }
         } else {
             tile.setMetaData(metaData);
         }
@@ -389,6 +471,132 @@ public class TileUtils {
         if (!outTiles.contains(tile)) {
             outTiles.add(tile);
         }
+    }
+
+    private static void loadPreferenceCategory(Context context, UserHandle user,
+            Map<Pair<String, String>, Tile> addedCache, String defaultCategory, List<Tile> outTiles,
+            Intent intent, Bundle metaData, ComponentInfo componentInfo) {
+        // Skip loading category if the component is tagged primary_profile_only but not running on
+        // the current user.
+        if (user.getIdentifier() != ActivityManager.getCurrentUser()
+                && Tile.isPrimaryProfileOnly(componentInfo.metaData)) {
+            Log.w(LOG_TAG, "Found " + componentInfo.name + " for intent "
+                    + intent + " is primary profile only, skip loading tile for uid "
+                    + user.getIdentifier());
+            return;
+        }
+
+        String categoryKey = defaultCategory;
+        // Load category
+        if ((metaData == null || !metaData.containsKey(EXTRA_CATEGORY_KEY))
+                && categoryKey == null) {
+            Log.w(LOG_TAG, "Found " + componentInfo.name + " for intent "
+                    + intent + " missing metadata "
+                    + (metaData == null ? "" : EXTRA_CATEGORY_KEY));
+            return;
+        } else {
+            categoryKey = metaData.getString(EXTRA_CATEGORY_KEY);
+        }
+
+        final Pair<String, String> key = new Pair<>(componentInfo.packageName, componentInfo.name);
+        Tile tile = addedCache.get(key);
+        if (tile == null) {
+            if (checkDependencies(context, metaData, componentInfo) &&
+                    checkEntitlement(context, componentInfo, CERT_INPUT_SHA256)) {
+                tile = new PreferenceCategoryTile((ActivityInfo) componentInfo, categoryKey);
+                addedCache.put(key, tile);
+            } else {
+                // Dependency/entitlement check failed
+                return;
+            }
+        } else {
+            tile.setMetaData(metaData);
+        }
+
+        if (!tile.userHandle.contains(user)) {
+            tile.userHandle.add(user);
+        }
+        if (!outTiles.contains(tile)) {
+            outTiles.add(tile);
+        }
+    }
+
+    private static boolean checkDependencies(Context context, Bundle metaData,
+            ComponentInfo componentInfo) {
+        if (metaData == null) {
+            return false;
+        } else {
+            boolean add = true;
+
+            // Check if the Tile depends on a boolean resource
+            if (metaData.containsKey(META_DATA_DEPEND_ON_RESOURCE)) {
+                add = metaData.getBoolean(META_DATA_DEPEND_ON_RESOURCE, false);
+            }
+
+            // Check if the Tile depends on a system feature
+            if (add && metaData.containsKey(META_DATA_DEPEND_ON_SYSTEM_FEATURE)) {
+                String sysFeature = metaData.getString(META_DATA_DEPEND_ON_SYSTEM_FEATURE);
+                if (!TextUtils.isEmpty(sysFeature)) {
+                    add = context.getPackageManager().hasSystemFeature(sysFeature);
+                }
+            }
+
+            // Check if the Tile depends on a system property
+            if (add && metaData.containsKey(META_DATA_DEPEND_ON_SYSTEM_PROPERTY)) {
+                String sysProperty = metaData.getString(META_DATA_DEPEND_ON_SYSTEM_PROPERTY);
+                if (!TextUtils.isEmpty(sysProperty)) {
+                    add = SystemProperties.getBoolean(sysProperty, false);
+                }
+            }
+
+            return add;
+        }
+    }
+
+    // Optional entitlement check when adding/moving/removing preferences, ensuring that only
+    // packages with the same signature as the Settings package can modify settings Tiles.
+    private static boolean checkEntitlement(Context context, ComponentInfo componentInfo,
+            int type) {
+        if (componentInfo != null && !TextUtils.isEmpty(componentInfo.packageName)) {
+            try {
+                final PackageManager pm = context.getPackageManager();
+                final PackageInfo packageInfo = pm.getPackageInfo(SETTING_PKG,
+                        PackageManager.GET_SIGNING_CERTIFICATES);
+                final SigningInfo signingInfo = packageInfo.signingInfo;
+                final Signature[] signatures = signingInfo.getApkContentsSigners();
+                final ArrayList<byte[]> hashes = hashSignatureArray(signatures);
+                for (byte[] hash : hashes) {
+                     if (pm.hasSigningCertificate(componentInfo.packageName, hash, type)) {
+                        return true;
+                     }
+                }
+                Log.w(LOG_TAG, "Entitlement check failed for '" + componentInfo.packageName +
+                        "', for type " + type);
+            } catch (NameNotFoundException e) {
+                Log.e(LOG_TAG, "Failed to get package info for " + SETTING_PKG);
+                return false;
+            }
+            Log.w(LOG_TAG, "Entitlement check failed for " + componentInfo.name);
+        }
+        return false;
+    }
+
+    private static ArrayList<byte[]> hashSignatureArray(Signature[] signatures) {
+        if (signatures == null) {
+            return null;
+        }
+
+        ArrayList<byte[]> hashes = new ArrayList<>(signatures.length);
+        for (Signature signature : signatures) {
+            try {
+                MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                digest.update(signature.toByteArray());
+                hashes.add(digest.digest());
+            } catch (NoSuchAlgorithmException e) {
+                Log.w(LOG_TAG, "No SHA-256 algorithm found!");
+            }
+        }
+        return hashes;
     }
 
     /** Returns the switch data of the key specified from the provider */
