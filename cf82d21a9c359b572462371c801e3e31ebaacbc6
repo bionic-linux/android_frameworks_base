@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e23148c8_65dd405f",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1166043
+      },
+      "writtenOn": "2022-12-01T02:43:41Z",
+      "side": 1,
+      "message": "500",
+      "range": {
+        "startLine": 153,
+        "startChar": 61,
+        "endLine": 153,
+        "endChar": 65
+      },
+      "revId": "cf82d21a9c359b572462371c801e3e31ebaacbc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a674c556_b5dcf9c7",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1166043
+      },
+      "writtenOn": "2022-12-01T02:43:41Z",
+      "side": 1,
+      "message": "let\u0027s remove oldest 400",
+      "range": {
+        "startLine": 155,
+        "startChar": 53,
+        "endLine": 155,
+        "endChar": 56
+      },
+      "revId": "cf82d21a9c359b572462371c801e3e31ebaacbc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
