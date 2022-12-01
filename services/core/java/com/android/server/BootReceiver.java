@@ -337,21 +337,26 @@ public class BootReceiver extends BroadcastReceiver {
             return;
         }
 
-        // Check if we should rate limit and abort early if needed. Do this for both proto and
-        // non-proto tombstones, even though proto tombstones do not support including the counter
-        // of events dropped since rate limiting activated yet.
-        DropboxRateLimiter.RateLimitResult rateLimitResult =
-                sDropboxRateLimiter.shouldRateLimit(TAG_TOMBSTONE, processName);
-        if (rateLimitResult.shouldRateLimit()) return;
-
         HashMap<String, Long> timestamps = readTimestamps();
         try {
             if (proto) {
+                // Check if we should rate limit and abort early if needed. Do this for both proto
+                // and non-proto tombstones, even though proto tombstones do not support including
+                // the counter of events dropped since rate limiting activated yet.
+                DropboxRateLimiter.RateLimitResult protoRateLimitResult =
+                        sDropboxRateLimiter.shouldRateLimit(TAG_TOMBSTONE_PROTO, processName);
+                if (protoRateLimitResult.shouldRateLimit()) return;
+
                 if (recordFileTimestamp(tombstone, timestamps)) {
                     db.addFile(TAG_TOMBSTONE_PROTO, tombstone, 0);
                 }
             } else {
-                // Add the header indicating how many events have been dropped due to rate limiting.
+                // Check if we should rate limit and abort early if needed.
+                DropboxRateLimiter.RateLimitResult rateLimitResult =
+                        sDropboxRateLimiter.shouldRateLimit(TAG_TOMBSTONE, processName);
+                if (rateLimitResult.shouldRateLimit()) return;
+
+                // Add a header indicating how many events have been dropped due to rate limiting.
                 final String headers = getBootHeadersToLogAndUpdate()
                         + rateLimitResult.createHeader();
                 addFileToDropBox(db, timestamps, headers, tombstone.getPath(), LOG_SIZE,
