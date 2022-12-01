@@ -306,7 +306,7 @@ public final class DeviceStateManagerService extends SystemService {
             mOverrideRequestController.handleNewSupportedStates(newStateIdentifiers);
             updatePendingStateLocked();
 
-            if (!mPendingState.isPresent()) {
+            if (mBaseState.isPresent() && !mPendingState.isPresent()) {
                 // If the change in the supported states didn't result in a change of the pending
                 // state commitPendingState() will never be called and the callbacks will never be
                 // notified of the change.
@@ -467,8 +467,10 @@ public final class DeviceStateManagerService extends SystemService {
             mPendingState = Optional.empty();
             updatePendingStateLocked();
 
-            // Notify callbacks of a change.
-            notifyDeviceStateInfoChangedAsync();
+            if (mBaseState.isPresent()) {
+                // Notify callbacks of a change.
+                notifyDeviceStateInfoChangedAsync();
+            }
 
             // The top request could have come in while the service was awaiting callback
             // from the policy. In that case we only set it to active if it matches the
