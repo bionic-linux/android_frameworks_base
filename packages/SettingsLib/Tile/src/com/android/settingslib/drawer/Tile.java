@@ -395,6 +395,13 @@ public abstract class Tile implements Parcelable {
         return TextUtils.equals(profile, PROFILE_PRIMARY);
     }
 
+    /**
+     * Whether or not this tile describes a PreferenceCategory (PreferenceCategoryTile)
+     */
+    public boolean isPreferenceCategory() {
+        return false;
+    }
+
     public static final Comparator<Tile> TILE_COMPARATOR =
             (lhs, rhs) -> rhs.getOrder() - lhs.getOrder();
 }
