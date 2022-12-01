@@ -337,11 +337,12 @@ public class BootReceiver extends BroadcastReceiver {
             return;
         }
 
-        // Check if we should rate limit and abort early if needed. Do this for both proto and
-        // non-proto tombstones, even though proto tombstones do not support including the counter
-        // of events dropped since rate limiting activated yet.
+        // Check if we should rate limit and abort early if needed. Do this for both proto
+        // and non-proto tombstones, even though proto tombstones do not support including
+        // the counter of events dropped since rate limiting activated yet.
         DropboxRateLimiter.RateLimitResult rateLimitResult =
-                sDropboxRateLimiter.shouldRateLimit(TAG_TOMBSTONE, processName);
+                sDropboxRateLimiter.shouldRateLimit(
+                       proto ? TAG_TOMBSTONE_PROTO : TAG_TOMBSTONE, processName);
         if (rateLimitResult.shouldRateLimit()) return;
 
         HashMap<String, Long> timestamps = readTimestamps();
@@ -351,7 +352,7 @@ public class BootReceiver extends BroadcastReceiver {
                     db.addFile(TAG_TOMBSTONE_PROTO, tombstone, 0);
                 }
             } else {
-                // Add the header indicating how many events have been dropped due to rate limiting.
+                // Add a header indicating how many events have been dropped due to rate limiting.
                 final String headers = getBootHeadersToLogAndUpdate()
                         + rateLimitResult.createHeader();
                 addFileToDropBox(db, timestamps, headers, tombstone.getPath(), LOG_SIZE,
