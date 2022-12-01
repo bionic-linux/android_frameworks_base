@@ -19,9 +19,11 @@ package android.net.vcn;
 import static android.net.ipsec.ike.IkeSessionParams.IKE_OPTION_MOBIKE;
 import static android.net.vcn.VcnGatewayConnectionConfig.DEFAULT_UNDERLYING_NETWORK_TEMPLATES;
 import static android.net.vcn.VcnGatewayConnectionConfig.UNDERLYING_NETWORK_TEMPLATES_KEY;
+import static android.net.vcn.VcnGatewayConnectionConfig.VCN_GATEWAY_OPTION_RECOVER_FROM_DATA_STALL_WITH_MOBIKE;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
@@ -125,6 +127,19 @@ public class VcnGatewayConnectionConfigTest {
         return buildTestConfigWithExposedCaps(newBuilder(), exposedCaps);
     }
 
+    // Public for use in VcnGatewayConnectionTest
+    public static VcnGatewayConnectionConfig buildTestConfigWithGatewayOptions(
+            int... gatewayOptions) {
+        final VcnGatewayConnectionConfig.Builder builder =
+                newBuilder().setVcnUnderlyingNetworkPriorities(UNDERLYING_NETWORK_TEMPLATES);
+
+        for (int option : gatewayOptions) {
+            builder.addOption(option);
+        }
+
+        return buildTestConfigWithExposedCaps(builder, EXPOSED_CAPS);
+    }
+
     @Test
     public void testBuilderRequiresNonNullGatewayConnectionName() {
         try {
@@ -211,6 +226,15 @@ public class VcnGatewayConnectionConfigTest {
     }
 
     @Test
+    public void testBuilderRequiresValidOption() {
+        try {
+            newBuilder().addOption(VCN_GATEWAY_OPTION_RECOVER_FROM_DATA_STALL_WITH_MOBIKE + 1);
+            fail("Expected exception due to invalid VCN gateway option");
+        } catch (IllegalArgumentException e) {
+        }
+    }
+
+    @Test
     public void testBuilderAndGetters() {
         final VcnGatewayConnectionConfig config = buildTestConfig();
 
@@ -225,11 +249,33 @@ public class VcnGatewayConnectionConfigTest {
 
         assertArrayEquals(RETRY_INTERVALS_MS, config.getRetryIntervalsMillis());
         assertEquals(MAX_MTU, config.getMaxMtu());
+
+        assertFalse(config.hasOption(VCN_GATEWAY_OPTION_RECOVER_FROM_DATA_STALL_WITH_MOBIKE));
+    }
+
+    @Test
+    public void testBuilderAndGettersWithOptions() {
+        final int[] options = new int[] {VCN_GATEWAY_OPTION_RECOVER_FROM_DATA_STALL_WITH_MOBIKE};
+
+        final VcnGatewayConnectionConfig config = buildTestConfigWithGatewayOptions(options);
+
+        for (int option : options) {
+            assertTrue(config.hasOption(option));
+        }
     }
 
     @Test
     public void testPersistableBundle() {
         final VcnGatewayConnectionConfig config = buildTestConfig();
+
+        assertEquals(config, new VcnGatewayConnectionConfig(config.toPersistableBundle()));
+    }
+
+    @Test
+    public void testPersistableBundleWithOptions() {
+        final VcnGatewayConnectionConfig config =
+                buildTestConfigWithGatewayOptions(
+                        VCN_GATEWAY_OPTION_RECOVER_FROM_DATA_STALL_WITH_MOBIKE);
 
         assertEquals(config, new VcnGatewayConnectionConfig(config.toPersistableBundle()));
     }
@@ -316,6 +362,22 @@ public class VcnGatewayConnectionConfigTest {
         assertEquals(config, configEqual);
 
         assertNotEquals(UNDERLYING_NETWORK_TEMPLATES, networkTemplatesNotEqual);
+        assertNotEquals(config, configNotEqual);
+    }
+
+    @Test
+    public void testVcnGatewayOptionsEquality() throws Exception {
+        final VcnGatewayConnectionConfig config =
+                buildTestConfigWithGatewayOptions(
+                        VCN_GATEWAY_OPTION_RECOVER_FROM_DATA_STALL_WITH_MOBIKE);
+        final VcnGatewayConnectionConfig configEqual =
+                buildTestConfigWithGatewayOptions(
+                        VCN_GATEWAY_OPTION_RECOVER_FROM_DATA_STALL_WITH_MOBIKE);
+
+        final VcnGatewayConnectionConfig configNotEqual =
+                buildTestConfigWithGatewayOptions(new int[0]);
+
+        assertEquals(config, configEqual);
         assertNotEquals(config, configNotEqual);
     }
 }
