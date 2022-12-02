@@ -24,13 +24,11 @@ import android.annotation.Nullable;
 import android.app.admin.PasswordMetrics;
 import android.content.Context;
 import android.content.pm.UserInfo;
-import android.hardware.weaver.V1_0.IWeaver;
-import android.hardware.weaver.V1_0.WeaverConfig;
-import android.hardware.weaver.V1_0.WeaverReadResponse;
-import android.hardware.weaver.V1_0.WeaverReadStatus;
-import android.hardware.weaver.V1_0.WeaverStatus;
+import android.hardware.weaver.IWeaver;
+import android.hardware.weaver.WeaverConfig;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.UserManager;
 import android.security.GateKeeper;
 import android.security.Scrypt;
@@ -421,8 +419,10 @@ public class SyntheticPasswordManager {
 
     private final Context mContext;
     private LockSettingsStorage mStorage;
-    private IWeaver mWeaver;
-    private WeaverConfig mWeaverConfig;
+    private android.hardware.weaver.V1_0.IWeaver mHidlWeaver;
+    private IWeaver mAidlWeaver;
+    private android.hardware.weaver.V1_0.WeaverConfig mHidlWeaverConfig;
+    private WeaverConfig mAidlWeaverConfig;
     private PasswordSlotManager mPasswordSlotManager;
 
     private final UserManager mUserManager;
@@ -439,74 +439,147 @@ public class SyntheticPasswordManager {
     }
 
     @VisibleForTesting
-    protected IWeaver getWeaverService() throws RemoteException {
+    protected android.hardware.weaver.V1_0.IWeaver getWeaverHidlService() throws RemoteException {
         try {
-            return IWeaver.getService(/* retry */ true);
+            return android.hardware.weaver.V1_0.IWeaver.getService(/* retry */ true);
         } catch (NoSuchElementException e) {
-            Slog.i(TAG, "Device does not support weaver");
+            Slog.i(TAG, "Device does not support HIDL weaver");
+            return null;
+        }
+    }
+
+    protected IWeaver getWeaverAidlService() throws RemoteException {
+        try {
+            return IWeaver.Stub.asInterface(
+                    ServiceManager.waitForDeclaredService(IWeaver.DESCRIPTOR + "/default"));
+        } catch (NoSuchElementException e) {
+            Slog.i(TAG, "Device does not support AIDL weaver");
             return null;
         }
     }
 
     public synchronized void initWeaverService() {
-        if (mWeaver != null) {
+        if (mHidlWeaver != null || mAidlWeaver != null) {
             return;
         }
         try {
-            mWeaverConfig = null;
-            mWeaver = getWeaverService();
-            if (mWeaver != null) {
-                mWeaver.getConfig((int status, WeaverConfig config) -> {
-                    if (status == WeaverStatus.OK && config.slots > 0) {
-                        mWeaverConfig = config;
-                    } else {
-                        Slog.e(TAG, "Failed to get weaver config, status " + status
-                                + " slots: " + config.slots);
-                        mWeaver = null;
-                    }
-                });
+            mHidlWeaverConfig = null;
+            mHidlWeaver = getWeaverHidlService();
+            if (mHidlWeaver != null) {
+                mHidlWeaver.getConfig(
+                        (int status, android.hardware.weaver.V1_0.WeaverConfig config) -> {
+                            if (status == android.hardware.weaver.V1_0.WeaverStatus.OK
+                                    && config.slots > 0) {
+                                mHidlWeaverConfig = config;
+                            } else {
+                                Slog.e(TAG,
+                                        "Failed to get HIDL weaver config, status " + status
+                                                + " slots: " + config.slots);
+                                mHidlWeaver = null;
+                            }
+                        });
                 mPasswordSlotManager.refreshActiveSlots(getUsedWeaverSlots());
+                Slog.i(TAG, "HIDL weaver service initialized");
             }
         } catch (RemoteException e) {
-            Slog.e(TAG, "Failed to get weaver service", e);
+            Slog.w(TAG, "Failed to get weaver HIDL service", e);
+        }
+
+        // If the HIDL service can't be found, look for the AIDL service
+        if (mHidlWeaver == null) {
+            try {
+                mAidlWeaver = getWeaverAidlService();
+            } catch (RemoteException e) {
+                Slog.w(TAG, "Failed to get weaver AIDL service", e);
+            }
+        }
+        if (mAidlWeaver != null) {
+            try {
+                mAidlWeaverConfig = mAidlWeaver.getConfig();
+                mPasswordSlotManager.refreshActiveSlots(getUsedWeaverSlots());
+                Slog.i(TAG, "AIDL weaver service initialized");
+            } catch (RemoteException e) {
+                Slog.e(TAG, "Failed to get AIDL weaver config", e);
+                mAidlWeaver = null;
+            }
         }
     }
 
-    private synchronized boolean isWeaverAvailable() {
-        if (mWeaver == null) {
+    private synchronized boolean isHidlWeaverAvailable() {
+        if (mAidlWeaver == null && mHidlWeaver == null) {
+            // Re-initializing weaver in case there was a transient error preventing access to it.
+            initWeaverService();
+        }
+        return mHidlWeaver != null && mHidlWeaverConfig.slots > 0;
+    }
+
+    private synchronized boolean isAidlWeaverAvailable() {
+        if (mAidlWeaver == null && mHidlWeaver == null) {
             //Re-initializing weaver in case there was a transient error preventing access to it.
             initWeaverService();
         }
-        return mWeaver != null && mWeaverConfig.slots > 0;
+        return mAidlWeaver != null && mAidlWeaverConfig.slots > 0;
+    }
+
+    private synchronized boolean isWeaverAvailable() {
+        return isHidlWeaverAvailable() || isAidlWeaverAvailable();
     }
 
     /**
-     * Enroll the given key value pair into the specified weaver slot. if the given key is null,
-     * a default all-zero key is used. If the value is not specified, a fresh random secret is
-     * generated as the value.
+     * Enroll the given key value pair into the specified weaver slot through HIDL service.
+     * If the given key is null, a default all-zero key is used. If the value is not specified,
+     * a fresh random secret is generated as the value.
      *
      * @return the value stored in the weaver slot, or null if the operation fails
      */
-    private byte[] weaverEnroll(int slot, byte[] key, @Nullable byte[] value) {
-        if (slot == INVALID_WEAVER_SLOT || slot >= mWeaverConfig.slots) {
-            throw new IllegalArgumentException("Invalid slot for weaver");
+    private byte[] weaverHidlEnroll(int slot, byte[] key, @Nullable byte[] value) {
+        if (slot == INVALID_WEAVER_SLOT || slot >= mHidlWeaverConfig.slots) {
+            throw new IllegalArgumentException("Invalid slot for HIDL weaver");
         }
         if (key == null) {
-            key = new byte[mWeaverConfig.keySize];
-        } else if (key.length != mWeaverConfig.keySize) {
-            throw new IllegalArgumentException("Invalid key size for weaver");
+            key = new byte[mHidlWeaverConfig.keySize];
+        } else if (key.length != mHidlWeaverConfig.keySize) {
+            throw new IllegalArgumentException("Invalid key size for HIDL weaver");
         }
         if (value == null) {
-            value = secureRandom(mWeaverConfig.valueSize);
+            value = secureRandom(mHidlWeaverConfig.valueSize);
         }
         try {
-            int writeStatus = mWeaver.write(slot, toByteArrayList(key), toByteArrayList(value));
-            if (writeStatus != WeaverStatus.OK) {
-                Slog.e(TAG, "weaver write failed, slot: " + slot + " status: " + writeStatus);
+            int writeStatus = mHidlWeaver.write(slot, toByteArrayList(key), toByteArrayList(value));
+            if (writeStatus != android.hardware.weaver.V1_0.WeaverStatus.OK) {
+                Slog.e(TAG, "HIDL weaver write failed, slot: " + slot + " status: " + writeStatus);
                 return null;
             }
         } catch (RemoteException e) {
-            Slog.e(TAG, "weaver write failed", e);
+            Slog.e(TAG, "HIDL weaver write failed", e);
+            return null;
+        }
+        return value;
+    }
+
+    /**
+     * Enroll the given key value pair into the specified weaver slot through AIDL service.
+     * If the given key is null, a default all-zero key is used. If the value is not specified,
+     * a fresh random secret is generated as the value.
+     *
+     * @return the value stored in the weaver slot, or null if the operation fails
+     */
+    private byte[] weaverAidlEnroll(int slot, byte[] key, @Nullable byte[] value) {
+        if (slot == INVALID_WEAVER_SLOT || slot >= mAidlWeaverConfig.slots) {
+            throw new IllegalArgumentException("Invalid slot for AIDL weaver");
+        }
+        if (key == null) {
+            key = new byte[mAidlWeaverConfig.keySize];
+        } else if (key.length != mAidlWeaverConfig.keySize) {
+            throw new IllegalArgumentException("Invalid key size for AIDL weaver");
+        }
+        if (value == null) {
+            value = secureRandom(mAidlWeaverConfig.valueSize);
+        }
+        try {
+            mAidlWeaver.write(slot, key, value);
+        } catch (RemoteException e) {
+            Slog.e(TAG, "AIDL weaver write failed, slot: " + slot, e);
             return null;
         }
         return value;
@@ -518,49 +591,54 @@ public class SyntheticPasswordManager {
      * is also returned.
      */
     private VerifyCredentialResponse weaverVerify(int slot, byte[] key) {
-        if (slot == INVALID_WEAVER_SLOT || slot >= mWeaverConfig.slots) {
+        if (slot == INVALID_WEAVER_SLOT || slot >= mHidlWeaverConfig.slots) {
             throw new IllegalArgumentException("Invalid slot for weaver");
         }
         if (key == null) {
-            key = new byte[mWeaverConfig.keySize];
-        } else if (key.length != mWeaverConfig.keySize) {
+            key = new byte[mHidlWeaverConfig.keySize];
+        } else if (key.length != mHidlWeaverConfig.keySize) {
             throw new IllegalArgumentException("Invalid key size for weaver");
         }
         final VerifyCredentialResponse[] response = new VerifyCredentialResponse[1];
         try {
-            mWeaver.read(slot, toByteArrayList(key),
-                    (int status, WeaverReadResponse readResponse) -> {
-                    switch (status) {
-                        case WeaverReadStatus.OK:
-                            response[0] = new VerifyCredentialResponse.Builder().setGatekeeperHAT(
-                                    fromByteArrayList(readResponse.value)).build();
-                            break;
-                        case WeaverReadStatus.THROTTLE:
-                            response[0] = VerifyCredentialResponse
-                                    .fromTimeout(readResponse.timeout);
-                            Slog.e(TAG, "weaver read failed (THROTTLE), slot: " + slot);
-                            break;
-                        case WeaverReadStatus.INCORRECT_KEY:
-                            if (readResponse.timeout == 0) {
+            mHidlWeaver.read(slot, toByteArrayList(key),
+                    (int status, android.hardware.weaver.V1_0.WeaverReadResponse readResponse) -> {
+                        switch (status) {
+                            case android.hardware.weaver.V1_0.WeaverReadStatus.OK:
+                                response[0] = new VerifyCredentialResponse.Builder()
+                                                      .setGatekeeperHAT(
+                                                              fromByteArrayList(readResponse.value))
+                                                      .build();
+                                break;
+                            case android.hardware.weaver.V1_0.WeaverReadStatus.THROTTLE:
+                                response[0] =
+                                        VerifyCredentialResponse.fromTimeout(readResponse.timeout);
+                                Slog.e(TAG, "weaver read failed (THROTTLE), slot: " + slot);
+                                break;
+                            case android.hardware.weaver.V1_0.WeaverReadStatus.INCORRECT_KEY:
+                                if (readResponse.timeout == 0) {
+                                    response[0] = VerifyCredentialResponse.ERROR;
+                                    Slog.e(TAG,
+                                            "weaver read failed (INCORRECT_KEY), slot: " + slot);
+                                } else {
+                                    response[0] = VerifyCredentialResponse.fromTimeout(
+                                            readResponse.timeout);
+                                    Slog.e(TAG,
+                                            "weaver read failed (INCORRECT_KEY/THROTTLE), slot: "
+                                                    + slot);
+                                }
+                                break;
+                            case android.hardware.weaver.V1_0.WeaverReadStatus.FAILED:
                                 response[0] = VerifyCredentialResponse.ERROR;
-                                Slog.e(TAG, "weaver read failed (INCORRECT_KEY), slot: " + slot);
-                            } else {
-                                response[0] = VerifyCredentialResponse
-                                        .fromTimeout(readResponse.timeout);
-                                Slog.e(TAG, "weaver read failed (INCORRECT_KEY/THROTTLE), slot: "
-                                        + slot);
-                            }
-                            break;
-                        case WeaverReadStatus.FAILED:
-                            response[0] = VerifyCredentialResponse.ERROR;
-                            Slog.e(TAG, "weaver read failed (FAILED), slot: " + slot);
-                            break;
-                        default:
-                            response[0] = VerifyCredentialResponse.ERROR;
-                            Slog.e(TAG, "weaver read unknown status " + status + ", slot: " + slot);
-                            break;
-                    }
-                });
+                                Slog.e(TAG, "weaver read failed (FAILED), slot: " + slot);
+                                break;
+                            default:
+                                response[0] = VerifyCredentialResponse.ERROR;
+                                Slog.e(TAG,
+                                        "weaver read unknown status " + status + ", slot: " + slot);
+                                break;
+                        }
+                    });
         } catch (RemoteException e) {
             response[0] = VerifyCredentialResponse.ERROR;
             Slog.e(TAG, "weaver read failed, slot: " + slot, e);
@@ -735,7 +813,11 @@ public class SyntheticPasswordManager {
             Set<Integer> usedSlots = getUsedWeaverSlots();
             if (!usedSlots.contains(slot)) {
                 Slog.i(TAG, "Destroy weaver slot " + slot + " for user " + userId);
-                weaverEnroll(slot, null, null);
+                if (isHidlWeaverAvailable()) {
+                    weaverHidlEnroll(slot, null, null);
+                } else {
+                    weaverAidlEnroll(slot, null, null);
+                }
                 mPasswordSlotManager.markSlotDeleted(slot);
             } else {
                 Slog.w(TAG, "Skip destroying reused weaver slot " + slot + " for user " + userId);
@@ -769,7 +851,7 @@ public class SyntheticPasswordManager {
     private int getNextAvailableWeaverSlot() {
         Set<Integer> usedSlots = getUsedWeaverSlots();
         usedSlots.addAll(mPasswordSlotManager.getUsedSlots());
-        for (int i = 0; i < mWeaverConfig.slots; i++) {
+        for (int i = 0; i < mHidlWeaverConfig.slots; i++) {
             if (!usedSlots.contains(i)) {
                 return i;
             }
@@ -803,8 +885,15 @@ public class SyntheticPasswordManager {
             // Weaver based user password
             int weaverSlot = getNextAvailableWeaverSlot();
             Slog.i(TAG, "Weaver enroll password to slot " + weaverSlot + " for user " + userId);
-            byte[] weaverSecret = weaverEnroll(weaverSlot, passwordTokenToWeaverKey(pwdToken),
-                    null);
+            byte[] weaverSecret = null;
+            if (isHidlWeaverAvailable()) {
+                weaverSecret =
+                        weaverHidlEnroll(weaverSlot, passwordTokenToWeaverKey(pwdToken), null);
+            } else {
+                weaverSecret =
+                        weaverAidlEnroll(weaverSlot, passwordTokenToWeaverKey(pwdToken), null);
+            }
+
             if (weaverSecret == null) {
                 throw new IllegalStateException(
                         "Fail to enroll user password under weaver " + userId);
@@ -966,7 +1055,11 @@ public class SyntheticPasswordManager {
         tokenData.mType = type;
         final byte[] secdiscardable = secureRandom(SECDISCARDABLE_LENGTH);
         if (isWeaverAvailable()) {
-            tokenData.weaverSecret = secureRandom(mWeaverConfig.valueSize);
+            if (isHidlWeaverAvailable()) {
+                tokenData.weaverSecret = secureRandom(mHidlWeaverConfig.valueSize);
+            } else {
+                tokenData.weaverSecret = secureRandom(mAidlWeaverConfig.valueSize);
+            }
             tokenData.secdiscardableOnDisk = SyntheticPasswordCrypto.encrypt(tokenData.weaverSecret,
                             PERSONALISATION_WEAVER_TOKEN, secdiscardable);
         } else {
@@ -1011,10 +1104,18 @@ public class SyntheticPasswordManager {
         if (isWeaverAvailable()) {
             int slot = getNextAvailableWeaverSlot();
             Slog.i(TAG, "Weaver enroll token to slot " + slot + " for user " + userId);
-            if (weaverEnroll(slot, null, tokenData.weaverSecret) == null) {
-                Slog.e(TAG, "Failed to enroll weaver secret when activating token");
-                return false;
+            if (isHidlWeaverAvailable()) {
+                if (weaverHidlEnroll(slot, null, tokenData.weaverSecret) == null) {
+                    Slog.e(TAG, "Failed to enroll weaver secret when activating token");
+                    return false;
+                }
+            } else {
+                if (weaverAidlEnroll(slot, null, tokenData.weaverSecret) == null) {
+                    Slog.e(TAG, "Failed to enroll weaver secret when activating token");
+                    return false;
+                }
             }
+
             saveWeaverSlot(slot, handle, userId);
             mPasswordSlotManager.markSlotInUse(slot);
         }
@@ -1512,10 +1613,10 @@ public class SyntheticPasswordManager {
 
     private byte[] passwordTokenToWeaverKey(byte[] token) {
         byte[] key = SyntheticPasswordCrypto.personalisedHash(PERSONALISATION_WEAVER_KEY, token);
-        if (key.length < mWeaverConfig.keySize) {
+        if (key.length < mHidlWeaverConfig.keySize) {
             throw new IllegalArgumentException("weaver key length too small");
         }
-        return Arrays.copyOf(key, mWeaverConfig.keySize);
+        return Arrays.copyOf(key, mHidlWeaverConfig.keySize);
     }
 
     protected long sidFromPasswordHandle(byte[] handle) {
