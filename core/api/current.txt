@@ -45099,6 +45099,10 @@ package android.text {
     ctor public NoCopySpan.Concrete();
   }
 
+  public class NonStandardEmoji {
+    method @NonNull public static java.util.Set<int[]> getEmojiSet();
+  }
+
   public interface ParcelableSpan extends android.os.Parcelable {
     method public int getSpanTypeId();
   }
