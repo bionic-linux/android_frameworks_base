@@ -44845,6 +44845,10 @@ package android.text {
     method @Deprecated public abstract void setText(CharSequence);
   }
 
+  public class CodepointExclusions {
+    method @NonNull public static java.util.List<java.lang.String> getExcludedCodpoints();
+  }
+
   public class DynamicLayout extends android.text.Layout {
     ctor @Deprecated public DynamicLayout(@NonNull CharSequence, @NonNull android.text.TextPaint, @IntRange(from=0) int, @NonNull android.text.Layout.Alignment, @FloatRange(from=0.0) float, float, boolean);
     ctor @Deprecated public DynamicLayout(@NonNull CharSequence, @NonNull CharSequence, @NonNull android.text.TextPaint, @IntRange(from=0) int, @NonNull android.text.Layout.Alignment, @FloatRange(from=0.0) float, float, boolean);
