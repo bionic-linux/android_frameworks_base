@@ -16,6 +16,23 @@
       "message": "Don\u0027t report device state until hardware state is known. \n\nHi @akulian@google.com  , \nThe changes have been readied, please help review, thank you!",
       "revId": "fb72420138282ef73829048fbb127f10c36f836e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51ebf137_05e89031",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2022-12-02T03:42:34Z",
+      "side": 1,
+      "message": "@kennethford@google.com, @jiamingliu@google.com, could you please help provide your reviews?",
+      "revId": "fb72420138282ef73829048fbb127f10c36f836e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
