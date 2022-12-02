@@ -91,6 +91,24 @@
       "parentUuid": "9e370b30_16e9e4bb",
       "revId": "fb72420138282ef73829048fbb127f10c36f836e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3cd3b49_90d0c174",
+        "filename": "services/core/java/com/android/server/devicestate/DeviceStateManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1390168
+      },
+      "writtenOn": "2022-12-02T14:33:49Z",
+      "side": 1,
+      "message": "Your plan is also feasible, please ignore my last reply.",
+      "parentUuid": "c48ce6db_e1315071",
+      "revId": "fb72420138282ef73829048fbb127f10c36f836e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
