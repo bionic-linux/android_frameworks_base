@@ -30,6 +30,7 @@ import libcore.util.EmptyArray;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.security.spec.AlgorithmParameterSpec;
+import java.security.spec.ECParameterSpec;
 import java.security.spec.MGF1ParameterSpec;
 import java.util.Collection;
 import java.util.Locale;
@@ -195,6 +196,7 @@ public abstract class KeyProperties {
     @StringDef(prefix = { "KEY_" }, value = {
         KEY_ALGORITHM_RSA,
         KEY_ALGORITHM_EC,
+        KEY_ALGORITHM_XDH,
         KEY_ALGORITHM_AES,
         KEY_ALGORITHM_HMAC_SHA1,
         KEY_ALGORITHM_HMAC_SHA224,
@@ -209,6 +211,11 @@ public abstract class KeyProperties {
 
     /** Elliptic Curve (EC) Cryptography key. */
     public static final String KEY_ALGORITHM_EC = "EC";
+
+    /** Curve 25519 based Agreement key.
+     * @hide
+     */
+    public static final String KEY_ALGORITHM_XDH = "XDH";
 
     /** Advanced Encryption Standard (AES) key. */
     public static final String KEY_ALGORITHM_AES = "AES";
@@ -245,7 +252,8 @@ public abstract class KeyProperties {
 
         public static int toKeymasterAsymmetricKeyAlgorithm(
                 @NonNull @KeyAlgorithmEnum String algorithm) {
-            if (KEY_ALGORITHM_EC.equalsIgnoreCase(algorithm)) {
+            if (KEY_ALGORITHM_EC.equalsIgnoreCase(algorithm)
+                    || KEY_ALGORITHM_XDH.equalsIgnoreCase(algorithm)) {
                 return KeymasterDefs.KM_ALGORITHM_EC;
             } else if (KEY_ALGORITHM_RSA.equalsIgnoreCase(algorithm)) {
                 return KeymasterDefs.KM_ALGORITHM_RSA;
@@ -909,6 +917,51 @@ public abstract class KeyProperties {
                 default:
                     throw new IllegalArgumentException("Unsupported security level: "
                             + securityLevel);
+            }
+        }
+    }
+
+    /**
+     * @hide
+     */
+    public abstract static class EcCurve {
+        private EcCurve() {}
+
+        /**
+         * @hide
+         */
+        public static int toKeymasterCurve(ECParameterSpec spec) {
+            int keySize = spec.getCurve().getField().getFieldSize();
+            switch (keySize) {
+                case 224:
+                    return android.hardware.security.keymint.EcCurve.P_224;
+                case 256:
+                    return android.hardware.security.keymint.EcCurve.P_256;
+                case 384:
+                    return android.hardware.security.keymint.EcCurve.P_384;
+                case 521:
+                    return android.hardware.security.keymint.EcCurve.P_521;
+                default:
+                    return -1;
+            }
+        }
+
+        /**
+         * @hide
+         */
+        public static int fromKeymasterCurve(int ecCurve) {
+            switch (ecCurve) {
+                case android.hardware.security.keymint.EcCurve.P_224:
+                    return 224;
+                case android.hardware.security.keymint.EcCurve.P_256:
+                case android.hardware.security.keymint.EcCurve.CURVE_25519:
+                    return 256;
+                case android.hardware.security.keymint.EcCurve.P_384:
+                    return 384;
+                case android.hardware.security.keymint.EcCurve.P_521:
+                    return 521;
+                default:
+                    return -1;
             }
         }
     }

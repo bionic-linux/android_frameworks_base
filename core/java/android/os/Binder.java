@@ -328,16 +328,28 @@ public class Binder implements IBinder {
     public static final native boolean isDirectlyHandlingTransaction();
 
     /**
+    * Returns {@code true} if the current thread has had its identity
+    * set explicitly via {@link #clearCallingIdentity()}
+    *
+    * @hide
+    */
+    @CriticalNative
+    private static native boolean hasExplicitIdentity();
+
+    /**
      * Return the Linux UID assigned to the process that sent the transaction
      * currently being processed.
      *
      * @throws IllegalStateException if the current thread is not currently
-     * executing an incoming transaction.
+     * executing an incoming transaction and the calling identity has not been
+     * explicitly set with {@link #clearCallingIdentity()}
      */
     public static final int getCallingUidOrThrow() {
-        if (!isDirectlyHandlingTransaction()) {
+        if (!isDirectlyHandlingTransaction() && !hasExplicitIdentity()) {
             throw new IllegalStateException(
-                  "Thread is not in a binder transcation");
+                  "Thread is not in a binder transaction, "
+                  + "and the calling identity has not been "
+                  + "explicitly set with clearCallingIdentity");
         }
         return getCallingUid();
     }
@@ -911,11 +923,15 @@ public class Binder implements IBinder {
             final String transactionName = getTransactionName(transactionCode);
             final StringBuffer buf = new StringBuffer();
 
+            // Keep trace name consistent with cpp trace name in:
+            // system/tools/aidl/generate_cpp.cpp
+            buf.append("AIDL::java::");
             if (transactionName != null) {
-                buf.append(mSimpleDescriptor).append(":").append(transactionName);
+                buf.append(mSimpleDescriptor).append("::").append(transactionName);
             } else {
-                buf.append(mSimpleDescriptor).append("#").append(transactionCode);
+                buf.append(mSimpleDescriptor).append("::#").append(transactionCode);
             }
+            buf.append("::server");
 
             transactionTraceName = buf.toString();
             mTransactionTraceNames.setRelease(index, transactionTraceName);
@@ -1219,25 +1235,40 @@ public class Binder implements IBinder {
     @UnsupportedAppUsage
     private boolean execTransact(int code, long dataObj, long replyObj,
             int flags) {
+
+        Parcel data = Parcel.obtain(dataObj);
+        Parcel reply = Parcel.obtain(replyObj);
+
         // At that point, the parcel request headers haven't been parsed so we do not know what
         // {@link WorkSource} the caller has set. Use calling UID as the default.
-        final int callingUid = Binder.getCallingUid();
-        final long origWorkSource = ThreadLocalWorkSource.setUid(callingUid);
+        //
+        // TODO: this is wrong - we should attribute along the entire call route
+        // also this attribution logic should move to native code - it only works
+        // for Java now
+        //
+        // This attribution support is not generic and therefore not support in RPC mode
+        final int callingUid = data.isForRpc() ? -1 : Binder.getCallingUid();
+        final long origWorkSource = callingUid == -1
+                ? -1 : ThreadLocalWorkSource.setUid(callingUid);
+
         try {
-            return execTransactInternal(code, dataObj, replyObj, flags, callingUid);
+            return execTransactInternal(code, data, reply, flags, callingUid);
         } finally {
-            ThreadLocalWorkSource.restore(origWorkSource);
+            reply.recycle();
+            data.recycle();
+
+            if (callingUid != -1) {
+                ThreadLocalWorkSource.restore(origWorkSource);
+            }
         }
     }
 
-    private boolean execTransactInternal(int code, long dataObj, long replyObj, int flags,
+    private boolean execTransactInternal(int code, Parcel data, Parcel reply, int flags,
             int callingUid) {
         // Make sure the observer won't change while processing a transaction.
         final BinderInternal.Observer observer = sObserver;
         final CallSession callSession =
                 observer != null ? observer.callStarted(this, code, UNSET_WORKSOURCE) : null;
-        Parcel data = Parcel.obtain(dataObj);
-        Parcel reply = Parcel.obtain(replyObj);
         // Theoretically, we should call transact, which will call onTransact,
         // but all that does is rewind it, and we just got these from an IPC,
         // so we'll just call it directly.
@@ -1268,8 +1299,10 @@ public class Binder implements IBinder {
 
         final boolean tracingEnabled = tagEnabled && transactionTraceName != null;
         try {
+            // TODO - this logic should not be in Java - it should be in native
+            // code in libbinder so that it works for all binder users.
             final BinderCallHeavyHitterWatcher heavyHitterWatcher = sHeavyHitterWatcher;
-            if (heavyHitterWatcher != null) {
+            if (heavyHitterWatcher != null && callingUid != -1) {
                 // Notify the heavy hitter watcher, if it's enabled.
                 heavyHitterWatcher.onTransaction(callingUid, getClass(), code);
             }
@@ -1277,7 +1310,10 @@ public class Binder implements IBinder {
                 Trace.traceBegin(Trace.TRACE_TAG_AIDL, transactionTraceName);
             }
 
-            if ((flags & FLAG_COLLECT_NOTED_APP_OPS) != 0) {
+            // TODO - this logic should not be in Java - it should be in native
+            // code in libbinder so that it works for all binder users. Further,
+            // this should not re-use flags.
+            if ((flags & FLAG_COLLECT_NOTED_APP_OPS) != 0 && callingUid != -1) {
                 AppOpsManager.startNotedAppOpsCollection(callingUid);
                 try {
                     res = onTransact(code, data, reply, flags);
@@ -1320,8 +1356,6 @@ public class Binder implements IBinder {
             }
 
             checkParcel(this, code, reply, "Unreasonably large binder reply buffer");
-            reply.recycle();
-            data.recycle();
         }
 
         // Just in case -- we are done with the IPC, so there should be no more strict

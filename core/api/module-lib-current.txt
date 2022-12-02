@@ -339,10 +339,6 @@ package android.os {
     method public boolean shouldBypassCache(@NonNull Q);
   }
 
-  public interface Parcelable {
-    method public default int getStability();
-  }
-
   public class Process {
     method public static final int getAppUidForSdkSandboxUid(int);
     method public static final boolean isSdkSandboxUid(int);
@@ -352,6 +348,7 @@ package android.os {
   }
 
   public final class ServiceManager {
+    method @NonNull public static String[] getDeclaredInstances(@NonNull String);
     method public static boolean isDeclared(@NonNull String);
     method @Nullable public static android.os.IBinder waitForDeclaredService(@NonNull String);
   }
@@ -386,6 +383,7 @@ package android.os {
     method public static void traceBegin(long, @NonNull String);
     method public static void traceCounter(long, @NonNull String, int);
     method public static void traceEnd(long);
+    field public static final long TRACE_TAG_AIDL = 16777216L; // 0x1000000L
     field public static final long TRACE_TAG_NETWORK = 2097152L; // 0x200000L
   }
 

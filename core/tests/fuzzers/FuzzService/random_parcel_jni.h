@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The Android Open Source Project
+ * Copyright (C) 2022 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#include <jni.h>
 
-package android.app.timezone;
+extern "C" {
+    JNIEXPORT void JNICALL Java_randomparcel_FuzzBinder_fuzzServiceInternal(JNIEnv *env, jobject thiz, jobject javaBinder, jbyteArray fuzzData);
 
-/**
- * Callback interface for a timezone updater to receive information about the success or failure of
- * an installation/uninstallation attempt.
- *
- * {@hide}
- */
-oneway interface ICallback {
-    void onFinished(int error);
+    // Function to register libandroid_runtime JNI functions with java env.
+    JNIEXPORT jint JNICALL Java_randomparcel_FuzzBinder_registerNatives(JNIEnv* env);
+
+    // Function from AndroidRuntime
+    jint registerFrameworkNatives(JNIEnv* env);
 }

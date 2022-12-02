@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 The Android Open Source Project
+ * Copyright (C) 2013 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-#pragma once
+package android.nfc;
 
-#include <jni.h>
-
-// Get the Java VM. If the symbol doesn't exist at runtime, it means libandroid_runtime
-// is not loaded in the current process. If the symbol exists but it returns nullptr, it
-// means JavaVM is not yet started.
-extern "C" JavaVM* AndroidRuntimeGetJavaVM();
+parcelable AvailableNfcAntenna;
