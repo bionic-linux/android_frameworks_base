@@ -70,6 +70,24 @@
       "parentUuid": "619081fd_5520416f",
       "revId": "ee48a528b8b0ba5315c2ceecdcd31173591371c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1424d96_c0116767",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-12-02T20:39:19Z",
+      "side": 1,
+      "message": "Actually, I\u0027m not really sure why you added the AIDLs on the non-updatable side...\n\nDo you mean you\u0027ll add bound services that implements these AIDLs?? Not sure but you can\u0027t share AIDL definitions directly across module boundaries...",
+      "parentUuid": "533f9b5a_6bdf5c27",
+      "revId": "ee48a528b8b0ba5315c2ceecdcd31173591371c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
