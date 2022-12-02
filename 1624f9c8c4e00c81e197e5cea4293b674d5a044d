@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63826dad_a941d140",
+        "filename": "core/java/android/os/Build.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1896276
+      },
+      "writtenOn": "2022-12-02T17:17:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe0552ce_162b7ef9",
+      "range": {
+        "startLine": 64,
+        "startChar": 29,
+        "endLine": 64,
+        "endChar": 40
+      },
+      "revId": "1624f9c8c4e00c81e197e5cea4293b674d5a044d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b018634_c4272868",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-11-24T16:49:04Z",
       "side": 1,
       "message": "Use TextUtils.isEmpty()",
+      "range": {
+        "startLine": 802,
+        "startChar": 0,
+        "endLine": 802,
+        "endChar": 97
+      },
+      "revId": "1624f9c8c4e00c81e197e5cea4293b674d5a044d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8111c7b_641b9a95",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1896276
+      },
+      "writtenOn": "2022-12-02T17:17:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b018634_c4272868",
       "range": {
         "startLine": 802,
         "startChar": 0,
