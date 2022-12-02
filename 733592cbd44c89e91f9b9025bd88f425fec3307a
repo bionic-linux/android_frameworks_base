@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbc66c72_8a8de6f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-02T03:24:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32aaa9e3_d6bd4cca",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e84f0e4_3256171d",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-12-01T18:43:07Z",
       "side": 1,
       "message": "Q: Is that the right way to refer to value in aidl file? I knew we used {@link xxx} when referring the JAVA values, but not sure how to refer to values in aidl file.",
+      "range": {
+        "startLine": 41,
+        "startChar": 69,
+        "endLine": 41,
+        "endChar": 99
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43d1a13a_cfb0c003",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-02T03:24:06Z",
+      "side": 1,
+      "message": "I think this should actually link to the generated java class `AudioHalVersion`",
+      "parentUuid": "9e84f0e4_3256171d",
       "range": {
         "startLine": 41,
         "startChar": 69,
@@ -94,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fec7300c_e8ae1d4f",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-02T03:24:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8dd4fa5_2b3a141d",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 57
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c31f1209_829255da",
@@ -117,6 +189,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "091491d6_ca2a1173",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-02T03:24:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c31f1209_829255da",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 39
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a056f1f6_b797fb64",
@@ -130,6 +226,30 @@
       "writtenOn": "2022-12-01T18:43:07Z",
       "side": 1,
       "message": "AFAIK, the \"AS.\" prefix is usually used in log from AudioService, not?",
+      "range": {
+        "startLine": 74,
+        "startChar": 39,
+        "endLine": 74,
+        "endChar": 42
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff9f4f15_6827975b",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-02T03:24:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a056f1f6_b797fb64",
       "range": {
         "startLine": 74,
         "startChar": 39,
@@ -187,6 +307,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10784606_d14557b6",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-02T03:24:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d3001ef_12caee3a",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 24
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6bd44f9a_5624b6e8",
@@ -200,6 +344,30 @@
       "writtenOn": "2022-12-01T18:02:42Z",
       "side": 1,
       "message": "The concept of \"validity\" seems to be inconsistent with calling the *_VERSIONS arrays \"lists of supported versions.\" We should say either \"valid\" or \"supported\" in both cases.",
+      "range": {
+        "startLine": 123,
+        "startChar": 24,
+        "endLine": 123,
+        "endChar": 31
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ec17e06_ebf31aa4",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-02T03:24:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bd44f9a_5624b6e8",
       "range": {
         "startLine": 123,
         "startChar": 24,
@@ -257,6 +425,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cbd31dc_f311358f",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-02T03:24:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c89d7ae_babf4e6e",
+      "range": {
+        "startLine": 131,
+        "startChar": 15,
+        "endLine": 133,
+        "endChar": 19
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08439858_90126366",
@@ -270,6 +462,30 @@
       "writtenOn": "2022-12-01T18:43:07Z",
       "side": 1,
       "message": "{@link AudioHalVersionInfo}",
+      "range": {
+        "startLine": 8465,
+        "startChar": 40,
+        "endLine": 8465,
+        "endChar": 65
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7665876_14b3c123",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 8465,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-02T03:24:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08439858_90126366",
       "range": {
         "startLine": 8465,
         "startChar": 40,
@@ -303,6 +519,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e625667_7f6fc7f7",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 8468,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-02T03:24:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4cb0cc8_f91fbe30",
+      "range": {
+        "startLine": 8468,
+        "startChar": 15,
+        "endLine": 8468,
+        "endChar": 71
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bf97fed2_f18d529b",
@@ -316,6 +556,30 @@
       "writtenOn": "2022-12-01T18:49:50Z",
       "side": 1,
       "message": "Could you also add comment here to note that aidl version is not included here? If we forget to change the code here, after aidl HAL is active, the device is going to fail CTS.",
+      "range": {
+        "startLine": 10838,
+        "startChar": 7,
+        "endLine": 10838,
+        "endChar": 80
+      },
+      "revId": "733592cbd44c89e91f9b9025bd88f425fec3307a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fddc71b3_cfa78e01",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 10838,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-02T03:24:06Z",
+      "side": 1,
+      "message": "The list will include both AIDL and HIDL versions now",
+      "parentUuid": "bf97fed2_f18d529b",
       "range": {
         "startLine": 10838,
         "startChar": 7,
