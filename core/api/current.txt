@@ -44899,6 +44899,16 @@ package android.text {
     method public android.text.Editable newEditable(CharSequence);
   }
 
+  public final class EmojiConsistency {
+    method @NonNull public static android.text.EmojiConsistency.Matcher emojiConsistencyMatcher();
+    method @NonNull public static java.util.Set<int[]> getEmojiConsistencySet();
+    field @NonNull public static final android.util.Range<java.lang.Integer> NO_MATCH;
+  }
+
+  public static interface EmojiConsistency.Matcher {
+    method @NonNull public android.util.Range<java.lang.Integer> nextEmojiRangeConsistencyMatch(@NonNull CharSequence, @IntRange(from=0) int);
+  }
+
   public interface GetChars extends java.lang.CharSequence {
     method public void getChars(int, int, char[], int);
   }
