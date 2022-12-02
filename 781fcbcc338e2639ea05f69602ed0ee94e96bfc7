@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "62b47f92_8bc9fe13",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1944206
+      },
+      "writtenOn": "2022-12-02T16:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31098c65_75f52b65",
+      "revId": "781fcbcc338e2639ea05f69602ed0ee94e96bfc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f896048_720bff11",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-12-02T15:00:54Z",
       "side": 1,
       "message": "to allow us to migrate from Binder.getCallingUid to it,",
+      "range": {
+        "startLine": 15,
+        "startChar": 43,
+        "endLine": 15,
+        "endChar": 44
+      },
+      "revId": "781fcbcc338e2639ea05f69602ed0ee94e96bfc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f4380f4_03001b98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1944206
+      },
+      "writtenOn": "2022-12-02T16:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f896048_720bff11",
       "range": {
         "startLine": 15,
         "startChar": 43,
@@ -64,6 +106,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4d4bfe2_a000c5c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1944206
+      },
+      "writtenOn": "2022-12-02T16:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02a49c61_3553b0f2",
+      "range": {
+        "startLine": 23,
+        "startChar": 63,
+        "endLine": 24,
+        "endChar": 55
+      },
+      "revId": "781fcbcc338e2639ea05f69602ed0ee94e96bfc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "151a7a5b_53e9f0e8",
@@ -77,6 +143,24 @@
       "writtenOn": "2022-12-02T15:00:54Z",
       "side": 1,
       "message": "The goal is to only use this in the system (hence @hide).",
+      "revId": "781fcbcc338e2639ea05f69602ed0ee94e96bfc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e740c469_09eee87f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1944206
+      },
+      "writtenOn": "2022-12-02T16:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "151a7a5b_53e9f0e8",
       "revId": "781fcbcc338e2639ea05f69602ed0ee94e96bfc7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
