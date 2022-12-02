@@ -52,6 +52,24 @@
       "parentUuid": "9ee5a2dc_ebf0a338",
       "revId": "ee48a528b8b0ba5315c2ceecdcd31173591371c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "533f9b5a_6bdf5c27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-12-02T20:29:17Z",
+      "side": 1,
+      "message": "If I\u0027m reading it correct, you\u0027re adding a system service on the non-updatable system side, which will talk to your mainline module using the APIs also exposed from the module.\n\nThen that means the system service should just be designed like a regular system service.\n\nThen just extend `com.android.server.SystemService` and use `publishBinderService()` there. Look into this method -- there\u0027s nothing special about this method ServiceManager. It just our convention. And use `ServiceManager.addService()` to register it.\n\nUsing SystemService also gives you all the boot phase callbacks and user lifecycle callbacks. You\u0027ll mostly need them. Even if you don\u0027t, just follow the convention.",
+      "parentUuid": "619081fd_5520416f",
+      "revId": "ee48a528b8b0ba5315c2ceecdcd31173591371c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
