@@ -73,6 +73,24 @@
       "message": "I think it is safer if we add a check to notifyDeviceStateInfoChangedAsync() like this:\n\nif (!mBaseState.isPresent() || !mCommittedState.isPresent()) {\n  Slog.e(TAG, \"Cannot notify device state info change before the initial state has been committed.\");\n  return;\n}\n\nLet\u0027s wait for Kenneth to comment on this since he\u0027s more familiar with the code.",
       "revId": "fb72420138282ef73829048fbb127f10c36f836e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c48ce6db_e1315071",
+        "filename": "services/core/java/com/android/server/devicestate/DeviceStateManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1390168
+      },
+      "writtenOn": "2022-12-02T13:25:02Z",
+      "side": 1,
+      "message": "This modification will not be thrown again, \nbut the mActiveOverride member needs to be considered additionally.\n```\n// need to be notify\nmBaseState.isPresent() \u0026\u0026 !mActiveOverride.isPresent()\n```",
+      "parentUuid": "9e370b30_16e9e4bb",
+      "revId": "fb72420138282ef73829048fbb127f10c36f836e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
