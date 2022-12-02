@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31098c65_75f52b65",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-12-02T15:00:54Z",
+      "side": 1,
+      "message": "Very good commit message 😊 Just a few nits",
+      "revId": "781fcbcc338e2639ea05f69602ed0ee94e96bfc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f896048_720bff11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-12-02T15:00:54Z",
+      "side": 1,
+      "message": "to allow us to migrate from Binder.getCallingUid to it,",
+      "range": {
+        "startLine": 15,
+        "startChar": 43,
+        "endLine": 15,
+        "endChar": 44
+      },
+      "revId": "781fcbcc338e2639ea05f69602ed0ee94e96bfc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02a49c61_3553b0f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-12-02T15:00:54Z",
+      "side": 1,
+      "message": "Remove (we just want system_server to use it)",
+      "range": {
+        "startLine": 23,
+        "startChar": 63,
+        "endLine": 24,
+        "endChar": 55
+      },
+      "revId": "781fcbcc338e2639ea05f69602ed0ee94e96bfc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "151a7a5b_53e9f0e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-12-02T15:00:54Z",
+      "side": 1,
+      "message": "The goal is to only use this in the system (hence @hide).",
+      "revId": "781fcbcc338e2639ea05f69602ed0ee94e96bfc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
