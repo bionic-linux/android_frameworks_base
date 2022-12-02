@@ -16,6 +16,24 @@
       "message": "You lost the line breaks",
       "revId": "395f211aca6802f06cb2f99b3c1cadcb678b1ddd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab9c3cf1_1441c032",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1944206
+      },
+      "writtenOn": "2022-12-02T17:22:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e8473b9_e9660e3f",
+      "revId": "395f211aca6802f06cb2f99b3c1cadcb678b1ddd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
