@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a85d9e51_205312c4",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2022-12-02T22:22:47Z",
+      "side": 1,
+      "message": "Do we have hidl1.0?",
+      "range": {
+        "startLine": 73,
+        "startChar": 19,
+        "endLine": 73,
+        "endChar": 94
+      },
+      "revId": "8eae77c532eea1ac8c3f04e267a04cd1b34af6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ef66c68_e06a73a4",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 10853,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2022-12-02T22:22:47Z",
+      "side": 1,
+      "message": "Given you put AIDL as the first one in the list, will it be a problem that you check \"android.hardware.asudio@1.0::IDevicesFactory\" first?",
+      "range": {
+        "startLine": 10853,
+        "startChar": 38,
+        "endLine": 10853,
+        "endChar": 81
+      },
+      "revId": "8eae77c532eea1ac8c3f04e267a04cd1b34af6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
