@@ -33,6 +33,29 @@
       "message": "@kennethford@google.com, @jiamingliu@google.com, could you please help provide your reviews?",
       "revId": "fb72420138282ef73829048fbb127f10c36f836e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15771da3_bb3ea5f1",
+        "filename": "services/core/java/com/android/server/devicestate/DeviceStateManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1390168
+      },
+      "writtenOn": "2022-12-02T06:35:49Z",
+      "side": 1,
+      "message": "The CL refer to the design of exception throw:\n\n```\nDon\u0027t report device state until hardware state is known.  \n\nThe previous implementation of DeviceStateProviderImpl would report the current device state as soon as a listener was registered leading to a series of device state changes on boot as the state of the hardware becomes known. This changes the implementation to await callbacks before notifying the listener of a change in device state.  \n\nFixes: 181671216 \nTest: atest DeviceStateProviderImplTest\nTest: atest DeviceStateManagerServiceTest\nTest: atest DeviceStateManagerGlobalTest \nChange-Id: I3f133b6d7135b829b79c9f225ae52c71061faa3e\n```",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 268,
+        "endChar": 9
+      },
+      "revId": "fb72420138282ef73829048fbb127f10c36f836e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
