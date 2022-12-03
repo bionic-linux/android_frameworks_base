@@ -126,6 +126,24 @@
       "parentUuid": "c48ce6db_e1315071",
       "revId": "fb72420138282ef73829048fbb127f10c36f836e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd9dba24_ee891345",
+        "filename": "services/core/java/com/android/server/devicestate/DeviceStateManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1640937
+      },
+      "writtenOn": "2022-12-03T00:15:05Z",
+      "side": 1,
+      "message": "I think I agree with Jiaming, it seems to make more sense to have this check live in `notifyDeviceStateInfoChangedAsync`",
+      "parentUuid": "a3cd3b49_90d0c174",
+      "revId": "fb72420138282ef73829048fbb127f10c36f836e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
