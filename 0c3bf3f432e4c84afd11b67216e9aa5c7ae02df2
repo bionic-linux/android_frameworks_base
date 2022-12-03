@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fe16f82_a505de59",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2022-12-03T01:26:10Z",
+      "side": 1,
+      "message": "Nice job!",
+      "revId": "0c3bf3f432e4c84afd11b67216e9aa5c7ae02df2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb5fcce1_eaa9999c",
+        "filename": "media/java/android/media/IAudioService.aidl",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2022-12-03T01:26:10Z",
+      "side": 1,
+      "message": "Please remove \u0027executable\u0027 bit from the file",
+      "revId": "0c3bf3f432e4c84afd11b67216e9aa5c7ae02df2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
