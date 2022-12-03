@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6abca89f_99bbefd5",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-03T00:18:16Z",
+      "side": 1,
+      "message": "I have some other CL coming, but you are right I should keep it consistent inside this topic.",
+      "parentUuid": "0e0fe1eb_b4fee850",
+      "range": {
+        "startLine": 62,
+        "startChar": 18,
+        "endLine": 62,
+        "endChar": 64
+      },
+      "revId": "7fb514a804a022578a7bb662eae0594a8f056d35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d9c90deb_72bf70c2",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-12-02T19:39:57Z",
       "side": 1,
       "message": "Can we define a method on `AudioHalVersionInfo` which returns such a list, and then use it here, something like:\n\n`VERSIONS \u003d List.of(AIDL_1_0.toList(), HIDL_7_1.toList(), ...)`\n\nThis should alleviate the need to have comments.",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 66,
+        "endChar": 79
+      },
+      "revId": "7fb514a804a022578a7bb662eae0594a8f056d35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90a81ad6_fc060c43",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-03T00:18:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d9c90deb_72bf70c2",
       "range": {
         "startLine": 66,
         "startChar": 20,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28bfe8fe_223b9998",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-03T00:18:16Z",
+      "side": 1,
+      "message": "With the change of constructor from public to private, valid field is no more needed.",
+      "parentUuid": "4fcb1d99_4360bc42",
+      "range": {
+        "startLine": 103,
+        "startChar": 20,
+        "endLine": 103,
+        "endChar": 26
+      },
+      "revId": "7fb514a804a022578a7bb662eae0594a8f056d35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a0ae2baa_3dd8e860",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-12-02T19:39:57Z",
       "side": 1,
       "message": "I would consider if we need named fields at all. Consider what happens if we just store the triple as `List\u003cInteger\u003e` inside `AudioHalVersionInfo` and use the static getters defined below.",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 32
+      },
+      "revId": "7fb514a804a022578a7bb662eae0594a8f056d35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b05d72f_825001f6",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-03T00:18:16Z",
+      "side": 1,
+      "message": "The original purpose of this class was a simple wrapper of `AudioHalVersion` and serve as the interface return.\nI\u0027m thinking maybe still make sense to hold `AudioHalVersion` as internal version definition, but simplify the wrapper interfaces to limit it to only getters, other than list of predefined `VERSIONS`, there is no real need to construct a customize `AudioHalVersionInfo`.\nWith this thinking, I removed some of the public interfaces as well as `mValid`, thanks for inspiring me evolve this class.",
+      "parentUuid": "a0ae2baa_3dd8e860",
       "range": {
         "startLine": 111,
         "startChar": 0,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "936a0000_51e3a487",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-03T00:18:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9901bbc1_0b2417ce",
+      "range": {
+        "startLine": 175,
+        "startChar": 30,
+        "endLine": 175,
+        "endChar": 57
+      },
+      "revId": "7fb514a804a022578a7bb662eae0594a8f056d35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2d07687_4e9f63b5",
@@ -129,6 +249,30 @@
       "writtenOn": "2022-12-02T19:39:57Z",
       "side": 1,
       "message": "We can compare using `VERSIONS.indexOf`, just taking care of \"invalid\" versions. We probably should treat them as being the \"oldest\".",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 69
+      },
+      "revId": "7fb514a804a022578a7bb662eae0594a8f056d35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de3ea7f4_4fc0e258",
+        "filename": "media/java/android/media/AudioHalVersionInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-03T00:18:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2d07687_4e9f63b5",
       "range": {
         "startLine": 196,
         "startChar": 0,
@@ -162,6 +306,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dbe9a18_e89db32a",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10838,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-03T00:18:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4c24e14b_cb686589",
+      "range": {
+        "startLine": 10838,
+        "startChar": 16,
+        "endLine": 10838,
+        "endChar": 17
+      },
+      "revId": "7fb514a804a022578a7bb662eae0594a8f056d35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d696f4f_8408f46e",
@@ -175,6 +343,30 @@
       "writtenOn": "2022-12-02T19:39:57Z",
       "side": 1,
       "message": "How could this be possible having that `AudioHalVersionInfo.VERSIONS` by definition only contains valid versions?",
+      "range": {
+        "startLine": 10843,
+        "startChar": 0,
+        "endLine": 10845,
+        "endChar": 66
+      },
+      "revId": "7fb514a804a022578a7bb662eae0594a8f056d35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a11ee050_3a4547ae",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10845,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2022-12-03T00:18:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2d696f4f_8408f46e",
       "range": {
         "startLine": 10843,
         "startChar": 0,
