@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "422625e6_20d1c4b1",
+        "filename": "core/tests/fuzzers/ParcelFuzzer/FuzzUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-12-03T03:53:21Z",
+      "side": 1,
+      "message": "actually - we should probably call this \u0027fillRandomParcel\u0027, wdyt?",
+      "range": {
+        "startLine": 39,
+        "startChar": 35,
+        "endLine": 39,
+        "endChar": 53
+      },
+      "revId": "b4bb3022b69f4b9d3f7ec1bc03cb9d22bf72e35a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9e13bbf_65ce2a4b",
+        "filename": "core/tests/fuzzers/ParcelFuzzer/FuzzUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-12-03T03:53:21Z",
+      "side": 1,
+      "message": "you may want to do:\n\ntry {\n    Parcel p1 \u003d Parcel.obtain();\n\n} finally {\n    p1.recycle();\n..\n\n(otherwise, if there is an exception, it will also be incorrectly reported as a leak)",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 37
+      },
+      "revId": "b4bb3022b69f4b9d3f7ec1bc03cb9d22bf72e35a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "285c678d_496b54ac",
+        "filename": "core/tests/fuzzers/ParcelFuzzer/ParcelFuzzer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-12-03T03:53:21Z",
+      "side": 1,
+      "message": "TODO\n\nfeel free to put \u0027TODO(b/150808347)\u0027 or file another bug. This will be a good one to keep in mind.",
+      "revId": "b4bb3022b69f4b9d3f7ec1bc03cb9d22bf72e35a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb43e8d6_91d122d2",
+        "filename": "core/tests/fuzzers/ParcelFuzzer/ReadUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-12-03T03:53:21Z",
+      "side": 1,
+      "message": "I think we talked about this. We may want to peak onto the array, so that we don\u0027t need to guess the size, 50% of the time. Will you do that on these?",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 52
+      },
+      "revId": "b4bb3022b69f4b9d3f7ec1bc03cb9d22bf72e35a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcbc95e3_5ad2ae50",
+        "filename": "core/tests/fuzzers/ParcelFuzzer/ReadUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-12-03T03:53:21Z",
+      "side": 1,
+      "message": "how do we know all the methods are here? (this is also a problem in the C++ and Rust ones - we might consider writing a test for that as well - but in Java... you can use reflection to check :)). We\u0027ve seen cases where we\u0027ve added a method to Parcel but forgot to add it here. Follow-up bug? 😊",
+      "revId": "b4bb3022b69f4b9d3f7ec1bc03cb9d22bf72e35a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb4f3789_032b9956",
+        "filename": "core/tests/fuzzers/ParcelFuzzer/parcelables/EmptyParcelable.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-12-03T03:53:21Z",
+      "side": 1,
+      "message": "nit: can/should we avoid duplicating these files?",
+      "revId": "b4bb3022b69f4b9d3f7ec1bc03cb9d22bf72e35a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
