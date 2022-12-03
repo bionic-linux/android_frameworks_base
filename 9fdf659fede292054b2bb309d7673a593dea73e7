@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7ce032d_c7d9a32f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2022-12-03T00:29:55Z",
+      "side": 1,
+      "message": "Thanks for taking care of the getHalVersion API!",
+      "revId": "9fdf659fede292054b2bb309d7673a593dea73e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
