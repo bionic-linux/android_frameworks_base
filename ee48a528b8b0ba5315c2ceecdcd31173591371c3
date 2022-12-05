@@ -88,6 +88,24 @@
       "parentUuid": "533f9b5a_6bdf5c27",
       "revId": "ee48a528b8b0ba5315c2ceecdcd31173591371c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6182789b_1eda15b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-12-05T23:59:21Z",
+      "side": 1,
+      "message": "I\u0027ve updated to extend `SystemService` instead. Lifetime callbacks are handy!\n\nAs discussed over GVC, the non-updatable AIDL is used by keystore2 and others to call into the system service. This is an unstable API as all clients are shipped together in the system image.\n\nInternally, the system service uses a JAR exposed by our apex to call into our app. The app has its own AIDL that the JAR wraps. See this topic for more context on the APIs in the APEX: https://android-review.git.corp.google.com/q/topic:%22rkpd-systemserver%22",
+      "parentUuid": "f1424d96_c0116767",
+      "revId": "ee48a528b8b0ba5315c2ceecdcd31173591371c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
