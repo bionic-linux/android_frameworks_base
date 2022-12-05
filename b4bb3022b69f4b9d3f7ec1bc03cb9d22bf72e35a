@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "beb8c3db_f15645c6",
+        "filename": "core/tests/fuzzers/ParcelFuzzer/FuzzUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2022-12-05T16:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "422625e6_20d1c4b1",
+      "range": {
+        "startLine": 39,
+        "startChar": 35,
+        "endLine": 39,
+        "endChar": 53
+      },
+      "revId": "b4bb3022b69f4b9d3f7ec1bc03cb9d22bf72e35a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e9e13bbf_65ce2a4b",
@@ -37,6 +61,54 @@
       "writtenOn": "2022-12-03T03:53:21Z",
       "side": 1,
       "message": "you may want to do:\n\ntry {\n    Parcel p1 \u003d Parcel.obtain();\n\n} finally {\n    p1.recycle();\n..\n\n(otherwise, if there is an exception, it will also be incorrectly reported as a leak)",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 37
+      },
+      "revId": "b4bb3022b69f4b9d3f7ec1bc03cb9d22bf72e35a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "832471c1_625ea078",
+        "filename": "core/tests/fuzzers/ParcelFuzzer/FuzzUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2022-12-05T16:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9e13bbf_65ce2a4b",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 37
+      },
+      "revId": "b4bb3022b69f4b9d3f7ec1bc03cb9d22bf72e35a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "359c901f_83a2943e",
+        "filename": "core/tests/fuzzers/ParcelFuzzer/FuzzUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2022-12-05T16:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9e13bbf_65ce2a4b",
       "range": {
         "startLine": 43,
         "startChar": 0,
@@ -64,6 +136,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2f34739_4d6ce967",
+        "filename": "core/tests/fuzzers/ParcelFuzzer/ParcelFuzzer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2022-12-05T16:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "285c678d_496b54ac",
+      "revId": "b4bb3022b69f4b9d3f7ec1bc03cb9d22bf72e35a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb43e8d6_91d122d2",
@@ -77,6 +167,30 @@
       "writtenOn": "2022-12-03T03:53:21Z",
       "side": 1,
       "message": "I think we talked about this. We may want to peak onto the array, so that we don\u0027t need to guess the size, 50% of the time. Will you do that on these?",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 52
+      },
+      "revId": "b4bb3022b69f4b9d3f7ec1bc03cb9d22bf72e35a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f056d2f8_a0e56b33",
+        "filename": "core/tests/fuzzers/ParcelFuzzer/ReadUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2022-12-05T16:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb43e8d6_91d122d2",
       "range": {
         "startLine": 155,
         "startChar": 0,
@@ -104,6 +218,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6abf0de_1de9c9e0",
+        "filename": "core/tests/fuzzers/ParcelFuzzer/ReadUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2022-12-05T16:37:29Z",
+      "side": 1,
+      "message": "Filed b/261441622.",
+      "parentUuid": "bcbc95e3_5ad2ae50",
+      "revId": "b4bb3022b69f4b9d3f7ec1bc03cb9d22bf72e35a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb4f3789_032b9956",
@@ -117,6 +249,24 @@
       "writtenOn": "2022-12-03T03:53:21Z",
       "side": 1,
       "message": "nit: can/should we avoid duplicating these files?",
+      "revId": "b4bb3022b69f4b9d3f7ec1bc03cb9d22bf72e35a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9597b5f_245d7480",
+        "filename": "core/tests/fuzzers/ParcelFuzzer/parcelables/EmptyParcelable.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2022-12-05T16:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb4f3789_032b9956",
       "revId": "b4bb3022b69f4b9d3f7ec1bc03cb9d22bf72e35a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }

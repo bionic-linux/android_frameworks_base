@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1722d4ac_802f9e12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2022-12-05T16:37:29Z",
+      "side": 1,
+      "message": "@usta@google.com @juu@google.com Can you please provide owners approval for Android.bp?\nI have added a file inside a file group which is used by fuzzer.",
+      "revId": "d8acb5ddb76f1151ad12ac0f10c10cc8f3026a19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
