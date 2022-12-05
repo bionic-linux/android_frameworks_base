@@ -16,6 +16,46 @@
       "message": "Gentle ping",
       "revId": "1a76f9fed6b82b6760d1f9370e9e1984ae346b55",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3acfecc_e17f98e6",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-12-05T13:02:02Z",
+      "side": 1,
+      "message": "wrap",
+      "revId": "1a76f9fed6b82b6760d1f9370e9e1984ae346b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82b40e51_d341fcf7",
+        "filename": "api/api.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-12-05T13:02:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is needed? @TestApi stubs are meant to include the @SystemApis.\n\nCould probably remove the all-non-updatable-modules-system-stubs module completely if not.",
+      "range": {
+        "startLine": 276,
+        "startChar": 70,
+        "endLine": 276,
+        "endChar": 108
+      },
+      "revId": "1a76f9fed6b82b6760d1f9370e9e1984ae346b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
