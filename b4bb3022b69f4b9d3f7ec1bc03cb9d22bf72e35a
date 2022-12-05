@@ -269,6 +269,24 @@
       "parentUuid": "eb4f3789_032b9956",
       "revId": "b4bb3022b69f4b9d3f7ec1bc03cb9d22bf72e35a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc1667eb_af8737f7",
+        "filename": "core/tests/fuzzers/ParcelFuzzer/parcelables/EmptyParcelable.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2022-12-05T16:42:36Z",
+      "side": 1,
+      "message": "https://android-review.git.corp.google.com/c/platform/frameworks/native/+/2327614\n\nUpdated existing files so that java fuzzer can use them.",
+      "parentUuid": "c9597b5f_245d7480",
+      "revId": "b4bb3022b69f4b9d3f7ec1bc03cb9d22bf72e35a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
