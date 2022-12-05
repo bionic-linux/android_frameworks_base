@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b607ba0_6ee68756",
+        "filename": "core/java/android/os/Build.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-12-05T17:04:50Z",
+      "side": 1,
+      "message": "This (and all following new fields) should be annotated with @TestApi so they are accessible from CTS.",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 13
+      },
+      "revId": "fd67c6a262e4d03688de9aab29bdbc2de194e302",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
