@@ -168,6 +168,24 @@
       "parentUuid": "a3cd3b49_90d0c174",
       "revId": "fb72420138282ef73829048fbb127f10c36f836e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69bd7573_7adc8402",
+        "filename": "services/core/java/com/android/server/devicestate/DeviceStateManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1390168
+      },
+      "writtenOn": "2022-12-05T07:18:10Z",
+      "side": 1,
+      "message": "Done\nHi @kennethford@google.com \nThis change has been verified on the foldable device and is ready for review,\nplease help review, thank you!",
+      "parentUuid": "bd9dba24_ee891345",
+      "revId": "fb72420138282ef73829048fbb127f10c36f836e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
