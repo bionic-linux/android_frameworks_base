@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d9f208d_088a380e",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2038,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-06T22:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3168c7ab_c977fa34",
+      "range": {
+        "startLine": 2038,
+        "startChar": 46,
+        "endLine": 2038,
+        "endChar": 66
+      },
+      "revId": "cd35584fdf8e9726c59e789e1fafcb9f066da3ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f797a4f_f975eaea",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-12-06T20:03:21Z",
       "side": 1,
       "message": "Typo? \"Underlyi\" is not any abbreviation i\u0027m aware of :P\n\nSuggest just fully spelling it out",
+      "range": {
+        "startLine": 178,
+        "startChar": 36,
+        "endLine": 178,
+        "endChar": 44
+      },
+      "revId": "cd35584fdf8e9726c59e789e1fafcb9f066da3ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "275fe253_b7e5b05b",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionConnectedStateTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-06T22:51:45Z",
+      "side": 1,
+      "message": "oh that\u0027s a typo",
+      "parentUuid": "2f797a4f_f975eaea",
       "range": {
         "startLine": 178,
         "startChar": 36,
