@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6299cde2_c88dbfb7",
+        "filename": "core/api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 44849,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2022-12-06T02:07:42Z",
+      "side": 1,
+      "message": "The API says \"Codepoints\" but the output is string. Maybe change the name to \"getExcludedStrings\" or change the return type to List\u003cint[]\u003e.\n\n\nAlso, this is set rather than list, so maybe better to use \n\n`Set\u003cint[]\u003e getExcludedCodepoints()`\n\nor \n\n`Set\u003cString\u003e getExcludedStrings()`\n\n?",
+      "range": {
+        "startLine": 44849,
+        "startChar": 34,
+        "endLine": 44849,
+        "endChar": 66
+      },
+      "revId": "6364595742a91218c8363f637874caa5125fecaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3a34ad80_7f398c18",
         "filename": "core/java/android/text/CodepointExclusions.java",
         "patchSetId": 3
