@@ -247,6 +247,24 @@
       "parentUuid": "fb705867_f74ae3a5",
       "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0666176a_6ded62de",
+        "filename": "services/core/java/com/android/server/security/RemoteProvisioningService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-12-06T00:00:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "67510b07_1961a376",
+      "revId": "793dc17eb5c1f14fe9a0b33b7f8c66808a7f71a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
