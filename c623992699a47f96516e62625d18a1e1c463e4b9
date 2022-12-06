@@ -134,6 +134,24 @@
       "parentUuid": "5ca9d354_b15cdd5a",
       "revId": "c623992699a47f96516e62625d18a1e1c463e4b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78cebc8c_481df0ba",
+        "filename": "services/core/java/com/android/server/security/RemoteProvisioningService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-12-06T00:25:31Z",
+      "side": 1,
+      "message": "Yeah `core/java/android/security/rkp` is cleaner. Having a service in a nested package should be fine.",
+      "parentUuid": "8d441674_67a9ea69",
+      "revId": "c623992699a47f96516e62625d18a1e1c463e4b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
