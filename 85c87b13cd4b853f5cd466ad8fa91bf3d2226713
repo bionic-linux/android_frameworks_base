@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd03f758_b692a41a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2022-12-06T18:43:27Z",
+      "side": 1,
+      "message": "Colin/Usta/Jason/Cole Can you please provide owners approval for core/java/Android.bp?",
+      "revId": "85c87b13cd4b853f5cd466ad8fa91bf3d2226713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ffefb83d_ed0ee256",
