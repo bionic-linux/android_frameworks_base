@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c632bc87_29b128af",
+        "filename": "services/core/java/com/android/server/devicestate/DeviceStateManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1640937
+      },
+      "writtenOn": "2022-12-06T22:04:48Z",
+      "side": 1,
+      "message": "should this be !mPendingState.isPresent() ?",
+      "range": {
+        "startLine": 487,
+        "startChar": 43,
+        "endLine": 487,
+        "endChar": 56
+      },
+      "revId": "78d8774edc919ef9496f0b2d33cc285d69ba5663",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
