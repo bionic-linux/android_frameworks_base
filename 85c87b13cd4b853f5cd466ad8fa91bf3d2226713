@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffefb83d_ed0ee256",
+        "filename": "core/tests/fuzzers/ParcelFuzzer/FuzzUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-12-06T18:04:57Z",
+      "side": 1,
+      "message": "nit: you can remove this and only have the final catch",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 36
+      },
+      "revId": "85c87b13cd4b853f5cd466ad8fa91bf3d2226713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
