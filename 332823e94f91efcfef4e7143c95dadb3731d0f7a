@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81528f38_53c413f9",
+        "filename": "core/java/android/text/CodepointExclusions.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2022-12-07T05:41:44Z",
+      "side": 1,
+      "message": "Maybe good to clarify the meaning of \"avoid showing\".\n\nIn case of Regional Indicators, even the system don\u0027t have a glyph of certain country, the system shows unknown flags or decomposed blue alphabet letters which is different from Tofu symbol.\n\nSo, in this context, the following description would be much clear, IMHO.\n\nIf the sequence included in this set and it is resolved to the single glyph, the sequence should be rendered as tofu or decomposed fallback form.\n\nWDYT?",
+      "range": {
+        "startLine": 34,
+        "startChar": 49,
+        "endLine": 34,
+        "endChar": 63
+      },
+      "revId": "332823e94f91efcfef4e7143c95dadb3731d0f7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8e5eb4f_11ed6f97",
+        "filename": "core/java/android/text/CodepointExclusions.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2022-12-07T05:41:44Z",
+      "side": 1,
+      "message": "Can we limit the usage only for emoji?\nNo need to add any codes but good to mention in the API doc, like\n\n\"Emoji code points that this device would like to avoid showing.\"\n\netc.\n\nI\u0027m not happy if this API is used for other than emoji context. For example, this could be abused for preventing the ligature form. (even it doesn\u0027t work so.)\n\nWDTY?",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 17
+      },
+      "revId": "332823e94f91efcfef4e7143c95dadb3731d0f7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82edd662_7c4aed95",
+        "filename": "core/java/android/text/CodepointExclusions.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2022-12-07T05:41:44Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t understand this sentence.\n\nWhat use cases in you mind?",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 87
+      },
+      "revId": "332823e94f91efcfef4e7143c95dadb3731d0f7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5b85ce0_a8cc0c47",
+        "filename": "core/java/android/text/CodepointExclusions.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2022-12-07T05:41:44Z",
+      "side": 1,
+      "message": "nit: set of code points to exclude on this device.",
+      "range": {
+        "startLine": 45,
+        "startChar": 15,
+        "endLine": 45,
+        "endChar": 54
+      },
+      "revId": "332823e94f91efcfef4e7143c95dadb3731d0f7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
