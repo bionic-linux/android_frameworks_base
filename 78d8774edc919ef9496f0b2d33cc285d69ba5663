@@ -22,6 +22,30 @@
       },
       "revId": "78d8774edc919ef9496f0b2d33cc285d69ba5663",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7974373c_adeea15f",
+        "filename": "services/core/java/com/android/server/devicestate/DeviceStateManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1972759
+      },
+      "writtenOn": "2022-12-07T00:58:00Z",
+      "side": 1,
+      "message": "Hi Yuxin, I think here we need to check three things, mBaseState, mPendingState, and mCommittedState.\n\nmPendingState.isPresent() is an expected situation. !mBaseState.isPresent() and !mCommittedState.isPresent() are abnormal situations.\n\nI would appreciate if we do some like this:\n\nif (mPendingState.isPresent()) {\n  Slog.i(TAG, \"Cannot notify device state info change when pending state is present.\");\n  return;\n}\n\nif (!mBaseState.isPresent() || !mCommittedState.isPresent()) {\n  Slog.e(TAG, \"Cannot notify device state info change before the initial state has been committed.\");\n  return;\n}",
+      "parentUuid": "c632bc87_29b128af",
+      "range": {
+        "startLine": 487,
+        "startChar": 43,
+        "endLine": 487,
+        "endChar": 56
+      },
+      "revId": "78d8774edc919ef9496f0b2d33cc285d69ba5663",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
