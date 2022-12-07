@@ -16,6 +16,24 @@
       "message": "Thank you for your change. Because of the coordination of NotificationCancellationEvent IDs required, we\u0027ll need to make the change upstream, so I\u0027ll be working on that shortly.",
       "revId": "efb9d93864745e5b9a691a13ad421fb5826fa340",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "710dbbdc_e6c13ea2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1935291
+      },
+      "writtenOn": "2022-12-07T02:28:56Z",
+      "side": 1,
+      "message": "ok,thanks",
+      "parentUuid": "d8e1cae3_c73f2b57",
+      "revId": "efb9d93864745e5b9a691a13ad421fb5826fa340",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
