@@ -261,7 +261,7 @@ public class ScreenMediaRecorder {
     /**
      * End screen recording
      */
-    void end() {
+    void end() throws RuntimeException {
         mMediaRecorder.stop();
         mMediaRecorder.release();
         mInputSurface.release();

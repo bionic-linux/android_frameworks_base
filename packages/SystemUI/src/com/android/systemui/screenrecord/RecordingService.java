@@ -381,7 +381,13 @@ public class RecordingService extends Service implements MediaRecorder.OnInfoLis
     private void stopRecording(int userId) {
         setTapsVisible(mOriginalShowTaps);
         if (getRecorder() != null) {
-            getRecorder().end();
+            try {
+                getRecorder().end();
+            } catch (RuntimeException e) {
+                // For now we don't want to interrupt stop process due to any occasional exceptions,
+                // so just eat them all.
+                Log.w(TAG, "An exception occurred while calling stopRecording. ", e);
+            }
             saveRecording(userId);
         } else {
             Log.e(TAG, "stopRecording called, but recorder was null");
