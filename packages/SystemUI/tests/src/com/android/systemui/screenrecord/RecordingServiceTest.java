@@ -143,4 +143,16 @@ public class RecordingServiceTest extends SysuiTestCase {
         // Then the state is set to not recording
         verify(mController).updateState(false);
     }
+
+    @Test
+    public void testStopRecording_MediaRecorder_RuntimeException_shouldNotCrash() {
+        // When MediaRecorder#stop() is called immediately after its start()
+        doThrow(new RuntimeException("stop failed")).when(mScreenMediaRecorder).end();
+
+        Intent stopIntent = RecordingService.getStopIntent(mContext);
+        mRecordingService.onStartCommand(stopIntent, 0, 0);
+
+        // Then the state is set to not recording
+        verify(mController).updateState(false);
+    }
 }
