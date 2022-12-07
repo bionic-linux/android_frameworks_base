@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1364d9ce_4e80ddf1",
+        "filename": "core/api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 44849,
+      "author": {
+        "id": 1376662
+      },
+      "writtenOn": "2022-12-07T18:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1044cb7b_97b7ec4c",
+      "range": {
+        "startLine": 44849,
+        "startChar": 34,
+        "endLine": 44849,
+        "endChar": 66
+      },
+      "revId": "6364595742a91218c8363f637874caa5125fecaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a34ad80_7f398c18",
@@ -89,6 +113,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da0ee98b_58fe2ee8",
+        "filename": "core/java/android/text/CodepointExclusions.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1376662
+      },
+      "writtenOn": "2022-12-07T18:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a34ad80_7f398c18",
+      "revId": "6364595742a91218c8363f637874caa5125fecaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "acdea186_9a848319",
@@ -102,6 +144,24 @@
       "writtenOn": "2022-12-06T02:03:48Z",
       "side": 1,
       "message": "sorted int[][] is easier",
+      "revId": "6364595742a91218c8363f637874caa5125fecaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57f69691_1ddc6eb9",
+        "filename": "core/java/android/text/CodepointExclusions.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1376662
+      },
+      "writtenOn": "2022-12-07T18:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acdea186_9a848319",
       "revId": "6364595742a91218c8363f637874caa5125fecaa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
