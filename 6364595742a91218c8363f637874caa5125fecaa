@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "547f7a52_1358e670",
+        "filename": "core/api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 44849,
+      "author": {
+        "id": 1376662
+      },
+      "writtenOn": "2022-12-07T01:20:34Z",
+      "side": 1,
+      "message": "Thanks!\n\nLet\u0027s go with Set\u003cint[]\u003e, as it\u0027s the most accurate and it doesn\u0027t imply that it should be whole substrings (e.g. word filter).\n\nPlease take a look again!\n\nThanks,\nSean",
+      "parentUuid": "6299cde2_c88dbfb7",
+      "range": {
+        "startLine": 44849,
+        "startChar": 34,
+        "endLine": 44849,
+        "endChar": 66
+      },
+      "revId": "6364595742a91218c8363f637874caa5125fecaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3a34ad80_7f398c18",
         "filename": "core/java/android/text/CodepointExclusions.java",
         "patchSetId": 3
