@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "6a89781a_d4c508d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-12-07T01:31:11Z",
+      "side": 1,
+      "message": "Common question 😊\n\nI need to expose AIDL to system components, and I cannot export stable AIDL from a mainline module. If I could, then I\u0027d definitely ship it all in-module.\n\nI _could_ ship it totally in-module if the module included a native wrapper around the service AIDL. I felt it was cleaner to just call the binder generated bits directly using a bundled binder API. Doing it this way is one less layer in the cake.",
+      "parentUuid": "ef9655ed_17143803",
+      "range": {
+        "startLine": 9,
+        "startChar": 62,
+        "endLine": 10,
+        "endChar": 40
+      },
+      "revId": "01eae81007440f8a7e40e5fd5ac6acbcd7148063",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "2044aec0_579cf4b6",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 20
@@ -54,6 +78,30 @@
       "writtenOn": "2022-12-07T01:12:40Z",
       "side": 1,
       "message": "Consider specifying a branch here (e.g., \"master\") to ensure that when the OWNERS are changed in that branch, they can also approve security fixes to previous branches.\n\nSee packages/modules/Connectivity/OWNERS for an example.",
+      "range": {
+        "startLine": 1,
+        "startChar": 4,
+        "endLine": 1,
+        "endChar": 5
+      },
+      "revId": "01eae81007440f8a7e40e5fd5ac6acbcd7148063",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62f50c2f_6cb1a73f",
+        "filename": "services/core/java/com/android/server/security/rkp/OWNERS",
+        "patchSetId": 20
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-12-07T01:31:11Z",
+      "side": 1,
+      "message": "Neat! I didn\u0027t know that syntax.",
+      "parentUuid": "3f94c6a3_d697c907",
       "range": {
         "startLine": 1,
         "startChar": 4,
