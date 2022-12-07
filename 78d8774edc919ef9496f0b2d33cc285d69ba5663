@@ -46,6 +46,30 @@
       },
       "revId": "78d8774edc919ef9496f0b2d33cc285d69ba5663",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fba550b_4fed94c0",
+        "filename": "services/core/java/com/android/server/devicestate/DeviceStateManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1390168
+      },
+      "writtenOn": "2022-12-07T02:18:34Z",
+      "side": 1,
+      "message": "Done\nChange has been updated, please help to review again, thank you！\n\n\nHi @kennethford@google.com,\n\n    private void commitPendingState() {\n        synchronized (mLock) {\n            ....\n            final DeviceState newState \u003d mPendingState.get();\n            mCommittedState \u003d Optional.of(newState);\n            mPendingState \u003d Optional.empty();\n            ....\n\n            if (!mPendingState.isPresent()) {\n                // Notify callbacks of a change.\n                notifyDeviceStateInfoChangedAsync();\n            }\n        }\n    }\n \nBefore calling notifyDeviceStateInfoChangedAsync(), mPendingState has been passed to mCommittedState in commitPendingState(), so mPendingState is empty at this time\n\n\nHi @jiamingliu@google.com,\nThis suggestion is constructive.",
+      "parentUuid": "7974373c_adeea15f",
+      "range": {
+        "startLine": 487,
+        "startChar": 43,
+        "endLine": 487,
+        "endChar": 56
+      },
+      "revId": "78d8774edc919ef9496f0b2d33cc285d69ba5663",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
