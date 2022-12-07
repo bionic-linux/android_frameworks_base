@@ -51,6 +51,29 @@
       "message": "@kenne",
       "revId": "436ea3e3a9ed861dce4d4f65e71b1300891b4842",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5fc78e9_ec0f1adc",
+        "filename": "services/core/java/com/android/server/devicestate/DeviceStateManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-12-07T06:02:21Z",
+      "side": 1,
+      "message": "There are lint comments to not have lines longer than 100 characters. Please also address them. Thanks!",
+      "range": {
+        "startLine": 267,
+        "startChar": 11,
+        "endLine": 271,
+        "endChar": 124
+      },
+      "revId": "436ea3e3a9ed861dce4d4f65e71b1300891b4842",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
