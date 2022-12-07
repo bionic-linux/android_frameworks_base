@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c941ac0f_c9d693d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1390168
+      },
+      "writtenOn": "2022-12-07T06:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b91a4c15_e761e39f",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 99
+      },
+      "revId": "c14e39ce01057ee0bc3c3c96bee1ba710db163b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0b9fdde_f97f936f",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-12-07T06:15:15Z",
       "side": 1,
       "message": "Should this comment also be updated? Or just remove.",
+      "range": {
+        "startLine": 484,
+        "startChar": 12,
+        "endLine": 486,
+        "endChar": 38
+      },
+      "revId": "c14e39ce01057ee0bc3c3c96bee1ba710db163b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8925272b_23227e55",
+        "filename": "services/core/java/com/android/server/devicestate/DeviceStateManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1390168
+      },
+      "writtenOn": "2022-12-07T06:46:26Z",
+      "side": 1,
+      "message": "Done\n\nOk,The log information and Change comments have explained.",
+      "parentUuid": "2e2dfd5e_58254b8b",
       "range": {
         "startLine": 484,
         "startChar": 12,

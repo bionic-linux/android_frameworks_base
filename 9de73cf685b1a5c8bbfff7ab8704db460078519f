@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8825885b_ec22719b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1390168
+      },
+      "writtenOn": "2022-12-07T06:46:26Z",
+      "side": 1,
+      "message": "Hi,@akulian@google.com @lihongyu@google.com\n\nChange has been updated. Please review again. Thank you！",
+      "revId": "9de73cf685b1a5c8bbfff7ab8704db460078519f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
