@@ -16,6 +16,24 @@
       "message": "Jay, would you help me with this failed verify? I have no access to Google internal services.",
       "revId": "37bcf81d41c108457fcb088f64a188297df7264a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed2392bb_0e8cfbcc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1580202
+      },
+      "writtenOn": "2022-12-08T13:41:18Z",
+      "side": 1,
+      "message": "will submit the patch internally for you. unfortunately that means you may not get credit for the fix",
+      "parentUuid": "fc4b1f5b_61ede1f7",
+      "revId": "37bcf81d41c108457fcb088f64a188297df7264a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
