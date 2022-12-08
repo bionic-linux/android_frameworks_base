@@ -34,6 +34,24 @@
       "parentUuid": "fc4b1f5b_61ede1f7",
       "revId": "37bcf81d41c108457fcb088f64a188297df7264a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca3aa55b_3ab7456e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2022-12-08T15:19:00Z",
+      "side": 1,
+      "message": "It\u0027s ok, still be glad to contribute to it. I will hold this CL for a while until you tell me to abandon.",
+      "parentUuid": "ed2392bb_0e8cfbcc",
+      "revId": "37bcf81d41c108457fcb088f64a188297df7264a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
