@@ -52,6 +52,24 @@
       "parentUuid": "ed2392bb_0e8cfbcc",
       "revId": "37bcf81d41c108457fcb088f64a188297df7264a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6d04e64_76a89abd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1580202
+      },
+      "writtenOn": "2022-12-08T16:44:28Z",
+      "side": 1,
+      "message": "actually this  bug has been fixed upstream. aosp should be up to date in the next update.",
+      "parentUuid": "ca3aa55b_3ab7456e",
+      "revId": "37bcf81d41c108457fcb088f64a188297df7264a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
