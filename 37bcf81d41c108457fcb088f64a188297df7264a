@@ -70,6 +70,24 @@
       "parentUuid": "ca3aa55b_3ab7456e",
       "revId": "37bcf81d41c108457fcb088f64a188297df7264a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcf494d9_d410a84f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2022-12-09T02:26:38Z",
+      "side": 1,
+      "message": "Fine, I\u0027ll abandon my CL.",
+      "parentUuid": "f6d04e64_76a89abd",
+      "revId": "37bcf81d41c108457fcb088f64a188297df7264a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
