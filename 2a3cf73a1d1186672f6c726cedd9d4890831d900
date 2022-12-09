@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee789a9b_feafcc1a",
+        "filename": "core/java/android/text/NonStandardEmoji.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1376662
+      },
+      "writtenOn": "2022-12-09T23:32:45Z",
+      "side": 1,
+      "message": "Consistency makes a lot of sense - going with that.",
+      "parentUuid": "c63f5068_a2943ffb",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 47
+      },
+      "revId": "2a3cf73a1d1186672f6c726cedd9d4890831d900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62bc0fd4_50235022",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-12-09T02:30:00Z",
       "side": 1,
       "message": "Does this include custom emoji font? I think using custom emoji font is much common compared to the using ReplacementSpan.",
+      "range": {
+        "startLine": 30,
+        "startChar": 60,
+        "endLine": 30,
+        "endChar": 82
+      },
+      "revId": "2a3cf73a1d1186672f6c726cedd9d4890831d900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a28d940f_9ff77070",
+        "filename": "core/java/android/text/NonStandardEmoji.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1376662
+      },
+      "writtenOn": "2022-12-09T23:32:45Z",
+      "side": 1,
+      "message": "This API exposes the information needed to do an emoji uncompat style span - which is probably the right solution to handle this case.",
+      "parentUuid": "62bc0fd4_50235022",
       "range": {
         "startLine": 30,
         "startChar": 60,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "32c4e15e_d6bf80ed",
+        "filename": "core/java/android/text/NonStandardEmoji.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1376662
+      },
+      "writtenOn": "2022-12-09T23:32:45Z",
+      "side": 1,
+      "message": "ack will say what it means \"don\u0027t render custom glyph\"",
+      "parentUuid": "6a01f378_12bcedd2",
+      "range": {
+        "startLine": 44,
+        "startChar": 73,
+        "endLine": 44,
+        "endChar": 97
+      },
+      "revId": "2a3cf73a1d1186672f6c726cedd9d4890831d900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d02cf93f_d395e772",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-12-09T02:30:00Z",
       "side": 1,
       "message": "VS variations should be included in the set? or developer needs to canonicalize (?) to match the VS?",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 75
+      },
+      "revId": "2a3cf73a1d1186672f6c726cedd9d4890831d900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0451f63_125ebab9",
+        "filename": "core/java/android/text/NonStandardEmoji.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1376662
+      },
+      "writtenOn": "2022-12-09T23:32:45Z",
+      "side": 1,
+      "message": "Imo - I think the consumer API is much simpler if it restricts itself to exact matches only (even if that means multiple entries in the set). We don\u0027t really have an API for a developer to normalize an emoji so asking them to do so would require us either build a matching interface here (which makes precaching the result harder) or building a emoji normalizer API.\n\nI explored making a matching interface today, and it wasn\u0027t super compelling from an API perspective:\n\n```\nval matcher \u003d EmojiConsistency.getEmojiMatcher()\nvar (start, endExclusive) \u003d matcher.nextEmojiConsistencyMatch(someString, from)\nwhile (endExclusive !\u003d -1) {\n   (start, endExclusive) \u003d matcher.nextEmojiConsistencyMatch(someString, endExclusive)\n}\n```\n\nThe main issue was there was no way to turn it into a static list of things to cache in a trie - so it would need to be called inline with every match instead of permanently cached (adds constant overhead to each emoji)\n\nWDYT?",
+      "parentUuid": "d02cf93f_d395e772",
       "range": {
         "startLine": 70,
         "startChar": 7,
