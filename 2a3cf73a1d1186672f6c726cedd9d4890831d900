@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c63f5068_a2943ffb",
+        "filename": "core/java/android/text/NonStandardEmoji.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2022-12-09T02:30:00Z",
+      "side": 1,
+      "message": "non-standard emoji implies me that non-RGI emoji in Unicode, like ninja cat.\n\nCan we use \"consistency\", \"compliance\" for them?\n\ne.g. \n- EmojiConsistency.getEmojiSetForDeviceConsistency()\n- DeviceEmojiCompliance.getEmojiSetForConsistency()\n\nThen, says that \"these set of emoji should be drawn by system with the default font for device consistency.\" etc?",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 47
+      },
+      "revId": "2a3cf73a1d1186672f6c726cedd9d4890831d900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62bc0fd4_50235022",
+        "filename": "core/java/android/text/NonStandardEmoji.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2022-12-09T02:30:00Z",
+      "side": 1,
+      "message": "Does this include custom emoji font? I think using custom emoji font is much common compared to the using ReplacementSpan.",
+      "range": {
+        "startLine": 30,
+        "startChar": 60,
+        "endLine": 30,
+        "endChar": 82
+      },
+      "revId": "2a3cf73a1d1186672f6c726cedd9d4890831d900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a01f378_12bcedd2",
+        "filename": "core/java/android/text/NonStandardEmoji.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2022-12-09T02:30:00Z",
+      "side": 1,
+      "message": "It is not clear the boundary of platform rendering and replacement span. For example, EmojiCompat also defers the platform rendering with custom Typeface with replacing text.",
+      "range": {
+        "startLine": 44,
+        "startChar": 73,
+        "endLine": 44,
+        "endChar": 97
+      },
+      "revId": "2a3cf73a1d1186672f6c726cedd9d4890831d900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d02cf93f_d395e772",
+        "filename": "core/java/android/text/NonStandardEmoji.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2022-12-09T02:30:00Z",
+      "side": 1,
+      "message": "VS variations should be included in the set? or developer needs to canonicalize (?) to match the VS?",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 75
+      },
+      "revId": "2a3cf73a1d1186672f6c726cedd9d4890831d900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
