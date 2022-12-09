@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be56cd94_30a97554",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2788,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-12-09T06:03:43Z",
+      "side": 1,
+      "message": "There should be one VPN object per user. The way you built this, when a VPN for a 2nd user starts it will remove the preference of the 1st user, and when a VPN stops it will remove everything.\n\nAs I was noting on the companion patch, I think we must call these in pairs. That means in ConnectivityService you\u0027ll have to either match on the set of ranges when you remove the preferences (simplest) or create a list of VPN preference objects and hold on to it so you can recreate everything every time (more complex, but closer to what we have for other preferences).",
+      "range": {
+        "startLine": 2788,
+        "startChar": 42,
+        "endLine": 2788,
+        "endChar": 50
+      },
+      "revId": "c7eca04f4f192bc5a1562f74b1eef4a7e48fd1e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "235a6ebf_38b53174",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2902,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-12-09T06:03:43Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem like a good idea to make mConfig a partially initialized object. This code here is forcing the maintainers to keep track of what part of the mConfig object is initialized when, which is extremely difficult to do in practice. It\u0027s already partially the case, and it\u0027s already super hard to follow, so let\u0027s not make the problem worse.\n\nI think you should instead do this in the same place as other initializations of mConfig, in l.4321 in this patch. You may even want to pass allowedApplications and disallowedApplications as arguments to setVpnNetworkPreferenceLocked.",
+      "range": {
+        "startLine": 2902,
+        "startChar": 0,
+        "endLine": 2902,
+        "endChar": 75
+      },
+      "revId": "c7eca04f4f192bc5a1562f74b1eef4a7e48fd1e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "497343d2_8a266e4f",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2902,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-12-09T06:03:43Z",
+      "side": 1,
+      "message": "Is mConfig.allowedApplications guaranteed to be null here ?",
+      "range": {
+        "startLine": 2902,
+        "startChar": 20,
+        "endLine": 2902,
+        "endChar": 42
+      },
+      "revId": "c7eca04f4f192bc5a1562f74b1eef4a7e48fd1e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
