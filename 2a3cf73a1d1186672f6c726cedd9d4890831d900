@@ -187,6 +187,30 @@
       },
       "revId": "2a3cf73a1d1186672f6c726cedd9d4890831d900",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9f81501_79dc8fd9",
+        "filename": "core/java/android/text/NonStandardEmoji.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1376662
+      },
+      "writtenOn": "2022-12-09T23:33:56Z",
+      "side": 1,
+      "message": "overhead to each emoji / each string",
+      "parentUuid": "f0451f63_125ebab9",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 75
+      },
+      "revId": "2a3cf73a1d1186672f6c726cedd9d4890831d900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
