@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "793b0493_c472b25c",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-10T02:29:15Z",
+      "side": 1,
+      "message": "Is this supposed to be a static block?",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 5
+      },
+      "revId": "c613f849403cf520ff7c9d10ee16bb2e435be062",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca2ccb7a_1f07b684",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-10T02:29:15Z",
+      "side": 1,
+      "message": "Do we still need this?",
+      "range": {
+        "startLine": 376,
+        "startChar": 28,
+        "endLine": 376,
+        "endChar": 68
+      },
+      "revId": "c613f849403cf520ff7c9d10ee16bb2e435be062",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
