@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdb2b807_77969715",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-10T03:03:06Z",
+      "side": 1,
+      "message": "Hmm, this probably needs to be in the event handling; otherwise there\u0027s technically a potential for race conditions.",
+      "range": {
+        "startLine": 869,
+        "startChar": 41,
+        "endLine": 869,
+        "endChar": 95
+      },
+      "revId": "748b62ef6f4a88cfe087350c4ac8f873c64899e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
