@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4af9a733_94c1a35f",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-10T01:09:36Z",
+      "side": 1,
+      "message": "We can use Map\u003cTransportType, Capability set\u003e at that time. At the same time entry\u003cTransportType, null\u003e means this transport will be restricted no matter what capabilities it has.",
+      "parentUuid": "a0c51fcf_f22af6f2",
+      "range": {
+        "startLine": 60,
+        "startChar": 27,
+        "endLine": 60,
+        "endChar": 30
+      },
+      "revId": "7d4cc9adf91dd126b3d12a1abb0deea8f04fa861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af0224aa_f750199b",
