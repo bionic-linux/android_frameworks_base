@@ -230,6 +230,24 @@
       "parentUuid": "f9d0b073_4e4e74ba",
       "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dc7d748_ec5d1cc4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2022-12-12T18:28:19Z",
+      "side": 1,
+      "message": "Hi Dean,\n\nPing.  do you have ETA for updated CLs to solve merge conflict ?",
+      "parentUuid": "b48ae8ef_e5b3deb8",
+      "revId": "d9f7f24b046e6f8edabd94dad5177b8bc1672b2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
