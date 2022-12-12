@@ -54,6 +54,13 @@ class ActivityRecordInputSink {
     }
 
     public void applyChangesToSurfaceIfChanged(SurfaceControl.Transaction transaction) {
+        if (!mActivityRecord.isVisible()) {
+            if (mSurfaceControl != null) {
+                transaction.remove(mSurfaceControl);
+                mSurfaceControl = null;
+            }
+            return;
+        }
         InputWindowHandleWrapper inputWindowHandleWrapper = getInputWindowHandleWrapper();
         if (mSurfaceControl == null) {
             mSurfaceControl = createSurface(transaction);
