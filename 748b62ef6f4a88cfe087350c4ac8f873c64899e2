@@ -22,6 +22,30 @@
       },
       "revId": "748b62ef6f4a88cfe087350c4ac8f873c64899e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5bc21de_c99d4517",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-12T23:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdb2b807_77969715",
+      "range": {
+        "startLine": 869,
+        "startChar": 41,
+        "endLine": 869,
+        "endChar": 95
+      },
+      "revId": "748b62ef6f4a88cfe087350c4ac8f873c64899e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
