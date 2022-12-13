@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8c5bed3_29104028",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-13T19:02:46Z",
+      "side": 1,
+      "message": "The latest presubmit is done with the child CL the https://android-build.googleplex.com/builds/treetop/android-review/2336537?ref\u003dCOMMENT\u0026revision\u003d4. The only failed test was already broken https://android-build.googleplex.com/builds/tests/view?invocationId\u003dI73300010116292396\u0026testResultId\u003dTR91828416251207022 and unrelated to this change.",
+      "revId": "9d9de6ecab045172c3524e722040370ee8f9a601",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
