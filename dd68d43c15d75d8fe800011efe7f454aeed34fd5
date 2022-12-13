@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d098663d_7af1759c",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-13T01:29:32Z",
+      "side": 1,
+      "message": "Hmm, this means we register yet another request for the system server process, it\u0027d be nice if we had a way to consolidate this. Could you file a bug for centralized connectivitiy diagnostics listeners, and possibly even for underlying network requests?\n\nIt\u0027s at best a P2, but we should consider it.",
+      "range": {
+        "startLine": 800,
+        "startChar": 44,
+        "endLine": 800,
+        "endChar": 83
+      },
+      "revId": "dd68d43c15d75d8fe800011efe7f454aeed34fd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
