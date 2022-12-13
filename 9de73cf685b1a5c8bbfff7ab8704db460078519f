@@ -33,6 +33,24 @@
       "message": "hi , @lihongyu@google.com\nThe autosubmit process seems to be blocked. Can you help us deal with this situation? Thank you！",
       "revId": "9de73cf685b1a5c8bbfff7ab8704db460078519f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b79451cb_24e7d6a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-12-13T09:37:17Z",
+      "side": 1,
+      "message": "@jiamingliu@google.com @kennethford@google.com would you mind helping on this since you are more familiar with the DeviceStateManager?",
+      "parentUuid": "3529a205_d2d6cbae",
+      "revId": "9de73cf685b1a5c8bbfff7ab8704db460078519f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
