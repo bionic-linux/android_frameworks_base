@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ee57064_5ac51c42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1043093
+      },
+      "writtenOn": "2022-12-14T19:33:18Z",
+      "side": 1,
+      "message": "Minor comment on `isSessionException`, otherwise LGTM.",
+      "revId": "d448bdfac888b9174420629221b11191a4623d87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4131a4c_f4cb601c",
+        "filename": "media/jni/android_media_MediaDrm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1043093
+      },
+      "writtenOn": "2022-12-14T19:33:18Z",
+      "side": 1,
+      "message": "nit, I think we can keep this as `status_t`.",
+      "range": {
+        "startLine": 421,
+        "startChar": 31,
+        "endLine": 421,
+        "endChar": 40
+      },
+      "revId": "d448bdfac888b9174420629221b11191a4623d87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
