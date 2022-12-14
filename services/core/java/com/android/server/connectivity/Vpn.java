@@ -301,6 +301,7 @@ public class Vpn {
     private static final int MAX_EVENTS_LOGS = 20;
     private final LocalLog mUnderlyNetworkChanges = new LocalLog(MAX_EVENTS_LOGS);
     private final LocalLog mVpnManagerEvents = new LocalLog(MAX_EVENTS_LOGS);
+    private Set<Range<Integer>> mRangesForVpnPreference = new ArraySet<>();
 
     /**
      * Whether to keep the connection active after rebooting, or upgrading or reinstalling. This
@@ -2735,6 +2736,7 @@ public class Vpn {
             synchronized (Vpn.this) {
                 exitVpnRunner();
                 cleanupVpnStateLocked();
+                clearVpnNetworkPreferenceLocked();
             }
         }
     }
@@ -2774,6 +2776,29 @@ public class Vpn {
         }
 
         return hasIPV6 && !hasIPV4;
+    }
+
+    @GuardedBy("this")
+    private void setVpnNetworkPreferenceLocked(Set<Range<Integer>> ranges) {
+        mRangesForVpnPreference = ranges;
+        final long token = Binder.clearCallingIdentity();
+        try {
+            mConnectivityManager.setRequireVpnForUids(true /* enabled */, false /* lockdown */,
+                    ranges);
+        } finally {
+            Binder.restoreCallingIdentity(token);
+        }
+    }
+
+    private void clearVpnNetworkPreferenceLocked() {
+        final long token = Binder.clearCallingIdentity();
+        try {
+            mConnectivityManager.setRequireVpnForUids(false /* enabled */, false /* lockdown */,
+                    mRangesForVpnPreference);
+        } finally {
+            Binder.restoreCallingIdentity(token);
+        }
+        mRangesForVpnPreference = new ArraySet<>();
     }
 
     /**
@@ -2887,6 +2912,8 @@ public class Vpn {
                     (r, exe) -> {
                         Log.d(TAG, "Runnable " + r + " rejected by the mExecutor");
                     });
+            setVpnNetworkPreferenceLocked(createUserAndRestrictedProfilesRanges(mUserId,
+                    mConfig.allowedApplications, mConfig.disallowedApplications));
         }
 
         @Override
@@ -3040,7 +3067,6 @@ public class Vpn {
                     mConfig.dnsServers.addAll(dnsAddrStrings);
 
                     mConfig.underlyingNetworks = new Network[] {network};
-                    mConfig.disallowedApplications = getAppExclusionList(mPackage);
 
                     networkAgent = mNetworkAgent;
 
@@ -3565,6 +3591,7 @@ public class Vpn {
             }
 
             disconnectVpnRunner();
+            clearVpnNetworkPreferenceLocked();
         }
 
         /**
@@ -4303,6 +4330,7 @@ public class Vpn {
             mConfig.requiresInternetValidation = profile.requiresInternetValidation;
             mConfig.excludeLocalRoutes = profile.excludeLocalRoutes;
             mConfig.allowBypass = profile.isBypassable;
+            mConfig.disallowedApplications = getAppExclusionList(mPackage);
 
             switch (profile.type) {
                 case VpnProfile.TYPE_IKEV2_IPSEC_USER_PASS:
@@ -4455,6 +4483,8 @@ public class Vpn {
                         .setUids(createUserAndRestrictedProfilesRanges(
                                 mUserId, null /* allowedApplications */, excludedApps))
                         .build();
+                setVpnNetworkPreferenceLocked(createUserAndRestrictedProfilesRanges(mUserId,
+                        mConfig.allowedApplications, mConfig.disallowedApplications));
                 doSendNetworkCapabilities(mNetworkAgent, mNetworkCapabilities);
             }
         }
