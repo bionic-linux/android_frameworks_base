@@ -16,6 +16,7 @@
 
 package com.android.server.security.rkp;
 
+import android.annotation.NonNull;
 import android.content.Context;
 import android.os.Binder;
 import android.os.OutcomeReceiver;
@@ -28,6 +29,7 @@ import android.security.rkp.service.RegistrationProxy;
 import android.util.Log;
 
 import com.android.server.SystemService;
+import com.android.server.SystemService.TargetUser;
 
 import java.time.Duration;
 
@@ -41,6 +43,7 @@ import java.time.Duration;
 public class RemoteProvisioningService extends SystemService {
     public static final String TAG = "RemoteProvisionSysSvc";
     private static final Duration CREATE_REGISTRATION_TIMEOUT = Duration.ofSeconds(10);
+    private static final Duration NOTIFY_BOOT_TIMEOUT = Duration.ofSeconds(10);
     private final RemoteProvisioningImpl mBinderImpl = new RemoteProvisioningImpl();
 
     /** @hide */
@@ -51,6 +54,26 @@ public class RemoteProvisioningService extends SystemService {
     @Override
     public void onStart() {
         publishBinderService(Context.REMOTE_PROVISIONING_SERVICE, mBinderImpl);
+    }
+
+    /*
+    // With this implementation, we are not able to see the installed service in rkpdapp.
+    @Override
+    public void onBootPhase(int phase) {
+        if (phase == SystemService.PHASE_BOOT_COMPLETED) {
+            Log.e(TAG, "notify Vikram that boot completed " + phase);
+            mBinderImpl.notifySystemReady();
+        } else {
+            Log.i(TAG, "notify Vikram about boot phase " + phase);
+        }
+    }
+    */
+
+    // This implementation allows bound service in rkpdapp to be notified for any work.
+    @Override
+    public void onUserUnlocking(@NonNull TargetUser user) {
+        Log.e(TAG, "user unlocking");
+        mBinderImpl.notifySystemReady();
     }
 
     private final class RemoteProvisioningImpl extends IRemoteProvisioning.Stub {
@@ -121,6 +144,12 @@ public class RemoteProvisioningService extends SystemService {
                 throws RemoteException {
             Log.i(TAG, "cancelGetRegistration()");
             callback.onError("cancelGetRegistration not yet implemented");
+        }
+
+        @Override
+        public void notifySystemReady() {
+            Log.i(TAG, "Vikram notify system ready");
+            RegistrationProxy.notifySystemReady(getContext(), NOTIFY_BOOT_TIMEOUT);
         }
     }
 }

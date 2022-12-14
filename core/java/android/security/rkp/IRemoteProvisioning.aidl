@@ -65,4 +65,9 @@ oneway interface IRemoteProvisioning {
      * a noop.
      */
     void cancelGetRegistration(IGetRegistrationCallback callback);
+
+    /**
+     * Notifies Remote Provisioning Service that system is now ready.
+     */
+    void notifySystemReady();
 }
