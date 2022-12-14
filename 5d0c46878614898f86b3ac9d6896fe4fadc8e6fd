@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "132adc57_ade5b90d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1886292
+      },
+      "writtenOn": "2022-12-14T18:56:57Z",
+      "side": 1,
+      "message": "Merge CLs to AOSP",
+      "revId": "5d0c46878614898f86b3ac9d6896fe4fadc8e6fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
