@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "057da8ff_55099c1e",
+        "filename": "core/java/android/security/rkp/IRemoteProvisioning.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-12-14T17:33:26Z",
+      "side": 1,
+      "message": "I\u0027m thinking we should generalize this a bit, so we pass in a boot phase.\n\nThat way, if rkpdapp needs to change which boot phase it does something in, it\u0027s able to.\n\nOf course, that presumes we can even make this work 😊",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 29
+      },
+      "revId": "15c410cfdc6eaf55d8df814ce8b4a5ded38e263d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb3f009c_66c921c4",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-12-14T17:33:26Z",
+      "side": 1,
+      "message": "Whoa, that\u0027s concerning.\n\nSo our bound service must not be ready at this point, which isn\u0027t terribly surprising I guess. Thoughts:\n1. I wonder if our app is waiting on something else? Some other dependency?\n2. Are apps not even able to be ready this early in boot?\n3. Is there some way to mark our app as \"early boot\" or something to ensure it starts earlier?\n\n\nWorst case, we fall back to boot receiver. That\u0027s certainly better than waiting for the first user to login.",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 89
+      },
+      "revId": "15c410cfdc6eaf55d8df814ce8b4a5ded38e263d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
