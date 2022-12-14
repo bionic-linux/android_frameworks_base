@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec4cf0f4_b01000ac",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2788,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-12-14T00:49:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be56cd94_30a97554",
+      "range": {
+        "startLine": 2788,
+        "startChar": 42,
+        "endLine": 2788,
+        "endChar": 50
+      },
+      "revId": "c7eca04f4f192bc5a1562f74b1eef4a7e48fd1e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "235a6ebf_38b53174",
@@ -65,6 +89,54 @@
         "startChar": 20,
         "endLine": 2902,
         "endChar": 42
+      },
+      "revId": "c7eca04f4f192bc5a1562f74b1eef4a7e48fd1e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9eb7c19_d12fef41",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2902,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-12-14T00:49:39Z",
+      "side": 1,
+      "message": "mConfig will be created when creating IKEv2VpnRunner, so if the mConfig.allowedApplications is not set before constructing IKEv2VpnRunner, then I think it\u0027s null.",
+      "parentUuid": "497343d2_8a266e4f",
+      "range": {
+        "startLine": 2902,
+        "startChar": 20,
+        "endLine": 2902,
+        "endChar": 42
+      },
+      "revId": "c7eca04f4f192bc5a1562f74b1eef4a7e48fd1e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5dd1f5a5_7c4c8148",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2902,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-12-14T00:49:39Z",
+      "side": 1,
+      "message": "The reason that you said I may want to pass allowedApplications and disallowedApplications as arguments to setVpnNetworkPreferenceLocked is because we want to pass null for allowedApplications?",
+      "parentUuid": "235a6ebf_38b53174",
+      "range": {
+        "startLine": 2902,
+        "startChar": 0,
+        "endLine": 2902,
+        "endChar": 75
       },
       "revId": "c7eca04f4f192bc5a1562f74b1eef4a7e48fd1e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
