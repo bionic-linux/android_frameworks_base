@@ -2776,6 +2776,25 @@ public class Vpn {
         return hasIPV6 && !hasIPV4;
     }
 
+    @GuardedBy("this")
+    private void setVpnNetworkPreferenceLocked(String session, Set<Range<Integer>> ranges) {
+        final long token = Binder.clearCallingIdentity();
+        try {
+            mConnectivityManager.setVpnDefaultForUids(session, ranges);
+        } finally {
+            Binder.restoreCallingIdentity(token);
+        }
+    }
+
+    private void clearVpnNetworkPreferenceLocked(String session) {
+        final long token = Binder.clearCallingIdentity();
+        try {
+            mConnectivityManager.setVpnDefaultForUids(session, new ArrayList<>());
+        } finally {
+            Binder.restoreCallingIdentity(token);
+        }
+    }
+
     /**
      * Internal class managing IKEv2/IPsec VPN connectivity
      *
@@ -2887,6 +2906,9 @@ public class Vpn {
                     (r, exe) -> {
                         Log.d(TAG, "Runnable " + r + " rejected by the mExecutor");
                     });
+            setVpnNetworkPreferenceLocked(mSessionKey,
+                    createUserAndRestrictedProfilesRanges(mUserId,
+                            mConfig.allowedApplications, mConfig.disallowedApplications));
         }
 
         @Override
@@ -3040,7 +3062,6 @@ public class Vpn {
                     mConfig.dnsServers.addAll(dnsAddrStrings);
 
                     mConfig.underlyingNetworks = new Network[] {network};
-                    mConfig.disallowedApplications = getAppExclusionList(mPackage);
 
                     networkAgent = mNetworkAgent;
 
@@ -3743,6 +3764,7 @@ public class Vpn {
             mConnectivityManager.unregisterNetworkCallback(mNetworkCallback);
             mConnectivityDiagnosticsManager.unregisterConnectivityDiagnosticsCallback(
                     mDiagnosticsCallback);
+            clearVpnNetworkPreferenceLocked(mSessionKey);
 
             mExecutor.shutdown();
         }
@@ -4303,6 +4325,7 @@ public class Vpn {
             mConfig.requiresInternetValidation = profile.requiresInternetValidation;
             mConfig.excludeLocalRoutes = profile.excludeLocalRoutes;
             mConfig.allowBypass = profile.isBypassable;
+            mConfig.disallowedApplications = getAppExclusionList(mPackage);
 
             switch (profile.type) {
                 case VpnProfile.TYPE_IKEV2_IPSEC_USER_PASS:
@@ -4455,6 +4478,9 @@ public class Vpn {
                         .setUids(createUserAndRestrictedProfilesRanges(
                                 mUserId, null /* allowedApplications */, excludedApps))
                         .build();
+                setVpnNetworkPreferenceLocked(getSessionKeyLocked(),
+                        createUserAndRestrictedProfilesRanges(mUserId,
+                                mConfig.allowedApplications, mConfig.disallowedApplications));
                 doSendNetworkCapabilities(mNetworkAgent, mNetworkCapabilities);
             }
         }
