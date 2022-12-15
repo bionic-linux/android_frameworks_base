@@ -41,8 +41,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.NfcServiceManager;
+import android.os.NfcServiceManager.ServiceRegisterer;
 import android.os.RemoteException;
-import android.os.ServiceManager;
 import android.util.Log;
 
 import java.io.IOException;
@@ -381,6 +382,7 @@ public final class NfcAdapter {
     // recovery
     @UnsupportedAppUsage
     static INfcAdapter sService;
+    static ServiceRegisterer sServiceRegisterer;
     static INfcTag sTagService;
     static INfcCardEmulation sCardEmulationService;
     static INfcFCardEmulation sNfcFCardEmulationService;
@@ -631,6 +633,7 @@ public final class NfcAdapter {
                 Log.v(TAG, "this device does not have NFC support");
                 throw new UnsupportedOperationException();
             }
+            sServiceRegisterer = (new NfcServiceManager()).getNfcManagerServiceRegisterer();
             sService = getServiceInterface();
             if (sService == null) {
                 Log.e(TAG, "could not retrieve NFC service");
@@ -678,7 +681,7 @@ public final class NfcAdapter {
     /** get handle to NFC service interface */
     private static INfcAdapter getServiceInterface() {
         /* get a handle to NFC service */
-        IBinder b = ServiceManager.getService("nfc");
+        IBinder b = sServiceRegisterer.get();
         if (b == null) {
             return null;
         }
@@ -708,12 +711,13 @@ public final class NfcAdapter {
                     "context not associated with any application (using a mock context?)");
         }
 
-        if (getServiceInterface() == null) {
-            // NFC is not available
-            return null;
+        if (sIsInitialized && sServiceRegisterer.tryGet() == null) {
+            synchronized (NfcAdapter.class) {
+                /* Stale sService pointer */
+                sIsInitialized = false;
+            }
         }
-
-        /* use getSystemService() for consistency */
+        /* Try to initialize the service */
         NfcManager manager = (NfcManager) context.getSystemService(Context.NFC_SERVICE);
         if (manager == null) {
             // NFC not available
