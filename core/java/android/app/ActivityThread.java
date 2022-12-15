@@ -100,6 +100,7 @@ import android.graphics.Canvas;
 import android.graphics.HardwareRenderer;
 import android.graphics.Typeface;
 import android.hardware.display.DisplayManagerGlobal;
+import android.internal.nfc.NfcServiceManager;
 import android.media.MediaFrameworkInitializer;
 import android.media.MediaFrameworkPlatformInitializer;
 import android.media.MediaServiceManager;
@@ -107,6 +108,7 @@ import android.net.ConnectivityManager;
 import android.net.Proxy;
 import android.net.TrafficStats;
 import android.net.Uri;
+import android.nfc.NfcFrameworkInitializer;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.BluetoothServiceManager;
@@ -7886,6 +7888,7 @@ public final class ActivityThread extends ClientTransactionHandler
         BluetoothFrameworkInitializer.setBluetoothServiceManager(new BluetoothServiceManager());
         BluetoothFrameworkInitializer.setBinderCallsStatsInitializer(context -> {
             BinderCallsStats.startForBluetooth(context); });
+        NfcFrameworkInitializer.setNfcServiceManager(new NfcServiceManager());
     }
 
     private void purgePendingResources() {
