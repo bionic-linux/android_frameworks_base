@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19062fb8_288c3b61",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-12-15T11:21:20Z",
+      "side": 1,
+      "message": "Please add a second Bug line:\nBug: 259376922\n\nHere and in all other CLs  in this topic.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 14
+      },
+      "revId": "34f0165b789a1d61f58fe95ddb2ac7188ad55070",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
