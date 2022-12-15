@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e96eeaf_f955454e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2781,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-12-15T08:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bfc2971_09db3113",
+      "range": {
+        "startLine": 2781,
+        "startChar": 34,
+        "endLine": 2781,
+        "endChar": 54
+      },
+      "revId": "4e109e2e9078a246ef85ca3044eb8f7497357fa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc17ca10_a1bac886",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-12-15T05:34:44Z",
       "side": 1,
       "message": "@GuardedBy(\"this\")",
+      "range": {
+        "startLine": 2789,
+        "startChar": 42,
+        "endLine": 2789,
+        "endChar": 48
+      },
+      "revId": "4e109e2e9078a246ef85ca3044eb8f7497357fa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6eb1526_36512aa9",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2789,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-12-15T08:22:52Z",
+      "side": 1,
+      "message": "In the previous patch, this method was using a member var which might be changed in other places, that\u0027s why I think calling this method should held the lock.\nBut in the newest patch, this method doesn\u0027t use it anymore, so I think we should removed the \"Locked\" postfix.",
+      "parentUuid": "bc17ca10_a1bac886",
       "range": {
         "startLine": 2789,
         "startChar": 42,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77fa9ebc_0947ae95",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2792,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-12-15T08:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4c223d8_2e0c3585",
+      "range": {
+        "startLine": 2792,
+        "startChar": 63,
+        "endLine": 2792,
+        "endChar": 80
+      },
+      "revId": "4e109e2e9078a246ef85ca3044eb8f7497357fa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "858f0e94_e73360e2",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-12-15T05:34:44Z",
       "side": 1,
       "message": "Wait, did you take the lock ? If it\u0027s guaranteed that the lock is held, please write a comment about it and annotate the constructor with @GuardedBy(\"Vpn.this\").",
+      "range": {
+        "startLine": 2909,
+        "startChar": 35,
+        "endLine": 2909,
+        "endChar": 41
+      },
+      "revId": "4e109e2e9078a246ef85ca3044eb8f7497357fa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f33ee95_62ddce3a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2909,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-12-15T08:22:52Z",
+      "side": 1,
+      "message": "Yes, IKEv2VpnRunner is created in startVpnProfilePrivileged() which is a synchronized method.\n\nThe IDE said that `\u0027@GuardedBy\u0027 not applicable to constructor`, so I can\u0027t add it.\n\nNow, since the setVpnNetworkPreferenceLocked() doesn\u0027t use the member var directly, I think we can remove the \"Locked\" postfix form the method name.",
+      "parentUuid": "858f0e94_e73360e2",
       "range": {
         "startLine": 2909,
         "startChar": 35,
