@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bfc2971_09db3113",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2781,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-12-15T05:34:44Z",
+      "side": 1,
+      "message": "Can\u0027t you use BinderUtils.withCleanCallingIdentity ?",
+      "range": {
+        "startLine": 2781,
+        "startChar": 34,
+        "endLine": 2781,
+        "endChar": 54
+      },
+      "revId": "4e109e2e9078a246ef85ca3044eb8f7497357fa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc17ca10_a1bac886",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2789,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-12-15T05:34:44Z",
+      "side": 1,
+      "message": "@GuardedBy(\"this\")",
+      "range": {
+        "startLine": 2789,
+        "startChar": 42,
+        "endLine": 2789,
+        "endChar": 48
+      },
+      "revId": "4e109e2e9078a246ef85ca3044eb8f7497357fa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4c223d8_2e0c3585",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2792,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-12-15T05:34:44Z",
+      "side": 1,
+      "message": "Can you use `Collections.EMPTY_LIST` here ?",
+      "range": {
+        "startLine": 2792,
+        "startChar": 63,
+        "endLine": 2792,
+        "endChar": 80
+      },
+      "revId": "4e109e2e9078a246ef85ca3044eb8f7497357fa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "858f0e94_e73360e2",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2909,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-12-15T05:34:44Z",
+      "side": 1,
+      "message": "Wait, did you take the lock ? If it\u0027s guaranteed that the lock is held, please write a comment about it and annotate the constructor with @GuardedBy(\"Vpn.this\").",
+      "range": {
+        "startLine": 2909,
+        "startChar": 35,
+        "endLine": 2909,
+        "endChar": 41
+      },
+      "revId": "4e109e2e9078a246ef85ca3044eb8f7497357fa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

@@ -140,6 +140,30 @@
       },
       "revId": "c7eca04f4f192bc5a1562f74b1eef4a7e48fd1e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8494934_0efda9f3",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2902,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-12-15T05:34:44Z",
+      "side": 1,
+      "message": "No, it was a suggestion where `setVpnNetworkPreferenceLocked` would not have to reference the `mConfig` and `mUserId` members, because it\u0027s confusing. But your new patchset calls `createUserAndRestrictedProfileRanges` inline here and passes the created set of ranges, so it accomplishes the same goal (and arguably, it\u0027s even better than my suggestion).",
+      "parentUuid": "5dd1f5a5_7c4c8148",
+      "range": {
+        "startLine": 2902,
+        "startChar": 0,
+        "endLine": 2902,
+        "endChar": 75
+      },
+      "revId": "c7eca04f4f192bc5a1562f74b1eef4a7e48fd1e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
