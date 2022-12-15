@@ -4447,6 +4447,8 @@ android.inputmethodservice.SoftInputWindow
 android.internal.hidl.base.V1_0.DebugInfo
 android.internal.hidl.base.V1_0.IBase
 android.internal.hidl.safe_union.V1_0.Monostate
+android.internal.nfc.NfcServiceManager$ServiceRegisterer
+android.internal.nfc.NfcServiceManager
 android.internal.telephony.sysprop.TelephonyProperties$$ExternalSyntheticLambda0
 android.internal.telephony.sysprop.TelephonyProperties$$ExternalSyntheticLambda10
 android.internal.telephony.sysprop.TelephonyProperties$$ExternalSyntheticLambda11
