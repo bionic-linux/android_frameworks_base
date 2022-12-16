@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "09184aec_3a727a42",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-16T23:59:29Z",
+      "side": 1,
+      "message": "I see.",
+      "parentUuid": "ab075f11_cee46f0d",
+      "range": {
+        "startLine": 2004,
+        "startChar": 27,
+        "endLine": 2005,
+        "endChar": 38
+      },
+      "revId": "7cd6bf2b749d62af7a022dda62e5d7da28fca87c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b6407ec2_e83c9865",
@@ -102,6 +126,30 @@
       "side": 1,
       "message": "Done, added documentation.\n\nNo, if the opportunistic SA gets torn down at any point AFTER the setup, it tears the whole VCN session down with it (thus the !isChildOpened condition on the onClosed/onClosedExceptionally callbacks)",
       "parentUuid": "b6407ec2_e83c9865",
+      "range": {
+        "startLine": 2401,
+        "startChar": 47,
+        "endLine": 2402,
+        "endChar": 64
+      },
+      "revId": "7cd6bf2b749d62af7a022dda62e5d7da28fca87c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7054c11_bed27bfd",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2402,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-16T23:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "239bb58b_5202b49a",
       "range": {
         "startLine": 2401,
         "startChar": 47,
