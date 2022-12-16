@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab075f11_cee46f0d",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-16T23:42:11Z",
+      "side": 1,
+      "message": "Just sanity checking to make sure a caller doesn\u0027t put -1. That\u0027d be a misconfiguration, but wanted to make sure things fail gracefully.\n\nThat said, this probably can be moved to the dependencies",
+      "parentUuid": "667de92c_1e1198af",
+      "range": {
+        "startLine": 2004,
+        "startChar": 27,
+        "endLine": 2005,
+        "endChar": 38
+      },
+      "revId": "7cd6bf2b749d62af7a022dda62e5d7da28fca87c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b6407ec2_e83c9865",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-12-16T03:00:21Z",
       "side": 1,
       "message": "Can we explicitly document that for the inbound all established SAs will be used and for the outbound, only the last established SA will be used?\n\nAlso are we planning to keep the session alive when the closed SA is not used in outbound?",
+      "range": {
+        "startLine": 2401,
+        "startChar": 47,
+        "endLine": 2402,
+        "endChar": 64
+      },
+      "revId": "7cd6bf2b749d62af7a022dda62e5d7da28fca87c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "239bb58b_5202b49a",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2402,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-16T23:42:11Z",
+      "side": 1,
+      "message": "Done, added documentation.\n\nNo, if the opportunistic SA gets torn down at any point AFTER the setup, it tears the whole VCN session down with it (thus the !isChildOpened condition on the onClosed/onClosedExceptionally callbacks)",
+      "parentUuid": "b6407ec2_e83c9865",
       "range": {
         "startLine": 2401,
         "startChar": 47,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "59badf98_2fc5ce89",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2657,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-16T23:42:11Z",
+      "side": 1,
+      "message": "In this case, yeah. That\u0027ll be something we can add in future. It\u0027ll simplify this, but in a very minor way.",
+      "parentUuid": "f9d3d8cc_e06a3f05",
+      "range": {
+        "startLine": 2657,
+        "startChar": 14,
+        "endLine": 2657,
+        "endChar": 59
+      },
+      "revId": "7cd6bf2b749d62af7a022dda62e5d7da28fca87c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7bf12240_d9d62144",
@@ -100,6 +172,30 @@
       "writtenOn": "2022-12-16T20:18:44Z",
       "side": 1,
       "message": "Maybe a shared method for those two tests?",
+      "range": {
+        "startLine": 491,
+        "startChar": 0,
+        "endLine": 516,
+        "endChar": 5
+      },
+      "revId": "7cd6bf2b749d62af7a022dda62e5d7da28fca87c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbb13e99_14f0d806",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionConnectedStateTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-16T23:42:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bf12240_d9d62144",
       "range": {
         "startLine": 491,
         "startChar": 0,
