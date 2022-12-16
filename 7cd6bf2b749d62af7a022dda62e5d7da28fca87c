@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fff86b0a_c4d22207",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-16T03:00:21Z",
+      "side": 1,
+      "message": "haven\u0027t got chance to review the tests",
+      "revId": "7cd6bf2b749d62af7a022dda62e5d7da28fca87c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "667de92c_1e1198af",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-16T03:00:21Z",
+      "side": 1,
+      "message": "Why do we need a max here? I think getParallelTunnelCount already makes sure parallelTunnelCount is at least one.",
+      "range": {
+        "startLine": 2004,
+        "startChar": 27,
+        "endLine": 2005,
+        "endChar": 38
+      },
+      "revId": "7cd6bf2b749d62af7a022dda62e5d7da28fca87c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6407ec2_e83c9865",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2402,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-16T03:00:21Z",
+      "side": 1,
+      "message": "Can we explicitly document that for the inbound all established SAs will be used and for the outbound, only the last established SA will be used?\n\nAlso are we planning to keep the session alive when the closed SA is not used in outbound?",
+      "range": {
+        "startLine": 2401,
+        "startChar": 47,
+        "endLine": 2402,
+        "endChar": 64
+      },
+      "revId": "7cd6bf2b749d62af7a022dda62e5d7da28fca87c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9d3d8cc_e06a3f05",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2657,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-16T03:00:21Z",
+      "side": 1,
+      "message": "I guess IKE needs to provide a way to clear the internal address requests, otherwise `TunnelModeChildSessionParams.Builder(TunnelModeChildSessionParams)` is not quite useful.",
+      "range": {
+        "startLine": 2657,
+        "startChar": 14,
+        "endLine": 2657,
+        "endChar": 59
+      },
+      "revId": "7cd6bf2b749d62af7a022dda62e5d7da28fca87c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
