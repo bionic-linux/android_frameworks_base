@@ -235,6 +235,30 @@
       },
       "revId": "2a3cf73a1d1186672f6c726cedd9d4890831d900",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca83bca9_903a4e5b",
+        "filename": "core/java/android/text/NonStandardEmoji.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1376662
+      },
+      "writtenOn": "2022-12-16T08:27:06Z",
+      "side": 1,
+      "message": "Using suggested verbage in other CL.\n\nThanks!",
+      "parentUuid": "aaff3de5_4b570f12",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 75
+      },
+      "revId": "2a3cf73a1d1186672f6c726cedd9d4890831d900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
