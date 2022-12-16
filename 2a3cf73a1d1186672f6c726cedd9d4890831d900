@@ -211,6 +211,30 @@
       },
       "revId": "2a3cf73a1d1186672f6c726cedd9d4890831d900",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaff3de5_4b570f12",
+        "filename": "core/java/android/text/NonStandardEmoji.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2022-12-16T05:44:32Z",
+      "side": 1,
+      "message": "I don\u0027t think we should include it to the API. I think this is documentation suggestion. \n\nFor example, if the MAN emoji should be in the consistency set, shall this set contains both `MAN` and `MAN + VS16` or just contains `MAN`?\n\nIf we include both, the current sentence makes sense. If the VS sequence is not included, we may want to say that\n\nCodepoint sequence MUST match the returned sequence fully to match except for emoji variation selectors.",
+      "parentUuid": "e9f81501_79dc8fd9",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 75
+      },
+      "revId": "2a3cf73a1d1186672f6c726cedd9d4890831d900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
