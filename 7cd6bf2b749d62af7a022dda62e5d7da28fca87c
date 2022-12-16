@@ -85,6 +85,29 @@
       },
       "revId": "7cd6bf2b749d62af7a022dda62e5d7da28fca87c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bf12240_d9d62144",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionConnectedStateTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-16T20:18:44Z",
+      "side": 1,
+      "message": "Maybe a shared method for those two tests?",
+      "range": {
+        "startLine": 491,
+        "startChar": 0,
+        "endLine": 516,
+        "endChar": 5
+      },
+      "revId": "7cd6bf2b749d62af7a022dda62e5d7da28fca87c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
