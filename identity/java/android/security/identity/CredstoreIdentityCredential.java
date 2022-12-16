@@ -38,9 +38,8 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Map;
 
 import javax.crypto.BadPaddingException;
@@ -228,7 +227,7 @@ class CredstoreIdentityCredential extends IdentityCredential {
                 throw new RuntimeException("Error decoding certificates", e);
             }
 
-            ArrayList<X509Certificate> x509Certs = new ArrayList<>();
+            LinkedList<X509Certificate> x509Certs = new LinkedList<>();
             for (Certificate cert : certs) {
                 x509Certs.add((X509Certificate) cert);
             }
@@ -385,7 +384,7 @@ class CredstoreIdentityCredential extends IdentityCredential {
     public @NonNull Collection<X509Certificate> getAuthKeysNeedingCertification() {
         try {
             AuthKeyParcel[] authKeyParcels = mBinder.getAuthKeysNeedingCertification();
-            ArrayList<X509Certificate> x509Certs = new ArrayList<>();
+            LinkedList<X509Certificate> x509Certs = new LinkedList<>();
             CertificateFactory factory = CertificateFactory.getInstance("X.509");
             for (AuthKeyParcel authKeyParcel : authKeyParcels) {
                 Collection<? extends Certificate> certs = null;
