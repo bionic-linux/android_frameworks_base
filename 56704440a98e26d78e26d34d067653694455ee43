@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ff22f78_6454696c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1886292
+      },
+      "writtenOn": "2022-12-19T03:42:07Z",
+      "side": 1,
+      "message": "This is to merge internal CL to AOSP branch.\nPlease review.",
+      "revId": "56704440a98e26d78e26d34d067653694455ee43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
