@@ -47,6 +47,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8ec4624_51aaf8c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2022-12-19T03:40:40Z",
+      "side": 1,
+      "message": "Yes, boot is a more suitable word, thanks",
+      "parentUuid": "d895cca9_38443d7b",
+      "range": {
+        "startLine": 9,
+        "startChar": 23,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "b2b5725060999e65d19ca3baefa4625bfbf16e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "377cc322_0d4273e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2022-12-19T03:40:40Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "d511230d_0985052b",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 5
+      },
+      "revId": "b2b5725060999e65d19ca3baefa4625bfbf16e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "19c6cf3f_4197ed1f",
@@ -77,6 +125,30 @@
       "writtenOn": "2022-12-16T14:39:59Z",
       "side": 1,
       "message": "formatting: should be on 2 lines",
+      "range": {
+        "startLine": 1235,
+        "startChar": 0,
+        "endLine": 1235,
+        "endChar": 111
+      },
+      "revId": "b2b5725060999e65d19ca3baefa4625bfbf16e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46982927_0d00d8b3",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2022-12-19T03:40:40Z",
+      "side": 1,
+      "message": "I see the presubmit is ready, do we still need to fix this ?",
+      "parentUuid": "5a42f8a8_6ee6fd3d",
       "range": {
         "startLine": 1235,
         "startChar": 0,
