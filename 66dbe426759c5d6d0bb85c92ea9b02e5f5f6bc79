@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66c7906d_87103ec0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101748
+      },
+      "writtenOn": "2022-12-20T00:50:08Z",
+      "side": 1,
+      "message": "Please also fix the CTS failures.",
+      "revId": "66dbe426759c5d6d0bb85c92ea9b02e5f5f6bc79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
