@@ -1122,28 +1122,6 @@ final class InstallPackageHelper {
             Trace.traceEnd(TRACE_TAG_PACKAGE_MANAGER);
         }
 
-        // If the minimum installable SDK version enforcement is enabled, block the install
-        // of apps using a lower target SDK version than required. This helps improve security
-        // and privacy as malware can target older SDK versions to avoid enforcement of new API
-        // behavior.
-        if (DeviceConfig.getBoolean(DeviceConfig.NAMESPACE_PACKAGE_MANAGER_SERVICE,
-                "MinInstallableTargetSdk__install_block_enabled",
-                false)) {
-            int minInstallableTargetSdk =
-                    DeviceConfig.getInt(DeviceConfig.NAMESPACE_PACKAGE_MANAGER_SERVICE,
-                            "MinInstallableTargetSdk__min_installable_target_sdk",
-                            0);
-            if (parsedPackage.getTargetSdkVersion() < minInstallableTargetSdk) {
-                Slog.w(TAG, "App " + parsedPackage.getPackageName()
-                        + " targets deprecated sdk version");
-                throw new PrepareFailure(INSTALL_FAILED_DEPRECATED_SDK_VERSION,
-                        "App package must target at least version "
-                                + minInstallableTargetSdk);
-            }
-        } else {
-            Slog.i(TAG, "Minimum installable target sdk enforcement not enabled");
-        }
-
         // Instant apps have several additional install-time checks.
         if (instantApp) {
             if (parsedPackage.getTargetSdkVersion() < Build.VERSION_CODES.O) {
