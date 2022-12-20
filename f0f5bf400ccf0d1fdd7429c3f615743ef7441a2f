@@ -187,6 +187,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5853bbba_3ce6e2fb",
+        "filename": "core/java/android/util/SnoopLoggerFiltersUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-12-20T21:31:32Z",
+      "side": 1,
+      "message": "can you add a @NonNull ? as this method cannot return null",
+      "range": {
+        "startLine": 147,
+        "startChar": 18,
+        "endLine": 147,
+        "endChar": 21
+      },
+      "revId": "f0f5bf400ccf0d1fdd7429c3f615743ef7441a2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c7cfb265_6d1d9f2f",
         "filename": "core/tests/snooploggertests/AndroidManifest.xml",
         "patchSetId": 3
