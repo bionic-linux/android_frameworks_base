@@ -253,6 +253,30 @@
       },
       "revId": "b2b5725060999e65d19ca3baefa4625bfbf16e62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c6515c7_68c1ec22",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-12-20T07:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72d9455c_929da43a",
+      "range": {
+        "startLine": 1235,
+        "startChar": 0,
+        "endLine": 1235,
+        "endChar": 111
+      },
+      "revId": "b2b5725060999e65d19ca3baefa4625bfbf16e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
