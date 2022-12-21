@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfba1b16_4c3c77e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133568
+      },
+      "writtenOn": "2022-12-21T19:43:32Z",
+      "side": 1,
+      "message": "Dolby is working on a set of patches (https://android-review.googlesource.com/q/topic:%22TIF_AudioPresentation_Parcel%22) to remove the need for the largely duplicate TvAudioPresentation class that is introduced in this current CL, and use AudioPresentation instead.",
+      "revId": "e1a8be8a6907b07756bfda0023120ca6913b3e33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ce27a3b_a8825afe",
