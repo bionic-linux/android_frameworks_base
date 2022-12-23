@@ -66,52 +66,52 @@ calling StatusManager and waiting for the call to come back to IStatusBar.
 
 ## Default SystemUI services list
 
-### [com.android.systemui.Dependency](/packages/SystemUI/src/com/android/systemui/Dependency.java)
+### [com.android.systemui.Dependency](/frameworks/base/packages/SystemUI/src/com/android/systemui/Dependency.java)
 
 Provides custom dependency injection.
 
-### [com.android.systemui.util.NotificationChannels](/packages/SystemUI/src/com/android/systemui/util/NotificationChannels.java)
+### [com.android.systemui.util.NotificationChannels](/frameworks/base/packages/SystemUI/src/com/android/systemui/util/NotificationChannels.java)
 
 Creates/initializes the channels sysui uses when posting notifications.
 
-### [com.android.systemui.keyguard.KeyguardViewMediator](/packages/SystemUI/src/com/android/systemui/keyguard/KeyguardViewMediator.java)
+### [com.android.systemui.keyguard.KeyguardViewMediator](/frameworks/base/packages/SystemUI/src/com/android/systemui/keyguard/KeyguardViewMediator.java)
 
 Manages keyguard view state.
 
-### [com.android.systemui.recents.Recents](/packages/SystemUI/src/com/android/systemui/recents/Recents.java)
+### [com.android.systemui.recents.Recents](/frameworks/base/packages/SystemUI/src/com/android/systemui/recents/Recents.java)
 
 Recents tracks all the data needed for recents and starts/stops the recents
 activity. It provides this cached data to RecentsActivity when it is started.
 
-### [com.android.systemui.volume.VolumeUI](/packages/SystemUI/src/com/android/systemui/volume/VolumeUI.java)
+### [com.android.systemui.volume.VolumeUI](/frameworks/base/packages/SystemUI/src/com/android/systemui/volume/VolumeUI.java)
 
 Registers all the callbacks/listeners required to show the Volume dialog when
 it should be shown.
 
-### [com.android.systemui.status.phone.StatusBar](/packages/SystemUI/src/com/android/systemui/status/phone/StatusBar.java)
+### [com.android.systemui.status.phone.StatusBar](/frameworks/base/packages/SystemUI/src/com/android/systemui/status/phone/StatusBar.java)
 
 This shows the UI for the status bar and the notification shade it contains.
 It also contains a significant amount of other UI that interacts with these
 surfaces (keyguard, AOD, etc.). StatusBar also contains a notification listener
 to receive notification callbacks.
 
-### [com.android.systemui.usb.StorageNotification](/packages/SystemUI/src/com/android/systemui/usb/StorageNotification.java)
+### [com.android.systemui.usb.StorageNotification](/frameworks/base/packages/SystemUI/src/com/android/systemui/usb/StorageNotification.java)
 
 Tracks USB status and sends notifications for it.
 
-### [com.android.systemui.power.PowerUI](/packages/SystemUI/src/com/android/systemui/power/PowerUI.java)
+### [com.android.systemui.power.PowerUI](/frameworks/base/packages/SystemUI/src/com/android/systemui/power/PowerUI.java)
 
 Tracks power status and sends notifications for low battery/power saver.
 
-### [com.android.systemui.media.RingtonePlayer](/packages/SystemUI/src/com/android/systemui/media/RingtonePlayer.java)
+### [com.android.systemui.media.RingtonePlayer](/frameworks/base/packages/SystemUI/src/com/android/systemui/media/RingtonePlayer.java)
 
 Plays ringtones.
 
-### [com.android.systemui.keyboard.KeyboardUI](/packages/SystemUI/src/com/android/systemui/keyboard/KeyboardUI.java)
+### [com.android.systemui.keyboard.KeyboardUI](/frameworks/base/packages/SystemUI/src/com/android/systemui/keyboard/KeyboardUI.java)
 
 Shows UI for keyboard shortcuts (triggered by keyboard shortcut).
 
-### [com.android.systemui.shortcut.ShortcutKeyDispatcher](/packages/SystemUI/src/com/android/systemui/shortcut/ShortcutKeyDispatcher.java)
+### [com.android.systemui.shortcut.ShortcutKeyDispatcher](/frameworks/base/packages/SystemUI/src/com/android/systemui/shortcut/ShortcutKeyDispatcher.java)
 
 Dispatches shortcut to System UI components.
 
@@ -119,32 +119,32 @@ Dispatches shortcut to System UI components.
 
 Component allowing the vendor/OEM to inject a custom component.
 
-### [com.android.systemui.util.leak.GarbageMonitor$Service](/packages/SystemUI/src/com/android/systemui/util/leak/GarbageMonitor.java)
+### [com.android.systemui.util.leak.GarbageMonitor$Service](/frameworks/base/packages/SystemUI/src/com/android/systemui/util/leak/GarbageMonitor.java)
 
 Tracks large objects in sysui to see if there are leaks.
 
-### [com.android.systemui.LatencyTester](/packages/SystemUI/src/com/android/systemui/LatencyTester.java)
+### [com.android.systemui.LatencyTester](/frameworks/base/packages/SystemUI/src/com/android/systemui/LatencyTester.java)
 
 Class that only runs on debuggable builds that listens to broadcasts that
 simulate actions in the system that are used for testing the latency.
 
-### [com.android.systemui.globalactions.GlobalActionsComponent](/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsComponent.java)
+### [com.android.systemui.globalactions.GlobalActionsComponent](/frameworks/base/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsComponent.java)
 
 Shows the global actions dialog (long-press power).
 
-### [com.android.systemui.ScreenDecorations](/packages/SystemUI/src/com/android/systemui/ScreenDecorations.java)
+### [com.android.systemui.ScreenDecorations](/frameworks/base/packages/SystemUI/src/com/android/systemui/ScreenDecorations.java)
 
 Draws decorations about the screen in software (e.g. rounded corners, cutouts).
 
-### [com.android.systemui.biometrics.BiometricDialogImpl](/packages/SystemUI/src/com/android/systemui/biometrics/BiometricDialogImpl.java)
+### [com.android.systemui.biometrics.BiometricDialogImpl](/frameworks/base/packages/SystemUI/src/com/android/systemui/biometrics/BiometricDialogImpl.java)
 
 Biometric UI.
 
-### [com.android.systemui.wmshell.WMShell](/packages/SystemUI/src/com/android/systemui/wmshell/WMShell.java)
+### [com.android.systemui.wmshell.WMShell](/frameworks/base/packages/SystemUI/src/com/android/systemui/wmshell/WMShell.java)
 
 Delegates SysUI events to WM Shell controllers.
 
 ---
 
- * [Plugins](/packages/SystemUI/docs/plugins.md)
- * [Demo Mode](/packages/SystemUI/docs/demo_mode.md)
+ * [Plugins](/frameworks/base/packages/SystemUI/docs/plugins.md)
+ * [Demo Mode](/frameworks/base/packages/SystemUI/docs/demo_mode.md)
