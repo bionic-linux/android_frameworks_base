@@ -33,6 +33,46 @@
       "message": "Will defer to appwidget owners",
       "revId": "407b92be53bac6a55872c2a6981266d1e4dd1289",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bd88f9c_9469a33b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1942245
+      },
+      "writtenOn": "2022-12-27T22:02:12Z",
+      "side": 1,
+      "message": "LGTM but need others to approve",
+      "revId": "407b92be53bac6a55872c2a6981266d1e4dd1289",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f482019_fb6a12cf",
+        "filename": "services/appwidget/java/com/android/server/appwidget/AppWidgetServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1942245
+      },
+      "writtenOn": "2022-12-27T22:02:12Z",
+      "side": 1,
+      "message": "Please consider breaking it into multiple lines",
+      "range": {
+        "startLine": 590,
+        "startChar": 36,
+        "endLine": 590,
+        "endChar": 103
+      },
+      "revId": "407b92be53bac6a55872c2a6981266d1e4dd1289",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
