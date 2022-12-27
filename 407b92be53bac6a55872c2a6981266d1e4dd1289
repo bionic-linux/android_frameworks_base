@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d845a5f2_b321a4b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2022-12-27T12:04:17Z",
+      "side": 1,
+      "message": "Hello,please help me review the patch,thanks",
+      "revId": "407b92be53bac6a55872c2a6981266d1e4dd1289",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
