@@ -73,6 +73,30 @@
       },
       "revId": "407b92be53bac6a55872c2a6981266d1e4dd1289",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fc1e7e3_4026778f",
+        "filename": "services/appwidget/java/com/android/server/appwidget/AppWidgetServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2022-12-28T02:28:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f482019_fb6a12cf",
+      "range": {
+        "startLine": 590,
+        "startChar": 36,
+        "endLine": 590,
+        "endChar": 103
+      },
+      "revId": "407b92be53bac6a55872c2a6981266d1e4dd1289",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
