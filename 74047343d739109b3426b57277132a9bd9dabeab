@@ -68,6 +68,24 @@
       "message": "@sihua@google.com Why this patch can not sumbit? It looks like need Code Review+2?",
       "revId": "74047343d739109b3426b57277132a9bd9dabeab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbb402ea_03f6113d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1942245
+      },
+      "writtenOn": "2022-12-29T20:18:21Z",
+      "side": 1,
+      "message": "Yes, it would require that we have a \"+2\" for code review part. I may have missed certain parts that are important for the integrity of the widget service and others could possibly provide further insights into this.",
+      "parentUuid": "fdee1ea0_d4515cd2",
+      "revId": "74047343d739109b3426b57277132a9bd9dabeab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
