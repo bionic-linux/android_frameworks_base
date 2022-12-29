@@ -33,6 +33,24 @@
       "message": "@sihua@google.com hello, I found I could not trigger presubmit-verified and auto-merge.Could you help me check or trigger? thanks",
       "revId": "74047343d739109b3426b57277132a9bd9dabeab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e17243dc_e0be9492",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1942245
+      },
+      "writtenOn": "2022-12-29T02:39:35Z",
+      "side": 1,
+      "message": "No problem, I have triggered the presubmit test",
+      "parentUuid": "e6cadf62_65eea9cd",
+      "revId": "74047343d739109b3426b57277132a9bd9dabeab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
