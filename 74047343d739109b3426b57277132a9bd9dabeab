@@ -86,6 +86,24 @@
       "parentUuid": "fdee1ea0_d4515cd2",
       "revId": "74047343d739109b3426b57277132a9bd9dabeab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d415fc9_9afbd2ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2022-12-30T01:05:44Z",
+      "side": 1,
+      "message": "Could you help me notify someone to continue review this path,thanks.",
+      "parentUuid": "cbb402ea_03f6113d",
+      "revId": "74047343d739109b3426b57277132a9bd9dabeab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
