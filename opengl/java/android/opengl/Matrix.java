@@ -103,8 +103,10 @@ public class Matrix {
      * @param rhsOffset The offset into the rhs array where the rhs is stored.
      *
      * @throws IllegalArgumentException under any of the following conditions:
-     * result, lhs, or rhs are null; resultOffset + 16 > result.length
-     * or lhsOffset + 16 > lhs.length or rhsOffset + 16 > rhs.length;
+     * result, lhs, or rhs are null;
+     * resultOffset + 16 > result.length
+     * or lhsOffset + 16 > lhs.length
+     * or rhsOffset + 16 > rhs.length;
      * resultOffset < 0 or lhsOffset < 0 or rhsOffset < 0
      */
     public static void multiplyMM(float[] result, int resultOffset,
@@ -206,15 +208,10 @@ public class Matrix {
      *
      * @throws IllegalArgumentException under any of the following conditions:
      * resultVec, lhsMat, or rhsVec are null;
-     * resultVecOffset + 16 > resultVec.length or
-     * lhsMatOffset + 16 > lhsMat.length or
-     * rhsVecOffset + 16 > rhsVec.length;
+     * resultVecOffset + 4  > resultVec.length
+     * or lhsMatOffset + 16 > lhsMat.length
+     * or rhsVecOffset + 4  > rhsVec.length;
      * resultVecOffset < 0 or lhsMatOffset < 0 or rhsVecOffset < 0
-     *
-     * @throws IllegalArgumentException if resultVec, lhsMat,
-     * or rhsVec are null, or if resultVecOffset + 4 > resultVec.length
-     * or lhsMatOffset + 16 > lhsMat.length or
-     * rhsVecOffset + 4 > rhsVec.length.
      */
     public static void multiplyMV(float[] resultVec,
             int resultVecOffset, float[] lhsMat, int lhsMatOffset,
@@ -808,9 +805,10 @@ public class Matrix {
      * @param rm returns the result
      * @param rmOffset index into rm where the result matrix starts
      * @param x angle of rotation, in degrees
-     * @param y angle of rotation, in degrees
+     * @param y is broken, do not use
      * @param z angle of rotation, in degrees
      */
+    @deprecated
     public static void setRotateEulerM(float[] rm, int rmOffset,
             float x, float y, float z) {
         x *= (float) (Math.PI / 180.0f);
@@ -837,6 +835,64 @@ public class Matrix {
 
         rm[rmOffset + 8]  = -sxsy * cz + sx * sz;
         rm[rmOffset + 9]  =  sxsy * sz + sx * cz;
+        rm[rmOffset + 10] =  cx * cy;
+        rm[rmOffset + 11] =  0.0f;
+
+        rm[rmOffset + 12] =  0.0f;
+        rm[rmOffset + 13] =  0.0f;
+        rm[rmOffset + 14] =  0.0f;
+        rm[rmOffset + 15] =  1.0f;
+    }
+
+    /**
+     * Converts Euler angles to a rotation matrix.
+     *
+     * @param rm returns the result
+     * @param rmOffset index into rm where the result matrix starts
+     * @param x angle of rotation, in degrees
+     * @param y angle of rotation, in degrees
+     * @param z angle of rotation, in degrees
+     *
+     * @throws IllegalArgumentException if rm is null;
+     * or if rmOffset + 16 > rm.length;
+     * rmOffset < 0
+     */
+    public static void setRotateEulerM2(float[] rm, int rmOffset,
+            float x, float y, float z) {
+        if (rm == null) {
+            throw new IllegalArgumentException("rm == null");
+        }
+        if (rmOffset < 0) {
+            throw new IllegalArgumentException("rmOffset < 0");
+        }
+        if (rm.length < rmOffset + 16) {
+            throw new IllegalArgumentException("rm.length < rmOffset + 16");
+        }
+
+        x *= (float) (Math.PI / 180.0f);
+        y *= (float) (Math.PI / 180.0f);
+        z *= (float) (Math.PI / 180.0f);
+        float cx = (float) Math.cos(x);
+        float sx = (float) Math.sin(x);
+        float cy = (float) Math.cos(y);
+        float sy = (float) Math.sin(y);
+        float cz = (float) Math.cos(z);
+        float sz = (float) Math.sin(z);
+        float cxsy = cx * sy;
+        float sxsy = sx * sy;
+
+        rm[rmOffset + 0]  =  cy * cz;
+        rm[rmOffset + 1]  = -cy * sz;
+        rm[rmOffset + 2]  =  sy;
+        rm[rmOffset + 3]  =  0.0f;
+
+        rm[rmOffset + 4]  =  sxsy * cz + cx * sz;
+        rm[rmOffset + 5]  = -sxsy * sz + cx * cz;
+        rm[rmOffset + 6]  = -sx * cy;
+        rm[rmOffset + 7]  =  0.0f;
+
+        rm[rmOffset + 8]  = -cxsy * cz + sx * sz;
+        rm[rmOffset + 9]  =  cxsy * sz + sx * cz;
         rm[rmOffset + 10] =  cx * cy;
         rm[rmOffset + 11] =  0.0f;
 
