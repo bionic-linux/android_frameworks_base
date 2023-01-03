@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1d059cd_12010428",
+        "filename": "opengl/java/android/opengl/Matrix.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2023-01-03T18:09:44Z",
+      "side": 1,
+      "message": "`@NonNull`",
+      "range": {
+        "startLine": 868,
+        "startChar": 41,
+        "endLine": 868,
+        "endChar": 49
+      },
+      "revId": "b3ddb3a9a1ec0dba1e9fdce16b4cb36b29de43af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
