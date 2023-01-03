@@ -7437,5 +7437,9 @@ message MetricsEvent {
     // ---- End Q Constants, all Q constants go above this line ----
     // Add new aosp constants above this line.
     // END OF AOSP CONSTANTS
+
+    // OPEN: Settings > Developer Options > Snoop Logger Filters
+    // CATEGORY: SETTINGS
+    SETTINGS_SNOOP_LOGGER_DASHBOARD = 2009;
   }
 }
