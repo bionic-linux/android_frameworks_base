@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "324f7b51_5056d555",
+        "filename": "core/java/android/util/SnoopLoggerFiltersUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1974186
+      },
+      "writtenOn": "2023-01-04T13:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3583b823_eb125571",
+      "range": {
+        "startLine": 42,
+        "startChar": 13,
+        "endLine": 42,
+        "endChar": 54
+      },
+      "revId": "f0f5bf400ccf0d1fdd7429c3f615743ef7441a2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "870fc579_80c18439",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-12-20T21:25:39Z",
       "side": 1,
       "message": "All of this is already declared in BluetoothProperties with aosp/2303178.\nAnd in this file you redeclared them to directly use the systemProperties\n\nI think it\u0027s more aligned with being a autonomous module if we keep using the BluetoothProperties here.\nSpoiler I do not know if BluetoothProperties fit well here.\nLet me know if it\u0027s not the case",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 31
+      },
+      "revId": "f0f5bf400ccf0d1fdd7429c3f615743ef7441a2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "761b72b8_d952430f",
+        "filename": "core/java/android/util/SnoopLoggerFiltersUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1974186
+      },
+      "writtenOn": "2023-01-04T13:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "870fc579_80c18439",
       "range": {
         "startLine": 41,
         "startChar": 4,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "787461be_5d6da2bd",
+        "filename": "core/java/android/util/SnoopLoggerFiltersUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1974186
+      },
+      "writtenOn": "2023-01-04T13:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d96d5405_3b4b5ca6",
+      "range": {
+        "startLine": 63,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 5
+      },
+      "revId": "f0f5bf400ccf0d1fdd7429c3f615743ef7441a2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0268d886_79abafc1",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-12-20T21:25:39Z",
       "side": 1,
       "message": "Can you explain why this step is necessary ?\nDo you mean `rfcommchannelfiltered` can be set to true while \nBLUETOOTH_BTSNOOP_LOG_MODE_PROPERTY is to full ?",
+      "range": {
+        "startLine": 85,
+        "startChar": 12,
+        "endLine": 86,
+        "endChar": 42
+      },
+      "revId": "f0f5bf400ccf0d1fdd7429c3f615743ef7441a2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4570d99b_33f798c9",
+        "filename": "core/java/android/util/SnoopLoggerFiltersUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1974186
+      },
+      "writtenOn": "2023-01-04T13:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0268d886_79abafc1",
       "range": {
         "startLine": 85,
         "startChar": 12,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fc17a0f_e7804930",
+        "filename": "core/java/android/util/SnoopLoggerFiltersUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1974186
+      },
+      "writtenOn": "2023-01-04T13:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26d00ab8_b2434503",
+      "range": {
+        "startLine": 116,
+        "startChar": 20,
+        "endLine": 116,
+        "endChar": 29
+      },
+      "revId": "f0f5bf400ccf0d1fdd7429c3f615743ef7441a2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c639294e_64ed53cb",
@@ -129,6 +249,30 @@
       "writtenOn": "2022-12-20T21:25:39Z",
       "side": 1,
       "message": "Why are we returning when already enabled and enable \u003d\u003d true but not when already disabled and enable \u003d false ?\n\n```\n        boolean already_enabled \u003d current_sysprops_list.contains(feature);\n        if (enabled \u003d\u003d already_enabled) {\n            return;\n        }\n        if (enabled) {\n            current_sysprops_list.add(feature);\n        } else {\n            current_sysprops_list.remove(feature);\n        }\n```",
+      "range": {
+        "startLine": 118,
+        "startChar": 9,
+        "endLine": 127,
+        "endChar": 9
+      },
+      "revId": "f0f5bf400ccf0d1fdd7429c3f615743ef7441a2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb197589_b7870d0c",
+        "filename": "core/java/android/util/SnoopLoggerFiltersUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1974186
+      },
+      "writtenOn": "2023-01-04T13:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c639294e_64ed53cb",
       "range": {
         "startLine": 118,
         "startChar": 9,
@@ -164,6 +308,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a5c23c02_b398e29a",
+        "filename": "core/java/android/util/SnoopLoggerFiltersUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1974186
+      },
+      "writtenOn": "2023-01-04T13:50:40Z",
+      "side": 1,
+      "message": "SystemProperties.get(BLUETOOTH_BTSNOOP_LOG_FILTER_TYPES_PROPERTY) may return empty string. If that\u0027s the case, this: \n\nList\u003cString\u003e current_sysprops_list \u003d new ArrayList\u003cString\u003e(Arrays.asList(current_sysprop.split(\",\", -1)));\n\nwill leave us with such list: [\"\"]. Then when we add a feature we will have: [\"\", \"feature\"], that\u0027s why I am removing it. I think that\u0027s the only case where it can happen. There probably is a better solution to not be left with such sysprop: \",feature\", but this worked for me ;)\n\nUPDATE: not relevant anymore",
+      "parentUuid": "a1e46746_9fd8fdb9",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 131,
+        "endChar": 9
+      },
+      "revId": "f0f5bf400ccf0d1fdd7429c3f615743ef7441a2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0b93ed22_d75a649f",
         "filename": "core/java/android/util/SnoopLoggerFiltersUtils.java",
         "patchSetId": 3
@@ -175,6 +343,30 @@
       "writtenOn": "2022-12-20T21:25:39Z",
       "side": 1,
       "message": "easier with\n```\nString new_sysprop \u003d String.join(\",\", current_sysprops_list);\n```",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 139,
+        "endChar": 9
+      },
+      "revId": "f0f5bf400ccf0d1fdd7429c3f615743ef7441a2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91e0cc44_67ed7cb1",
+        "filename": "core/java/android/util/SnoopLoggerFiltersUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1974186
+      },
+      "writtenOn": "2023-01-04T13:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b93ed22_d75a649f",
       "range": {
         "startLine": 133,
         "startChar": 7,
@@ -208,6 +400,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18937708_795a3f1e",
+        "filename": "core/java/android/util/SnoopLoggerFiltersUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1974186
+      },
+      "writtenOn": "2023-01-04T13:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5853bbba_3ce6e2fb",
+      "range": {
+        "startLine": 147,
+        "startChar": 18,
+        "endLine": 147,
+        "endChar": 21
+      },
+      "revId": "f0f5bf400ccf0d1fdd7429c3f615743ef7441a2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7cfb265_6d1d9f2f",
@@ -231,6 +447,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f9d2171_67d6cc19",
+        "filename": "core/tests/snooploggertests/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1974186
+      },
+      "writtenOn": "2023-01-04T13:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7cfb265_6d1d9f2f",
+      "range": {
+        "startLine": 3,
+        "startChar": 16,
+        "endLine": 3,
+        "endChar": 20
+      },
+      "revId": "f0f5bf400ccf0d1fdd7429c3f615743ef7441a2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "087250ed_434e0a94",
@@ -244,6 +484,30 @@
       "writtenOn": "2022-12-20T21:25:39Z",
       "side": 1,
       "message": "nit 2022",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "f0f5bf400ccf0d1fdd7429c3f615743ef7441a2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "495e8913_7a3d6718",
+        "filename": "core/tests/snooploggertests/src/android/util/SnoopLoggerFiltersUtilsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1974186
+      },
+      "writtenOn": "2023-01-04T13:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "087250ed_434e0a94",
       "range": {
         "startLine": 2,
         "startChar": 17,
