@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e9ee992_9d8f67a4",
+        "filename": "opengl/java/android/opengl/Matrix.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1060206
+      },
+      "writtenOn": "2023-01-06T17:42:48Z",
+      "side": 1,
+      "message": "Note the deprecation here as well just to be doubly sure!",
+      "range": {
+        "startLine": 807,
+        "startChar": 49,
+        "endLine": 807,
+        "endChar": 50
+      },
+      "revId": "b52f95daaffdb2e48d1083bcb1a1bffc26b6d950",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
