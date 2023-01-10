@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7b4935b_676a737b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2023-01-10T15:07:11Z",
+      "side": 1,
+      "message": "Please report a bug with reproduce step and link it in the description for tracking purpose.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "6b35e6b3c6c3a0c319b722d1c185774cf8a3e023",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
