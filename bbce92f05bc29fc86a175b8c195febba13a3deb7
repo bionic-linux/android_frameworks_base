@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "685f42e5_e7ae855a",
+        "filename": "packages/SystemUI/src/com/android/keyguard/CarrierTextManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2023-01-10T15:58:01Z",
+      "side": 0,
+      "message": "This string definition seems not used any more.\nShould I also remove it from strings.xml?\n\nThanks",
+      "range": {
+        "startLine": 608,
+        "startChar": 45,
+        "endLine": 608,
+        "endChar": 88
+      },
+      "revId": "bbce92f05bc29fc86a175b8c195febba13a3deb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
