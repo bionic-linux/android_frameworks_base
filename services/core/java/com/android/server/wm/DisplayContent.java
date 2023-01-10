@@ -835,8 +835,19 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         }
 
         ProtoLog.v(WM_DEBUG_FOCUS_LIGHT, "findFocusedWindow: Found new focus @ %s", w);
-        mTmpWindow = w;
-        return true;
+
+        // Fix the problem that the task with alwaysOnTop is returned directly, causing the input to be misplaced.
+        if (w.mActivityRecord != null) {
+            if (focusedApp.getRootTaskId() == w.mActivityRecord.getRootTaskId()) {
+                mTmpWindow = w;
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            mTmpWindow = w;
+            return true;
+        }
     };
 
     private final Consumer<WindowState> mPerformLayout = w -> {
