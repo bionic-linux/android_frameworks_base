@@ -70,6 +70,30 @@
       },
       "revId": "530fa524ee1cfa4455579ec0e850de5a365a64c0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6c5adb6_cf8d0ca9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1944206
+      },
+      "writtenOn": "2023-01-10T19:38:20Z",
+      "side": 1,
+      "message": "Confirmed with a test app that this is the case.  `Slog.wtf` did NOT crash the app\u0027s process.\n\nSetting this back to use Slog.wtf.  smoreland@ plmk if you\u0027d still prefer we not.",
+      "parentUuid": "5449e01a_4b4b774b",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 67
+      },
+      "revId": "530fa524ee1cfa4455579ec0e850de5a365a64c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
