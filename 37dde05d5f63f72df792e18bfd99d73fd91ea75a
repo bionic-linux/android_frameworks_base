@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22dd5a87_569a6fb6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1887141
+      },
+      "writtenOn": "2023-01-10T11:51:15Z",
+      "side": 1,
+      "message": "Upload the patch set to the AOSP branch for delivery to partners.\nPlease review.",
+      "revId": "37dde05d5f63f72df792e18bfd99d73fd91ea75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
