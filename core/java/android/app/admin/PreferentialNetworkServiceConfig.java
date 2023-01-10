@@ -50,6 +50,7 @@ public final class PreferentialNetworkServiceConfig implements Parcelable {
     final boolean mIsEnabled;
     final int mNetworkId;
     final boolean mAllowFallbackToDefaultConnection;
+    final boolean mShouldBlockNonMatchingNetworks;
     final int[] mIncludedUids;
     final int[] mExcludedUids;
 
@@ -63,6 +64,8 @@ public final class PreferentialNetworkServiceConfig implements Parcelable {
             "preferential_network_service_network_id";
     private static final String TAG_ALLOW_FALLBACK_TO_DEFAULT_CONNECTION =
             "allow_fallback_to_default_connection";
+    private static final String TAG_BLOCK_NON_MATCHING_NETWORKS =
+            "block_non_matching_networks";
     private static final String TAG_INCLUDED_UIDS = "included_uids";
     private static final String TAG_EXCLUDED_UIDS = "excluded_uids";
     private static final String ATTR_VALUE = "value";
@@ -110,10 +113,12 @@ public final class PreferentialNetworkServiceConfig implements Parcelable {
     }
 
     private PreferentialNetworkServiceConfig(boolean isEnabled,
-            boolean allowFallbackToDefaultConnection, int[] includedUids,
+            boolean allowFallbackToDefaultConnection, boolean shouldBlockNonMatchingNetworks,
+            int[] includedUids,
             int[] excludedUids, @PreferentialNetworkPreferenceId int networkId) {
         mIsEnabled = isEnabled;
         mAllowFallbackToDefaultConnection = allowFallbackToDefaultConnection;
+        mShouldBlockNonMatchingNetworks = shouldBlockNonMatchingNetworks;
         mIncludedUids = includedUids;
         mExcludedUids = excludedUids;
         mNetworkId = networkId;
@@ -122,6 +127,7 @@ public final class PreferentialNetworkServiceConfig implements Parcelable {
     private PreferentialNetworkServiceConfig(Parcel in) {
         mIsEnabled = in.readBoolean();
         mAllowFallbackToDefaultConnection = in.readBoolean();
+        mShouldBlockNonMatchingNetworks = in.readBoolean();
         mNetworkId = in.readInt();
         mIncludedUids = in.createIntArray();
         mExcludedUids = in.createIntArray();
@@ -143,6 +149,17 @@ public final class PreferentialNetworkServiceConfig implements Parcelable {
      */
     public boolean isFallbackToDefaultConnectionAllowed() {
         return mAllowFallbackToDefaultConnection;
+    }
+
+    /**
+     * Whether to block networks that do not match this configuration.
+     * This boolean configures whether the concerned UIDs should be blocked from using
+     * networks that do not match the configured network ID even if these networks are
+     * otherwise open to all apps.
+     * @return true if UIDs should be blocked from using non-matching networks, else false.
+     */
+    public boolean shouldBlockNonMatchingNetworks() {
+        return mShouldBlockNonMatchingNetworks;
     }
 
     /**
@@ -189,6 +206,7 @@ public final class PreferentialNetworkServiceConfig implements Parcelable {
         return "PreferentialNetworkServiceConfig{"
                 + "mIsEnabled=" + isEnabled()
                 + "mAllowFallbackToDefaultConnection=" + isFallbackToDefaultConnectionAllowed()
+                + "mBlockNonMatchingNetworks=" + shouldBlockNonMatchingNetworks()
                 + "mIncludedUids=" + Arrays.toString(mIncludedUids)
                 + "mExcludedUids=" + Arrays.toString(mExcludedUids)
                 + "mNetworkId=" + mNetworkId
@@ -202,6 +220,7 @@ public final class PreferentialNetworkServiceConfig implements Parcelable {
         final PreferentialNetworkServiceConfig that = (PreferentialNetworkServiceConfig) o;
         return mIsEnabled == that.mIsEnabled
                 && mAllowFallbackToDefaultConnection == that.mAllowFallbackToDefaultConnection
+                && mShouldBlockNonMatchingNetworks == that.mShouldBlockNonMatchingNetworks
                 && mNetworkId == that.mNetworkId
                 && Arrays.equals(mIncludedUids, that.mIncludedUids)
                 && Arrays.equals(mExcludedUids, that.mExcludedUids);
@@ -210,7 +229,8 @@ public final class PreferentialNetworkServiceConfig implements Parcelable {
     @Override
     public int hashCode() {
         return Objects.hash(mIsEnabled, mAllowFallbackToDefaultConnection,
-                Arrays.hashCode(mIncludedUids), Arrays.hashCode(mExcludedUids), mNetworkId);
+                mShouldBlockNonMatchingNetworks, Arrays.hashCode(mIncludedUids),
+                Arrays.hashCode(mExcludedUids), mNetworkId);
     }
 
     /**
@@ -221,6 +241,7 @@ public final class PreferentialNetworkServiceConfig implements Parcelable {
         boolean mIsEnabled = false;
         int mNetworkId = 0;
         boolean mAllowFallbackToDefaultConnection = true;
+        boolean mShouldBlockNonMatchingNetworks = false;
         int[] mIncludedUids = new int[0];
         int[] mExcludedUids = new int[0];
 
@@ -244,8 +265,12 @@ public final class PreferentialNetworkServiceConfig implements Parcelable {
         /**
          * Set whether the default connection should be used as fallback.
          * This boolean configures whether the default connection (default internet or wifi)
-         * should be used if a preferential network service connection is not available.
-         * Default value is true
+         * should be used if a preferential network service connection is not available. Note
+         * that the UIDs subject to this configuration might or might not be blocked from using
+         * the default connection and other networks that are otherwise open to all apps by
+         * specifying explicitly that traffic should go on one of them. See
+         * {@link #setShouldBlockNonMatchingNetworks(boolean)} to configure that.
+         * The default value is true.
          * @param allowFallbackToDefaultConnection  true if fallback is allowed else false
          * @return The builder to facilitate chaining.
          */
@@ -254,6 +279,23 @@ public final class PreferentialNetworkServiceConfig implements Parcelable {
         public PreferentialNetworkServiceConfig.Builder setFallbackToDefaultConnectionAllowed(
                 boolean allowFallbackToDefaultConnection) {
             mAllowFallbackToDefaultConnection = allowFallbackToDefaultConnection;
+            return this;
+        }
+
+        /**
+         * Set whether to block networks that do not match this configuration.
+         * This boolean configures whether the concerned UIDs should be blocked from using
+         * networks that do not match the configured network ID even if these networks are
+         * otherwise open to all apps.
+         * The default value is false.
+         * @param blockNonMatchingNetworks true if UIDs should be blocked from using non-matching
+         *                                 networks.
+         * @return The builder to facilitate chaining.
+         */
+        @NonNull
+        public PreferentialNetworkServiceConfig.Builder setShouldBlockNonMatchingNetworks(
+                boolean blockNonMatchingNetworks) {
+            mShouldBlockNonMatchingNetworks = blockNonMatchingNetworks;
             return this;
         }
 
@@ -305,8 +347,13 @@ public final class PreferentialNetworkServiceConfig implements Parcelable {
                 throw new IllegalStateException("Both includedUids and excludedUids "
                         + "cannot be nonempty");
             }
+            if (mShouldBlockNonMatchingNetworks && mAllowFallbackToDefaultConnection) {
+                throw new IllegalStateException("A config cannot both allow fallback and "
+                        + "block non-matching networks");
+            }
             return new PreferentialNetworkServiceConfig(mIsEnabled,
-                    mAllowFallbackToDefaultConnection, mIncludedUids, mExcludedUids, mNetworkId);
+                    mAllowFallbackToDefaultConnection, mShouldBlockNonMatchingNetworks,
+                    mIncludedUids, mExcludedUids, mNetworkId);
         }
 
         /**
@@ -331,6 +378,7 @@ public final class PreferentialNetworkServiceConfig implements Parcelable {
     public void writeToParcel(@NonNull android.os.Parcel dest, int flags) {
         dest.writeBoolean(mIsEnabled);
         dest.writeBoolean(mAllowFallbackToDefaultConnection);
+        dest.writeBoolean(mShouldBlockNonMatchingNetworks);
         dest.writeInt(mNetworkId);
         dest.writeIntArray(mIncludedUids);
         dest.writeIntArray(mExcludedUids);
@@ -422,6 +470,9 @@ public final class PreferentialNetworkServiceConfig implements Parcelable {
             } else if (TAG_ALLOW_FALLBACK_TO_DEFAULT_CONNECTION.equals(tagDAM)) {
                 resultBuilder.setFallbackToDefaultConnectionAllowed(parser.getAttributeBoolean(
                         null, ATTR_VALUE, true));
+            } else if (TAG_BLOCK_NON_MATCHING_NETWORKS.equals(tagDAM)) {
+                resultBuilder.setShouldBlockNonMatchingNetworks(parser.getAttributeBoolean(
+                        null, ATTR_VALUE, true));
             } else if (TAG_INCLUDED_UIDS.equals(tagDAM)) {
                 resultBuilder.setIncludedUids(readStringListToIntArray(parser, TAG_UID));
             } else if (TAG_EXCLUDED_UIDS.equals(tagDAM)) {
@@ -442,6 +493,8 @@ public final class PreferentialNetworkServiceConfig implements Parcelable {
         writeAttributeValueToXml(out, TAG_NETWORK_ID, getNetworkId());
         writeAttributeValueToXml(out, TAG_ALLOW_FALLBACK_TO_DEFAULT_CONNECTION,
                 isFallbackToDefaultConnectionAllowed());
+        writeAttributeValueToXml(out, TAG_BLOCK_NON_MATCHING_NETWORKS,
+                shouldBlockNonMatchingNetworks());
         writeAttributeValuesToXml(out, TAG_INCLUDED_UIDS, TAG_UID,
                 intArrayToStringList(getIncludedUids()));
         writeAttributeValuesToXml(out, TAG_EXCLUDED_UIDS, TAG_UID,
@@ -459,6 +512,8 @@ public final class PreferentialNetworkServiceConfig implements Parcelable {
         pw.println(mIsEnabled);
         pw.print("allowFallbackToDefaultConnection=");
         pw.println(mAllowFallbackToDefaultConnection);
+        pw.print("blockNonMatchingNetworks=");
+        pw.println(mShouldBlockNonMatchingNetworks);
         pw.print("includedUids=");
         pw.println(mIncludedUids);
         pw.print("excludedUids=");
