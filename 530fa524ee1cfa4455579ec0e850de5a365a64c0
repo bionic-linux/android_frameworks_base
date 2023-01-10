@@ -46,6 +46,30 @@
       },
       "revId": "530fa524ee1cfa4455579ec0e850de5a365a64c0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5449e01a_4b4b774b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2023-01-10T13:14:42Z",
+      "side": 1,
+      "message": "Slog.wtf doesn\u0027t throw. I\u0027ve discussed it in the email thread. We also switched from Log.wtf to Slog.wtf to avoid crashes in ag/20786389 and I had verified this locally. For the avoidance of doubt, could you also verify locally with a test app that Slog.wtf doesn\u0027t throw @mattgilbride@google.com? Can we move back to Slog.wtf if the concern here is the throwing aspect?",
+      "parentUuid": "8ef2353a_539d8ee5",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 67
+      },
+      "revId": "530fa524ee1cfa4455579ec0e850de5a365a64c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
