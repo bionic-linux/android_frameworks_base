@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3eee64f_677efd37",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2023-01-11T16:36:57Z",
+      "side": 1,
+      "message": "More like `tag` than `message`",
+      "range": {
+        "startLine": 368,
+        "startChar": 54,
+        "endLine": 368,
+        "endChar": 61
+      },
+      "revId": "de0f00b238155cca17e5de4818e9d6e5858eec20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
