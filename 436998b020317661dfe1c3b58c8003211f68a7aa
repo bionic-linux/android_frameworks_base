@@ -16,6 +16,23 @@
       "message": "friendly ping :)",
       "revId": "436998b020317661dfe1c3b58c8003211f68a7aa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee781cc4_784a5a22",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1096946
+      },
+      "writtenOn": "2023-01-11T23:51:38Z",
+      "side": 1,
+      "message": "thanks!",
+      "revId": "436998b020317661dfe1c3b58c8003211f68a7aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
