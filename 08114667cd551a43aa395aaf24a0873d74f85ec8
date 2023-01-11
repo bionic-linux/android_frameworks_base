@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "932d2fc7_573061a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2023-01-11T04:36:10Z",
+      "side": 1,
+      "message": "Hi Fabian,\n\nI have updated new patch set according to your request.\nCould you please help review it at your earliest convenience?\n\nThanks",
+      "revId": "08114667cd551a43aa395aaf24a0873d74f85ec8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
