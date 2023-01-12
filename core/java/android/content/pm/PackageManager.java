@@ -1536,7 +1536,7 @@ public abstract class PackageManager {
      *
      * @hide
      */
-    public static final int INSTALL_BYPASS_LOW_TARGET_SDK_BLOCK = 0x00800000;
+    public static final int INSTALL_BYPASS_LOW_TARGET_SDK_BLOCK = 0x01000000;
 
     /** @hide */
     @IntDef(flag = true, value = {
