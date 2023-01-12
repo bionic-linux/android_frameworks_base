@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d48c1693_c3456502",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1776,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2023-01-12T17:11:38Z",
+      "side": 1,
+      "message": "Q: Why Intent.SIM_STATE_LOADED is mapped to TelephonyManager.SIM_STATE_READY instead of TelephonyManager.SIM_STATE_LOADED?\nA: Check android.telephony.TelephonyManager.java#getSimState\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/telephony/java/android/telephony/TelephonyManager.java#3521\nTelephonyManager.SIM_STATE_LOADED is mapped to TelephonyManager.SIM_STATE_READY by Telephony FWK.\nAnd SystemUI-Keyguard doesn\u0027t handle TelephonyManager.SIM_STATE_LOADED.\nAs a result, just follow current design, i.e. map to TelephonyManager.SIM_STATE_READY.",
+      "range": {
+        "startLine": 1776,
+        "startChar": 30,
+        "endLine": 1776,
+        "endChar": 46
+      },
+      "revId": "d8c2b829d13fbcb89d562a155fd83078e4809843",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
