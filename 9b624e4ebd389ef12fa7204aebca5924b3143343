@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "092dde3e_38e89cc8",
+        "filename": "core/java/android/app/admin/PreferentialNetworkServiceConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-01-12T11:26:55Z",
+      "side": 1,
+      "message": "false",
+      "range": {
+        "startLine": 503,
+        "startChar": 42,
+        "endLine": 503,
+        "endChar": 46
+      },
+      "revId": "9b624e4ebd389ef12fa7204aebca5924b3143343",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
