@@ -134,6 +134,7 @@ public class PacProxyService extends IPacProxyManager.Stub {
             } finally {
                 TrafficStats.setThreadStatsTag(oldTag);
             }
+            Log.e(TAG, "run, file=" + file + ", mCurrentPac=" + mCurrentPac);
             if (file != null) {
                 synchronized (mProxyLock) {
                     if (!file.equals(mCurrentPac)) {
@@ -204,7 +205,7 @@ public class PacProxyService extends IPacProxyManager.Stub {
     public void setCurrentProxyScriptUrl(@Nullable ProxyInfo proxy) {
         PermissionUtils.enforceNetworkStackPermissionOr(mContext,
                 android.Manifest.permission.NETWORK_SETTINGS);
-
+        Log.e(TAG, "setCurrentProxyScriptUrl, ProxyInfo=" + proxy);
         synchronized (mBroadcastStateLock) {
             if (proxy != null && !Uri.EMPTY.equals(proxy.getPacFileUrl())) {
                 if (proxy.getPacFileUrl().equals(mPacUrl) && (proxy.getPort() > 0)) return;
@@ -314,6 +315,7 @@ public class PacProxyService extends IPacProxyManager.Stub {
 
     @GuardedBy("mProxyLock")
     private void setCurrentProxyScript(String script) {
+        Log.e(TAG, "setCurrentProxyScript, scritp=" + script);
         if (mProxyService == null) {
             Log.e(TAG, "setCurrentProxyScript: no proxy service");
             return;
@@ -327,6 +329,7 @@ public class PacProxyService extends IPacProxyManager.Stub {
     }
 
     private void bind() {
+        Log.e(TAG, "bind()");
         if (mContext == null) {
             Log.e(TAG, "No context for binding");
             return;
@@ -341,6 +344,7 @@ public class PacProxyService extends IPacProxyManager.Stub {
         mConnection = new ServiceConnection() {
             @Override
             public void onServiceDisconnected(ComponentName component) {
+                Log.e(TAG, "mConnection, onServiceDisconnected.");
                 synchronized (mProxyLock) {
                     mProxyService = null;
                 }
@@ -348,6 +352,7 @@ public class PacProxyService extends IPacProxyManager.Stub {
 
             @Override
             public void onServiceConnected(ComponentName component, IBinder binder) {
+                Log.e(TAG, "mConnection, onServiceConnected, mCurrentPac=" + mCurrentPac);
                 synchronized (mProxyLock) {
                     try {
                         Log.d(TAG, "Adding service " + PAC_SERVICE_NAME + " "
@@ -366,6 +371,7 @@ public class PacProxyService extends IPacProxyManager.Stub {
                         if (mCurrentPac != null) {
                             setCurrentProxyScript(mCurrentPac);
                         } else {
+                            Log.e(TAG, "post PacDownloader");
                             mNetThreadHandler.post(mPacDownloader);
                         }
                     }
@@ -381,10 +387,12 @@ public class PacProxyService extends IPacProxyManager.Stub {
         mProxyConnection = new ServiceConnection() {
             @Override
             public void onServiceDisconnected(ComponentName component) {
+                Log.e(TAG, "mProxyConnection, onServiceDisconnected");
             }
 
             @Override
             public void onServiceConnected(ComponentName component, IBinder binder) {
+                Log.e(TAG, "mProxyConnection, onServiceConnected");
                 IProxyCallback callbackService = IProxyCallback.Stub.asInterface(binder);
                 if (callbackService != null) {
                     try {
@@ -398,6 +406,7 @@ public class PacProxyService extends IPacProxyManager.Stub {
                                     // it's called by a Runnable which is post by mNetThread.
                                     mHasSentBroadcast = false;
                                 }
+                                Log.e(TAG, "port=" + port);
                                 mLastPort = port;
                                 if (port != -1) {
                                     Log.d(TAG, "Local proxy is bound on " + port);
@@ -420,6 +429,7 @@ public class PacProxyService extends IPacProxyManager.Stub {
     }
 
     private void unbind() {
+        Log.e(TAG, "unbind()");
         if (mConnection != null) {
             mContext.unbindService(mConnection);
             mConnection = null;
@@ -433,6 +443,7 @@ public class PacProxyService extends IPacProxyManager.Stub {
     }
 
     private void sendPacBroadcast(ProxyInfo proxy) {
+        Log.e(TAG, "sendPacBroadcast, ProxyInfo=" + proxy);
         final int length = mCallbacks.beginBroadcast();
         for (int i = 0; i < length; i++) {
             final IPacProxyInstalledListener listener = mCallbacks.getBroadcastItem(i);
@@ -447,12 +458,17 @@ public class PacProxyService extends IPacProxyManager.Stub {
 
     // This method must be called on mNetThreadHandler.
     private void sendProxyIfNeeded() {
+        Log.e(TAG, "sendProxyIfNeeded, mHasDownloaded=" + mHasDownloaded
+                + ", mHasSentBroadcast=" + mHasSentBroadcast
+                + ", mLastPort=" + mLastPort);
         synchronized (mBroadcastStateLock) {
             if (!mHasDownloaded || (mLastPort == -1)) {
                 return;
             }
             if (!mHasSentBroadcast) {
-                sendPacBroadcast(ProxyInfo.buildPacProxy(mPacUrl, mLastPort));
+                final ProxyInfo proxy = ProxyInfo.buildPacProxy(mPacUrl, mLastPort);
+                Log.e(TAG, "sendPacBroadcast, Proxy=" + proxy);
+                sendPacBroadcast(proxy);
                 mHasSentBroadcast = true;
             }
         }
