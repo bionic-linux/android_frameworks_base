@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33165bd5_2f7082c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1456881
+      },
+      "writtenOn": "2023-01-13T18:59:02Z",
+      "side": 1,
+      "message": "Hi Andrii, I just found a mistake in path to files in the previous aosp/2352382. Could you please take a look at this fix? Thanks!",
+      "revId": "8f50322a04c8511a353cd5f5aeaf91c6371fcc91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
