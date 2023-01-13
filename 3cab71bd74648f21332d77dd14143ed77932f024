@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "881eb1a8_e33efb62",
+        "filename": "services/core/java/com/android/server/pm/pkg/parsing/ParsingPackageUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2093,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2023-01-13T18:13:11Z",
+      "side": 1,
+      "message": "I\u0027m not sure a custom tag gains us anything if we don\u0027t track the tag in a separate data structure. Since it just gets merged into `getActivities`, any app can just replace the `customization` tag with `activity` and the system wouldn\u0027t be able to tell the difference.",
+      "revId": "3cab71bd74648f21332d77dd14143ed77932f024",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
