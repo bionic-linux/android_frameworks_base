@@ -15,5 +15,6 @@ tigerhuang@google.com
 lihongyu@google.com
 mariiasand@google.com
 
-per-file BackgroundActivityStartController.java = set noparent
-per-file BackgroundActivityStartController.java = brufino@google.com, ogunwale@google.com, louischang@google.com, lus@google.com, rickywai@google.com
+# Files owned by the Responsible APIs team
+per-file Background*Start* = set noparent
+per-file Background*Start* = file:/RESPONSIBLE_APIS_OWNERS
