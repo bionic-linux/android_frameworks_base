@@ -10,3 +10,6 @@ per-file *UiAutomation* = file:/services/accessibility/OWNERS
 
 # KeyguardManagerTest
 per-file KeyguardManagerTest.java = file:/services/core/java/com/android/server/locksettings/OWNERS
+
+# Files owned by the Responsible APIs team
+per-file Background*Start* = file:/BAL_OWNERS
