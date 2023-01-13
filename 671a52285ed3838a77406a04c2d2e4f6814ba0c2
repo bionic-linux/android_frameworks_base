@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1f8d32a_0340c6bd",
+        "filename": "RESPONSIBLE_APIS_OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2023-01-13T10:54:53Z",
+      "side": 1,
+      "message": "I think it\u0027d make more sense for this to be `BAL_OWNERS` since it\u0027s limited to BAL stuff.",
+      "revId": "671a52285ed3838a77406a04c2d2e4f6814ba0c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
