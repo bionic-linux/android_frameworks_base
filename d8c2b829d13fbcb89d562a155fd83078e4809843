@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "9c4a9992_a928cc60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2023-01-14T16:57:54Z",
+      "side": 1,
+      "message": "Hi Jayachandran C,\n\nSorry, I didn\u0027t notice your comment, because this patch was WIP.\nIs that OK I create issue through issue tracker directly?\nhttps://issuetracker.google.com/issues\n\nI created this patch based on telephony point of view design, and corner case that keyguard sim state is wrongly set.\n\nFor most cases, KeyguardUpdateMonitor#refreshSimState will override SimData#simState with correct state by calling TelephonyManager#getSimState\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java#3536\n\nThanks",
+      "parentUuid": "a9b38276_f3fd48b3",
+      "revId": "d8c2b829d13fbcb89d562a155fd83078e4809843",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "d48c1693_c3456502",
         "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java",
         "patchSetId": 9
