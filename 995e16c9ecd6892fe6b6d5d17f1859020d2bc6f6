@@ -16,6 +16,24 @@
       "message": "No changes to PackageParser. It\u0027s unused except for a very old and unstable API.",
       "revId": "995e16c9ecd6892fe6b6d5d17f1859020d2bc6f6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6195413f_044f2aac",
+        "filename": "core/java/android/content/pm/PackageParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1956704
+      },
+      "writtenOn": "2023-01-17T11:35:18Z",
+      "side": 0,
+      "message": "Done, the changes to PackagesParser were not needed",
+      "parentUuid": "53b038f7_88c19aa5",
+      "revId": "995e16c9ecd6892fe6b6d5d17f1859020d2bc6f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

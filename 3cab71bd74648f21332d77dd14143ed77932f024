@@ -16,6 +16,24 @@
       "message": "I\u0027m not sure a custom tag gains us anything if we don\u0027t track the tag in a separate data structure. Since it just gets merged into `getActivities`, any app can just replace the `customization` tag with `activity` and the system wouldn\u0027t be able to tell the difference.",
       "revId": "3cab71bd74648f21332d77dd14143ed77932f024",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "904db6ec_e042fa0e",
+        "filename": "services/core/java/com/android/server/pm/pkg/parsing/ParsingPackageUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2093,
+      "author": {
+        "id": 1956704
+      },
+      "writtenOn": "2023-01-17T11:35:18Z",
+      "side": 1,
+      "message": "Thanks @chiuwinson@google.com, I understand your point. The customization tag is only added for clarity, to visually separate it from the activity tag in the manifest.\nAdding a new data structure to hold the customizations is unfortunately beyond my expertise (I work in Settings).\nAlso please note that only system applications can perform customizations (line 454 in TileUtils.java) and furthermore, these apps must be signed with the same certificate as the Settings app (line 589 in TileUtils.java). So IMO the risk of misuse is minimal",
+      "parentUuid": "881eb1a8_e33efb62",
+      "revId": "3cab71bd74648f21332d77dd14143ed77932f024",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
