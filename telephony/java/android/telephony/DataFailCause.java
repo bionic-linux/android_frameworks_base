@@ -1017,6 +1017,8 @@ public final class DataFailCause {
     /** The carrier allows only a specific IP version (IPv4 or IPv6),
      * but the UE is on a network with a different IP version*/
     public static final int IWLAN_EPDG_IP_VERSION_PREFERENCE_CONFLICT = 0x4007;
+    /** SIM information not available for IWLAN to bring up*/
+    public static final int IWLAN_SIM_NOT_READY = 0x4008;
 
     // OEM sepecific error codes. To be used by OEMs when they don't
     // want to reveal error code which would be replaced by ERROR_UNSPECIFIED
@@ -1513,6 +1515,7 @@ public final class DataFailCause {
         sFailCauseMap.put(IWLAN_TUNNEL_NOT_FOUND, "IWLAN_TUNNEL_NOT_FOUND");
         sFailCauseMap.put(IWLAN_EPDG_IP_VERSION_PREFERENCE_CONFLICT,
                 "IWLAN_EPDG_IP_VERSION_PREFERENCE_CONFLICT");
+        sFailCauseMap.put(IWLAN_SIM_NOT_READY, "IWLAN_SIM_NOT_READY");
         sFailCauseMap.put(OEM_DCFAILCAUSE_1, "OEM_DCFAILCAUSE_1");
         sFailCauseMap.put(OEM_DCFAILCAUSE_2, "OEM_DCFAILCAUSE_2");
         sFailCauseMap.put(OEM_DCFAILCAUSE_3, "OEM_DCFAILCAUSE_3");
