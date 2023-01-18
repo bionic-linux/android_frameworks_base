@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ea063e4_b35d7a7d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2023-01-18T07:36:58Z",
+      "side": 1,
+      "message": "Shouldn\u0027t manufacturer and device also be included?",
+      "revId": "a2e8c0d622084afb636e7a692694e00482209bf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
