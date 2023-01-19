@@ -1012,6 +1012,9 @@ public final class DataFailCause {
     public static final int IWLAN_DNS_RESOLUTION_NAME_FAILURE = 0x4004;
     /** No response received from the DNS Server due to a timeout*/
     public static final int IWLAN_DNS_RESOLUTION_TIMEOUT = 0x4005;
+    /** IWLAN PDN setup failed due to Wi-Fi lost during IKE tunnel setup,
+     * match exception reported by IKE module*/
+    public static final int IWLAN_IKE_NETWORK_LOST_EXCEPTION = 0x4011;
 
     // OEM sepecific error codes. To be used by OEMs when they don't
     // want to reveal error code which would be replaced by ERROR_UNSPECIFIED
@@ -1505,6 +1508,7 @@ public final class DataFailCause {
         sFailCauseMap.put(IWLAN_IKEV2_CERT_INVALID, "IWLAN_IKEV2_CERT_INVALID");
         sFailCauseMap.put(IWLAN_DNS_RESOLUTION_NAME_FAILURE, "IWLAN_DNS_RESOLUTION_NAME_FAILURE");
         sFailCauseMap.put(IWLAN_DNS_RESOLUTION_TIMEOUT, "IWLAN_DNS_RESOLUTION_TIMEOUT");
+        sFailCauseMap.put(IWLAN_IKE_NETWORK_LOST_EXCEPTION, "IWLAN_IKE_NETWORK_LOST_EXCEPTION");
         sFailCauseMap.put(OEM_DCFAILCAUSE_1, "OEM_DCFAILCAUSE_1");
         sFailCauseMap.put(OEM_DCFAILCAUSE_2, "OEM_DCFAILCAUSE_2");
         sFailCauseMap.put(OEM_DCFAILCAUSE_3, "OEM_DCFAILCAUSE_3");
