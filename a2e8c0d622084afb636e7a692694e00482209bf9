@@ -16,6 +16,23 @@
       "message": "Shouldn\u0027t manufacturer and device also be included?",
       "revId": "a2e8c0d622084afb636e7a692694e00482209bf9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61b9d302_2a6a1fb0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2023-01-19T20:59:18Z",
+      "side": 1,
+      "message": "Jeff, please do an OWNERS review of Build.java\n\nThe solution implemented here is based on the advice in https://buganizer.corp.google.com/issues/111535209#comment6",
+      "revId": "a2e8c0d622084afb636e7a692694e00482209bf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
