@@ -1021,6 +1021,8 @@ public final class DataFailCause {
     public static final int IWLAN_SIM_NOT_READY = 0x4008;
     /** Failed to apply tunnel transform*/
     public static final int IWLAN_TUNNEL_TRANSFORM_FAILED = 0x4009;
+    /** IKE Init timeout, no response from EPDG*/
+    public static final int IWLAN_IKE_INIT_TIMEOUT = 0x4010;
 
     // OEM sepecific error codes. To be used by OEMs when they don't
     // want to reveal error code which would be replaced by ERROR_UNSPECIFIED
@@ -1519,6 +1521,7 @@ public final class DataFailCause {
                 "IWLAN_EPDG_IP_VERSION_PREFERENCE_CONFLICT");
         sFailCauseMap.put(IWLAN_SIM_NOT_READY, "IWLAN_SIM_NOT_READY");
         sFailCauseMap.put(IWLAN_TUNNEL_TRANSFORM_FAILED, "IWLAN_TUNNEL_TRANSFORM_FAILED");
+        sFailCauseMap.put(IWLAN_IKE_INIT_TIMEOUT, "IWLAN_IKE_INIT_TIMEOUT");
         sFailCauseMap.put(OEM_DCFAILCAUSE_1, "OEM_DCFAILCAUSE_1");
         sFailCauseMap.put(OEM_DCFAILCAUSE_2, "OEM_DCFAILCAUSE_2");
         sFailCauseMap.put(OEM_DCFAILCAUSE_3, "OEM_DCFAILCAUSE_3");
