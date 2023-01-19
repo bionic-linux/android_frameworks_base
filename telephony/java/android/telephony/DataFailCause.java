@@ -1016,6 +1016,8 @@ public final class DataFailCause {
     public static final int IWLAN_TUNNEL_NOT_FOUND = 0x4006;
     /** SIM information not available for IWLAN to bring up*/
     public static final int IWLAN_SIM_NOT_READY = 0x4007;
+    /** Failed to apply tunnel transform*/
+    public static final int IWLAN_TUNNEL_TRANSFORM_FAILED = 0x4008;
 
     // OEM sepecific error codes. To be used by OEMs when they don't
     // want to reveal error code which would be replaced by ERROR_UNSPECIFIED
@@ -1511,6 +1513,7 @@ public final class DataFailCause {
         sFailCauseMap.put(IWLAN_DNS_RESOLUTION_TIMEOUT, "IWLAN_DNS_RESOLUTION_TIMEOUT");
         sFailCauseMap.put(IWLAN_TUNNEL_NOT_FOUND, "IWLAN_TUNNEL_NOT_FOUND");
         sFailCauseMap.put(IWLAN_SIM_NOT_READY, "IWLAN_SIM_NOT_READY");
+        sFailCauseMap.put(IWLAN_TUNNEL_TRANSFORM_FAILED, "IWLAN_TUNNEL_TRANSFORM_FAILED");
         sFailCauseMap.put(OEM_DCFAILCAUSE_1, "OEM_DCFAILCAUSE_1");
         sFailCauseMap.put(OEM_DCFAILCAUSE_2, "OEM_DCFAILCAUSE_2");
         sFailCauseMap.put(OEM_DCFAILCAUSE_3, "OEM_DCFAILCAUSE_3");
