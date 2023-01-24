@@ -39,6 +39,30 @@
       },
       "revId": "3977772bd764b96f85c3f59b037f0640b923443c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80f85b60_4be69768",
+        "filename": "services/core/java/com/android/server/BatteryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1969435
+      },
+      "writtenOn": "2023-01-24T14:35:11Z",
+      "side": 1,
+      "message": "Yeah, sure, thanks!\nI have a parallel CL, that is better to be merged before this one, it is approved already by you. https://android-review.googlesource.com/c/platform/frameworks/base/+/2238876\n\nSo I\u0027ll refactor this one after merge of 2238876, as I\u0027ll also need to resolve conflicts here.",
+      "parentUuid": "07fcab95_edb40d0b",
+      "range": {
+        "startLine": 1206,
+        "startChar": 16,
+        "endLine": 1206,
+        "endChar": 18
+      },
+      "revId": "3977772bd764b96f85c3f59b037f0640b923443c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
