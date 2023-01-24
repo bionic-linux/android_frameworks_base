@@ -16,6 +16,29 @@
       "message": "Upstream from Meta.",
       "revId": "3977772bd764b96f85c3f59b037f0640b923443c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07fcab95_edb40d0b",
+        "filename": "services/core/java/com/android/server/BatteryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2023-01-24T03:08:55Z",
+      "side": 1,
+      "message": "Could you change this from an \"if\" to a \"switch\" statement with LOW_BATTERY_BEHAVIOR_DEFAULT covered by the \"default\" branch?  This would make the logic more future-proof, in case more constants are added later.\n\nThere will be a little bit of code duplication, but hopefully it will still be readable.",
+      "range": {
+        "startLine": 1206,
+        "startChar": 16,
+        "endLine": 1206,
+        "endChar": 18
+      },
+      "revId": "3977772bd764b96f85c3f59b037f0640b923443c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
