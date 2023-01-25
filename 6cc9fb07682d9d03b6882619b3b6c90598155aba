@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f82d681_74356884",
+        "filename": "packages/SettingsLib/Tile/src/com/android/settingslib/drawer/TileUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2023-01-25T17:32:59Z",
+      "side": 1,
+      "message": "I mentioned it on the issue, but fetching all meta-data can easily hit the Binder transaction limit.\n\nEither migrate to `\u003cproperty\u003e`, or query each Activity individually, by first querying for them without `GET_META_DATA` and then resolving `getActivityInfo` for each with the flag set.\n\nAlthough regardless of any solution, we should probably still try-catch this with some very general exception handling and figure out what to do if we can\u0027t access the data from the other apps.",
+      "range": {
+        "startLine": 452,
+        "startChar": 16,
+        "endLine": 452,
+        "endChar": 44
+      },
+      "revId": "6cc9fb07682d9d03b6882619b3b6c90598155aba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
