@@ -151,6 +151,19 @@ public abstract class PackageManager {
             "android.media.PROPERTY_MEDIA_CAPABILITIES";
 
     /**
+     * &lt;application&gt; level {@link android.content.pm.PackageManager.Property} tag specifying
+     * the XML resource ID containing an application's network slice declaration XML file
+     *
+     * For example:
+     * &lt;application&gt;
+     *   &lt;property android:name="android.telephony.PROPERTY_NETWORK_SLICE_DECLARATIONS"
+     *     android:resource="@xml/network_slices"&gt;
+     * &lt;application&gt;
+     */
+    public static final String PROPERTY_NETWORK_SLICE_DECLARATIONS =
+            "android.telephony.PROPERTY_NETWORK_SLICE_DECLARATIONS";
+
+    /**
      * Application level property that an app can specify to opt-out from having private data
      * directories both on the internal and external storages.
      *
