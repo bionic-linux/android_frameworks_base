@@ -122,6 +122,24 @@
       "parentUuid": "29dd778a_22948f8b",
       "revId": "f0ab05c3445525c467d067f3077a4bc26c726e9b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d795e3de_06a5c876",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2023-01-25T01:16:24Z",
+      "side": 1,
+      "message": "Hello, everyone!\n\nAfter we updated the Android TV emulator to the latest version (TTT5.221206.003), here are our latest findings.\n\nUI LANGUAGE\n1. The TV language picker has been finally revamped, like you\u0027ve said, but the countries are in random order, not in alphabetical order.\n(We mean that although the languages are in alphabetical order, the countries are not.)\n2. When pressing the left arrow or back button from the country selection screen, it goes back to the currently set language instead of the one chosen just before going to the country selection screen.\n\nCAPTION LANGUAGE\nThe issue is still not fixed with the caption language, even though the UI language setting issue is nearly fixed. Although users in India can finally use their local languages for the Google TV user interface, only English and Hindi work as caption languages right now. Same thing for phones and tablets.\n\nSTEPS TO REPRODUCE\n1. Assuming that we start the emulators from scratch, if using the Google TV Emulator, select Manage Accounts to open the menu. If using the Android TV Emulator, select the gear icon on the top right.\n2. Select Device Preferences or System, depending on the emulator being used.\n3. Select Language, then choose a language without a radio button on the right.\n4. Notice that the countries are in random order. If you force stop the Settings app and reopen it, the order of countries will be randomized again. The expected behavior is that the countries need to be in alphabetical order, just like on phones and tablets.\n\nSUMMARY\nAlthough the issue for the Android TV UI language is nearly fixed, there is no progress made on the caption languages right now. This issue is only partially fixed at the moment.\n\nHope to hear from you soon!",
+      "parentUuid": "825814fb_51fff01c",
+      "revId": "f0ab05c3445525c467d067f3077a4bc26c726e9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

@@ -16,6 +16,23 @@
       "message": "Removing myself from the reviewers. \nWhile I appreciate your contributions to our overall product,\nThe wording chosen in this Cl is not very friendly and actively discourages reviewers to engage. To be specific \"no -2 or it\u0027s game over\" sounds very unfriendly and not the reviewing culture we\u0027d like to establish.\n\nYou\u0027ve also added half our senior leadership to this CL which doesn\u0027t make it more likely to be fixed.\nAt this point if Robin - our Framework TV lead - says that this doesn\u0027t seem to be the right way forward, I\u0027d trust him.\nI\u0027d suggest abandoning this CL and following up on the bug.\n\nI know you mean well, so thank you again for trying to make the TV platform better.",
       "revId": "8d017ac1af9658fed2368171dcf1b1f0511b6051",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2efd5d1d_a2ae23b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2023-01-25T01:16:24Z",
+      "side": 1,
+      "message": "These edits in question refer to resolving the caption languages right now, although the UI language bug is nearly resolved.",
+      "revId": "8d017ac1af9658fed2368171dcf1b1f0511b6051",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
