@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7b3385c4_c3c6ef3e",
+        "filename": "packages/SettingsLib/Tile/src/com/android/settingslib/drawer/TileUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1956704
+      },
+      "writtenOn": "2023-01-27T12:05:27Z",
+      "side": 1,
+      "message": "Added double queries and try-catch",
+      "parentUuid": "541117df_b9999c29",
+      "range": {
+        "startLine": 452,
+        "startChar": 16,
+        "endLine": 452,
+        "endChar": 44
+      },
+      "revId": "6cc9fb07682d9d03b6882619b3b6c90598155aba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5332f4e6_1a67df84",
         "filename": "packages/SettingsLib/Tile/src/com/android/settingslib/drawer/TileUtils.java",
         "patchSetId": 4
@@ -61,6 +85,30 @@
       "writtenOn": "2023-01-26T20:08:18Z",
       "side": 1,
       "message": "nit: any -\u003e every?",
+      "range": {
+        "startLine": 455,
+        "startChar": 32,
+        "endLine": 455,
+        "endChar": 35
+      },
+      "revId": "6cc9fb07682d9d03b6882619b3b6c90598155aba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c826d0d_a2c64528",
+        "filename": "packages/SettingsLib/Tile/src/com/android/settingslib/drawer/TileUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1956704
+      },
+      "writtenOn": "2023-01-27T12:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5332f4e6_1a67df84",
       "range": {
         "startLine": 455,
         "startChar": 32,
