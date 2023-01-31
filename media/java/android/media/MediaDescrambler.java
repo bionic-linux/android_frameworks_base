@@ -67,8 +67,12 @@ public final class MediaDescrambler implements AutoCloseable {
 
         IDescrambler mAidlDescrambler;
 
-        AidlDescrambler(IDescrambler aidlDescrambler) {
-            mAidlDescrambler = aidlDescrambler;
+        AidlDescrambler(IDescrambler aidlDescrambler) throws Exception {
+            if (aidlDescrambler != null) {
+                mAidlDescrambler = aidlDescrambler;
+            } else {
+                throw new Exception("Descrambler could not be created");
+            }
         }
 
         @Override
@@ -105,9 +109,13 @@ public final class MediaDescrambler implements AutoCloseable {
 
         IDescramblerBase mHidlDescrambler;
 
-        HidlDescrambler(IDescramblerBase hidlDescrambler) {
-            mHidlDescrambler = hidlDescrambler;
-            native_setup(hidlDescrambler.asBinder());
+        HidlDescrambler(IDescramblerBase hidlDescrambler) throws Exception {
+            if (hidlDescrambler != null) {
+                mHidlDescrambler = hidlDescrambler;
+                native_setup(hidlDescrambler.asBinder());
+            } else {
+                throw new Exception("Descrambler could not be created");
+            }
         }
 
         @Override
@@ -200,6 +208,8 @@ public final class MediaDescrambler implements AutoCloseable {
                         new HidlDescrambler(
                                 MediaCas.getServiceHidl().createDescrambler(CA_system_id));
                 mIsAidlHal = false;
+            } else {
+                throw new Exception("No CAS service found!");
             }
         } catch(Exception e) {
             Log.e(TAG, "Failed to create descrambler: " + e);
