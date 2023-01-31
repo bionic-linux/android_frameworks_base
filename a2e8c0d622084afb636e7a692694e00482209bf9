@@ -33,6 +33,24 @@
       "message": "Jeff, please do an OWNERS review of Build.java\n\nThe solution implemented here is based on the advice in https://buganizer.corp.google.com/issues/111535209#comment6",
       "revId": "a2e8c0d622084afb636e7a692694e00482209bf9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adf9c0c2_a14a9696",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1896276
+      },
+      "writtenOn": "2023-01-31T11:22:47Z",
+      "side": 1,
+      "message": "As per discussion with @eranm, as of now Manufacturer and device properties are not expected to change in AOSP/GSI build, hence these properties are not included.\nIn future if we find any change in these values in GSI build then we will add them.",
+      "parentUuid": "5ea063e4_b35d7a7d",
+      "revId": "a2e8c0d622084afb636e7a692694e00482209bf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
