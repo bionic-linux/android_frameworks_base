@@ -152,7 +152,7 @@ public final class VpnProfile implements Cloneable, Parcelable {
     public final boolean excludeLocalRoutes;                     // 25
     public final boolean requiresInternetValidation;             // 26
     public final IkeTunnelConnectionParams ikeTunConnParams;     // 27
-
+    public int keepaliveStartFlags = 0;                          // 28
     // Helper fields.
     @UnsupportedAppUsage
     public transient boolean saveLogin = false;
@@ -207,6 +207,7 @@ public final class VpnProfile implements Cloneable, Parcelable {
                 in.readParcelable(PersistableBundle.class.getClassLoader());
         ikeTunConnParams = (bundle == null) ? null
                 : TunnelConnectionParamsUtils.fromPersistableBundle(bundle);
+        keepaliveStartFlags = in.readInt();
     }
 
     /**
@@ -258,6 +259,7 @@ public final class VpnProfile implements Cloneable, Parcelable {
         out.writeBoolean(requiresInternetValidation);
         out.writeParcelable(ikeTunConnParams == null ? null
                 : TunnelConnectionParamsUtils.toPersistableBundle(ikeTunConnParams), flags);
+        out.writeInt(keepaliveStartFlags);
     }
 
     /**
@@ -282,8 +284,9 @@ public final class VpnProfile implements Cloneable, Parcelable {
             // 27:                                            ...and requiresInternetValidation
             //     (26,27 can only be found on dogfood devices)
             // 28:                                            ...and ikeTunConnParams
+            // 29:                                            ...and keepaliveStartFlags
             if ((values.length < 14 || (values.length > 19 && values.length < 24)
-                    || values.length > 28)) {
+                    || values.length > 29)) {
                 return null;
             }
 
@@ -370,6 +373,10 @@ public final class VpnProfile implements Cloneable, Parcelable {
                 profile.areAuthParamsInline = Boolean.parseBoolean(values[23]);
             }
 
+            if (values.length >= 29) {
+                profile.keepaliveStartFlags = Integer.parseInt(values[28]);
+            }
+
             // isRestrictedToTestNetworks (values[24]) assigned as part of the constructor
 
             profile.saveLogin = !profile.username.isEmpty() || !profile.password.isEmpty();
@@ -447,7 +454,7 @@ public final class VpnProfile implements Cloneable, Parcelable {
         } else {
             builder.append(VALUE_DELIMITER).append("");
         }
-
+        builder.append(VALUE_DELIMITER).append(keepaliveStartFlags);
         return builder.toString().getBytes(StandardCharsets.UTF_8);
     }
 
@@ -529,7 +536,7 @@ public final class VpnProfile implements Cloneable, Parcelable {
             l2tpSecret, ipsecIdentifier, ipsecSecret, ipsecUserCert, ipsecCaCert, ipsecServerCert,
             proxy, mAllowedAlgorithms, isBypassable, isMetered, maxMtu, areAuthParamsInline,
             isRestrictedToTestNetworks, excludeLocalRoutes, requiresInternetValidation,
-            ikeTunConnParams);
+            ikeTunConnParams, keepaliveStartFlags);
     }
 
     /** Checks VPN profiles for interior equality. */
@@ -565,7 +572,8 @@ public final class VpnProfile implements Cloneable, Parcelable {
                 && isRestrictedToTestNetworks == other.isRestrictedToTestNetworks
                 && excludeLocalRoutes == other.excludeLocalRoutes
                 && requiresInternetValidation == other.requiresInternetValidation
-                && Objects.equals(ikeTunConnParams, other.ikeTunConnParams);
+                && Objects.equals(ikeTunConnParams, other.ikeTunConnParams)
+                && keepaliveStartFlags == other.keepaliveStartFlags;
     }
 
     @NonNull

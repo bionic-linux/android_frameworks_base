@@ -138,6 +138,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
     private final int mMaxMtu; // Defaults in builder
     private final boolean mIsRestrictedToTestNetworks;
     @Nullable private final IkeTunnelConnectionParams mIkeTunConnParams;
+    private final int mKeepaliveStartFlags;
 
     private Ikev2VpnProfile(
             int type,
@@ -157,7 +158,8 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
             boolean restrictToTestNetworks,
             boolean excludeLocalRoutes,
             boolean requiresInternetValidation,
-            @Nullable IkeTunnelConnectionParams ikeTunConnParams) {
+            @Nullable IkeTunnelConnectionParams ikeTunConnParams,
+            int keepaliveStartFlags) {
         super(type, excludeLocalRoutes, requiresInternetValidation);
 
         checkNotNull(allowedAlgorithms, MISSING_PARAM_MSG_TMPL, "Allowed Algorithms");
@@ -185,7 +187,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         mMaxMtu = maxMtu;
         mIsRestrictedToTestNetworks = restrictToTestNetworks;
         mIkeTunConnParams = ikeTunConnParams;
-
+        mKeepaliveStartFlags = keepaliveStartFlags;
         validate();
     }
 
@@ -411,6 +413,11 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         return mIkeTunConnParams;
     }
 
+    /** Retrieves the keepalive start flags. */
+    public int getKeepaliveStartFlags() {
+        return mKeepaliveStartFlags;
+    }
+
     /**
      * Returns whether or not this VPN profile is restricted to test networks.
      *
@@ -440,7 +447,8 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
                 mIsRestrictedToTestNetworks,
                 mExcludeLocalRoutes,
                 mRequiresInternetValidation,
-                mIkeTunConnParams);
+                mIkeTunConnParams,
+                mKeepaliveStartFlags);
     }
 
     @Override
@@ -467,7 +475,8 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
                 && mIsRestrictedToTestNetworks == other.mIsRestrictedToTestNetworks
                 && mExcludeLocalRoutes == other.mExcludeLocalRoutes
                 && mRequiresInternetValidation == other.mRequiresInternetValidation
-                && Objects.equals(mIkeTunConnParams, other.mIkeTunConnParams);
+                && Objects.equals(mIkeTunConnParams, other.mIkeTunConnParams)
+                && mKeepaliveStartFlags == other.mKeepaliveStartFlags;
     }
 
     /**
@@ -489,6 +498,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         profile.maxMtu = mMaxMtu;
         profile.areAuthParamsInline = true;
         profile.saveLogin = true;
+        profile.keepaliveStartFlags = mKeepaliveStartFlags;
         // The other fields should come from mIkeTunConnParams if it's available.
         if (mIkeTunConnParams != null) {
             profile.type = VpnProfile.TYPE_IKEV2_FROM_IKE_TUN_CONN_PARAMS;
@@ -592,6 +602,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         builder.setBypassable(profile.isBypassable);
         builder.setMetered(profile.isMetered);
         builder.setMaxMtu(profile.maxMtu);
+        builder.setKeepaliveStartOptions(profile.keepaliveStartFlags);
         if (profile.isRestrictedToTestNetworks) {
             builder.restrictToTestNetworks();
         }
@@ -774,7 +785,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         private boolean mIsRestrictedToTestNetworks = false;
         private boolean mExcludeLocalRoutes = false;
         @Nullable private final IkeTunnelConnectionParams mIkeTunConnParams;
-
+        private int mKeepaliveStartFlags = 0;
         /**
          * Creates a new builder with the basic parameters of an IKEv2/IPsec VPN.
          *
@@ -1103,6 +1114,24 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
             return this;
         }
 
+
+        /**
+         * Set the given keepalive start options.
+         *
+         * @param flags the start flag.
+         * @return this builder
+         * @throws IllegalArgumentException if the value is smaller than 0.
+         */
+        @NonNull
+        @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNELS)
+        public Builder setKeepaliveStartOptions(int flags) {
+            if (flags < 0) {
+                throw new IllegalArgumentException("Flags should not be smaller than 0");
+            }
+            mKeepaliveStartFlags = flags;
+            return this;
+        }
+
         /**
          * Validates, builds and provisions the VpnProfile.
          *
@@ -1129,7 +1158,8 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
                     mIsRestrictedToTestNetworks,
                     mExcludeLocalRoutes,
                     mRequiresInternetValidation,
-                    mIkeTunConnParams);
+                    mIkeTunConnParams,
+                    mKeepaliveStartFlags);
         }
     }
 }
