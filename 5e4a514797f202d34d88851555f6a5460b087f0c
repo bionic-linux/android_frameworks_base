@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24d50ab5_2a0bdcc2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2023-02-01T14:48:44Z",
+      "side": 1,
+      "message": "Does it make sense to also add Beth?",
+      "revId": "5e4a514797f202d34d88851555f6a5460b087f0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
