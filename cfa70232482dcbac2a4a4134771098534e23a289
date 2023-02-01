@@ -16,6 +16,24 @@
       "message": "Sorry, I wasn\u0027t clear, the code has to look something like\n\n```\nvar results \u003d pm.queryIntentActivitiesAsUser(intent, 0, userId)\nfor (var result : results) {\n    var activity \u003d pm.getActivityInfo(result.activityInfo.componentName, GET_META_DATA)\n    var metaData \u003d activity.metaData\n    loadTile(...)\n}\n```",
       "revId": "cfa70232482dcbac2a4a4134771098534e23a289",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26966310_b376ec2d",
+        "filename": "packages/SettingsLib/Tile/src/com/android/settingslib/drawer/TileUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1956704
+      },
+      "writtenOn": "2023-02-01T14:23:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d77d2f8c_fa070c2b",
+      "revId": "cfa70232482dcbac2a4a4134771098534e23a289",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
