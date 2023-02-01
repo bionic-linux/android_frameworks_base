@@ -54,6 +54,7 @@ import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.RouteInfo;
+import android.net.SocketKeepalive;
 import android.net.eap.EapSessionConfig;
 import android.net.ipsec.ike.ChildSaProposal;
 import android.net.ipsec.ike.ChildSessionCallback;
@@ -111,6 +112,8 @@ public class VpnIkev2Utils {
                         .addIkeOption(IkeSessionParams.IKE_OPTION_MOBIKE)
                         .setLocalIdentification(localId)
                         .setRemoteIdentification(remoteId);
+
+        setKeepaliveStartOptions(profile, ikeOptionsBuilder);
         setIkeAuth(profile, ikeOptionsBuilder);
 
         for (final IkeSaProposal ikeProposal : getIkeSaProposals()) {
@@ -118,6 +121,15 @@ public class VpnIkev2Utils {
         }
 
         return ikeOptionsBuilder.build();
+    }
+
+    private static void setKeepaliveStartOptions(@NonNull Ikev2VpnProfile profile,
+            @NonNull IkeSessionParams.Builder builder) {
+        final boolean automaticOnOffkeepalive =
+                (profile.getKeepaliveStartFlags() & SocketKeepalive.FLAG_AUTOMATIC_ON_OFF) != 0;
+        if (automaticOnOffkeepalive) {
+            builder.addIkeOption(IkeSessionParams.IKE_OPTION_POWER_OPTIMIZED_KEEPALIVES);
+        }
     }
 
     static ChildSessionParams buildChildSessionParams(List<String> allowedAlgorithms) {
