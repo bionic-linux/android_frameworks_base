@@ -34,6 +34,24 @@
       "parentUuid": "24d50ab5_2a0bdcc2",
       "revId": "5e4a514797f202d34d88851555f6a5460b087f0c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8efc602_42129282",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2023-02-01T14:57:01Z",
+      "side": 1,
+      "message": "Ack. Considering it\u0027s a trivial amount of work, I\u0027ll leave this up to Beth.",
+      "parentUuid": "88951cc3_c4b170e0",
+      "revId": "5e4a514797f202d34d88851555f6a5460b087f0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
