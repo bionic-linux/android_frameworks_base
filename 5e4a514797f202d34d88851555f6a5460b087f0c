@@ -16,6 +16,24 @@
       "message": "Does it make sense to also add Beth?",
       "revId": "5e4a514797f202d34d88851555f6a5460b087f0c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88951cc3_c4b170e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1934795
+      },
+      "writtenOn": "2023-02-01T14:54:16Z",
+      "side": 1,
+      "message": "sgtm, but I remember there\u0027re a restriction that you can only add yourself as Owner.",
+      "parentUuid": "24d50ab5_2a0bdcc2",
+      "revId": "5e4a514797f202d34d88851555f6a5460b087f0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
