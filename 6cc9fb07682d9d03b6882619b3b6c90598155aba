@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae93073a_f278870b",
+        "filename": "packages/SettingsLib/Tile/src/com/android/settingslib/drawer/TileUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2023-02-02T08:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b3385c4_c3c6ef3e",
+      "range": {
+        "startLine": 452,
+        "startChar": 16,
+        "endLine": 452,
+        "endChar": 44
+      },
+      "revId": "6cc9fb07682d9d03b6882619b3b6c90598155aba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5332f4e6_1a67df84",
