@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a582a0e5_a4abde28",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2023-02-02T07:15:13Z",
+      "side": 1,
+      "message": "PROPERTY_NETWORK_SLICE_DECLARATIONS",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 31
+      },
+      "revId": "1d61935fecbad8304401d959b0a55d00e3761f17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86351959_046667a1",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2023-02-02T07:15:13Z",
+      "side": 1,
+      "message": "PROPERTY_NETWORK_SLICE_DECLARATIONS might be better for consistency with PROPERTY_MEDIA_CAPABILITIES",
+      "range": {
+        "startLine": 164,
+        "startChar": 31,
+        "endLine": 164,
+        "endChar": 57
+      },
+      "revId": "1d61935fecbad8304401d959b0a55d00e3761f17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
