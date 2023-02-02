@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3e05586_bed979bb",
+        "filename": "media/java/android/media/MediaDescrambler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2023-02-02T19:02:33Z",
+      "side": 0,
+      "message": "Do you remove descrambler totally ?   even for HIDL ?",
+      "range": {
+        "startLine": 74,
+        "startChar": 3,
+        "endLine": 74,
+        "endChar": 34
+      },
+      "revId": "b3238fc8a436400edc4f174da3a3bfbb753a8f97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
