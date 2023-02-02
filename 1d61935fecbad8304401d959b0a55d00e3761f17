@@ -50,6 +50,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "962d0590_dbec0f4e",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-02-02T08:58:29Z",
+      "side": 1,
+      "message": "Likewise this shouldn\u0027t mention \"slice\" : these are network capabilities. See my comments on the other change.",
+      "range": {
+        "startLine": 159,
+        "startChar": 62,
+        "endLine": 159,
+        "endChar": 67
+      },
+      "revId": "1d61935fecbad8304401d959b0a55d00e3761f17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87de4898_51968296",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-02-02T08:58:29Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be in telephony because slices are not only a telephony concept, as we discussed. See my comments on the other change.",
+      "range": {
+        "startLine": 159,
+        "startChar": 44,
+        "endLine": 159,
+        "endChar": 53
+      },
+      "revId": "1d61935fecbad8304401d959b0a55d00e3761f17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "86351959_046667a1",
         "filename": "core/java/android/content/pm/PackageManager.java",
         "patchSetId": 1
