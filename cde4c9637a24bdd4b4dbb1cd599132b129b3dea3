@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bd1b60e_92eab155",
+        "filename": "proto/src/metrics_constants/metrics_constants.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 7443,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2023-02-03T21:47:10Z",
+      "side": 1,
+      "message": "This is already merged in internal but not the arrays.xml file.\n\nI recommande splitting this CL in 2 different CL.\nThe first one will contain the proto update and must have a \n`Merged-In: I03f72af05b3444f5b2f521838f940ed6d5b675e2` in order to not try to automerge where the previous patch is merged.\n\nthe second one will have the values/arrays.xml and doesn\u0027t need a merged-in tag.",
+      "range": {
+        "startLine": 7443,
+        "startChar": 0,
+        "endLine": 7443,
+        "endChar": 43
+      },
+      "revId": "cde4c9637a24bdd4b4dbb1cd599132b129b3dea3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
