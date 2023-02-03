@@ -802,6 +802,7 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
 
             if (mSpec.isDevicePropertiesAttestationIncluded()) {
                 final String platformReportedBrand = TextUtils.isEmpty(Build.BRAND_FOR_ATTESTATION)
+                        || Build.BRAND_FOR_ATTESTATION.equals(Build.UNKNOWN)
                         ? Build.BRAND : Build.BRAND_FOR_ATTESTATION;
                 params.add(KeyStore2ParameterUtils.makeBytes(
                         KeymasterDefs.KM_TAG_ATTESTATION_ID_BRAND,
@@ -812,8 +813,9 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
                         Build.DEVICE.getBytes(StandardCharsets.UTF_8)
                 ));
                 final String platformReportedProduct =
-                        TextUtils.isEmpty(Build.PRODUCT_FOR_ATTESTATION) ? Build.PRODUCT :
-                                Build.PRODUCT_FOR_ATTESTATION;
+                        TextUtils.isEmpty(Build.PRODUCT_FOR_ATTESTATION)
+                                || Build.PRODUCT_FOR_ATTESTATION.equals(Build.UNKNOWN)
+                                ? Build.PRODUCT : Build.PRODUCT_FOR_ATTESTATION;
                 params.add(KeyStore2ParameterUtils.makeBytes(
                         KeymasterDefs.KM_TAG_ATTESTATION_ID_PRODUCT,
                         platformReportedProduct.getBytes(StandardCharsets.UTF_8)
@@ -823,6 +825,7 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
                         Build.MANUFACTURER.getBytes(StandardCharsets.UTF_8)
                 ));
                 final String platformReportedModel = TextUtils.isEmpty(Build.MODEL_FOR_ATTESTATION)
+                        || Build.MODEL_FOR_ATTESTATION.equals(Build.UNKNOWN)
                         ? Build.MODEL : Build.MODEL_FOR_ATTESTATION;
                 params.add(KeyStore2ParameterUtils.makeBytes(
                         KeymasterDefs.KM_TAG_ATTESTATION_ID_MODEL,
