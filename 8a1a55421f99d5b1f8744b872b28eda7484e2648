@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4692bed9_c63b560c",
+        "filename": "media/java/android/media/MediaDescrambler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1927725
+      },
+      "writtenOn": "2023-02-03T00:46:20Z",
+      "side": 1,
+      "message": "move this \u0027;\u0027 to prev line.",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 5
+      },
+      "revId": "8a1a55421f99d5b1f8744b872b28eda7484e2648",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
