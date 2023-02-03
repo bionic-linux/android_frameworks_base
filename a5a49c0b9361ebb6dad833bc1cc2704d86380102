@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4976fbe1_79f79634",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-02-03T06:39:11Z",
+      "side": 1,
+      "message": "Let\u0027s be more expansive. Suggested wording (feel free to improve and amend) :\n\n    \u0026lt;application\u0026gt; level {@link android.content.pm.PackageManager.Property}\n    tag specifying the XML resource ID containing the declaration of the \n    self-certified network capabilities used by the application.\n    \u003cp\u003e\n    Starting in Android 14, usage of some network capabilities in\n    {@link ConnectivityManager#requestNetwork} require the application to have\n    declared its usage of that particular capability in this resource. Only\n    some capabilities require a declaration. Please look up the specific\n    capability you want to use in {@link NetworkCapabilities} to see if it\n    needs declaration in this property.\n\n    For example :\n    ...\n\nYou will also need to include a link to your public documentation of the format of that XML, which means you\u0027ll have to have that public documentation somewhere :)",
+      "range": {
+        "startLine": 155,
+        "startChar": 80,
+        "endLine": 155,
+        "endChar": 84
+      },
+      "revId": "a5a49c0b9361ebb6dad833bc1cc2704d86380102",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fe2838f_28a8eb03",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-02-03T06:39:11Z",
+      "side": 1,
+      "message": "I think this is a bit too generic ; sure, these are network capabilities, but we have another 34 capabilities that are not affected by this.\n\nSuggest `PROPERTY_SELF_CERTIFIED_NETWORK_CAPABILITIES`, since this is what this does, or `PROPERTY_REQUESTED_NETWORK_CAPABILITIES_DECLARATION` since this is what this is.",
+      "range": {
+        "startLine": 163,
+        "startChar": 40,
+        "endLine": 163,
+        "endChar": 60
+      },
+      "revId": "a5a49c0b9361ebb6dad833bc1cc2704d86380102",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
