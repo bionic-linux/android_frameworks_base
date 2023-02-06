@@ -52,6 +52,24 @@
       "parentUuid": "950d12a9_74e36353",
       "revId": "961e3fc635d7a1b46621dd468316f33ad9d721c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a0d739d_4720233c",
+        "filename": "core/java/android/nfc/NfcServiceManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-02-06T21:49:30Z",
+      "side": 1,
+      "message": "NFC will have some non-mainline API\u0027s like this one. So, these will remain part of system image to provide any dependencies for the NFC mainline module like access to these @hide classes.",
+      "parentUuid": "f129e76b_87599f5e",
+      "revId": "961e3fc635d7a1b46621dd468316f33ad9d721c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
