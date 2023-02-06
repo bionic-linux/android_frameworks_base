@@ -34,6 +34,24 @@
       "parentUuid": "e9f0be49_2ca4db22",
       "revId": "961e3fc635d7a1b46621dd468316f33ad9d721c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f129e76b_87599f5e",
+        "filename": "core/java/android/nfc/NfcServiceManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2023-02-06T21:47:02Z",
+      "side": 1,
+      "message": "This will still be an @hide dependency from the NFC side, so is there a plan to resolve this down the line?",
+      "parentUuid": "950d12a9_74e36353",
+      "revId": "961e3fc635d7a1b46621dd468316f33ad9d721c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
