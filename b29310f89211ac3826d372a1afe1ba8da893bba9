@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "431be17f_ba4a1e62",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7876,
+      "author": {
+        "id": 1928857
+      },
+      "writtenOn": "2023-02-06T02:48:16Z",
+      "side": 1,
+      "message": "Advise to eliminate the ADDRESS.",
+      "range": {
+        "startLine": 7876,
+        "startChar": 35,
+        "endLine": 7876,
+        "endChar": 75
+      },
+      "revId": "b29310f89211ac3826d372a1afe1ba8da893bba9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94d44c97_ea570f62",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8084,
+      "author": {
+        "id": 1928857
+      },
+      "writtenOn": "2023-02-06T02:48:16Z",
+      "side": 1,
+      "message": "\"Consider the following 3GPP terms:\n\nEPDG_PLMN_PRIORITY_RPLMN,\n\n/* derrived from IMSI */\nEPDG_PLMN_PRIORITY_HPLMN,\n\nEPDG_PLMN_PRIORITY_ALL_EHPLMN,\nEPDG_PLMN_PRIORITY_FIRST_EHPLMN,",
+      "range": {
+        "startLine": 8081,
+        "startChar": 0,
+        "endLine": 8084,
+        "endChar": 46
+      },
+      "revId": "b29310f89211ac3826d372a1afe1ba8da893bba9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
