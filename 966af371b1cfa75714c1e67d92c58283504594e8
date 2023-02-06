@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e620920_67281e68",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2023-02-06T15:12:39Z",
+      "side": 1,
+      "message": "Extract a method:\nboolean isPropertyEmptyOrUnknown(String property) {\n  return TextUtils.isEmpty(property) || property.equals(Build.UNKNOWN);\n}\n\nAnd use it throughout.",
+      "range": {
+        "startLine": 827,
+        "startChar": 53,
+        "endLine": 828,
+        "endChar": 76
+      },
+      "revId": "966af371b1cfa75714c1e67d92c58283504594e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
