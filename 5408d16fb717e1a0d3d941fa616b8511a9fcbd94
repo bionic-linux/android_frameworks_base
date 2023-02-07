@@ -33,6 +33,23 @@
       "message": "Thanks for review. It seems that presubmit check failed. I\u0027ve no permission on the link of debug info. Could you please help check it?",
       "revId": "5408d16fb717e1a0d3d941fa616b8511a9fcbd94",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45e2fb75_9d86a1ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1902133
+      },
+      "writtenOn": "2023-02-07T08:07:03Z",
+      "side": 1,
+      "message": "There still seems to be warnings. Would you please help check it? Thx!",
+      "revId": "5408d16fb717e1a0d3d941fa616b8511a9fcbd94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
