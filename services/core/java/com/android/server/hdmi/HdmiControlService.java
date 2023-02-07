@@ -3464,11 +3464,12 @@ public class HdmiControlService extends SystemService {
                 }
                 try {
                     record.mListener.onReceived(srcAddress, destAddress, params, hasVendorId);
+                    return true;
                 } catch (RemoteException e) {
                     Slog.e(TAG, "Failed to notify vendor command reception", e);
                 }
             }
-            return true;
+            return false;
         }
     }
 
