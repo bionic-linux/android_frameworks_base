@@ -22,6 +22,30 @@
       },
       "revId": "167546166914feed6075ab598f2a54819d4709df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eabe1c66_614c27e8",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8247,
+      "author": {
+        "id": 1980932
+      },
+      "writtenOn": "2023-02-07T06:41:15Z",
+      "side": 1,
+      "message": "RPLMN will only be used when it exist in the KEY_MCC_MNCS_STRING_ARRAY (epdg selection information). If the array is empty, RPLMN will be ignored and will use HPLMN.",
+      "parentUuid": "5b50acaf_0ac9a01f",
+      "range": {
+        "startLine": 8247,
+        "startChar": 28,
+        "endLine": 8247,
+        "endChar": 44
+      },
+      "revId": "167546166914feed6075ab598f2a54819d4709df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
