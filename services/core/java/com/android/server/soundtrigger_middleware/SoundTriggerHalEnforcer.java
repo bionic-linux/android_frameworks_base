@@ -212,16 +212,21 @@ public class SoundTriggerHalEnforcer implements ISoundTriggerHal {
     }
 
     private RuntimeException handleException(RuntimeException e) {
+        boolean needReboot = false;
         if (e instanceof RecoverableException) {
+            needReboot = true;
             throw e;
         }
         if (e.getCause() instanceof DeadObjectException) {
             // Server is dead, no need to reboot.
             Log.e(TAG, "HAL died");
+            needReboot = true;
             throw new RecoverableException(Status.DEAD_OBJECT);
         }
-        Log.e(TAG, "Exception caught from HAL, rebooting HAL");
-        reboot();
+        if (needReboot) {
+            Log.e(TAG, "Exception caught from HAL, rebooting HAL");
+            reboot();
+        }
         throw e;
     }
 
