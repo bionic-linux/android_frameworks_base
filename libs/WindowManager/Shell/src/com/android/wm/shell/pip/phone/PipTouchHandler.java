@@ -597,6 +597,12 @@ public class PipTouchHandler {
             return true;
         }
 
+        // Ignore the motion event When the entry animation is waiting to be started
+        if (!mTouchState.isUserInteracting() && mPipTaskOrganizer.isEntryScheduled()) {
+            Slog.i(TAG, "Waiting to start the enty animation, skip the motion event.");
+            return true;
+        }
+
         // Update the touch state
         mTouchState.onTouchEvent(ev);
 
