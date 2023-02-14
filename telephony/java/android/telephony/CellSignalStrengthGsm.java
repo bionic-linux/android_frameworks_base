@@ -36,14 +36,19 @@ public final class CellSignalStrengthGsm extends CellSignalStrength implements P
     private static final boolean DBG = false;
 
     private static final int GSM_RSSI_MAX = -51;
+    //Add by kayun.kuang start
+    private static final int GSM_RSSI_HIGHEST = -85;
+    //Add by kayun.kuang end
     private static final int GSM_RSSI_GREAT = -89;
     private static final int GSM_RSSI_GOOD = -97;
     private static final int GSM_RSSI_MODERATE = -103;
     private static final int GSM_RSSI_POOR = -107;
     private static final int GSM_RSSI_MIN = -113;
 
+    //Add by kayun.kuang start
     private static final int[] sRssiThresholds = new int[] {
-            GSM_RSSI_POOR, GSM_RSSI_MODERATE, GSM_RSSI_GOOD, GSM_RSSI_GREAT};
+            GSM_RSSI_POOR, GSM_RSSI_MODERATE, GSM_RSSI_GOOD, GSM_RSSI_GREAT, GSM_RSSI_HIGHEST};
+    //Add by kayun.kuang end
 
     private int mRssi; // in dBm [-113, -51] or UNAVAILABLE
     @UnsupportedAppUsage
@@ -95,11 +100,27 @@ public final class CellSignalStrengthGsm extends CellSignalStrength implements P
     }
 
     /** {@inheritDoc} */
+    //Add by kayun.kuang start
     @Override
-    @IntRange(from = SIGNAL_STRENGTH_NONE_OR_UNKNOWN, to = SIGNAL_STRENGTH_GREAT)
+    @IntRange(from = SIGNAL_STRENGTH_NONE_OR_UNKNOWN, to = SIGNAL_STRENGTH_HIGHEST)
     public int getLevel() {
-        return mLevel;
+        // return mLevel;
+        final int dbm = getDbm();
+        if (dbm >= -85) {
+            level = SIGNAL_STRENGTH_HIGHEST;
+        } else if (dbm >= -95) {
+            level = SIGNAL_STRENGTH_GREAT;
+        } else if (dbm >= -100) {
+            level = SIGNAL_STRENGTH_GOOD;
+        } else if (dbm >= -105) {
+            level = SIGNAL_STRENGTH_MODERATE;
+        } else if (dbm >= -110) {
+            level = SIGNAL_STRENGTH_POOR;
+        } else {
+            level = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
+        }
     }
+    //Add by kayun.kuang end
 
     /** @hide */
     @Override
