@@ -349,11 +349,27 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
     }
 
     /** {@inheritDoc} */
+    //Add by kayun.kuang start
     @Override
-    @IntRange(from = SIGNAL_STRENGTH_NONE_OR_UNKNOWN, to = SIGNAL_STRENGTH_GREAT)
+    @IntRange(from = SIGNAL_STRENGTH_NONE_OR_UNKNOWN, to = SIGNAL_STRENGTH_HIGHEST)
     public int getLevel() {
-        return mLevel;
+        // return mLevel;
+        final int dbm = getDbm();
+        if (dbm >= -85) {
+            level = SIGNAL_STRENGTH_HIGHEST;
+        } else if (dbm >= -95) {
+            level = SIGNAL_STRENGTH_GREAT;
+        } else if (dbm >= -100) {
+            level = SIGNAL_STRENGTH_GOOD;
+        } else if (dbm >= -105) {
+            level = SIGNAL_STRENGTH_MODERATE;
+        } else if (dbm >= -110) {
+            level = SIGNAL_STRENGTH_POOR;
+        } else {
+            level = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
+        }
     }
+    //Add by kayun.kuang end
 
     /**
      * Checks if the given parameter type is considered to use for {@link #getLevel()}.

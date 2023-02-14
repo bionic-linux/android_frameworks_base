@@ -39,14 +39,19 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
     private static final boolean DBG = false;
 
     private static final int WCDMA_RSSI_MAX = -51;
+    //Add by kayun.kuang start
+    private static final int WCDMA_RSSI_HIGHEST = -70;
+    //Add by kayun.kuang end
     private static final int WCDMA_RSSI_GREAT = -77;
     private static final int WCDMA_RSSI_GOOD = -87;
     private static final int WCDMA_RSSI_MODERATE = -97;
     private static final int WCDMA_RSSI_POOR = -107;
     private static final int WCDMA_RSSI_MIN = -113;
 
+    //Modify by kayun.kuang start
     private static final int[] sRssiThresholds = new int[]{
-            WCDMA_RSSI_POOR, WCDMA_RSSI_MODERATE, WCDMA_RSSI_GOOD, WCDMA_RSSI_GREAT};
+            WCDMA_RSSI_POOR, WCDMA_RSSI_MODERATE, WCDMA_RSSI_GOOD, WCDMA_RSSI_GREAT, WCDMA_RSSI_HIGHEST};
+    //Modify by kayun.kuang end
 
     private static final int WCDMA_RSCP_MAX = -24;
     private static final int WCDMA_RSCP_GREAT = -85;
@@ -125,11 +130,27 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
     }
 
     /** {@inheritDoc} */
+    //Modify by kayun.kuang start
     @Override
-    @IntRange(from = SIGNAL_STRENGTH_NONE_OR_UNKNOWN, to = SIGNAL_STRENGTH_GREAT)
+    @IntRange(from = SIGNAL_STRENGTH_NONE_OR_UNKNOWN, to = SIGNAL_STRENGTH_HIGHEST)
     public int getLevel() {
-        return mLevel;
+        // return mLevel;
+        final int dbm = getDbm();
+        if (dbm >= -85) {
+            level = SIGNAL_STRENGTH_HIGHEST;
+        } else if (dbm >= -95) {
+            level = SIGNAL_STRENGTH_GREAT;
+        } else if (dbm >= -100) {
+            level = SIGNAL_STRENGTH_GOOD;
+        } else if (dbm >= -105) {
+            level = SIGNAL_STRENGTH_MODERATE;
+        } else if (dbm >= -110) {
+            level = SIGNAL_STRENGTH_POOR;
+        } else {
+            level = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
+        }
     }
+    //Modify by kayun.kuang end
 
     /** @hide */
     @Override
