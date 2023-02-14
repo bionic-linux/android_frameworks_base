@@ -60,6 +60,12 @@ public class SignalStrength implements Parcelable {
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public static final int SIGNAL_STRENGTH_GREAT =
             CellSignalStrength.SIGNAL_STRENGTH_GREAT; // = 4
+    //Add by kayun.kuang start
+    /** @hide */
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    public static final int SIGNAL_STRENGTH_HIGHEST =
+            CellSignalStrength.SIGNAL_STRENGTH_HIGHEST; // = 5
+    //Add by kayun.kuang end
     /** @hide */
     @UnsupportedAppUsage
     public static final int NUM_SIGNAL_STRENGTH_BINS = 5;
@@ -514,10 +520,12 @@ public class SignalStrength implements Parcelable {
      */
     public int getLevel() {
         int level = getPrimary().getLevel();
-        if (level < SIGNAL_STRENGTH_NONE_OR_UNKNOWN || level > SIGNAL_STRENGTH_GREAT) {
+        //Modify by kayun.kuang start
+        if (level < SIGNAL_STRENGTH_NONE_OR_UNKNOWN || level > SIGNAL_STRENGTH_HIGHEST) {
             loge("Invalid Level " + level + ", this=" + this);
             return SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
         }
+        //Modify by kayun.kuang start
         return getPrimary().getLevel();
     }
 
