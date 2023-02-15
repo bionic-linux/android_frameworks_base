@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad136f9e_3134b97b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1309980
+      },
+      "writtenOn": "2023-02-15T04:28:45Z",
+      "side": 1,
+      "message": "According to the [comment](https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/21309461/comments/0c65e6b3_4fe41f15) in ag/21309461, submit it as this patch in AOSP.",
+      "revId": "f8c1760623b43887d0f80318aa794ed73c6ed8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
