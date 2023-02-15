@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fa66505_d77e1264",
+        "filename": "core/java/android/content/res/Resources.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2756,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2023-02-15T18:24:14Z",
+      "side": 1,
+      "message": "Who actually calls this? I thought we generally used this annotation for APIs that were not intended for external use, but have historically been used that way? I\u0027m surprised to see this on a new API.",
+      "range": {
+        "startLine": 2756,
+        "startChar": 3,
+        "endLine": 2756,
+        "endChar": 24
+      },
+      "revId": "1ff7cb478fe8dea81cab033e9e4933c79fa180db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
