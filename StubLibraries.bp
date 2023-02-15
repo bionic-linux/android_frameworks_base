@@ -546,7 +546,6 @@ droidstubs {
         "api-versions-jars-dir",
     ],
     api_levels_sdk_type: "module-lib",
-    extensions_info_file: ":sdk-extensions-info",
 }
 
 droidstubs {
@@ -563,7 +562,6 @@ droidstubs {
         "api-versions-jars-dir",
     ],
     api_levels_sdk_type: "system-server",
-    extensions_info_file: ":sdk-extensions-info",
 }
 
 /////////////////////////////////////////////////////////////////////
