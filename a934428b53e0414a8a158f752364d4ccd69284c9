@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42c2f7e2_6c847642",
+        "filename": "api/api.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-02-15T14:56:43Z",
+      "side": 1,
+      "message": "Cole, are you going to remove these? I was thinking of converting them to Android.bp as well but will skip that if they\u0027re on the chopping block",
+      "revId": "a934428b53e0414a8a158f752364d4ccd69284c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
