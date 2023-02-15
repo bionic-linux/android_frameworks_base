@@ -16,6 +16,24 @@
       "message": "Maybe a weird request but: is it possible to set this to empty string and comment on why it\u0027s empty instead? It looks like a bug now. ditto below",
       "revId": "1c2ff8b88908cd0aec3c761279a25fc6d7549494",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79c47aba_33729b7b",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2023-02-15T22:09:07Z",
+      "side": 0,
+      "message": "The empty string leads to a build error, but I added a comment about it.",
+      "parentUuid": "ff5fa167_11b7db57",
+      "revId": "1c2ff8b88908cd0aec3c761279a25fc6d7549494",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
