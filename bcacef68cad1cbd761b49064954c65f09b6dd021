@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3855222_f6664065",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1958109
+      },
+      "writtenOn": "2023-02-16T00:53:49Z",
+      "side": 1,
+      "message": "tl;dr: Prior to this, all given uids are supplied to cm.replaceFirewallChain even though some of these uids may be associated with default rules for the chain, indicating they should not be part of the firewall chain (should not be allowed or should not be blocked) as this will invert the behavior.",
+      "revId": "bcacef68cad1cbd761b49064954c65f09b6dd021",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
