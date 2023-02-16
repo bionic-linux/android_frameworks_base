@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "786d488c_7c14a12c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2023-02-16T19:28:45Z",
+      "side": 1,
+      "message": "What is the expected memory and/or app startup latency impact for this change? Have you run any measurements?",
+      "revId": "8a3abdf0746d9b3d24f172d0d46882597dc6f03a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ce44d3e7_d072e2ea",
         "filename": "core/java/android/content/res/Resources.java",
         "patchSetId": 3
