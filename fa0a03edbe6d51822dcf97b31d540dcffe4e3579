@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8edc3471_a287b04a",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-02-16T21:16:17Z",
+      "side": 1,
+      "message": "these were added as public ints so they\u0027ll be in the public API, but don\u0027t show up in current.txt yet. But since they\u0027re only usable if you can use system API, please mark them @hide @SystemAPI like the other additions below, and then run `m update-api`.",
+      "revId": "fa0a03edbe6d51822dcf97b31d540dcffe4e3579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
