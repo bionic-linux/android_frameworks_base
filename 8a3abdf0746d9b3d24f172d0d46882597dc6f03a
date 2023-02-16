@@ -16,6 +16,29 @@
       "message": "Thank you for Hans\u0027 review.",
       "revId": "8a3abdf0746d9b3d24f172d0d46882597dc6f03a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce44d3e7_d072e2ea",
+        "filename": "core/java/android/content/res/Resources.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2689,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2023-02-16T18:31:20Z",
+      "side": 1,
+      "message": "Aside for discussion with Chris, NOT for this CL:\n\nI can\u0027t imagine this is a good idea. This is normally called during zygote startup, right? So we put a zygote allocated object on a list so that it can be used later by a child, dirtying zygote space?\n\nThis is probably ancient code. We should probably also look for other instances of this kind of stuff.",
+      "range": {
+        "startLine": 2689,
+        "startChar": 16,
+        "endLine": 2689,
+        "endChar": 29
+      },
+      "revId": "8a3abdf0746d9b3d24f172d0d46882597dc6f03a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
