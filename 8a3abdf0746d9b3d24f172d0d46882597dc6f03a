@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9606df8e_7dfdf443",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2023-02-16T19:37:07Z",
+      "side": 1,
+      "message": "The changes to ZygoteInit.java shouldn\u0027t impact app startup latency as it just moves where the code is located, not where or when it is called in the Zygote.\n\nThe resetPreloadDrawableStateCache() only impacts the local process, not the Zygote or any other processes on the System.  This will cause some of that process\u0027s shared memory pages to be marked dirty, which in turn will cause the Zygote\u0027s PSS to _increase_ but the _rss_ value will stay the same.\n\nAny increase in physical memory usage should only occur in the process that resets the preload drawable state cache.",
+      "parentUuid": "786d488c_7c14a12c",
+      "revId": "8a3abdf0746d9b3d24f172d0d46882597dc6f03a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ce44d3e7_d072e2ea",
         "filename": "core/java/android/content/res/Resources.java",
         "patchSetId": 3
