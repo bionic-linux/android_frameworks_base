@@ -39,6 +39,30 @@
       },
       "revId": "8a3abdf0746d9b3d24f172d0d46882597dc6f03a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f9b7ef5_63770d7c",
+        "filename": "core/java/android/content/res/Resources.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2689,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2023-02-16T18:40:14Z",
+      "side": 1,
+      "message": "Sounds good to me.",
+      "parentUuid": "ce44d3e7_d072e2ea",
+      "range": {
+        "startLine": 2689,
+        "startChar": 16,
+        "endLine": 2689,
+        "endChar": 29
+      },
+      "revId": "8a3abdf0746d9b3d24f172d0d46882597dc6f03a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
