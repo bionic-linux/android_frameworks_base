@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "464f9acf_753237b9",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-02-16T21:01:27Z",
+      "side": 1,
+      "message": "To fix: These need to use the @RequiresPermission annotation, that gets ingested as part of javadoc generation and other tooling to help developers. See here for example: https://source.corp.google.com/android-internal/frameworks/base/core/java/android/os/BatteryManager.java;rcl\u003dc0401b62b80d76ebceb09698a7f6f5cab5c078e6;l\u003d395\n\nThat can be done in a follow-up, since it\u0027s a doc-only change, though.",
+      "revId": "26280e60f39f3b9774eade0d224ce75e94472504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1804fcf7_39592554",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-02-16T21:01:27Z",
+      "side": 1,
+      "message": "This still needs documentation on what the valid values are, and what they mean.",
+      "revId": "26280e60f39f3b9774eade0d224ce75e94472504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
