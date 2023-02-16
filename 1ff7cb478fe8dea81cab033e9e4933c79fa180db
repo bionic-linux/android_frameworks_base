@@ -22,6 +22,30 @@
       },
       "revId": "1ff7cb478fe8dea81cab033e9e4933c79fa180db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29d499a1_e73fcd9e",
+        "filename": "core/java/android/content/res/Resources.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2756,
+      "author": {
+        "id": 1309980
+      },
+      "writtenOn": "2023-02-16T09:28:42Z",
+      "side": 1,
+      "message": "Done by removing the annotation.\n\nThis is called by ag/21312839. It isn\u0027t public. @VisibleForTesting is enough for fixing the issue.",
+      "parentUuid": "3fa66505_d77e1264",
+      "range": {
+        "startLine": 2756,
+        "startChar": 3,
+        "endLine": 2756,
+        "endChar": 24
+      },
+      "revId": "1ff7cb478fe8dea81cab033e9e4933c79fa180db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
