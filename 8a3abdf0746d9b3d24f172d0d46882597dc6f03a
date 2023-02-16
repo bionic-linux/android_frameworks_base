@@ -53,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "135d889b_17799f48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2023-02-16T19:51:15Z",
+      "side": 1,
+      "message": "\u003e Any increase in physical memory usage should only occur in the process that resets the preload drawable state cache.\n\nI see, makes perfect sense. And that reset is just happening for a few resource-specific perf tests?",
+      "parentUuid": "9606df8e_7dfdf443",
+      "revId": "8a3abdf0746d9b3d24f172d0d46882597dc6f03a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce44d3e7_d072e2ea",
