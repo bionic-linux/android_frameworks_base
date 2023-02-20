@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "341ed3d6_8ba55cfa",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3455,
+      "author": {
+        "id": 1707594
+      },
+      "writtenOn": "2023-02-20T06:15:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86b96563_3f63a70a",
+      "revId": "319d9e4053bc2078007db5be2745ab8feeaea069",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e869678d_053a011d",
@@ -41,6 +59,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff8d75bb_9b937171",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3468,
+      "author": {
+        "id": 1707594
+      },
+      "writtenOn": "2023-02-20T06:15:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e869678d_053a011d",
+      "range": {
+        "startLine": 3468,
+        "startChar": 0,
+        "endLine": 3468,
+        "endChar": 31
+      },
+      "revId": "319d9e4053bc2078007db5be2745ab8feeaea069",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aab5eabe_67880b83",
@@ -54,6 +96,24 @@
       "writtenOn": "2023-02-18T02:39:38Z",
       "side": 1,
       "message": "return false;",
+      "revId": "319d9e4053bc2078007db5be2745ab8feeaea069",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b654b9dd_27d276e9",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3473,
+      "author": {
+        "id": 1707594
+      },
+      "writtenOn": "2023-02-20T06:15:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aab5eabe_67880b83",
       "revId": "319d9e4053bc2078007db5be2745ab8feeaea069",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
