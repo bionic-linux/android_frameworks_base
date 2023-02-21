@@ -2752,7 +2752,8 @@ public class Vpn {
 
         void onDefaultNetworkCapabilitiesChanged(@NonNull NetworkCapabilities nc);
 
-        void onDefaultNetworkLinkPropertiesChanged(@NonNull LinkProperties lp);
+        void onDefaultNetworkLinkPropertiesChanged(@NonNull Network network,
+                @NonNull LinkProperties lp);
 
         void onDefaultNetworkLost(@NonNull Network network);
 
@@ -2784,6 +2785,18 @@ public class Vpn {
         return hasIPV6 && !hasIPV4;
     }
 
+    private static boolean isIpv6Only(LinkProperties lp) {
+        return !lp.hasIpv4Address() && lp.hasGlobalIpv6Address();
+    }
+
+    private static boolean isIpv4Only(LinkProperties lp) {
+        return lp.hasIpv4Address() && !lp.hasGlobalIpv6Address();
+    }
+
+    private static boolean isIpv4v6(LinkProperties lp) {
+        return lp.hasIpv4Address() && lp.hasGlobalIpv6Address();
+    }
+
     private void setVpnNetworkPreference(String session, Set<Range<Integer>> ranges) {
         BinderUtils.withCleanCallingIdentity(
                 () -> mConnectivityManager.setVpnDefaultForUids(session, ranges));
@@ -2792,6 +2805,25 @@ public class Vpn {
     private void clearVpnNetworkPreference(String session) {
         BinderUtils.withCleanCallingIdentity(
                 () -> mConnectivityManager.setVpnDefaultForUids(session, Collections.EMPTY_LIST));
+    }
+
+    private static boolean isIpFamilyChanged(@NonNull LinkProperties oldLp,
+            @NonNull LinkProperties newLp) {
+        // Define IP family changed:
+        // oldLp -> newLp
+        // IPv4 -> IPv6
+        // IPv4 -> IPv4, IPv6
+        // IPv6 -> IPv4
+        // IPv6 -> IPv4, IPv6
+        // IPv4, IPv6 -> IPv4
+        // IPv4, IPv6 -> IPv6
+        if ((isIpv4Only(oldLp) && (isIpv6Only(newLp) || isIpv4v6(newLp)))
+                || (isIpv6Only(oldLp) && (isIpv4Only(newLp) || isIpv4v6(newLp)))
+                || (isIpv4v6(oldLp) && (isIpv4Only(newLp) || isIpv6Only(newLp)))) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -3408,8 +3440,13 @@ public class Vpn {
         }
 
         /** Called when the LinkProperties of underlying network is changed */
-        public void onDefaultNetworkLinkPropertiesChanged(@NonNull LinkProperties lp) {
+        public void onDefaultNetworkLinkPropertiesChanged(@NonNull Network network,
+                @NonNull LinkProperties lp) {
+            final LinkProperties oldLp = mUnderlyingLinkProperties;
             mUnderlyingLinkProperties = lp;
+            if (oldLp != null && isIpFamilyChanged(oldLp, lp)) {
+                maybeMigrateIkeSession(network);
+            }
         }
 
         class VpnConnectivityDiagnosticsCallback

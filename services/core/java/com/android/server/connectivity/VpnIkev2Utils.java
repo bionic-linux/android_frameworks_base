@@ -423,7 +423,7 @@ public class VpnIkev2Utils {
                 @NonNull LinkProperties linkProperties) {
             Log.d(mTag, "LP changed for net " + network + " : " + linkProperties);
             mExecutor.execute(
-                    () -> mCallback.onDefaultNetworkLinkPropertiesChanged(linkProperties));
+                    () -> mCallback.onDefaultNetworkLinkPropertiesChanged(network, linkProperties));
         }
 
         @Override
