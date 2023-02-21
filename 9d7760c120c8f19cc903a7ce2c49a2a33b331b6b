@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edc31857_3c3eafcf",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2822,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-02-21T09:56:33Z",
+      "side": 1,
+      "message": "This looks pretty contrived\n\nCan you do something like\n\n    V4 \u003d 1\n    V6 \u003d 2\n    private static int getIpVersionMask(lp) {\n      return (lp.hasV4 ? V4 : 0) | (lp.hasV6 ? V6 : 0);\n    }\n    private static boolean isIpFamilyChanged(oldLp, newLp) {\n      return getIpVersionMask(oldLp) !\u003d getIpVersionMask(newLp);\n    }\n\nI think it would be a lot easier to understand",
+      "range": {
+        "startLine": 2820,
+        "startChar": 0,
+        "endLine": 2822,
+        "endChar": 83
+      },
+      "revId": "9d7760c120c8f19cc903a7ce2c49a2a33b331b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
