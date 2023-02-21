@@ -63,6 +63,30 @@
       },
       "revId": "3977772bd764b96f85c3f59b037f0640b923443c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6780174f_26c7b5b0",
+        "filename": "services/core/java/com/android/server/BatteryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1969435
+      },
+      "writtenOn": "2023-02-21T17:03:09Z",
+      "side": 1,
+      "message": "rebased \u0026\u0026 fixed \u0026\u0026 retested on emulator with extra not commited logs",
+      "parentUuid": "80f85b60_4be69768",
+      "range": {
+        "startLine": 1206,
+        "startChar": 16,
+        "endLine": 1206,
+        "endChar": 18
+      },
+      "revId": "3977772bd764b96f85c3f59b037f0640b923443c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
