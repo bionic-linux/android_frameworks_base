@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05de7f6d_501de4c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2023-02-21T13:08:06Z",
+      "side": 1,
+      "message": "This will need a Merged-In line, as this CL is already merged internally. The presubmits may fail.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 52
+      },
+      "revId": "248a51dd965d3974441fc9faa3799e3028ea3d71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
