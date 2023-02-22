@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d28d3a5c_2e02224b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1969435
+      },
+      "writtenOn": "2023-02-22T11:13:23Z",
+      "side": 1,
+      "message": "Hi! Can you review config changes please?",
+      "revId": "fc5a73f5c9a9c9c812abac982bc985c4555d2f61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
