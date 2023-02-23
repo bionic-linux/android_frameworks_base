@@ -22,6 +22,30 @@
       },
       "revId": "0566af4b8f43925b406b58ddb863fbbbd0cc0989",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb5e8c52_2f40ff2d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2023-02-23T17:53:18Z",
+      "side": 1,
+      "message": "ub-ctsshim-dev is based on a branch that doesn\u0027t have riscv64 support in it.  I\u0027ve updated the script in the branches that support it, so when ub-ctsshim-dev is moved forward the new prebuilts will get built.  Until then I\u0027ve built them locally, but CTS won\u0027t be run on riscv64 any time soon.",
+      "parentUuid": "bb299369_5651bb99",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 38
+      },
+      "revId": "0566af4b8f43925b406b58ddb863fbbbd0cc0989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
