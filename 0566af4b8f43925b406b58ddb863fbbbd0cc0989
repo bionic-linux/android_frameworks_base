@@ -46,6 +46,30 @@
       },
       "revId": "0566af4b8f43925b406b58ddb863fbbbd0cc0989",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6f63d5a_d47215bb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2023-02-23T17:59:50Z",
+      "side": 1,
+      "message": "Usually we move the ub-ctsshim-dev to new branch when a need arises. Feel free to move it to be based of udc-dev if you have some spare time. Otherwise please file a bug in APEX component and assign to me, I will try to move it once I have some spare time (probably in March)",
+      "parentUuid": "bb5e8c52_2f40ff2d",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 38
+      },
+      "revId": "0566af4b8f43925b406b58ddb863fbbbd0cc0989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
