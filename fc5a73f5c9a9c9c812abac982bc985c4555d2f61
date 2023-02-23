@@ -16,6 +16,23 @@
       "message": "Hi! Can you review config changes please?",
       "revId": "fc5a73f5c9a9c9c812abac982bc985c4555d2f61",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e02cce7_0f8d5c94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1969435
+      },
+      "writtenOn": "2023-02-23T13:41:31Z",
+      "side": 1,
+      "message": "@dplotnikov@google.com hi! pre-submit job is red, anything I can do? Or is it just flacky?",
+      "revId": "fc5a73f5c9a9c9c812abac982bc985c4555d2f61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
