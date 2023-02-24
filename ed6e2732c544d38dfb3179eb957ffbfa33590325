@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0142a819_9fe4e8e1",
+        "filename": "services/core/java/com/android/server/hdmi/SystemAudioAutoInitiationAction.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2023-02-24T14:57:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b612c6e_907c42b4",
+      "revId": "ed6e2732c544d38dfb3179eb957ffbfa33590325",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "707bf656_3ba11a58",
@@ -79,6 +97,30 @@
       "side": 1,
       "message": "I find this change necessary, based on the feature\u0027s requirements.",
       "parentUuid": "57c649a4_cf8e9ed9",
+      "range": {
+        "startLine": 201,
+        "startChar": 30,
+        "endLine": 201,
+        "endChar": 65
+      },
+      "revId": "ed6e2732c544d38dfb3179eb957ffbfa33590325",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e42b3794_c3196b44",
+        "filename": "services/tests/servicestests/src/com/android/server/hdmi/HdmiCecLocalDeviceTvTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2023-02-24T14:57:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7fadf35_d764c1a2",
       "range": {
         "startLine": 201,
         "startChar": 30,
