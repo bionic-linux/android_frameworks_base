@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "300eb6cc_73600f7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2023-02-24T18:40:42Z",
+      "side": 1,
+      "message": "LGTM but I\u0027ve already added another capability internally, so this will conflict.",
+      "revId": "2a1695814aeb3046e5dc3d8bce8988f16729aef1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
