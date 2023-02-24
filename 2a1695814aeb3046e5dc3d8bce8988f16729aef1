@@ -16,6 +16,24 @@
       "message": "LGTM but I\u0027ve already added another capability internally, so this will conflict.",
       "revId": "2a1695814aeb3046e5dc3d8bce8988f16729aef1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c43bd6b8_9c83cd14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2023-02-24T18:49:37Z",
+      "side": 1,
+      "message": "Will send something to resolve the conflict.",
+      "parentUuid": "300eb6cc_73600f7b",
+      "revId": "2a1695814aeb3046e5dc3d8bce8988f16729aef1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
