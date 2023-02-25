@@ -15,9 +15,9 @@
  */
 package com.android.internal.expresslog;
 
-import androidx.test.filters.SmallTest;
-
 import static org.junit.Assert.assertEquals;
+
+import androidx.test.filters.SmallTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,36 +25,41 @@ import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
 @SmallTest
-public class UniformOptionsTest {
-    private static final String TAG = UniformOptionsTest.class.getSimpleName();
+public class ScaledRangeOptionsTest {
+    private static final String TAG = ScaledRangeOptionsTest.class.getSimpleName();
 
     @Test
     public void testGetBinsCount() {
-        Histogram.UniformOptions options1 = new Histogram.UniformOptions(1, 100, 1000);
+        Histogram.ScaledRangeOptions options1 = new Histogram.ScaledRangeOptions(1, 100, 100, 2);
         assertEquals(3, options1.getBinsCount());
 
-        Histogram.UniformOptions options10 = new Histogram.UniformOptions(10, 100, 1000);
+        Histogram.ScaledRangeOptions options10 = new Histogram.ScaledRangeOptions(10, 100, 100, 2);
         assertEquals(12, options10.getBinsCount());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructZeroBinsCount() {
-        new Histogram.UniformOptions(0, 100, 1000);
+        new Histogram.ScaledRangeOptions(0, 100, 100, 2);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructNegativeBinsCount() {
-        new Histogram.UniformOptions(-1, 100, 1000);
+        new Histogram.ScaledRangeOptions(-1, 100, 100, 2);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testConstructMaxValueLessThanMinValue() {
-        new Histogram.UniformOptions(10, 1000, 100);
+    public void testConstructNegativeFirstBinWidth() {
+        new Histogram.ScaledRangeOptions(10, 100, -100, 2);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructNegativeScaleFactor() {
+        new Histogram.ScaledRangeOptions(10, 100, 100, -2);
     }
 
     @Test
     public void testBinIndexForRangeEqual1() {
-        Histogram.UniformOptions options = new Histogram.UniformOptions(10, 1, 11);
+        Histogram.ScaledRangeOptions options = new Histogram.ScaledRangeOptions(10, 1, 1, 1);
         for (int i = 0, bins = options.getBinsCount(); i < bins; i++) {
             assertEquals(i, options.getBinForSample(i));
         }
@@ -62,7 +67,7 @@ public class UniformOptionsTest {
 
     @Test
     public void testBinIndexForRangeEqual2() {
-        Histogram.UniformOptions options = new Histogram.UniformOptions(10, 1, 21);
+        Histogram.ScaledRangeOptions options = new Histogram.ScaledRangeOptions(10, 1, 2, 1);
         for (int i = 0, bins = options.getBinsCount(); i < bins; i++) {
             assertEquals(i, options.getBinForSample(i * 2));
             assertEquals(i, options.getBinForSample(i * 2 - 1));
@@ -71,7 +76,7 @@ public class UniformOptionsTest {
 
     @Test
     public void testBinIndexForRangeEqual5() {
-        Histogram.UniformOptions options = new Histogram.UniformOptions(2, 0, 10);
+        Histogram.ScaledRangeOptions options = new Histogram.ScaledRangeOptions(2, 0, 5, 1);
         assertEquals(4, options.getBinsCount());
         for (int i = 0; i < 2; i++) {
             for (int sample = 0; sample < 5; sample++) {
@@ -82,7 +87,7 @@ public class UniformOptionsTest {
 
     @Test
     public void testBinIndexForRangeEqual10() {
-        Histogram.UniformOptions options = new Histogram.UniformOptions(10, 1, 101);
+        Histogram.ScaledRangeOptions options = new Histogram.ScaledRangeOptions(10, 1, 10, 1);
         assertEquals(0, options.getBinForSample(0));
         assertEquals(options.getBinsCount() - 2, options.getBinForSample(100));
         assertEquals(options.getBinsCount() - 1, options.getBinForSample(101));
@@ -90,36 +95,6 @@ public class UniformOptionsTest {
         final float binSize = (101 - 1) / 10f;
         for (int i = 1, bins = options.getBinsCount() - 1; i < bins; i++) {
             assertEquals(i, options.getBinForSample(i * binSize));
-        }
-    }
-
-    @Test
-    public void testBinIndexForRangeEqual90() {
-        final int binCount = 10;
-        final int minValue = 100;
-        final int maxValue = 100000;
-
-        Histogram.UniformOptions options = new Histogram.UniformOptions(binCount, minValue,
-                maxValue);
-
-        // logging underflow sample
-        assertEquals(0, options.getBinForSample(minValue - 1));
-
-        // logging overflow sample
-        assertEquals(binCount + 1, options.getBinForSample(maxValue));
-        assertEquals(binCount + 1, options.getBinForSample(maxValue + 1));
-
-        // logging min edge sample
-        assertEquals(1, options.getBinForSample(minValue));
-
-        // logging max edge sample
-        assertEquals(binCount, options.getBinForSample(maxValue - 1));
-
-        // logging single valid sample per bin
-        final int binSize = (maxValue - minValue) / binCount;
-
-        for (int i = 0; i < binCount; i++) {
-            assertEquals(i + 1, options.getBinForSample(minValue + binSize * i));
         }
     }
 }
