@@ -122,6 +122,24 @@
       "parentUuid": "ca927f26_6e49f5e9",
       "revId": "fc5a73f5c9a9c9c812abac982bc985c4555d2f61",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "975dec9f_771cb583",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2023-02-27T17:26:23Z",
+      "side": 1,
+      "message": "Submitted. Thank you very much Artem!",
+      "parentUuid": "329c9281_38621752",
+      "revId": "fc5a73f5c9a9c9c812abac982bc985c4555d2f61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
