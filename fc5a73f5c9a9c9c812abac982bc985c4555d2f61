@@ -69,6 +69,41 @@
       "parentUuid": "d28d3a5c_2e02224b",
       "revId": "fc5a73f5c9a9c9c812abac982bc985c4555d2f61",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b70ec87c_2ae701bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1969435
+      },
+      "writtenOn": "2023-02-27T17:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29e4de3b_9738e6b0",
+      "revId": "fc5a73f5c9a9c9c812abac982bc985c4555d2f61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca927f26_6e49f5e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1969435
+      },
+      "writtenOn": "2023-02-27T17:18:02Z",
+      "side": 1,
+      "message": "@patb@google.com thanks!\n\n@dplotnikov@google.com I guess autosubmit will not work, so I\u0027ll need your help to merge this",
+      "revId": "fc5a73f5c9a9c9c812abac982bc985c4555d2f61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
