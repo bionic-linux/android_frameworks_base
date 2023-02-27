@@ -104,6 +104,24 @@
       "message": "@patb@google.com thanks!\n\n@dplotnikov@google.com I guess autosubmit will not work, so I\u0027ll need your help to merge this",
       "revId": "fc5a73f5c9a9c9c812abac982bc985c4555d2f61",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "329c9281_38621752",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1969435
+      },
+      "writtenOn": "2023-02-27T17:20:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca927f26_6e49f5e9",
+      "revId": "fc5a73f5c9a9c9c812abac982bc985c4555d2f61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
