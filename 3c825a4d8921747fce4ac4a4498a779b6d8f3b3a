@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f387a2f_0c4ad15b",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1080076
+      },
+      "writtenOn": "2023-02-27T04:50:34Z",
+      "side": 0,
+      "message": "please remove this member as well",
+      "range": {
+        "startLine": 108,
+        "startChar": 29,
+        "endLine": 108,
+        "endChar": 39
+      },
+      "revId": "3c825a4d8921747fce4ac4a4498a779b6d8f3b3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

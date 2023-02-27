@@ -151,6 +151,53 @@
       },
       "revId": "8a3abdf0746d9b3d24f172d0d46882597dc6f03a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "983ebd20_35fec62b",
+        "filename": "core/java/android/content/res/Resources.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2689,
+      "author": {
+        "id": 1080076
+      },
+      "writtenOn": "2023-02-27T04:50:34Z",
+      "side": 1,
+      "message": "given that this whole preloading calls into some low level resource loading code, I suspect there are kilobytes and kilobytes of heap, both managed and native, dirtied one way or another",
+      "parentUuid": "6f9b7ef5_63770d7c",
+      "range": {
+        "startLine": 2689,
+        "startChar": 16,
+        "endLine": 2689,
+        "endChar": 29
+      },
+      "revId": "8a3abdf0746d9b3d24f172d0d46882597dc6f03a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59d48e47_84d3ca6d",
+        "filename": "core/java/android/content/res/ResourcesImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1080076
+      },
+      "writtenOn": "2023-02-27T04:50:34Z",
+      "side": 1,
+      "message": "mark with @VisibleForTesting to make it clear it\u0027s not for anything else? Also worth pointing out that it\u0027s not thread safe and definitely can\u0027t be used anywhere but in a single global test initialization function",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 43
+      },
+      "revId": "8a3abdf0746d9b3d24f172d0d46882597dc6f03a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
