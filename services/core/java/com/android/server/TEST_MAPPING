@@ -29,17 +29,6 @@
             "file_patterns": ["SensorPrivacyService\\.java"]
         },
         {
-            "name": "FrameworksServicesTests",
-            "options": [
-                {
-                    "include-filter": "com.android.server.BinaryTransparencyServiceTest"
-                }
-            ],
-            "file_patterns": ["BinaryTransparencyService\\.java"]
-        }
-    ],
-    "presubmit-large": [
-        {
             "name": "CtsScopedStorageCoreHostTest",
             "file_patterns": ["StorageManagerService\\.java"]
         },
@@ -51,6 +40,17 @@
             "name": "CtsScopedStorageDeviceOnlyTest",
             "file_patterns": ["StorageManagerService\\.java"]
         },
+        {
+            "name": "FrameworksServicesTests",
+            "options": [
+                {
+                    "include-filter": "com.android.server.BinaryTransparencyServiceTest"
+                }
+            ],
+            "file_patterns": ["BinaryTransparencyService\\.java"]
+        }
+    ],
+    "presubmit-large": [
         {
             "name": "CtsContentTestCases",
             "options": [
