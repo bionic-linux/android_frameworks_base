@@ -36,9 +36,7 @@
                 }
             ],
             "file_patterns": ["BinaryTransparencyService\\.java"]
-        }
-    ],
-    "presubmit-large": [
+        },
         {
             "name": "CtsScopedStorageCoreHostTest",
             "file_patterns": ["StorageManagerService\\.java"]
@@ -50,7 +48,9 @@
         {
             "name": "CtsScopedStorageDeviceOnlyTest",
             "file_patterns": ["StorageManagerService\\.java"]
-        },
+        }
+    ],
+    "presubmit-large": [
         {
             "name": "CtsContentTestCases",
             "options": [
