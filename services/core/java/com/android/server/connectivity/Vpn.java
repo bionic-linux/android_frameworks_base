@@ -304,6 +304,9 @@ public class Vpn {
     private final VpnProfileStore mVpnProfileStore;
     protected boolean mDataStallSuspected = false;
 
+    private static final int IS_IPV4 = 1;
+    private static final int IS_IPV6 = 2;
+
     @VisibleForTesting
     VpnProfileStore getVpnProfileStore() {
         return mVpnProfileStore;
@@ -2762,7 +2765,8 @@ public class Vpn {
 
         void onDefaultNetworkCapabilitiesChanged(@NonNull NetworkCapabilities nc);
 
-        void onDefaultNetworkLinkPropertiesChanged(@NonNull LinkProperties lp);
+        void onDefaultNetworkLinkPropertiesChanged(@NonNull Network network,
+                @NonNull LinkProperties lp);
 
         void onDefaultNetworkLost(@NonNull Network network);
 
@@ -2792,6 +2796,14 @@ public class Vpn {
         }
 
         return hasIPV6 && !hasIPV4;
+    }
+
+    private static int getIpVersionMask(LinkProperties lp) {
+        return (lp.hasIpv4Address() ? IS_IPV4 : 0) | (lp.hasGlobalIpv6Address() ? IS_IPV6 : 0);
+    }
+
+    private static boolean isIpFamilyChanged(LinkProperties oldLp, LinkProperties newLp) {
+        return getIpVersionMask(oldLp) != getIpVersionMask(newLp);
     }
 
     private void setVpnNetworkPreference(String session, Set<Range<Integer>> ranges) {
@@ -3460,8 +3472,13 @@ public class Vpn {
         }
 
         /** Called when the LinkProperties of underlying network is changed */
-        public void onDefaultNetworkLinkPropertiesChanged(@NonNull LinkProperties lp) {
+        public void onDefaultNetworkLinkPropertiesChanged(@NonNull Network network,
+                @NonNull LinkProperties lp) {
+            final LinkProperties oldLp = mUnderlyingLinkProperties;
             mUnderlyingLinkProperties = lp;
+            if (oldLp != null && isIpFamilyChanged(oldLp, lp)) {
+                maybeMigrateIkeSession(network);
+            }
         }
 
         class VpnConnectivityDiagnosticsCallback
