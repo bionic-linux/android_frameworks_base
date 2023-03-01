@@ -49002,10 +49002,12 @@ package android.view {
     method public long getDownTime();
     method public int getEdgeFlags();
     method public long getEventTime();
+    method public long getEventTimeNano();
     method public int getFlags();
     method public float getHistoricalAxisValue(int, int);
     method public float getHistoricalAxisValue(int, int, int);
     method public long getHistoricalEventTime(int);
+    method public long getHistoricalEventTimeNano(int);
     method public float getHistoricalOrientation(int);
     method public float getHistoricalOrientation(int, int);
     method public void getHistoricalPointerCoords(int, int, android.view.MotionEvent.PointerCoords);
