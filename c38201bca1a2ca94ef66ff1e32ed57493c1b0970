@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e33dda8a_92bbfe8a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060688
+      },
+      "writtenOn": "2023-03-01T21:05:53Z",
+      "side": 1,
+      "message": "Can you share the reproduce steps in the bug (id\u003d269032068)?",
+      "revId": "c38201bca1a2ca94ef66ff1e32ed57493c1b0970",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
