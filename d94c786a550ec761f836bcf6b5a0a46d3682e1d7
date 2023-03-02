@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76363431_fee368af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2023-03-02T18:01:43Z",
+      "side": 1,
+      "message": "Chinmay, I am in CP the udc FR into aosp/master. This CL need to CP first. So here is a pure CP into aosp. Please help to have a quick approval. Thanks!",
+      "revId": "d94c786a550ec761f836bcf6b5a0a46d3682e1d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
