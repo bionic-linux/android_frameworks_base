@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66ae7b30_d1a020fc",
+        "filename": "core/java/android/content/res/ResourcesImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2023-03-02T21:31:02Z",
+      "side": 1,
+      "message": "thread-safety",
+      "range": {
+        "startLine": 166,
+        "startChar": 17,
+        "endLine": 166,
+        "endChar": 32
+      },
+      "revId": "ba53cadade4a844fb60689bf29d5299a97fd6b2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
