@@ -198,6 +198,30 @@
       },
       "revId": "8a3abdf0746d9b3d24f172d0d46882597dc6f03a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6495f515_6c5fbcd2",
+        "filename": "core/java/android/content/res/ResourcesImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1309980
+      },
+      "writtenOn": "2023-03-03T05:09:58Z",
+      "side": 1,
+      "message": "Done by adding the @VisibleForTesting and comments in pathset 6.",
+      "parentUuid": "59d48e47_84d3ca6d",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 43
+      },
+      "revId": "8a3abdf0746d9b3d24f172d0d46882597dc6f03a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
