@@ -16,6 +16,24 @@
       "message": "Can you mark yourself as a last resort? Or would you like to get added for random build file changes?",
       "revId": "a670b3f06ee3fcb6fd993ee9dd456ede169b33f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ee2ebc5_b3bb1f2d",
+        "filename": "OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-03-03T10:06:58Z",
+      "side": 1,
+      "message": "I\u0027ll leave as-is for now and tweak if necessary. I want to be the reviewer of StubLibraries.bp, ApiDocs.bp and part of Android.bp, but it seemed like a mouthful to list them here. Once I get that stuff moved to the api subdir I can probably exclude myself from reviews here.",
+      "parentUuid": "b54234bb_732aba8b",
+      "revId": "a670b3f06ee3fcb6fd993ee9dd456ede169b33f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
