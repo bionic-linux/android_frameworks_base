@@ -39,11 +39,14 @@ import dalvik.system.VMRuntime;
 
 import libcore.content.type.MimeMap;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Objects;
 import java.util.logging.LogManager;
+
+import javax.net.ssl.SSLContext;
 
 /**
  * Main entry point for runtime initialization.  Not for
@@ -220,7 +223,52 @@ public class RuntimeInit {
          * with several customizations (extensions, overrides).
          */
         MimeMap.setDefaultSupplier(DefaultMimeMapFactory::create);
+
+        disableTlsV1();
     }
+
+    private static final String[] TLS_V2_PROTOCOLS = new String[] { "TLSv1.2" };
+    private static final String[] TLS_V3_PROTOCOLS = new String[] { "TLSv1.2", "TLSv1.3" };
+
+    private static void disableTlsV1()  {
+        // Replace the supported protocol data in NativeCrypto with our own values.
+        setNativeCryptoArray("DEFAULT_PROTOCOLS", TLS_V3_PROTOCOLS);
+        setNativeCryptoArray("SUPPORTED_PROTOCOLS", TLS_V3_PROTOCOLS);
+        setNativeCryptoArray("TLSV13_PROTOCOLS", TLS_V3_PROTOCOLS);
+        setNativeCryptoArray("TLSV12_PROTOCOLS", TLS_V2_PROTOCOLS);
+        // Current Android behaviour when an app asks for V1 or V1.1 is to actually return V2
+        // protocols.  You _could_ set an array of nulls to actually break such apps, but
+        // better to silently "upgrade" them.
+        setNativeCryptoArray("TLSV11_PROTOCOLS", TLS_V2_PROTOCOLS);
+        setNativeCryptoArray("TLSV1_PROTOCOLS", TLS_V2_PROTOCOLS);
+        try {
+            // The "default" SSLContext has already been set, so override it.
+            // This is safe as the default context is effectively a TLS v1.3
+            // context initialised with default values.
+            SSLContext context = SSLContext.getInstance("TLSv1.3");
+            context.init(null, null, null);
+            SSLContext.setDefault(context);
+        } catch (Throwable throwable) {
+            // Ignored.
+        }
+    }
+
+    // Sets the named array in NativeCrypto to the new array passed in.
+    private static void setNativeCryptoArray(String arrayName, String[] value) {
+        try {
+            Class<?> clazz = Class.forName("com.android.org.conscrypt.NativeCrypto");
+            for (Field field : clazz.getDeclaredFields()) {
+                if (field.getName().equals(arrayName)) {
+                    field.setAccessible(true);
+                    field.set(null, value);
+                    field.setAccessible(false);
+                }
+            }
+        } catch (Throwable t) {
+            // Ignored.
+        }
+    }
+
 
     @UnsupportedAppUsage
     protected static final void commonInit() {
