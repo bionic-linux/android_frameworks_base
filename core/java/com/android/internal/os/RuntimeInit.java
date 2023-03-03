@@ -39,11 +39,18 @@ import dalvik.system.VMRuntime;
 
 import libcore.content.type.MimeMap;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.logging.LogManager;
+
+import javax.net.ssl.SSLContext;
 
 /**
  * Main entry point for runtime initialization.  Not for
@@ -220,6 +227,97 @@ public class RuntimeInit {
          * with several customizations (extensions, overrides).
          */
         MimeMap.setDefaultSupplier(DefaultMimeMapFactory::create);
+
+        disableUnwantedTls();
+    }
+
+    private static final List<String> PROTOCOL_ARRAYS = List.of(
+            "DEFAULT_PROTOCOLS",
+            "SUPPORTED_PROTOCOLS",
+            "TLSV13_PROTOCOLS",
+            "TLSV12_PROTOCOLS",
+             "TLSV11_PROTOCOLS",
+            "TLSV1_PROTOCOLS"
+    );
+    private static final Set<String> UNWANTED_PROTOCOLS = Set.of("TLSv1.1", "TLSv1");
+    private static final List<String> SUITE_ARRAYS = List.of(
+            "SUPPORTED_TLS_1_2_CIPHER_SUITES",
+            "SUPPORTED_TLS_1_3_CIPHER_SUITES",
+            "DEFAULT_X509_CIPHER_SUITES",
+            "DEFAULT_PSK_CIPHER_SUITES"
+    );
+    private static final Set<String> UNWANTED_SUITES = Set.of(
+            "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
+            "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
+            "TLS_CHACHA20_POLY1305_SHA256",
+            "TLS_ECDHE_PSK_WITH_CHACHA20_POLY1305_SHA256"
+    );
+
+    private static void disableUnwantedTls()  {
+        for (String array : PROTOCOL_ARRAYS) {
+            filterNativeCryptoArray(array, UNWANTED_PROTOCOLS);
+        }
+        for (String array : SUITE_ARRAYS) {
+            filterNativeCryptoArray(array, UNWANTED_SUITES);
+        }
+
+        try {
+            // The "default" SSLContext has already been set, so override it.
+            // This is safe as the default context is effectively a TLS v1.3
+            // context initialised with default values.
+            SSLContext context = SSLContext.getInstance("TLSv1.3");
+            context.init(null, null, null);
+            SSLContext.setDefault(context);
+            // Other classes also have cached initial defaults in static fields, so
+            // null them out to force recalculation based on the changes above.
+            nullify("javax.net.ssl.SSLSocketFactory", "defaultSocketFactory");
+            nullify("javax.net.ssl.SSLServerSocketFactory", "defaultServerSocketFactory");
+            nullify("javax.net.ssl.HttpsURLConnection", "defaultSSLSocketFactory");
+            nullify("com.android.org.conscrypt.SSLParametersImpl", "defaultParameters");
+
+        } catch (Throwable throwable) {
+            // Ignored.
+        }
+    }
+
+    // Sets the named static field in the names class to null.
+    private static void nullify(String className, String fieldName) {
+        try {
+            Class<?> clazz = Class.forName(className);
+            for (Field field : clazz.getDeclaredFields()) {
+                if (field.getName().equals(fieldName)) {
+                    field.setAccessible(true);
+                    field.set(null, null);
+                    field.setAccessible(false);
+                }
+            }
+        } catch (Throwable t) {
+            // Ignored.
+        }
+    }
+
+    // Filters unwanted values out of the named String array in NativeCrypto.
+    private static void filterNativeCryptoArray(String arrayName, Set<String> unwanted) {
+        try {
+            Class<?> clazz = Class.forName("com.android.org.conscrypt.NativeCrypto");
+            for (Field field : clazz.getDeclaredFields()) {
+                if (field.getName().equals(arrayName)) {
+                    field.setAccessible(true);
+                    String[] current = (String[]) field.get(null);
+                    field.set(null, filterArray(current, unwanted));
+                    field.setAccessible(false);
+                }
+            }
+        } catch (Throwable t) {
+            // Ignored.
+        }
+    }
+
+    // Returns a new String array with unwanted values filtered out.
+    private static String[] filterArray(String[] input, Set<String> unwanted) {
+        List<String> result = new ArrayList<>(Arrays.asList(input));
+        result.removeAll(unwanted);
+        return result.toArray(new String[0]);
     }
 
     @UnsupportedAppUsage
