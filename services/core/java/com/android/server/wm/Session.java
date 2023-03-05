@@ -113,7 +113,7 @@ class Session extends IWindowSession.Stub implements IBinder.DeathRecipient {
     private boolean mShowingAlertWindowNotificationAllowed;
     private boolean mClientDead = false;
     private float mLastReportedAnimatorScale;
-    private String mPackageName;
+    protected String mPackageName;
     private String mRelayoutTag;
     private String mUpdateViewVisibilityTag;
     private String mUpdateWindowLayoutTag;

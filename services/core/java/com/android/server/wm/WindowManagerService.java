@@ -5968,7 +5968,7 @@ public class WindowManagerService extends IWindowManager.Stub
         final boolean hold = newHoldScreen != null;
 
         if (hold && mHoldingScreenOn != newHoldScreen) {
-            mHoldingScreenWakeLock.setWorkSource(new WorkSource(newHoldScreen.mUid));
+            mHoldingScreenWakeLock.setWorkSource(new WorkSource(newHoldScreen.mUid, newHoldScreen.mPackageName));
         }
         mHoldingScreenOn = newHoldScreen;
 
