@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "388dd92c_f8abf18a",
+        "filename": "media/jni/android_media_MediaCodec.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 1951601
+      },
+      "writtenOn": "2023-03-08T01:14:44Z",
+      "side": 1,
+      "message": "why not\nreturn msg ?: \"codec is released already\";",
+      "range": {
+        "startLine": 1370,
+        "startChar": 8,
+        "endLine": 1373,
+        "endChar": 43
+      },
+      "revId": "8eecb8d5c5732343bbc859b47f4bce4e33e7878b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
