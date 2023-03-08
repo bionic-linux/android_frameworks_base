@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b69e689_7d0e55bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1975032
+      },
+      "writtenOn": "2023-03-08T04:49:56Z",
+      "side": 1,
+      "message": "Works well. i checked that gps tag disappears.",
+      "revId": "2bf5896e3fe784069661ad674f58efe48e2aab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
