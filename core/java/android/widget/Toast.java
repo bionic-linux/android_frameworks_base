@@ -73,9 +73,6 @@ import java.util.List;
  * <a href="{@docRoot}reference/com/google/android/material/snackbar/Snackbar">Snackbars</a> are
  * preferred for brief messages while the app is in the foreground.
  * <p>
- * Note that toasts being sent from the background are rate limited, so avoid sending such toasts
- * in quick succession.
- * <p>
  * Starting with Android 12 (API level 31), apps targeting Android 12 or newer will have
  * their toasts limited to two lines.
  *
@@ -189,6 +186,9 @@ public class Toast {
 
     /**
      * Show the view for the specified duration.
+     *
+     * <p>Note that toasts being sent from the background are rate limited, so avoid sending such
+     * toasts in quick succession.
      */
     public void show() {
         if (Compatibility.isChangeEnabled(CHANGE_TEXT_TOASTS_IN_THE_SYSTEM)) {
