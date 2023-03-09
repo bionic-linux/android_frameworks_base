@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "551145dc_92ac8c6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-03-09T14:36:06Z",
+      "side": 1,
+      "message": "Thanks Wonsik. Can we think for each error message if it is actionable by the developer? If so, we could guide them towards it. E.g. \"this need a graphic HardwareBuffer, this is a LinearBlock, etc.\"\n\nIn essence we are giving more context so they can fix their app, or understand if they are dealing with some HAL issue, or some race condition.",
+      "revId": "c9c5b5b29af18ddd0e87dac7b86e134a677b276f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecf38c40_f672042f",
+        "filename": "media/jni/android_media_MediaCodec.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2484,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-03-09T14:36:06Z",
+      "side": 1,
+      "message": "can we be more actionable here? E.g. how to allocate a compatible buffer?\n\nI feel the next step will be to provide guidance to developers on what to do when they get this error. If we could distinguish codec/implementation error from developer error, that would be a great help.",
+      "range": {
+        "startLine": 2484,
+        "startChar": 37,
+        "endLine": 2484,
+        "endChar": 66
+      },
+      "revId": "c9c5b5b29af18ddd0e87dac7b86e134a677b276f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "652c7bd9_73c4c5a5",
+        "filename": "media/jni/android_media_MediaCodec.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2511,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-03-09T14:36:06Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 2511,
+        "startChar": 34,
+        "endLine": 2511,
+        "endChar": 59
+      },
+      "revId": "c9c5b5b29af18ddd0e87dac7b86e134a677b276f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
