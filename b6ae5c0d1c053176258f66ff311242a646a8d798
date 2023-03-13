@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e044c91_ab0b9f97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2023-03-13T22:12:36Z",
+      "side": 1,
+      "message": "presubmit errors seem unrelated.\nMartijn, if you could update that lint complaint about the catch() block, I\u0027ll\nstill be able to do the +2 and submit.",
+      "revId": "b6ae5c0d1c053176258f66ff311242a646a8d798",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac462f53_0c026045",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3118,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2023-03-13T22:12:36Z",
+      "side": 1,
+      "message": "we are intentionally falling through to return a read-error in the next two\nlines.  that seems ok to me.\nthe lint warning suggests that the appropriate structure is a simple comment:\n\n} catch (IOException e) {\n  // absorb the exception and fall through to the \u0027failed read\u0027 return path\n}",
+      "range": {
+        "startLine": 3118,
+        "startChar": 48,
+        "endLine": 3118,
+        "endChar": 51
+      },
+      "revId": "b6ae5c0d1c053176258f66ff311242a646a8d798",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
