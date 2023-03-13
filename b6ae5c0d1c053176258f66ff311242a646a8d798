@@ -39,6 +39,30 @@
       },
       "revId": "b6ae5c0d1c053176258f66ff311242a646a8d798",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a96a3d90_0f4cb50a",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3118,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2023-03-13T22:23:46Z",
+      "side": 1,
+      "message": "[i know this was existing code and not a construct that martijn added]",
+      "parentUuid": "ac462f53_0c026045",
+      "range": {
+        "startLine": 3118,
+        "startChar": 48,
+        "endLine": 3118,
+        "endChar": 51
+      },
+      "revId": "b6ae5c0d1c053176258f66ff311242a646a8d798",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
