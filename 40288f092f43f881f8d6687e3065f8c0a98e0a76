@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8296fc44_13b131b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1958109
+      },
+      "writtenOn": "2023-03-14T22:26:54Z",
+      "side": 1,
+      "message": "Note: I am not seeing any new failures in `atest CtsJobSchedulerTestCases` as a result of this change, but old failures remain. From an AOSP android-13.0.0_r35 on bramble, both before and after this change, the following tests fail for me:\n\n```\nandroid.jobscheduler.cts.ConnectivityConstraintTest#testCellularConstraintExecutedAndStopped_Foreground: Job with metered connectivity constraint for foreground app was stopped when Data Saver was turned on.\nandroid.jobscheduler.cts.ConnectivityConstraintTest#testFgExpeditedJobBypassesDataSaver: Wifi must be connected to an access point for this test. expected:\u003ctrue\u003e but was:\u003cfalse\u003e\nandroid.jobscheduler.cts.ExpeditedJobTest#testTopEJUnlimited: Job did not start after scheduling\nandroid.jobscheduler.cts.IdleConstraintTest#testScreenOnDeviceOnDockChangeState: Job unexpectedly not waiting, in state: active\n ready\n```",
+      "revId": "40288f092f43f881f8d6687e3065f8c0a98e0a76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
