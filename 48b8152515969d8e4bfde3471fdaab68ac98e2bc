@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e7a6b03_df61472b",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1279898
+      },
+      "writtenOn": "2023-03-15T01:24:04Z",
+      "side": 1,
+      "message": "For reference, this flag name is what is currently used by the Renderscript.java file in frameworks/rs. I can migrate this to a public constant if desirable, but I assume that this will shortly be removed entirely by the aforementioned bug.",
+      "range": {
+        "startLine": 192,
+        "startChar": 42,
+        "endLine": 192,
+        "endChar": 69
+      },
+      "revId": "48b8152515969d8e4bfde3471fdaab68ac98e2bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
