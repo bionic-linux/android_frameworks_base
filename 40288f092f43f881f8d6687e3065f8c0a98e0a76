@@ -33,6 +33,24 @@
       "message": "The disparity between user-allowlist and system-allowlist has been largely intentional till now.\nWe only allow what is absolutely needed for system-allowlisted apps to function properly.\nThere should be a better way to fix whatever is broken here.",
       "revId": "40288f092f43f881f8d6687e3065f8c0a98e0a76",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc0db42f_a24886cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1958109
+      },
+      "writtenOn": "2023-03-15T00:42:26Z",
+      "side": 1,
+      "message": "Thanks for the quick review. Good to know that this is at least partly intentional, but if I didn\u0027t explain the issue clearly enough, more details are available here: https://issuetracker.google.com/issues/22364351\n\nIf you have other ideas on how to fix this more appropriately, I\u0027d be interested, but if this behavior is fully intended, it would be helpful to know as well.",
+      "parentUuid": "cb1d1243_f50e45c3",
+      "revId": "40288f092f43f881f8d6687e3065f8c0a98e0a76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
