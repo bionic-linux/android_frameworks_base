@@ -16,6 +16,24 @@
       "message": "I have the sense that we don\u0027t even need to load this here. Can you try it without the load entirely?",
       "revId": "12eb82e8574b817e6fb37df00d6c3176014921e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3ad73b7_2086a39d",
+        "filename": "rs/java/android/renderscript/RenderScript.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1279898
+      },
+      "writtenOn": "2023-03-16T00:49:14Z",
+      "side": 1,
+      "message": "You\u0027re right! Removing this doesn\u0027t seem to have any tangible effect, all the RS CTS tests still pass. Removing from CL.",
+      "parentUuid": "ae28d0b2_08ac0187",
+      "revId": "12eb82e8574b817e6fb37df00d6c3176014921e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
