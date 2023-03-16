@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba31e2f7_b0903f14",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2023-03-16T01:33:02Z",
+      "side": 1,
+      "message": "I don\u0027t really know if we can request ES2.\nLast time I talked to jreck@ he mentioned some OEMs don\u0027t support it at early boot stages.",
+      "range": {
+        "startLine": 463,
+        "startChar": 29,
+        "endLine": 463,
+        "endChar": 47
+      },
+      "revId": "d93f7b274b1ecc6e62e69d2be08cf48a34e5a65f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
