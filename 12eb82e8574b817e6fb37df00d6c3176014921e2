@@ -34,6 +34,24 @@
       "parentUuid": "ae28d0b2_08ac0187",
       "revId": "12eb82e8574b817e6fb37df00d6c3176014921e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b49df5c_7d104fba",
+        "filename": "rs/java/android/renderscript/RenderScript.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2023-03-16T00:50:51Z",
+      "side": 1,
+      "message": "heh, thanks for asking that, srhines --- i just assumed he\u0027d already tried and it hadn\u0027t worked :-)",
+      "parentUuid": "e3ad73b7_2086a39d",
+      "revId": "12eb82e8574b817e6fb37df00d6c3176014921e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
