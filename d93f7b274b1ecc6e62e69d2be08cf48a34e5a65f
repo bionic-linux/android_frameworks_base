@@ -22,6 +22,30 @@
       },
       "revId": "d93f7b274b1ecc6e62e69d2be08cf48a34e5a65f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53493f5b_f26d2f46",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2023-03-16T01:39:01Z",
+      "side": 1,
+      "message": "SurfaceFlinger will have already created an ES2 context before bootanimation ever runs, but also bootanimation is using ES2 regardless so it must be available or it doesn\u0027t work",
+      "parentUuid": "ba31e2f7_b0903f14",
+      "range": {
+        "startLine": 463,
+        "startChar": 29,
+        "endLine": 463,
+        "endChar": 47
+      },
+      "revId": "d93f7b274b1ecc6e62e69d2be08cf48a34e5a65f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
