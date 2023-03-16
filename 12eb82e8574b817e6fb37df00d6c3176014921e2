@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae28d0b2_08ac0187",
+        "filename": "rs/java/android/renderscript/RenderScript.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2023-03-16T00:35:42Z",
+      "side": 1,
+      "message": "I have the sense that we don\u0027t even need to load this here. Can you try it without the load entirely?",
+      "revId": "12eb82e8574b817e6fb37df00d6c3176014921e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
