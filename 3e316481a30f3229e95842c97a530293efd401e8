@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da071ba5_f767c243",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1827146
+      },
+      "writtenOn": "2023-03-17T19:25:18Z",
+      "side": 1,
+      "message": "https://r.android.com/2478575 needs to be merged first",
+      "revId": "3e316481a30f3229e95842c97a530293efd401e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
