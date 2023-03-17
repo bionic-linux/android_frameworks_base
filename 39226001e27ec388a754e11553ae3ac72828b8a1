@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73ebd85c_92a35a14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1387509
+      },
+      "writtenOn": "2023-03-17T15:35:24Z",
+      "side": 1,
+      "message": "I am not sure why this cl improves things. Calling `#asSequence` builds a new object[1]. Otherwise, this cl offers no change in functionality.\n\nhttps://github.com/JetBrains/kotlin/blob/30788566012c571aa1d3590912468d1ebe59983d/libraries/stdlib/src/kotlin/collections/Sequences.kt#L21",
+      "revId": "39226001e27ec388a754e11553ae3ac72828b8a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
