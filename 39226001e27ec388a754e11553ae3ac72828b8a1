@@ -34,6 +34,24 @@
       "parentUuid": "73ebd85c_92a35a14",
       "revId": "39226001e27ec388a754e11553ae3ac72828b8a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "047c2cec_8c61d6eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1387509
+      },
+      "writtenOn": "2023-03-17T18:09:38Z",
+      "side": 1,
+      "message": "The `filterForEach` method used only iterates once, however:\n\n```\ninline fun \u003cT\u003e Collection\u003cT\u003e.filterForEach(f: (T) -\u003e Boolean, execute: (T) -\u003e Unit) {\n    forEach {\n        if (f.invoke(it)) {\n            execute.invoke(it)\n        }\n    }\n}\n```",
+      "parentUuid": "17226fc8_9ffa914d",
+      "revId": "39226001e27ec388a754e11553ae3ac72828b8a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
