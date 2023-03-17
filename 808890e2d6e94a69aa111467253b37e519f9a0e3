@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13e06cd0_3a217374",
+        "filename": "core/java/com/android/internal/expresslog/Counter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1373412
+      },
+      "writtenOn": "2023-03-17T10:42:18Z",
+      "side": 1,
+      "message": "`, amount, uid`\n\nWe were very lucky that the build caught it.",
+      "range": {
+        "startLine": 69,
+        "startChar": 75,
+        "endLine": 69,
+        "endChar": 87
+      },
+      "revId": "808890e2d6e94a69aa111467253b37e519f9a0e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
