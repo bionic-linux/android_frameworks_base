@@ -58,7 +58,7 @@ class ConfigurationControllerImpl @Inject constructor(context: Context) : Config
     override fun notifyThemeChanged() {
         val listeners = ArrayList(listeners)
 
-        listeners.filterForEach({ this.listeners.contains(it) }) {
+        listeners.asSequence().filter { listeners.contains(it) }.forEach {
             it.onThemeChanged()
         }
     }
@@ -67,7 +67,7 @@ class ConfigurationControllerImpl @Inject constructor(context: Context) : Config
         // Avoid concurrent modification exception
         val listeners = ArrayList(listeners)
 
-        listeners.filterForEach({ this.listeners.contains(it) }) {
+        listeners.asSequence().filter { listeners.contains(it) }.forEach {
             it.onConfigChanged(newConfig)
         }
         val fontScale = newConfig.fontScale
@@ -76,7 +76,7 @@ class ConfigurationControllerImpl @Inject constructor(context: Context) : Config
         val uiModeChanged = uiMode != this.uiMode
         if (density != this.density || fontScale != this.fontScale ||
                 inCarMode && uiModeChanged) {
-            listeners.filterForEach({ this.listeners.contains(it) }) {
+            listeners.asSequence().filter { listeners.contains(it) }.forEach {
                 it.onDensityOrFontScaleChanged()
             }
             this.density = density
@@ -86,7 +86,7 @@ class ConfigurationControllerImpl @Inject constructor(context: Context) : Config
         val smallestScreenWidth = newConfig.smallestScreenWidthDp
         if (smallestScreenWidth != this.smallestScreenWidth) {
             this.smallestScreenWidth = smallestScreenWidth
-            listeners.filterForEach({ this.listeners.contains(it) }) {
+            listeners.asSequence().filter { listeners.contains(it) }.forEach {
                 it.onSmallestScreenWidthChanged()
             }
         }
@@ -98,7 +98,7 @@ class ConfigurationControllerImpl @Inject constructor(context: Context) : Config
             // would be a direct reference to windowConfiguration.maxBounds, so the if statement
             // above would always fail. See b/245799099 for more information.
             this.maxBounds.set(maxBounds)
-            listeners.filterForEach({ this.listeners.contains(it) }) {
+            listeners.asSequence().filter { listeners.contains(it) }.forEach {
                 it.onMaxBoundsChanged()
             }
         }
@@ -106,7 +106,7 @@ class ConfigurationControllerImpl @Inject constructor(context: Context) : Config
         val localeList = newConfig.locales
         if (localeList != this.localeList) {
             this.localeList = localeList
-            listeners.filterForEach({ this.listeners.contains(it) }) {
+            listeners.asSequence().filter { listeners.contains(it) }.forEach {
                 it.onLocaleListChanged()
             }
         }
@@ -117,20 +117,20 @@ class ConfigurationControllerImpl @Inject constructor(context: Context) : Config
             context.theme.applyStyle(context.themeResId, true)
 
             this.uiMode = uiMode
-            listeners.filterForEach({ this.listeners.contains(it) }) {
+            listeners.asSequence().filter { listeners.contains(it) }.forEach {
                 it.onUiModeChanged()
             }
         }
 
         if (layoutDirection != newConfig.layoutDirection) {
             layoutDirection = newConfig.layoutDirection
-            listeners.filterForEach({ this.listeners.contains(it) }) {
+            listeners.asSequence().filter { listeners.contains(it) }.forEach {
                 it.onLayoutDirectionChanged(layoutDirection == LAYOUT_DIRECTION_RTL)
             }
         }
 
         if (lastConfig.updateFrom(newConfig) and ActivityInfo.CONFIG_ASSETS_PATHS != 0) {
-            listeners.filterForEach({ this.listeners.contains(it) }) {
+            listeners.asSequence().filter { listeners.contains(it) }.forEach {
                 it.onThemeChanged()
             }
         }
@@ -147,16 +147,5 @@ class ConfigurationControllerImpl @Inject constructor(context: Context) : Config
 
     override fun isLayoutRtl(): Boolean {
         return layoutDirection == LAYOUT_DIRECTION_RTL
-    }
-}
-
-// This could be done with a Collection.filter and Collection.forEach, but Collection.filter
-// creates a new array to store them in and we really don't need that here, so this provides
-// a little more optimized inline version.
-inline fun <T> Collection<T>.filterForEach(f: (T) -> Boolean, execute: (T) -> Unit) {
-    forEach {
-        if (f.invoke(it)) {
-            execute.invoke(it)
-        }
     }
 }
