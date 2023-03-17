@@ -69,6 +69,47 @@
       "parentUuid": "dc0db42f_a24886cd",
       "revId": "40288f092f43f881f8d6687e3065f8c0a98e0a76",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2110f08f_0135fb3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2023-03-17T22:18:24Z",
+      "side": 1,
+      "message": "The app should probably use an expedited job if it needs to happen immediately and ignore Doze.",
+      "parentUuid": "da7b5ea0_871fdcc4",
+      "revId": "40288f092f43f881f8d6687e3065f8c0a98e0a76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a20c87b5_674c7459",
+        "filename": "apex/jobscheduler/service/java/com/android/server/alarm/AlarmManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2857,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2023-03-17T22:18:24Z",
+      "side": 1,
+      "message": "The comment indicates the choice of the user\u0027s list was intentional.",
+      "range": {
+        "startLine": 2857,
+        "startChar": 59,
+        "endLine": 2857,
+        "endChar": 82
+      },
+      "revId": "40288f092f43f881f8d6687e3065f8c0a98e0a76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
