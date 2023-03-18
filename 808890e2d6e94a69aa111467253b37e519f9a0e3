@@ -22,6 +22,30 @@
       },
       "revId": "808890e2d6e94a69aa111467253b37e519f9a0e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc8a9d37_77e074f6",
+        "filename": "core/java/com/android/internal/expresslog/Counter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1827146
+      },
+      "writtenOn": "2023-03-18T06:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13e06cd0_3a217374",
+      "range": {
+        "startLine": 69,
+        "startChar": 75,
+        "endLine": 69,
+        "endChar": 87
+      },
+      "revId": "808890e2d6e94a69aa111467253b37e519f9a0e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
