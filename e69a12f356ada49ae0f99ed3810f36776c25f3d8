@@ -39,6 +39,30 @@
       },
       "revId": "e69a12f356ada49ae0f99ed3810f36776c25f3d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5d011e3_e8dfac85",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3076,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2023-03-20T13:25:32Z",
+      "side": 1,
+      "message": "I think this might be ok, because if the retriever does use `in` in `readAt()`, it explicitly seeks to the requested position before reading, unless it\u0027s a read at the exact same position that was requested before. But that case might already have been broken? Eg, if the retriever first reads at offset 10, then the code in L3200 modifies the position in the stream, and then the retriever again tries to read at offset 10, it would also read at the wrong offset. It seems to me mixing use of the InputStream with the receiver is a bit fragile.",
+      "parentUuid": "d1082688_de347574",
+      "range": {
+        "startLine": 3075,
+        "startChar": 1,
+        "endLine": 3076,
+        "endChar": 44
+      },
+      "revId": "e69a12f356ada49ae0f99ed3810f36776c25f3d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
