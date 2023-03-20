@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2b3bc60_0a7079ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1283035
+      },
+      "writtenOn": "2023-03-20T08:48:31Z",
+      "side": 1,
+      "message": "Hello. How to overcome \"Presubmit-Verified -1\"?",
+      "revId": "d93f7b274b1ecc6e62e69d2be08cf48a34e5a65f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ba31e2f7_b0903f14",
