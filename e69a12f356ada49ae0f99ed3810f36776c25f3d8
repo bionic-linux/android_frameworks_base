@@ -16,6 +16,29 @@
       "message": "re-hug; i don\u0027t think that the presubmit failures are related to this change.",
       "revId": "e69a12f356ada49ae0f99ed3810f36776c25f3d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1082688_de347574",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3076,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2023-03-20T11:36:57Z",
+      "side": 1,
+      "message": "this change is not obviously correct to me, because `in` is mutated below (e.g. L3200) and then the `retriever` is used after that (e.g. L3221). The mutation will only take effect if `fd \u003d\u003d null` (i.e. `retriever` is backed directly by `in`).\n\nI\u0027m not saying this is wrong - just that it looks suspicious and I\u0027d like to see some robust testing to ensure this is correct.",
+      "range": {
+        "startLine": 3075,
+        "startChar": 1,
+        "endLine": 3076,
+        "endChar": 44
+      },
+      "revId": "e69a12f356ada49ae0f99ed3810f36776c25f3d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
