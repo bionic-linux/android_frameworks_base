@@ -63,6 +63,30 @@
       },
       "revId": "e69a12f356ada49ae0f99ed3810f36776c25f3d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45cb46ba_1d991312",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3076,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2023-03-20T17:40:09Z",
+      "side": 1,
+      "message": "Yes it looks like you\u0027re right, the seeks inside `MediaDataSource.readAt` mean that the mutations on L3200 aren\u0027t **supposed** to affect the result on L3221, and this CL makes that less likely, not more.\n\nI do agree this all looks extremely fragile (regardless of this change). For example the comments on L3095 suggest that we can\u0027t allow arbitrary seeks into `in`, but those same checks aren\u0027t in effect when we\u0027re directly seeking around in `in` on L3200. However if this is a problem, it\u0027s a problem before this change (and this change bypasses the problem, as it happens).",
+      "parentUuid": "a5d011e3_e8dfac85",
+      "range": {
+        "startLine": 3075,
+        "startChar": 1,
+        "endLine": 3076,
+        "endChar": 44
+      },
+      "revId": "e69a12f356ada49ae0f99ed3810f36776c25f3d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
