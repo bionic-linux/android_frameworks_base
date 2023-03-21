@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f572428c_a637874a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1746367
+      },
+      "writtenOn": "2023-03-21T08:26:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a8d3fdb_f708dbfc",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 59
+      },
+      "revId": "1d0881df2cd4b606ec0bda4392e7c38a3b2f131f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e46f8596_20bb4cd4",
@@ -49,6 +73,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "614a5504_7f0e5e6b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1746367
+      },
+      "writtenOn": "2023-03-21T08:26:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e46f8596_20bb4cd4",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 54
+      },
+      "revId": "1d0881df2cd4b606ec0bda4392e7c38a3b2f131f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "b4e6677f_eb875e16",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
@@ -60,6 +108,24 @@
       "writtenOn": "2023-03-21T07:38:36Z",
       "side": 1,
       "message": "I am Ok with the CL except some nits. Please also get approval from other folks",
+      "revId": "1d0881df2cd4b606ec0bda4392e7c38a3b2f131f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee1d5bcd_b1c96715",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1746367
+      },
+      "writtenOn": "2023-03-21T08:26:23Z",
+      "side": 1,
+      "message": "Thank you very much, the commit message format has been updated, please CR again。",
+      "parentUuid": "b4e6677f_eb875e16",
       "revId": "1d0881df2cd4b606ec0bda4392e7c38a3b2f131f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
