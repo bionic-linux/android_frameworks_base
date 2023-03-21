@@ -111,6 +111,30 @@
       },
       "revId": "e69a12f356ada49ae0f99ed3810f36776c25f3d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca25c029_931191c3",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3076,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2023-03-21T14:47:53Z",
+      "side": 1,
+      "message": "let\u0027s clean it up now -- while we have the covers off and while we have the context fresh in our minds.\n\nlet\u0027s do a new bug;  maybe with a link between it and the original \"binder thread exhaustion bug\" for context.",
+      "parentUuid": "efb4d308_7a54d440",
+      "range": {
+        "startLine": 3075,
+        "startChar": 1,
+        "endLine": 3076,
+        "endChar": 44
+      },
+      "revId": "e69a12f356ada49ae0f99ed3810f36776c25f3d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
