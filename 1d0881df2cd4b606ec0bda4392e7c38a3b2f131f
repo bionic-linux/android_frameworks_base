@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a8d3fdb_f708dbfc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2023-03-21T07:38:36Z",
+      "side": 1,
+      "message": "Bug: 274493538",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 59
+      },
+      "revId": "1d0881df2cd4b606ec0bda4392e7c38a3b2f131f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e46f8596_20bb4cd4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2023-03-21T07:38:36Z",
+      "side": 1,
+      "message": "Test: adb shell dumpsys power | grep -Ei \"Wake Locks:\" -A\u003cn\u003e",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 54
+      },
+      "revId": "1d0881df2cd4b606ec0bda4392e7c38a3b2f131f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4e6677f_eb875e16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2023-03-21T07:38:36Z",
+      "side": 1,
+      "message": "I am Ok with the CL except some nits. Please also get approval from other folks",
+      "revId": "1d0881df2cd4b606ec0bda4392e7c38a3b2f131f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
