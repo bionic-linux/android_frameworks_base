@@ -33,6 +33,23 @@
       "message": "Any update?",
       "revId": "1331b121e0cb0438e6c7dfd050eb47cc8d158a44",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f985ac67_fe2207cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1214924
+      },
+      "writtenOn": "2023-03-21T02:42:07Z",
+      "side": 1,
+      "message": "I\u0027m not in the OWNERS for these files, so removing myself from reviewers.",
+      "revId": "1331b121e0cb0438e6c7dfd050eb47cc8d158a44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
