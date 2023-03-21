@@ -87,6 +87,30 @@
       },
       "revId": "e69a12f356ada49ae0f99ed3810f36776c25f3d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efb4d308_7a54d440",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3076,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2023-03-21T14:40:28Z",
+      "side": 1,
+      "message": "Agreed. Ray, do you want a bug filed for this? It probably doesn\u0027t cause issues in practice, but it\u0027d be good to clean up.",
+      "parentUuid": "45cb46ba_1d991312",
+      "range": {
+        "startLine": 3075,
+        "startChar": 1,
+        "endLine": 3076,
+        "endChar": 44
+      },
+      "revId": "e69a12f356ada49ae0f99ed3810f36776c25f3d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
