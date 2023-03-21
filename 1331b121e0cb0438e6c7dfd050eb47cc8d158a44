@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "24ca867b_7c31406b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1746367
+      },
+      "writtenOn": "2023-03-21T07:29:32Z",
+      "side": 1,
+      "message": "Hi Charles,\nThe bug ID and more details have been added, please review again, thanks.",
+      "parentUuid": "ab28ecdd_3241841d",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "1331b121e0cb0438e6c7dfd050eb47cc8d158a44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "7d7f7c88_d107d268",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
