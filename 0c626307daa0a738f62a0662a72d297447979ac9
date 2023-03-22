@@ -53,6 +53,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd18ba40_f029fd76",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2023-03-22T19:15:54Z",
+      "side": 1,
+      "message": "This isn\u0027t appropriate for this API. If the TV doesn\u0027t have a hardware decoder that can satisfy this, shouldn\u0027t it be hitting a software fallback instead?\n\nBut asking devs to figure all those quirks out to pick a different format isn\u0027t appropriate, especially not for 565 as we don\u0027t really like that format in general. A fallback to 8888 is OK, but that should be done automatically by the system not by forcing devs to jump through all these hoops.",
+      "revId": "0c626307daa0a738f62a0662a72d297447979ac9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd7d9b44_a9cee6e5",
