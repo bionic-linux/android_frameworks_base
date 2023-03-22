@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8535c0c6_734833bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2023-03-22T16:39:08Z",
+      "side": 1,
+      "message": "I did ask Xiao to add some documentation since right now there is none and this is surprising behavior for TVs that ship with Android 13 (ideally, I think we should find a way to fix the implementation but the ship has sailed for Android 13 so...)\n\nIf there\u0027s a better place than doc comments then I\u0027m fine with that too as long as this information is discoverable.",
+      "parentUuid": "6630915e_4113b187",
+      "revId": "0c626307daa0a738f62a0662a72d297447979ac9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fd7d9b44_a9cee6e5",
         "filename": "graphics/java/android/graphics/BitmapFactory.java",
         "patchSetId": 3
