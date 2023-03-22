@@ -140,7 +140,14 @@ public class BitmapFactory {
          * the decoder will try to pick the best matching config based on the
          * system's screen depth, and characteristics of the original image such
          * as if it has per-pixel alpha (requiring a config that also does).
-         * 
+         *
+         * <p class="note"> From {@link android.os.Build.VERSION_CODES#TIRAMISU},
+         * if a TV device does not support COLOR_FormatYUVP010 as a video decoder
+         * output format, i.e. there is no {@link android.media.MediaCodecInfo.CodecCapabilities
+         * #COLOR_FormatYUVP010} in its {@link android.media.MediaCodecInfo.CodecCapabilities
+         * #colorFormats}, then it is unable to decode 10-bit heif images to {@link Bitmap.Config
+         * #RGBA_1010102}, please use {@link Bitmap.Config#RGB_565} as inPreferredConfig instead.</p>
+         *
          * Image are loaded with the {@link Bitmap.Config#ARGB_8888} config by
          * default.
          */
