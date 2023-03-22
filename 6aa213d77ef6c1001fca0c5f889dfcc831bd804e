@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9bde010_7faba076",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4070,
+      "author": {
+        "id": 1929540
+      },
+      "writtenOn": "2023-03-22T14:46:51Z",
+      "side": 1,
+      "message": "I don\u0027t know this module, so asking out of curiosity - why this function is even called if the device type does not match ?\n\nName of this function suggest LeAudio...",
+      "range": {
+        "startLine": 4070,
+        "startChar": 17,
+        "endLine": 4070,
+        "endChar": 45
+      },
+      "revId": "6aa213d77ef6c1001fca0c5f889dfcc831bd804e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
