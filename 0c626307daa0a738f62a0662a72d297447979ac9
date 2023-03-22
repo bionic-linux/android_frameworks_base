@@ -70,6 +70,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5af0f6a_66359514",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1952631
+      },
+      "writtenOn": "2023-03-22T19:53:50Z",
+      "side": 1,
+      "message": "As Alec and I have discussed in b/240533606 (from #comment48): fallback to 8888 is not possible, and currently the fallback can\u0027t be done automatically by the system.",
+      "parentUuid": "bd18ba40_f029fd76",
+      "revId": "0c626307daa0a738f62a0662a72d297447979ac9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd7d9b44_a9cee6e5",
