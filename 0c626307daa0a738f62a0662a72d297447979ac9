@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6630915e_4113b187",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060206
+      },
+      "writtenOn": "2023-03-22T16:33:22Z",
+      "side": 1,
+      "message": "This looks like a very specific comment.  I\u0027ll let jreck comment further.  I think such comments and guidance belong somewhere else - it\u0027s unlikely if you\u0027re having issues, you will end up on this particular field and figure out this is what you need to change.  Is there a centralized place for such knowledge?  Should our exceptions be better?",
+      "revId": "0c626307daa0a738f62a0662a72d297447979ac9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd7d9b44_a9cee6e5",
+        "filename": "graphics/java/android/graphics/BitmapFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1060206
+      },
+      "writtenOn": "2023-03-22T16:33:22Z",
+      "side": 1,
+      "message": "Can this be \"a device\"?",
+      "range": {
+        "startLine": 145,
+        "startChar": 11,
+        "endLine": 145,
+        "endChar": 25
+      },
+      "revId": "0c626307daa0a738f62a0662a72d297447979ac9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "001521ae_2249b649",
+        "filename": "graphics/java/android/graphics/BitmapFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1060206
+      },
+      "writtenOn": "2023-03-22T16:33:22Z",
+      "side": 1,
+      "message": "@link or @code",
+      "range": {
+        "startLine": 145,
+        "startChar": 43,
+        "endLine": 145,
+        "endChar": 62
+      },
+      "revId": "0c626307daa0a738f62a0662a72d297447979ac9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ac86da7_100c227e",
+        "filename": "graphics/java/android/graphics/BitmapFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1060206
+      },
+      "writtenOn": "2023-03-22T16:33:22Z",
+      "side": 1,
+      "message": "HEIF",
+      "range": {
+        "startLine": 148,
+        "startChar": 62,
+        "endLine": 148,
+        "endChar": 66
+      },
+      "revId": "0c626307daa0a738f62a0662a72d297447979ac9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a0269b1_1e62d316",
+        "filename": "graphics/java/android/graphics/BitmapFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1060206
+      },
+      "writtenOn": "2023-03-22T16:33:22Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 149,
+        "startChar": 71,
+        "endLine": 149,
+        "endChar": 88
+      },
+      "revId": "0c626307daa0a738f62a0662a72d297447979ac9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "533c4d7c_87c1129d",
+        "filename": "graphics/java/android/graphics/BitmapFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1060206
+      },
+      "writtenOn": "2023-03-22T16:33:22Z",
+      "side": 1,
+      "message": "and you should",
+      "range": {
+        "startLine": 149,
+        "startChar": 25,
+        "endLine": 149,
+        "endChar": 33
+      },
+      "revId": "0c626307daa0a738f62a0662a72d297447979ac9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
