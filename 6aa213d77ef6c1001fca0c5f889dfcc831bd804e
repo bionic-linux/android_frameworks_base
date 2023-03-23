@@ -22,6 +22,30 @@
       },
       "revId": "6aa213d77ef6c1001fca0c5f889dfcc831bd804e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b32c673f_c10385dc",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4070,
+      "author": {
+        "id": 1928988
+      },
+      "writtenOn": "2023-03-23T11:03:45Z",
+      "side": 1,
+      "message": "Because there was a workaround that was forcing the LE Audio device, and we wanted it to be contained within the Le Audio dedicated function. And now when I removed the workaround, I wanted to keep track of it in the comments, just in case of any regressions found in the future (however tests showed no regressions so far). And I wanted the comments to still be contained within the Le Audio specific function.\n\nI think we can refactor this and completely remove the comments mentioning the workaround once this is proven to be rock solid. BTW. I was not the original author of this workaround and until now I was just moving it around. That\u0027s why I\u0027m handling it with such care. 😜",
+      "parentUuid": "e9bde010_7faba076",
+      "range": {
+        "startLine": 4070,
+        "startChar": 17,
+        "endLine": 4070,
+        "endChar": 45
+      },
+      "revId": "6aa213d77ef6c1001fca0c5f889dfcc831bd804e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
