@@ -5044,4 +5044,8 @@
 
     <!-- the number of the max cached processes in the system. -->
     <integer name="config_customizedMaxCachedProcesses">32</integer>
+
+    <!-- Audio Loopback Latency Test Support -->
+    <!-- Whether the system can run audio loopback latency tests. -->
+    <bool name="config_loopbackLatencySupport">true</bool>
 </resources>

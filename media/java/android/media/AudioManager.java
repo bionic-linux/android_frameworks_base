@@ -5891,14 +5891,22 @@ public class AudioManager {
      */
     public static final String PROPERTY_SUPPORT_AUDIO_SOURCE_UNPROCESSED =
             "android.media.property.SUPPORT_AUDIO_SOURCE_UNPROCESSED";
+
+    /**
+     * Used as a key for {@link #getProperty} to determine if the audio latency test is
+     * available and supported.
+     */
+    public static final String PROPERTY_SUPPORT_AUDIO_LOOPBACK_LATENCY_TEST =
+            "android.media.property.SUPPORT_AUDIO_LOOPBACK_LATENCY_TEST";
     /**
      * Returns the value of the property with the specified key.
      * @param key One of the strings corresponding to a property key: either
      *            {@link #PROPERTY_OUTPUT_SAMPLE_RATE},
      *            {@link #PROPERTY_OUTPUT_FRAMES_PER_BUFFER},
      *            {@link #PROPERTY_SUPPORT_MIC_NEAR_ULTRASOUND},
-     *            {@link #PROPERTY_SUPPORT_SPEAKER_NEAR_ULTRASOUND}, or
-     *            {@link #PROPERTY_SUPPORT_AUDIO_SOURCE_UNPROCESSED}.
+     *            {@link #PROPERTY_SUPPORT_SPEAKER_NEAR_ULTRASOUND},
+     *            {@link #PROPERTY_SUPPORT_AUDIO_SOURCE_UNPROCESSED}, or
+     *            {@link #PROPERTY_SUPPORT_AUDIO_LOOPBACK_LATENCY_TEST}.
      * @return A string representing the associated value for that property key,
      *         or null if there is no value for that key.
      */
@@ -5920,6 +5928,9 @@ public class AudioManager {
         } else if (PROPERTY_SUPPORT_AUDIO_SOURCE_UNPROCESSED.equals(key)) {
             return String.valueOf(getContext().getResources().getBoolean(
                     com.android.internal.R.bool.config_supportAudioSourceUnprocessed));
+        } else if (PROPERTY_SUPPORT_AUDIO_LOOPBACK_LATENCY_TEST.equals(key)) {
+            return String.valueOf(getContext().getResources().getBoolean(
+                    com.android.internal.R.bool.config_loopbackLatencySupport));
         } else {
             // null or unknown key
             return null;

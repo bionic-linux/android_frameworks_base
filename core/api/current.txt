@@ -20555,6 +20555,7 @@ package android.media {
     field public static final int PLAYBACK_OFFLOAD_SUPPORTED = 1; // 0x1
     field public static final String PROPERTY_OUTPUT_FRAMES_PER_BUFFER = "android.media.property.OUTPUT_FRAMES_PER_BUFFER";
     field public static final String PROPERTY_OUTPUT_SAMPLE_RATE = "android.media.property.OUTPUT_SAMPLE_RATE";
+    field public static final String PROPERTY_SUPPORT_AUDIO_LOOPBACK_LATENCY_TEST = "android.media.property.SUPPORT_AUDIO_LOOPBACK_LATENCY_TEST";
     field public static final String PROPERTY_SUPPORT_AUDIO_SOURCE_UNPROCESSED = "android.media.property.SUPPORT_AUDIO_SOURCE_UNPROCESSED";
     field public static final String PROPERTY_SUPPORT_MIC_NEAR_ULTRASOUND = "android.media.property.SUPPORT_MIC_NEAR_ULTRASOUND";
     field public static final String PROPERTY_SUPPORT_SPEAKER_NEAR_ULTRASOUND = "android.media.property.SUPPORT_SPEAKER_NEAR_ULTRASOUND";
