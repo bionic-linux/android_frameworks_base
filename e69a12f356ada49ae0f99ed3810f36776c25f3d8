@@ -135,6 +135,30 @@
       },
       "revId": "e69a12f356ada49ae0f99ed3810f36776c25f3d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c69c68d4_1d0c3dac",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3076,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2023-03-24T12:15:22Z",
+      "side": 1,
+      "message": "Filed b/275044381",
+      "parentUuid": "ca25c029_931191c3",
+      "range": {
+        "startLine": 3075,
+        "startChar": 1,
+        "endLine": 3076,
+        "endChar": 44
+      },
+      "revId": "e69a12f356ada49ae0f99ed3810f36776c25f3d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
