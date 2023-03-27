@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a73caea_1c007a9a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2023-03-27T18:04:20Z",
+      "side": 1,
+      "message": "Just a small docs change on an existing permission to clarify that WRITE implicitly means READ too.",
+      "revId": "65807729e09a78de6e722ee092dc8fab6420a418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
