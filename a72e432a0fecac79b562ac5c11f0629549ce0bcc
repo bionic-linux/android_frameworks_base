@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1401f640_8fd8317b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2023-03-28T23:14:18Z",
+      "side": 1,
+      "message": "Cherrypicking BroadcastOptions impl to AOSP.",
+      "revId": "a72e432a0fecac79b562ac5c11f0629549ce0bcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
