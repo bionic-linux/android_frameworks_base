@@ -1,5 +1,5 @@
 # Bug component: 142675
-
-file:EnterprisePlatform_OWNERS
+file:WorkDeviceExperience_OWNERS
+file:EnterprisePlatformSecurity_OWNERS
 
 yamasani@google.com #{LAST_RESORT_SUGGESTION}
