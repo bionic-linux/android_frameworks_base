@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7e9ec45_5e264112",
+        "filename": "media/jni/android_media_MediaCodec.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2484,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-03-30T21:12:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "492bb153_6f48aa13",
+      "range": {
+        "startLine": 2484,
+        "startChar": 37,
+        "endLine": 2484,
+        "endChar": 66
+      },
+      "revId": "c9c5b5b29af18ddd0e87dac7b86e134a677b276f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "652c7bd9_73c4c5a5",
@@ -102,6 +126,30 @@
       "side": 1,
       "message": "PTAL",
       "parentUuid": "652c7bd9_73c4c5a5",
+      "range": {
+        "startLine": 2511,
+        "startChar": 34,
+        "endLine": 2511,
+        "endChar": 59
+      },
+      "revId": "c9c5b5b29af18ddd0e87dac7b86e134a677b276f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48087af2_3f846b51",
+        "filename": "media/jni/android_media_MediaCodec.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2511,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-03-30T21:12:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7eeecdbe_42ddb6d6",
       "range": {
         "startLine": 2511,
         "startChar": 34,
