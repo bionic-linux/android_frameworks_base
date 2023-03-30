@@ -1533,7 +1533,7 @@ public class DisplayDeviceConfig {
         loadBrightnessRampsFromConfigXml();
         loadAmbientLightSensorFromConfigXml();
         loadBrightnessChangeThresholdsFromXml();
-        useFallbackProxSensor();
+        setProxSensorUnspecified();
         loadAutoBrightnessConfigsFromConfigXml();
         loadAutoBrightnessAvailableFromConfigXml();
         loadRefreshRateSetting(null);
@@ -1554,7 +1554,7 @@ public class DisplayDeviceConfig {
         mBrightnessRampIncreaseMaxMillis = 0;
         setSimpleMappingStrategyValues();
         loadAmbientLightSensorFromConfigXml();
-        useFallbackProxSensor();
+        setProxSensorUnspecified();
         loadAutoBrightnessAvailableFromConfigXml();
     }
 
@@ -2200,12 +2200,7 @@ public class DisplayDeviceConfig {
         }
     }
 
-    private void useFallbackProxSensor() {
-        mProximitySensor.name = null;
-        mProximitySensor.type = null;
-    }
-
-    private void useNullProxSensor() {
+    private void setProxSensorUnspecified() {
         mProximitySensor.name = "";
         mProximitySensor.type = "";
     }
@@ -2221,12 +2216,6 @@ public class DisplayDeviceConfig {
     private void loadProxSensorFromDdc(DisplayConfiguration config) {
         SensorDetails sensorDetails = config.getProxSensor();
         if (sensorDetails != null) {
-            if (sensorDetails.getName() == null && sensorDetails.getType() == null) {
-                // If prox sensor is defined, but no details given, this is assumed that
-                // the display does not have or wish to use a prox sensor for it.
-                useNullProxSensor();
-                return;
-            }
             mProximitySensor.name = sensorDetails.getName();
             mProximitySensor.type = sensorDetails.getType();
             final RefreshRateRange rr = sensorDetails.getRefreshRate();
@@ -2235,8 +2224,7 @@ public class DisplayDeviceConfig {
                 mProximitySensor.maxRefreshRate = rr.getMaximum().floatValue();
             }
         } else {
-            // If prox sensor is unspecified, then use a fallback.
-            useFallbackProxSensor();
+            setProxSensorUnspecified();
         }
     }
 
