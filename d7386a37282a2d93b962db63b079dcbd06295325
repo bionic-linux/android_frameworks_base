@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12d9e3d6_3a382566",
+        "filename": "core/java/android/app/admin/OWNERS",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-04-03T09:50:28Z",
+      "side": 1,
+      "message": "Add a comment about being conservative in introducing new owners? Same for the transitively-included files.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "d7386a37282a2d93b962db63b079dcbd06295325",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
