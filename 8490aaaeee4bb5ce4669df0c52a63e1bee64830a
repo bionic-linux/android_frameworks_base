@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b300ddb7_4b372543",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2023-04-04T23:23:13Z",
+      "side": 1,
+      "message": "Shouldn\u0027t need this in Android 14, as there will be better support for other profile types.",
+      "revId": "8490aaaeee4bb5ce4669df0c52a63e1bee64830a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
