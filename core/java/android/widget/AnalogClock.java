@@ -57,7 +57,7 @@ import java.util.Locale;
  * @attr ref android.R.styleable#AnalogClock_hand_minute
  * @attr ref android.R.styleable#AnalogClock_hand_second
  * @attr ref android.R.styleable#AnalogClock_timeZone
- * @deprecated This widget is no longer supported.
+ * @deprecated This widget is no longer supported within app usage. It is still supported for app widget usage.
  */
 @RemoteView
 @Deprecated
