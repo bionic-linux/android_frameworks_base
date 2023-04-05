@@ -22,6 +22,30 @@
       },
       "revId": "8c249c2949267c003b235571588dcef516cbefc2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "866214da_960c119c",
+        "filename": "core/java/android/widget/AnalogClock.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 2001110
+      },
+      "writtenOn": "2023-04-05T19:52:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71bfbf45_087c6f52",
+      "range": {
+        "startLine": 59,
+        "startChar": 50,
+        "endLine": 60,
+        "endChar": 46
+      },
+      "revId": "8c249c2949267c003b235571588dcef516cbefc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
