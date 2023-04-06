@@ -38,4 +38,7 @@ java_test_host {
         "OverlayHostTests_AppOverlayV1",
         "OverlayHostTests_AppOverlayV2",
     ],
+    data_native_bins: [
+        ":OverlayHostTests_UpdateOverlay",
+    ],
 }
