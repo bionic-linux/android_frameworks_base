@@ -16,6 +16,29 @@
       "message": "Some hardware bitmap test failures were reported while running android.uirendering.cts on Nvidia platform. These bitmaps all ended up with black pixels. The root cause is that the draw state was set not reset back to GL_BACK after the context is re-bound.\n\nThis change is to set the read/draw buffer state of default framebuffer to GL_BACK after MakeCurrent. Vendor implementations disagree on the draw/read buffer state if the default framebuffer transitions from a surface to EGL_NO_SURFACE and vice-versa. There was a related discussion within Khronos on this topic. See https://cvs.khronos.org/bugzilla/show_bug.cgi?id\u003d13534.\nThe discussion was not resolved with a clear consensus.",
       "revId": "4a012f5d3f630b2913df0163f79bf2f584c7c0f0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74c902dd_502c2155",
+        "filename": "libs/hwui/pipeline/skia/SkiaOpenGLPipeline.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2023-04-07T19:19:39Z",
+      "side": 1,
+      "message": "Should these queries be done after the bind to FBO 0? If the driver re-initializes when bound to FBO 0 (which was proposed behavior I think), then we don\u0027t need to do the glDrawBuffers call right?",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 63
+      },
+      "revId": "4a012f5d3f630b2913df0163f79bf2f584c7c0f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
