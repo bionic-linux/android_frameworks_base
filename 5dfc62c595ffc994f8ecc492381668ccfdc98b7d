@@ -16,6 +16,24 @@
       "message": "Do you have a bug number? We can\u0027t change SettingsProvider version number here because our internal branch has diverged from AOSP, so this will cause a merge conflict.",
       "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4261baec_2a3f6643",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1943370
+      },
+      "writtenOn": "2023-04-07T07:55:15Z",
+      "side": 1,
+      "message": "Done. Bug number is 277244307.\n\n\u003e We can\u0027t change SettingsProvider version number here because our internal branch has diverged from AOSP, so this will cause a merge conflict.\n\nIn that case, would it be fine for you to cherry-pick this into internal branch and update to the next available SettingsProvider number?\n\nThanks.",
+      "parentUuid": "1d1b4c63_8d2e5d96",
+      "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
