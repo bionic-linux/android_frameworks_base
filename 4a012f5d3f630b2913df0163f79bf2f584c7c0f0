@@ -39,6 +39,30 @@
       },
       "revId": "4a012f5d3f630b2913df0163f79bf2f584c7c0f0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01dcf8d6_bebef86b",
+        "filename": "libs/hwui/pipeline/skia/SkiaOpenGLPipeline.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1121771
+      },
+      "writtenOn": "2023-04-07T21:20:58Z",
+      "side": 1,
+      "message": "These are for querying current bound FBO, just so it can be restored after resetting state for FBO 0. The idea is that given HWUI assumes after MakeCurrent GL_BACK would always be the state for the EGLSurafce(FBO 0). However, the spec isn\u0027t very clear about that, HWUI can\u0027t rely on all drivers to have the same behavior and better to explicitly set draw/read state to GL_BACK by itself. This change limits the reset to GL_BACK only when prior EGLContext was surfaceless, since a surfaceless context\u0027s default framebuffer draw/read state is GL_NONE",
+      "parentUuid": "74c902dd_502c2155",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 63
+      },
+      "revId": "4a012f5d3f630b2913df0163f79bf2f584c7c0f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
