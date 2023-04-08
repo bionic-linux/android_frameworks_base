@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72481b25_c67278fe",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8500,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2023-04-08T18:56:34Z",
+      "side": 1,
+      "message": "in the `sendRecoverableCrashToAppExitInfo`, if the r is null, it\u0027ll actually just return. I think in that case, maybe we should still call `crashApplication` below",
+      "revId": "b23379200ab873fa64c01d6b3120b1a8d635b418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fadd08da_bab26260",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2023-04-08T18:56:34Z",
+      "side": 1,
+      "message": "just confirm: since the index is a pid, it\u0027ll hold only 1 recoverable crash per process, is this what you want?",
+      "revId": "b23379200ab873fa64c01d6b3120b1a8d635b418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10463da4_536093bd",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2023-04-08T18:56:34Z",
+      "side": 1,
+      "message": "Is this `getRecoverableCrashesLocked` going to be used somewhere ?",
+      "revId": "b23379200ab873fa64c01d6b3120b1a8d635b418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
