@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3078bb0_3a86dfcc",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5553,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2023-04-10T15:55:07Z",
+      "side": 1,
+      "message": "Please update this var name",
+      "range": {
+        "startLine": 5553,
+        "startChar": 34,
+        "endLine": 5553,
+        "endChar": 57
+      },
+      "revId": "6f8aaae526030b8cf33dd25573751930e33e1804",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
