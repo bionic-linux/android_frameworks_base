@@ -88,6 +88,24 @@
       "parentUuid": "920195eb_5f90e97d",
       "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db0733ab_0924269f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2023-04-10T17:00:27Z",
+      "side": 1,
+      "message": "I think that\u0027s what some other teams have opted to do that needed to ship changes on older QPR branches. Not sure if that\u0027s the right path here though.\n\nIt would make it easier if the partner needs access to it before U AOSP push, since it\u0027s not possible to skip version numbers. We can\u0027t release the internal upgrades to AOSP yet, so they couldn\u0027t upgrade their devices without having it disagree with final U release.",
+      "parentUuid": "e41bdc00_fbe24fb2",
+      "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
