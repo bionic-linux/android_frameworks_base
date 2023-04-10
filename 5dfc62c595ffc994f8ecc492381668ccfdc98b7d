@@ -34,6 +34,24 @@
       "parentUuid": "1d1b4c63_8d2e5d96",
       "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3361ff3b_aca77ba4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2023-04-10T15:55:42Z",
+      "side": 1,
+      "message": "I\u0027m assuming this would produce a merge conflict that can be manually resolved",
+      "parentUuid": "4261baec_2a3f6643",
+      "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
