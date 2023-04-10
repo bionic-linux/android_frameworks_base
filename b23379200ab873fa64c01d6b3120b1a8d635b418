@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "23926592_e1b0aafe",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8500,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2023-04-10T18:44:55Z",
+      "side": 1,
+      "message": "so this is for recoverable, where we specifically don\u0027t want to crash. see the current `crashApplication` is guarded by `if (!recoverable)`.\n\nif `r` is null, that\u0027s fine, we just won\u0027t do anything. i can\u0027t think of a case where `r` is null though, this path only happens for native recoverable crashes from debuggerd.",
+      "parentUuid": "72481b25_c67278fe",
+      "revId": "b23379200ab873fa64c01d6b3120b1a8d635b418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fadd08da_bab26260",
@@ -35,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10e724dc_6ac097e6",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2023-04-10T18:44:55Z",
+      "side": 1,
+      "message": "yep, that\u0027s it. one should be enough.",
+      "parentUuid": "fadd08da_bab26260",
+      "revId": "b23379200ab873fa64c01d6b3120b1a8d635b418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "10463da4_536093bd",
@@ -48,6 +84,24 @@
       "writtenOn": "2023-04-08T18:56:34Z",
       "side": 1,
       "message": "Is this `getRecoverableCrashesLocked` going to be used somewhere ?",
+      "revId": "b23379200ab873fa64c01d6b3120b1a8d635b418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0db5b048_fc94a38a",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2023-04-10T18:44:55Z",
+      "side": 1,
+      "message": "eh, if it\u0027s dead now no point in adding it. removed.",
+      "parentUuid": "10463da4_536093bd",
       "revId": "b23379200ab873fa64c01d6b3120b1a8d635b418",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
