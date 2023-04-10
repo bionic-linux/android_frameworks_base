@@ -52,6 +52,24 @@
       "parentUuid": "4261baec_2a3f6643",
       "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "920195eb_5f90e97d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2023-04-10T16:49:23Z",
+      "side": 1,
+      "message": "The problem is not the merge conflict, but the fact that the same integer will refer to different upgrades, meaning any device that takes an update on one branch will diverge forever and cannot take an OTA across to a different branch that used the integer for a different upgrade.",
+      "parentUuid": "3361ff3b_aca77ba4",
+      "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
