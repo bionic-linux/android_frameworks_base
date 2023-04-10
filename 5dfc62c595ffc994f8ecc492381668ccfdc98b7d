@@ -70,6 +70,24 @@
       "parentUuid": "3361ff3b_aca77ba4",
       "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e41bdc00_fbe24fb2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2023-04-10T16:54:54Z",
+      "side": 1,
+      "message": "Ah yes 😊\n\nAn alternative is to provide a default value in Settings, instead of using this provider: src/com/android/settings/display/LockscreenClockPreferenceController.java",
+      "parentUuid": "920195eb_5f90e97d",
+      "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
