@@ -356,11 +356,4 @@ interface ISub {
        * @hide
        */
        List<SubscriptionInfo> getSubscriptionInfoListAssociatedWithUser(in UserHandle userHandle);
-
-       /**
-        * @return {@code true} if using SubscriptionManagerService instead of
-        * SubscriptionController.
-        */
-       //TODO: Removed before U AOSP public release.
-       boolean isSubscriptionManagerServiceEnabled();
 }

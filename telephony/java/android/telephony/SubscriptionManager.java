@@ -160,10 +160,6 @@ public class SubscriptionManager {
     private static final String CACHE_KEY_SUBSCRIPTION_MANAGER_SERVICE_PROPERTY =
             "cache_key.telephony.subscription_manager_service";
 
-    /** The temporarily cache key to indicate whether subscription manager service is enabled. */
-    private static final String CACHE_KEY_SUBSCRIPTION_MANAGER_SERVICE_ENABLED_PROPERTY =
-            "cache_key.telephony.subscription_manager_service_enabled";
-
     /** @hide */
     public static final String GET_SIM_SPECIFIC_SETTINGS_METHOD_NAME = "getSimSpecificSettings";
 
@@ -320,12 +316,6 @@ public class SubscriptionManager {
             new IntegerPropertyInvalidatedCache<>(ISub::getPhoneId,
                     CACHE_KEY_SUBSCRIPTION_MANAGER_SERVICE_PROPERTY,
                     INVALID_PHONE_INDEX);
-
-    //TODO: Removed before U AOSP public release.
-    private static VoidPropertyInvalidatedCache<Boolean> sIsSubscriptionManagerServiceEnabled =
-            new VoidPropertyInvalidatedCache<>(ISub::isSubscriptionManagerServiceEnabled,
-                    CACHE_KEY_SUBSCRIPTION_MANAGER_SERVICE_ENABLED_PROPERTY,
-                    false);
 
     /**
      * Generates a content {@link Uri} used to receive updates on simInfo change
@@ -1345,6 +1335,8 @@ public class SubscriptionManager {
 
     private final Context mContext;
 
+    private static boolean sIsSubscriptionManagerServiceEnabled = false;
+
     // Cache of Resource that has been created in getResourcesForSubId. Key is a Pair containing
     // the Context and subId.
     private static final Map<Pair<Context, Integer>, Resources> sResourcesCache =
@@ -1430,6 +1422,9 @@ public class SubscriptionManager {
     public SubscriptionManager(Context context) {
         if (DBG) logd("SubscriptionManager created");
         mContext = context;
+
+        sIsSubscriptionManagerServiceEnabled = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_using_subscription_manager_service);
     }
 
     /**
@@ -1438,9 +1433,8 @@ public class SubscriptionManager {
      *
      * @hide
      */
-    //TODO: Removed before U AOSP public release.
     public static boolean isSubscriptionManagerServiceEnabled() {
-        return sIsSubscriptionManagerServiceEnabled.query(null);
+        return sIsSubscriptionManagerServiceEnabled;
     }
 
     private NetworkPolicyManager getNetworkPolicyManager() {
@@ -3953,13 +3947,6 @@ public class SubscriptionManager {
         PropertyInvalidatedCache.invalidateCache(CACHE_KEY_SUBSCRIPTION_MANAGER_SERVICE_PROPERTY);
     }
 
-    /** @hide */
-    //TODO: Removed before U AOSP public release.
-    public static void invalidateSubscriptionManagerServiceEnabledCaches() {
-        PropertyInvalidatedCache.invalidateCache(
-                CACHE_KEY_SUBSCRIPTION_MANAGER_SERVICE_ENABLED_PROPERTY);
-    }
-
     /**
      * Allows a test process to disable client-side caching operations.
      *
@@ -3981,8 +3968,6 @@ public class SubscriptionManager {
         sGetSlotIndexCache.disableLocal();
         sGetSubIdCache.disableLocal();
         sGetPhoneIdCache.disableLocal();
-
-        sIsSubscriptionManagerServiceEnabled.disableLocal();
     }
 
     /**
@@ -4005,8 +3990,6 @@ public class SubscriptionManager {
         sGetSlotIndexCache.clear();
         sGetSubIdCache.clear();
         sGetPhoneIdCache.clear();
-
-        sIsSubscriptionManagerServiceEnabled.clear();
     }
 
     /**
