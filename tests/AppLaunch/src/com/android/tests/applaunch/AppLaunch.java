@@ -33,12 +33,12 @@ import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.UserHandle;
-import android.support.test.uiautomator.UiDevice;
 import android.test.InstrumentationTestCase;
 import android.test.InstrumentationTestRunner;
 import android.util.Log;
 
 import androidx.test.rule.logging.AtraceLogger;
+import androidx.test.uiautomator.UiDevice;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -51,9 +51,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.file.Paths;
-import java.time.format.DateTimeFormatter;
-import java.time.ZonedDateTime;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
