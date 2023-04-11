@@ -124,6 +124,24 @@
       "parentUuid": "db0733ab_0924269f",
       "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cd3769a_f17684c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2023-04-11T12:54:15Z",
+      "side": 1,
+      "message": "As stated in the bug, they are looking to provide a path to upgrade from Android 11 -\u003e 13 (the latest AOSP version). I think the only viable path is to provide a default value inside `LockscreenClockPreferenceController` instead of using `SettingsProvider`. Let me know if you disagree Winson",
+      "parentUuid": "695ec806_51679fa5",
+      "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
