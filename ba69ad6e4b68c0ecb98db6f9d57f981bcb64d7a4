@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c63e531a_c6213dd9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2023-04-11T19:13:51Z",
+      "side": 1,
+      "message": "Just resolving my earlier comment to avoid blocking the autosubmit.  Thanks for the review!",
+      "revId": "ba69ad6e4b68c0ecb98db6f9d57f981bcb64d7a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
