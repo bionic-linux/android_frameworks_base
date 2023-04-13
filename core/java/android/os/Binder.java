@@ -144,6 +144,11 @@ public class Binder implements IBinder {
      */
     private static volatile boolean sStackTrackingEnabled = false;
 
+    /** really really useful here */
+    public void hiImANewApi() {
+        return;
+    }
+
     /**
      * Enable Binder IPC stack tracking. If enabled, every binder transaction will be logged to
      * {@link TransactionTracker}.

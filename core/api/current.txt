@@ -30956,6 +30956,7 @@ package android.os {
     method @NonNull public static final android.os.UserHandle getCallingUserHandle();
     method public static final int getCallingWorkSourceUid();
     method @Nullable public String getInterfaceDescriptor();
+    method public void hiImANewApi();
     method public boolean isBinderAlive();
     method public static final void joinThreadPool();
     method public void linkToDeath(@NonNull android.os.IBinder.DeathRecipient, int);
