@@ -110,6 +110,54 @@
       },
       "revId": "bdac7ce132d632d45d287cefc209fcda55564533",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4078abc3_d2d86cb8",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/pip/phone/PipTouchHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1969520
+      },
+      "writtenOn": "2023-04-13T07:41:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b18f5e9_ac7a95a4",
+      "range": {
+        "startLine": 602,
+        "startChar": 46,
+        "endLine": 602,
+        "endChar": 50
+      },
+      "revId": "bdac7ce132d632d45d287cefc209fcda55564533",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5e915de_1604c900",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/pip/phone/PipTouchHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1969520
+      },
+      "writtenOn": "2023-04-13T07:41:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b131a49_eca9ae4c",
+      "range": {
+        "startLine": 602,
+        "startChar": 12,
+        "endLine": 602,
+        "endChar": 16
+      },
+      "revId": "bdac7ce132d632d45d287cefc209fcda55564533",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
