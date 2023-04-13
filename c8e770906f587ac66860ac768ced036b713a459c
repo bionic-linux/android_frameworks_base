@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a39b1d17_b73546f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2023-04-13T15:59:53Z",
+      "side": 1,
+      "message": "I see some `udc-dev` targets in presubmit, which is a good start. Hopefully those involve `check-api`.",
+      "revId": "c8e770906f587ac66860ac768ced036b713a459c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
