@@ -16,6 +16,24 @@
       "message": "I see some `udc-dev` targets in presubmit, which is a good start. Hopefully those involve `check-api`.",
       "revId": "c8e770906f587ac66860ac768ced036b713a459c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75b6cdab_7d6267ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-04-13T17:07:25Z",
+      "side": 1,
+      "message": "*** checkapi is built as part of the device target. The implementation is funny (b/278087433) but it exists via droid-\u003edroid_targets-\u003edroidcore-\u003echeckapi.",
+      "parentUuid": "a39b1d17_b73546f4",
+      "revId": "c8e770906f587ac66860ac768ced036b713a459c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
