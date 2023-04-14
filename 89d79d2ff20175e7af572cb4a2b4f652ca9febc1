@@ -51,6 +51,24 @@
       "parentUuid": "c3bae0db_df1827b0",
       "revId": "89d79d2ff20175e7af572cb4a2b4f652ca9febc1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ff46726_e02d47ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2023-04-14T20:57:00Z",
+      "side": 1,
+      "message": "Understood. I appreciate you providing the details.",
+      "parentUuid": "3343a8d6_7c5fb098",
+      "revId": "89d79d2ff20175e7af572cb4a2b4f652ca9febc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
