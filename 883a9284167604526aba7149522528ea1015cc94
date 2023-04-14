@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5fa6e26_09903821",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146974
+      },
+      "writtenOn": "2023-04-14T10:05:18Z",
+      "side": 1,
+      "message": "I could find this from tm-qpr1-release, but not any gsi branches.",
+      "revId": "883a9284167604526aba7149522528ea1015cc94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
