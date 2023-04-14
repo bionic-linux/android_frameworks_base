@@ -160,6 +160,24 @@
       "parentUuid": "8cd3769a_f17684c5",
       "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "737dcf86_de5b8e7a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2023-04-14T11:45:02Z",
+      "side": 1,
+      "message": "Ok, I think we sorted this out internally. Since updating `SettingsProvider` is not safe to do across branches, the only other option is to provide your new default value in multiple locations. `LockscreenClockPreferenceController` in Settings, and `KeyguardClockSwitchController` in SystemUI. The first will make sure the proper default is provided when the user access the Settings app. The second location is where the setting is retrieved, with a currrent default value of 1. This should be updated to use your new resource value.",
+      "parentUuid": "3fa8a260_9942ac03",
+      "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
