@@ -16,6 +16,24 @@
       "message": "I could find this from tm-qpr1-release, but not any gsi branches.",
       "revId": "883a9284167604526aba7149522528ea1015cc94",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9a265e1_b8c72fac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1092583
+      },
+      "writtenOn": "2023-04-14T20:59:16Z",
+      "side": 1,
+      "message": "auto-merger messed up. The rest of the topic got automerged into internal tm-gsi-dev, but not this one.",
+      "parentUuid": "c5fa6e26_09903821",
+      "revId": "883a9284167604526aba7149522528ea1015cc94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
