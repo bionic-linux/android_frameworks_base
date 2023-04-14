@@ -16,6 +16,41 @@
       "message": "Could you confirm if you were seeing some specific issue that this was causing?",
       "revId": "89d79d2ff20175e7af572cb4a2b4f652ca9febc1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2629a933_619c732f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1958109
+      },
+      "writtenOn": "2023-04-14T20:38:44Z",
+      "side": 1,
+      "message": "This was causing an issue with an implementation",
+      "revId": "89d79d2ff20175e7af572cb4a2b4f652ca9febc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3343a8d6_7c5fb098",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1958109
+      },
+      "writtenOn": "2023-04-14T20:38:44Z",
+      "side": 1,
+      "message": "For us, we ran into it during an attempt at optimizing our firewall implementation in CalyxOS, which has been based on the restricted mode allowlist. One way we did this was, in NetworkPolicyManagerService, in updateRestrictedModeAllowlistUL, we would no longer clear mUidFirewallRestrictedModeRules but would instead modify it based on actual changes. We used existing helper methods like setUidFirewallRuleUL and setUidFirewallRulesUL, which happily add default rules instead of removing them. That\u0027s where we hit this.\n\nWe ultimately ended up abandoning these optimizations anyway, so the problems never made it live for us. Unless other developers of AOSP-based ROMs are modifying NetworkPolicyManagerService, I don\u0027t think they\u0027d have run into it, but I\u0027m not entirely sure.",
+      "parentUuid": "c3bae0db_df1827b0",
+      "revId": "89d79d2ff20175e7af572cb4a2b4f652ca9febc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
