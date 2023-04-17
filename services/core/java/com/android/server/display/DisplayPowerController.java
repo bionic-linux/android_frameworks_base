@@ -76,6 +76,8 @@ import com.android.server.display.whitebalance.DisplayWhiteBalanceSettings;
 import com.android.server.policy.WindowManagerPolicy;
 
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -158,6 +160,8 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     private static final int REPORTED_TO_POLICY_SCREEN_TURNING_OFF = 3;
 
     private static final int RINGBUFFER_MAX = 100;
+
+    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("MM-dd HH:mm:ss.SSS");
 
     private final String TAG;
 
@@ -3053,7 +3057,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         }
 
         public String toString(boolean includeTime) {
-            return (includeTime ? TimeUtils.formatForLogging(time) + " - " : "")
+            return (includeTime ? FORMAT.format(new Date(time)) + " - " : "")
                     + "BrightnessEvent: "
                     + "disp=" + displayId
                     + ", physDisp=" + physicalDisplayId
