@@ -178,6 +178,24 @@
       "parentUuid": "3fa8a260_9942ac03",
       "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b30247a2_d321a455",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1943370
+      },
+      "writtenOn": "2023-04-17T05:58:53Z",
+      "side": 1,
+      "message": "Hi Matt,\nI am sorry, I used the same Change-Id to make the suggested change. I hope it\u0027s fine.\n\nAs discussed, I have made the changes along with aosp/2539870.\n\nPlease have a look.",
+      "parentUuid": "737dcf86_de5b8e7a",
+      "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
