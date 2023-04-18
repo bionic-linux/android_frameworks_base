@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1659a85_b1101070",
+        "filename": "services/core/java/com/android/server/wm/PinnedTaskController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-04-18T06:34:46Z",
+      "side": 1,
+      "message": "Note that this will be dead code in next release if `TransitionController.isShellTransitionsEnabled()` is true.",
+      "revId": "fd937bb873151c7d9b2ca10aaf329c05ff5fd123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd6dc8cb_1daf7046",
