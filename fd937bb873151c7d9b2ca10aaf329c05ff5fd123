@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd6dc8cb_1daf7046",
+        "filename": "services/core/java/com/android/server/wm/PinnedTaskController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2023-04-18T05:55:54Z",
+      "side": 1,
+      "message": "How about excluding the finishing activity here?",
+      "revId": "fd937bb873151c7d9b2ca10aaf329c05ff5fd123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
