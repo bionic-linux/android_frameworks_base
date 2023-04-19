@@ -196,6 +196,24 @@
       "parentUuid": "737dcf86_de5b8e7a",
       "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "621d88ac_35ca4c9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1943370
+      },
+      "writtenOn": "2023-04-19T02:45:16Z",
+      "side": 1,
+      "message": "Hi Matt,\nAwaiting update from your side for both the changes. :-)",
+      "parentUuid": "b30247a2_d321a455",
+      "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
