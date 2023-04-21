@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "611064e1_2926067a",
+        "filename": "core/java/android/app/ActivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2023-04-21T20:17:54Z",
+      "side": 1,
+      "message": "I would suggest `new int[uids.length]`.",
+      "range": {
+        "startLine": 338,
+        "startChar": 15,
+        "endLine": 338,
+        "endChar": 25
+      },
+      "revId": "35818fcea0749f60464c5deffc517463fd3f2c4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
