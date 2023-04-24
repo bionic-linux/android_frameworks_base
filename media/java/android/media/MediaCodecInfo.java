@@ -934,13 +934,25 @@ public final class MediaCodecInfo {
                     }
                 }
                 levelCaps = createFromProfileLevel(mMime, profile, maxLevel);
-                // remove profile from this format otherwise levelCaps.isFormatSupported will
-                // get into this same conditon and loop forever.
-                Map<String, Object> mapWithoutProfile = new HashMap<>(map);
-                mapWithoutProfile.remove(MediaFormat.KEY_PROFILE);
-                MediaFormat formatWithoutProfile = new MediaFormat(mapWithoutProfile);
-                if (levelCaps != null && !levelCaps.isFormatSupported(formatWithoutProfile)) {
-                    return false;
+                // We must remove the profile from this format otherwise levelCaps.isFormatSupported
+                // will get into this same conditon and loop forever. Furthermore, since levelCaps
+                // does not contain features and bitrate specific keys, keep only keys relevant for
+                // a level check.
+                Map<String, Object> levelCriticalFormatMap = new HashMap<>(map);
+                final Set<String> criticalKeys =
+                    isVideo() ? VideoCapabilities.VIDEO_LEVEL_CRITICAL_FORMAT_KEYS :
+                    isAudio() ? AudioCapabilities.AUDIO_LEVEL_CRITICAL_FORMAT_KEYS :
+                    null;
+
+                // critical keys will always contiain KEY_MIME, but should contain others to be
+                // meaningful
+                if (criticalKeys != null && criticalKeys.size() > 1 && levelCaps != null) {
+                    levelCriticalFormatMap.keySet().retainAll(criticalKeys);
+
+                    MediaFormat levelCriticalFormat = new MediaFormat(levelCriticalFormatMap);
+                    if (!levelCaps.isFormatSupported(levelCriticalFormat)) {
+                        return false;
+                    }
                 }
             }
             if (mAudioCaps != null && !mAudioCaps.supportsFormat(format)) {
@@ -1632,6 +1644,11 @@ public final class MediaCodecInfo {
                 format.setInteger(MediaFormat.KEY_SAMPLE_RATE, mSampleRates[0]);
             }
         }
+
+        // We don't set level-specific limits for audio codecs today. Key candidates would
+        // be sample rate or channel count.
+        static final Set<String> AUDIO_LEVEL_CRITICAL_FORMAT_KEYS = Set.of(
+                MediaFormat.KEY_MIME);
 
         /** @hide */
         public boolean supportsFormat(MediaFormat format) {
@@ -2356,6 +2373,13 @@ public final class MediaCodecInfo {
             }
             return ok;
         }
+
+        /* package private */
+        static final Set<String> VIDEO_LEVEL_CRITICAL_FORMAT_KEYS = Set.of(
+                MediaFormat.KEY_WIDTH,
+                MediaFormat.KEY_HEIGHT,
+                MediaFormat.KEY_FRAME_RATE,
+                MediaFormat.KEY_MIME);
 
         /**
          * @hide
