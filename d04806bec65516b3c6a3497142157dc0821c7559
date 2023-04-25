@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48cf3a05_3d3158d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2023-04-25T03:59:06Z",
+      "side": 1,
+      "message": "as we don\u0027t have a way to build and flash from source, will wait for treehugger run on this CL and then validate this for couple of cases.",
+      "revId": "d04806bec65516b3c6a3497142157dc0821c7559",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca120abd_162b498e",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2023-04-25T03:59:06Z",
+      "side": 1,
+      "message": "as per \"Common Typos\" Check\nnit: condition",
+      "range": {
+        "startLine": 938,
+        "startChar": 43,
+        "endLine": 938,
+        "endChar": 51
+      },
+      "revId": "d04806bec65516b3c6a3497142157dc0821c7559",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
