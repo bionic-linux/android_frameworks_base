@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1fca4b5_a12b205b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121894
+      },
+      "writtenOn": "2023-04-25T17:03:50Z",
+      "side": 1,
+      "message": "You will need to convert those dependencies to Soong, right now makefile deps do not work",
+      "revId": "90ceffc97f1e2454a32231f7b437892eb9e8eabb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
