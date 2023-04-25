@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ff088ef_fc17a29f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-04-25T06:07:46Z",
+      "side": 1,
+      "message": "adjusted it a bit to still include bitrate",
+      "revId": "d04806bec65516b3c6a3497142157dc0821c7559",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca120abd_162b498e",
@@ -37,6 +54,23 @@
         "endLine": 938,
         "endChar": 51
       },
+      "revId": "d04806bec65516b3c6a3497142157dc0821c7559",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d03c3417_d9130930",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-04-25T06:07:46Z",
+      "side": 1,
+      "message": "nit:contain",
       "revId": "d04806bec65516b3c6a3497142157dc0821c7559",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
