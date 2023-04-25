@@ -232,6 +232,24 @@
       "parentUuid": "621d88ac_35ca4c9c",
       "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd04a9b1_e0360bd2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1943370
+      },
+      "writtenOn": "2023-04-25T14:26:55Z",
+      "side": 1,
+      "message": "Ah, I\u0027m sorry then. I think I misunderstood your suggestion. But, these two changes seem to match the requirement.\n\nI mean, the double line clock is now disabled in both lock screen and in settings entry.\n\nCould you please help me understand what is the expected approach?\n\nThanks.",
+      "parentUuid": "d650d1b6_e337c8c8",
+      "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
