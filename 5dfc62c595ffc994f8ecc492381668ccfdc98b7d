@@ -250,6 +250,24 @@
       "parentUuid": "d650d1b6_e337c8c8",
       "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f59855d_a2f06e30",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2023-04-25T16:41:29Z",
+      "side": 1,
+      "message": "You updated the code in the correct locations. But we would like to have the default value pulled from a resource like you had in the prior version. The resource should default to 1.",
+      "parentUuid": "cd04a9b1_e0360bd2",
+      "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
