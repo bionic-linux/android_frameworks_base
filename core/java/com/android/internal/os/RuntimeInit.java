@@ -156,9 +156,13 @@ public class RuntimeInit {
                     ActivityThread.currentActivityThread().stopProfiling();
                 }
 
-                // Bring up crash dialog, wait for it to be dismissed
-                ActivityManager.getService().handleApplicationCrash(
-                        mApplicationObject, new ApplicationErrorReport.ParcelableCrashInfo(e));
+                // Do not report for non-zygote java programs (e.g. "monkey") to avoid dead lock.
+                // Note that mApplicationObject is null in system itself, so we have to check uid.
+                if (mApplicationObject != null || Process.myUid() == Process.SYSTEM_UID) {
+                    // Bring up crash dialog, wait for it to be dismissed
+                    ActivityManager.getService().handleApplicationCrash(
+                            mApplicationObject, new ApplicationErrorReport.ParcelableCrashInfo(e));
+                }
             } catch (Throwable t2) {
                 if (t2 instanceof DeadObjectException) {
                     // System process is dead; ignore
