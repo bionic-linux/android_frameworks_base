@@ -809,4 +809,8 @@
         <item>bottom_end:wallet</item>
     </string-array>
 
+    <!-- Overrides the behavior of double line clock in lock screen setting:
+         0 - Don't show double line clock
+         1 - Show double line clock in lock screen (default) -->
+    <integer name="config_ls_doubleline_clock_override">1</integer>
 </resources>
