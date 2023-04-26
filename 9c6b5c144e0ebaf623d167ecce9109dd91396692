@@ -57,6 +57,30 @@
       },
       "revId": "9c6b5c144e0ebaf623d167ecce9109dd91396692",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65a20d68_9b4fb6dc",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2023-04-26T23:31:07Z",
+      "side": 1,
+      "message": "Sorry I missed that you were not added to the thread: https://groups.google.com/a/google.com/g/android-framework-wakeups/c/v7X64kNKYuM\n\nWas following what @lorenzo@google.com said. But as @maze@google.com also pointed out there can be other networks without MACs, then in that case I would prefer leaving out the condition...",
+      "parentUuid": "f5fa7a78_fc92ed25",
+      "range": {
+        "startLine": 302,
+        "startChar": 12,
+        "endLine": 302,
+        "endChar": 42
+      },
+      "revId": "9c6b5c144e0ebaf623d167ecce9109dd91396692",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
