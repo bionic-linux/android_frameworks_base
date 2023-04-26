@@ -139,13 +139,14 @@ public class LocalBluetoothLeBroadcastMetadata {
 
     public String convertToQrCodeString() {
         String subgroupString = convertSubgroupToString(mSubgroupList);
+        String deviceAddress = mSourceDevice.getAddress();
         return new StringBuilder()
                 .append(BluetoothBroadcastUtils.SCHEME_BT_BROADCAST_METADATA)
                 .append(BluetoothBroadcastUtils.PREFIX_BT_ADDRESS_TYPE)
                 .append(METADATA_START).append(mSourceAddressType).append(METADATA_END)
                 .append(BluetoothBroadcastUtils.DELIMITER_QR_CODE)
                 .append(BluetoothBroadcastUtils.PREFIX_BT_DEVICE)
-                .append(METADATA_START).append(mSourceDevice).append(METADATA_END)
+                .append(METADATA_START).append(deviceAddress).append(METADATA_END)
                 .append(BluetoothBroadcastUtils.DELIMITER_QR_CODE)
                 .append(BluetoothBroadcastUtils.PREFIX_BT_ADVERTISING_SID)
                 .append(METADATA_START).append(mSourceAdvertisingSid).append(METADATA_END)
