@@ -132,6 +132,8 @@ public class KeyguardClockSwitchControllerTest extends SysuiTestCase {
                 mock(RelativeLayout.LayoutParams.class));
         when(mView.getContext()).thenReturn(getContext());
         when(mView.getResources()).thenReturn(mResources);
+        when(mResources.getInteger(R.integer.config_doubleline_clock_default))
+                .thenReturn(1);
         when(mResources.getDimensionPixelSize(R.dimen.keyguard_clock_top_margin))
                 .thenReturn(100);
         when(mResources.getDimensionPixelSize(R.dimen.keyguard_large_clock_top_margin))
@@ -278,6 +280,7 @@ public class KeyguardClockSwitchControllerTest extends SysuiTestCase {
 
         // When a settings change has occurred to the small clock, make sure the view is adjusted
         reset(mView);
+        when(mView.getResources()).thenReturn(mResources);
         observer.onChange(true);
         mExecutor.runAllReady();
         verify(mView).switchToClock(KeyguardClockSwitch.SMALL, /* animate */ true);
