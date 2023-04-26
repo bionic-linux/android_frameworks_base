@@ -41,6 +41,7 @@ import android.util.SparseArray;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.BitUtils;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.RingBuffer;
@@ -278,6 +279,11 @@ public class NetdEventListenerService extends BaseNetdEventListener {
         }
     }
 
+    private boolean hasCellularTransport(Network network) {
+        final NetworkCapabilities nc = mCm.getNetworkCapabilities(network);
+        return nc.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR);
+    }
+
     @Override
     public synchronized void onWakeupEvent(String prefix, int uid, int ethertype, int ipNextHeader,
             byte[] dstHw, String srcIp, String dstIp, int srcPort, int dstPort, long timestampNs) {
@@ -286,12 +292,19 @@ public class NetdEventListenerService extends BaseNetdEventListener {
             throw new IllegalArgumentException("Prefix " + prefix
                     + " required in format <nethandle>:<interface>");
         }
+        final long netHandle = Long.parseLong(prefixParts[0]);
+        final Network network = Network.fromNetworkHandle(netHandle);
 
         final WakeupEvent event = new WakeupEvent();
         event.iface = prefixParts[1];
         event.uid = uid;
         event.ethertype = ethertype;
-        event.dstHwAddr = MacAddress.fromBytes(dstHw);
+        if (hasCellularTransport(network) && ArrayUtils.isEmpty(dstHw)) {
+            // Ignore empty mac addresses on cellular networks as they may be unavailable.
+            event.dstHwAddr = null;
+        } else {
+            event.dstHwAddr = MacAddress.fromBytes(dstHw);
+        }
         event.srcIp = srcIp;
         event.dstIp = dstIp;
         event.ipNextHeader = ipNextHeader;
@@ -306,14 +319,12 @@ public class NetdEventListenerService extends BaseNetdEventListener {
 
         final BatteryStatsInternal bsi = LocalServices.getService(BatteryStatsInternal.class);
         if (bsi != null) {
-            final long netHandle = Long.parseLong(prefixParts[0]);
             final long elapsedMs = SystemClock.elapsedRealtime() + event.timestampMs
                     - System.currentTimeMillis();
-            bsi.noteCpuWakingNetworkPacket(Network.fromNetworkHandle(netHandle), elapsedMs,
-                    event.uid);
+            bsi.noteCpuWakingNetworkPacket(network, elapsedMs, event.uid);
         }
 
-        final String dstMac = event.dstHwAddr.toString();
+        final String dstMac = String.valueOf(event.dstHwAddr);
         FrameworkStatsLog.write(FrameworkStatsLog.PACKET_WAKEUP_OCCURRED,
                 uid, event.iface, ethertype, dstMac, srcIp, dstIp, ipNextHeader, srcPort, dstPort);
     }
