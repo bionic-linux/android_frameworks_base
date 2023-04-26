@@ -33,6 +33,7 @@ import android.net.Uri;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.testing.AndroidTestingRunner;
+import android.testing.TestableResources;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -118,6 +119,7 @@ public class KeyguardClockSwitchControllerTest extends SysuiTestCase {
 
     private final View mFakeSmartspaceView = new View(mContext);
 
+    private TestableResources mTestableResources;
     private KeyguardClockSwitchController mController;
     private View mSliceView;
     private FakeExecutor mExecutor;
@@ -125,6 +127,11 @@ public class KeyguardClockSwitchControllerTest extends SysuiTestCase {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
+
+        mTestableResources = mContext.getOrCreateTestableResources();
+
+        // Add override for default state for lock screen clock
+        mTestableResources.addOverride(R.integer.config_doubleline_clock_default, 1);
 
         when(mView.findViewById(R.id.left_aligned_notification_icon_container))
                 .thenReturn(mNotificationIcons);

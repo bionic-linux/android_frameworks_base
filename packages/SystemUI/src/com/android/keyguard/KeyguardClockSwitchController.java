@@ -22,6 +22,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.android.keyguard.KeyguardClockSwitch.LARGE;
 import static com.android.keyguard.KeyguardClockSwitch.SMALL;
 
+import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -391,8 +392,12 @@ public class KeyguardClockSwitchController extends ViewController<KeyguardClockS
     }
 
     private void updateDoubleLineClock() {
+
+        Resources resources = mView.getResources();
+
         mCanShowDoubleLineClock = mSecureSettings.getIntForUser(
-            Settings.Secure.LOCKSCREEN_USE_DOUBLE_LINE_CLOCK, 1,
+            Settings.Secure.LOCKSCREEN_USE_DOUBLE_LINE_CLOCK,
+                resources.getInteger(R.integer.config_doubleline_clock_default),
                 UserHandle.USER_CURRENT) != 0;
 
         if (!mCanShowDoubleLineClock) {
