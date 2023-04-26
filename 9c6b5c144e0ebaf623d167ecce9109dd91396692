@@ -81,6 +81,30 @@
       },
       "revId": "9c6b5c144e0ebaf623d167ecce9109dd91396692",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05f99f3d_e8ba0382",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2023-04-26T23:56:10Z",
+      "side": 1,
+      "message": "I\u0027m concerned that silently accepting null MAC addresses will mask bugs elsewhere. How about we support null MAC addresses, but if we see an event with a null MAC address on wifi, we log an error and complain?",
+      "parentUuid": "65a20d68_9b4fb6dc",
+      "range": {
+        "startLine": 302,
+        "startChar": 12,
+        "endLine": 302,
+        "endChar": 42
+      },
+      "revId": "9c6b5c144e0ebaf623d167ecce9109dd91396692",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
