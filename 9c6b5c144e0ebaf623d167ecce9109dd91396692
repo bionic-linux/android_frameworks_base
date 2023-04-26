@@ -16,6 +16,29 @@
       "message": "I will add the unit tests in this topic.",
       "revId": "9c6b5c144e0ebaf623d167ecce9109dd91396692",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5fa7a78_fc92ed25",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2023-04-26T22:26:26Z",
+      "side": 1,
+      "message": "Is it worth checking this, or would ArrayUtils.isEmpty() be sufficient?",
+      "range": {
+        "startLine": 302,
+        "startChar": 12,
+        "endLine": 302,
+        "endChar": 42
+      },
+      "revId": "9c6b5c144e0ebaf623d167ecce9109dd91396692",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
