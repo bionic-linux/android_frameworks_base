@@ -586,6 +586,11 @@
     <!-- The time (in ms) needed to trigger the lock icon view's long-press affordance -->
     <integer name="config_lockIconLongPress" translatable="false">200</integer>
 
+    <!-- Provides default value for double line clock in lock screen setting:
+         0 - Don't show double line clock
+         1 - Show double line clock in lock screen (default) -->
+    <integer name="config_doubleline_clock_default">1</integer>
+
     <!-- package name of a built-in camera app to use to restrict implicit intent resolution
          when the double-press power gesture is used. Ignored if empty. -->
     <string translatable="false" name="config_cameraGesturePackage"></string>
