@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2135e82_ca24200c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2023-04-26T22:38:51Z",
+      "side": 1,
+      "message": "I don\u0027t think this should be looking at cellular transport type.  VPNs\nare also often mac-less.\n\nOn Thu, Apr 27, 2023 at 12:26 AM Patrick Rohr (Gerrit)\n\u003cnoreply-gerritcodereview-bB3muERPmK7ql4IS74BTGw\u003d\u003d@google.com\u003e wrote:",
+      "tag": "mailMessageId\u003d\u003cCANP3RGeAxHkfk8LWK25pwKg2KD9CJZHuEQafGft-7+v00LJ0XQ@mail.gmail.com\u003e",
+      "revId": "9c6b5c144e0ebaf623d167ecce9109dd91396692",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f5fa7a78_fc92ed25",
