@@ -16,6 +16,23 @@
       "message": "Please help review. Thanks!",
       "revId": "dd6982c6736c2c09d78c3adac2e1c7cac35e81be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bd80e0f_e5ec24ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2023-04-27T21:10:29Z",
+      "side": 1,
+      "message": "The deadlock doesn\u0027t have much to do with the fact that this isn\u0027t a zygote process.\n\nThe system_process makes a blocking call into IActivityController, which is somewhat risky - any blocking binder call back into system_server will be dispatched with the WindowManager lock held, causing a lock inversion here.\n\nThe issue here really is the fact that this is IActivityController.",
+      "revId": "dd6982c6736c2c09d78c3adac2e1c7cac35e81be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
