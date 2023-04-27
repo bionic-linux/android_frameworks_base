@@ -1805,7 +1805,6 @@ public final class Call {
      * This will initiate CONSULTATIVE transfer.
      * @param toCall The other ongoing {@code Call} to which this call will be transferred.
      *
-     * @hide
      */
     public void transfer(@NonNull android.telecom.Call toCall) {
         mInCallAdapter.transferCall(mTelecomCallId, toCall.mTelecomCallId);
