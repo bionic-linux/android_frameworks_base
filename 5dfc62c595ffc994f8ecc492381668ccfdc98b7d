@@ -268,6 +268,24 @@
       "parentUuid": "cd04a9b1_e0360bd2",
       "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30febe28_df9a86cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1943370
+      },
+      "writtenOn": "2023-04-27T14:07:20Z",
+      "side": 1,
+      "message": "Hi Matt,\nThoughts on the new patch set? I have verified it along with aosp/2539870 and it works fine.",
+      "parentUuid": "8f59855d_a2f06e30",
+      "revId": "5dfc62c595ffc994f8ecc492381668ccfdc98b7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
