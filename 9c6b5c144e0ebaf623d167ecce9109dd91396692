@@ -105,6 +105,30 @@
       },
       "revId": "9c6b5c144e0ebaf623d167ecce9109dd91396692",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f52f5eb_db975acc",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2023-04-27T04:22:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05f99f3d_e8ba0382",
+      "range": {
+        "startLine": 302,
+        "startChar": 12,
+        "endLine": 302,
+        "endChar": 42
+      },
+      "revId": "9c6b5c144e0ebaf623d167ecce9109dd91396692",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
