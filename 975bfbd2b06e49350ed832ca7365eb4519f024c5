@@ -72,6 +72,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e6737ffe_395ec230",
+        "filename": "core/java/android/widget/AutoCompleteTextView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 1150125
+      },
+      "writtenOn": "2023-04-28T19:54:11Z",
+      "side": 1,
+      "message": "Hi Siyamed, \n\nSorry to resurface this after a year. I actually created another cl to fix this in appcompat: \nhttps://android-review.git.corp.google.com/c/platform/frameworks/support/+/2101234\n\nCan you help take a look?",
+      "parentUuid": "dfbf9a30_8d584bbb",
+      "range": {
+        "startLine": 1427,
+        "startChar": 22,
+        "endLine": 1427,
+        "endChar": 41
+      },
+      "revId": "975bfbd2b06e49350ed832ca7365eb4519f024c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "350eb363_e53df164",
         "filename": "core/java/android/widget/AutoCompleteTextView.java",
         "patchSetId": 3
