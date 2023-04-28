@@ -1212,8 +1212,11 @@ public class AudioDeviceInventory {
             // Reset LEA suspend state each time a new sink is connected
             mAudioSystem.setParameters("LeAudioSuspended=false");
 
+            UUID sensorUuid = UuidUtils.uuidFromAudioDeviceAttributes(
+                    new AudioDeviceAttributes(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP, address));
             mConnectedDevices.put(DeviceInfo.makeDeviceListKey(device, address),
-                    new DeviceInfo(device, name, address, AudioSystem.AUDIO_FORMAT_DEFAULT));
+                    new DeviceInfo(device, name, address,
+                      AudioSystem.AUDIO_FORMAT_DEFAULT, sensorUuid));
             mDeviceBroker.postAccessoryPlugMediaUnmute(device);
             setCurrentAudioRouteNameIfPossible(name, /*fromA2dp=*/false);
         }
