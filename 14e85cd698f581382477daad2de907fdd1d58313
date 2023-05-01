@@ -22,6 +22,30 @@
       },
       "revId": "14e85cd698f581382477daad2de907fdd1d58313",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "151437d2_67f2dbd9",
+        "filename": "packages/SystemUI/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2023-05-01T11:39:46Z",
+      "side": 1,
+      "message": "Sorry, I meant to say `config_doubleline_clock_default`. It doesn\u0027t really override, rather it provides a default value.",
+      "parentUuid": "f556906e_fa8f9337",
+      "range": {
+        "startLine": 815,
+        "startChar": 19,
+        "endLine": 815,
+        "endChar": 54
+      },
+      "revId": "14e85cd698f581382477daad2de907fdd1d58313",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
