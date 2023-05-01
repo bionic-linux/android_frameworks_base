@@ -34,5 +34,6 @@
         <permission name="android.permission.RECEIVE_DATA_ACTIVITY_CHANGE"/>
         <permission name="android.permission.TETHER_PRIVILEGED"/>
         <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+        <permission name="android.permission.MANAGE_USERS"/>
     </privapp-permissions>
 </permissions>
