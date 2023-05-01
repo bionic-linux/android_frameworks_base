@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f556906e_fa8f9337",
+        "filename": "packages/SystemUI/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2023-05-01T11:34:41Z",
+      "side": 1,
+      "message": "Remove `ls` from the name: `config_doubleline_clock_override`",
+      "range": {
+        "startLine": 815,
+        "startChar": 19,
+        "endLine": 815,
+        "endChar": 54
+      },
+      "revId": "14e85cd698f581382477daad2de907fdd1d58313",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
