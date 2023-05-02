@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3659b30_628b0c1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2023-05-02T21:15:58Z",
+      "side": 1,
+      "message": "Unfortunately I\u0027m not actually an owner. Added Yurii.\n\nAlso, I think AAPT2 is released from a snapshot from internal to g3, not from AOSP. I forget who handles the release process, but if you\u0027re relying on this outside the platform build, you\u0027ll need someone to manually release a new version of AAPT2.",
+      "revId": "e179976494c01306407520235d799c3a7b01bade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
