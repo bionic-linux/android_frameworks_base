@@ -33,6 +33,23 @@
       "message": "Badhri, it\u0027s been some time!\n\nCan you please help review this patch? More than half of the code is tests.",
       "revId": "e8299345366aeb500e6c0a002211925b47bd4542",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75b1a4d7_372ed3e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2002580
+      },
+      "writtenOn": "2023-05-04T07:23:46Z",
+      "side": 1,
+      "message": "Badhri, may you, please, take a look for the next steps? Thank you!",
+      "revId": "e8299345366aeb500e6c0a002211925b47bd4542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
