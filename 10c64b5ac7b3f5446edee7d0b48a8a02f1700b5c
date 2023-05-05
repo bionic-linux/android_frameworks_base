@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86c5ce27_4d6212de",
+        "filename": "core/java/android/app/assist/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1632811
+      },
+      "writtenOn": "2023-05-05T22:17:09Z",
+      "side": 1,
+      "message": "volnov too, also in cc?",
+      "revId": "10c64b5ac7b3f5446edee7d0b48a8a02f1700b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
