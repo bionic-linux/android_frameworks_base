@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8e4f1b4_d713ab72",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1958109
+      },
+      "writtenOn": "2023-05-08T18:36:07Z",
+      "side": 1,
+      "message": "An AOSP fork with a SimpleDeviceConfig set to enable location indicators was experiencing that the location indicator consistently did not work after first install, but started working after a reboot. Debugging showed that the callbacks to respond to PrivacyConfig changes were being finalized not long after SystemUI\u0027s start.",
+      "revId": "fb2fc4df18d89dc35b902fe73bc25ab8b1b959cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
