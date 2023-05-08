@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "3e71041e_e7aa65ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-05-08T13:40:12Z",
+      "side": 1,
+      "message": "Also downloaded the sdk-*-platforms.zip and sdk-*-docs.zip and compared the output (no diffs)",
+      "revId": "19fcec6c634c28c1a842d7164d94a46b3ef59942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "64795573_9881997a",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
