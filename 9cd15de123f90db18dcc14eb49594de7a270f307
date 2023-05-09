@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd5d7ac9_5d2632fc",
+        "filename": "core/java/android/hardware/camera2/impl/CameraExtensionSessionImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1481938
+      },
+      "writtenOn": "2023-05-09T07:05:20Z",
+      "side": 1,
+      "message": "Though this can stop the task that is pending in queue,  it can\u0027t stop the task that is already running.  \n\nI feel like this could still cause the issue , it just lowers the possibility. \n\nAlternatively,  how about we add synchronized(..) in CameraOutputImageCallback to ensure mImageListenerMap is not accessed concurrently.",
+      "range": {
+        "startLine": 719,
+        "startChar": 0,
+        "endLine": 719,
+        "endChar": 34
+      },
+      "revId": "9cd15de123f90db18dcc14eb49594de7a270f307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
