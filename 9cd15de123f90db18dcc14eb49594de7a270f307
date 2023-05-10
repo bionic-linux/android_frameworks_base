@@ -22,6 +22,30 @@
       },
       "revId": "9cd15de123f90db18dcc14eb49594de7a270f307",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d5c1609_d4cd9a17",
+        "filename": "core/java/android/hardware/camera2/impl/CameraExtensionSessionImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1141048
+      },
+      "writtenOn": "2023-05-10T01:56:20Z",
+      "side": 1,
+      "message": "Good point, I think we can do both.",
+      "parentUuid": "fd5d7ac9_5d2632fc",
+      "range": {
+        "startLine": 719,
+        "startChar": 0,
+        "endLine": 719,
+        "endChar": 34
+      },
+      "revId": "9cd15de123f90db18dcc14eb49594de7a270f307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
