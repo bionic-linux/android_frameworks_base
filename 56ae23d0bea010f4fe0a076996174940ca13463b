@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1fd5740a_eee653b1",
+        "filename": "core/java/android/hardware/camera2/impl/CameraExtensionSessionImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1141048
+      },
+      "writtenOn": "2023-05-11T00:41:07Z",
+      "side": 1,
+      "message": "The local lock is an option however the order with which we obtain multiple locks is starting to become a challenge so I opted to re-use the same lock that we utilize throughout the entire session stack.",
+      "parentUuid": "cf6e5f28_07b8b867",
+      "range": {
+        "startLine": 1255,
+        "startChar": 0,
+        "endLine": 1255,
+        "endChar": 43
+      },
+      "revId": "56ae23d0bea010f4fe0a076996174940ca13463b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9ee42408_6adbb525",
         "filename": "core/java/android/hardware/camera2/impl/CameraExtensionSessionImpl.java",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2023-05-10T02:39:28Z",
       "side": 1,
       "message": "Invoking listener inside the synchronized block could cause deadlock.  (because that listener will be running with the lock being held)\n\nIs it possible to run the listener outside of the synchronized block ?",
+      "range": {
+        "startLine": 1273,
+        "startChar": 0,
+        "endLine": 1273,
+        "endChar": 67
+      },
+      "revId": "56ae23d0bea010f4fe0a076996174940ca13463b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5396baa0_fe685e78",
+        "filename": "core/java/android/hardware/camera2/impl/CameraExtensionSessionImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 1141048
+      },
+      "writtenOn": "2023-05-11T00:41:07Z",
+      "side": 1,
+      "message": "I generally agree that is not a good idea to hold a lock while calling a callback. However since we are synchronizing with \u0027release()\u0027 there is another aspect to consider. Releasing the lock can also invalidate any images the moment \u0027release()\u0027 has an opportunity to close the underlying image reader.\nAdditionally the callbacks that we use and register here do not interact with other locks (as far as I can tell).",
+      "parentUuid": "9ee42408_6adbb525",
       "range": {
         "startLine": 1273,
         "startChar": 0,
