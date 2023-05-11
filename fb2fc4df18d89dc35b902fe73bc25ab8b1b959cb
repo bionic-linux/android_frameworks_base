@@ -63,6 +63,30 @@
       },
       "revId": "fb2fc4df18d89dc35b902fe73bc25ab8b1b959cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4a2d897_e98353f1",
+        "filename": "packages/SystemUI/src/com/android/systemui/privacy/PrivacyConfig.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2023-05-11T21:47:13Z",
+      "side": 1,
+      "message": "Might be a proguard optimization?\n\nI agree, it seems fine to keep strong references to the PrivacyConfig callbacks.",
+      "parentUuid": "39d34fbb_c477ea9a",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "fb2fc4df18d89dc35b902fe73bc25ab8b1b959cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
