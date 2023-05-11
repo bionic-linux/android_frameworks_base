@@ -39,6 +39,30 @@
       },
       "revId": "fb2fc4df18d89dc35b902fe73bc25ab8b1b959cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39d34fbb_c477ea9a",
+        "filename": "packages/SystemUI/src/com/android/systemui/privacy/PrivacyConfig.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1958109
+      },
+      "writtenOn": "2023-05-11T21:08:57Z",
+      "side": 1,
+      "message": "AppOpsPrivacyItemMonitor is listed, yes. The callbacks list is empty.\n\nThe way I understand it is that the reference AppOpsPrivacyItemMonitor holds -- configCallback -- is ultimately not strong enough, since configCallback is not referred to anywhere else at all, only in the init block. I\u0027m thinking it gets optimized out.\n\nBut I also couldn\u0027t see a good reason for the references in PrivacyConfig to be weak, since from what I can tell, the only callback users are expected to stick around. Happy to be corrected on that though.",
+      "parentUuid": "82fd0c02_011d8b87",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "fb2fc4df18d89dc35b902fe73bc25ab8b1b959cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
