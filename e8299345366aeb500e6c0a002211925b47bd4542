@@ -77,6 +77,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "65e02485_43e753af",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-05-11T17:40:05Z",
+      "side": 1,
+      "message": "Fixed the \"translatable\"\n\nRegarding the difference from `config_usbHostDenylist`:\n`config_usbHostDenylist` allows to disable host feature for specific buses.\nNewly added `config_usbHostAppDenyList` allows to disable the feature for the device with specific identifiers. \ne.g. our use case: we want to deny the 3P apps that use the USB host feature to access our USB gadgets protocols as they are already handled by our system services.\n\nRegarding the fact that denied device will not be connected to audio framework: in suggested approach.. If that\u0027t the vendor decision to deny the device, they indeed won\u0027t connect to audio. Is it a bad thing?\nI guess in ideal world, for `USB_CLASS_PER_INTERFACE` devices it would have been nice to only deny apps the access to specific interfaces and allow the rest. However `UsbHostManager` does not have that granularity at the moment.",
+      "parentUuid": "dc903fa3_83cfad88",
+      "range": {
+        "startLine": 1179,
+        "startChar": 24,
+        "endLine": 1179,
+        "endChar": 49
+      },
+      "revId": "e8299345366aeb500e6c0a002211925b47bd4542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "481e3f97_e34ca360",
         "filename": "services/usb/java/com/android/server/usb/AsteriskIntPrefixTree.java",
         "patchSetId": 1
@@ -100,6 +124,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ab91dfcd_43d04aaa",
+        "filename": "services/usb/java/com/android/server/usb/AsteriskIntPrefixTree.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-05-11T17:40:05Z",
+      "side": 1,
+      "message": "It is indeed not that useful. But also is a part of canonical prefix tree so I hesitated and decided to keep it 😊. This keeps the data structure universal and allows for it to be used in other parts of code base if needed.",
+      "parentUuid": "481e3f97_e34ca360",
+      "range": {
+        "startLine": 51,
+        "startChar": 16,
+        "endLine": 51,
+        "endChar": 22
+      },
+      "revId": "e8299345366aeb500e6c0a002211925b47bd4542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "61c2f9f4_e92da983",
         "filename": "services/usb/java/com/android/server/usb/UsbHostManager.java",
         "patchSetId": 1
@@ -111,6 +159,30 @@
       "writtenOn": "2023-05-10T23:48:19Z",
       "side": 1,
       "message": "nit, one space.",
+      "range": {
+        "startLine": 72,
+        "startChar": 29,
+        "endLine": 72,
+        "endChar": 31
+      },
+      "revId": "e8299345366aeb500e6c0a002211925b47bd4542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bdc2cf6_dc042990",
+        "filename": "services/usb/java/com/android/server/usb/UsbHostManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-05-11T17:40:05Z",
+      "side": 1,
+      "message": "fixed",
+      "parentUuid": "61c2f9f4_e92da983",
       "range": {
         "startLine": 72,
         "startChar": 29,
