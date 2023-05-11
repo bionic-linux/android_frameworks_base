@@ -16,6 +16,29 @@
       "message": "An AOSP fork with a SimpleDeviceConfig set to enable location indicators was experiencing that the location indicator consistently did not work after first install, but started working after a reboot. Debugging showed that the callbacks to respond to PrivacyConfig changes were being finalized not long after SystemUI\u0027s start.",
       "revId": "fb2fc4df18d89dc35b902fe73bc25ab8b1b959cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82fd0c02_011d8b87",
+        "filename": "packages/SystemUI/src/com/android/systemui/privacy/PrivacyConfig.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2023-05-11T21:01:02Z",
+      "side": 1,
+      "message": "Does this not list AppOpsPrivacyItemMonitor$configCallback in the failure case?\nIs AppOpsPrivacyItemMonitor listed in PrivacyItemController\u0027s dump for PrivacyItemMonitors?\n\nPrivacyItemController holds a strong reference to AppOpsPrivacyItemMonitor, which holds a strong reference to its PrivacyConfig.Callback, so I wonder how the PrivacyConfig.Callback would be garbage collected.",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "fb2fc4df18d89dc35b902fe73bc25ab8b1b959cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
