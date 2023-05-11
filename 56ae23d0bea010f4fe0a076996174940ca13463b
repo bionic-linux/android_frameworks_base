@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d331eaa0_40aa0033",
+        "filename": "core/java/android/hardware/camera2/impl/CameraExtensionSessionImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1481938
+      },
+      "writtenOn": "2023-05-11T08:34:03Z",
+      "side": 1,
+      "message": "ok that makes sense.",
+      "parentUuid": "1fd5740a_eee653b1",
+      "range": {
+        "startLine": 1255,
+        "startChar": 0,
+        "endLine": 1255,
+        "endChar": 43
+      },
+      "revId": "56ae23d0bea010f4fe0a076996174940ca13463b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9ee42408_6adbb525",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "I generally agree that is not a good idea to hold a lock while calling a callback. However since we are synchronizing with \u0027release()\u0027 there is another aspect to consider. Releasing the lock can also invalidate any images the moment \u0027release()\u0027 has an opportunity to close the underlying image reader.\nAdditionally the callbacks that we use and register here do not interact with other locks (as far as I can tell).",
       "parentUuid": "9ee42408_6adbb525",
+      "range": {
+        "startLine": 1273,
+        "startChar": 0,
+        "endLine": 1273,
+        "endChar": 67
+      },
+      "revId": "56ae23d0bea010f4fe0a076996174940ca13463b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3972875c_984688c2",
+        "filename": "core/java/android/hardware/camera2/impl/CameraExtensionSessionImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 1481938
+      },
+      "writtenOn": "2023-05-11T08:34:03Z",
+      "side": 1,
+      "message": "that\u0027s a good point. I am good with it.",
+      "parentUuid": "5396baa0_fe685e78",
       "range": {
         "startLine": 1273,
         "startChar": 0,
