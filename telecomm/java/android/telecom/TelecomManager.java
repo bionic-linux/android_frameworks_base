@@ -974,6 +974,22 @@ public class TelecomManager {
     public static final int CALL_SOURCE_UNSPECIFIED = 0;
 
     /**
+     * The extra to provide the call number presentation that has initiated a new incoming call. it
+     * mainly used by missed incoming call SMS feature.
+     * Valid values are:
+     * <ul>
+     *     <li>{@link #PRESENTATION_ALLOWED}</li>
+     *     <li>{@link #PRESENTATION_RESTRICTED}</li>
+     *     <li>{@link #PRESENTATION_UNKNOWN}</li>
+     *     <li>{@link #PRESENTATION_PAYPHONE}</li>
+     *     <li>{@link #PRESENTATION_UNAVAILABLE}</li>
+     * </ul>
+     * @hide
+     */
+    @SystemApi
+    public static final String EXTRA_CALL_PRESENTATION = "android.telecom.extra.CALL_PRESENTATION";
+
+    /**
      * The following 4 constants define how properties such as phone numbers and names are
      * displayed to the user.
      */
