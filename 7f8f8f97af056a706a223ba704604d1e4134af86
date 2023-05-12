@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fe6b58e_cf178686",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3418,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2023-05-12T09:51:43Z",
+      "side": 1,
+      "message": "Please wrap this in () or move it into a variable. I think operator precedence of \u0026\u0026 before || means the whole expression is evaluated incorrectly.",
+      "range": {
+        "startLine": 3417,
+        "startChar": 24,
+        "endLine": 3418,
+        "endChar": 83
+      },
+      "revId": "7f8f8f97af056a706a223ba704604d1e4134af86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
