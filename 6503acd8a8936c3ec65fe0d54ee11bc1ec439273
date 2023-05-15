@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc91f78c_33420f31",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2023-05-15T13:50:26Z",
+      "side": 1,
+      "message": "LGTM (assuming the use case below is correct), but can you explain in the commit message why this is needed?\n\nAFAIK it is needed to allow networkstack to know whether a given UID is a device owner using getDeviceOwnerNameOnAnyUser.",
+      "revId": "6503acd8a8936c3ec65fe0d54ee11bc1ec439273",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
