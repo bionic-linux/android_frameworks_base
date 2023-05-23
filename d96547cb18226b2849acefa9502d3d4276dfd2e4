@@ -16,6 +16,23 @@
       "message": "Hi @evanlaird@google.com/ @jglazier@google.com/ @mpietal@google.com,\nCould you please help review this CL? It applies cleanly on top of QPR2 now. So, I think Treehugger should not complain anymore.\n\nI have verified both the CLs and they work as expected. Request you to please have a look at it.",
       "revId": "d96547cb18226b2849acefa9502d3d4276dfd2e4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76e6c342_31b9eb1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1954821
+      },
+      "writtenOn": "2023-05-23T14:36:11Z",
+      "side": 1,
+      "message": "From Wallpaper Picker app, we also use this default value http://shortn/_qJmsBgcMN9\n\nIs it possible to add this default value in `[ANDROID_ROOT]/frameworks/base/packages/SystemUI/customization/res/values/config.xml`\nSo that Wallpaper Picker app can also share this default value.",
+      "revId": "d96547cb18226b2849acefa9502d3d4276dfd2e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
