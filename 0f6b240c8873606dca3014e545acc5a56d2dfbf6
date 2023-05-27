@@ -16,6 +16,23 @@
       "message": "Thank you so much for reviewing it!\nAddressed and answered to all of the comments.",
       "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b9005f3_26210ae7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1967850
+      },
+      "writtenOn": "2023-05-27T21:59:52Z",
+      "side": 1,
+      "message": "Jiabin, thx for reviewing the patch - can you please look at Andrei\u0027s recent comments whether they address your feedback?",
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
