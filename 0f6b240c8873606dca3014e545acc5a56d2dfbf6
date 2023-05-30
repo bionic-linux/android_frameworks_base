@@ -73,6 +73,30 @@
       },
       "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f52ef7ee_0efdba34",
+        "filename": "services/usb/java/com/android/server/usb/UsbHostManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2023-05-30T22:12:41Z",
+      "side": 1,
+      "message": "This looks more like a generic USB request other than an audio only issue. Badhri, could you help comment here?",
+      "parentUuid": "f9e2b932_e184b2a9",
+      "range": {
+        "startLine": 646,
+        "startChar": 12,
+        "endLine": 648,
+        "endChar": 37
+      },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
