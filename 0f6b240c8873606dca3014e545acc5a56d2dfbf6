@@ -33,6 +33,46 @@
       "message": "Jiabin, thx for reviewing the patch - can you please look at Andrei\u0027s recent comments whether they address your feedback?",
       "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c24a0bb0_74e80c4b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2023-05-30T17:55:27Z",
+      "side": 1,
+      "message": "Eric, could you also chime here to see if a feature is required for this change?",
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9e2b932_e184b2a9",
+        "filename": "services/usb/java/com/android/server/usb/UsbHostManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2023-05-30T17:55:27Z",
+      "side": 1,
+      "message": "With the change, it is against original logic that only ignore device if all interfaces are deny-listed. Could you explain more here?",
+      "range": {
+        "startLine": 646,
+        "startChar": 12,
+        "endLine": 648,
+        "endChar": 37
+      },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

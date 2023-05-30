@@ -99,6 +99,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4acbdfb5_88f08666",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2023-05-30T17:55:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "65e02485_43e753af",
+      "range": {
+        "startLine": 1179,
+        "startChar": 24,
+        "endLine": 1179,
+        "endChar": 49
+      },
+      "revId": "e8299345366aeb500e6c0a002211925b47bd4542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "481e3f97_e34ca360",
@@ -136,6 +160,30 @@
       "side": 1,
       "message": "It is indeed not that useful. But also is a part of canonical prefix tree so I hesitated and decided to keep it 😊. This keeps the data structure universal and allows for it to be used in other parts of code base if needed.",
       "parentUuid": "481e3f97_e34ca360",
+      "range": {
+        "startLine": 51,
+        "startChar": 16,
+        "endLine": 51,
+        "endChar": 22
+      },
+      "revId": "e8299345366aeb500e6c0a002211925b47bd4542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12ff3823_227a3ce7",
+        "filename": "services/usb/java/com/android/server/usb/AsteriskIntPrefixTree.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2023-05-30T17:55:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ab91dfcd_43d04aaa",
       "range": {
         "startLine": 51,
         "startChar": 16,
