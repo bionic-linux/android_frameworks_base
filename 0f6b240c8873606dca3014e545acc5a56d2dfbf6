@@ -54,6 +54,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c115fd87_ba713b4c",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceDenyList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1060750
+      },
+      "writtenOn": "2023-05-30T22:34:17Z",
+      "side": 1,
+      "message": "What is \"trie\"?",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 12
+      },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eba1a36d_ce7c2332",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceDenyList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1060750
+      },
+      "writtenOn": "2023-05-30T22:34:17Z",
+      "side": 1,
+      "message": "Instead of just a \"deny\" list,\ncould we support both \"deny\" and \"permit\"?\nThis would be similar to the Access Control Lists design (ACL).",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 26
+      },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f9e2b932_e184b2a9",
         "filename": "services/usb/java/com/android/server/usb/UsbHostManager.java",
         "patchSetId": 2
