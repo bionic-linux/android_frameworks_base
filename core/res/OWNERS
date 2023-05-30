@@ -1,25 +1,28 @@
+# Frameworks - AndroidManifest, build, services reviews should typically go here
 adamp@google.com
-asc@google.com
-cinek@google.com
-dsandler@android.com
-dsandler@google.com
-dupin@google.com
 hackbod@android.com
 hackbod@google.com
 ilyamaty@google.com
 jaggies@google.com
 jsharkey@android.com
 jsharkey@google.com
-juliacr@google.com
 kchyn@google.com
 michaelwr@google.com
 nandana@google.com
 narayan@google.com
 ogunwale@google.com
 patb@google.com
+yamasani@google.com
+
+# SysUI - Assets, theming, UI reviews should typically go here
+asc@google.com
+cinek@google.com
+dsandler@android.com
+dsandler@google.com
+dupin@google.com
+juliacr@google.com
 shanh@google.com
 tsuji@google.com
-yamasani@google.com
 
 # WindowManager team
 # TODO(262451702): Move WindowManager configs out of config.xml in a separate file
