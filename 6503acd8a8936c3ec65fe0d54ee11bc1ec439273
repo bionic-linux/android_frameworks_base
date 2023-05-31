@@ -16,6 +16,47 @@
       "message": "LGTM (assuming the use case below is correct), but can you explain in the commit message why this is needed?\n\nAFAIK it is needed to allow networkstack to know whether a given UID is a device owner using getDeviceOwnerNameOnAnyUser.",
       "revId": "6503acd8a8936c3ec65fe0d54ee11bc1ec439273",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c503182_78032d1f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2023-05-31T14:21:20Z",
+      "side": 1,
+      "message": "+1.",
+      "parentUuid": "cc91f78c_33420f31",
+      "revId": "6503acd8a8936c3ec65fe0d54ee11bc1ec439273",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90656534_369053e8",
+        "filename": "data/etc/com.android.networkstack.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2023-05-31T14:21:20Z",
+      "side": 1,
+      "message": "Please maintain the sort order",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 60
+      },
+      "revId": "6503acd8a8936c3ec65fe0d54ee11bc1ec439273",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
