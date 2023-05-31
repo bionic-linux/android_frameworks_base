@@ -52,6 +52,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e515c31_75e29fd4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-05-31T11:13:26Z",
+      "side": 1,
+      "message": "Addressed the comments",
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c115fd87_ba713b4c",
@@ -77,6 +94,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9f8291f8_1851ece1",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceDenyList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-05-31T11:13:26Z",
+      "side": 1,
+      "message": "Trie is an another name for a prefix tree data structure.",
+      "parentUuid": "c115fd87_ba713b4c",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 12
+      },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eba1a36d_ce7c2332",
         "filename": "services/usb/java/com/android/server/usb/UsbDeviceDenyList.java",
         "patchSetId": 2
@@ -88,6 +129,30 @@
       "writtenOn": "2023-05-30T22:34:17Z",
       "side": 1,
       "message": "Instead of just a \"deny\" list,\ncould we support both \"deny\" and \"permit\"?\nThis would be similar to the Access Control Lists design (ACL).",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 26
+      },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f13c2dde_77160c01",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceDenyList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-05-31T11:13:26Z",
+      "side": 1,
+      "message": "Currently USBHostManager follows the deny list approach i.e. \"every USB device is allowed to be accessed by 3P apps, unless specified otherwise\". It\u0027s done this way to allow arbitrary USB accessories to be used along with he corresponding 3P apps acting as user space drivers for them.\nSo allow list approach didn\u0027t seem like a good fit for given use case.\nUnless we want to make it a device policy enforced by DevicePolicyManager. However that would drastically increase the volume of this change.",
+      "parentUuid": "eba1a36d_ce7c2332",
       "range": {
         "startLine": 36,
         "startChar": 22,
