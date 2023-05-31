@@ -69,6 +69,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4150273a_884edca6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2023-05-31T18:58:32Z",
+      "side": 1,
+      "message": "Adding Mark as owner to review the USB framework change.",
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c115fd87_ba713b4c",
