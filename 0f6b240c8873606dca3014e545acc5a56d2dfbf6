@@ -86,6 +86,86 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5507aea2_45da98b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1826738
+      },
+      "writtenOn": "2023-06-01T11:20:31Z",
+      "side": 1,
+      "message": "Looks good overall",
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fbfd779_6327fd1a",
+        "filename": "services/usb/java/com/android/server/usb/AsteriskIntPrefixTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1826738
+      },
+      "writtenOn": "2023-06-01T11:20:31Z",
+      "side": 1,
+      "message": "If values is empty should we still be setting isFinalNode to true?",
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c272290_4e0a2a1f",
+        "filename": "services/usb/java/com/android/server/usb/AsteriskIntPrefixTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1826738
+      },
+      "writtenOn": "2023-06-01T11:20:31Z",
+      "side": 1,
+      "message": "Can this be private?",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 23
+      },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17e2c1da_40464b6b",
+        "filename": "services/usb/java/com/android/server/usb/AsteriskIntPrefixTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1826738
+      },
+      "writtenOn": "2023-06-01T11:20:31Z",
+      "side": 1,
+      "message": "isLeafNode may be slightly clearer.",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 35
+      },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c115fd87_ba713b4c",
@@ -135,6 +215,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4dd96d52_199f5bf5",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceDenyList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1826738
+      },
+      "writtenOn": "2023-06-01T11:20:31Z",
+      "side": 1,
+      "message": "Could it make it more explicit if we only allow \"*\" as match all, or is there precedent for this format with empty string being match all?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 99
+      },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eba1a36d_ce7c2332",
         "filename": "services/usb/java/com/android/server/usb/UsbDeviceDenyList.java",
         "patchSetId": 2
@@ -176,6 +279,23 @@
         "endLine": 36,
         "endChar": 26
       },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f299491b_f6dce00b",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceDenyList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1826738
+      },
+      "writtenOn": "2023-06-01T11:20:31Z",
+      "side": 1,
+      "message": "I know this class is pretty straightforward (at present) but I still think it\u0027s worth adding unit test coverage.",
       "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
