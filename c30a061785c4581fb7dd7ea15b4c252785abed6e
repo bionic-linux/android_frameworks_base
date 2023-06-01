@@ -34,6 +34,24 @@
       "parentUuid": "9db39d70_abf345c6",
       "revId": "c30a061785c4581fb7dd7ea15b4c252785abed6e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2adc14b1_53b383e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-06-01T18:57:24Z",
+      "side": 1,
+      "message": "It is still failing:\n\n```\njava.lang.NullPointerException: Attempt to invoke virtual method \u0027android.content.res.Resources android.content.Context.getResources()\u0027 on a null object reference\n\tat com.android.keyguard.KeyguardClockSwitchController.updateDoubleLineClock(KeyguardClockSwitchController.java:488)\n\tat com.android.keyguard.KeyguardClockSwitchController.-$$Nest$mupdateDoubleLineClock(Unknown Source:0)\n\tat com.android.keyguard.KeyguardClockSwitchController$1.onChange(KeyguardClockSwitchController.java:107)\n\tat com.android.keyguard.KeyguardClockSwitchControllerTest.testChangeToDoubleLineClockSetsSmallClock(KeyguardClockSwitchControllerTest.java:322)\n```",
+      "parentUuid": "d57df43e_e2e9b64a",
+      "revId": "c30a061785c4581fb7dd7ea15b4c252785abed6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
