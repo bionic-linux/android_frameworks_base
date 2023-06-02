@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d38b2ea1_d1200ca7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-06-02T17:54:40Z",
+      "side": 1,
+      "message": "fixed the javadoc comment",
+      "revId": "0b1089eaff1a671af6ec606b0afeb4936cf5cea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

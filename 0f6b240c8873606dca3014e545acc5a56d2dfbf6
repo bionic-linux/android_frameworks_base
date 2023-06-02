@@ -138,6 +138,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7eccd8b7_f48e3b84",
+        "filename": "services/usb/java/com/android/server/usb/AsteriskIntPrefixTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-06-02T17:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d27dba29_1cb031b3",
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c272290_4e0a2a1f",
@@ -175,6 +193,30 @@
       "side": 1,
       "message": "Yeah, this was an android app developer in me trying to reduce the method count by preventing the synthetic accessors generation 😅",
       "parentUuid": "5c272290_4e0a2a1f",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 23
+      },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a31fba4e_b4a500d5",
+        "filename": "services/usb/java/com/android/server/usb/AsteriskIntPrefixTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-06-02T17:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcb55d92_6ac0db7b",
       "range": {
         "startLine": 116,
         "startChar": 0,
@@ -350,6 +392,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fa48d11_41e34f69",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceDenyList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-06-02T17:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d718b03a_5c98f7e1",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 99
+      },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eba1a36d_ce7c2332",
@@ -428,6 +494,24 @@
       "side": 1,
       "message": "I\u0027ve intentionally split it the code into two well testable and composable classes.\nEven though it\u0027s a bit of a duplication, I agree that it\u0027s better to have some minimal test coverage.",
       "parentUuid": "f299491b_f6dce00b",
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ddbcb4c_6f436cd2",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceDenyList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-06-02T17:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f1acb19_016a337c",
       "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
