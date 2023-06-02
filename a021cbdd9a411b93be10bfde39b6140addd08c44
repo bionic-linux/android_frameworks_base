@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "deda99fc_3df0bcff",
+        "filename": "core/java/android/view/accessibility/AccessibilityNodeInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2167,
+      "author": {
+        "id": 1059968
+      },
+      "writtenOn": "2023-06-02T17:52:53Z",
+      "side": 1,
+      "message": "Other services use this too, no? Switch Access, for example.",
+      "range": {
+        "startLine": 2167,
+        "startChar": 67,
+        "endLine": 2167,
+        "endChar": 98
+      },
+      "revId": "a021cbdd9a411b93be10bfde39b6140addd08c44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b3ed955_7afefd87",
+        "filename": "core/java/android/view/accessibility/AccessibilityNodeInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2243,
+      "author": {
+        "id": 1059968
+      },
+      "writtenOn": "2023-06-02T17:52:53Z",
+      "side": 1,
+      "message": "Nit: accessibility instead of a11y",
+      "range": {
+        "startLine": 2243,
+        "startChar": 82,
+        "endLine": 2243,
+        "endChar": 86
+      },
+      "revId": "a021cbdd9a411b93be10bfde39b6140addd08c44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3a13f0a_314da455",
+        "filename": "core/java/android/view/accessibility/AccessibilityNodeInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2833,
+      "author": {
+        "id": 1059968
+      },
+      "writtenOn": "2023-06-02T17:52:53Z",
+      "side": 1,
+      "message": "This can be used to \u003ca href\u003d\"{@docRoot}guide/topics/ui/accessibility/principles#content-groups\"\u003egroup related content.\u003c/a\u003e",
+      "range": {
+        "startLine": 2831,
+        "startChar": 10,
+        "endLine": 2833,
+        "endChar": 19
+      },
+      "revId": "a021cbdd9a411b93be10bfde39b6140addd08c44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2225e29f_885f46e4",
+        "filename": "core/java/android/view/accessibility/AccessibilityNodeInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4773,
+      "author": {
+        "id": 1059968
+      },
+      "writtenOn": "2023-06-02T17:52:53Z",
+      "side": 1,
+      "message": "Nit: The view that implements this, should send...",
+      "range": {
+        "startLine": 4773,
+        "startChar": 14,
+        "endLine": 4773,
+        "endChar": 30
+      },
+      "revId": "a021cbdd9a411b93be10bfde39b6140addd08c44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08c068f2_426788ad",
+        "filename": "core/java/android/view/accessibility/AccessibilityNodeInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4778,
+      "author": {
+        "id": 1059968
+      },
+      "writtenOn": "2023-06-02T17:52:53Z",
+      "side": 1,
+      "message": "Is accessibility focus not used by services that are not screenreaders?",
+      "range": {
+        "startLine": 4778,
+        "startChar": 57,
+        "endLine": 4778,
+        "endChar": 88
+      },
+      "revId": "a021cbdd9a411b93be10bfde39b6140addd08c44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "294d76e0_69afe1d3",
+        "filename": "core/java/android/view/accessibility/AccessibilityNodeInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4789,
+      "author": {
+        "id": 1059968
+      },
+      "writtenOn": "2023-06-02T17:52:53Z",
+      "side": 1,
+      "message": "Same comment as above",
+      "range": {
+        "startLine": 4789,
+        "startChar": 14,
+        "endLine": 4789,
+        "endChar": 31
+      },
+      "revId": "a021cbdd9a411b93be10bfde39b6140addd08c44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
