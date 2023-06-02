@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a7d1e0a7_a293764a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2023-06-02T17:02:40Z",
+      "side": 1,
+      "message": "I agree that defining the modules in bp file is less magical, but leads to a lot of boilerplates as you can see in aosp/2607372, as the module definition would look like:\n```\njava_library {\n    name: \"android_stubs_current\",\n    static_libs: [\"android_stubs_current.from-source\"],\n    product_variables: {\n        build_from_text_stub: {\n            static_libs: [\n                \"android_stubs_current.from-text\",\n            ],\n            exclude_static_libs: [\n                \"android_stubs_current.from-source\",\n            ],\n        },\n    },\n    ...\n}\n```\n-- while the static libs can be handled with a single if branch if it is defined in the go code.\n\n`core.current.stubs` and `{legacy|stable}.core.platform.api.stubs` were defined here similarly in the earlier patchsets of this CL, but this led to presubmit failures for ART branches as the change essentially moves the modules definition from `build/soong` to `frameworks/base`, leading to missing dependency problems. Therefore, I had to introduce the `product_variable` as you have suggested.",
+      "parentUuid": "d542512e_d29015e1",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "930eb9f44c5d7ed4d51b16655b438cbc70264392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9caa8b33_431df51e",
         "filename": "api/api.go",
         "patchSetId": 7
@@ -37,6 +61,24 @@
       "writtenOn": "2023-06-02T12:24:21Z",
       "side": 1,
       "message": "could probably just inline `+\".from-text\"`, given we inline `+\".from-source\"`",
+      "revId": "930eb9f44c5d7ed4d51b16655b438cbc70264392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfe262fe_4a33b2c4",
+        "filename": "api/api.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2023-06-02T17:02:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9caa8b33_431df51e",
       "revId": "930eb9f44c5d7ed4d51b16655b438cbc70264392",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -54,6 +96,24 @@
       "writtenOn": "2023-06-02T12:24:21Z",
       "side": 1,
       "message": "just a nitpick, in general when there\u0027s an arbitrary choice it\u0027s nice to make the if condition positive, i.e. \"if build from from text stub, append .from-text\" is clearer than \"if not build from text stub, append .from-source\"\n\n(not that important)",
+      "revId": "930eb9f44c5d7ed4d51b16655b438cbc70264392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3e79236_d952741a",
+        "filename": "api/api.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2023-06-02T17:02:40Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion!",
+      "parentUuid": "a16678bd_1ec00a7d",
       "revId": "930eb9f44c5d7ed4d51b16655b438cbc70264392",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
