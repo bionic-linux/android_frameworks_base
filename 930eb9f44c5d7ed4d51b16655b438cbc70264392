@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d542512e_d29015e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-06-02T12:27:37Z",
+      "side": 1,
+      "message": "Hey Jihoon, given you\u0027re adding `product_variable` to the Android.bp syntax anyway, is there a reason we need to define these modules in go code rather than Android.bp? Android.bp is usually simpler / clearer to read / less magical. :)",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "930eb9f44c5d7ed4d51b16655b438cbc70264392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9caa8b33_431df51e",
         "filename": "api/api.go",
         "patchSetId": 7
