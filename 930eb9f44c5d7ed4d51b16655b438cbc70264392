@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9caa8b33_431df51e",
+        "filename": "api/api.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-06-02T12:24:21Z",
+      "side": 1,
+      "message": "could probably just inline `+\".from-text\"`, given we inline `+\".from-source\"`",
+      "revId": "930eb9f44c5d7ed4d51b16655b438cbc70264392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a16678bd_1ec00a7d",
+        "filename": "api/api.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-06-02T12:24:21Z",
+      "side": 1,
+      "message": "just a nitpick, in general when there\u0027s an arbitrary choice it\u0027s nice to make the if condition positive, i.e. \"if build from from text stub, append .from-text\" is clearer than \"if not build from text stub, append .from-source\"\n\n(not that important)",
+      "revId": "930eb9f44c5d7ed4d51b16655b438cbc70264392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

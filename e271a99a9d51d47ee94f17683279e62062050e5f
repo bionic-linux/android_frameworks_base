@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5b05bce_0b96dddf",
+        "filename": "api/api.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-06-02T12:24:21Z",
+      "side": 1,
+      "message": "maybe `javaLibraryNames`? These are not api_library",
+      "range": {
+        "startLine": 367,
+        "startChar": 1,
+        "endLine": 367,
+        "endChar": 20
+      },
+      "revId": "e271a99a9d51d47ee94f17683279e62062050e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
