@@ -122,6 +122,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d27dba29_1cb031b3",
+        "filename": "services/usb/java/com/android/server/usb/AsteriskIntPrefixTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-06-02T17:48:49Z",
+      "side": 1,
+      "message": "Good point, fixed",
+      "parentUuid": "4fbfd779_6327fd1a",
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5c272290_4e0a2a1f",
         "filename": "services/usb/java/com/android/server/usb/AsteriskIntPrefixTree.java",
         "patchSetId": 2
@@ -145,6 +163,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fcb55d92_6ac0db7b",
+        "filename": "services/usb/java/com/android/server/usb/AsteriskIntPrefixTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-06-02T17:48:49Z",
+      "side": 1,
+      "message": "Yeah, this was an android app developer in me trying to reduce the method count by preventing the synthetic accessors generation 😅",
+      "parentUuid": "5c272290_4e0a2a1f",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 23
+      },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "17e2c1da_40464b6b",
         "filename": "services/usb/java/com/android/server/usb/AsteriskIntPrefixTree.java",
         "patchSetId": 2
@@ -156,6 +198,30 @@
       "writtenOn": "2023-06-01T11:20:31Z",
       "side": 1,
       "message": "isLeafNode may be slightly clearer.",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 35
+      },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc31a4d6_481f64ef",
+        "filename": "services/usb/java/com/android/server/usb/AsteriskIntPrefixTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-06-02T17:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17e2c1da_40464b6b",
       "range": {
         "startLine": 118,
         "startChar": 0,
@@ -213,6 +279,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bd0e41f_8960542a",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceDenyList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-06-02T17:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f8291f8_1851ece1",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 12
+      },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4dd96d52_199f5bf5",
@@ -226,6 +316,30 @@
       "writtenOn": "2023-06-01T11:20:31Z",
       "side": 1,
       "message": "Could it make it more explicit if we only allow \"*\" as match all, or is there precedent for this format with empty string being match all?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 99
+      },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d718b03a_5c98f7e1",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceDenyList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-06-02T17:48:49Z",
+      "side": 1,
+      "message": "It was inspired by ipv6 format 😅. I totally agree that explicit is better.",
+      "parentUuid": "4dd96d52_199f5bf5",
       "range": {
         "startLine": 32,
         "startChar": 0,
@@ -296,6 +410,24 @@
       "writtenOn": "2023-06-01T11:20:31Z",
       "side": 1,
       "message": "I know this class is pretty straightforward (at present) but I still think it\u0027s worth adding unit test coverage.",
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f1acb19_016a337c",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceDenyList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-06-02T17:48:49Z",
+      "side": 1,
+      "message": "I\u0027ve intentionally split it the code into two well testable and composable classes.\nEven though it\u0027s a bit of a duplication, I agree that it\u0027s better to have some minimal test coverage.",
+      "parentUuid": "f299491b_f6dce00b",
       "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },

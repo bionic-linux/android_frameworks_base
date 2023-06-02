@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2e2897d_06ad53ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1953906
+      },
+      "writtenOn": "2023-06-02T17:48:49Z",
+      "side": 1,
+      "message": "Addressed the comments:\n- asterisk value has to be explicit now, adjusted the tests accordingly\n- access modifiers for `class Node` : `package` -\u003e `private`\n- `isFinalNode` -\u003e `isLeafNode`\n- `isLeafNode` value for root node shouldn\u0027t be true\n- added minimal tests for `UsbDeviceDenyList` class\n- migrated parametrised tests to use lists instead of arrays to make them show list values when fail as opposed to Array\u0027s `.toString()`",
+      "revId": "ce3f78c070ad3af18214f735a0cdf818fda05f16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
