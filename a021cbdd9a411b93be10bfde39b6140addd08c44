@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e09f1ed_a681ac32",
+        "filename": "core/java/android/view/accessibility/AccessibilityNodeInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2167,
+      "author": {
+        "id": 1410358
+      },
+      "writtenOn": "2023-06-02T21:35:09Z",
+      "side": 1,
+      "message": "Switch access draws an outline to track where users are, but it doesn\u0027t use accessibility focus. Being able to set focus and draw it depends on touch exploration being enabled, which switch access doesn\u0027t need.",
+      "parentUuid": "deda99fc_3df0bcff",
+      "range": {
+        "startLine": 2167,
+        "startChar": 67,
+        "endLine": 2167,
+        "endChar": 98
+      },
+      "revId": "a021cbdd9a411b93be10bfde39b6140addd08c44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b3ed955_7afefd87",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-06-02T17:52:53Z",
       "side": 1,
       "message": "Nit: accessibility instead of a11y",
+      "range": {
+        "startLine": 2243,
+        "startChar": 82,
+        "endLine": 2243,
+        "endChar": 86
+      },
+      "revId": "a021cbdd9a411b93be10bfde39b6140addd08c44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d42dee65_80d64aec",
+        "filename": "core/java/android/view/accessibility/AccessibilityNodeInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2243,
+      "author": {
+        "id": 1410358
+      },
+      "writtenOn": "2023-06-02T21:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b3ed955_7afefd87",
       "range": {
         "startLine": 2243,
         "startChar": 82,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea53f7ea_e06dd7f2",
+        "filename": "core/java/android/view/accessibility/AccessibilityNodeInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2833,
+      "author": {
+        "id": 1410358
+      },
+      "writtenOn": "2023-06-02T21:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3a13f0a_314da455",
+      "range": {
+        "startLine": 2831,
+        "startChar": 10,
+        "endLine": 2833,
+        "endChar": 19
+      },
+      "revId": "a021cbdd9a411b93be10bfde39b6140addd08c44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2225e29f_885f46e4",
@@ -83,6 +155,30 @@
       "writtenOn": "2023-06-02T17:52:53Z",
       "side": 1,
       "message": "Nit: The view that implements this, should send...",
+      "range": {
+        "startLine": 4773,
+        "startChar": 14,
+        "endLine": 4773,
+        "endChar": 30
+      },
+      "revId": "a021cbdd9a411b93be10bfde39b6140addd08c44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "340799de_310ab5ff",
+        "filename": "core/java/android/view/accessibility/AccessibilityNodeInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4773,
+      "author": {
+        "id": 1410358
+      },
+      "writtenOn": "2023-06-02T21:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2225e29f_885f46e4",
       "range": {
         "startLine": 4773,
         "startChar": 14,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "04d08fcf_7a981003",
+        "filename": "core/java/android/view/accessibility/AccessibilityNodeInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4778,
+      "author": {
+        "id": 1410358
+      },
+      "writtenOn": "2023-06-02T21:35:09Z",
+      "side": 1,
+      "message": "Accessibility focus was originally designed for use by screen readers. Currently setting and drawing the accessibility focus outline in the app is dependent on having touch exploration enabled, and often the assumption is the type of service that enables this is a screen reader. \n\nBut this currently might be too restrictive. It\u0027s possible a service would want touch exploration events without ever setting or drawing accessibility focus. I could add \"typically\" or \"usually\" to leave room for these.",
+      "parentUuid": "08c068f2_426788ad",
+      "range": {
+        "startLine": 4778,
+        "startChar": 57,
+        "endLine": 4778,
+        "endChar": 88
+      },
+      "revId": "a021cbdd9a411b93be10bfde39b6140addd08c44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "294d76e0_69afe1d3",
@@ -129,6 +249,30 @@
       "writtenOn": "2023-06-02T17:52:53Z",
       "side": 1,
       "message": "Same comment as above",
+      "range": {
+        "startLine": 4789,
+        "startChar": 14,
+        "endLine": 4789,
+        "endChar": 31
+      },
+      "revId": "a021cbdd9a411b93be10bfde39b6140addd08c44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "005c4a75_553c504d",
+        "filename": "core/java/android/view/accessibility/AccessibilityNodeInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4789,
+      "author": {
+        "id": 1410358
+      },
+      "writtenOn": "2023-06-02T21:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "294d76e0_69afe1d3",
       "range": {
         "startLine": 4789,
         "startChar": 14,
