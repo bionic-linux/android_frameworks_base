@@ -457,6 +457,8 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
 
     /**
      * Represents the event of setting input focus of a {@link android.view.View}.
+     * @see AccessibilityNodeInfo.AccessibilityAction#ACTION_ACCESSIBILITY_FOCUS for the difference
+     * between input and accessibility focus.
      */
     public static final int TYPE_VIEW_FOCUSED = 0x00000008;
 
@@ -522,11 +524,15 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
 
     /**
      * Represents the event of gaining accessibility focus.
+     * @see AccessibilityNodeInfo.AccessibilityAction#ACTION_ACCESSIBILITY_FOCUS for the difference
+     * between input and accessibility focus.
      */
     public static final int TYPE_VIEW_ACCESSIBILITY_FOCUSED = 0x00008000;
 
     /**
      * Represents the event of clearing accessibility focus.
+     * @see AccessibilityNodeInfo.AccessibilityAction#ACTION_ACCESSIBILITY_FOCUS for the difference
+     * between input and accessibility focus.
      */
     public static final int TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED = 0x00010000;
 
