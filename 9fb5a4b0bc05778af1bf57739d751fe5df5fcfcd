@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5101dced_5a286462",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060750
+      },
+      "writtenOn": "2023-06-05T17:10:10Z",
+      "side": 1,
+      "message": "This CL adds a new property to AudioManager.\nWe cannot retroactively change the Android 12 API.\nAlso this property is specific to whether a CTS test is supported and does not belong in AudioManager.\nWe need to find another way to solve the problem.",
+      "revId": "9fb5a4b0bc05778af1bf57739d751fe5df5fcfcd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
