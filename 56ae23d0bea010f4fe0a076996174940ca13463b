@@ -166,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fd78bf9_295735e6",
+        "filename": "core/java/android/hardware/camera2/impl/CameraExtensionSessionImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1141048
+      },
+      "writtenOn": "2023-06-06T00:22:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "958b2607_13cc7eea",
+      "range": {
+        "startLine": 1287,
+        "startChar": 0,
+        "endLine": 1305,
+        "endChar": 0
+      },
+      "revId": "56ae23d0bea010f4fe0a076996174940ca13463b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c9c1dcf_a92de7b0",
@@ -189,6 +213,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "efadafc8_0ca0dcf2",
+        "filename": "core/java/android/hardware/camera2/impl/CameraExtensionSessionImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1313,
+      "author": {
+        "id": 1141048
+      },
+      "writtenOn": "2023-06-06T00:22:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6c9c1dcf_a92de7b0",
+      "range": {
+        "startLine": 1313,
+        "startChar": 0,
+        "endLine": 1313,
+        "endChar": 77
+      },
+      "revId": "56ae23d0bea010f4fe0a076996174940ca13463b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b6648f54_e1652fd4",
@@ -202,6 +250,30 @@
       "writtenOn": "2023-05-10T02:39:28Z",
       "side": 1,
       "message": "Same as above,  could we run the listener outside of the synchronized block ?",
+      "range": {
+        "startLine": 1340,
+        "startChar": 0,
+        "endLine": 1340,
+        "endChar": 63
+      },
+      "revId": "56ae23d0bea010f4fe0a076996174940ca13463b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1961b741_ff1cf142",
+        "filename": "core/java/android/hardware/camera2/impl/CameraExtensionSessionImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1141048
+      },
+      "writtenOn": "2023-06-06T00:22:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b6648f54_e1652fd4",
       "range": {
         "startLine": 1340,
         "startChar": 0,
