@@ -174,5 +174,8 @@ interface IStorageManager {
     boolean isAppIoBlocked(in String volumeUuid, int uid, int tid, int reason) = 95;
     void setCloudMediaProvider(in String authority) = 96;
     String getCloudMediaProvider() = 97;
-    long getInternalStorageBlockDeviceSize() = 98;
+    String openStorageArea(in String packageName, in String storageAreaName, in byte[] secret) = 98;
+    void closeStorageArea(in String packageName, in String storageAreaName) = 99;
+    void deleteStorageArea(in String packageName, in String storageAreaName) = 100;
+    long getInternalStorageBlockDeviceSize() = 101;
 }

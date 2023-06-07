@@ -112,6 +112,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -2931,6 +2932,84 @@ public class StorageManager {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+    }
+
+    /** {@hide} */
+    public static final int STORAGE_AREA_KEY_LENGTH = 32;
+
+    /**
+     * Opens a "storage area", creating it if it doesn't exist.
+     * <p>
+     * A "storage area" is a transparently encrypted directory, private to the application, that can
+     * normally only be accessed while the screen is unlocked. This provides a level of protection
+     * above that of the Credential Encrypted storage which is the default for app data.
+     * <p>
+     * Storage areas are identified by application-provided <code>storageAreaName</code>. The name
+     * must contain only the characters <code>a-z</code>, <code>A-Z</code>, <code>0-9</code>,
+     * <code>-</code>, and <code>_</code>, and it cannot exceed 128 characters.
+     * <p>
+     * Existing storage areas cannot be opened while the screen is locked. However, a new storage
+     * area can be created while the screen is locked.
+     * <p>
+     * An already-open storage area can continue to be accessed even when the screen is locked.
+     * However, it is recommended that applications close storage areas when the screen is locked.
+     * <p>
+     * A storage area can be opened multiple times at once, causing multiple {@link
+     * OpenStorageArea}s to exist for the same underlying storage area. In this case, the storage
+     * area will not be fully closed until each individual {@link OpenStorageArea} has been closed.
+     *
+     * @return an {@link OpenStorageArea} that is a handle to the storage area. This should be used
+     *         in a try-with-resources statement to ensure that the storage area gets closed.
+     */
+    @NonNull
+    public OpenStorageArea openStorageArea(@NonNull String storageAreaName) throws IOException {
+        // TODO: provide proper secret
+        return openStorageArea(storageAreaName, new byte[STORAGE_AREA_KEY_LENGTH]);
+    }
+
+    @NonNull
+    private OpenStorageArea openStorageArea(@NonNull String storageAreaName, byte[] secret)
+            throws IOException {
+        try {
+            String directory = mStorageManager.openStorageArea(mContext.getOpPackageName(),
+                    storageAreaName, secret);
+            return new OpenStorageArea(this, storageAreaName, new File(directory));
+        } catch (RemoteException e) {
+            throw new IOException("failed to open storage area " + storageAreaName, e);
+        }
+    }
+
+    /** {@hide} */
+    public void closeStorageArea(@NonNull OpenStorageArea storageArea) throws IOException {
+        try {
+            mStorageManager.closeStorageArea(mContext.getOpPackageName(), storageArea.getName());
+        } catch (RemoteException e) {
+            throw new IOException("failed to close storage area " + storageArea.getName(), e);
+        }
+    }
+
+    /**
+     * If the app has a storage area with the given name, deletes it as securely as possible.
+     *
+     * @throws IOException if the storage area is currently open
+     */
+    public void deleteStorageArea(@NonNull String storageAreaName) throws IOException {
+        try {
+            mStorageManager.deleteStorageArea(mContext.getOpPackageName(), storageAreaName);
+        } catch (RemoteException e) {
+            throw new IOException("failed to delete storage area " + storageAreaName, e);
+        }
+    }
+
+    /**
+     * Lists all storage areas belonging to the app.
+     *
+     * @return the set of storage area names
+     */
+    @NonNull
+    public Set<String> listStorageAreas() {
+        File dir = Environment.getDataStorageAreaPackageDirectory(mContext.getOpPackageName());
+        return Set.of(dir.list());
     }
 
     private final Object mFuseAppLoopLock = new Object();
