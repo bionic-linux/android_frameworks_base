@@ -29,6 +29,7 @@ import static android.os.UserHandle.PER_USER_RANGE;
 import android.annotation.BytesLong;
 import android.annotation.CallbackExecutor;
 import android.annotation.IntDef;
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
@@ -76,6 +77,10 @@ import android.os.UserHandle;
 import android.provider.DeviceConfig;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.security.Flags;
+import android.security.keystore.KeyProperties;
+import android.security.keystore.KeyProtection;
+import android.security.keystore2.AndroidKeyStoreSecretKey;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.OsConstants;
@@ -104,20 +109,38 @@ import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.security.InvalidKeyException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableEntryException;
+import java.security.KeyStore.SecretKeyEntry;
+import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Stream;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.crypto.KeyGenerator;
+import javax.crypto.Mac;
+import javax.crypto.SecretKey;
 
 /**
  * StorageManager is the interface to the systems storage service. The storage
@@ -301,6 +324,9 @@ public class StorageManager {
     private final AppOpsManager mAppOps;
     private final Looper mLooper;
     private final AtomicInteger mNextNonce = new AtomicInteger(0);
+
+    private KeyStore mKeyStore;
+    private final KeyProtection mKeyProtection;
 
     @GuardedBy("mDelegates")
     private final ArrayList<StorageEventListenerDelegate> mDelegates = new ArrayList<>();
@@ -486,6 +512,16 @@ public class StorageManager {
         mLooper = looper;
         mStorageManager = IStorageManager.Stub.asInterface(ServiceManager.getServiceOrThrow("mount"));
         mAppOps = mContext.getSystemService(AppOpsManager.class);
+        mKeyProtection = new KeyProtection.Builder(KeyProperties.PURPOSE_SIGN)
+                                            .setUnlockedDeviceRequired(true)
+                                            .build();
+        try {
+            mKeyStore = KeyStore.getInstance("AndroidKeyStore");
+            mKeyStore.load(null, null);
+        } catch(Exception e) {
+            /* don't crash here -- check for null keystore in openStorageArea */
+        }
+
     }
 
     /**
@@ -2926,6 +2962,182 @@ public class StorageManager {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+    }
+
+    /** {@hide} */
+    public static final int STORAGE_AREA_KEY_LENGTH = 32;
+
+    /**
+     * Opens a "storage area", creating it if it doesn't exist.
+     * <p>
+     * A "storage area" is a transparently encrypted directory, private to the application, that can
+     * normally only be accessed while the screen is unlocked. This provides a level of protection
+     * above that of the Credential Encrypted storage which is the default for app data.
+     * <p>
+     * Storage areas are identified by application-provided <code>storageAreaName</code>. The name
+     * must contain only the characters <code>a-z</code>, <code>A-Z</code>, <code>0-9</code>,
+     * <code>-</code>, and <code>_</code>, and it cannot exceed 128 characters.
+     * <p>
+     * Existing storage areas cannot be opened while the screen is locked. However, a new storage
+     * area can be created while the screen is locked.
+     * <p>
+     * An already-open storage area can continue to be accessed even when the screen is locked.
+     * However, it is recommended that applications close storage areas when the screen is locked.
+     * <p>
+     * A storage area can be opened multiple times at once, causing multiple {@link
+     * OpenStorageArea}s to exist for the same underlying storage area. In this case, the storage
+     * area will not be fully closed until each individual {@link OpenStorageArea} has been closed.
+     *
+     * @return an {@link OpenStorageArea} that is a handle to the storage area. This should be used
+     *         in a try-with-resources statement to ensure that the storage area gets closed.
+     */
+    @NonNull
+    @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
+    public OpenStorageArea openStorageArea(@NonNull String storageAreaName) throws IOException {
+        if (mKeyStore == null) {
+            throw new IOException("failed to open storage area "
+                        + storageAreaName + " b/c keystore was null");
+        }
+        // the key alias should be pkgname_storageAreaName
+        String keyAlias = mContext.getOpPackageName() + "_" + storageAreaName;
+        try {
+            byte[] secret;
+            if (!mKeyStore.isKeyEntry(keyAlias)) {
+                // make the new key and add it to keystore
+                KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
+                mKeyStore.load(null);
+                SecretKey sk = keyGen.generateKey();
+                mKeyStore.setEntry(keyAlias, new KeyStore.SecretKeyEntry(sk), mKeyProtection);
+                secret = deriveHMACSecretFromSecretKey(storageAreaName, sk);
+            } else {
+                secret = deriveHMACSecretFromSecretKey(storageAreaName,
+                            (SecretKey) mKeyStore.getKey(keyAlias, null));
+            }
+            return openStorageArea(storageAreaName, secret);
+        } catch(KeyStoreException
+                | InvalidKeyException
+                | NoSuchAlgorithmException
+                | CertificateException
+                | UnrecoverableEntryException e) {
+            throw new IOException("failed to open storage area b/c of key error "
+                            + storageAreaName, e);
+        }
+    }
+
+    @NonNull
+    private byte[] deriveHMACSecretFromSecretKey(@NonNull String storageAreaName, SecretKey sk)
+            throws InvalidKeyException, NoSuchAlgorithmException{
+        final Mac m = Mac.getInstance("HmacSHA256");
+        m.init(sk);
+        // now, derive the byte array
+        // hardcode label and context for this storage area for this package
+        byte[] label = ("storage-area-" + storageAreaName + "-key").getBytes();
+        byte[] context = ("android-storage-manager-package-"
+                + mContext.getOpPackageName() + "-storage-area-context").getBytes();
+        // copying the code from
+        // frameworks/base/services/core/java/com/android/server/locksettings/SP800Derive.java
+        // the `withContext` method (also copying the comments)
+        m.update(ByteBuffer.allocate(Integer.BYTES).putInt(1).array()); // hardwired counter value
+        m.update(label);
+        m.update((byte)0);
+        m.update(context);
+        // disabmiguate context
+        m.update(ByteBuffer.allocate(Integer.BYTES).putInt(context.length * 8).array());
+        // hardwired output length
+        m.update(ByteBuffer.allocate(Integer.BYTES).allocate(STORAGE_AREA_KEY_LENGTH).array());
+        return m.doFinal();
+    }
+
+    @NonNull
+    private OpenStorageArea openStorageArea(@NonNull String storageAreaName, byte[] secret)
+            throws IOException {
+        try {
+            String directory = mStorageManager.openStorageArea(mContext.getOpPackageName(),
+                    storageAreaName, secret);
+            return new OpenStorageArea(this, storageAreaName, new File(directory));
+        } catch (RemoteException e) {
+            throw new IOException("failed to open storage area " + storageAreaName, e);
+        }
+    }
+
+    /** {@hide} */
+    public void closeStorageArea(@NonNull OpenStorageArea storageArea)
+        throws IOException, FileNotFoundException {
+        // throw an error if the storage area does not exist
+        // note: dealing with this error here instead of in vold in order to avoid
+        // having to distinguish vold errors based on the error code (ENOENT, etc)
+        // we want this error to be a different type of Exception than other vold errors
+        // so users can deal with it differently or ignore it easily if they choose
+        if (!this.listStorageAreas().contains(storageArea.getName())) {
+            throw new FileNotFoundException("storage area " + storageArea.getName() +
+                        " does not exist for package " + mContext.getOpPackageName());
+        }
+        try {
+            mStorageManager.closeStorageArea(mContext.getOpPackageName(), storageArea.getName());
+        } catch (RemoteException e) {
+            throw new IOException("failed to close storage area " + storageArea.getName(), e);
+        }
+    }
+
+    /**
+     * If the app has a storage area with the given name, deletes it as securely as possible.
+     *
+     * @throws IOException if the storage area is currently open
+     * @throws NoSuchElementException if no storage area with the specified name exists
+     */
+    @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
+    public void deleteStorageArea(@NonNull String storageAreaName)
+        throws IOException, FileNotFoundException {
+        // throw an error if the storage area does not exist
+        // note: dealing with this error here instead of in vold in order to avoid
+        // having to distinguish vold errors based on the error code (ENOENT, etc)
+        // we want this error to be a different type of Exception than other vold errors
+        // so users can deal with it differently or ignore it easily if they choose
+        if (!this.listStorageAreas().contains(storageAreaName)) {
+            throw new FileNotFoundException("storage area " + storageAreaName +
+                        " does not exist for package " + mContext.getOpPackageName());
+        }
+        // delete the contents of the storage area -- this is done in app space
+        // to avoid giving write permission to the app data in storage areas to a
+        // service (like vold)
+        // not wrapped in a try-catch b/c errors here will throw an IOException
+        Path storageAreaDirPath = this.getPackageDirectoryOfStorageAreas()
+                                        .toPath().resolve(storageAreaName);
+        Stream<Path> fileStream = Files.walk(storageAreaDirPath) // depth-first walk
+                                    // reverse order, so we delete files
+                                    // in subdirs before the subdir
+                                    .sorted(Comparator.reverseOrder());
+        for (Path subPath: (Iterable<Path>)fileStream::iterator) {
+                // don't delete the storage area itself (vold_prepare_subdirs does this)
+                if(subPath != storageAreaDirPath) {
+                    Files.delete(subPath);
+                }
+        }
+        // dispatch the deletion of the (now empty) storage area directory
+        // and delete the keystore key
+        try {
+            mStorageManager.deleteStorageArea(mContext.getOpPackageName(), storageAreaName);
+            // the key alias should be pkgname_storageAreaName
+            String keyAlias = mContext.getOpPackageName() + "_" + storageAreaName;
+            mKeyStore.deleteEntry(keyAlias);
+        } catch (RemoteException | KeyStoreException e) {
+            throw new IOException("failed to delete storage area " + storageAreaName, e);
+        }
+    }
+
+    /**
+     * Lists all storage areas belonging to the app.
+     *
+     * @return the set of storage area names
+     */
+    @NonNull
+    @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
+    public Set<String> listStorageAreas() {
+        return Set.of(this.getPackageDirectoryOfStorageAreas().list());
+    }
+
+    private File getPackageDirectoryOfStorageAreas() {
+        return Environment.getDataStorageAreaPackageDirectory(mContext.getOpPackageName());
     }
 
     private final Object mFuseAppLoopLock = new Object();
