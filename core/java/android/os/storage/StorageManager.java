@@ -29,6 +29,7 @@ import static android.os.UserHandle.PER_USER_RANGE;
 import android.annotation.BytesLong;
 import android.annotation.CallbackExecutor;
 import android.annotation.IntDef;
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
@@ -59,6 +60,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.FileUtils;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.IInstalld;
 import android.os.IVold;
 import android.os.IVoldTaskListener;
@@ -76,6 +78,10 @@ import android.os.UserHandle;
 import android.provider.DeviceConfig;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.security.Flags;
+import android.security.keystore.KeyProperties;
+import android.security.keystore.KeyProtection;
+import android.security.keystore2.AndroidKeyStoreSecretKey;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.OsConstants;
@@ -104,14 +110,22 @@ import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Stream;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -292,6 +306,9 @@ public class StorageManager {
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public static final int ENCRYPTION_STATE_NONE = 1;
 
+    /** {@hide} */
+    public static final int STORAGE_AREA_KEY_LENGTH = 32;
+
     private static volatile IStorageManager sStorageManager = null;
 
     private final Context mContext;
@@ -466,6 +483,23 @@ public class StorageManager {
     public static StorageManager from(Context context) {
         return context.getSystemService(StorageManager.class);
     }
+
+    // binder support for closing all storage areas when an app crashes
+    private final IBinder.DeathRecipient mDeathRecipient = new IBinder.DeathRecipient() {
+        @Override
+        public void binderDied() {
+            Log.w(TAG, mContext.getOpPackageName() + "crashed, closing open storage areas");
+            unlinkToDeath();
+            try {
+                for(String storageArea: listStorageAreas()) {
+                    mStorageManager.closeStorageArea(mContext.getOpPackageName(), storageArea);
+                }
+            } catch(RemoteException e) {
+                Log.w(TAG, mContext.getOpPackageName() +
+                    ": remote error trying to close open storage areas on app crash");
+            }
+        }
+    };
 
     /**
      * Constructs a StorageManager object through which an application can
@@ -2926,6 +2960,159 @@ public class StorageManager {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+    }
+
+    /**
+     * Opens a "storage area", creating it if it doesn't exist, and protecting it with a
+     * <code>byte[]<\code> secret that is used to derive a FBE key to encrypt it.
+     * <p>
+     * A "storage area" is a transparently encrypted directory, private to the application, that
+     * provides at least the same level of protection as that of the Credential Encrypted storage
+     * which is the default for app data.
+     *
+     * <b>WARNING</b>: This internal API is <b>not</b> the recommended way to create/open storage
+     * areas. The intended usage is through the library, which will create an UnlockedDeviceRequired
+     * key for the storage area, ensuring that it can only be accessed when the screen is unlocked.
+     * This provides protection <b>above</b> that of the CE storage.
+     *
+     * <p>
+     * Storage areas are identified by application-provided <code>storageAreaName</code>. The name
+     * must contain only the characters <code>a-z</code>, <code>A-Z</code>, <code>0-9</code>,
+     * <code>-</code>, and <code>_</code>, and it cannot exceed 128 characters.
+     * <p>
+     * Existing storage areas cannot be opened while the screen is locked. However, a new storage
+     * area can be created while the screen is locked.
+     * <p>
+     * An already-open storage area can continue to be accessed even when the screen is locked.
+     * However, it is recommended that applications close storage areas when the screen is locked.
+     * <p>
+     * A storage area can be opened multiple times at once, causing multiple {@link
+     * StorageArea}s to exist for the same underlying storage area. In this case, the storage
+     * area will not be fully closed until each individual {@link StorageArea} has been closed.
+     *
+     * @return an {@link StorageArea} that is a handle to the storage area. This should be used
+     *         in a try-with-resources statement to ensure that the storage area gets closed.
+     */
+    @NonNull
+    @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
+    public StorageArea openStorageArea(@NonNull String storageAreaName, @NonNull byte[] secret)
+            throws IOException {
+        try {
+            if (this.listStorageAreas().size() == 0) {
+                // if we will have at least one storage area, make sure it's closed if app crashes
+                // do this before creation in case there is a race condition and length jumps to > 1
+                // this way we try to avoid calling linkToDeath more than necessary
+                linkToDeath();
+            }
+            String directory = mStorageManager.openStorageArea(mContext.getOpPackageName(),
+                    storageAreaName, secret);
+            return new StorageArea(this, storageAreaName, new File(directory));
+        } catch (RemoteException e) {
+            throw new IOException("failed to open storage area " + storageAreaName, e);
+        }
+    }
+
+    /** {@hide} */
+    public void closeStorageArea(@NonNull StorageArea storageArea)
+        throws IOException, FileNotFoundException {
+        // throw an error if the storage area does not exist
+        // note: dealing with this error here instead of in vold in order to avoid
+        // having to distinguish vold errors based on the error code (ENOENT, etc)
+        // we want this error to be a different type of Exception than other vold errors
+        // so users can deal with it differently or ignore it easily if they choose
+        if (!this.listStorageAreas().contains(storageArea.getName())) {
+            throw new FileNotFoundException("storage area " + storageArea.getName() +
+                        " does not exist for package " + mContext.getOpPackageName());
+        }
+        try {
+            mStorageManager.closeStorageArea(mContext.getOpPackageName(), storageArea.getName());
+        } catch (RemoteException e) {
+            throw new IOException("failed to close storage area " + storageArea.getName(), e);
+        }
+    }
+
+    /**
+     * If the app has a storage area with the given name, deletes it as securely as possible.
+     *
+     * <b>WARNING</b>: This internal API is <b>not</b> the recommended way to delete storage
+     * areas. The intended usage is through the library. If a storage area is opened via the
+     * library, then calling this method to delete it will result in the area's Keystore key
+     * not being cleared.
+     *
+     * @throws IOException if the storage area is currently open
+     * @throws NoSuchElementException if no storage area with the specified name exists
+     */
+    @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
+    public void deleteStorageArea(@NonNull String storageAreaName)
+        throws IOException, FileNotFoundException {
+        // throw an error if the storage area does not exist
+        // note: dealing with this error here instead of in vold in order to avoid
+        // having to distinguish vold errors based on the error code (ENOENT, etc)
+        // we want this error to be a different type of Exception than other vold errors
+        // so users can deal with it differently or ignore it easily if they choose
+        if (!this.listStorageAreas().contains(storageAreaName)) {
+            throw new FileNotFoundException("storage area " + storageAreaName +
+                        " does not exist for package " + mContext.getOpPackageName());
+        }
+        // delete the contents of the storage area -- this is done in app space
+        // to avoid giving write permission to the app data in storage areas to a
+        // service (like vold)
+        // not wrapped in a try-catch b/c errors here will throw an IOException
+        Path storageAreaDirPath = this.getPackageDirectoryOfStorageAreas()
+                                        .toPath().resolve(storageAreaName);
+        Stream<Path> fileStream = Files.walk(storageAreaDirPath) // depth-first walk
+                                    // reverse order, so we delete files
+                                    // in subdirs before the subdir
+                                    .sorted(Comparator.reverseOrder());
+        for (Path subPath: (Iterable<Path>)fileStream::iterator) {
+                // don't delete the storage area itself (vold_prepare_subdirs does this)
+                if(subPath != storageAreaDirPath) {
+                    Files.delete(subPath);
+                }
+        }
+        // dispatch the deletion of the (now empty) storage area directory
+        try {
+            mStorageManager.deleteStorageArea(mContext.getOpPackageName(), storageAreaName);
+        } catch (RemoteException e) {
+            throw new IOException("failed to delete storage area " + storageAreaName, e);
+        }
+    }
+
+    /**
+     * Lists all storage areas belonging to the app.
+     *
+     * @return the set of storage area names
+     */
+    @NonNull
+    @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
+    public Set<String> listStorageAreas() {
+        return Set.of(this.getPackageDirectoryOfStorageAreas().list());
+    }
+
+    private void linkToDeath() {
+        IBinder binder = mStorageManager.asBinder();
+        if (binder == null) {
+            Log.w(TAG, "Linking to binder death recipient skipped");
+            return;
+        }
+        try {
+            binder.linkToDeath(mDeathRecipient, 0);
+        } catch (RemoteException e) {
+            Log.w(TAG, "Linking to binder death recipient failed: " + e);
+        }
+    }
+
+    private void unlinkToDeath() {
+        IBinder binder = mStorageManager.asBinder();
+        if (binder == null) {
+            Log.w(TAG, "Unlinking from binder death recipient skipped");
+            return;
+        }
+        binder.unlinkToDeath(mDeathRecipient, 0);
+    }
+
+    private File getPackageDirectoryOfStorageAreas() {
+        return Environment.getDataStorageAreaPackageDirectory(mContext.getOpPackageName());
     }
 
     private final Object mFuseAppLoopLock = new Object();
