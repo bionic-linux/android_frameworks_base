@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "892546b3_77947330",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4011,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2023-06-08T22:11:56Z",
+      "side": 1,
+      "message": "This is an incredibly small nit, but usually string references to a Java method would be formatted as `PackageInstaller.SessionInfo#isStaged`. Or if you want to take it even further, `PackageInstaller$SessionInfo#isStaged`, but I find the former easier to read.\n\nThat being said, I don\u0027t think this is worth mentioning at all and we just cut this at `requiring a reboot`.",
+      "range": {
+        "startLine": 4011,
+        "startChar": 58,
+        "endLine": 4011,
+        "endChar": 69
+      },
+      "revId": "5ef069a4719342e22dde78b52d5d285b7e40a72d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
