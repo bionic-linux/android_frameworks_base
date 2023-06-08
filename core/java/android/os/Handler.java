@@ -182,7 +182,7 @@ public class Handler {
      *
      * Asynchronous messages represent interrupts or events that do not require global ordering
      * with respect to synchronous messages.  Asynchronous messages are not subject to
-     * the synchronization barriers introduced by {@link MessageQueue#enqueueSyncBarrier(long)}.
+     * the synchronization barriers introduced by {@link MessageQueue#postSyncBarrier()}.
      *
      * @param async If true, the handler calls {@link Message#setAsynchronous(boolean)} for
      * each {@link Message} that is sent to it or {@link Runnable} that is posted to it.
@@ -203,7 +203,7 @@ public class Handler {
      *
      * Asynchronous messages represent interrupts or events that do not require global ordering
      * with respect to synchronous messages.  Asynchronous messages are not subject to
-     * the synchronization barriers introduced by {@link MessageQueue#enqueueSyncBarrier(long)}.
+     * the synchronization barriers introduced by {@link MessageQueue#postSyncBarrier()}.
      *
      * @param callback The callback interface in which to handle messages, or null.
      * @param async If true, the handler calls {@link Message#setAsynchronous(boolean)} for
@@ -418,7 +418,7 @@ public class Handler {
      * attached. 
      *  
      * @param r The Runnable that will be executed.
-     * 
+     *
      * @return Returns true if the Runnable was successfully placed in to the 
      *         message queue.  Returns false on failure, usually because the
      *         looper processing the message queue is exiting.
@@ -538,10 +538,10 @@ public class Handler {
      * <b>This method is only for use in very special circumstances -- it
      * can easily starve the message queue, cause ordering problems, or have
      * other unexpected side-effects.</b>
-     *  
+     *
      * @param r The Runnable that will be executed.
-     * 
-     * @return Returns true if the message was successfully placed in to the 
+     *
+     * @return Returns true if the message was successfully placed in to the
      *         message queue.  Returns false on failure, usually because the
      *         looper processing the message queue is exiting.
      */
@@ -743,7 +743,7 @@ public class Handler {
         MessageQueue queue = mQueue;
         if (queue == null) {
             RuntimeException e = new RuntimeException(
-                this + " sendMessageAtTime() called with no mQueue");
+                    this + " sendMessageAtFrontOfQueue() called with no mQueue");
             Log.w("Looper", e.getMessage(), e);
             return false;
         }
