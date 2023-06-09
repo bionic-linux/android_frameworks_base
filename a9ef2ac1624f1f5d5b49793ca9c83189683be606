@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8b68905_5d950e58",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardClockSwitchController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1943370
+      },
+      "writtenOn": "2023-06-09T06:24:18Z",
+      "side": 1,
+      "message": "Hi @mpietal@google.com,\n\nAny suggestion for this? I tried to use `mContext`, `getContext()` and this but I end up with NPE in all scenarios while trying atest. But, there\u0027s no NPE while running on device with this change in.\n\nI took reference from [this](https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/packages/SystemUI/src/com/android/keyguard/KeyguardHostViewController.java#486).\n\nRequest you to please help.\n\n\n```\n[4/14] com.android.keyguard.KeyguardClockSwitchControllerTest#testChangeToDoubleLineClockSetsSmallClock: FAILED (244ms)\n\nSTACKTRACE:\njava.lang.NullPointerException: Attempt to invoke virtual method \u0027int android.content.res.Resources.getInteger(int)\u0027 on a null object reference\n    at com.android.keyguard.KeyguardClockSwitchController.updateDoubleLineClock(KeyguardClockSwitchController.java:398)\n    at com.android.keyguard.KeyguardClockSwitchController.-$$Nest$mupdateDoubleLineClock(Unknown Source:0)\n    at com.android.keyguard.KeyguardClockSwitchController$1.onChange(KeyguardClockSwitchController.java:97)\n    at com.android.keyguard.KeyguardClockSwitchControllerTest.testChangeToDoubleLineClockSetsSmallClock(KeyguardClockSwitchControllerTest.java:281)\n```",
+      "range": {
+        "startLine": 400,
+        "startChar": 16,
+        "endLine": 400,
+        "endChar": 25
+      },
+      "revId": "a9ef2ac1624f1f5d5b49793ca9c83189683be606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
