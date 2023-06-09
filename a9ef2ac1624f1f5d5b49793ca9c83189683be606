@@ -22,6 +22,30 @@
       },
       "revId": "a9ef2ac1624f1f5d5b49793ca9c83189683be606",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba04d258_d775c82e",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardClockSwitchController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2023-06-09T12:41:26Z",
+      "side": 1,
+      "message": "Looking through the existing tests, you should see patterns like:\n\n`\nTestableResources resources \u003d mContext.getOrCreateTestableResources();\nresources.addOverride(R.integer.config_showTemperatureWarning, 0);\n`",
+      "parentUuid": "e8b68905_5d950e58",
+      "range": {
+        "startLine": 400,
+        "startChar": 16,
+        "endLine": 400,
+        "endChar": 25
+      },
+      "revId": "a9ef2ac1624f1f5d5b49793ca9c83189683be606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
