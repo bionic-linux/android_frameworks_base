@@ -29,6 +29,7 @@
 #include <media/AudioSystem.h>
 #include <nativehelper/JNIHelp.h>
 #include <nativehelper/ScopedLocalRef.h>
+#include <nativehelper/ScopedPrimitiveArray.h>
 #include <system/audio.h>
 #include <system/audio_policy.h>
 #include <utils/Log.h>
@@ -1029,14 +1030,13 @@ static jint convertAudioPortConfigFromNative(JNIEnv *env,
                                                  const struct audio_port_config *nAudioPortConfig)
 {
     jint jStatus = AUDIO_JAVA_SUCCESS;
-    jobject jAudioGainConfig = NULL;
-    jobject jAudioGain = NULL;
     jintArray jGainValues;
     bool audioportCreated = false;
 
     ALOGV("convertAudioPortConfigFromNative jAudioPort %p", jAudioPort);
 
-    if (jAudioPort == NULL) {
+    ScopedLocalRef<jobject> jAudioPortDeleter(env, nullptr);
+    if (jAudioPort == nullptr) {
         jobject jHandle = env->NewObject(gAudioHandleClass, gAudioHandleCstor,
                                                  nAudioPortConfig->id);
 
@@ -1059,8 +1059,10 @@ static jint convertAudioPortConfigFromNative(JNIEnv *env,
                                            NULL,    // channelIndexMasks
                                            NULL,    // formats
                                            NULL);   // gains
+        jAudioPortDeleter.reset(jAudioPort);
+
         env->DeleteLocalRef(jHandle);
-        if (jAudioPort == NULL) {
+        if (jAudioPort == nullptr) {
             return (jint)AUDIO_JAVA_ERROR;
         }
         ALOGV("convertAudioPortConfigFromNative jAudioPort created for handle %d",
@@ -1068,6 +1070,9 @@ static jint convertAudioPortConfigFromNative(JNIEnv *env,
 
         audioportCreated = true;
     }
+
+    ScopedLocalRef<jobject> jAudioGainConfig(env, nullptr);
+    ScopedLocalRef<jobject> jAudioGain(env, nullptr);
 
     bool useInMask = audio_port_config_has_input_direction(nAudioPortConfig);
 
@@ -1082,20 +1087,11 @@ static jint convertAudioPortConfigFromNative(JNIEnv *env,
               gainIndex, nAudioPortConfig->gain.mode);
         if (audioportCreated) {
             ALOGV("convertAudioPortConfigFromNative creating gain");
-            jAudioGain = env->NewObject(gAudioGainClass, gAudioGainCstor,
-                                               gainIndex,
-                                               0,
-                                               0,
-                                               0,
-                                               0,
-                                               0,
-                                               0,
-                                               0,
-                                               0);
+            jAudioGain.reset(env->NewObject(gAudioGainClass, gAudioGainCstor, gainIndex, 0, 0, 0, 0,
+                                            0, 0, 0, 0));
             if (jAudioGain == NULL) {
                 ALOGV("convertAudioPortConfigFromNative creating gain FAILED");
-                jStatus = (jint)AUDIO_JAVA_ERROR;
-                goto exit;
+                return (jint)AUDIO_JAVA_ERROR;
             }
         } else {
             ALOGV("convertAudioPortConfigFromNative reading gain from port");
@@ -1103,15 +1099,13 @@ static jint convertAudioPortConfigFromNative(JNIEnv *env,
                                                                       gAudioPortFields.mGains);
             if (jGains == NULL) {
                 ALOGV("convertAudioPortConfigFromNative could not get gains from port");
-                jStatus = (jint)AUDIO_JAVA_ERROR;
-                goto exit;
+                return (jint)AUDIO_JAVA_ERROR;
             }
-            jAudioGain = env->GetObjectArrayElement(jGains, gainIndex);
+            jAudioGain.reset(env->GetObjectArrayElement(jGains, gainIndex));
             env->DeleteLocalRef(jGains);
             if (jAudioGain == NULL) {
                 ALOGV("convertAudioPortConfigFromNative could not get gain at index %d", gainIndex);
-                jStatus = (jint)AUDIO_JAVA_ERROR;
-                goto exit;
+                return (jint)AUDIO_JAVA_ERROR;
             }
         }
         int numValues;
@@ -1123,8 +1117,7 @@ static jint convertAudioPortConfigFromNative(JNIEnv *env,
         jGainValues = env->NewIntArray(numValues);
         if (jGainValues == NULL) {
             ALOGV("convertAudioPortConfigFromNative could not create gain values %d", numValues);
-            jStatus = (jint)AUDIO_JAVA_ERROR;
-            goto exit;
+            return (jint)AUDIO_JAVA_ERROR;
         }
         env->SetIntArrayRegion(jGainValues, 0, numValues,
                                nAudioPortConfig->gain.values);
@@ -1138,19 +1131,14 @@ static jint convertAudioPortConfigFromNative(JNIEnv *env,
             ALOGV("convertAudioPortConfigFromNative OUT mask java %x native %x", jMask, nMask);
         }
 
-        jAudioGainConfig = env->NewObject(gAudioGainConfigClass,
-                                        gAudioGainConfigCstor,
-                                        gainIndex,
-                                        jAudioGain,
-                                        nAudioPortConfig->gain.mode,
-                                        jMask,
-                                        jGainValues,
-                                        nAudioPortConfig->gain.ramp_duration_ms);
+        jAudioGainConfig.reset(env->NewObject(gAudioGainConfigClass, gAudioGainConfigCstor,
+                                              gainIndex, jAudioGain.get(),
+                                              nAudioPortConfig->gain.mode, jMask, jGainValues,
+                                              nAudioPortConfig->gain.ramp_duration_ms));
         env->DeleteLocalRef(jGainValues);
         if (jAudioGainConfig == NULL) {
             ALOGV("convertAudioPortConfigFromNative could not create gain config");
-            jStatus = (jint)AUDIO_JAVA_ERROR;
-            goto exit;
+            return (jint)AUDIO_JAVA_ERROR;
         }
     }
     jclass clazz;
@@ -1169,8 +1157,7 @@ static jint convertAudioPortConfigFromNative(JNIEnv *env,
             methodID = gAudioMixPortConfigCstor;
             ALOGV("convertAudioPortConfigFromNative building a mix config");
         } else {
-            jStatus = (jint)AUDIO_JAVA_ERROR;
-            goto exit;
+            return (jint)AUDIO_JAVA_ERROR;
         }
     }
     nMask = (nAudioPortConfig->config_mask & AUDIO_PORT_CONFIG_CHANNEL_MASK)
@@ -1194,23 +1181,12 @@ static jint convertAudioPortConfigFromNative(JNIEnv *env,
                                    (nAudioPortConfig->config_mask & AUDIO_PORT_CONFIG_FORMAT)
                                            ? nAudioPortConfig->format
                                            : AUDIO_CONFIG_BASE_INITIALIZER.format),
-                           jAudioGainConfig);
+                           jAudioGainConfig.get());
     if (*jAudioPortConfig == NULL) {
         ALOGV("convertAudioPortConfigFromNative could not create new port config");
         jStatus = (jint)AUDIO_JAVA_ERROR;
     } else {
         ALOGV("convertAudioPortConfigFromNative OK");
-    }
-
-exit:
-    if (audioportCreated) {
-        env->DeleteLocalRef(jAudioPort);
-        if (jAudioGain != NULL) {
-            env->DeleteLocalRef(jAudioGain);
-        }
-    }
-    if (jAudioGainConfig != NULL) {
-        env->DeleteLocalRef(jAudioGainConfig);
     }
     return jStatus;
 }
@@ -1325,15 +1301,6 @@ static jint convertAudioProfileFromNative(JNIEnv *env, jobject *jAudioProfile,
 static jint convertAudioPortFromNative(JNIEnv *env, jobject *jAudioPort,
                                        const struct audio_port_v7 *nAudioPort) {
     jint jStatus = (jint)AUDIO_JAVA_SUCCESS;
-    jintArray jEncapsulationModes = NULL;
-    jintArray jEncapsulationMetadataTypes = NULL;
-    jobjectArray jGains = NULL;
-    jobject jHandle = NULL;
-    jobject jAudioPortConfig = NULL;
-    jstring jDeviceName = NULL;
-    jobject jAudioProfiles = NULL;
-    jobject jAudioDescriptors = nullptr;
-    ScopedLocalRef<jobject> jPcmFloatProfileFromExtendedInteger(env, nullptr);
     bool hasFloat = false;
     bool useInMask;
 
@@ -1357,17 +1324,18 @@ static jint convertAudioPortFromNative(JNIEnv *env, jobject *jAudioPort,
         } else {
             ALOGE("%s", s.c_str());
         }
-        jStatus = (jint)AUDIO_JAVA_ERROR;
-        goto exit;
+        return (jint)AUDIO_JAVA_ERROR;
     }
 
     useInMask = audio_has_input_direction(nAudioPort->type, nAudioPort->role);
-    jAudioProfiles = env->NewObject(gArrayListClass, gArrayListMethods.cstor);
+    ScopedLocalRef<jobject> jAudioProfiles(env,
+                                           env->NewObject(gArrayListClass,
+                                                          gArrayListMethods.cstor));
     if (jAudioProfiles == nullptr) {
-        jStatus = (jint)AUDIO_JAVA_ERROR;
-        goto exit;
+        return (jint)AUDIO_JAVA_ERROR;
     }
 
+    ScopedLocalRef<jobject> jPcmFloatProfileFromExtendedInteger(env, nullptr);
     for (size_t i = 0; i < nAudioPort->num_audio_profiles; ++i) {
         jobject jAudioProfile = nullptr;
         jStatus = convertAudioProfileFromNative(env, &jAudioProfile, &nAudioPort->audio_profiles[i],
@@ -1377,10 +1345,9 @@ static jint convertAudioPortFromNative(JNIEnv *env, jobject *jAudioPort,
             continue;
         }
         if (jStatus != NO_ERROR) {
-            jStatus = (jint)AUDIO_JAVA_ERROR;
-            goto exit;
+            return (jint)AUDIO_JAVA_ERROR;
         }
-        env->CallBooleanMethod(jAudioProfiles, gArrayListMethods.add, jAudioProfile);
+        env->CallBooleanMethod(jAudioProfiles.get(), gArrayListMethods.add, jAudioProfile);
 
         if (nAudioPort->audio_profiles[i].format == AUDIO_FORMAT_PCM_FLOAT) {
             hasFloat = true;
@@ -1421,14 +1388,15 @@ static jint convertAudioPortFromNative(JNIEnv *env, jobject *jAudioPort,
         // (replacing the zero pad). This ensures pre-S apps that look
         // for ENCODING_PCM_FLOAT continue to see that encoding if the device supports
         // extended precision integers.
-        env->CallBooleanMethod(jAudioProfiles, gArrayListMethods.add,
+        env->CallBooleanMethod(jAudioProfiles.get(), gArrayListMethods.add,
                                jPcmFloatProfileFromExtendedInteger.get());
     }
 
-    jAudioDescriptors = env->NewObject(gArrayListClass, gArrayListMethods.cstor);
+    ScopedLocalRef<jobject> jAudioDescriptors(env,
+                                              env->NewObject(gArrayListClass,
+                                                             gArrayListMethods.cstor));
     if (jAudioDescriptors == nullptr) {
-        jStatus = (jint)AUDIO_JAVA_ERROR;
-        goto exit;
+        return (jint)AUDIO_JAVA_ERROR;
     }
     for (size_t i = 0; i < nAudioPort->num_extra_audio_descriptors; ++i) {
         const auto &extraAudioDescriptor = nAudioPort->extra_audio_descriptors[i];
@@ -1458,15 +1426,16 @@ static jint convertAudioPortFromNative(JNIEnv *env, jobject *jAudioPort,
                                         env->NewObject(gAudioDescriptorClass, gAudioDescriptorCstor,
                                                        standard, encapsulationType,
                                                        jDescriptor.get()));
-        env->CallBooleanMethod(jAudioDescriptors, gArrayListMethods.add, jAudioDescriptor.get());
+        env->CallBooleanMethod(jAudioDescriptors.get(), gArrayListMethods.add,
+                               jAudioDescriptor.get());
     }
 
     // gains
-    jGains = env->NewObjectArray(nAudioPort->num_gains,
-                                          gAudioGainClass, NULL);
-    if (jGains == NULL) {
-        jStatus = (jint)AUDIO_JAVA_ERROR;
-        goto exit;
+    ScopedLocalRef<jobjectArray> jGains(env,
+                                        env->NewObjectArray(nAudioPort->num_gains, gAudioGainClass,
+                                                            NULL));
+    if (jGains == nullptr) {
+        return (jint)AUDIO_JAVA_ERROR;
     }
 
     for (size_t j = 0; j < nAudioPort->num_gains; j++) {
@@ -1491,88 +1460,72 @@ static jint convertAudioPortFromNative(JNIEnv *env, jobject *jAudioPort,
                                                  nAudioPort->gains[j].min_ramp_ms,
                                                  nAudioPort->gains[j].max_ramp_ms);
         if (jGain == NULL) {
-            jStatus = (jint)AUDIO_JAVA_ERROR;
-            goto exit;
+            return (jint)AUDIO_JAVA_ERROR;
         }
-        env->SetObjectArrayElement(jGains, j, jGain);
+        env->SetObjectArrayElement(jGains.get(), j, jGain);
         env->DeleteLocalRef(jGain);
     }
 
-    jHandle = env->NewObject(gAudioHandleClass, gAudioHandleCstor,
-                                             nAudioPort->id);
-    if (jHandle == NULL) {
-        jStatus = (jint)AUDIO_JAVA_ERROR;
-        goto exit;
+    ScopedLocalRef<jobject> jHandle(env,
+                                    env->NewObject(gAudioHandleClass, gAudioHandleCstor,
+                                                   nAudioPort->id));
+    if (jHandle == nullptr) {
+        return (jint)AUDIO_JAVA_ERROR;
     }
 
-    jDeviceName = env->NewStringUTF(nAudioPort->name);
-
+    ScopedLocalRef<jstring> jDeviceName(env, env->NewStringUTF(nAudioPort->name));
     if (nAudioPort->type == AUDIO_PORT_TYPE_DEVICE) {
-        ALOGV("convertAudioPortFromNative is a device %08x", nAudioPort->ext.device.type);
-        jstring jAddress = env->NewStringUTF(nAudioPort->ext.device.address);
-        jEncapsulationModes =
-                convertEncapsulationInfoFromNative(env, nAudioPort->ext.device.encapsulation_modes);
-        jEncapsulationMetadataTypes =
+        ScopedLocalRef<jintArray> jEncapsulationModes(
+                env,
+                convertEncapsulationInfoFromNative(env,
+                                                   nAudioPort->ext.device.encapsulation_modes));
+        ScopedLocalRef<jintArray> jEncapsulationMetadataTypes(
+                env,
                 convertEncapsulationInfoFromNative(env,
                                                    nAudioPort->ext.device
-                                                           .encapsulation_metadata_types);
+                                                           .encapsulation_metadata_types));
+        ALOGV("convertAudioPortFromNative is a device %08x", nAudioPort->ext.device.type);
+        jstring jAddress = env->NewStringUTF(nAudioPort->ext.device.address);
         *jAudioPort =
-                env->NewObject(gAudioDevicePortClass, gAudioDevicePortCstor, jHandle, jDeviceName,
-                               jAudioProfiles, jGains, nAudioPort->ext.device.type, jAddress,
-                               jEncapsulationModes, jEncapsulationMetadataTypes, jAudioDescriptors);
+                env->NewObject(gAudioDevicePortClass, gAudioDevicePortCstor, jHandle.get(),
+                               jDeviceName.get(), jAudioProfiles.get(), jGains.get(),
+                               nAudioPort->ext.device.type, jAddress, jEncapsulationModes.get(),
+                               jEncapsulationMetadataTypes.get(), jAudioDescriptors.get());
         env->DeleteLocalRef(jAddress);
     } else if (nAudioPort->type == AUDIO_PORT_TYPE_MIX) {
         ALOGV("convertAudioPortFromNative is a mix");
-        *jAudioPort = env->NewObject(gAudioMixPortClass, gAudioMixPortCstor, jHandle,
-                                     nAudioPort->ext.mix.handle, nAudioPort->role, jDeviceName,
-                                     jAudioProfiles, jGains);
+        *jAudioPort = env->NewObject(gAudioMixPortClass, gAudioMixPortCstor, jHandle.get(),
+                                     nAudioPort->ext.mix.handle, nAudioPort->role,
+                                     jDeviceName.get(), jAudioProfiles.get(), jGains.get());
     } else {
         ALOGE("convertAudioPortFromNative unknown nAudioPort type %d", nAudioPort->type);
-        jStatus = (jint)AUDIO_JAVA_ERROR;
-        goto exit;
+        return (jint)AUDIO_JAVA_ERROR;
     }
     if (*jAudioPort == NULL) {
-        jStatus = (jint)AUDIO_JAVA_ERROR;
-        goto exit;
+        return (jint)AUDIO_JAVA_ERROR;
     }
 
-    jStatus = convertAudioPortConfigFromNative(env,
-                                                       *jAudioPort,
-                                                       &jAudioPortConfig,
-                                                       &nAudioPort->active_config);
+    jobject jAudioPortConfigTmp = nullptr;
+
+    jStatus = convertAudioPortConfigFromNative(env, *jAudioPort, &jAudioPortConfigTmp,
+                                               &nAudioPort->active_config);
+    ScopedLocalRef<jobject> jAudioPortConfig(env, jAudioPortConfigTmp);
     if (jStatus != AUDIO_JAVA_SUCCESS) {
-        goto exit;
+        return jStatus;
     }
 
-    env->SetObjectField(*jAudioPort, gAudioPortFields.mActiveConfig, jAudioPortConfig);
-
-exit:
-    if (jDeviceName != NULL) {
-        env->DeleteLocalRef(jDeviceName);
-    }
-    if (jEncapsulationModes != NULL) {
-        env->DeleteLocalRef(jEncapsulationModes);
-    }
-    if (jEncapsulationMetadataTypes != NULL) {
-        env->DeleteLocalRef(jEncapsulationMetadataTypes);
-    }
-    if (jAudioProfiles != NULL) {
-        env->DeleteLocalRef(jAudioProfiles);
-    }
-    if (jGains != NULL) {
-        env->DeleteLocalRef(jGains);
-    }
-    if (jHandle != NULL) {
-        env->DeleteLocalRef(jHandle);
-    }
-    if (jAudioPortConfig != NULL) {
-        env->DeleteLocalRef(jAudioPortConfig);
-    }
-    if (jAudioDescriptors != nullptr) {
-        env->DeleteLocalRef(jAudioDescriptors);
-    }
-
+    env->SetObjectField(*jAudioPort, gAudioPortFields.mActiveConfig, jAudioPortConfig.get());
     return jStatus;
+}
+
+static bool setGeneration(JNIEnv *env, jintArray jGeneration, unsigned int generation1) {
+    ScopedIntArrayRW nGeneration(env, jGeneration);
+    if (nGeneration.get() == nullptr) {
+        return false;
+    } else {
+        nGeneration[0] = generation1;
+        return true;
+    }
 }
 
 static jint
@@ -1598,8 +1551,7 @@ android_media_AudioSystem_listAudioPorts(JNIEnv *env, jobject clazz,
     unsigned int generation1;
     unsigned int generation;
     unsigned int numPorts;
-    jint *nGeneration;
-    struct audio_port_v7 *nPorts = nullptr;
+    std::vector<audio_port_v7> nPorts;
     int attempts = MAX_PORT_GENERATION_SYNC_ATTEMPTS;
     jint jStatus;
 
@@ -1618,43 +1570,42 @@ android_media_AudioSystem_listAudioPorts(JNIEnv *env, jobject clazz,
             break;
         }
         if (numPorts == 0) {
-            jStatus = (jint)AUDIO_JAVA_SUCCESS;
-            goto exit;
+            return setGeneration(env, jGeneration, generation1) ? AUDIO_JAVA_SUCCESS
+                                                                : AUDIO_JAVA_ERROR;
         }
-        nPorts = (struct audio_port_v7 *)realloc(nPorts, numPorts * sizeof(struct audio_port_v7));
+        nPorts.resize(numPorts);
 
         status = AudioSystem::listAudioPorts(AUDIO_PORT_ROLE_NONE, AUDIO_PORT_TYPE_NONE, &numPorts,
-                                             nPorts, &generation);
+                                             &nPorts[0], &generation);
         ALOGV("listAudioPorts AudioSystem::listAudioPorts numPorts %d generation %d generation1 %d",
               numPorts, generation, generation1);
     } while (generation1 != generation && status == NO_ERROR);
 
     jStatus = nativeToJavaStatus(status);
     if (jStatus != AUDIO_JAVA_SUCCESS) {
-        goto exit;
+        if (!setGeneration(env, jGeneration, generation1)) {
+            jStatus = AUDIO_JAVA_ERROR;
+        }
+        return jStatus;
     }
 
     for (size_t i = 0; i < numPorts; i++) {
         jobject jAudioPort = NULL;
         jStatus = convertAudioPortFromNative(env, &jAudioPort, &nPorts[i]);
         if (jStatus != AUDIO_JAVA_SUCCESS) {
-            goto exit;
+            if (!setGeneration(env, jGeneration, generation1)) {
+                jStatus = AUDIO_JAVA_ERROR;
+            }
+            return jStatus;
         }
         env->CallBooleanMethod(jPorts, gArrayListMethods.add, jAudioPort);
         if (jAudioPort != NULL) {
             env->DeleteLocalRef(jAudioPort);
         }
     }
-
-exit:
-    nGeneration = env->GetIntArrayElements(jGeneration, NULL);
-    if (nGeneration == NULL) {
-        jStatus = (jint)AUDIO_JAVA_ERROR;
-    } else {
-        nGeneration[0] = generation1;
-        env->ReleaseIntArrayElements(jGeneration, nGeneration, 0);
+    if (!setGeneration(env, jGeneration, generation1)) {
+        jStatus = AUDIO_JAVA_ERROR;
     }
-    free(nPorts);
     return jStatus;
 }
 
@@ -1684,47 +1635,38 @@ android_media_AudioSystem_createAudioPatch(JNIEnv *env, jobject clazz,
     }
 
     audio_patch_handle_t handle = (audio_patch_handle_t)0;
-    jobject jPatch = env->GetObjectArrayElement(jPatches, 0);
-    jobject jPatchHandle = NULL;
+    ScopedLocalRef<jobject> jPatch(env, env->GetObjectArrayElement(jPatches, 0));
+    ScopedLocalRef<jobject> jPatchHandle(env, nullptr);
     if (jPatch != NULL) {
-        if (!env->IsInstanceOf(jPatch, gAudioPatchClass)) {
+        if (!env->IsInstanceOf(jPatch.get(), gAudioPatchClass)) {
             return (jint)AUDIO_JAVA_BAD_VALUE;
         }
-        jPatchHandle = env->GetObjectField(jPatch, gAudioPatchFields.mHandle);
-        handle = (audio_patch_handle_t)env->GetIntField(jPatchHandle, gAudioHandleFields.mId);
+        jPatchHandle.reset(env->GetObjectField(jPatch.get(), gAudioPatchFields.mHandle));
+        handle = (audio_patch_handle_t)env->GetIntField(jPatchHandle.get(), gAudioHandleFields.mId);
     }
 
     struct audio_patch nPatch = { .id = handle };
 
-    jobject jSource = NULL;
-    jobject jSink = NULL;
-
     for (jint i = 0; i < numSources; i++) {
-        jSource = env->GetObjectArrayElement(jSources, i);
-        if (!env->IsInstanceOf(jSource, gAudioPortConfigClass)) {
-            jStatus = (jint)AUDIO_JAVA_BAD_VALUE;
-            goto exit;
+        ScopedLocalRef<jobject> jSource(env, env->GetObjectArrayElement(jSources, i));
+        if (!env->IsInstanceOf(jSource.get(), gAudioPortConfigClass)) {
+            return (jint)AUDIO_JAVA_BAD_VALUE;
         }
-        jStatus = convertAudioPortConfigToNative(env, &nPatch.sources[i], jSource, false);
-        env->DeleteLocalRef(jSource);
-        jSource = NULL;
+        jStatus = convertAudioPortConfigToNative(env, &nPatch.sources[i], jSource.get(), false);
         if (jStatus != AUDIO_JAVA_SUCCESS) {
-            goto exit;
+            return jStatus;
         }
         nPatch.num_sources++;
     }
 
     for (jint i = 0; i < numSinks; i++) {
-        jSink = env->GetObjectArrayElement(jSinks, i);
-        if (!env->IsInstanceOf(jSink, gAudioPortConfigClass)) {
-            jStatus = (jint)AUDIO_JAVA_BAD_VALUE;
-            goto exit;
+        ScopedLocalRef<jobject> jSink(env, env->GetObjectArrayElement(jSinks, i));
+        if (!env->IsInstanceOf(jSink.get(), gAudioPortConfigClass)) {
+            return (jint)AUDIO_JAVA_BAD_VALUE;
         }
-        jStatus = convertAudioPortConfigToNative(env, &nPatch.sinks[i], jSink, false);
-        env->DeleteLocalRef(jSink);
-        jSink = NULL;
+        jStatus = convertAudioPortConfigToNative(env, &nPatch.sinks[i], jSink.get(), false);
         if (jStatus != AUDIO_JAVA_SUCCESS) {
-            goto exit;
+            return jStatus;
         }
         nPatch.num_sinks++;
     }
@@ -1735,38 +1677,22 @@ android_media_AudioSystem_createAudioPatch(JNIEnv *env, jobject clazz,
 
     jStatus = nativeToJavaStatus(status);
     if (jStatus != AUDIO_JAVA_SUCCESS) {
-        goto exit;
+        return jStatus;
     }
 
-    if (jPatchHandle == NULL) {
-        jPatchHandle = env->NewObject(gAudioHandleClass, gAudioHandleCstor,
-                                           handle);
-        if (jPatchHandle == NULL) {
-            jStatus = (jint)AUDIO_JAVA_ERROR;
-            goto exit;
+    if (jPatchHandle == nullptr) {
+        jPatchHandle.reset(env->NewObject(gAudioHandleClass, gAudioHandleCstor, handle));
+        if (jPatchHandle == nullptr) {
+            return (jint)AUDIO_JAVA_ERROR;
         }
-        jPatch = env->NewObject(gAudioPatchClass, gAudioPatchCstor, jPatchHandle, jSources, jSinks);
-        if (jPatch == NULL) {
-            jStatus = (jint)AUDIO_JAVA_ERROR;
-            goto exit;
+        jPatch.reset(env->NewObject(gAudioPatchClass, gAudioPatchCstor, jPatchHandle.get(),
+                                    jSources, jSinks));
+        if (jPatch == nullptr) {
+            return (jint)AUDIO_JAVA_ERROR;
         }
-        env->SetObjectArrayElement(jPatches, 0, jPatch);
+        env->SetObjectArrayElement(jPatches, 0, jPatch.get());
     } else {
-        env->SetIntField(jPatchHandle, gAudioHandleFields.mId, handle);
-    }
-
-exit:
-    if (jPatchHandle != NULL) {
-        env->DeleteLocalRef(jPatchHandle);
-    }
-    if (jPatch != NULL) {
-        env->DeleteLocalRef(jPatch);
-    }
-    if (jSource != NULL) {
-        env->DeleteLocalRef(jSource);
-    }
-    if (jSink != NULL) {
-        env->DeleteLocalRef(jSink);
+        env->SetIntField(jPatchHandle.get(), gAudioHandleFields.mId, handle);
     }
     return jStatus;
 }
@@ -1818,13 +1744,7 @@ android_media_AudioSystem_listAudioPatches(JNIEnv *env, jobject clazz,
     unsigned int generation1;
     unsigned int generation;
     unsigned int numPatches;
-    jint *nGeneration;
-    struct audio_patch *nPatches = NULL;
-    jobjectArray jSources = NULL;
-    jobject jSource = NULL;
-    jobjectArray jSinks = NULL;
-    jobject jSink = NULL;
-    jobject jPatch = NULL;
+    std::vector<audio_patch> nPatches;
     int attempts = MAX_PORT_GENERATION_SYNC_ATTEMPTS;
     jint jStatus;
 
@@ -1845,15 +1765,13 @@ android_media_AudioSystem_listAudioPatches(JNIEnv *env, jobject clazz,
             break;
         }
         if (numPatches == 0) {
-            jStatus = (jint)AUDIO_JAVA_SUCCESS;
-            goto exit;
+            return setGeneration(env, jGeneration, generation1) ? AUDIO_JAVA_SUCCESS
+                                                                : AUDIO_JAVA_ERROR;
         }
 
-        nPatches = (struct audio_patch *)realloc(nPatches, numPatches * sizeof(struct audio_patch));
+        nPatches.resize(numPatches);
 
-        status = AudioSystem::listAudioPatches(&numPatches,
-                                               nPatches,
-                                               &generation);
+        status = AudioSystem::listAudioPatches(&numPatches, &nPatches[0], &generation);
         ALOGV("listAudioPatches AudioSystem::listAudioPatches numPatches %d generation %d generation1 %d",
               numPatches, generation, generation1);
 
@@ -1861,15 +1779,21 @@ android_media_AudioSystem_listAudioPatches(JNIEnv *env, jobject clazz,
 
     jStatus = nativeToJavaStatus(status);
     if (jStatus != AUDIO_JAVA_SUCCESS) {
-        goto exit;
+        if (!setGeneration(env, jGeneration, generation1)) {
+            jStatus = AUDIO_JAVA_ERROR;
+        }
+        return jStatus;
     }
 
     for (size_t i = 0; i < numPatches; i++) {
+        ScopedLocalRef<jobject> jPatch(env, nullptr);
+        ScopedLocalRef<jobjectArray> jSources(env, nullptr);
+        ScopedLocalRef<jobjectArray> jSinks(env, nullptr);
         jobject patchHandle = env->NewObject(gAudioHandleClass, gAudioHandleCstor,
                                                  nPatches[i].id);
         if (patchHandle == NULL) {
-            jStatus = AUDIO_JAVA_ERROR;
-            goto exit;
+            setGeneration(env, jGeneration, generation1);
+            return AUDIO_JAVA_ERROR;
         }
         ALOGV("listAudioPatches patch %zu num_sources %d num_sinks %d",
               i, nPatches[i].num_sources, nPatches[i].num_sinks);
@@ -1877,96 +1801,66 @@ android_media_AudioSystem_listAudioPatches(JNIEnv *env, jobject clazz,
         env->SetIntField(patchHandle, gAudioHandleFields.mId, nPatches[i].id);
 
         // load sources
-        jSources = env->NewObjectArray(nPatches[i].num_sources,
-                                       gAudioPortConfigClass, NULL);
-        if (jSources == NULL) {
-            jStatus = AUDIO_JAVA_ERROR;
-            goto exit;
+        jSources.reset(env->NewObjectArray(nPatches[i].num_sources, gAudioPortConfigClass, NULL));
+        if (jSources == nullptr) {
+            setGeneration(env, jGeneration, generation1);
+            return AUDIO_JAVA_ERROR;
         }
 
         for (size_t j = 0; j < nPatches[i].num_sources; j++) {
-            jStatus = convertAudioPortConfigFromNative(env,
-                                                      NULL,
-                                                      &jSource,
-                                                      &nPatches[i].sources[j]);
+            jobject jSourceTmp = nullptr;
+            jStatus = convertAudioPortConfigFromNative(env, NULL, &jSourceTmp,
+                                                       &nPatches[i].sources[j]);
+            ScopedLocalRef<jobject> jSource(env, jSourceTmp);
             if (jStatus != AUDIO_JAVA_SUCCESS) {
-                goto exit;
+                if (!setGeneration(env, jGeneration, generation1)) {
+                    jStatus = AUDIO_JAVA_ERROR;
+                }
+                return jStatus;
             }
-            env->SetObjectArrayElement(jSources, j, jSource);
-            env->DeleteLocalRef(jSource);
-            jSource = NULL;
+            env->SetObjectArrayElement(jSources.get(), j, jSource.get());
             ALOGV("listAudioPatches patch %zu source %zu is a %s handle %d",
                   i, j,
                   nPatches[i].sources[j].type == AUDIO_PORT_TYPE_DEVICE ? "device" : "mix",
                   nPatches[i].sources[j].id);
         }
         // load sinks
-        jSinks = env->NewObjectArray(nPatches[i].num_sinks,
-                                     gAudioPortConfigClass, NULL);
-        if (jSinks == NULL) {
-            jStatus = AUDIO_JAVA_ERROR;
-            goto exit;
+        jSinks.reset(env->NewObjectArray(nPatches[i].num_sinks, gAudioPortConfigClass, NULL));
+        if (jSinks == nullptr) {
+            setGeneration(env, jGeneration, generation1);
+            return AUDIO_JAVA_ERROR;
         }
 
         for (size_t j = 0; j < nPatches[i].num_sinks; j++) {
-            jStatus = convertAudioPortConfigFromNative(env,
-                                                      NULL,
-                                                      &jSink,
-                                                      &nPatches[i].sinks[j]);
+            jobject jSinkTmp = nullptr;
+            jStatus = convertAudioPortConfigFromNative(env, NULL, &jSinkTmp, &nPatches[i].sinks[j]);
+            ScopedLocalRef<jobject> jSink(env, jSinkTmp);
 
             if (jStatus != AUDIO_JAVA_SUCCESS) {
-                goto exit;
+                if (!setGeneration(env, jGeneration, generation1)) {
+                    jStatus = AUDIO_JAVA_ERROR;
+                }
+                return jStatus;
             }
-            env->SetObjectArrayElement(jSinks, j, jSink);
-            env->DeleteLocalRef(jSink);
-            jSink = NULL;
+            env->SetObjectArrayElement(jSinks.get(), j, jSink.get());
             ALOGV("listAudioPatches patch %zu sink %zu is a %s handle %d",
                   i, j,
                   nPatches[i].sinks[j].type == AUDIO_PORT_TYPE_DEVICE ? "device" : "mix",
                   nPatches[i].sinks[j].id);
         }
 
-        jPatch = env->NewObject(gAudioPatchClass, gAudioPatchCstor,
-                                       patchHandle, jSources, jSinks);
-        env->DeleteLocalRef(jSources);
-        jSources = NULL;
-        env->DeleteLocalRef(jSinks);
-        jSinks = NULL;
-        if (jPatch == NULL) {
+        jPatch.reset(env->NewObject(gAudioPatchClass, gAudioPatchCstor, patchHandle, jSources.get(),
+                                    jSinks.get()));
+        if (jPatch == nullptr) {
             jStatus = AUDIO_JAVA_ERROR;
-            goto exit;
+            setGeneration(env, jGeneration, generation1);
+            return AUDIO_JAVA_ERROR;
         }
-        env->CallBooleanMethod(jPatches, gArrayListMethods.add, jPatch);
-        env->DeleteLocalRef(jPatch);
-        jPatch = NULL;
+        env->CallBooleanMethod(jPatches, gArrayListMethods.add, jPatch.get());
     }
-
-exit:
-
-    nGeneration = env->GetIntArrayElements(jGeneration, NULL);
-    if (nGeneration == NULL) {
+    if (!setGeneration(env, jGeneration, generation1)) {
         jStatus = AUDIO_JAVA_ERROR;
-    } else {
-        nGeneration[0] = generation1;
-        env->ReleaseIntArrayElements(jGeneration, nGeneration, 0);
     }
-
-    if (jSources != NULL) {
-        env->DeleteLocalRef(jSources);
-    }
-    if (jSource != NULL) {
-        env->DeleteLocalRef(jSource);
-    }
-    if (jSinks != NULL) {
-        env->DeleteLocalRef(jSinks);
-    }
-    if (jSink != NULL) {
-        env->DeleteLocalRef(jSink);
-    }
-    if (jPatch != NULL) {
-        env->DeleteLocalRef(jPatch);
-    }
-    free(nPatches);
     return jStatus;
 }
 
@@ -2208,20 +2102,16 @@ android_media_AudioSystem_registerPolicyMixes(JNIEnv *env, jobject clazz,
 
     status_t status;
     jint jStatus;
-    jobject jAudioMix = NULL;
     Vector <AudioMix> mixes;
     for (jint i = 0; i < numMixes; i++) {
-        jAudioMix = env->GetObjectArrayElement(jMixes, i);
-        if (!env->IsInstanceOf(jAudioMix, gAudioMixClass)) {
-            jStatus = (jint)AUDIO_JAVA_BAD_VALUE;
-            goto exit;
+        ScopedLocalRef<jobject> jAudioMix(env, env->GetObjectArrayElement(jMixes, i));
+        if (!env->IsInstanceOf(jAudioMix.get(), gAudioMixClass)) {
+            return (jint)AUDIO_JAVA_BAD_VALUE;
         }
         AudioMix mix;
-        jStatus = convertAudioMixToNative(env, &mix, jAudioMix);
-        env->DeleteLocalRef(jAudioMix);
-        jAudioMix = NULL;
+        jStatus = convertAudioMixToNative(env, &mix, jAudioMix.get());
         if (jStatus != AUDIO_JAVA_SUCCESS) {
-            goto exit;
+            return jStatus;
         }
         mixes.add(mix);
     }
@@ -2231,14 +2121,6 @@ android_media_AudioSystem_registerPolicyMixes(JNIEnv *env, jobject clazz,
     ALOGV("AudioSystem::registerPolicyMixes() returned %d", status);
 
     jStatus = nativeToJavaStatus(status);
-    if (jStatus != AUDIO_JAVA_SUCCESS) {
-        goto exit;
-    }
-
-exit:
-    if (jAudioMix != NULL) {
-        env->DeleteLocalRef(jAudioMix);
-    }
     return jStatus;
 }
 
