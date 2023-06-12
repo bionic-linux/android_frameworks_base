@@ -1380,6 +1380,9 @@ public class Editor {
             Selection.setSelection((Spannable) mTextView.getText(), selectionStart, selectionEnd);
         }
 
+        if (!hasSelectionController()) {
+            return false;
+        }
         SelectionModifierCursorController selectionController = getSelectionController();
         int minOffset = selectionController.getMinTouchOffset();
         int maxOffset = selectionController.getMaxTouchOffset();
@@ -1520,6 +1523,9 @@ public class Editor {
     }
 
     private long getLastTouchOffsets() {
+        if (!hasSelectionController()) {
+            return false;
+        }
         SelectionModifierCursorController selectionController = getSelectionController();
         final int minOffset = selectionController.getMinTouchOffset();
         final int maxOffset = selectionController.getMaxTouchOffset();
@@ -1735,38 +1741,38 @@ public class Editor {
      * Handles touch events on an editable text view, implementing cursor movement, selection, etc.
      */
     @VisibleForTesting
-    public void onTouchEvent(MotionEvent event) {
-        final boolean filterOutEvent = shouldFilterOutTouchEvent(event);
-        mLastButtonState = event.getButtonState();
-        if (filterOutEvent) {
-            if (event.getActionMasked() == MotionEvent.ACTION_UP) {
-                mDiscardNextActionUp = true;
+        public void onTouchEvent(MotionEvent event) {
+            final boolean filterOutEvent = shouldFilterOutTouchEvent(event);
+            mLastButtonState = event.getButtonState();
+            if (filterOutEvent) {
+                if (event.getActionMasked() == MotionEvent.ACTION_UP) {
+                    mDiscardNextActionUp = true;
+                }
+                return;
             }
-            return;
-        }
-        ViewConfiguration viewConfiguration = ViewConfiguration.get(mTextView.getContext());
-        mTouchState.update(event, viewConfiguration);
-        updateFloatingToolbarVisibility(event);
+            ViewConfiguration viewConfiguration = ViewConfiguration.get(mTextView.getContext());
+            mTouchState.update(event, viewConfiguration);
+            updateFloatingToolbarVisibility(event);
 
-        if (hasInsertionController()) {
-            getInsertionController().onTouchEvent(event);
-        }
-        if (hasSelectionController()) {
-            getSelectionController().onTouchEvent(event);
-        }
+            if (hasInsertionController()) {
+                getInsertionController().onTouchEvent(event);
+            }
+            if (hasSelectionController()) {
+                getSelectionController().onTouchEvent(event);
+            }
 
-        if (mShowSuggestionRunnable != null) {
-            mTextView.removeCallbacks(mShowSuggestionRunnable);
-            mShowSuggestionRunnable = null;
-        }
+            if (mShowSuggestionRunnable != null) {
+                mTextView.removeCallbacks(mShowSuggestionRunnable);
+                mShowSuggestionRunnable = null;
+            }
 
-        if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-            // Reset this state; it will be re-set if super.onTouchEvent
-            // causes focus to move to the view.
-            mTouchFocusSelected = false;
-            mIgnoreActionUpEvent = false;
+            if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                // Reset this state; it will be re-set if super.onTouchEvent
+                // causes focus to move to the view.
+                mTouchFocusSelected = false;
+                mIgnoreActionUpEvent = false;
+            }
         }
-    }
 
     private void updateFloatingToolbarVisibility(MotionEvent event) {
         if (mTextActionMode != null) {
@@ -4245,7 +4251,7 @@ public class Editor {
                     || (mTextIsSelectable && mode == TextActionMode.TEXT_LINK);
             if (mHasSelection) {
                 SelectionModifierCursorController selectionController = getSelectionController();
-                if (selectionController.mStartHandle == null) {
+                if (hasSelectionController() && selectionController.mStartHandle == null) {
                     // As these are for initializing selectionController, hide() must be called.
                     loadHandleDrawables(false /* overwrite */);
                     selectionController.initHandles();
