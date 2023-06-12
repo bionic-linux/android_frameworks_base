@@ -1380,6 +1380,9 @@ public class Editor {
             Selection.setSelection((Spannable) mTextView.getText(), selectionStart, selectionEnd);
         }
 
+        if (!hasSelectionController()) {
+            return false;
+        }
         SelectionModifierCursorController selectionController = getSelectionController();
         int minOffset = selectionController.getMinTouchOffset();
         int maxOffset = selectionController.getMaxTouchOffset();
@@ -1520,6 +1523,9 @@ public class Editor {
     }
 
     private long getLastTouchOffsets() {
+        if (!hasSelectionController()) {
+            return false;
+        }
         SelectionModifierCursorController selectionController = getSelectionController();
         final int minOffset = selectionController.getMinTouchOffset();
         final int maxOffset = selectionController.getMaxTouchOffset();
@@ -4245,7 +4251,7 @@ public class Editor {
                     || (mTextIsSelectable && mode == TextActionMode.TEXT_LINK);
             if (mHasSelection) {
                 SelectionModifierCursorController selectionController = getSelectionController();
-                if (selectionController.mStartHandle == null) {
+                if (hasSelectionController() && selectionController.mStartHandle == null) {
                     // As these are for initializing selectionController, hide() must be called.
                     loadHandleDrawables(false /* overwrite */);
                     selectionController.initHandles();
