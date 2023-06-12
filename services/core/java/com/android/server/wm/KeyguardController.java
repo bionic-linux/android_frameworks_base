@@ -661,8 +661,9 @@ class KeyguardController {
                 display.pendingLayoutChanges |= FINISH_LAYOUT_REDO_WALLPAPER;
             }
 
-            if (mTopTurnScreenOnActivity != lastTurnScreenOnActivity
-                    && mTopTurnScreenOnActivity != null
+            if (mTopTurnScreenOnActivity != null
+                    && (mTopTurnScreenOnActivity != lastTurnScreenOnActivity
+                    || mTopTurnScreenOnActivity.currentLaunchCanTurnScreenOn())
                     && !mService.mWindowManager.mPowerManager.isInteractive()
                     && (mRequestDismissKeyguard || occludedByActivity)) {
                 controller.mTaskSupervisor.wakeUp("handleTurnScreenOn");
