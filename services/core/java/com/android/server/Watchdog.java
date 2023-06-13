@@ -94,7 +94,8 @@ public class Watchdog implements Dumpable {
     //         can trigger the watchdog.
     // Note 2: The debug value is already below the wait time in ZygoteConnection. Wrapped
     //         applications may not work with a debug build. CTS will fail.
-    private static final long DEFAULT_TIMEOUT = DB ? 10 * 1000 : 60 * 1000;
+    private static final long DEFAULT_TIMEOUT =
+            DB ? 10 * 1000 : 60 * 1000 * Build.HW_TIMEOUT_MULTIPLIER;
 
     // These are temporally ordered: larger values as lateness increases
     private static final int COMPLETED = 0;
