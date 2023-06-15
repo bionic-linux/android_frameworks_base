@@ -52,6 +52,8 @@ public class AudioMix {
     int mCallbackFlags;
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     String mDeviceAddress;
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
+    int mPriority;
 
     // initialized in constructor, read by AudioPolicyConfig
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
@@ -61,7 +63,7 @@ public class AudioMix {
      * All parameters are guaranteed valid through the Builder.
      */
     private AudioMix(AudioMixingRule rule, AudioFormat format, int routeFlags, int callbackFlags,
-            int deviceType, String deviceAddress) {
+            int deviceType, String deviceAddress, int priority) {
         mRule = rule;
         mFormat = format;
         mRouteFlags = routeFlags;
@@ -69,6 +71,7 @@ public class AudioMix {
         mCallbackFlags = callbackFlags;
         mDeviceSystemType = deviceType;
         mDeviceAddress = (deviceAddress == null) ? new String("") : deviceAddress;
+        mPriority = priority;
     }
 
     // CALLBACK_FLAG_* values: keep in sync with AudioMix::kCbFlag* values defined
@@ -149,6 +152,13 @@ public class AudioMix {
     /** Maximum channel number for privileged playback capture*/
     private static final int PRIVILEDGED_CAPTURE_MAX_BYTES_PER_SAMPLE = 2;
 
+    /** lowest priority */
+    private static final int MIX_PRIORITY_LOW = -1;
+    /** MEDIUM priority (default) */
+    private static final int MIX_PRIORITY_MEDIUM = 0;
+    /** High priority */
+    private static final int MIX_PRIORITY_HIGH = 1;
+
     /**
      * The current mixing state.
      * @return one of {@link #MIX_STATE_DISABLED}, {@link #MIX_STATE_IDLE},
@@ -177,6 +187,11 @@ public class AudioMix {
     /** @hide */
     public int getMixType() {
         return mMixType;
+    }
+
+    /** @hide */
+    public int getPriority() {
+        return mPriority;
     }
 
     void setRegistration(String regId) {
@@ -283,6 +298,7 @@ public class AudioMix {
         // an AudioSystem.DEVICE_* value, not AudioDeviceInfo.TYPE_*
         private int mDeviceSystemType = AudioSystem.DEVICE_NONE;
         private String mDeviceAddress = null;
+        private int mPriority = MIX_PRIORITY_MEDIUM;
 
         /**
          * @hide
@@ -346,6 +362,17 @@ public class AudioMix {
         public Builder setDevice(int deviceType, String address) {
             mDeviceSystemType = deviceType;
             mDeviceAddress = address;
+            return this;
+        }
+
+        /**
+         * @hide
+         * Only used by AudioPolicyConfig, not a public API.
+         * @param  priority level
+         * @return the same Builder instance
+         */
+        public Builder setPriority(int priority) {
+            mPriority = priority;
             return this;
         }
 
@@ -477,7 +504,7 @@ public class AudioMix {
                 }
             }
             return new AudioMix(mRule, mFormat, mRouteFlags, mCallbackFlags, mDeviceSystemType,
-                    mDeviceAddress);
+                    mDeviceAddress, mPriority /* priority */);
         }
     }
 }

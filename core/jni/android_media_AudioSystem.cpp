@@ -141,6 +141,7 @@ static struct {
     jfieldID    mDeviceAddress;
     jfieldID    mMixType;
     jfieldID    mCallbackFlags;
+    jfieldID    mPriority;
 } gAudioMixFields;
 
 static jclass gAudioFormatClass;
@@ -2112,6 +2113,7 @@ static jint convertAudioMixToNative(JNIEnv *env,
     nAudioMix->mRouteFlags = env->GetIntField(jAudioMix, gAudioMixFields.mRouteFlags);
     nAudioMix->mDeviceType = (audio_devices_t)
             env->GetIntField(jAudioMix, gAudioMixFields.mDeviceType);
+    nAudioMix->mPriority = env->GetIntField(jAudioMix, gAudioMixFields.mPriority);
 
     jstring jDeviceAddress = (jstring)env->GetObjectField(jAudioMix,
                                                            gAudioMixFields.mDeviceAddress);
@@ -3280,6 +3282,7 @@ int register_android_media_AudioSystem(JNIEnv *env)
                                                       "Ljava/lang/String;");
     gAudioMixFields.mMixType = GetFieldIDOrDie(env, audioMixClass, "mMixType", "I");
     gAudioMixFields.mCallbackFlags = GetFieldIDOrDie(env, audioMixClass, "mCallbackFlags", "I");
+    gAudioMixFields.mPriority = GetFieldIDOrDie(env, audioMixClass, "mPriority", "I");
 
     jclass audioFormatClass = FindClassOrDie(env, "android/media/AudioFormat");
     gAudioFormatClass = MakeGlobalRefOrDie(env, audioFormatClass);
