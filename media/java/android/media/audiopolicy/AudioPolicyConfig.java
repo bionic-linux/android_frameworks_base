@@ -92,6 +92,8 @@ public class AudioPolicyConfig implements Parcelable {
             // write device information
             dest.writeInt(mix.mDeviceSystemType);
             dest.writeString(mix.mDeviceAddress);
+            // write priority information
+            dest.writeInt(mix.mPriority);
             // write mix format
             dest.writeInt(mix.getFormat().getSampleRate());
             dest.writeInt(mix.getFormat().getEncoding());
@@ -123,6 +125,8 @@ public class AudioPolicyConfig implements Parcelable {
             mixBuilder.setCallbackFlags(in.readInt());
             // read device information
             mixBuilder.setDevice(in.readInt(), in.readString());
+            // read priority information
+            mixBuilder.setPriority(in.readInt());
             // read mix format
             int sampleRate = in.readInt();
             int encoding = in.readInt();
