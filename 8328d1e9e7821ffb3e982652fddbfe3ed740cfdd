@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e3a435b_d739c03f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2012745
+      },
+      "writtenOn": "2023-06-15T06:43:34Z",
+      "side": 1,
+      "message": "The scenario is as follows: Device is in sleeping state and WhatsApp video call is received. \n1. In the WhatsApp video call activity startup flow, KeyguardController#updateVisibility() is called multiple times from RootWindowContainer#ensureActivitiesVisible()\n2. When app sets canTurnScreenOn, mTopTurnScreenOnActivity is assigned the top activity in line #627. But this time setShowWhenLocked flag is not yet set by app. So occludedByActivity is false hence wakeUp() is not called.\n3. Next time when KeyguardController#updateVisibility() is called, the lastTurnScreenOnActivity is assigned the same activity as mTopTurnScreenOnActivity in line #609, which is WhatsApp video call activity.\n4. Now in all further calls to KeyguardController#updateVisibility(), the condition on line #664 \"mTopTurnScreenOnActivity !\u003d lastTurnScreenOnActivity\" is never satisfied as both point to the same WhatsApp video call activity.\n5. So even though the app has setShowWhenLocked flag and occludedByActivity is true, the above condition in point 4. does not allow control to enter the if statement and wakeUp the screen.",
+      "parentUuid": "01aae82d_6bedcf69",
+      "range": {
+        "startLine": 13,
+        "startChar": 7,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "8328d1e9e7821ffb3e982652fddbfe3ed740cfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "d3cde84b_2f894664",
