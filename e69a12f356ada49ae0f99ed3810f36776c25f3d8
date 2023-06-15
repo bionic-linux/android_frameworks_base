@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e757ce89_fa6963c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1975505
+      },
+      "writtenOn": "2023-06-15T12:38:08Z",
+      "side": 1,
+      "message": "\u003e I think this might be ok, because if the retriever does use in in readAt(), it explicitly seeks to the requested position before reading, unless it\u0027s a read at the exact same position that was requested before. But that case might already have been broken? Eg, if the retriever first reads at offset 10, then the code in L3200 modifies the position in the stream, and then the retriever again tries to read at offset 10, it would also read at the wrong offset. It seems to me mixing use of the InputStream with the receiver is a bit fragile.\n\nHi Martijn\n\nCould you have a try to replace in.seek/in.read with Os.pread when fd is not null?\n```java\nif (fd \u003d\u003d null) {\n    in.seek(n);\n    in.read(buf, n);\n} else {\n    Os.pread(fd, buf, 0, n);\n}\n```\nOs.pread will read content from specified position without change of offset.\n[pread](http://man7.org/linux/man-pages/man2/pread.2.html)",
+      "revId": "e69a12f356ada49ae0f99ed3810f36776c25f3d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d1082688_de347574",
         "filename": "media/java/android/media/ExifInterface.java",
         "patchSetId": 2
