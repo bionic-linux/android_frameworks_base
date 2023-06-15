@@ -46,6 +46,30 @@
       },
       "revId": "a9ef2ac1624f1f5d5b49793ca9c83189683be606",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a82d481_19d8cdaa",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardClockSwitchController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1877755
+      },
+      "writtenOn": "2023-06-15T10:21:10Z",
+      "side": 1,
+      "message": "This was a different issue, one test reset the mock so getResources wasn\u0027t mocked anymore. Since I don\u0027t know why exactly the mock is being reset the test now re-sets the getResources mock after the reset and works fine now.",
+      "parentUuid": "ba04d258_d775c82e",
+      "range": {
+        "startLine": 400,
+        "startChar": 16,
+        "endLine": 400,
+        "endChar": 25
+      },
+      "revId": "a9ef2ac1624f1f5d5b49793ca9c83189683be606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
