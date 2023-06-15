@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4d8a8173_67856fcf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2023-06-15T14:09:54Z",
+      "side": 1,
+      "message": "LongPing,\ncan you try the following (copied this text from a different bug that isn\u0027t visible to you)\nThanks,\n-- Ray\n\nhere\u0027s the new approach.  limited testing has shown it doesn\u0027t wedge the system.  I\u0027ll need help from Samsung, because they have all the reproducing test cases (I haven\u0027t been able to make them work for me).\n\nSetup/Integration:\n\n(1) revert the two existing CLs in your tree. They are not needed for this fix. We see in b/283908789 that they appear to introduce other problems.\n(1a) https://r.android.com/c/platform/frameworks/base/+/2485757\n(1b) https://r.android.com/c/platform/frameworks/base/+/2469521\n\n(2) apply the new CL:\n(2a) https://r.android.com/c/platform/frameworks/av/+/2622310\n\n(3) test, test, test\n\n\nThe TLDR for the new fix is that in the media.extractor, where we used to call close() that looped back to the mediaprovider and cause deadlock, we put the item that we\u0027re closing into a queue of pending close() operations and we have a separate not-part-of-the-binder-pool worker thread do the close for us. The original thread completes immediately. This new worker thread works at its own pace through the list of things to close; sometimes this takes a while [such as when apps overload the mediaprovider\u0027s binder pool].",
+      "parentUuid": "3fbc4523_f973635d",
+      "revId": "e69a12f356ada49ae0f99ed3810f36776c25f3d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d1082688_de347574",
         "filename": "media/java/android/media/ExifInterface.java",
         "patchSetId": 2
