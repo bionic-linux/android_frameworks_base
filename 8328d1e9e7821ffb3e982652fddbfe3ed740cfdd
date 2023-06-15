@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "01aae82d_6bedcf69",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2023-06-15T01:15:22Z",
+      "side": 1,
+      "message": "Not sure I fully understand the issue here. What was not reset? IIUC, the visibility should be updated when the device went to sleep and resets the `mTopTurnScreenOnActivity` to null.",
+      "range": {
+        "startLine": 13,
+        "startChar": 7,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "8328d1e9e7821ffb3e982652fddbfe3ed740cfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "d3cde84b_2f894664",
