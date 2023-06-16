@@ -2541,11 +2541,7 @@ public class TelephonyManager {
     /** Phone is via SIP. */
     public static final int PHONE_TYPE_SIP = PhoneConstants.PHONE_TYPE_SIP;
 
-    /**
-     * Phone is via IMS.
-     *
-     * @hide
-     */
+    /** Phone is via IMS. */
     public static final int PHONE_TYPE_IMS = PhoneConstants.PHONE_TYPE_IMS;
 
     /**
@@ -2554,6 +2550,9 @@ public class TelephonyManager {
      * @hide
      */
     public static final int PHONE_TYPE_THIRD_PARTY = PhoneConstants.PHONE_TYPE_THIRD_PARTY;
+
+    /** Phone is via IMS. */
+    public static final int PHONE_TYPE_CDMA_LTE = PhoneConstants.PHONE_TYPE_CDMA_LTE;
 
     /**
      * Returns the current phone type.
