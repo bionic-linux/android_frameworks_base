@@ -159,6 +159,23 @@
       "message": "Please help to review and get it merged",
       "revId": "8328d1e9e7821ffb3e982652fddbfe3ed740cfdd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5327d82_c4a178fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1977516
+      },
+      "writtenOn": "2023-06-16T13:16:04Z",
+      "side": 1,
+      "message": "unresolved",
+      "revId": "8328d1e9e7821ffb3e982652fddbfe3ed740cfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
