@@ -144,6 +144,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "606c7564_b1a616ce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2023-06-16T13:18:04Z",
+      "side": 1,
+      "message": "Unresolved the correct comment thread.\n\n@louischang@google.com PTAL next week.",
+      "parentUuid": "c2edf6a0_cb3e2e36",
+      "range": {
+        "startLine": 13,
+        "startChar": 7,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "8328d1e9e7821ffb3e982652fddbfe3ed740cfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "d3cde84b_2f894664",
@@ -174,6 +198,24 @@
       "writtenOn": "2023-06-16T13:16:04Z",
       "side": 1,
       "message": "unresolved",
+      "revId": "8328d1e9e7821ffb3e982652fddbfe3ed740cfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4556f95b_745d6e0b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2023-06-16T13:18:04Z",
+      "side": 1,
+      "message": "closing empy comment thread.",
+      "parentUuid": "b5327d82_c4a178fd",
       "revId": "8328d1e9e7821ffb3e982652fddbfe3ed740cfdd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
