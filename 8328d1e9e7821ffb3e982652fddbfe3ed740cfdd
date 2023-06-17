@@ -265,6 +265,30 @@
       },
       "revId": "8328d1e9e7821ffb3e982652fddbfe3ed740cfdd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b3a254e_7cc58e59",
+        "filename": "services/core/java/com/android/server/wm/KeyguardController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 2012745
+      },
+      "writtenOn": "2023-06-17T09:26:27Z",
+      "side": 1,
+      "message": "This seems fine too. I have uploaded a new patch set after removing the condition. Kindly review and get it merged.\nThanks!",
+      "parentUuid": "c2d0f3d0_9d5c50af",
+      "range": {
+        "startLine": 666,
+        "startChar": 23,
+        "endLine": 666,
+        "endChar": 78
+      },
+      "revId": "8328d1e9e7821ffb3e982652fddbfe3ed740cfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

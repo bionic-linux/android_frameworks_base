@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "863e2a4b_64a03390",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2012745
+      },
+      "writtenOn": "2023-06-17T09:26:27Z",
+      "side": 1,
+      "message": "Uploaded a new patchset. please review and get it merged",
+      "revId": "7b712e2f1df3fb91c932557c59c167293efae33f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
