@@ -33,6 +33,24 @@
       "message": "Please help to submit. Thank you",
       "revId": "7b712e2f1df3fb91c932557c59c167293efae33f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0b8c412_d61c7ae5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2012745
+      },
+      "writtenOn": "2023-06-17T12:45:12Z",
+      "side": 1,
+      "message": "@louischang@google.com kindly submit.",
+      "parentUuid": "8e8a84c6_041fbe01",
+      "revId": "7b712e2f1df3fb91c932557c59c167293efae33f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
