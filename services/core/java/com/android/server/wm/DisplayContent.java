@@ -677,6 +677,9 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
     // Used in updating the display size
     private Point mTmpDisplaySize = new Point();
 
+    // Using in freezing display, for recording previous freezing size
+    private final Point mFreezingTmpSize = new Point();
+
     // Used in updating override configurations
     private final Configuration mTempConfig = new Configuration();
 
@@ -1104,6 +1107,9 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         if (DEBUG_DISPLAY) Slog.v(TAG_WM, "Creating display=" + display);
 
         mWmService.mDisplayWindowSettings.applySettingsToDisplayLocked(this);
+
+        mFreezingTmpSize.set(mDisplayInfo.logicalWidth, mDisplayInfo.logicalHeight);
+        Slog.d(TAG, "DisplayContent init, mFreezingTmpSize= " + mFreezingTmpSize);
     }
 
     boolean isReady() {
@@ -1350,11 +1356,17 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         final Configuration currentDisplayConfig = getConfiguration();
         mTmpConfiguration.setTo(currentDisplayConfig);
         computeScreenConfiguration(mTmpConfiguration);
-        configChanged |= currentDisplayConfig.diff(mTmpConfiguration) != 0;
+        final int changes = currentDisplayConfig.diff(mTmpConfiguration);
+        configChanged |= changes != 0;
+
+        boolean freeze = ((changes & ActivityInfo.CONFIG_SCREEN_SIZE) != 0) &&
+                ((changes & ActivityInfo.CONFIG_WINDOW_CONFIGURATION) != 0);
 
         if (configChanged) {
             mWaitingForConfig = true;
-            mWmService.startFreezingDisplay(0 /* exitAnim */, 0 /* enterAnim */, this);
+            if (freeze) {
+                mWmService.startFreezingDisplay(0 /* exitAnim */, 0 /* enterAnim */, this);
+            }
             sendNewConfiguration();
         }
 
@@ -5396,6 +5408,14 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
             mMetricsLogger = new MetricsLogger();
         }
         return mMetricsLogger;
+    }
+
+    public Point currentSize(Point newSize) {
+        Point currentSize = new Point(mFreezingTmpSize);
+        if (newSize != null && !newSize.equals(mFreezingTmpSize)) {
+            mFreezingTmpSize.set(newSize.x, newSize.y);
+        }
+        return currentSize;
     }
 
     void onDisplayChanged() {

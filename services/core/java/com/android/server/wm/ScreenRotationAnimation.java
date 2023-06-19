@@ -177,6 +177,16 @@ class ScreenRotationAnimation {
         mOriginalHeight = flipped ? originalWidth : originalHeight;
         mSurfaceRotationAnimationController = new SurfaceRotationAnimationController();
 
+        Point newSize = new Point(mOriginalWidth, mOriginalHeight);
+        Point lastFreezeSize = displayContent.currentSize(newSize);
+        Slog.d(TAG, "LastFreezeSize= " + lastFreezeSize + ", currentSize= " + mOriginalWidth + " x " + mOriginalHeight);
+
+        if (newSize.equals(lastFreezeSize)) {
+            Slog.i(TAG, "Size is not changed, stopFreezingScreen");
+            mService.stopFreezingScreen();
+            return;
+        }
+
         // Check whether the current screen contains any secure content.
         boolean isSecure = displayContent.hasSecureWindowOnScreen();
         final int displayId = displayContent.getDisplayId();
@@ -187,7 +197,9 @@ class ScreenRotationAnimation {
                     new SurfaceControl.LayerCaptureArgs.Builder(displayContent.getSurfaceControl())
                             .setCaptureSecureLayers(true)
                             .setAllowProtected(true)
-                            .setSourceCrop(new Rect(0, 0, mWidth, mHeight))
+                            .setSourceCrop(new Rect(0, 0, lastFreezeSize.x, lastFreezeSize.y))
+                            .setFrameScale((float) mOriginalWidth / lastFreezeSize.x,
+                                    (float) mOriginalHeight / lastFreezeSize.y)
                             .build();
             SurfaceControl.ScreenshotHardwareBuffer screenshotBuffer =
                     SurfaceControl.captureLayers(args);
@@ -251,6 +263,10 @@ class ScreenRotationAnimation {
         } catch (OutOfResourcesException e) {
             Slog.w(TAG, "Unable to allocate freeze surface", e);
         }
+
+        Rect frameRect = new Rect(0, 0, mOriginalWidth, mOriginalHeight);
+        displayContent.getPendingTransaction().setGeometry(mScreenshotLayer,
+                frameRect, frameRect, Surface.ROTATION_0);
 
         ProtoLog.i(WM_SHOW_SURFACE_ALLOC,
                 "  FREEZE %s: CREATE", mScreenshotLayer);
