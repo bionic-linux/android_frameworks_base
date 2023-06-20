@@ -70,6 +70,30 @@
       },
       "revId": "a9ef2ac1624f1f5d5b49793ca9c83189683be606",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1378a2a6_64a953d2",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardClockSwitchController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1943370
+      },
+      "writtenOn": "2023-06-20T07:48:51Z",
+      "side": 1,
+      "message": "Hi @mpietal@google.com,\n\nThere seems to be a merge conflict for `packages/SystemUI/tests/src/com/android/keyguard/KeyguardClockSwitchControllerTest.java` specifically because of #135. I have moved it 2 lines up. Can you help check if the latest patch set is helping resolve the conflict?\n\nIf not, could you help resolve the internal conflict and submit it?\n\nThanks.",
+      "parentUuid": "5a82d481_19d8cdaa",
+      "range": {
+        "startLine": 400,
+        "startChar": 16,
+        "endLine": 400,
+        "endChar": 25
+      },
+      "revId": "a9ef2ac1624f1f5d5b49793ca9c83189683be606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
