@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2be6c8d_0b4ecb7d",
+        "filename": "services/core/java/com/android/server/wm/TaskPersister.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-06-20T15:38:33Z",
+      "side": 1,
+      "message": "Note that in the latest code the `Task.toString` no longer calls `shouldBeVisible` so the original issue will be gone.\n\nHowever, this is fine because it is default disabled debug log.",
+      "revId": "37fd8c29ffbe7653afb21cff088224d00d68cceb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
