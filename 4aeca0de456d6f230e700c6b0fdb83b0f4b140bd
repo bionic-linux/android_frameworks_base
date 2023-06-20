@@ -16,6 +16,23 @@
       "message": "@felipeal@google.com and @bookatz@google.com - need your support to merge this change to 12L GSI branch- blocking a partner certification",
       "revId": "4aeca0de456d6f230e700c6b0fdb83b0f4b140bd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e63b79c_0feee086",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1953015
+      },
+      "writtenOn": "2023-06-20T20:55:47Z",
+      "side": 1,
+      "message": "Request for review and approval",
+      "revId": "4aeca0de456d6f230e700c6b0fdb83b0f4b140bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
