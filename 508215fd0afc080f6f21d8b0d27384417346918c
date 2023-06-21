@@ -22,6 +22,30 @@
       },
       "revId": "508215fd0afc080f6f21d8b0d27384417346918c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21bd0417_80eb17a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1764865
+      },
+      "writtenOn": "2023-06-21T08:42:57Z",
+      "side": 1,
+      "message": "then I guess cherry-picking https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/services/core/java/com/android/server/wm/ScreenRotationAnimation.java#285 to t TV branch should be enough.",
+      "parentUuid": "63fc97ac_e460c779",
+      "range": {
+        "startLine": 13,
+        "startChar": 40,
+        "endLine": 13,
+        "endChar": 60
+      },
+      "revId": "508215fd0afc080f6f21d8b0d27384417346918c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
