@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "247832f9_e0b9b912",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1366077
+      },
+      "writtenOn": "2023-06-21T18:11:42Z",
+      "side": 1,
+      "message": "FYI currently planning on sending out a PSA prior to submitting this, but sharing early to see if there are any concerns.",
+      "revId": "43bc211608263ac44c8e4fb115f84cf127844c88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
