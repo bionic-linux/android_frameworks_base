@@ -347,6 +347,7 @@ java_defaults {
         "spatializer-aidl-java",
         "audiopolicy-types-aidl-java",
         "modules-utils-expresslog",
+        "nfc_flags_lib",
     ],
 }
 
