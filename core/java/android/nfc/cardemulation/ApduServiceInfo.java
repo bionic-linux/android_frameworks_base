@@ -14,10 +14,15 @@
  * limitations under the License.
  */
 
+/**********************************************************************
+ * This file is not a part of the NFC mainline modure                 *
+ * *******************************************************************/
+
 package android.nfc.cardemulation;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
-import android.compat.annotation.UnsupportedAppUsage;
+import android.annotation.SystemApi;
 import android.content.ComponentName;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -29,6 +34,7 @@ import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
+import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -38,10 +44,8 @@ import android.util.proto.ProtoOutputStream;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,80 +53,77 @@ import java.util.Map;
 /**
  * @hide
  */
+@SystemApi
 public final class ApduServiceInfo implements Parcelable {
-    static final String TAG = "ApduServiceInfo";
+    private static final String TAG = "ApduServiceInfo";
 
     /**
      * The service that implements this
      */
-    @UnsupportedAppUsage
-    final ResolveInfo mService;
+    private final ResolveInfo mService;
 
     /**
      * Description of the service
      */
-    final String mDescription;
+    private final String mDescription;
 
     /**
      * Whether this service represents AIDs running on the host CPU
      */
-    final boolean mOnHost;
+    private final boolean mOnHost;
 
     /**
      * Offhost reader name.
      * eg: SIM, eSE etc
      */
-    String mOffHostName;
+    private final String mOffHostName;
 
     /**
      * Offhost reader name from manifest file.
      * Used for unsetOffHostSecureElement()
      */
-    final String mStaticOffHostName;
+    private final String mStaticOffHostName;
 
     /**
      * Mapping from category to static AID group
      */
-    @UnsupportedAppUsage
-    final HashMap<String, AidGroup> mStaticAidGroups;
+    private final HashMap<String, AidGroup> mStaticAidGroups;
 
     /**
      * Mapping from category to dynamic AID group
      */
-    @UnsupportedAppUsage
-    final HashMap<String, AidGroup> mDynamicAidGroups;
+    private final HashMap<String, AidGroup> mDynamicAidGroups;
 
     /**
      * Whether this service should only be started when the device is unlocked.
      */
-    final boolean mRequiresDeviceUnlock;
+    private final boolean mRequiresDeviceUnlock;
 
     /**
      * Whether this service should only be started when the device is screen on.
      */
-    final boolean mRequiresDeviceScreenOn;
+    private final boolean mRequiresDeviceScreenOn;
 
     /**
      * The id of the service banner specified in XML.
      */
-    final int mBannerResourceId;
+    private final int mBannerResourceId;
 
     /**
      * The uid of the package the service belongs to
      */
-    final int mUid;
+    private final int mUid;
 
     /**
      * Settings Activity for this service
      */
-    final String mSettingsActivityName;
+    private final String mSettingsActivityName;
 
     /**
      * @hide
      */
-    @UnsupportedAppUsage
     public ApduServiceInfo(ResolveInfo info, boolean onHost, String description,
-            ArrayList<AidGroup> staticAidGroups, ArrayList<AidGroup> dynamicAidGroups,
+            List<AidGroup> staticAidGroups, List<AidGroup> dynamicAidGroups,
             boolean requiresUnlock, int bannerResource, int uid,
             String settingsActivityName, String offHost, String staticOffHost) {
         this(info, onHost, description, staticAidGroups, dynamicAidGroups,
@@ -134,7 +135,7 @@ public final class ApduServiceInfo implements Parcelable {
      * @hide
      */
     public ApduServiceInfo(ResolveInfo info, boolean onHost, String description,
-            ArrayList<AidGroup> staticAidGroups, ArrayList<AidGroup> dynamicAidGroups,
+            List<AidGroup> staticAidGroups, List<AidGroup> dynamicAidGroups,
             boolean requiresUnlock, boolean requiresScreenOn, int bannerResource, int uid,
             String settingsActivityName, String offHost, String staticOffHost) {
         this.mService = info;
@@ -157,9 +158,8 @@ public final class ApduServiceInfo implements Parcelable {
         this.mSettingsActivityName = settingsActivityName;
     }
 
-    @UnsupportedAppUsage
-    public ApduServiceInfo(PackageManager pm, ResolveInfo info, boolean onHost) throws
-            XmlPullParserException, IOException {
+    public ApduServiceInfo(@NonNull PackageManager pm, @NonNull ResolveInfo info, boolean onHost)
+            throws XmlPullParserException, IOException {
         ServiceInfo si = info.serviceInfo;
         XmlResourceParser parser = null;
         try {
@@ -336,11 +336,13 @@ public final class ApduServiceInfo implements Parcelable {
         mUid = si.applicationInfo.uid;
     }
 
+    @NonNull
     public ComponentName getComponent() {
         return new ComponentName(mService.serviceInfo.packageName,
                 mService.serviceInfo.name);
     }
 
+    @NonNull
     public String getOffHostSecureElement() {
         return mOffHostName;
     }
@@ -353,6 +355,7 @@ public final class ApduServiceInfo implements Parcelable {
      * for that category.
      * @return List of AIDs registered by the service
      */
+    @NonNull
     public List<String> getAids() {
         final ArrayList<String> aids = new ArrayList<String>();
         for (AidGroup group : getAidGroups()) {
@@ -361,6 +364,15 @@ public final class ApduServiceInfo implements Parcelable {
         return aids;
     }
 
+    /**
+     * Returns a consolidated list of AIDs with prefixes from the AID groups
+     * registered by this service. Note that if a service has both
+     * a static (manifest-based) AID group for a category and a dynamic
+     * AID group, only the dynamically registered AIDs will be returned
+     * for that category.
+     * @return List of prefix AIDs registered by the service
+     */
+    @NonNull
     public List<String> getPrefixAids() {
         final ArrayList<String> prefixAids = new ArrayList<String>();
         for (AidGroup group : getAidGroups()) {
@@ -373,6 +385,15 @@ public final class ApduServiceInfo implements Parcelable {
         return prefixAids;
     }
 
+    /**
+     * Returns a consolidated list of AIDs with subsets from the AID groups
+     * registered by this service. Note that if a service has both
+     * a static (manifest-based) AID group for a category and a dynamic
+     * AID group, only the dynamically registered AIDs will be returned
+     * for that category.
+     * @return List of prefix AIDs registered by the service
+     */
+    @NonNull
     public List<String> getSubsetAids() {
         final ArrayList<String> subsetAids = new ArrayList<String>();
         for (AidGroup group : getAidGroups()) {
@@ -384,14 +405,20 @@ public final class ApduServiceInfo implements Parcelable {
         }
         return subsetAids;
     }
+
     /**
      * Returns the registered AID group for this category.
      */
-    public AidGroup getDynamicAidGroupForCategory(String category) {
+    @NonNull
+    public AidGroup getDynamicAidGroupForCategory(@NonNull String category) {
         return mDynamicAidGroups.get(category);
     }
 
-    public boolean removeDynamicAidGroupForCategory(String category) {
+    /**
+     * Removes the registered AID group for this category.
+     */
+    @NonNull
+    public boolean removeDynamicAidGroupForCategory(@NonNull String category) {
         return (mDynamicAidGroups.remove(category) != null);
     }
 
@@ -403,7 +430,8 @@ public final class ApduServiceInfo implements Parcelable {
      * for that category.
      * @return List of AIDs registered by the service
      */
-    public ArrayList<AidGroup> getAidGroups() {
+    @NonNull
+    public List<AidGroup> getAidGroups() {
         final ArrayList<AidGroup> groups = new ArrayList<AidGroup>();
         for (Map.Entry<String, AidGroup> entry : mDynamicAidGroups.entrySet()) {
             groups.add(entry.getValue());
@@ -422,7 +450,8 @@ public final class ApduServiceInfo implements Parcelable {
      * Returns the category to which this service has attributed the AID that is passed in,
      * or null if we don't know this AID.
      */
-    public String getCategoryForAid(String aid) {
+    @NonNull
+    public String getCategoryForAid(@NonNull String aid) {
         ArrayList<AidGroup> groups = getAidGroups();
         for (AidGroup group : groups) {
             if (group.aids.contains(aid.toUpperCase())) {
@@ -432,16 +461,23 @@ public final class ApduServiceInfo implements Parcelable {
         return null;
     }
 
-    public boolean hasCategory(String category) {
+    /**
+     * Returns whether there is any AID group for this category.
+     */
+    public boolean hasCategory(@NonNull String category) {
         return (mStaticAidGroups.containsKey(category) || mDynamicAidGroups.containsKey(category));
     }
 
-    @UnsupportedAppUsage
+    /**
+     * Returns whether the service is on host or not.
+     */
     public boolean isOnHost() {
         return mOnHost;
     }
 
-    @UnsupportedAppUsage
+    /**
+     * Returns whether the service requires device unlock.
+     */
     public boolean requiresUnlock() {
         return mRequiresDeviceUnlock;
     }
@@ -453,17 +489,25 @@ public final class ApduServiceInfo implements Parcelable {
         return mRequiresDeviceScreenOn;
     }
 
-    @UnsupportedAppUsage
+    /**
+     * Returns description of service.
+     */
+    @NonNull
     public String getDescription() {
         return mDescription;
     }
 
-    @UnsupportedAppUsage
+    /**
+     * Returns uid of service.
+     */
     public int getUid() {
         return mUid;
     }
 
-    public void setOrReplaceDynamicAidGroup(AidGroup aidGroup) {
+    /**
+     * Add or replace an AID group to this service.
+     */
+    public void setOrReplaceDynamicAidGroup(@NonNull AidGroup aidGroup) {
         mDynamicAidGroups.put(aidGroup.getCategory(), aidGroup);
     }
 
@@ -476,7 +520,7 @@ public final class ApduServiceInfo implements Parcelable {
      *                  TS26_NFC_REQ_070: For embedded SE, Secure Element Name SHALL be eSE[number]
      *                                    (e.g. eSE/eSE1, eSE2, etc.).
      */
-    public void setOffHostSecureElement(String offHost) {
+    public void setOffHostSecureElement(@NonNull String offHost) {
         mOffHostName = offHost;
     }
 
@@ -488,11 +532,19 @@ public final class ApduServiceInfo implements Parcelable {
         mOffHostName = mStaticOffHostName;
     }
 
-    public CharSequence loadLabel(PackageManager pm) {
+    /**
+     * Load label for this service.
+     */
+    @NonNull
+    public CharSequence loadLabel(@NonNull PackageManager pm) {
         return mService.loadLabel(pm);
     }
 
-    public CharSequence loadAppLabel(PackageManager pm) {
+    /**
+     * Load application label for this service.
+     */
+    @NonNull
+    public CharSequence loadAppLabel(@NonNull PackageManager pm) {
         try {
             return pm.getApplicationLabel(pm.getApplicationInfo(
                     mService.resolvePackageName, PackageManager.GET_META_DATA));
@@ -501,12 +553,19 @@ public final class ApduServiceInfo implements Parcelable {
         }
     }
 
-    public Drawable loadIcon(PackageManager pm) {
+    /**
+     * Load application icon for this service.
+     */
+    @NonNull
+    public Drawable loadIcon(@NonNull PackageManager pm) {
         return mService.loadIcon(pm);
     }
 
-    @UnsupportedAppUsage
-    public Drawable loadBanner(PackageManager pm) {
+    /**
+     * Load application banner for this service.
+     */
+    @NonNull
+    public Drawable loadBanner(@NonNull PackageManager pm) {
         Resources res;
         try {
             res = pm.getResourcesForApplication(mService.serviceInfo.packageName);
@@ -521,7 +580,10 @@ public final class ApduServiceInfo implements Parcelable {
         }
     }
 
-    @UnsupportedAppUsage
+    /**
+     * Load activity name for this service.
+     */
+    @NonNull
     public String getSettingsActivityName() { return mSettingsActivityName; }
 
     @Override
@@ -563,7 +625,7 @@ public final class ApduServiceInfo implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
         mService.writeToParcel(dest, flags);
         dest.writeString(mDescription);
         dest.writeInt(mOnHost ? 1 : 0);
@@ -584,8 +646,7 @@ public final class ApduServiceInfo implements Parcelable {
         dest.writeString(mSettingsActivityName);
     };
 
-    @UnsupportedAppUsage
-    public static final @android.annotation.NonNull Parcelable.Creator<ApduServiceInfo> CREATOR =
+    public static final @NonNull Parcelable.Creator<ApduServiceInfo> CREATOR =
             new Parcelable.Creator<ApduServiceInfo>() {
         @Override
         public ApduServiceInfo createFromParcel(Parcel source) {
@@ -620,7 +681,11 @@ public final class ApduServiceInfo implements Parcelable {
         }
     };
 
-    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+    /**
+     * Dump contents for debugging
+     */
+    public void dump(@NonNull ParcelFileDescriptor fd, @NonNull PrintWriter pw,
+                     @NonNull String[] args) {
         pw.println("    " + getComponent()
                 + " (Description: " + getDescription() + ")"
                 + " (UID: " + getUid() + ")");
@@ -659,7 +724,7 @@ public final class ApduServiceInfo implements Parcelable {
      *
      * @param proto the ProtoOutputStream to write to
      */
-    public void dumpDebug(ProtoOutputStream proto) {
+    public void dumpDebug(@NonNull ProtoOutputStream proto) {
         Utils.dumpDebugComponentName(getComponent(), proto, ApduServiceInfoProto.COMPONENT_NAME);
         proto.write(ApduServiceInfoProto.DESCRIPTION, getDescription());
         proto.write(ApduServiceInfoProto.ON_HOST, mOnHost);
