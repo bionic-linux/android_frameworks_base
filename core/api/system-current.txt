@@ -9139,6 +9139,73 @@ package android.nfc {
 
 }
 
+package android.nfc.cardemulation {
+
+  @FlaggedApi(Flags.FLAG_ENABLE_NFC_MAINLINE) public final class AidGroup implements android.os.Parcelable {
+    ctor public AidGroup(@NonNull java.util.List<java.lang.String>, @NonNull String);
+    method @Nullable public static android.nfc.cardemulation.AidGroup createFromXml(@NonNull org.xmlpull.v1.XmlPullParser) throws java.io.IOException, org.xmlpull.v1.XmlPullParserException;
+    method public int describeContents();
+    method public void dump(@NonNull android.util.proto.ProtoOutputStream);
+    method @NonNull public java.util.List<java.lang.String> getAids();
+    method @NonNull public String getCategory();
+    method public void writeAsXml(@NonNull org.xmlpull.v1.XmlSerializer) throws java.io.IOException;
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.nfc.cardemulation.AidGroup> CREATOR;
+  }
+
+  @FlaggedApi(Flags.FLAG_ENABLE_NFC_MAINLINE) public final class ApduServiceInfo implements android.os.Parcelable {
+    ctor public ApduServiceInfo(@NonNull android.content.pm.PackageManager, @NonNull android.content.pm.ResolveInfo, boolean) throws java.io.IOException, org.xmlpull.v1.XmlPullParserException;
+    method public int describeContents();
+    method public void dump(@NonNull android.os.ParcelFileDescriptor, @NonNull java.io.PrintWriter, @NonNull String[]);
+    method public void dumpDebug(@NonNull android.util.proto.ProtoOutputStream);
+    method @NonNull public java.util.List<android.nfc.cardemulation.AidGroup> getAidGroups();
+    method @NonNull public java.util.List<java.lang.String> getAids();
+    method @NonNull public String getCategoryForAid(@NonNull String);
+    method @NonNull public android.content.ComponentName getComponent();
+    method @NonNull public String getDescription();
+    method @NonNull public android.nfc.cardemulation.AidGroup getDynamicAidGroupForCategory(@NonNull String);
+    method @Nullable public String getOffHostSecureElement();
+    method @NonNull public java.util.List<java.lang.String> getPrefixAids();
+    method @NonNull public String getSettingsActivityName();
+    method @NonNull public java.util.List<java.lang.String> getSubsetAids();
+    method public int getUid();
+    method public boolean hasCategory(@NonNull String);
+    method public boolean isOnHost();
+    method @NonNull public CharSequence loadAppLabel(@NonNull android.content.pm.PackageManager);
+    method @NonNull public android.graphics.drawable.Drawable loadBanner(@NonNull android.content.pm.PackageManager);
+    method @NonNull public android.graphics.drawable.Drawable loadIcon(@NonNull android.content.pm.PackageManager);
+    method @NonNull public CharSequence loadLabel(@NonNull android.content.pm.PackageManager);
+    method @NonNull public boolean removeDynamicAidGroupForCategory(@NonNull String);
+    method public boolean requiresScreenOn();
+    method public boolean requiresUnlock();
+    method public void setOffHostSecureElement(@NonNull String);
+    method public void setOrReplaceDynamicAidGroup(@NonNull android.nfc.cardemulation.AidGroup);
+    method public void unsetOffHostSecureElement();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.nfc.cardemulation.ApduServiceInfo> CREATOR;
+  }
+
+  @FlaggedApi(Flags.FLAG_ENABLE_NFC_MAINLINE) public final class NfcFServiceInfo implements android.os.Parcelable {
+    ctor public NfcFServiceInfo(@NonNull android.content.pm.PackageManager, @NonNull android.content.pm.ResolveInfo) throws java.io.IOException, org.xmlpull.v1.XmlPullParserException;
+    method public int describeContents();
+    method public void dump(@NonNull android.os.ParcelFileDescriptor, @NonNull java.io.PrintWriter, @NonNull String[]);
+    method public void dumpDebug(@NonNull android.util.proto.ProtoOutputStream);
+    method @NonNull public android.content.ComponentName getComponent();
+    method @NonNull public String getDescription();
+    method @NonNull public String getNfcid2();
+    method @NonNull public String getSystemCode();
+    method @NonNull public String getT3tPmm();
+    method public int getUid();
+    method @NonNull public android.graphics.drawable.Drawable loadIcon(@NonNull android.content.pm.PackageManager);
+    method @NonNull public CharSequence loadLabel(@NonNull android.content.pm.PackageManager);
+    method public void setOrReplaceDynamicNfcid2(@NonNull String);
+    method public void setOrReplaceDynamicSystemCode(@NonNull String);
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.nfc.cardemulation.NfcFServiceInfo> CREATOR;
+  }
+
+}
+
 package android.os {
 
   public class BatteryManager {
