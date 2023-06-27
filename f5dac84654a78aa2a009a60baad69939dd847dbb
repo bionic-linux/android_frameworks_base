@@ -22,6 +22,30 @@
       },
       "revId": "f5dac84654a78aa2a009a60baad69939dd847dbb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a949cb4_fa30a9c4",
+        "filename": "core/java/android/net/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1376883
+      },
+      "writtenOn": "2023-06-27T14:55:47Z",
+      "side": 1,
+      "message": "that\u0027s a good question - I assumed it wouldn\u0027t but let me ask around.",
+      "parentUuid": "df4a9bc0_501ac370",
+      "range": {
+        "startLine": 8,
+        "startChar": 1,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "f5dac84654a78aa2a009a60baad69939dd847dbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
