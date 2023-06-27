@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df4a9bc0_501ac370",
+        "filename": "core/java/android/net/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2023-06-27T06:25:18Z",
+      "side": 1,
+      "message": "Is this going to override the owners on line:6?",
+      "range": {
+        "startLine": 8,
+        "startChar": 1,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "f5dac84654a78aa2a009a60baad69939dd847dbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
