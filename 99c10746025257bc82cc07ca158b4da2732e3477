@@ -22,6 +22,30 @@
       },
       "revId": "99c10746025257bc82cc07ca158b4da2732e3477",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d2cfc69_ddc4c220",
+        "filename": "apct-tests/perftests/core/src/android/libcore/regression/ExpensiveObjectsPerfTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2023-06-27T16:01:48Z",
+      "side": 1,
+      "message": "300000 is the default one. I just tripled it, but lmk if it is too much.",
+      "parentUuid": "fb277cdb_b62b4373",
+      "range": {
+        "startLine": 55,
+        "startChar": 20,
+        "endLine": 55,
+        "endChar": 26
+      },
+      "revId": "99c10746025257bc82cc07ca158b4da2732e3477",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
