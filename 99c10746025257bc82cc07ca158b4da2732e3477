@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb277cdb_b62b4373",
+        "filename": "apct-tests/perftests/core/src/android/libcore/regression/ExpensiveObjectsPerfTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1863710
+      },
+      "writtenOn": "2023-06-27T15:54:02Z",
+      "side": 1,
+      "message": "How did you reach this timeout?",
+      "range": {
+        "startLine": 55,
+        "startChar": 20,
+        "endLine": 55,
+        "endChar": 26
+      },
+      "revId": "99c10746025257bc82cc07ca158b4da2732e3477",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
