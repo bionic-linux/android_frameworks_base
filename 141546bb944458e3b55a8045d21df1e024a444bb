@@ -16,6 +16,24 @@
       "message": "The patch needs to be rebased.",
       "revId": "141546bb944458e3b55a8045d21df1e024a444bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "734a9bca_254ed148",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1538561
+      },
+      "writtenOn": "2023-06-28T01:40:40Z",
+      "side": 1,
+      "message": "Just rebased, thanks!",
+      "parentUuid": "d107d099_e5245388",
+      "revId": "141546bb944458e3b55a8045d21df1e024a444bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
