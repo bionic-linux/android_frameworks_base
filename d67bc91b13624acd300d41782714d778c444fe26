@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f60139e0_a324f010",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-06-29T16:59:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be76445d_a4f4c7a3",
+      "range": {
+        "startLine": 321,
+        "startChar": 72,
+        "endLine": 321,
+        "endChar": 73
+      },
+      "revId": "d67bc91b13624acd300d41782714d778c444fe26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aab52c37_c2681855",
@@ -71,6 +95,30 @@
       "writtenOn": "2023-06-16T17:20:09Z",
       "side": 1,
       "message": "Looks like indentation got changed to a wrong state here and in a couple of other places below.",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 359,
+        "endChar": 4
+      },
+      "revId": "d67bc91b13624acd300d41782714d778c444fe26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "991a5041_5e2c9db5",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-06-29T16:59:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aab52c37_c2681855",
       "range": {
         "startLine": 359,
         "startChar": 0,
@@ -104,6 +152,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4c0ea36_1e35ee59",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-06-29T16:59:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c114b2d5_fb304d1a",
+      "range": {
+        "startLine": 611,
+        "startChar": 0,
+        "endLine": 611,
+        "endChar": 8
+      },
+      "revId": "d67bc91b13624acd300d41782714d778c444fe26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c12fcd2d_f6d2de2e",
@@ -117,6 +189,30 @@
       "writtenOn": "2023-06-16T17:20:09Z",
       "side": 1,
       "message": "Could you please change to `AUDIO_PATCH_HANDLE_NONE`? https://cs.android.com/android/platform/superproject/+/master:system/media/audio/include/system/audio.h;l\u003d74;drc\u003ddb7f28320f56aaa1e09e73407adbc4d725b67b8e",
+      "range": {
+        "startLine": 1642,
+        "startChar": 34,
+        "endLine": 1642,
+        "endChar": 71
+      },
+      "revId": "d67bc91b13624acd300d41782714d778c444fe26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "134163f9_c1e8124a",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-06-29T16:59:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c12fcd2d_f6d2de2e",
       "range": {
         "startLine": 1642,
         "startChar": 34,
@@ -150,6 +246,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "11425f35_cd3dc1ca",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-06-29T16:59:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b067a6ce_37c64b1b",
+      "range": {
+        "startLine": 1715,
+        "startChar": 34,
+        "endLine": 1715,
+        "endChar": 71
+      },
+      "revId": "d67bc91b13624acd300d41782714d778c444fe26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d039f4f0_19debfef",
@@ -173,6 +293,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e14848b9_1a0d9437",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2069,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-06-29T16:59:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d039f4f0_19debfef",
+      "range": {
+        "startLine": 2069,
+        "startChar": 16,
+        "endLine": 2069,
+        "endChar": 20
+      },
+      "revId": "d67bc91b13624acd300d41782714d778c444fe26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6770a57_d712f5a6",
@@ -186,6 +330,30 @@
       "writtenOn": "2023-06-16T17:20:09Z",
       "side": 1,
       "message": "While we are on this, we can make use of https://cs.android.com/android/platform/superproject/+/refs/heads/master:libnativehelper/include_platform_header_only/nativehelper/jni_macros.h and simplify these definitions to something like this:\n\n```\nMAKE_JNI_NATIVE_METHOD_AUTOSIG(\"setParameters\", android_media_AudioSystem_setParameters),\n```\n\nOr even to avoid repeating `android_media_AudioSystem_` and the method name two times, wrap it in another macro:\n\n```\n#define MAKE_AUDIO_SYSTEM_METHOD(x) MAKE_JNI_NATIVE_METHOD_AUTOSIG(#x, android_media_AudioSystem_##x)\n```",
+      "range": {
+        "startLine": 2859,
+        "startChar": 0,
+        "endLine": 2860,
+        "endChar": 77
+      },
+      "revId": "d67bc91b13624acd300d41782714d778c444fe26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be5faad3_a95a7d4a",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2860,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-06-29T16:59:58Z",
+      "side": 1,
+      "message": "As I see, this macro MAKE_JNI_NATIVE_METHOD_AUTOSIG can be used only for functions with final type arguments. There is a check in signature_checker.h:\n\n      if (arg_trait.type_finality !\u003d kFinal) {\n        PARSE_FAILURE(\"Bad parameter type. Only unambigous (final) types can be used to infer a signature.\");  // NOLINT\n      }\n      \nSo, I replaced definitions to this macro, where it is possible.",
+      "parentUuid": "d6770a57_d712f5a6",
       "range": {
         "startLine": 2859,
         "startChar": 0,
