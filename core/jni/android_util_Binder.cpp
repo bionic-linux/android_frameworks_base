@@ -31,6 +31,7 @@
 #include <unistd.h>
 
 #include <android-base/stringprintf.h>
+#include <android-base/threads.h>
 #include <binder/BpBinder.h>
 #include <binder/IInterface.h>
 #include <binder/IPCThreadState.h>
@@ -40,7 +41,6 @@
 #include <binder/Stability.h>
 #include <binderthreadstate/CallerUtils.h>
 #include <cutils/atomic.h>
-#include <cutils/threads.h>
 #include <log/log.h>
 #include <utils/KeyedVector.h>
 #include <utils/List.h>
@@ -1399,7 +1399,7 @@ static void conditionally_log_binder_call(int64_t start_millis,
 // We only measure binder call durations to potentially log them if
 // we're on the main thread.
 static bool should_time_binder_calls() {
-  return (getpid() == gettid());
+    return (getpid() == base::GetThreadId());
 }
 
 static jboolean android_os_BinderProxy_transact(JNIEnv* env, jobject obj,
