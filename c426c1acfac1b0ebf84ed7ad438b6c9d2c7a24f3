@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c874347_d1812771",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2023-06-29T23:19:40Z",
+      "side": 1,
+      "message": "Usually we write `Test: m` meaning that such refactorings shouldn\u0027t break the build.",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 61
+      },
+      "revId": "c426c1acfac1b0ebf84ed7ad438b6c9d2c7a24f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61091e9c_5d622752",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2023-06-29T23:19:40Z",
+      "side": 1,
+      "message": "This macro should be defined right before we start using it. `LOG_TAG` is special because it\u0027s used by system libraries.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 101
+      },
+      "revId": "c426c1acfac1b0ebf84ed7ad438b6c9d2c7a24f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4c20849_f1b04c7c",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2874,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2023-06-29T23:19:40Z",
+      "side": 1,
+      "message": "Can we use `MAKE_JNI_NATIVE_METHOD` here and for other leftovers? Curious why `MAKE_JNI_NATIVE_METHOD_AUTOSIG` can\u0027t be used—it is supposed to map `Ljava/lang/String;` to `jstring` and `L*;` to `jobject`.",
+      "range": {
+        "startLine": 2873,
+        "startChar": 0,
+        "endLine": 2874,
+        "endChar": 85
+      },
+      "revId": "c426c1acfac1b0ebf84ed7ad438b6c9d2c7a24f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10546361_a65aab90",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2997,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2023-06-29T23:19:40Z",
+      "side": 1,
+      "message": "Please also try using `MAKE_JNI_NATIVE_METHOD_AUTOSIG` here and below.",
+      "range": {
+        "startLine": 2996,
+        "startChar": 0,
+        "endLine": 2997,
+        "endChar": 79
+      },
+      "revId": "c426c1acfac1b0ebf84ed7ad438b6c9d2c7a24f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
