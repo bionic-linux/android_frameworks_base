@@ -292,7 +292,7 @@ java_api_library {
         ":non-updatable-current.txt",
     ],
     defaults: ["non_updatable_api_library_defaults"],
-    dep_api_srcs: "android_stubs_current.from-text",
+    full_api_surface_stub: "android_stubs_current.from-text",
 }
 
 java_api_library {
@@ -303,7 +303,7 @@ java_api_library {
         ":non-updatable-system-current.txt",
     ],
     defaults: ["non_updatable_api_library_defaults"],
-    dep_api_srcs: "android_system_stubs_current.from-text",
+    full_api_surface_stub: "android_system_stubs_current.from-text",
 }
 
 java_api_library {
@@ -315,7 +315,7 @@ java_api_library {
         ":non-updatable-test-current.txt",
     ],
     defaults: ["non_updatable_api_library_defaults"],
-    dep_api_srcs: "android_test_stubs_current.from-text",
+    full_api_surface_stub: "android_test_stubs_current.from-text",
 }
 
 java_api_library {
@@ -327,7 +327,7 @@ java_api_library {
         ":non-updatable-module-lib-current.txt",
     ],
     defaults: ["non_updatable_api_library_defaults"],
-    dep_api_srcs: "android_module_lib_stubs_current_full.from-text",
+    full_api_surface_stub: "android_module_lib_stubs_current_full.from-text",
 }
 
 java_defaults {
