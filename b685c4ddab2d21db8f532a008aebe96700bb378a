@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "642d41e4_9df2a774",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2023-06-29T21:36:22Z",
+      "side": 1,
+      "message": "@smoreland: Shouldn\u0027t there be getThreadId equivalent for pid? Should I care for the scope of this bug?",
+      "range": {
+        "startLine": 1402,
+        "startChar": 12,
+        "endLine": 1402,
+        "endChar": 18
+      },
+      "revId": "b685c4ddab2d21db8f532a008aebe96700bb378a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
