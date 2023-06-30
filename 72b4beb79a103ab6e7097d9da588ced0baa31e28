@@ -46,6 +46,30 @@
       },
       "revId": "72b4beb79a103ab6e7097d9da588ced0baa31e28",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f38ae5a_164a9672",
+        "filename": "services/core/java/com/android/server/pm/MovePackageHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-06-30T18:31:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5a0fdcbb_889e5829",
+      "range": {
+        "startLine": 397,
+        "startChar": 16,
+        "endLine": 397,
+        "endChar": 79
+      },
+      "revId": "72b4beb79a103ab6e7097d9da588ced0baa31e28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
