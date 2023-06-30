@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46e8d753_695deb71",
+        "filename": "services/core/java/com/android/server/pm/MovePackageHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-06-30T17:05:00Z",
+      "side": 1,
+      "message": "Should the flags change based on `StorageManager.isUserKeyUnlocked(user.id) \u0026\u0026 smInternal.isCeStoragePrepared`, just like what happens in `StorageEventHelper#loadPrivatePackagesInner`?",
+      "range": {
+        "startLine": 397,
+        "startChar": 16,
+        "endLine": 397,
+        "endChar": 79
+      },
+      "revId": "72b4beb79a103ab6e7097d9da588ced0baa31e28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
