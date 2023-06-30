@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cc920cc_ea48d8e7",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3315,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-06-30T18:34:44Z",
+      "side": 1,
+      "message": "To put this in terms of ownership, are we saying here that MediaCodec does not take the ownership of the buffer? (E.g. app needs to close it when it no longer uses it, but could close it immediately), or are we saying that the app needs to hold onto this buffer (because MediaCodec will refer to it) while this input buffer is in use?",
+      "range": {
+        "startLine": 3315,
+        "startChar": 11,
+        "endLine": 3315,
+        "endChar": 21
+      },
+      "revId": "a96e39bcac0ad9fa9a96db6474be9cac446ecad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
