@@ -38,6 +38,7 @@ import android.os.BatteryStatsInternal;
 import android.os.Process;
 import android.os.RemoteException;
 
+import androidx.test.filters.FlakyTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.android.internal.util.FakeLatencyTracker;
@@ -45,6 +46,7 @@ import com.android.internal.util.FakeLatencyTracker;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.ArgumentCaptor;
@@ -52,7 +54,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @RunWith(JUnit4.class)
+@FlakyTest(bugId = 275746222)
 public class SoundTriggerMiddlewareLoggingLatencyTest {
+
+    @Rule
+    public Timeout mGlobalTimeout = Timeout.seconds(30);
 
     private FakeLatencyTracker mLatencyTracker;
     @Mock
