@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8ebace0_fa03d57a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-06-30T13:03:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c874347_d1812771",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 61
+      },
+      "revId": "c426c1acfac1b0ebf84ed7ad438b6c9d2c7a24f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61091e9c_5d622752",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-06-29T23:19:40Z",
       "side": 1,
       "message": "This macro should be defined right before we start using it. `LOG_TAG` is special because it\u0027s used by system libraries.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 101
+      },
+      "revId": "c426c1acfac1b0ebf84ed7ad438b6c9d2c7a24f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1eac8c7_ef1fa1a0",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-06-30T13:03:28Z",
+      "side": 1,
+      "message": "Moved before gMethods array.",
+      "parentUuid": "61091e9c_5d622752",
       "range": {
         "startLine": 22,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e2cb037_7793666a",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2874,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-06-30T13:03:28Z",
+      "side": 1,
+      "message": "Yes, MAKE_JNI_NATIVE_METHOD is applicable here. I added it.\nMAKE_JNI_NATIVE_METHOD_AUTOSIG macro produces compilation error for every function, having jobject or jobject array in its signature, because jobject type is not final.",
+      "parentUuid": "f4c20849_f1b04c7c",
+      "range": {
+        "startLine": 2873,
+        "startChar": 0,
+        "endLine": 2874,
+        "endChar": 85
+      },
+      "revId": "c426c1acfac1b0ebf84ed7ad438b6c9d2c7a24f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "10546361_a65aab90",
@@ -83,6 +155,30 @@
       "writtenOn": "2023-06-29T23:19:40Z",
       "side": 1,
       "message": "Please also try using `MAKE_JNI_NATIVE_METHOD_AUTOSIG` here and below.",
+      "range": {
+        "startLine": 2996,
+        "startChar": 0,
+        "endLine": 2997,
+        "endChar": 79
+      },
+      "revId": "c426c1acfac1b0ebf84ed7ad438b6c9d2c7a24f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "419ec11b_edce589d",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2997,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-06-30T13:03:28Z",
+      "side": 1,
+      "message": "For native_setup I added MAKE_JNI_NATIVE_METHOD macro, because as you can see, there is Ljava/lang/Object in function signature.\nFor native_finalize MAKE_JNI_NATIVE_METHOD_AUTOSIG works fine.",
+      "parentUuid": "10546361_a65aab90",
       "range": {
         "startLine": 2996,
         "startChar": 0,
