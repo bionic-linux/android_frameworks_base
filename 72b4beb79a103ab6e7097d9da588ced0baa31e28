@@ -22,6 +22,30 @@
       },
       "revId": "72b4beb79a103ab6e7097d9da588ced0baa31e28",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a0fdcbb_889e5829",
+        "filename": "services/core/java/com/android/server/pm/MovePackageHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-06-30T17:43:31Z",
+      "side": 1,
+      "message": "CE storage is already unlocked from Settings when move is triggered. And there is a defensive check at Line#186-187 for checking unlock status, so passing the flags for CE \u0026 DE.",
+      "parentUuid": "46e8d753_695deb71",
+      "range": {
+        "startLine": 397,
+        "startChar": 16,
+        "endLine": 397,
+        "endChar": 79
+      },
+      "revId": "72b4beb79a103ab6e7097d9da588ced0baa31e28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
