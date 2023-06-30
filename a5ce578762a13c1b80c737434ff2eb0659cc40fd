@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dd52bc8_e7220955",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2023-06-30T18:30:03Z",
+      "side": 1,
+      "message": "Cool. Let\u0027s run this through presubmit to see if there any issues with downstream branches.",
+      "revId": "a5ce578762a13c1b80c737434ff2eb0659cc40fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee3ac66d_0cf0719d",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2023-06-30T18:30:03Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 613,
+        "startChar": 0,
+        "endLine": 613,
+        "endChar": 103
+      },
+      "revId": "a5ce578762a13c1b80c737434ff2eb0659cc40fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
