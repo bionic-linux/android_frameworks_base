@@ -22,6 +22,30 @@
       },
       "revId": "5cfb0cfde2da22518500cc7c44170ae81fc62101",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb54a527_8e0b4f6e",
+        "filename": "core/res/res/xml/sms_short_codes.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2023-06-30T01:14:54Z",
+      "side": 1,
+      "message": "In the bug you have explicitly called out this so resolving",
+      "parentUuid": "ee86f3f6_35858bf7",
+      "range": {
+        "startLine": 211,
+        "startChar": 58,
+        "endLine": 211,
+        "endChar": 63
+      },
+      "revId": "5cfb0cfde2da22518500cc7c44170ae81fc62101",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
