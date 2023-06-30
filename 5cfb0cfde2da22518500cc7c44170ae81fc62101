@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee86f3f6_35858bf7",
+        "filename": "core/res/res/xml/sms_short_codes.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2023-06-30T01:13:08Z",
+      "side": 1,
+      "message": "40777 is no more free or no more used ?",
+      "range": {
+        "startLine": 211,
+        "startChar": 58,
+        "endLine": 211,
+        "endChar": 63
+      },
+      "revId": "5cfb0cfde2da22518500cc7c44170ae81fc62101",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
