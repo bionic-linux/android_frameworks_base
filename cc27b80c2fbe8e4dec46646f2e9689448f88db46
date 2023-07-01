@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40c4445a_95258b8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1936176
+      },
+      "writtenOn": "2023-07-01T06:41:05Z",
+      "side": 1,
+      "message": "Hi, John Reck, I remove useless variable \"mapbase\" from screencap. Please review.",
+      "revId": "cc27b80c2fbe8e4dec46646f2e9689448f88db46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
