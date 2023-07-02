@@ -3675,6 +3675,17 @@ public abstract class PackageManager {
     public static final String FEATURE_DEVICE_ADMIN = "android.software.device_admin";
 
     /**
+     * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}:
+     * The device supports {@link com.android.dynsystem.DynamicSystemInstallationService}
+     * initialization after boot.
+     * @hide
+     */
+    @SystemApi
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_DYNAMIC_SYSTEM_INSTALLATION_SETUP =
+            "android.software.dynamic_system_installation_setup";
+
+    /**
      * Feature for {@link #getSystemAvailableFeatures} and
      * {@link #hasSystemFeature}: The device supports leanback UI. This is
      * typically used in a living room television experience, but is a software

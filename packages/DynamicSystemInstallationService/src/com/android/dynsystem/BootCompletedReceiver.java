@@ -16,9 +16,11 @@
 
 package com.android.dynsystem;
 
+import android.app.ActivityThread;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.UserHandle;
 import android.os.image.DynamicSystemClient;
 
@@ -34,16 +36,23 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        String action = intent.getAction();
+        ActivityThread activityThread = ActivityThread.systemMain();
+        Context systemContext = activityThread.getSystemContext();
+        PackageManager pm = systemContext.getPackageManager();
 
-        if (!Intent.ACTION_BOOT_COMPLETED.equals(action)) {
-            return;
+        if (pm.hasSystemFeature(
+                PackageManager.FEATURE_DYNAMIC_SYSTEM_INSTALLATION_SETUP)) {
+            String action = intent.getAction();
+
+            if (!Intent.ACTION_BOOT_COMPLETED.equals(action)) {
+                return;
+            }
+
+            Intent startServiceIntent = new Intent(
+                    context, DynamicSystemInstallationService.class);
+
+            startServiceIntent.setAction(DynamicSystemClient.ACTION_NOTIFY_IF_IN_USE);
+            context.startServiceAsUser(startServiceIntent, UserHandle.SYSTEM);
         }
-
-        Intent startServiceIntent = new Intent(
-                context, DynamicSystemInstallationService.class);
-
-        startServiceIntent.setAction(DynamicSystemClient.ACTION_NOTIFY_IF_IN_USE);
-        context.startServiceAsUser(startServiceIntent, UserHandle.SYSTEM);
     }
 }
