@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccf325f0_c9de345d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-07-03T13:29:34Z",
+      "side": 1,
+      "message": "Mikhail, this commit is in relation chain with (depends on) another my commit regarding C++ refactoring: \nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/2619399\n \nI suppose after code review these 2 commits should be submitted together. I have fixed your comments for the both commits.",
+      "revId": "a7c0a89ca046454c5e49f62c2e1f05f4bac59ab2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
