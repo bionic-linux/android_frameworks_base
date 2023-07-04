@@ -16,6 +16,23 @@
       "message": "Hi, John Reck, I remove useless variable \"mapbase\" from screencap. Please review.",
       "revId": "cc27b80c2fbe8e4dec46646f2e9689448f88db46",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb240683_540a9ed2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1936176
+      },
+      "writtenOn": "2023-07-04T14:27:39Z",
+      "side": 1,
+      "message": "Hi, Chris Li, I removed useless variable \"mapbase\" from screencap. Please review.",
+      "revId": "cc27b80c2fbe8e4dec46646f2e9689448f88db46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
