@@ -33,6 +33,23 @@
       "message": "Hi, Chris Li, I removed useless variable \"mapbase\" from screencap. Please review.",
       "revId": "cc27b80c2fbe8e4dec46646f2e9689448f88db46",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8834a5e_be77f517",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2023-07-05T02:58:08Z",
+      "side": 1,
+      "message": "Looks like a cleanup leftover from ag/884166",
+      "revId": "cc27b80c2fbe8e4dec46646f2e9689448f88db46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
