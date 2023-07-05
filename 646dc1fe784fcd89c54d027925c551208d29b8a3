@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "151344ca_edadddf6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1936176
+      },
+      "writtenOn": "2023-07-05T05:27:50Z",
+      "side": 1,
+      "message": "Got it. I also removed “mapsize”.",
+      "revId": "646dc1fe784fcd89c54d027925c551208d29b8a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

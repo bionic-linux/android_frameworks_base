@@ -73,6 +73,30 @@
       },
       "revId": "cc27b80c2fbe8e4dec46646f2e9689448f88db46",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "058127b1_1099a9c4",
+        "filename": "cmds/screencap/screencap.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1936176
+      },
+      "writtenOn": "2023-07-05T05:27:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce7a5ae2_74a05028",
+      "range": {
+        "startLine": 176,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 25
+      },
+      "revId": "cc27b80c2fbe8e4dec46646f2e9689448f88db46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
