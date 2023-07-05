@@ -50,6 +50,29 @@
       "message": "Looks like a cleanup leftover from ag/884166",
       "revId": "cc27b80c2fbe8e4dec46646f2e9689448f88db46",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce7a5ae2_74a05028",
+        "filename": "cmds/screencap/screencap.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2023-07-05T04:54:26Z",
+      "side": 1,
+      "message": "mapsize is not used either",
+      "range": {
+        "startLine": 176,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 25
+      },
+      "revId": "cc27b80c2fbe8e4dec46646f2e9689448f88db46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
