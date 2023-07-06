@@ -16,6 +16,24 @@
       "message": "Mikhail, this commit is in relation chain with (depends on) another my commit regarding C++ refactoring: \nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/2619399\n \nI suppose after code review these 2 commits should be submitted together. I have fixed your comments for the both commits.",
       "revId": "a7c0a89ca046454c5e49f62c2e1f05f4bac59ab2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddfbb41c_d949f0ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2023-07-06T00:24:40Z",
+      "side": 1,
+      "message": "Sorry about the delay, I\u0027ve reviewed that one, PTAL at the comments. Then we will be able to run both through the presubmit. It seems to be picky about the approval status of changes originating from external contributors.",
+      "parentUuid": "ccf325f0_c9de345d",
+      "revId": "a7c0a89ca046454c5e49f62c2e1f05f4bac59ab2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
