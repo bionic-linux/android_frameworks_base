@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe04d653_047cf8ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2023-07-06T18:53:55Z",
+      "side": 1,
+      "message": "Looks like there are downstream merge conflicts. I will need to land it to an internal branch first.",
+      "revId": "929af580f778b938dd79f56a214924e3283ee48d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
