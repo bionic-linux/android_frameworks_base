@@ -16,7 +16,10 @@
 
 package com.android.wm.shell.common;
 
+import android.util.ArrayMap;
+import android.os.Debug;
 import android.util.Pools;
+import android.util.Slog;
 import android.view.SurfaceControl;
 
 /**
@@ -26,16 +29,19 @@ public class TransactionPool {
     private final Pools.SynchronizedPool<SurfaceControl.Transaction> mTransactionPool =
             new Pools.SynchronizedPool<>(4);
 
+    private ArrayMap<Long, String> mReleaseStackMap = new ArrayMap();
+
     public TransactionPool() {
     }
 
     /** Gets a transaction from the pool. */
     public SurfaceControl.Transaction acquire() {
         SurfaceControl.Transaction t = mTransactionPool.acquire();
-        if (t == null) {
-            return new SurfaceControl.Transaction();
+        SurfaceControl.Transaction st = t != null ? t : new SurfaceControl.Transaction();
+        if (st.mNativeObject != 0 && mReleaseStackMap.indexOfKey(st.mNativeObject) < 0) {
+            mReleaseStackMap.put(st.mNativeObject, null);
         }
-        return t;
+        return st;
     }
 
     /**
@@ -43,8 +49,20 @@ public class TransactionPool {
      * returning to pool.
      */
     public void release(SurfaceControl.Transaction t) {
+        if (t.mNativeObject != 0) {
+            final String releaseStack = mReleaseStackMap.get(t.mNativeObject);
+            if (releaseStack != null) {
+                Slog.w("TransactionPool", " transaction " + t
+                       + " already released from pool," + releaseStack);
+                return;
+            }
+        }
         if (!mTransactionPool.release(t)) {
             t.close();
+        } else if (t.mNativeObject != 0) {
+            if (mReleaseStackMap.indexOfKey(t.mNativeObject) >= 0) {
+                mReleaseStackMap.put(t.mNativeObject, Debug.getCallers(7));
+            }
         }
     }
 }
