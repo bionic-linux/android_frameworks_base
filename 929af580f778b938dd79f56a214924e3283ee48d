@@ -33,6 +33,24 @@
       "message": "Thanks for review!\nCould you please submit the patch, I don\u0027t have permissions?",
       "revId": "929af580f778b938dd79f56a214924e3283ee48d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3747c0d9_e69b8f60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2023-07-07T16:12:10Z",
+      "side": 1,
+      "message": "Sorry for a delay. Not sure if you are able see complete information about presubmit errors. There is a merge conflict when trying to apply this patch to Android U sources downstream because there were some changes that haven\u0027t yet been upstreamed to AOSP. So, what I\u0027m doing now is resolving these conflicts and doing a merge downstream first. After that, I will be able to submit bots CLs to AOSP. Thanks for your patience!",
+      "parentUuid": "ec5fef74_e0a7c7a6",
+      "revId": "929af580f778b938dd79f56a214924e3283ee48d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
