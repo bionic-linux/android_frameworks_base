@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "489c8d36_28546d74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2023-07-07T03:21:28Z",
+      "side": 1,
+      "message": "Please fix the trailing space. The change LGTM.",
+      "revId": "558f889838ab5d5bbeb50088a80642d3468e1913",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a679253e_99650e4a",
+        "filename": "core/java/android/app/Activity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2023-07-07T03:21:28Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Please remove the trailing whitespace.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nPlease remove the trailing whitespace.",
+      "range": {
+        "startLine": 2218,
+        "startChar": 94,
+        "endLine": 2218,
+        "endChar": 95
+      },
+      "revId": "558f889838ab5d5bbeb50088a80642d3468e1913",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37076ab5_915476c3",
+        "filename": "core/java/android/app/Activity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2219,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2023-07-07T03:21:28Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Please remove the trailing whitespace.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nPlease remove the trailing whitespace.",
+      "range": {
+        "startLine": 2219,
+        "startChar": 93,
+        "endLine": 2219,
+        "endChar": 94
+      },
+      "revId": "558f889838ab5d5bbeb50088a80642d3468e1913",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
