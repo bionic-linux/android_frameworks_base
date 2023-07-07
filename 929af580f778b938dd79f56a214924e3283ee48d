@@ -16,6 +16,23 @@
       "message": "Looks like there are downstream merge conflicts. I will need to land it to an internal branch first.",
       "revId": "929af580f778b938dd79f56a214924e3283ee48d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec5fef74_e0a7c7a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-07-07T08:06:38Z",
+      "side": 1,
+      "message": "Thanks for review!\nCould you please submit the patch, I don\u0027t have permissions?",
+      "revId": "929af580f778b938dd79f56a214924e3283ee48d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
