@@ -2800,11 +2800,6 @@ public final class ViewRootImpl implements ViewParent,
         return bounds;
     }
 
-    int dipToPx(int dip) {
-        final DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
-        return (int) (displayMetrics.density * dip + 0.5f);
-    }
-
     private void performTraversals() {
         mLastPerformTraversalsSkipDrawReason = null;
 
