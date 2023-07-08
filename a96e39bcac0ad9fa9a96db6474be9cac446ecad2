@@ -22,6 +22,30 @@
       },
       "revId": "a96e39bcac0ad9fa9a96db6474be9cac446ecad2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9d2a1ba_4591759e",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3315,
+      "author": {
+        "id": 1573264
+      },
+      "writtenOn": "2023-07-08T00:46:25Z",
+      "side": 1,
+      "message": "+1 to that. It should be enough to say \"takes ownership of the buffer\" of \"does not take ownership of the buffer\".",
+      "parentUuid": "9cc920cc_ea48d8e7",
+      "range": {
+        "startLine": 3315,
+        "startChar": 11,
+        "endLine": 3315,
+        "endChar": 21
+      },
+      "revId": "a96e39bcac0ad9fa9a96db6474be9cac446ecad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
