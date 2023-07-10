@@ -2335,6 +2335,9 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
                     }
                 }
             }
+
+            mDisplayImeController.reStartImeAnimation(mDisplayId);
+
             if (mMainStage.getChildCount() == 0 || mSideStage.getChildCount() == 0) {
                 // TODO(shell-transitions): Implement a fallback behavior for now.
                 throw new IllegalStateException("Somehow removed the last task in a stage"
