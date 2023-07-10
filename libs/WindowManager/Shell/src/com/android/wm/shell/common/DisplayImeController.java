@@ -527,6 +527,14 @@ public class DisplayImeController implements DisplayController.OnDisplaysChanged
         }
     }
 
+    public void reStartImeAnimation(int displayId) {
+        PerDisplay pd = mImePerDisplay.get(displayId);
+        if (pd == null) {
+            return;
+        }
+        pd.startAnimation(isImeShowing(displayId), true, null);
+    }
+
     /**
      * Allows other things to synchronize with the ime position
      */
