@@ -16,6 +16,24 @@
       "message": "The change is fine, but I\u0027m wondering why we need to cherry-pick this from main to master? Is the change only in one of the branches?\n\nI just want to make sure whether this is caused by the branch switching.",
       "revId": "fec2dd6bdf3f2719cabdf9a07bd4021029e17cb2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d4d51aa_80c8c040",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2009630
+      },
+      "writtenOn": "2023-07-10T12:05:57Z",
+      "side": 1,
+      "message": "this is not caused by the branch switching. Just because I\u0027m not familiar enough with these branches, haha",
+      "parentUuid": "ccb23658_8bdb61cc",
+      "revId": "fec2dd6bdf3f2719cabdf9a07bd4021029e17cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
