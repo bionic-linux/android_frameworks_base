@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2943e72b_b2aaa1e3",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2803,
+      "author": {
+        "id": 1367099
+      },
+      "writtenOn": "2023-07-11T05:00:02Z",
+      "side": 0,
+      "message": "Is this really un-used?\n\nHow about the call from `ViewRootInsetsControllerHost#dipToPx()`?",
+      "range": {
+        "startLine": 2803,
+        "startChar": 8,
+        "endLine": 2803,
+        "endChar": 15
+      },
+      "revId": "8eb8a951717a5de8cc1a30167e2f12180ec71131",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
