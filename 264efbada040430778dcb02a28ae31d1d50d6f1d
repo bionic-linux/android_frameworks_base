@@ -22,6 +22,30 @@
       },
       "revId": "264efbada040430778dcb02a28ae31d1d50d6f1d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa27d51e_37133999",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2454,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2023-07-11T21:13:43Z",
+      "side": 1,
+      "message": "`ReleaseIntArrayElements` (line 2457) wants a non-const array. Now I realized why you wanted to use a `const_cast` here initially. I think, we should just stick with `reinterpret_cast` since we can\u0027t make this pointer constant.",
+      "parentUuid": "a7e4919b_f0cfe0d0",
+      "range": {
+        "startLine": 2454,
+        "startChar": 4,
+        "endLine": 2454,
+        "endChar": 11
+      },
+      "revId": "264efbada040430778dcb02a28ae31d1d50d6f1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
