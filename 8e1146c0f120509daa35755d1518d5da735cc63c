@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05f52186_f98c979d",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2023-07-11T19:13:24Z",
+      "side": 1,
+      "message": "note: This is what clang-format does, undoing correct formatting made by hand. Need to figure out what\u0027s wrong with it.",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 360,
+        "endChar": 32
+      },
+      "revId": "8e1146c0f120509daa35755d1518d5da735cc63c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
