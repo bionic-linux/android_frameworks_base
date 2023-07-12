@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37546662_42823341",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/BootCompletedReceiver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2023-07-12T08:27:06Z",
+      "side": 1,
+      "message": "We\u0027d like to keep the DSU behavior unchanged. How about making the flag opt-out.",
+      "revId": "6e13d2ce8d0b8549fd86864dd7bbb4343a7097bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
