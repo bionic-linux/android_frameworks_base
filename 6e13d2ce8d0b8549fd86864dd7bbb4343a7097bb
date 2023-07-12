@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2940de3a_8fcdf337",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2023-07-12T20:01:36Z",
+      "side": 1,
+      "message": "This feels like potential misuse of PackageManager features. Generally speaking, PackageManager FEATURE_ constants are meant to represent functionality that an app might require to run on a device and that an app store might use to choose which apps to target to a user on a given device.\n\nIt\u0027s not meant as a generic flagging mechanism. Please provide more context on this feature.",
+      "revId": "6e13d2ce8d0b8549fd86864dd7bbb4343a7097bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "37546662_42823341",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/BootCompletedReceiver.java",
         "patchSetId": 1
