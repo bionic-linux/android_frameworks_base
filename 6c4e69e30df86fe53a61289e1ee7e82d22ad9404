@@ -16,6 +16,29 @@
       "message": "reply for the commets.",
       "revId": "6c4e69e30df86fe53a61289e1ee7e82d22ad9404",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3929f26_d6bee402",
+        "filename": "core/java/android/content/res/ResourcesImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1080076
+      },
+      "writtenOn": "2023-07-12T17:27:47Z",
+      "side": 1,
+      "message": "this lock needs to also protect the actual `clear()` calls",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 9
+      },
+      "revId": "6c4e69e30df86fe53a61289e1ee7e82d22ad9404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
