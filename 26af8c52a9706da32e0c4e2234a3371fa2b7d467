@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83e3a496_7a843f83",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2023-07-13T12:25:58Z",
+      "side": 1,
+      "message": "This looks very reasonable to me, but I would like telephony to double check these changes",
+      "revId": "26af8c52a9706da32e0c4e2234a3371fa2b7d467",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
