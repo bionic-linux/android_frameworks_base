@@ -32,6 +32,7 @@ import android.content.res.Resources;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.Settings.Secure;
 import android.testing.AndroidTestingRunner;
 import android.testing.TestableContext;
 import android.testing.TestableLooper;
@@ -226,6 +227,25 @@ public class PinnerServiceTest {
         // Check if dump() reports total pinned bytes
         int totalPinnedSizeBytes = getPinnedSize(pinnerService);
         assertThat(totalPinnedSizeBytes).isGreaterThan(0);
+
+        // Make sure pinned files are unmapped
+        unpinAll(pinnerService);
+    }
+
+    @Test
+    public void testPinHomeAppOnUserSetupComplete() throws Exception {
+        // Disable HOME app pinning
+        Resources res = mock(Resources.class);
+        doReturn(false).when(res).getBoolean(com.android.internal.R.bool.config_pinnerHomeApp);
+        when(mContext.getResources()).thenReturn(res);
+        PinnerService pinnerService = new PinnerService(mContext);
+
+        Secure.putIntForUser(mContext.getContentResolver(), Secure.USER_SETUP_COMPLETE, 1, 0);
+
+        waitForPinnerService(pinnerService);
+
+        ArrayMap<Integer, Object> pinnedApps = getPinnedApps(pinnerService);
+        assertThat(pinnedApps.get(KEY_HOME)).isNull();
 
         // Make sure pinned files are unmapped
         unpinAll(pinnerService);
