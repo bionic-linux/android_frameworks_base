@@ -21,6 +21,7 @@ import android.window.TaskSnapshot;
 import android.util.ArrayMap;
 
 import java.io.PrintWriter;
+import android.os.SystemProperties;
 
 /**
  * Caches snapshots. See {@link TaskSnapshotController}.
@@ -33,6 +34,7 @@ class TaskSnapshotCache {
     private final TaskSnapshotLoader mLoader;
     private final ArrayMap<ActivityRecord, Integer> mAppTaskMap = new ArrayMap<>();
     private final ArrayMap<Integer, CacheEntry> mRunningCache = new ArrayMap<>();
+    private final boolean getsnapshotsFromDisk = SystemProperties.getBoolean("persist.sys.getsnapshots_from_disk", false);
 
     TaskSnapshotCache(WindowManagerService service, TaskSnapshotLoader loader) {
         mService = service;
@@ -63,7 +65,11 @@ class TaskSnapshotCache {
             // Try the running cache.
             final CacheEntry entry = mRunningCache.get(taskId);
             if (entry != null) {
-                return entry.snapshot;
+                if (entry.snapshot != null) {
+                    if (!getsnapshotsFromDisk || !isLowResolution || (isLowResolution && entry.snapshot.isLowResolution()) || !restoreFromDisk) {
+                        return entry.snapshot;
+                    }
+                }
             }
         }
 
