@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dca9830_a77c8a35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2023-07-17T13:24:28Z",
+      "side": 1,
+      "message": "Hi Matt Pietal,\n\nThanks for your review, I appreciate it.\nSorry again, I uploaded a new patchset, just minor change to correct the commitor part, no any code logic update.\n\nCould you please help review this patch at your earliest convenience?\n\nAnd if possible, please involve Telephony team members to help review from their point of view.\nI have provide detailed investigation with below issue tracker link:\nhttps://issuetracker.google.com/issues/265440217\n\nThanks",
+      "revId": "89ddfdda87c3987b5e887d7a16b5e136c3d17c8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
