@@ -16,6 +16,24 @@
       "message": "Please also add a \"Bug: \" line to reference to the bug #",
       "revId": "d3c95d14cc82d79bce49c5abd4d123df9543cef6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a072a3f_5ea17ae2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2023-07-17T13:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaebe7e8_479bae19",
+      "revId": "d3c95d14cc82d79bce49c5abd4d123df9543cef6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

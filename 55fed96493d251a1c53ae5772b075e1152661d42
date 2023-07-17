@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de060aef_3e03376e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2023-07-17T13:27:04Z",
+      "side": 1,
+      "message": "Could you please help review this patch at your earliest convenience?\nI have created issue track link, and update new patch set with the bug number:\nhttps://issuetracker.google.com/issues/291395535\n\nThanks",
+      "revId": "55fed96493d251a1c53ae5772b075e1152661d42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
