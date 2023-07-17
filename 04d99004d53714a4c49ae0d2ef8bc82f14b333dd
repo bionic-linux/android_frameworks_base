@@ -16,6 +16,24 @@
       "message": "Could you please help review this patch at your earliest convenience?\nI have created issue track link, and update new patch set with the bug number:\nhttps://issuetracker.google.com/issues/291395535\n\nThanks",
       "revId": "04d99004d53714a4c49ae0d2ef8bc82f14b333dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdff5f0e_843e931f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2023-07-17T13:29:31Z",
+      "side": 1,
+      "message": "Sorry, I put the wrong comment for this gerrit patch.\nAbove comment is just for another patch: https://android-review.googlesource.com/c/platform/frameworks/base/+/1531803\n\nFor current gerrit patch, please check my revised comment as below:\nCould you please help review this patch at your earliest convenience?\nI have taken rebase action to fix the conflict, and check buid pass again.\n\nThanks",
+      "parentUuid": "1889bf86_bdbff50d",
+      "revId": "04d99004d53714a4c49ae0d2ef8bc82f14b333dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
