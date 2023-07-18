@@ -54,7 +54,8 @@ public final class SingleKeyGestureDetector {
     private int mDownKeyCode = KeyEvent.KEYCODE_UNKNOWN;
     private volatile boolean mHandledByLongPress = false;
     private final Handler mHandler;
-    private long mLastDownTime = 0;
+    private long mLastEventDownTime = 0;
+    private long mCurrentEventUpTime = 0;
 
     /** Supported gesture flags */
     public static final int KEY_LONGPRESS = 1 << 1;
@@ -242,14 +243,13 @@ public final class SingleKeyGestureDetector {
                     break;
                 }
             }
-            mLastDownTime = 0;
         }
         if (mActiveRule == null) {
             return;
         }
 
-        final long keyDownInterval = event.getDownTime() - mLastDownTime;
-        mLastDownTime = event.getDownTime();
+        final long keyDownInterval = SystemClock.elapsedRealtime() - mLastEventDownTime;
+        mLastEventDownTime = SystemClock.elapsedRealtime();
         if (keyDownInterval >= MULTI_PRESS_TIMEOUT) {
             mKeyPressCounter = 1;
         } else {
@@ -294,8 +294,24 @@ public final class SingleKeyGestureDetector {
         mHandler.removeMessages(MSG_KEY_LONG_PRESS);
         mHandler.removeMessages(MSG_KEY_VERY_LONG_PRESS);
         mDownKeyCode = KeyEvent.KEYCODE_UNKNOWN;
+        mCurrentEventUpTime = SystemClock.elapsedRealtime();
         if (mActiveRule == null) {
             return false;
+        }
+
+        if (!mHandledByLongPress) {
+            if (mCurrentEventUpTime < mLastEventDownTime + mActiveRule.getLongPressTimeoutMs()) {
+                mHandler.removeMessages(MSG_KEY_LONG_PRESS);
+            } else {
+                mHandledByLongPress = mActiveRule.supportLongPress();
+            }
+
+            if (mCurrentEventUpTime
+                    < mLastEventDownTime + mActiveRule.getVeryLongPressTimeoutMs()) {
+                mHandler.removeMessages(MSG_KEY_VERY_LONG_PRESS);
+            } else {
+                mHandledByLongPress = mActiveRule.supportVeryLongPress();
+            }
         }
 
         if (mHandledByLongPress) {
@@ -394,7 +410,7 @@ public final class SingleKeyGestureDetector {
                         Log.i(TAG, "Detect long press " + KeyEvent.keyCodeToString(keyCode));
                     }
                     mHandledByLongPress = true;
-                    rule.onLongPress(mLastDownTime);
+                    rule.onLongPress(mLastEventDownTime);
                     break;
                 case MSG_KEY_VERY_LONG_PRESS:
                     if (DEBUG) {
@@ -402,7 +418,7 @@ public final class SingleKeyGestureDetector {
                                 + KeyEvent.keyCodeToString(keyCode));
                     }
                     mHandledByLongPress = true;
-                    rule.onVeryLongPress(mLastDownTime);
+                    rule.onVeryLongPress(mLastEventDownTime);
                     break;
                 case MSG_KEY_DELAYED_PRESS:
                     if (DEBUG) {
@@ -410,9 +426,9 @@ public final class SingleKeyGestureDetector {
                                 + ", count " + pressCount);
                     }
                     if (pressCount == 1) {
-                        rule.onPress(mLastDownTime);
+                        rule.onPress(mLastEventDownTime);
                     } else {
-                        rule.onMultiPress(mLastDownTime, pressCount);
+                        rule.onMultiPress(mLastEventDownTime, pressCount);
                     }
                     break;
             }

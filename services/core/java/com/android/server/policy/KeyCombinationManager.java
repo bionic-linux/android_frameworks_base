@@ -147,7 +147,7 @@ public class KeyCombinationManager {
             }
 
             if (mDownTimes.get(keyCode) == 0) {
-                mDownTimes.put(keyCode, eventTime);
+                mDownTimes.put(keyCode, SystemClock.elapsedRealtime());
             } else {
                 // ignore old key, maybe a repeat key.
                 return false;
