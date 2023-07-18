@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba28e790_cee9cc8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2023-07-18T15:45:37Z",
+      "side": 1,
+      "message": "Sounds like your goal here is to explicitly *not* use good-quality task snapshots in case they\u0027re available, because low-quality task snapshots render faster?\n\nWe could review the code, but it might make more sense to start with a bug in the issue tracker so we can hear what exact performance problems you\u0027re having without this.",
+      "revId": "92ceac3ac2224f182b807639a52eac6f5b4c3a32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
