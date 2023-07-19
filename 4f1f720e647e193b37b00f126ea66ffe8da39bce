@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d023992c_148eb5ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1944172
+      },
+      "writtenOn": "2023-07-19T16:49:01Z",
+      "side": 1,
+      "message": "Removing myself as a reviewer since I only modified this file in passing, and don\u0027t know much about Pinner.",
+      "revId": "4f1f720e647e193b37b00f126ea66ffe8da39bce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
