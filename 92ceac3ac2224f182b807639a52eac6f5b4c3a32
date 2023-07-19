@@ -16,6 +16,24 @@
       "message": "Sounds like your goal here is to explicitly *not* use good-quality task snapshots in case they\u0027re available, because low-quality task snapshots render faster?\n\nWe could review the code, but it might make more sense to start with a bug in the issue tracker so we can hear what exact performance problems you\u0027re having without this.",
       "revId": "92ceac3ac2224f182b807639a52eac6f5b4c3a32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9399d00c_dfb54802",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2023786
+      },
+      "writtenOn": "2023-07-19T07:27:21Z",
+      "side": 1,
+      "message": "Without this, when the user starts 20 applications in a row and exits to the background, and then slides on the recent task page of a low-end machine, the sliding process is too laggy and the user experience is poor.",
+      "parentUuid": "ba28e790_cee9cc8e",
+      "revId": "92ceac3ac2224f182b807639a52eac6f5b4c3a32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
