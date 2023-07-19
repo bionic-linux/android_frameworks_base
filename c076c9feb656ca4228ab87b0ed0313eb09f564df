@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "609636d4_50cf5f2a",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-07-19T21:37:33Z",
+      "side": 1,
+      "message": "this won\u0027t actually be true btw - auto-generated transactions will start at 1, but also, if they do start at 0 and this code hits that index, all of the other indexes would be OBO?",
+      "range": {
+        "startLine": 963,
+        "startChar": 0,
+        "endLine": 963,
+        "endChar": 96
+      },
+      "revId": "c076c9feb656ca4228ab87b0ed0313eb09f564df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
