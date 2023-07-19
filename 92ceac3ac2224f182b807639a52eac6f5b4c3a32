@@ -34,6 +34,24 @@
       "parentUuid": "ba28e790_cee9cc8e",
       "revId": "92ceac3ac2224f182b807639a52eac6f5b4c3a32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b04b1ec_add9614d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1367099
+      },
+      "writtenOn": "2023-07-19T08:13:58Z",
+      "side": 1,
+      "message": "As Robin mentioned, can you help to create an entry in issue tracker under the component frameworks? (The link is here: https://issuetracker.google.com/issues?q\u003dcomponentid:192705%2B, you can find instructions here: https://source.android.com/docs/setup/contribute/report-bugs)\n\nYou can attach the how the things get improved with your change, such as attaching video recording, state the freezing frame number reduce on your device. Also, it would be great if you can describe when the entry.snapshot will be skipped and use the restored one instead, and show the difference in visual between entry.snapshot and the restored snapshot.\n\nI understand the performance concern you have, but we need to make sure the user experience other than the performance is still with high standard. It would be very helpful if you can provide information about the solution you investigated.",
+      "parentUuid": "9399d00c_dfb54802",
+      "revId": "92ceac3ac2224f182b807639a52eac6f5b4c3a32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
