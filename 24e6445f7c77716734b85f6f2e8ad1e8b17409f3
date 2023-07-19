@@ -16,6 +16,193 @@
       "message": "Adding rahul for API reviews.",
       "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a5369d2_6654547f",
+        "filename": "core/java/android/nfc/cardemulation/AidGroup.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2023-07-19T18:27:40Z",
+      "side": 1,
+      "message": "nit: typo on \"module\" in all files",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f15a105f_abe0e481",
+        "filename": "core/java/android/nfc/cardemulation/AidGroup.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2023-07-19T18:27:40Z",
+      "side": 1,
+      "message": "nit: start @param and @return summaries with a lowercase character",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcc4cc6f_655604e7",
+        "filename": "core/java/android/nfc/cardemulation/AidGroup.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2023-07-19T18:27:40Z",
+      "side": 1,
+      "message": "Document exceptions thrown by any APIs",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17d0445a_6fc4ebcc",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2023-07-19T18:27:40Z",
+      "side": 1,
+      "message": "Please add docs",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05783c5c_0abf0865",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2023-07-19T18:27:40Z",
+      "side": 1,
+      "message": "Add docs",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "455f4d53_fddaa97e",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2023-07-19T18:27:40Z",
+      "side": 1,
+      "message": "Add docs",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23641aac_f4471033",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2023-07-19T18:27:40Z",
+      "side": 1,
+      "message": "Document return values for these APIs",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ebad8f2_61d017ef",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2023-07-19T18:27:40Z",
+      "side": 1,
+      "message": "nit: end first sentence of docs with period",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "184fa85d_9237f957",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2023-07-19T18:27:40Z",
+      "side": 1,
+      "message": "Same as above",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29df3640_74f50fa2",
+        "filename": "core/java/android/nfc/cardemulation/NfcFServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2023-07-19T18:27:40Z",
+      "side": 1,
+      "message": "Add docs to APIs in this class",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f994dce_03887019",
+        "filename": "core/java/android/nfc/cardemulation/NfcFServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2023-07-19T18:27:40Z",
+      "side": 1,
+      "message": "nit: end first sentence in period.",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
