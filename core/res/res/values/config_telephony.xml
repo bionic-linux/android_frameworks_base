@@ -52,6 +52,33 @@
     <integer name="config_delay_for_ims_dereg_millis">0</integer>
     <java-symbol type="integer" name="config_delay_for_ims_dereg_millis" />
 
+<<<<<<< HEAD
+=======
+    <!-- Define the bar of considering the availability of a subscription is stable in milliseconds,
+         where 0 means immediate switch, and negative milliseconds indicates the auto data switch
+         feature is disabled.-->
+    <integer name="auto_data_switch_availability_stability_time_threshold_millis">10000</integer>
+    <java-symbol type="integer" name="auto_data_switch_availability_stability_time_threshold_millis" />
+
+    <!-- Define the maximum retry times when a validation for switching failed.-->
+    <integer name="auto_data_switch_validation_max_retry">7</integer>
+    <java-symbol type="integer" name="auto_data_switch_validation_max_retry" />
+
+    <!-- Boolean indicating whether ping test is required to pass on the target data SIM before the
+         device automatically switch to it. -->
+    <bool name="auto_data_switch_ping_test_before_switch">true</bool>
+    <java-symbol type="bool" name="auto_data_switch_ping_test_before_switch" />
+
+    <!-- Define the tolerated gap of score for auto data switch decision, larger than which the
+         device will switch to the SIM with higher score. The score is used in conjunction with the
+         score table defined in
+         CarrierConfigManager#KEY_AUTO_DATA_SWITCH_RAT_SIGNAL_SCORE_STRING_ARRAY.
+         If 0, the device always switch to the higher score SIM.
+         If < 0, the network type and signal strength based auto switch is disabled. -->
+    <integer name="auto_data_switch_score_tolerance">-1</integer>
+    <java-symbol type="integer" name="auto_data_switch_score_tolerance" />
+
+>>>>>>> 1003d4081537 (Temporarily disable RAT/signalStrength based auto data switch)
     <!-- Boolean indicating whether the Iwlan data service supports persistence of iwlan ipsec
          tunnels across service restart. If iwlan tunnels are not persisted across restart,
          Framework will clean up dangling data connections when service restarts -->

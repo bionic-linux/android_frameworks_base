@@ -9353,6 +9353,54 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(KEY_IWLAN_HANDOVER_POLICY_STRING_ARRAY, new String[]{
                 "source=GERAN|UTRAN|EUTRAN|NGRAN|IWLAN, "
                         + "target=GERAN|UTRAN|EUTRAN|NGRAN|IWLAN, type=allowed"});
+<<<<<<< HEAD
+=======
+        PersistableBundle auto_data_switch_rat_signal_score_string_bundle = new PersistableBundle();
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "NR_SA_MMWAVE", new int[]{10000, 13227, 16000, 18488, 20017});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "NR_NSA_MMWAVE", new int[]{8000, 10227, 12488, 15017, 15278});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "LTE", new int[]{3731, 5965, 8618, 11179, 13384});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "NR_SA", new int[]{5288, 6795, 6955, 7562, 9713});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "NR_NSA", new int[]{5463, 6827, 8029, 9007, 9428});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "UMTS", new int[]{100, 169, 183, 192, 300});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "eHRPD", new int[]{10, 400, 600, 800, 1000});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "TD_SCDMA", new int[]{1, 50, 100, 500, 1000});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "iDEN", new int[]{1, 2, 10, 50, 100});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "EvDo_B", new int[]{1000, 1495, 2186, 2532, 2600});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "HSPA+", new int[]{1619, 2500, 3393, 4129, 4212});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "HSPA", new int[]{1000, 1495, 2186, 2532, 2544});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "HSUPA", new int[]{1500, 1919, 2132, 2362, 2704});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "HSDPA", new int[]{1500, 1732, 4000, 7000, 8000});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "EvDo_A", new int[]{600, 840, 1200, 1300, 1400});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "EvDo_0", new int[]{300, 600, 1000, 1500, 2000});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "1xRTT", new int[]{50, 60, 70, 80, 90});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "EDGE", new int[]{154, 169, 183, 192, 267});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "GPRS", new int[]{15, 30, 40, 45, 50});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "CDMA", new int[]{1, 50, 100, 300, 2000});
+        auto_data_switch_rat_signal_score_string_bundle.putIntArray(
+                "GSM", new int[]{1, 2, 10, 50, 100});
+        sDefaults.putPersistableBundle(KEY_AUTO_DATA_SWITCH_RAT_SIGNAL_SCORE_BUNDLE,
+                auto_data_switch_rat_signal_score_string_bundle);
+>>>>>>> 1003d4081537 (Temporarily disable RAT/signalStrength based auto data switch)
         sDefaults.putInt(KEY_CELLULAR_USAGE_SETTING_INT,
                 SubscriptionManager.USAGE_SETTING_UNKNOWN);
         // Default data stall recovery configurations.
