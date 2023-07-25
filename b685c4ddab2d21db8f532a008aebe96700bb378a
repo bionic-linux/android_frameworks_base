@@ -22,6 +22,30 @@
       },
       "revId": "b685c4ddab2d21db8f532a008aebe96700bb378a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73c091ef_d19883b7",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2023-07-25T19:31:31Z",
+      "side": 1,
+      "message": "No longer applicable after aosp/2654297",
+      "parentUuid": "642d41e4_9df2a774",
+      "range": {
+        "startLine": 1402,
+        "startChar": 12,
+        "endLine": 1402,
+        "endChar": 18
+      },
+      "revId": "b685c4ddab2d21db8f532a008aebe96700bb378a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

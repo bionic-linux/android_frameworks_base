@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac730c27_0a548989",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2023-07-25T19:31:31Z",
+      "side": 1,
+      "message": "Steven, this change is no longer needed for Linux Binder at all. It\u0027s only for b/289414897.",
+      "revId": "947a192a8aebdb4bd9c7f69f4559bec896f8fd0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
