@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56b20655_ac85d9c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1092253
+      },
+      "writtenOn": "2023-07-26T20:29:58Z",
+      "side": 1,
+      "message": "Can we write a test that pounds on touch exploration, turning it on and off, maybe with a bunch of touch events going through it, that could be used to verify that this bug can\u0027t come back?",
+      "revId": "951cb485c2d2917512ce289c89ab5e50a282cc2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc68bd1f_b4e57d86",
+        "filename": "services/accessibility/java/com/android/server/accessibility/gestures/TouchExplorer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1092253
+      },
+      "writtenOn": "2023-07-26T20:29:58Z",
+      "side": 1,
+      "message": "How confident are we at this point that a hover exit is what\u0027s actually needed, as opposed to an action_cancel or some other reset?",
+      "range": {
+        "startLine": 1345,
+        "startChar": 12,
+        "endLine": 1345,
+        "endChar": 62
+      },
+      "revId": "951cb485c2d2917512ce289c89ab5e50a282cc2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
