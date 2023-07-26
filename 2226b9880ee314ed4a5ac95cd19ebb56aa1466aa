@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90c19318_5a098785",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1778340
+      },
+      "writtenOn": "2023-07-26T20:43:34Z",
+      "side": 1,
+      "message": "It would have to be pretty repetitive, probably with randomized intervals between stopping and continuing touch exploration. It\u0027s not something you can necessarily produce on the first try. But if that\u0027s something we can deal with then yes.",
+      "revId": "2226b9880ee314ed4a5ac95cd19ebb56aa1466aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

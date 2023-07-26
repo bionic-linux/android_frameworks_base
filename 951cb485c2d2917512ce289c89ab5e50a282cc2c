@@ -39,6 +39,30 @@
       },
       "revId": "951cb485c2d2917512ce289c89ab5e50a282cc2c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1dbe67c_b445aee2",
+        "filename": "services/accessibility/java/com/android/server/accessibility/gestures/TouchExplorer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1778340
+      },
+      "writtenOn": "2023-07-26T20:43:34Z",
+      "side": 1,
+      "message": "Pretty confident. It\u0027s what we do when we re-initiate touch exploration in-framework. All we\u0027re doing is replicating existing behavior.",
+      "parentUuid": "dc68bd1f_b4e57d86",
+      "range": {
+        "startLine": 1345,
+        "startChar": 12,
+        "endLine": 1345,
+        "endChar": 62
+      },
+      "revId": "951cb485c2d2917512ce289c89ab5e50a282cc2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
