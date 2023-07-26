@@ -16,6 +16,23 @@
       "message": "Steven, this change is no longer needed for Linux Binder at all. It\u0027s only for b/289414897.",
       "revId": "947a192a8aebdb4bd9c7f69f4559bec896f8fd0e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea9bbc47_0df3817d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2023-07-26T13:44:45Z",
+      "side": 1,
+      "message": "This change is blocking https://r.android.com/2675701",
+      "revId": "947a192a8aebdb4bd9c7f69f4559bec896f8fd0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
