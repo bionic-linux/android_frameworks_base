@@ -87,6 +87,30 @@
       },
       "revId": "951cb485c2d2917512ce289c89ab5e50a282cc2c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "304a9a2a_3f6a568f",
+        "filename": "services/accessibility/java/com/android/server/accessibility/gestures/TouchExplorer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1778340
+      },
+      "writtenOn": "2023-07-27T00:55:25Z",
+      "side": 1,
+      "message": "The function will only inject an exit if there was a previously injected hover event and it was a hover enter. If there was no previously injected event or the previously injected event was something other than hover enter it does nothing.",
+      "parentUuid": "966e30c9_a7b10c47",
+      "range": {
+        "startLine": 1345,
+        "startChar": 12,
+        "endLine": 1345,
+        "endChar": 62
+      },
+      "revId": "951cb485c2d2917512ce289c89ab5e50a282cc2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

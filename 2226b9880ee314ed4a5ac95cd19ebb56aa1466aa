@@ -33,6 +33,23 @@
       "message": "There\u0027s a CTS test that issues a bunch of magnification changes that I wrote after finding that doing lots of movement could cause crashes in some situations. Having something that fails at least most of the time without the change but passes consistently with the change would improve confidence that we have the right fix, and we could consider moving it to U.",
       "revId": "2226b9880ee314ed4a5ac95cd19ebb56aa1466aa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "936f0c21_14d51a04",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1778340
+      },
+      "writtenOn": "2023-07-27T00:55:25Z",
+      "side": 1,
+      "message": "On it. The tough part is getting it to break in the test environment. There might be something specific and/or incorrect about the talkback logic that\u0027s triggering this. I might have to bring some of that into the test.",
+      "revId": "2226b9880ee314ed4a5ac95cd19ebb56aa1466aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
