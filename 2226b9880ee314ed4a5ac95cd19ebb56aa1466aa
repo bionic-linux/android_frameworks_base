@@ -16,6 +16,23 @@
       "message": "It would have to be pretty repetitive, probably with randomized intervals between stopping and continuing touch exploration. It\u0027s not something you can necessarily produce on the first try. But if that\u0027s something we can deal with then yes.",
       "revId": "2226b9880ee314ed4a5ac95cd19ebb56aa1466aa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "489452b7_4344ab97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1092253
+      },
+      "writtenOn": "2023-07-27T00:42:08Z",
+      "side": 1,
+      "message": "There\u0027s a CTS test that issues a bunch of magnification changes that I wrote after finding that doing lots of movement could cause crashes in some situations. Having something that fails at least most of the time without the change but passes consistently with the change would improve confidence that we have the right fix, and we could consider moving it to U.",
+      "revId": "2226b9880ee314ed4a5ac95cd19ebb56aa1466aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

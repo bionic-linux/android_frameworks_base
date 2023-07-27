@@ -63,6 +63,30 @@
       },
       "revId": "951cb485c2d2917512ce289c89ab5e50a282cc2c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "966e30c9_a7b10c47",
+        "filename": "services/accessibility/java/com/android/server/accessibility/gestures/TouchExplorer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1092253
+      },
+      "writtenOn": "2023-07-27T00:42:08Z",
+      "side": 1,
+      "message": "Could we inject an exit without an enter, which could create another malformed sequence?",
+      "parentUuid": "e1dbe67c_b445aee2",
+      "range": {
+        "startLine": 1345,
+        "startChar": 12,
+        "endLine": 1345,
+        "endChar": 62
+      },
+      "revId": "951cb485c2d2917512ce289c89ab5e50a282cc2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
