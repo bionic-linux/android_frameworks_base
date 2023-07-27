@@ -50,6 +50,23 @@
       "message": "On it. The tough part is getting it to break in the test environment. There might be something specific and/or incorrect about the talkback logic that\u0027s triggering this. I might have to bring some of that into the test.",
       "revId": "2226b9880ee314ed4a5ac95cd19ebb56aa1466aa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a79deea6_0959f74a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1092253
+      },
+      "writtenOn": "2023-07-27T01:02:20Z",
+      "side": 1,
+      "message": "SG. Thanks for the extra detail. I think adding the test will need to land in a different repo, so I think it\u0027s OK to land this one here.",
+      "revId": "2226b9880ee314ed4a5ac95cd19ebb56aa1466aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
