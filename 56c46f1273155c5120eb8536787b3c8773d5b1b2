@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbc9ab22_39347db6",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6069,
+      "author": {
+        "id": 1858130
+      },
+      "writtenOn": "2023-07-28T20:10:35Z",
+      "side": 1,
+      "message": "We want only MODULE_LIBRARIES here.\nSimilar to PAC_PROXY_SERVICE",
+      "range": {
+        "startLine": 6069,
+        "startChar": 4,
+        "endLine": 6069,
+        "endChar": 14
+      },
+      "revId": "56c46f1273155c5120eb8536787b3c8773d5b1b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
