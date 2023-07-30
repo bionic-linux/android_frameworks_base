@@ -30,6 +30,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
+import android.flag.AconfigFlagProvider;
+import android.flag.AconfigFlags;
 import android.net.Uri;
 import android.provider.Settings.Config.SyncDisabledMode;
 import android.provider.Settings.ResetMode;
@@ -785,6 +787,16 @@ public final class DeviceConfig {
     @GuardedBy("sLock")
     private static Map<String, Pair<ContentObserver, Integer>> sNamespaces = new HashMap<>();
     private static final String TAG = "DeviceConfig";
+
+    static {
+        // Register DeviceConfig as the provider for Aconfig flags.
+        AconfigFlags.setProvider(new AconfigFlagProvider() {
+            @Override
+            public boolean getBoolean(String ns, String name, boolean def) {
+                return DeviceConfig.getBoolean(ns, name, def);
+            }
+        });
+    }
 
     // Should never be invoked
     private DeviceConfig() {
