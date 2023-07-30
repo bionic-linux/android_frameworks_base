@@ -3712,6 +3712,14 @@ package android.debug {
 
 }
 
+package android.flag {
+
+  public abstract class AconfigFlags {
+    method public static boolean getBoolean(@NonNull String, @NonNull String, boolean);
+  }
+
+}
+
 package android.graphics.fonts {
 
   public final class FontFamilyUpdateRequest {
