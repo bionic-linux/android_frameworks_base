@@ -261,6 +261,7 @@ filegroup {
 java_defaults {
     name: "framework-minus-apex-defaults",
     defaults: [
+        "framework-minus-apex-aconfig-libraries",
         "framework-aidl-export-defaults",
         "latest_android_hardware_soundtrigger3_java_static",
     ],
@@ -327,6 +328,7 @@ java_defaults {
     ],
     sdk_version: "core_platform",
     static_libs: [
+        "android.flag-java",
         "android.hardware.common.fmq-V1-java",
         "bouncycastle-repackaged-unbundled",
         "framework-internal-utils",
@@ -524,6 +526,7 @@ packages_to_document = [
 filegroup {
     name: "android-non-updatable-stub-sources",
     srcs: [
+        ":android.flag-sources",
         ":framework-mime-sources", // mimemap builds separately but has no separate droidstubs.
         ":framework-non-updatable-sources",
         ":opt-telephony-srcs",
@@ -611,6 +614,7 @@ stubs_defaults {
 }
 
 build = [
+    "AconfigFlags.bp",
     "ProtoLibraries.bp",
     "TestProtoLibraries.bp",
 ]
