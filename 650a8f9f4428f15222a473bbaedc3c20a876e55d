@@ -3,6 +3,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cfbebd5c_b39a6e34",
+        "filename": "AconfigFlags.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-07-31T21:58:55Z",
+      "side": 1,
+      "message": "Why this package name? Just because of where I put it in the source tree?\nSince it\u0027s going to be also used in native and service code, maybe I need to put it elsewhere if it\u0027s expected that this package name matches the Java hierarchy.\n\nBut if that\u0027s the case, why do we have to manually enter it instead of it being inferred from the source tree hierarchy?",
+      "revId": "650a8f9f4428f15222a473bbaedc3c20a876e55d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "079d8148_bdc376c3",
+        "filename": "AconfigFlags.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-07-31T21:58:55Z",
+      "side": 1,
+      "message": "why do we need to hard-code aconfig flag file locations? Can we just use wildcards and import all aconfig files under core/ ?",
+      "revId": "650a8f9f4428f15222a473bbaedc3c20a876e55d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bb52d53e_a83b44f8",
         "filename": "AconfigFlags.bp",
         "patchSetId": 2
@@ -14,6 +48,30 @@
       "writtenOn": "2023-07-31T15:16:23Z",
       "side": 1,
       "message": "could we add aconfig or flag in this name? it won\u0027t be easy to tell this a flag lib",
+      "range": {
+        "startLine": 39,
+        "startChar": 40,
+        "endLine": 39,
+        "endChar": 44
+      },
+      "revId": "650a8f9f4428f15222a473bbaedc3c20a876e55d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc871879_4ababbb6",
+        "filename": "AconfigFlags.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-07-31T21:58:55Z",
+      "side": 1,
+      "message": "Yes, this is not an OK name, it needs to be clear it\u0027s flagging related.",
+      "parentUuid": "bb52d53e_a83b44f8",
       "range": {
         "startLine": 39,
         "startChar": 40,
