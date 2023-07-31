@@ -22,6 +22,29 @@
       },
       "revId": "650a8f9f4428f15222a473bbaedc3c20a876e55d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1fb143b_22df7f46",
+        "filename": "flag/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1944425
+      },
+      "writtenOn": "2023-07-31T15:30:49Z",
+      "side": 1,
+      "message": "Can we make this library host_supported\u003dtrue. Would it be better to make it just java library that doesn\u0027t have any dependency on Android? It will be good for testing, and the usage case on the host. Since current we separate the implementation and the interface. \n\nFor example, if it doesn\u0027t depend on Android, then the test mode could just implement another \"DeviceConfig\".",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 12
+      },
+      "revId": "650a8f9f4428f15222a473bbaedc3c20a876e55d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
