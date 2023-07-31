@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb52d53e_a83b44f8",
+        "filename": "AconfigFlags.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1944425
+      },
+      "writtenOn": "2023-07-31T15:16:23Z",
+      "side": 1,
+      "message": "could we add aconfig or flag in this name? it won\u0027t be easy to tell this a flag lib",
+      "range": {
+        "startLine": 39,
+        "startChar": 40,
+        "endLine": 39,
+        "endChar": 44
+      },
+      "revId": "650a8f9f4428f15222a473bbaedc3c20a876e55d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
