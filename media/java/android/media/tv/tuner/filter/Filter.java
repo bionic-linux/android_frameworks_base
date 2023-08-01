@@ -264,9 +264,15 @@ public class Filter implements AutoCloseable {
         synchronized (mCallbackLock) {
             if (mCallback != null && mExecutor != null) {
                 mExecutor.execute(() -> {
+                    FilterCallback callback;
                     synchronized (mCallbackLock) {
-                        if (mCallback != null) {
-                            mCallback.onFilterStatusChanged(this, status);
+                        callback = mCallback;
+                    }
+                    if (callback != null) {
+                        try {
+                            callback.onFilterStatusChanged(this, status);
+                        } catch (NullPointerException e) {
+                            Log.d(TAG, "catch exception:" + e);
                         }
                     }
                 });
@@ -278,14 +284,20 @@ public class Filter implements AutoCloseable {
         synchronized (mCallbackLock) {
             if (mCallback != null && mExecutor != null) {
                 mExecutor.execute(() -> {
+                    FilterCallback callback;
                     synchronized (mCallbackLock) {
-                        if (mCallback != null) {
-                            mCallback.onFilterEvent(this, events);
-                        } else {
-                            for (FilterEvent event : events) {
-                                if (event instanceof MediaEvent) {
-                                    ((MediaEvent)event).release();
-                                }
+                        callback = mCallback;
+                    }
+                    if (callback != null) {
+                        try {
+                            callback.onFilterEvent(this, events);
+                        } catch (NullPointerException e) {
+                            Log.d(TAG, "catch exception:" + e);
+                        }
+                    } else {
+                        for (FilterEvent event : events) {
+                            if (event instanceof MediaEvent) {
+                                (MediaEvent)event.release();
                             }
                         }
                     }
@@ -293,7 +305,7 @@ public class Filter implements AutoCloseable {
             } else {
                 for (FilterEvent event : events) {
                     if (event instanceof MediaEvent) {
-                        ((MediaEvent)event).release();
+                        (MediaEvent)event.release();
                     }
                 }
             }
