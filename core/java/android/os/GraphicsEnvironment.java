@@ -112,6 +112,12 @@ public class GraphicsEnvironment {
     private static final int ANGLE_GL_DRIVER_ALL_ANGLE_OFF = 0;
 
     // Values for ANGLE_GL_DRIVER_SELECTION_VALUES
+<<<<<<< PATCH SET (adbb80 [Cherry-pick] Revert^3 "Revert "Load native GLES driver when)
+    private static final String ANGLE_GL_DRIVER_CHOICE_DEFAULT = "default";
+    private static final String ANGLE_GL_DRIVER_CHOICE_ANGLE = "angle";
+    private static final String ANGLE_GL_DRIVER_CHOICE_NATIVE = "native";
+    private static final String SYSTEM_ANGLE_STRING = "system";
+=======
     private enum AngleDriverChoice {
         DEFAULT("default"),
         ANGLE("angle"),
@@ -123,6 +129,7 @@ public class GraphicsEnvironment {
             this.choice = choice;
         }
     }
+>>>>>>> BASE      (40e068 Merge "[Cherry-pick] Load native GLES driver when specified.)
 
     private static final String PROPERTY_RO_ANGLE_SUPPORTED = "ro.gfx.angle.supported";
 
@@ -132,7 +139,6 @@ public class GraphicsEnvironment {
     private GameManager mGameManager;
 
     private int mAngleOptInIndex = -1;
-    private boolean mEnabledByGameMode = false;
     private boolean mShouldUseAngle = false;
 
     /**
@@ -205,11 +211,19 @@ public class GraphicsEnvironment {
     /**
      * Query to determine the ANGLE driver choice.
      */
+<<<<<<< PATCH SET (adbb80 [Cherry-pick] Revert^3 "Revert "Load native GLES driver when)
+    private String queryAngleChoice(Context context, Bundle coreSettings,
+=======
     private AngleDriverChoice queryAngleChoice(Context context, Bundle coreSettings,
+>>>>>>> BASE      (40e068 Merge "[Cherry-pick] Load native GLES driver when specified.)
                                                String packageName) {
         if (TextUtils.isEmpty(packageName)) {
             Log.v(TAG, "No package name specified; use the system driver");
+<<<<<<< PATCH SET (adbb80 [Cherry-pick] Revert^3 "Revert "Load native GLES driver when)
+            return ANGLE_GL_DRIVER_CHOICE_DEFAULT;
+=======
             return AngleDriverChoice.DEFAULT;
+>>>>>>> BASE      (40e068 Merge "[Cherry-pick] Load native GLES driver when specified.)
         }
 
         return queryAngleChoiceInternal(context, coreSettings, packageName);
@@ -433,11 +447,19 @@ public class GraphicsEnvironment {
      *    forces a choice;
      * 3) Use ANGLE if isAngleEnabledByGameMode() returns true;
      */
+<<<<<<< PATCH SET (adbb80 [Cherry-pick] Revert^3 "Revert "Load native GLES driver when)
+    private String queryAngleChoiceInternal(Context context, Bundle bundle,
+=======
     private AngleDriverChoice queryAngleChoiceInternal(Context context, Bundle bundle,
+>>>>>>> BASE      (40e068 Merge "[Cherry-pick] Load native GLES driver when specified.)
                                                        String packageName) {
         // Make sure we have a good package name
         if (TextUtils.isEmpty(packageName)) {
+<<<<<<< PATCH SET (adbb80 [Cherry-pick] Revert^3 "Revert "Load native GLES driver when)
+            return ANGLE_GL_DRIVER_CHOICE_DEFAULT;
+=======
             return AngleDriverChoice.DEFAULT;
+>>>>>>> BASE      (40e068 Merge "[Cherry-pick] Load native GLES driver when specified.)
         }
 
         // Check the semi-global switch (i.e. once system has booted enough) for whether ANGLE
@@ -452,7 +474,11 @@ public class GraphicsEnvironment {
         }
         if (allUseAngle == ANGLE_GL_DRIVER_ALL_ANGLE_ON) {
             Log.v(TAG, "Turn on ANGLE for all applications.");
+<<<<<<< PATCH SET (adbb80 [Cherry-pick] Revert^3 "Revert "Load native GLES driver when)
+            return ANGLE_GL_DRIVER_CHOICE_ANGLE;
+=======
             return AngleDriverChoice.ANGLE;
+>>>>>>> BASE      (40e068 Merge "[Cherry-pick] Load native GLES driver when specified.)
         }
 
         // Get the per-application settings lists
@@ -465,17 +491,23 @@ public class GraphicsEnvironment {
         Log.v(TAG, "  angle_gl_driver_selection_pkgs=" + optInPackages);
         Log.v(TAG, "  angle_gl_driver_selection_values=" + optInValues);
 
-        mEnabledByGameMode = isAngleEnabledByGameMode(context, packageName);
+        final String gameModeChoice = isAngleEnabledByGameMode(context, packageName)
+                                      ? ANGLE_GL_DRIVER_CHOICE_ANGLE
+                                      : ANGLE_GL_DRIVER_CHOICE_DEFAULT;
 
         // Make sure we have good settings to use
-        if (optInPackages.size() != optInValues.size()) {
+        if (optInPackages.size() == 0 || optInPackages.size() != optInValues.size()) {
             Log.v(TAG,
                     "Global.Settings values are invalid: "
                         + "number of packages: "
                             + optInPackages.size() + ", "
                         + "number of values: "
                             + optInValues.size());
+<<<<<<< PATCH SET (adbb80 [Cherry-pick] Revert^3 "Revert "Load native GLES driver when)
+            return gameModeChoice;
+=======
             return mEnabledByGameMode ? AngleDriverChoice.ANGLE : AngleDriverChoice.DEFAULT;
+>>>>>>> BASE      (40e068 Merge "[Cherry-pick] Load native GLES driver when specified.)
         }
 
         // See if this application is listed in the per-application settings list
@@ -483,7 +515,11 @@ public class GraphicsEnvironment {
 
         if (pkgIndex < 0) {
             Log.v(TAG, packageName + " is not listed in per-application setting");
+<<<<<<< PATCH SET (adbb80 [Cherry-pick] Revert^3 "Revert "Load native GLES driver when)
+            return gameModeChoice;
+=======
             return mEnabledByGameMode ? AngleDriverChoice.ANGLE : AngleDriverChoice.DEFAULT;
+>>>>>>> BASE      (40e068 Merge "[Cherry-pick] Load native GLES driver when specified.)
         }
         mAngleOptInIndex = pkgIndex;
 
@@ -493,14 +529,25 @@ public class GraphicsEnvironment {
         Log.v(TAG,
                 "ANGLE Developer option for '" + packageName + "' "
                         + "set to: '" + optInValue + "'");
+<<<<<<< PATCH SET (adbb80 [Cherry-pick] Revert^3 "Revert "Load native GLES driver when)
+        if (optInValue.equals(ANGLE_GL_DRIVER_CHOICE_ANGLE)) {
+            return ANGLE_GL_DRIVER_CHOICE_ANGLE;
+        } else if (optInValue.equals(ANGLE_GL_DRIVER_CHOICE_NATIVE)) {
+            return ANGLE_GL_DRIVER_CHOICE_NATIVE;
+=======
         if (optInValue.equals(AngleDriverChoice.ANGLE.choice)) {
             return AngleDriverChoice.ANGLE;
         } else if (optInValue.equals(AngleDriverChoice.NATIVE.choice)) {
             return AngleDriverChoice.NATIVE;
+>>>>>>> BASE      (40e068 Merge "[Cherry-pick] Load native GLES driver when specified.)
         } else {
             // The user either chose default or an invalid value; go with the default driver or what
             // the game mode indicates
+<<<<<<< PATCH SET (adbb80 [Cherry-pick] Revert^3 "Revert "Load native GLES driver when)
+            return gameModeChoice;
+=======
             return mEnabledByGameMode ? AngleDriverChoice.ANGLE : AngleDriverChoice.DEFAULT;
+>>>>>>> BASE      (40e068 Merge "[Cherry-pick] Load native GLES driver when specified.)
         }
     }
 
@@ -567,6 +614,13 @@ public class GraphicsEnvironment {
      */
     private boolean setupAngle(Context context, Bundle bundle, PackageManager packageManager,
             String packageName) {
+<<<<<<< PATCH SET (adbb80 [Cherry-pick] Revert^3 "Revert "Load native GLES driver when)
+        final String angleChoice = queryAngleChoice(context, bundle, packageName);
+        if (angleChoice.equals(ANGLE_GL_DRIVER_CHOICE_DEFAULT)) {
+            return false;
+        }
+        if (angleChoice.equals(ANGLE_GL_DRIVER_CHOICE_NATIVE)) {
+=======
 
         final AngleDriverChoice angleDriverChoice = queryAngleChoice(context, bundle, packageName);
         if (angleDriverChoice == AngleDriverChoice.DEFAULT) {
@@ -574,6 +628,7 @@ public class GraphicsEnvironment {
         }
 
         if (queryAngleChoice(context, bundle, packageName) == AngleDriverChoice.NATIVE) {
+>>>>>>> BASE      (40e068 Merge "[Cherry-pick] Load native GLES driver when specified.)
             nativeSetAngleInfo("", true, packageName, null);
             return false;
         }
@@ -671,7 +726,11 @@ public class GraphicsEnvironment {
         // If we make it to here, system ANGLE will be used.  Call nativeSetAngleInfo() with
         // the application package name and ANGLE features to use.
         final String[] features = getAngleEglFeatures(context, bundle);
+<<<<<<< PATCH SET (adbb80 [Cherry-pick] Revert^3 "Revert "Load native GLES driver when)
+        nativeSetAngleInfo(SYSTEM_ANGLE_STRING, false, packageName, features);
+=======
         nativeSetAngleInfo("system", false, packageName, features);
+>>>>>>> BASE      (40e068 Merge "[Cherry-pick] Load native GLES driver when specified.)
         return true;
     }
 
