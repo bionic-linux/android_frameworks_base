@@ -264,10 +264,12 @@ public class Filter implements AutoCloseable {
         synchronized (mCallbackLock) {
             if (mCallback != null && mExecutor != null) {
                 mExecutor.execute(() -> {
+                    FilterCallback callback;
                     synchronized (mCallbackLock) {
-                        if (mCallback != null) {
-                            mCallback.onFilterStatusChanged(this, status);
-                        }
+                        callback = mCallback;
+                    }
+                    if (callback != null) {
+                        callback.onFilterStatusChanged(this, status);
                     }
                 });
             }
@@ -278,14 +280,16 @@ public class Filter implements AutoCloseable {
         synchronized (mCallbackLock) {
             if (mCallback != null && mExecutor != null) {
                 mExecutor.execute(() -> {
+                    FilterCallback callback;
                     synchronized (mCallbackLock) {
-                        if (mCallback != null) {
-                            mCallback.onFilterEvent(this, events);
-                        } else {
-                            for (FilterEvent event : events) {
-                                if (event instanceof MediaEvent) {
-                                    ((MediaEvent)event).release();
-                                }
+                        callback = mCallback;
+                    }
+                    if (callback != null) {
+                        callback.onFilterEvent(this, events);
+                    } else {
+                        for (FilterEvent event : events) {
+                            if (event instanceof MediaEvent) {
+                                ((MediaEvent)event).release();
                             }
                         }
                     }
