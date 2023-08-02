@@ -34,6 +34,24 @@
       "parentUuid": "919c12dc_5a422d68",
       "revId": "cc712520e986fc9e9451b5ed5833b5740670f544",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13ecb60c_15ec18bb",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5553,
+      "author": {
+        "id": 1955705
+      },
+      "writtenOn": "2023-08-02T20:24:32Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "af685fe1_31c944b6",
+      "revId": "cc712520e986fc9e9451b5ed5833b5740670f544",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
