@@ -3633,7 +3633,7 @@ public class SettingsProvider extends ContentProvider {
         }
 
         private final class UpgradeController {
-            private static final int SETTINGS_VERSION = 212;
+            private static final int SETTINGS_VERSION = 213;
 
             private final int mUserId;
 
@@ -5548,6 +5548,31 @@ public class SettingsProvider extends ContentProvider {
                     }
 
                     currentVersion = 212;
+                }
+
+                if (currentVersion == 212) {
+                    // Version 213: default |def_airplane_mode_radios| and
+                    // |airplane_mode_toggleable_radios| changed to remove NFC & add UWB.
+                    final SettingsState globalSettings = getGlobalSettingsLocked();
+                    final String oldApmRadiosValue = globalSettings.getSettingLocked(
+                            Settings.Global.AIRPLANE_MODE_RADIOS).getValue();
+                    if (TextUtils.equals("cell,bluetooth,wifi,nfc,wimax", oldApmRadiosValue)) {
+                        globalSettings.insertSettingOverrideableByRestoreLocked(
+                                Settings.Global.AIRPLANE_MODE_RADIOS,
+                                getContext().getResources().getString(
+                                        R.string.def_airplane_mode_radios),
+                                null, true, SettingsState.SYSTEM_PACKAGE_NAME);
+                    }
+                    final String oldApmToggleableRadiosValue = globalSettings.getSettingLocked(
+                            Settings.Global.AIRPLANE_MODE_TOGGLEABLE_RADIOS).getValue();
+                    if (TextUtils.equals("bluetooth,wifi,nfc", oldApmToggleableRadiosValue)) {
+                        globalSettings.insertSettingOverrideableByRestoreLocked(
+                                Settings.Global.AIRPLANE_MODE_TOGGLEABLE_RADIOS,
+                                getContext().getResources().getString(
+                                        R.string.airplane_mode_toggleable_radios),
+                                null, true, SettingsState.SYSTEM_PACKAGE_NAME);
+                    }
+                    currentVersion = 213;
                 }
 
                 // vXXX: Add new settings above this point.
