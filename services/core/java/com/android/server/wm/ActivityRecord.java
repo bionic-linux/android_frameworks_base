@@ -3359,7 +3359,7 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
         final ActivityRecord next = taskDisplayArea.topRunningActivity();
         final boolean isLastRootTaskOverEmptyHome =
                 next == null && rootTask.isFocusedRootTaskOnDisplay()
-                        && taskDisplayArea.getOrCreateRootHomeTask() != null;
+                        && taskDisplayArea.getOrCreateRootHomeTask(true) != null;
         if (isLastRootTaskOverEmptyHome) {
             // Don't destroy activity immediately if this is the last activity on the display and
             // the display contains root home task. Although there is no next activity at the
