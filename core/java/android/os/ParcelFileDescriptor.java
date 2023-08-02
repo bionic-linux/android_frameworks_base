@@ -106,6 +106,8 @@ public class ParcelFileDescriptor implements Parcelable, Closeable {
 
     private volatile boolean mClosed;
 
+    private boolean mDropOnWrite;
+
     private final CloseGuard mGuard = CloseGuard.get();
 
     /**
@@ -1109,11 +1111,19 @@ public class ParcelFileDescriptor implements Parcelable, Closeable {
                 out.writeInt(0);
                 out.writeFileDescriptor(mFd);
             }
-            if ((flags & PARCELABLE_WRITE_RETURN_VALUE) != 0 && !mClosed) {
+            if (((flags & PARCELABLE_WRITE_RETURN_VALUE) != 0 || mDropOnWrite) && !mClosed) {
                 // Not a real close, so emit no status
                 closeWithStatus(Status.SILENCE, null);
             }
         }
+    }
+
+    /**
+     * Close the file descriptor after it's written to parcel.
+     * {@hide}
+     */
+    public void dropOnWrite() {
+        mDropOnWrite = true;
     }
 
     public static final @android.annotation.NonNull Parcelable.Creator<ParcelFileDescriptor> CREATOR
