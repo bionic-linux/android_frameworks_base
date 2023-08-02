@@ -424,7 +424,7 @@ public final class Parcel {
     @FastNative
     private static native void nativeWriteStrongBinder(long nativePtr, IBinder val);
     @FastNative
-    private static native void nativeWriteFileDescriptor(long nativePtr, FileDescriptor val);
+    private static native void nativeWriteFileDescriptor(long nativePtr, FileDescriptor val, boolean dupFd);
 
     private static native byte[] nativeCreateByteArray(long nativePtr);
     private static native boolean nativeReadByteArray(long nativePtr, byte[] dest, int destLen);
@@ -1211,7 +1211,12 @@ public final class Parcel {
      * if {@link Parcelable#PARCELABLE_WRITE_RETURN_VALUE} is set.</p>
      */
     public final void writeFileDescriptor(@NonNull FileDescriptor val) {
-        nativeWriteFileDescriptor(mNativePtr, val);
+        nativeWriteFileDescriptor(mNativePtr, val, true);
+    }
+
+    /** {@hide} */
+    public final void writeFileDescriptorNoDup(@NonNull FileDescriptor val) {
+        nativeWriteFileDescriptor(mNativePtr, val, false);
     }
 
     /**
@@ -1219,7 +1224,7 @@ public final class Parcel {
      * This will be the new name for writeFileDescriptor, for consistency.
      **/
     public final void writeRawFileDescriptor(@NonNull FileDescriptor val) {
-        nativeWriteFileDescriptor(mNativePtr, val);
+        nativeWriteFileDescriptor(mNativePtr, val, true);
     }
 
     /**

@@ -346,12 +346,13 @@ static void android_os_Parcel_writeStrongBinder(JNIEnv* env, jclass clazz, jlong
     }
 }
 
-static void android_os_Parcel_writeFileDescriptor(JNIEnv* env, jclass clazz, jlong nativePtr, jobject object)
+static void android_os_Parcel_writeFileDescriptor(JNIEnv* env, jclass clazz, jlong nativePtr, jobject object, jboolean dupFd)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
         const status_t err =
-                parcel->writeDupFileDescriptor(jniGetFDFromFileDescriptor(env, object));
+                dupFd ? parcel->writeDupFileDescriptor(jniGetFDFromFileDescriptor(env, object))
+                      : parcel->writeFileDescriptor(jniGetFDFromFileDescriptor(env, object));
         if (err != NO_ERROR) {
             signalExceptionForError(env, clazz, err);
         }
@@ -852,7 +853,7 @@ static const JNINativeMethod gParcelMethods[] = {
     // @FastNative
     {"nativeWriteStrongBinder",   "(JLandroid/os/IBinder;)V", (void*)android_os_Parcel_writeStrongBinder},
     // @FastNative
-    {"nativeWriteFileDescriptor", "(JLjava/io/FileDescriptor;)V", (void*)android_os_Parcel_writeFileDescriptor},
+    {"nativeWriteFileDescriptor", "(JLjava/io/FileDescriptor;Z)V", (void*)android_os_Parcel_writeFileDescriptor},
 
     {"nativeCreateByteArray",     "(J)[B", (void*)android_os_Parcel_createByteArray},
     {"nativeReadByteArray",       "(J[BI)Z", (void*)android_os_Parcel_readByteArray},
