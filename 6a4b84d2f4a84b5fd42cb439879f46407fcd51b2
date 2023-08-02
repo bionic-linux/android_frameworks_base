@@ -16,6 +16,24 @@
       "message": "Gently reminder, please check the patch.\n@rahulbanerjee@google.com\n@dupin@google.com",
       "revId": "6a4b84d2f4a84b5fd42cb439879f46407fcd51b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5c7b845_41dd39da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1972780
+      },
+      "writtenOn": "2023-08-02T18:19:37Z",
+      "side": 1,
+      "message": "Gently reminder, please check the patch.\n@rahulbanerjee@google.com\n@dupin@google.com",
+      "parentUuid": "2b2865bf_214cc297",
+      "revId": "6a4b84d2f4a84b5fd42cb439879f46407fcd51b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
