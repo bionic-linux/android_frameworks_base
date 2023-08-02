@@ -16,6 +16,24 @@
       "message": "The currentVersion here is 212 while it was 215 in ag/22295562. Do we need to merge in those changes also, or, is it okay for the version numbers to diverge ?",
       "revId": "cc712520e986fc9e9451b5ed5833b5740670f544",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af685fe1_31c944b6",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5553,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-02T19:50:12Z",
+      "side": 1,
+      "message": "This is the correct patch. We should use version id corresponding to the branch.",
+      "parentUuid": "919c12dc_5a422d68",
+      "revId": "cc712520e986fc9e9451b5ed5833b5740670f544",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
