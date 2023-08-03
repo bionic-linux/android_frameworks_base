@@ -71,6 +71,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6593cf2_a5a0e26e",
+        "filename": "AconfigFlags.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-08-03T00:28:44Z",
+      "side": 1,
+      "message": "A bit of an extended comment, so apologies, but trying to understand the underlying philosophy of the arrangement.\n\nWill something break if I refer to a flag in `android.hardware.camera2` from `android.hardware`, or from `android.hardware.camera2.params`? \n\nI mean, I\u0027d like to put my flag file somewhere that signifies \u0027camera platform\u0027, not just some directory for our public API surface that my team owns. Primarily because I expect flags to be for features that cross-cut across multiple packages (the public API here, system service com.android.*, and native service that has no package name).\n\nI can just throw them in this file and not worry about it, but if there\u0027s guidance on how it\u0027s recommended we organize flags, it\u0027d be great to see it.\n\nMaybe it\u0027s not clear to me why there\u0027s both a namespace and a package name.\nOf course, the generated Java has to live somewhere, but why isn\u0027t it just in `com.android.internal.flags.\u003cnamespace\u003e` or something similar? I feel like there\u0027s a reason for the package name that isn\u0027t obvious to me, and I\u0027m worried I\u0027ll set things up incorrectly as a result.",
+      "parentUuid": "492b6101_a77e2e42",
+      "revId": "650a8f9f4428f15222a473bbaedc3c20a876e55d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb52d53e_a83b44f8",
