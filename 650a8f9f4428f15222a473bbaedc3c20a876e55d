@@ -205,6 +205,30 @@
       },
       "revId": "650a8f9f4428f15222a473bbaedc3c20a876e55d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8a6026a_904ce1b6",
+        "filename": "flag/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1944425
+      },
+      "writtenOn": "2023-08-03T01:38:10Z",
+      "side": 1,
+      "message": "Yes the test code calls in to the map. what I thought was since we have this opportunity, we can make the code generate the same code, but the test will plugin another implementation.\n\nwe can discuss this out of this cl. Thank you",
+      "parentUuid": "8d4246b7_a31bcd7d",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 12
+      },
+      "revId": "650a8f9f4428f15222a473bbaedc3c20a876e55d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
