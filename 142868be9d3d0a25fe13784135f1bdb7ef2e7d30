@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a1acf38_8cfaef12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1953015
+      },
+      "writtenOn": "2023-08-04T19:14:53Z",
+      "side": 1,
+      "message": "Hi @samgarg@google.com - Could you please review and provide Dr.No approval",
+      "revId": "142868be9d3d0a25fe13784135f1bdb7ef2e7d30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
