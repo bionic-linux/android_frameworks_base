@@ -1377,6 +1377,37 @@ class StorageManagerService extends IStorageManager.Stub
         return mVold.supportsBlockCheckpoint();
     }
 
+    private void prepareUserStorageForMoveInternal(String fromVolumeUuid, String toVolumeUuid,
+            List<UserInfo> users) {
+
+        if (users == null) {
+            Slog.e(TAG, "User list is null, cannot prepare storage");
+            return;
+        }
+
+        final UserManagerInternal umInternal = LocalServices.getService(UserManagerInternal.class);
+        for (UserInfo user : users) {
+            final int flags;
+            if (user == null) {
+                // Skip preparing storage if user is null
+                continue;
+            } else if (umInternal.isUserUnlockingOrUnlocked(user.id)) {
+                // For unlocked users, both CE & DE storage are already prepared for mounted
+                // volumes, do not do anything.
+                continue;
+            } else if (umInternal.isUserRunning(user.id)) {
+                // For running users, DE storage is already prepared on mounted volumes, so prepare
+                // only CE storage.
+                flags = StorageManager.FLAG_STORAGE_CE;
+            } else {
+                // Otherwise, prepare both CE & DE storage
+                flags = StorageManager.FLAG_STORAGE_DE | StorageManager.FLAG_STORAGE_CE;
+            }
+            prepareUserStorageInternal(fromVolumeUuid, user.id, user.serialNumber, flags);
+            prepareUserStorageInternal(toVolumeUuid, user.id, user.serialNumber, flags);
+        }
+    }
+
     @Override
     public void onAwakeStateChanged(boolean isAwake) {
         // Ignored
@@ -2976,6 +3007,7 @@ class StorageManagerService extends IStorageManager.Stub
 
         final VolumeInfo from;
         final VolumeInfo to;
+        final List<UserInfo> users;
 
         synchronized (mLock) {
             if (Objects.equals(mPrimaryStorageUuid, volumeUuid)) {
@@ -2989,7 +3021,7 @@ class StorageManagerService extends IStorageManager.Stub
             mMoveTargetUuid = volumeUuid;
 
             // We need all the users unlocked to move their primary storage
-            final List<UserInfo> users = mContext.getSystemService(UserManager.class).getUsers();
+            users = mContext.getSystemService(UserManager.class).getUsers();
             for (UserInfo user : users) {
                 if (StorageManager.isFileEncrypted() && !isUserKeyUnlocked(user.id)) {
                     Slog.w(TAG, "Failing move due to locked user " + user.id);
@@ -3023,6 +3055,19 @@ class StorageManagerService extends IStorageManager.Stub
                     return;
                 }
             }
+        }
+
+        // Prepare the storage before move, this helps unlocking adopted storage (as the keys are
+        // tied to prepare user data step) & also helps in setting correct SELinux labels for
+        // directories
+        try {
+            prepareUserStorageForMoveInternal(mPrimaryStorageUuid, volumeUuid, users);
+        } catch (RuntimeException e) {
+            Slog.w(TAG, "Failing move due to failure on prepare user data");
+            synchronized (mLock) {
+                onMoveStatusLocked(PackageManager.MOVE_FAILED_INTERNAL_ERROR);
+            }
+            return;
         }
 
         try {
@@ -5010,5 +5055,12 @@ class StorageManagerService extends IStorageManager.Stub
             mCloudProviderChangeListeners.add(listener);
             mHandler.obtainMessage(H_CLOUD_MEDIA_PROVIDER_CHANGED, listener);
         }
+
+        @Override
+        public void prepareUserStorageForMove(String fromVolumeUuid, String toVolumeUuid,
+                List<UserInfo> users) {
+            prepareUserStorageForMoveInternal(fromVolumeUuid, toVolumeUuid, users);
+        }
+
     }
 }

@@ -19,6 +19,7 @@ package android.os.storage;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.UserIdInt;
+import android.content.pm.UserInfo;
 import android.os.IVold;
 
 import java.util.List;
@@ -169,4 +170,18 @@ public abstract class StorageManagerInternal {
      */
     public abstract void registerCloudProviderChangeListener(
             @NonNull CloudProviderChangeListener listener);
+
+    /**
+     * Prepares user data directories before moving storage or apps. This is required as adopted
+     * storage unlock is tied to the prepare user data and storage needs to be unlocked before
+     * performing any operations on it. This will also help in creating user data directories
+     * before initaiting the move operations.
+     *
+     * @param fromVolumeUuid the source volume UUID from which content needs to be transferred
+     * @param toVolumeUuid the destination volume UUID to which contents are to be transferred
+     * @param users a list of users for whom to prepare for storage
+     */
+    public abstract void prepareUserStorageForMove(String fromVolumeUuid, String toVolumeUuid,
+            List<UserInfo> users);
+
 }
