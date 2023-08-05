@@ -856,8 +856,10 @@ static jobject Bitmap_createFromParcel(JNIEnv* env, jobject, jobject parcel) {
                     ALOGW("mmap failed, error %d (%s)", err, strerror(err));
                     return STATUS_NO_MEMORY;
                 }
+                int rawFd = fd.release();
                 nativeBitmap =
-                        Bitmap::createFrom(imageInfo, rowBytes, fd.release(), addr, size, !isMutable);
+                        Bitmap::createFrom(imageInfo, rowBytes, rawFd, addr, size, !isMutable);
+                close(rawFd);
                 return STATUS_OK;
             });
 
