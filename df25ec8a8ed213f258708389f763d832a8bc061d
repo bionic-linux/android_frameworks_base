@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f60fed0_ff617118",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2023-08-07T18:01:22Z",
+      "side": 1,
+      "message": "Bitmap::createFrom takes ownership of the FD. This change just results in a double-close on the FD, which is a major bug in its own right.\n\nI think Leon is right that your issue is elsewhere, like the Bitmap itself is being \"leaked\". Check an hprof or similar.",
+      "revId": "df25ec8a8ed213f258708389f763d832a8bc061d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d562764_80a6c707",
