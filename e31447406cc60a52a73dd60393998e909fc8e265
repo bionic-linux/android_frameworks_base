@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfbb2a20_b2ae908c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-08T04:26:06Z",
+      "side": 1,
+      "message": "Thanks for the new CL!  This explanation is a little hard to follow.  It seems oriented towards your earlier CLs that have been abandoned.  To make sure I\u0027ve understood this new CL, I\u0027ve tried to write a better explanation.  Can you consider the following?\n\n```\nMoving \"primary storage\" between internal and adoptable storage involves\naccessing the CE and DE storage of all users.  Similarly, moving an app\ninvolves accessing the CE and DE storage of all users who have the app\ninstalled.  CE and DE storage must be unlocked and prepared on both\nvolumes for all these users.  Currently this as handled as follows:\n\n- Before starting either operation, Settings requires LSKF verification\n  for each user whose CE storage is currently locked.\n\n- For \"move app\", PMS prepares CE and DE storage on the target volume\n  for users who don\u0027t have a CE directory on the target volume.\n\nThis isn\u0027t enough, however.  First, because unlocking of adoptable\nstorage is done by SMS.prepareUserStorage and not by SMS.unlockUserKey,\nLSKF verification doesn\u0027t do it unless the user is already running.\nTherefore, CE adoptable storage isn\u0027t unlocked for stopped users.\n\nSecond, since a stopped user might never have had adoptable storage\nprepared at all, and \"move primary storage\" skips the prepare, the\ntarget directory /mnt/expand/${volume_uuid}/media/${user_id} can end up\nwith the wrong SELinux label, encryption policy, and other metadata.\n\nFix both issues by making PMS and SMS call prepareUserStorage on the\nsource and target volumes for all relevant users for both types of move.\n```\n\nDoes that correctly describe your CL, or have I misunderstood or overlooked something?  If you agree it\u0027s better than your current commit message, please go ahead and use it as your commit message.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 52
+      },
+      "revId": "e31447406cc60a52a73dd60393998e909fc8e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebe696a9_83f8193d",
+        "filename": "core/java/android/os/storage/StorageManagerInternal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-08T04:26:06Z",
+      "side": 1,
+      "message": "It should be made clear that this is essential, i.e. this is another reason why prepareUserStorage is required",
+      "range": {
+        "startLine": 177,
+        "startChar": 40,
+        "endLine": 178,
+        "endChar": 45
+      },
+      "revId": "e31447406cc60a52a73dd60393998e909fc8e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb11cda1_f9dd1fb2",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-08T04:26:06Z",
+      "side": 1,
+      "message": "Not necessary",
+      "range": {
+        "startLine": 1383,
+        "startChar": 0,
+        "endLine": 1386,
+        "endChar": 9
+      },
+      "revId": "e31447406cc60a52a73dd60393998e909fc8e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a059cb6c_b5e58bf8",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-08T04:26:06Z",
+      "side": 1,
+      "message": "Not necessary",
+      "range": {
+        "startLine": 1391,
+        "startChar": 0,
+        "endLine": 1393,
+        "endChar": 25
+      },
+      "revId": "e31447406cc60a52a73dd60393998e909fc8e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5437a5bd_b67fee3c",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1404,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-08T04:26:06Z",
+      "side": 1,
+      "message": "Why not just prepare both CE and DE unconditionally?",
+      "range": {
+        "startLine": 1404,
+        "startChar": 16,
+        "endLine": 1404,
+        "endChar": 88
+      },
+      "revId": "e31447406cc60a52a73dd60393998e909fc8e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7d413f4_8e548054",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3060,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-08T04:26:06Z",
+      "side": 1,
+      "message": "Android documentation calls it \"adoptable storage\", not \"adopted storage\"",
+      "range": {
+        "startLine": 3060,
+        "startChar": 65,
+        "endLine": 3060,
+        "endChar": 80
+      },
+      "revId": "e31447406cc60a52a73dd60393998e909fc8e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b7c7286_b4803e27",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3060,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-08T04:26:06Z",
+      "side": 1,
+      "message": "\"helps unlocking\" \u003d\u003e \"is required to unlock\"",
+      "range": {
+        "startLine": 3060,
+        "startChar": 49,
+        "endLine": 3060,
+        "endChar": 64
+      },
+      "revId": "e31447406cc60a52a73dd60393998e909fc8e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e89d5d3f_27a677d7",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3062,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-08T04:26:06Z",
+      "side": 1,
+      "message": "\"helps in setting correct SELinux labels for directories\" \u003d\u003e \"is required for the destination files to end up with the correct SELinux labels and encryption policies\"",
+      "range": {
+        "startLine": 3061,
+        "startChar": 50,
+        "endLine": 3062,
+        "endChar": 22
+      },
+      "revId": "e31447406cc60a52a73dd60393998e909fc8e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
