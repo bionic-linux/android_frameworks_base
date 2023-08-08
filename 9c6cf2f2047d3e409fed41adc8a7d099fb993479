@@ -22,6 +22,30 @@
       },
       "revId": "9c6cf2f2047d3e409fed41adc8a7d099fb993479",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38ef672f_440444f7",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2133,
+      "author": {
+        "id": 1758351
+      },
+      "writtenOn": "2023-08-08T09:20:20Z",
+      "side": 1,
+      "message": "Updated. I think it need to be a @SystemApi because ideally we want the TV offload service able to access this permission in V. It seems their service is not mainlined ag/23781903.",
+      "parentUuid": "6efe7f2e_eb5ea6f9",
+      "range": {
+        "startLine": 2133,
+        "startChar": 8,
+        "endLine": 2133,
+        "endChar": 54
+      },
+      "revId": "9c6cf2f2047d3e409fed41adc8a7d099fb993479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
