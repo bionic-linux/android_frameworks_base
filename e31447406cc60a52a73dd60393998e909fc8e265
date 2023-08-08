@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "139f9c5a_4d14b4f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-08T06:11:02Z",
+      "side": 1,
+      "message": "This explains the issue perfectly. Thanks. Have updated the commit message.",
+      "parentUuid": "bfbb2a20_b2ae908c",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 52
+      },
+      "revId": "e31447406cc60a52a73dd60393998e909fc8e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ebe696a9_83f8193d",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-08-08T04:26:06Z",
       "side": 1,
       "message": "It should be made clear that this is essential, i.e. this is another reason why prepareUserStorage is required",
+      "range": {
+        "startLine": 177,
+        "startChar": 40,
+        "endLine": 178,
+        "endChar": 45
+      },
+      "revId": "e31447406cc60a52a73dd60393998e909fc8e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbe2ebfb_3e319278",
+        "filename": "core/java/android/os/storage/StorageManagerInternal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-08T06:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebe696a9_83f8193d",
       "range": {
         "startLine": 177,
         "startChar": 40,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "41464333_c2a923e5",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-08T06:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb11cda1_f9dd1fb2",
+      "range": {
+        "startLine": 1383,
+        "startChar": 0,
+        "endLine": 1386,
+        "endChar": 9
+      },
+      "revId": "e31447406cc60a52a73dd60393998e909fc8e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a059cb6c_b5e58bf8",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2d6772f_74a1766b",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-08T06:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a059cb6c_b5e58bf8",
+      "range": {
+        "startLine": 1391,
+        "startChar": 0,
+        "endLine": 1393,
+        "endChar": 25
+      },
+      "revId": "e31447406cc60a52a73dd60393998e909fc8e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5437a5bd_b67fee3c",
@@ -106,6 +202,30 @@
       "writtenOn": "2023-08-08T04:26:06Z",
       "side": 1,
       "message": "Why not just prepare both CE and DE unconditionally?",
+      "range": {
+        "startLine": 1404,
+        "startChar": 16,
+        "endLine": 1404,
+        "endChar": 88
+      },
+      "revId": "e31447406cc60a52a73dd60393998e909fc8e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e836230a_e855791a",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1404,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-08T06:11:02Z",
+      "side": 1,
+      "message": "Do we want to prepare unconditionally? The current CL prevents unwanted prepare user storage",
+      "parentUuid": "5437a5bd_b67fee3c",
       "range": {
         "startLine": 1404,
         "startChar": 16,
@@ -162,6 +282,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e711d045_39d06ce3",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3060,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-08T06:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b7c7286_b4803e27",
+      "range": {
+        "startLine": 3060,
+        "startChar": 49,
+        "endLine": 3060,
+        "endChar": 64
+      },
+      "revId": "e31447406cc60a52a73dd60393998e909fc8e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5ec94ee_1c2f5b50",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3060,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-08T06:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7d413f4_8e548054",
+      "range": {
+        "startLine": 3060,
+        "startChar": 65,
+        "endLine": 3060,
+        "endChar": 80
+      },
+      "revId": "e31447406cc60a52a73dd60393998e909fc8e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e89d5d3f_27a677d7",
@@ -175,6 +343,30 @@
       "writtenOn": "2023-08-08T04:26:06Z",
       "side": 1,
       "message": "\"helps in setting correct SELinux labels for directories\" \u003d\u003e \"is required for the destination files to end up with the correct SELinux labels and encryption policies\"",
+      "range": {
+        "startLine": 3061,
+        "startChar": 50,
+        "endLine": 3062,
+        "endChar": 22
+      },
+      "revId": "e31447406cc60a52a73dd60393998e909fc8e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "181e98d8_b0655e6b",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3062,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-08T06:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e89d5d3f_27a677d7",
       "range": {
         "startLine": 3061,
         "startChar": 50,
