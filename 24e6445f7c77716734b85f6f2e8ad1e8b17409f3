@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c136f77a_e48b4f54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-08T20:57:47Z",
+      "side": 1,
+      "message": "Addressed the comments. PTAL, Thanks!",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5a5369d2_6654547f",
@@ -31,6 +48,24 @@
       "writtenOn": "2023-07-19T18:27:40Z",
       "side": 1,
       "message": "nit: typo on \"module\" in all files",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9049b9f9_f3a3627f",
+        "filename": "core/java/android/nfc/cardemulation/AidGroup.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-08T20:57:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a5369d2_6654547f",
       "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -52,6 +87,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "05e652d0_264bb5cb",
+        "filename": "core/java/android/nfc/cardemulation/AidGroup.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-08T20:57:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f15a105f_abe0e481",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dcc4cc6f_655604e7",
@@ -65,6 +118,24 @@
       "writtenOn": "2023-07-19T18:27:40Z",
       "side": 1,
       "message": "Document exceptions thrown by any APIs",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfb9187c_f563111c",
+        "filename": "core/java/android/nfc/cardemulation/AidGroup.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-08T20:57:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcc4cc6f_655604e7",
       "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -86,6 +157,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f874fb4_d80fef9d",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-08T20:57:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17d0445a_6fc4ebcc",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05783c5c_0abf0865",
@@ -99,6 +188,24 @@
       "writtenOn": "2023-07-19T18:27:40Z",
       "side": 1,
       "message": "Add docs",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60e0e5c3_907f5dc8",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-08T20:57:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05783c5c_0abf0865",
       "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -120,6 +227,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b65056a_a955da2c",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-08T20:57:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "455f4d53_fddaa97e",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "23641aac_f4471033",
@@ -133,6 +258,24 @@
       "writtenOn": "2023-07-19T18:27:40Z",
       "side": 1,
       "message": "Document return values for these APIs",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa17156c_f5a244b4",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-08T20:57:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23641aac_f4471033",
       "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -154,6 +297,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1c1dcdf_a31cfb78",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-08T20:57:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ebad8f2_61d017ef",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "184fa85d_9237f957",
@@ -167,6 +328,24 @@
       "writtenOn": "2023-07-19T18:27:40Z",
       "side": 1,
       "message": "Same as above",
+      "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb81d0b3_b8187f03",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-08T20:57:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "184fa85d_9237f957",
       "revId": "24e6445f7c77716734b85f6f2e8ad1e8b17409f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
