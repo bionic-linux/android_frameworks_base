@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "693c0ce7_ab593fef",
+        "filename": "core/java/android/os/storage/StorageManagerInternal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-09T04:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc068f7d_39f0b6ca",
+      "range": {
+        "startLine": 178,
+        "startChar": 7,
+        "endLine": 178,
+        "endChar": 17
+      },
+      "revId": "17c548063a05fa7382af3380d1d0090cb8663bf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b87b5776_2c1eb894",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-08-09T04:27:29Z",
       "side": 1,
       "message": "\"for storage\" \u003d\u003e \"storage\"",
+      "range": {
+        "startLine": 183,
+        "startChar": 56,
+        "endLine": 183,
+        "endChar": 67
+      },
+      "revId": "17c548063a05fa7382af3380d1d0090cb8663bf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00379d2f_44bce25d",
+        "filename": "core/java/android/os/storage/StorageManagerInternal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-09T04:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b87b5776_2c1eb894",
       "range": {
         "startLine": 183,
         "startChar": 56,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f1083cc_5f85eb42",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-09T04:52:34Z",
+      "side": 1,
+      "message": "My bad, missed it",
+      "parentUuid": "3eadfa00_0b878dab",
+      "range": {
+        "startLine": 1383,
+        "startChar": 8,
+        "endLine": 1383,
+        "endChar": 99
+      },
+      "revId": "17c548063a05fa7382af3380d1d0090cb8663bf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a6d269a2_e6daed7f",
@@ -83,6 +155,30 @@
       "writtenOn": "2023-08-09T04:27:29Z",
       "side": 1,
       "message": "`for (int userId : userIds) {`",
+      "range": {
+        "startLine": 391,
+        "startChar": 8,
+        "endLine": 391,
+        "endChar": 62
+      },
+      "revId": "17c548063a05fa7382af3380d1d0090cb8663bf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3e8dce5_11682343",
+        "filename": "services/core/java/com/android/server/pm/MovePackageHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-09T04:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6d269a2_e6daed7f",
       "range": {
         "startLine": 391,
         "startChar": 8,
