@@ -46,6 +46,30 @@
       },
       "revId": "9c6cf2f2047d3e409fed41adc8a7d099fb993479",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d6c8e12_c3c1caac",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2133,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2023-08-09T12:58:00Z",
+      "side": 1,
+      "message": "AIUI if the service needs a signature permission, then that means it must be compiled with the platform, and that means it can access module-lib APIs I think? Remi, am I missing something?",
+      "parentUuid": "38ef672f_440444f7",
+      "range": {
+        "startLine": 2133,
+        "startChar": 8,
+        "endLine": 2133,
+        "endChar": 54
+      },
+      "revId": "9c6cf2f2047d3e409fed41adc8a7d099fb993479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
