@@ -5748,7 +5748,10 @@ class Task extends TaskFragment {
                 false /* deferResume */);
 
         ActivityRecord topActivity = getDisplayArea().topRunningActivity();
-        Task topRootTask = topActivity.getRootTask();
+        // Task topRootTask = topActivity.getRootTask();
+        // When getDisplayArea() is not default display,there will be a null
+        // pointer situation,to avoid this situation, a null pointer judgment has been added.
+        Task topRootTask = topActivity == null ? null : topActivity.getRootTask();
         if (topRootTask != null && topRootTask != this && topActivity.isState(RESUMED)) {
             // Usually resuming a top activity triggers the next app transition, but nothing's got
             // resumed in this case, so we need to execute it explicitly.
