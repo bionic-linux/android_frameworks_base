@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65afa261_9648f1bd",
+        "filename": "services/core/java/com/android/server/wm/Task.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5753,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2023-08-09T12:27:07Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t add much, could you remove please and simply keep the nullcheck?\n\n```suggestion\n       ActivityRecord topActivity \u003d getDisplayArea().topRunningActivity();\n```",
+      "range": {
+        "startLine": 5750,
+        "startChar": 74,
+        "endLine": 5753,
+        "endChar": 93
+      },
+      "revId": "e04168e6e22ad9e2b81705acf2c63c01c811b4b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
