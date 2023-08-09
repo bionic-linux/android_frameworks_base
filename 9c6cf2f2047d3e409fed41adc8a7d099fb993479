@@ -70,6 +70,30 @@
       },
       "revId": "9c6cf2f2047d3e409fed41adc8a7d099fb993479",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e97f165b_f51e26e7",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2133,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2023-08-09T13:08:46Z",
+      "side": 1,
+      "message": "If that\u0027s correct then we should probably also make the APIs themselves module-lib, not just the permission...",
+      "parentUuid": "9d6c8e12_c3c1caac",
+      "range": {
+        "startLine": 2133,
+        "startChar": 8,
+        "endLine": 2133,
+        "endChar": 54
+      },
+      "revId": "9c6cf2f2047d3e409fed41adc8a7d099fb993479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
