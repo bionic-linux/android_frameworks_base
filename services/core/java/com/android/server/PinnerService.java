@@ -1015,7 +1015,8 @@ public final class PinnerService extends SystemService {
                                    "pinning at %s %s bytes of %s",
                                    pinStart, pinLength, fileToPin));
                     }
-                    Os.mlock(address + pinStart, pinLength);
+                    //Os.mlock(address + pinStart, pinLength);
+                    Os.mlock2(address + pinStart, pinLength, OsConstants.MLOCK_ONFAULT);
                 }
                 bytesPinned += pinLength;
             }
