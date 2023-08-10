@@ -94,6 +94,30 @@
       },
       "revId": "9c6cf2f2047d3e409fed41adc8a7d099fb993479",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "281d2d2e_bb4add0f",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2133,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2023-08-10T04:46:49Z",
+      "side": 1,
+      "message": "I don\u0027t think a platform prebuilt APK is supposed to build against module-lib; although they may (and often do) build against hidden API, which will include module-lib.\n\nI think when go/android-api-types says \"Platform\" it\u0027s referring to stuff (especially system services) building against hidden API, rather than APKs. Marking an API module-lib is enough in that case since the component is already building against hidden API and will see the symbol.\n\nBut currently the offload service builds against system API; making it build against module-lib would disable the ART hidden API checks, which isn\u0027t desirable I think. When the client is an unbundled APK that builds against stable APIs with hidden API checks enabled, @SystemApi sounds better to me.",
+      "parentUuid": "e97f165b_f51e26e7",
+      "range": {
+        "startLine": 2133,
+        "startChar": 8,
+        "endLine": 2133,
+        "endChar": 54
+      },
+      "revId": "9c6cf2f2047d3e409fed41adc8a7d099fb993479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
