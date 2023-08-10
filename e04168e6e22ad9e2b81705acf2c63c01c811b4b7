@@ -22,6 +22,30 @@
       },
       "revId": "e04168e6e22ad9e2b81705acf2c63c01c811b4b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22b3ffc0_fb2c12bd",
+        "filename": "services/core/java/com/android/server/wm/Task.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5753,
+      "author": {
+        "id": 2032917
+      },
+      "writtenOn": "2023-08-10T10:34:00Z",
+      "side": 1,
+      "message": "The relevant comments have been deleted. Thank you for reviewing again",
+      "parentUuid": "65afa261_9648f1bd",
+      "range": {
+        "startLine": 5750,
+        "startChar": 74,
+        "endLine": 5753,
+        "endChar": 93
+      },
+      "revId": "e04168e6e22ad9e2b81705acf2c63c01c811b4b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
