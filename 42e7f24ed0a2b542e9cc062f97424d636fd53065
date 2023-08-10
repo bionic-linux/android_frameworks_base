@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bfce297_72b5b342",
+        "filename": "libs/protoutil/src/EncodedBuffer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-08-10T23:08:07Z",
+      "side": 1,
+      "message": "this function already caches the page size, right? Should we call it each time? I suspect we probably would also want to make BUFFER_SIZE as constexpr here. Even though it\u0027s a few bytes I don\u0027t think we want to spend extra space on it.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 39
+      },
+      "revId": "42e7f24ed0a2b542e9cc062f97424d636fd53065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
