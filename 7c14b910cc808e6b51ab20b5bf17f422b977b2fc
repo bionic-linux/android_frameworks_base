@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f063a19_b6c68cc0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-10T06:16:38Z",
+      "side": 1,
+      "message": "Sorry, I missed the `prepareUserStorageInternal()` change. Handling exception now.",
+      "parentUuid": "c503c42f_bde77a84",
+      "revId": "7c14b910cc808e6b51ab20b5bf17f422b977b2fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "103b356b_757aba9a",
