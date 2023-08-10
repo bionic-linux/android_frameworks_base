@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d31aad2_983fabe3",
+        "filename": "libs/protoutil/tests/EncodedBuffer_test.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2023-08-10T23:45:56Z",
+      "side": 1,
+      "message": "To clarify why the `+ i` is removed from the test.\n\n`+ i` was being used to add some \"randomness\" to the char that we write into the buffer that we later use to verify.\n\npreviously `i` only goes at most `16` so it all fits into `uint8_t` but now `i` goes up to page size. So the \"byte\" written is just the silently truncated lower byte of the `50 + i` so it doesn\u0027t match when we do the `readByte()` below.\n\nFor simplicity just use a constant value 50.",
+      "range": {
+        "startLine": 38,
+        "startChar": 16,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "325c87adb0808f735e30dd3a91a4a5e1f9b7a369",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
