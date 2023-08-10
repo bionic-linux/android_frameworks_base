@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cd0178d3_97a4575a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-10T04:35:27Z",
+      "side": 1,
+      "message": "The presubmit failure is caused by this CL not building after it\u0027s automerged into the internal branch because `prepareUserStorageIfNeeded()` throws an `Exception` on the internal branch.  Sorry about this; it\u0027s another problem caused by people not working in AOSP first.  At https://r.android.com/2702436 I\u0027ve cherry-picked the CL that changed the method to throw `Exception`.  Can you rebase your CL on top of it and make it build?  Thanks!",
+      "revId": "7c14b910cc808e6b51ab20b5bf17f422b977b2fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "103b356b_757aba9a",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 4
