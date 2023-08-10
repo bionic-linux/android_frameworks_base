@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c13d99a6_c02bafd7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-08-10T23:06:10Z",
+      "side": 1,
+      "message": "Could this test also be added to TEST_MAPPING here?",
+      "revId": "8b8b4fdceee7b2196cd978fff76d7280e57df548",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
