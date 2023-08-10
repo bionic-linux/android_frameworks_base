@@ -46,6 +46,30 @@
       },
       "revId": "42e7f24ed0a2b542e9cc062f97424d636fd53065",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd6b3f83_ccbbf6cf",
+        "filename": "libs/protoutil/src/EncodedBuffer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-08-10T23:45:13Z",
+      "side": 1,
+      "message": "Do we need to store getpagesize in read only memory here though? getpagesize calls page_size, and this value will be cached here:\nhttps://android-review.git.corp.google.com/c/platform/bionic/+/2675944/15/libc/platform/bionic/page.h#30\n\nWe should only need one copy of this. Sure, on a 64-bit system, we\u0027re only wasting 8 bytes here, but given that we\u0027re doing an allocation, I think it should be okay to do a function call, given that we are already doing a mmap, yeah?",
+      "parentUuid": "1c5b1413_ab4e6fdc",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 39
+      },
+      "revId": "42e7f24ed0a2b542e9cc062f97424d636fd53065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
