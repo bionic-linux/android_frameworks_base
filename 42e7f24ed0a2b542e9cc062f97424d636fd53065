@@ -22,6 +22,30 @@
       },
       "revId": "42e7f24ed0a2b542e9cc062f97424d636fd53065",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c5b1413_ab4e6fdc",
+        "filename": "libs/protoutil/src/EncodedBuffer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2023-08-10T23:31:42Z",
+      "side": 1,
+      "message": "\u003e This function already caches the page size, right? Should we call it each time?\n\nWe only call it once, the value would not change between calls.\n\n\u003e probably would also want to make BUFFER_SIZE as constexpr here. Even though it\u0027s a few bytes I don\u0027t think we want to spend extra space on it.\n\nUpdated it to constexpr. However the generated code is the same. In this case the compilers know it.",
+      "parentUuid": "7bfce297_72b5b342",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 39
+      },
+      "revId": "42e7f24ed0a2b542e9cc062f97424d636fd53065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
