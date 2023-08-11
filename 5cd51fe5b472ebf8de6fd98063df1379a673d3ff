@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04b6dfe5_12505e29",
+        "filename": "core/java/android/security/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2023-08-11T11:13:53Z",
+      "side": 1,
+      "message": "I don\u0027t expect it to be fixed in this CL, but the rest of this entire file is owned by Xooglers. Is there a better team alias we could point at? \n\nAlternatively, brambonne@ has taken up networking responsibilities IIRC. He may have an opinion on being added to this owners file.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 65
+      },
+      "revId": "5cd51fe5b472ebf8de6fd98063df1379a673d3ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
