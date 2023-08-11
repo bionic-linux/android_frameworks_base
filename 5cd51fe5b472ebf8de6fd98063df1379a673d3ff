@@ -22,6 +22,30 @@
       },
       "revId": "5cd51fe5b472ebf8de6fd98063df1379a673d3ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6b96d5e_dd2f9567",
+        "filename": "core/java/android/security/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2023-08-11T11:38:59Z",
+      "side": 1,
+      "message": "Thanks for calling this out :)\n\nhttps://r.android.com/2705333 should take care of at least the networking bits",
+      "parentUuid": "04b6dfe5_12505e29",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 65
+      },
+      "revId": "5cd51fe5b472ebf8de6fd98063df1379a673d3ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
