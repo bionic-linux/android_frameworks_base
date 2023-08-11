@@ -70,6 +70,30 @@
       },
       "revId": "42e7f24ed0a2b542e9cc062f97424d636fd53065",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f11343c1_f7287b93",
+        "filename": "libs/protoutil/src/EncodedBuffer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2023-08-11T00:37:46Z",
+      "side": 1,
+      "message": "It makes sense about the extra 8 bytes. But prefer to keep it for simplicity since caller doesn\u0027t need know the implementation details of getpagesize()",
+      "parentUuid": "fd6b3f83_ccbbf6cf",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 39
+      },
+      "revId": "42e7f24ed0a2b542e9cc062f97424d636fd53065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
