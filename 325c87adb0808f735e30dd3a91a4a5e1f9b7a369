@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "352d365d_cb495f88",
+        "filename": "libs/protoutil/tests/EncodedBuffer_test.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2023-08-11T00:37:40Z",
+      "side": 1,
+      "message": "Did explicit cast to uinit8. Done.",
+      "parentUuid": "766492f0_de16f557",
+      "range": {
+        "startLine": 38,
+        "startChar": 16,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "325c87adb0808f735e30dd3a91a4a5e1f9b7a369",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6186203f_118e57d5",
@@ -61,6 +85,30 @@
       "writtenOn": "2023-08-10T23:50:46Z",
       "side": 1,
       "message": "we can have something like\n\n```\nEXPECT_EQ(buffer-\u003ereadRawByte(), (50 + i) % 256);\n```",
+      "range": {
+        "startLine": 53,
+        "startChar": 41,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "325c87adb0808f735e30dd3a91a4a5e1f9b7a369",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73cf1662_f4c2d058",
+        "filename": "libs/protoutil/tests/EncodedBuffer_test.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2023-08-11T00:37:40Z",
+      "side": 1,
+      "message": "Good idea. Thanks. Done",
+      "parentUuid": "6186203f_118e57d5",
       "range": {
         "startLine": 53,
         "startChar": 41,
