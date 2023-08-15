@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4a6a175_bd121a35",
+        "filename": "core/java/android/nfc/cardemulation/AidGroup.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1127992
+      },
+      "writtenOn": "2023-08-15T20:26:15Z",
+      "side": 1,
+      "message": "API review feedback nit: Please add explanation of why exception is thrown for this and all other @throws in comments in this CL.\n\nReference API guidelines here: https://g3doc.corp.google.com/company/teams/android-api-council/guidelines/index.md?cl\u003dhead#throws",
+      "range": {
+        "startLine": 186,
+        "startChar": 7,
+        "endLine": 186,
+        "endChar": 37
+      },
+      "revId": "4e6535e16439b1a37ceed768f00f81b7409d5fc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
