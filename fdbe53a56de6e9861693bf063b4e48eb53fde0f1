@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81fd50ee_81d98bb3",
+        "filename": "keystore/java/android/security/keystore2/KeyStore2ParameterUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2023-08-15T20:10:33Z",
+      "side": 1,
+      "message": "Nit: This can be relabeled to class 3 biometrics, right? Or is that only a face thing? Either way, some face unlocks can now be used for strong authenticators, and not just fingerprint IIRC.",
+      "range": {
+        "startLine": 342,
+        "startChar": 68,
+        "endLine": 342,
+        "endChar": 79
+      },
+      "revId": "fdbe53a56de6e9861693bf063b4e48eb53fde0f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
