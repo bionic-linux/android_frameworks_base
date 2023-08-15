@@ -22,6 +22,30 @@
       },
       "revId": "fdbe53a56de6e9861693bf063b4e48eb53fde0f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5ea59db_d1988a3a",
+        "filename": "keystore/java/android/security/keystore2/KeyStore2ParameterUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-15T20:20:21Z",
+      "side": 1,
+      "message": "`git grep -i fingerprint keystore/` shows a lot of hits, but yes \"fingerprint\" seems outdated.  The keystore public API documentation just says \"biometric\", but one place (https://developer.android.com/reference/android/security/keystore/KeyProperties#AUTH_BIOMETRIC_STRONG) implies that really \"strong biometric\" is meant.  I understand that \"strong biometric\" is still outdated, as it\u0027s become \"class 3\".  I think fixing all this is best left for a different CL.",
+      "parentUuid": "81fd50ee_81d98bb3",
+      "range": {
+        "startLine": 342,
+        "startChar": 68,
+        "endLine": 342,
+        "endChar": 79
+      },
+      "revId": "fdbe53a56de6e9861693bf063b4e48eb53fde0f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
