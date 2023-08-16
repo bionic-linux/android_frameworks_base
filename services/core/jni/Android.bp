@@ -85,6 +85,10 @@ cc_library_static {
     header_libs: [
         "bionic_libc_platform_headers",
     ],
+
+    static_libs: [
+        "libdebuggerd",
+    ],
 }
 
 cc_defaults {
