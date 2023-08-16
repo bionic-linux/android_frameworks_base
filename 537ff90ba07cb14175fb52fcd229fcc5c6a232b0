@@ -103,6 +103,23 @@
       "message": "@ebiggers@google.com could you please help merge this?\nI see the earlier Pre-Submit run has passed.",
       "revId": "537ff90ba07cb14175fb52fcd229fcc5c6a232b0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72726e5c_0e180bcd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-16T19:25:34Z",
+      "side": 1,
+      "message": "Merged, thanks for the contribution!",
+      "revId": "537ff90ba07cb14175fb52fcd229fcc5c6a232b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
