@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "796d4fb6_7ee408c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1943370
+      },
+      "writtenOn": "2023-08-17T19:20:34Z",
+      "side": 1,
+      "message": "@mpietal@google.com, please help with review.\n\nCL has been updated based on suggestion in aosp/2539870. Validated with atest and all 17 tests are passing.",
+      "revId": "74f17857d3e8246d5677b406b45f4fdee476912d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
