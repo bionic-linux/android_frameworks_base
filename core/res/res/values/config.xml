@@ -5003,6 +5003,11 @@
     <!-- Default value for performant auth feature. -->
     <bool name="config_performantAuthDefault">false</bool>
 
+    <!-- Provides default value for double line clock in lock screen setting:
+         0 - Don't show double line clock
+         1 - Show double line clock in lock screen (default) -->
+    <integer name="config_doubleline_clock_default">1</integer>
+
     <!-- The component name for the default profile supervisor, which can be set as a profile owner
     even after user setup is complete. The defined component should be used for supervision purposes
     only. The component must be part of a system app. -->

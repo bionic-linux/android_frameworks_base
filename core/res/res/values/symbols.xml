@@ -4943,6 +4943,9 @@
 
   <java-symbol type="dimen" name="status_bar_height_default" />
 
+  <!-- For double line clock in lock screen -->
+  <java-symbol type="integer" name="config_doubleline_clock_default"/>
+
   <!-- Whether to show weather on the lockscreen by default. -->
   <java-symbol type="bool" name="config_lockscreenWeatherEnabledByDefault" />
   <java-symbol type="string" name="default_card_name"/>
