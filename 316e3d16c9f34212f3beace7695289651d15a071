@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06a8ab80_dc2fc88c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2023-08-17T13:44:45Z",
+      "side": 1,
+      "message": "Looks good to me, would like Seth\u0027s opinion as well.",
+      "revId": "316e3d16c9f34212f3beace7695289651d15a071",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
