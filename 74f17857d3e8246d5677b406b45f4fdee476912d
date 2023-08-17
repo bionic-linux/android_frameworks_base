@@ -16,6 +16,29 @@
       "message": "@mpietal@google.com, please help with review.\n\nCL has been updated based on suggestion in aosp/2539870. Validated with atest and all 17 tests are passing.",
       "revId": "74f17857d3e8246d5677b406b45f4fdee476912d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fdd47e5_72de948e",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 5009,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-08-17T20:20:46Z",
+      "side": 1,
+      "message": "nit: `config_doublelineClockDefault` to be consistent with other config names",
+      "range": {
+        "startLine": 5009,
+        "startChar": 19,
+        "endLine": 5009,
+        "endChar": 50
+      },
+      "revId": "74f17857d3e8246d5677b406b45f4fdee476912d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
