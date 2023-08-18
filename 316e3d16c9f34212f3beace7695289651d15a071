@@ -16,6 +16,23 @@
       "message": "Looks good to me, would like Seth\u0027s opinion as well.",
       "revId": "316e3d16c9f34212f3beace7695289651d15a071",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40db56d7_8c4545dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1896276
+      },
+      "writtenOn": "2023-08-18T10:34:03Z",
+      "side": 1,
+      "message": "Need a code owner review for this change to fix Device ID attestation issues on GSI builds.",
+      "revId": "316e3d16c9f34212f3beace7695289651d15a071",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
