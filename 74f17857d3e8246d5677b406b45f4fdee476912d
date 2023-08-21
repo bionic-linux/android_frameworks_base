@@ -87,6 +87,30 @@
       },
       "revId": "74f17857d3e8246d5677b406b45f4fdee476912d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bee406e2_86cc7f1f",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 5009,
+      "author": {
+        "id": 1943370
+      },
+      "writtenOn": "2023-08-21T14:00:48Z",
+      "side": 1,
+      "message": "Hi @mpietal@google.com,\n\nThere seems to be a conflict with [this change](https://android-review.googlesource.com/c/platform/frameworks/base/+/2527300/17/packages/SystemUI/tests/src/com/android/keyguard/KeyguardClockSwitchControllerTest.java#152). Looks like there are more changes in internal branch for this.\n\nCould you please help resolve this conflict and trigger presubmit?\n\nThanks.",
+      "parentUuid": "86507c70_fbf6dec1",
+      "range": {
+        "startLine": 5009,
+        "startChar": 19,
+        "endLine": 5009,
+        "endChar": 50
+      },
+      "revId": "74f17857d3e8246d5677b406b45f4fdee476912d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
