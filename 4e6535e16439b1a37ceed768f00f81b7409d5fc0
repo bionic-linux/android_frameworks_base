@@ -22,6 +22,30 @@
       },
       "revId": "4e6535e16439b1a37ceed768f00f81b7409d5fc0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "157ad8c0_afd9c3ee",
+        "filename": "core/java/android/nfc/cardemulation/AidGroup.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-21T20:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4a6a175_bd121a35",
+      "range": {
+        "startLine": 186,
+        "startChar": 7,
+        "endLine": 186,
+        "endChar": 37
+      },
+      "revId": "4e6535e16439b1a37ceed768f00f81b7409d5fc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
