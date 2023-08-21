@@ -63,6 +63,30 @@
       },
       "revId": "74f17857d3e8246d5677b406b45f4fdee476912d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86507c70_fbf6dec1",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 5009,
+      "author": {
+        "id": 1943370
+      },
+      "writtenOn": "2023-08-21T12:14:10Z",
+      "side": 1,
+      "message": "@mpietal@google.com @tsuji@google.com, could you please help with review?\n\nThanks.",
+      "parentUuid": "2e0ebd99_c5145c89",
+      "range": {
+        "startLine": 5009,
+        "startChar": 19,
+        "endLine": 5009,
+        "endChar": 50
+      },
+      "revId": "74f17857d3e8246d5677b406b45f4fdee476912d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
