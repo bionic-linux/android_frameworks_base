@@ -118,6 +118,30 @@
       },
       "revId": "9c6cf2f2047d3e409fed41adc8a7d099fb993479",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83aff73d_af9c4808",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2133,
+      "author": {
+        "id": 1758351
+      },
+      "writtenOn": "2023-08-21T03:15:47Z",
+      "side": 1,
+      "message": "As discussed offload, using @SystemApi is better option here. Resolved the thread.",
+      "parentUuid": "281d2d2e_bb4add0f",
+      "range": {
+        "startLine": 2133,
+        "startChar": 8,
+        "endLine": 2133,
+        "endChar": 54
+      },
+      "revId": "9c6cf2f2047d3e409fed41adc8a7d099fb993479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
