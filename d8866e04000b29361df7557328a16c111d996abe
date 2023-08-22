@@ -16,6 +16,23 @@
       "message": "Addressed the comment. PTAL, Thanks!",
       "revId": "d8866e04000b29361df7557328a16c111d996abe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38cd54a6_6fa26317",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1127992
+      },
+      "writtenOn": "2023-08-22T19:04:12Z",
+      "side": 1,
+      "message": "@rahulsabnis can you please do API review?\n\nLGTM but lost my +1 and request to be readded to mdb group still pending, don\u0027t want to block approval. Thanks!",
+      "revId": "d8866e04000b29361df7557328a16c111d996abe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
