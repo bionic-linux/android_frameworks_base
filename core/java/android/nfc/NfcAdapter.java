@@ -706,14 +706,16 @@ public final class NfcAdapter {
             throw new IllegalArgumentException(
                     "context not associated with any application (using a mock context?)");
         }
-
-        if (sIsInitialized && sServiceRegisterer.tryGet() == null) {
-            synchronized (NfcAdapter.class) {
-                /* Stale sService pointer */
-                if (sIsInitialized) sIsInitialized = false;
+        if (sServiceRegisterer.tryGet() == null) {
+            if (sIsInitialized) {
+                synchronized (NfcAdapter.class) {
+                    /* Stale sService pointer */
+                    if (sIsInitialized) sIsInitialized = false;
+                }
             }
             return null;
         }
+
         /* Try to initialize the service */
         NfcManager manager = (NfcManager) context.getSystemService(Context.NFC_SERVICE);
         if (manager == null) {
