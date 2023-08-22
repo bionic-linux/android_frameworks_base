@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9521c526_b13cd254",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-08-22T20:39:47Z",
+      "side": 1,
+      "message": "The Camera2Tests stuff is all ancient projects by interns, so sorry for the extra work here for you.",
+      "revId": "b0b4612dfe7592b7a576bee67503454abb54e3f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
