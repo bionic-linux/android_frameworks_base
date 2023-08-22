@@ -43,17 +43,8 @@ import android.os.Build;
 public final class NfcManager {
     private final NfcAdapter mAdapter;
 
-    /**
-     * @hide
-     */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
-    public NfcManager(Context context) {
+    private void retrieveNfcAdapter() {
         NfcAdapter adapter;
-        context = context.getApplicationContext();
-        if (context == null) {
-            throw new IllegalArgumentException(
-                    "context not associated with any application (using a mock context?)");
-        }
         try {
             adapter = NfcAdapter.getNfcAdapter(context);
         } catch (UnsupportedOperationException e) {
@@ -63,11 +54,27 @@ public final class NfcManager {
     }
 
     /**
+     * @hide
+     */
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
+    public NfcManager(Context context) {
+        context = context.getApplicationContext();
+        if (context == null) {
+            throw new IllegalArgumentException(
+                    "context not associated with any application (using a mock context?)");
+        }
+        retrieveNfcAdapter();
+    }
+
+    /**
      * Get the default NFC Adapter for this device.
      *
      * @return the default NFC Adapter
      */
     public NfcAdapter getDefaultAdapter() {
+        if (mAdapter == null) {
+           retrieveNfcAdapter(); 
+        }
         return mAdapter;
     }
 }
