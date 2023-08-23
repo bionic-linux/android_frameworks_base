@@ -35,6 +35,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b210ad6_2a5e147c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-23T21:03:56Z",
+      "side": 1,
+      "message": "Addressed the comments. PTAL, Thanks!",
+      "revId": "d8866e04000b29361df7557328a16c111d996abe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b1a7836c_2eccddc5",
@@ -81,6 +98,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "208e05f3_eb99708d",
+        "filename": "core/java/android/nfc/cardemulation/AidGroup.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-23T21:03:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "716335b8_7ac327d4",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 38
+      },
+      "revId": "d8866e04000b29361df7557328a16c111d996abe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d81d4a7a_d8712d53",
@@ -104,6 +145,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cd73151_d9e2bf14",
+        "filename": "core/java/android/nfc/cardemulation/AidGroup.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-23T21:03:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d81d4a7a_d8712d53",
+      "range": {
+        "startLine": 86,
+        "startChar": 32,
+        "endLine": 86,
+        "endChar": 46
+      },
+      "revId": "d8866e04000b29361df7557328a16c111d996abe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "04019985_f90fb4f1",
@@ -117,6 +182,30 @@
       "writtenOn": "2023-08-23T18:46:48Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Build Warnings: [AndroidFrameworkEfficientParcelable] Recommended to use \u0027writeString8()\u0027 to improve efficiency; sending as UTF-8 can double throughput\n\nAnalyzer Description: Reports warnings that originate from build.log in the build artifacts.\nOwner: farivar@google.com\n\n    [AndroidFrameworkEfficientParcelable] Recommended to use \u0027writeString8()\u0027 to improve efficiency; sending as UTF-8 can double throughput\n            dest.writeString(mCategory);\n                            ^\n\nThis finding was found on https://android-build.googleplex.com/builds/build-details/P61468445/targets/errorprone-trunk_staging, but may also be present on other builds.\n\nThis is a different branch than your cl origionated on (it was automerged), and thus might better reflect the state of the code in the git_main branch.",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 36
+      },
+      "revId": "d8866e04000b29361df7557328a16c111d996abe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "076542d8_e6d0d296",
+        "filename": "core/java/android/nfc/cardemulation/AidGroup.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-23T21:03:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04019985_f90fb4f1",
       "range": {
         "startLine": 155,
         "startChar": 0,
