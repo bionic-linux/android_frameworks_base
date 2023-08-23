@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9595abf_8a464179",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1313,
+      "author": {
+        "id": 1080076
+      },
+      "writtenOn": "2023-08-23T19:44:20Z",
+      "side": 1,
+      "message": "should this be `string()` here and earlier?",
+      "range": {
+        "startLine": 1313,
+        "startChar": 54,
+        "endLine": 1313,
+        "endChar": 61
+      },
+      "revId": "bb27b524448cbd10545272eb711a41d882eb4e9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
