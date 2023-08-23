@@ -22,6 +22,30 @@
       },
       "revId": "bb27b524448cbd10545272eb711a41d882eb4e9f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "668a3144_7d11d786",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1313,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2023-08-23T19:57:58Z",
+      "side": 1,
+      "message": "Here: `leaf.string()` (`std::filesystem::path::string`) returns `std::string`, while frame.name is `android::String8`. There\u0027s automatic conversion from C string to String8, but not from std::string to String8\n\nEarlier: `animation.parts[j].path.string()` would be a `String8` and there\u0027s no comparison operator defined for `std::string \u003d\u003d android::String8`.",
+      "parentUuid": "e9595abf_8a464179",
+      "range": {
+        "startLine": 1313,
+        "startChar": 54,
+        "endLine": 1313,
+        "endChar": 61
+      },
+      "revId": "bb27b524448cbd10545272eb711a41d882eb4e9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
