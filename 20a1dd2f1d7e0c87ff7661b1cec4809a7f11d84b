@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88bb2a6a_9a215ad9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2023-08-24T20:46:50Z",
+      "side": 1,
+      "message": "Can you send an e-mail to g/android-lsc-discuss? Happy to be the reviewer but just want to get this through the official channels.",
+      "revId": "20a1dd2f1d7e0c87ff7661b1cec4809a7f11d84b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
