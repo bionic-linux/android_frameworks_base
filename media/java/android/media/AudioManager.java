@@ -3539,6 +3539,21 @@ public class AudioManager {
      */
     @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     @RequiresPermission(android.Manifest.permission.BLUETOOTH_STACK)
+    public void setBluetoothHeadsetProperties(@NonNull String name, boolean hasNrecEnabled,
+            boolean hasWbsEnabled, boolean hasLc3SwbEnabled, boolean hasAptXSwbEnabled) {
+        AudioSystem.setParameters("bt_headset_name=" + name
+                + ";bt_headset_nrec=" + (hasNrecEnabled ? "on" : "off")
+                + ";bt_wbs=" + (hasWbsEnabled ? "on" : "off")
+                + ";bt_lc3_swb=" + (hasLc3SwbEnabled ? "on" : "off")
+                /* bt_swb: 0 -> on, 65535 -> off */
+                + ";bt_swb=" + (hasAptXSwbEnabled ? "0" : "65535"));
+    }
+
+    /**
+     * @hide
+     */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @RequiresPermission(Manifest.permission.BLUETOOTH_STACK)
     public void setA2dpSuspended(boolean enable) {
         AudioSystem.setParameters("A2dpSuspended=" + enable);
     }
