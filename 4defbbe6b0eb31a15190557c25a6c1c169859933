@@ -52,6 +52,24 @@
       "parentUuid": "e68a272c_f5f7247d",
       "revId": "4defbbe6b0eb31a15190557c25a6c1c169859933",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c7da9a6_2e565410",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1413437
+      },
+      "writtenOn": "2023-08-28T03:24:28Z",
+      "side": 1,
+      "message": "Checked the sony change, it is the same fix patch code as this CL. \n\nSo let us focus on sony\u0027s change.",
+      "parentUuid": "9ab30bec_6e829010",
+      "revId": "4defbbe6b0eb31a15190557c25a6c1c169859933",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
