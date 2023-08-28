@@ -2327,6 +2327,12 @@ public class AlarmManagerService extends SystemService {
         final Alarm a = new Alarm(type, when, whenElapsed, windowLength, interval,
                 operation, directReceiver, listenerTag, workSource, flags, alarmClock,
                 callingUid, callingPackage, idleOptions, exactAllowReason);
+
+        if(a.creatorUid == Process.INVALID_UID){
+            Slog.w(TAG, "The pendingIntentInfo of the alarm is invalid " + callingUid + ":" + a);
+            return;
+        }
+
         if (mActivityManagerInternal.isAppStartModeDisabled(callingUid, callingPackage)) {
             Slog.w(TAG, "Not setting alarm from " + callingUid + ":" + a
                     + " -- package not allowed to start");
