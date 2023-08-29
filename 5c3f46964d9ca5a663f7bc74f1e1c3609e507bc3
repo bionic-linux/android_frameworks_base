@@ -22,6 +22,30 @@
       },
       "revId": "5c3f46964d9ca5a663f7bc74f1e1c3609e507bc3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f9136dd_e970c3b7",
+        "filename": "core/java/android/service/trust/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-29T18:40:38Z",
+      "side": 1,
+      "message": "This CL is a cherry-pick, but yes Chad should be removed in a follow-up CL...",
+      "parentUuid": "205e9846_87277b36",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 9
+      },
+      "revId": "5c3f46964d9ca5a663f7bc74f1e1c3609e507bc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
