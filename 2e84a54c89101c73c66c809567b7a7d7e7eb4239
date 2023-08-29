@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b809ab6b_056be19d",
+        "filename": "core/java/android/service/trust/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-29T19:01:59Z",
+      "side": 1,
+      "message": "Yes, vishwath@ was already removed, and I\u0027ll upload a follow-up CL that removes cbrubaker@.  This CL is a cherry-pick so any changes belong in follow-up CLs.",
+      "parentUuid": "cbf8fff0_939b5a3f",
+      "revId": "2e84a54c89101c73c66c809567b7a7d7e7eb4239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b657a5de_98f91bef",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-08-29T18:57:20Z",
       "side": 1,
       "message": "Would it be helpful to add more owners, in case someone is (temporarily) unavailable?",
+      "revId": "2e84a54c89101c73c66c809567b7a7d7e7eb4239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3958f28f_dc0f618f",
+        "filename": "core/java/android/service/trust/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-29T19:01:59Z",
+      "side": 1,
+      "message": "Yes, I\u0027ll talk with Jacob to find additional OWNER(s).  Note that this CL is a cherry-pick so any addition would belong in a follow-up CL.",
+      "parentUuid": "b657a5de_98f91bef",
       "revId": "2e84a54c89101c73c66c809567b7a7d7e7eb4239",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
