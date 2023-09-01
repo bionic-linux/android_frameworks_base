@@ -16,6 +16,24 @@
       "message": "Can you please provide the context for this?",
       "revId": "3aa5b5462253a7220966552a172b3b07625cfff9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e2746c2_a0699311",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1464582
+      },
+      "writtenOn": "2023-09-01T17:27:33Z",
+      "side": 1,
+      "message": "Android Autofill team works with the AssistStructure directly as it\u0027s used as an input for field detection. So this would suggest that it makes sense to add some TLs into the owners of this path. \n\nThe frameworks/base/services/autofill/OWNERS file seems too wide, so I added just two people from Android Autofill. \n\nPlease let me know if you have better ideas! :)",
+      "parentUuid": "4148eeba_a07a03df",
+      "revId": "3aa5b5462253a7220966552a172b3b07625cfff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
