@@ -16,6 +16,23 @@
       "message": "Looks like EncryptedLocalTransport/ doesn\u0027t have a dedicated OWNERS, +jjaggi for approval.",
       "revId": "74d09ea6ff951ada8bb0544bcca065167fa3e352",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58c19fe5_e4b5bed0",
+        "filename": "packages/LocalTransport/src/com/android/localtransport/LocalTransport.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1241761
+      },
+      "writtenOn": "2023-09-04T10:49:36Z",
+      "side": 1,
+      "message": "DBC on syntax: It looks like this would have been nicer to express with something like:\n```\n@KeepTarget(subtypeOfClassConstant \u003d LocalTransport.class)\n```\nwhich would use the normal notion of subtype which is inclusive.\n\nIf we added this it we should consider replacing the name `extendsClassConstant` by `strictSubtypeOfClassConstant`. That seems to make it much more clear if the class itself is part of the target.\n\nWDYT?",
+      "revId": "74d09ea6ff951ada8bb0544bcca065167fa3e352",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
