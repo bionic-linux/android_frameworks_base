@@ -33,6 +33,24 @@
       "message": "DBC on syntax: It looks like this would have been nicer to express with something like:\n```\n@KeepTarget(subtypeOfClassConstant \u003d LocalTransport.class)\n```\nwhich would use the normal notion of subtype which is inclusive.\n\nIf we added this it we should consider replacing the name `extendsClassConstant` by `strictSubtypeOfClassConstant`. That seems to make it much more clear if the class itself is part of the target.\n\nWDYT?",
       "revId": "74d09ea6ff951ada8bb0544bcca065167fa3e352",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c40e4d04_ddaf4137",
+        "filename": "packages/LocalTransport/src/com/android/localtransport/LocalTransport.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2023-09-05T20:32:23Z",
+      "side": 1,
+      "message": "Agreed that an inclusive variant would be convenient. I don\u0027t mind the current `extendsClassConstant` semantics/name as it matches what you\u0027d get with declarative Proguard syntax (`extends Foo`), but also don\u0027t have a strong opinion. `strictSubtypeOfClassConstant` is definitely clearer as a standalone name.",
+      "parentUuid": "58c19fe5_e4b5bed0",
+      "revId": "74d09ea6ff951ada8bb0544bcca065167fa3e352",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
