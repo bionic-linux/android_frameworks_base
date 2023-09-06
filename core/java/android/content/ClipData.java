@@ -573,6 +573,7 @@ public class ClipData implements Parcelable {
                         AssetFileDescriptor descr = context.getContentResolver()
                                 .openTypedAssetFileDescriptor(mUri,
                                         hasHtml ? "text/html" : "text/plain", null);
+                        if (descr == null) return "";
                         stream = descr.createInputStream();
                         InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
 
