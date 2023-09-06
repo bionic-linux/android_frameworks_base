@@ -239,6 +239,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "251d24e2_fdfeba59",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-09-06T18:48:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05f0dd51_34ca938a",
+      "range": {
+        "startLine": 485,
+        "startChar": 46,
+        "endLine": 485,
+        "endChar": 62
+      },
+      "revId": "d8866e04000b29361df7557328a16c111d996abe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b01cc6d2_17d51174",
@@ -252,6 +276,24 @@
       "writtenOn": "2023-08-23T18:46:48Z",
       "side": 1,
       "message": "Maybe rename to resetOffHostSecureElement? unset is a strange way to word it and it conflicts with the docs.",
+      "revId": "d8866e04000b29361df7557328a16c111d996abe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd55d906_b6c5229b",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-09-06T18:48:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b01cc6d2_17d51174",
       "revId": "d8866e04000b29361df7557328a16c111d996abe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -273,6 +315,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ee53c85_b302e85f",
+        "filename": "core/java/android/nfc/cardemulation/NfcFServiceInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-09-06T18:48:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bba3d4c_240b0d26",
+      "revId": "d8866e04000b29361df7557328a16c111d996abe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43088f37_a098a4e1",
@@ -286,6 +346,24 @@
       "writtenOn": "2023-08-23T18:46:48Z",
       "side": 1,
       "message": "Just call this setDynamicNfcid2 because it\u0027s implied the value will be replaced if it already exists",
+      "revId": "d8866e04000b29361df7557328a16c111d996abe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35cde34f_64dd96e1",
+        "filename": "core/java/android/nfc/cardemulation/NfcFServiceInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-09-06T18:48:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43088f37_a098a4e1",
       "revId": "d8866e04000b29361df7557328a16c111d996abe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
