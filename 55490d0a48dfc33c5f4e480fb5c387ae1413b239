@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73c91207_3779fc4a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2023-09-06T12:20:06Z",
+      "side": 1,
+      "message": "Looks good to me (descr is checked for `!\u003d null` in the other place it\u0027s created already) - but I\u0027m curious what the repro case in the linked issue is so asked there.",
+      "revId": "55490d0a48dfc33c5f4e480fb5c387ae1413b239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
