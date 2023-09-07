@@ -3299,16 +3299,13 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             // so it could call AM to get the UIDs of such apps, and iterate through them instead.
             updateRulesForRestrictBackgroundUL();
             try {
-                if (!mNetworkManager.setDataSaverModeEnabled(mRestrictBackground)) {
-                    Slog.e(TAG,
-                            "Could not change Data Saver Mode on NMS to " + mRestrictBackground);
-                    mRestrictBackground = oldRestrictBackground;
-                    // TODO: if it knew the foreground apps (see TODO above), it could call
-                    // updateRulesForRestrictBackgroundUL() again to restore state.
-                    return;
-                }
-            } catch (RemoteException e) {
-                // ignored; service lives in system_server
+                mConnManager.setDataSaverEnabled(mRestrictBackground);
+            } catch (IllegalStateException e) {
+                Slog.e(TAG, "Could not change Data Saver Mode to " + mRestrictBackground);
+                mRestrictBackground = oldRestrictBackground;
+                // TODO: if it knew the foreground apps (see TODO above), it could call
+                // updateRulesForRestrictBackgroundUL() again to restore state.
+                return;
             }
 
             sendRestrictBackgroundChangedMsg();

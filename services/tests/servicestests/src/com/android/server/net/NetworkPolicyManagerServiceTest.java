@@ -136,7 +136,6 @@ import android.net.NetworkTemplate;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.wifi.WifiInfo;
 import android.os.Binder;
-import android.os.Build;
 import android.os.Handler;
 import android.os.INetworkManagementService;
 import android.os.PersistableBundle;
@@ -181,7 +180,6 @@ import com.google.common.util.concurrent.AbstractFuture;
 import libcore.io.Streams;
 
 import org.junit.After;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -543,7 +541,6 @@ public class NetworkPolicyManagerServiceTest {
                 any(Consumer.class), anyInt());
         when(mUserManager.getUsers()).thenReturn(buildUserInfoList());
         when(mNetworkManager.isBandwidthControlEnabled()).thenReturn(true);
-        when(mNetworkManager.setDataSaverModeEnabled(anyBoolean())).thenReturn(true);
         doNothing().when(mConnManager)
                 .registerNetworkCallback(any(), mNetworkCallbackCaptor.capture());
 
