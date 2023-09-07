@@ -569,7 +569,6 @@ public class NetworkPolicyManagerServiceTest {
                 any(Consumer.class), anyInt());
         when(mUserManager.getUsers()).thenReturn(buildUserInfoList());
         when(mNetworkManager.isBandwidthControlEnabled()).thenReturn(true);
-        when(mNetworkManager.setDataSaverModeEnabled(anyBoolean())).thenReturn(true);
         doNothing().when(mConnManager)
                 .registerNetworkCallback(any(), mNetworkCallbackCaptor.capture());
 
