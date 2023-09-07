@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51ef10cd_2db0db08",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-09-07T22:30:24Z",
+      "side": 1,
+      "message": "Clean cherry-pick to fix presubmit failure",
+      "revId": "c3522c19321786ad22111db855bd4ab013ec23c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
