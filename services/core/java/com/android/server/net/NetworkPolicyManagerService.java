@@ -258,6 +258,7 @@ import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.StatLogger;
 import com.android.modules.utils.TypedXmlPullParser;
 import com.android.modules.utils.TypedXmlSerializer;
+import com.android.net.flags.Flags;
 import com.android.net.module.util.NetworkIdentityUtils;
 import com.android.net.module.util.NetworkStatsUtils;
 import com.android.net.module.util.PermissionUtils;
@@ -3303,16 +3304,17 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             // so it could call AM to get the UIDs of such apps, and iterate through them instead.
             updateRulesForRestrictBackgroundUL();
             try {
-                if (!mNetworkManager.setDataSaverModeEnabled(mRestrictBackground)) {
-                    Slog.e(TAG,
-                            "Could not change Data Saver Mode on NMS to " + mRestrictBackground);
-                    mRestrictBackground = oldRestrictBackground;
-                    // TODO: if it knew the foreground apps (see TODO above), it could call
-                    // updateRulesForRestrictBackgroundUL() again to restore state.
-                    return;
+                if (Flags.setDataSaverViaCm()) {
+                    mConnManager.setDataSaverEnabled(mRestrictBackground);
+                } else {
+                    mNetworkManager.setDataSaverModeEnabled(mRestrictBackground);
                 }
-            } catch (RemoteException e) {
-                // ignored; service lives in system_server
+            } catch (IllegalStateException | RemoteException e) {
+                Slog.e(TAG, "Could not change Data Saver Mode to " + mRestrictBackground);
+                mRestrictBackground = oldRestrictBackground;
+                // TODO: if it knew the foreground apps (see TODO above), it could call
+                // updateRulesForRestrictBackgroundUL() again to restore state.
+                return;
             }
 
             sendRestrictBackgroundChangedMsg();
