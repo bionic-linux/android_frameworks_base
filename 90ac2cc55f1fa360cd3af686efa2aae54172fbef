@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a179ae35_d3f8e402",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2023-09-07T20:23:54Z",
+      "side": 1,
+      "message": "Sorry, didn\u0027t realize the revert happened inside master branch. Cherry-picked into main branch in aosp/2746216. Will abandon this one.",
+      "revId": "90ac2cc55f1fa360cd3af686efa2aae54172fbef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
