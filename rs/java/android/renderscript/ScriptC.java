@@ -17,8 +17,9 @@
 package android.renderscript;
 
 import android.content.res.Resources;
+import android.os.Build.VERSION_CODES;
+import android.util.Slog;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -89,7 +90,21 @@ public class ScriptC extends Script {
         setID(id);
     }
 
-    private static synchronized long internalCreate(RenderScript rs, Resources resources, int resourceID) {
+    private static void throwExceptionIfSDKTooHigh(RenderScript rs) {
+        int targetSdkVersion = rs.getApplicationContext().getApplicationInfo().targetSdkVersion;
+        String message =
+                "ScriptC scripts are not supported when targeting an API Level >= 35. Please refer "
+                    + "to https://developer.android.com/guide/topics/renderscript/migration-guide "
+                    + "for proposed alternatives.";
+        Slog.w(TAG, message);
+        if (targetSdkVersion > VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            throw new UnsupportedOperationException(message);
+        }
+    }
+
+    private static synchronized long internalCreate(
+            RenderScript rs, Resources resources, int resourceID) {
+        throwExceptionIfSDKTooHigh(rs);
         byte[] pgm;
         int pgmLength;
         InputStream is = resources.openRawResource(resourceID);
@@ -125,6 +140,7 @@ public class ScriptC extends Script {
     }
 
     private static synchronized long internalStringCreate(RenderScript rs, String resName, byte[] bitcode) {
+        throwExceptionIfSDKTooHigh(rs);
         //        Log.v(TAG, "Create script for resource = " + resName);
         return rs.nScriptCCreate(resName, RenderScript.getCachePath(), bitcode, bitcode.length);
     }
