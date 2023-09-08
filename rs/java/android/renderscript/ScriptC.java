@@ -17,8 +17,9 @@
 package android.renderscript;
 
 import android.content.res.Resources;
+import android.os.Build.VERSION_CODES;
+import android.util.Slog;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -89,7 +90,20 @@ public class ScriptC extends Script {
         setID(id);
     }
 
-    private static synchronized long internalCreate(RenderScript rs, Resources resources, int resourceID) {
+    private static synchronized long internalCreate(
+            RenderScript rs, Resources resources, int resourceID) {
+        int targetSdkVersion = rs.getApplicationContext().getApplicationInfo().targetSdkVersion;
+        String linkToAlternatives =
+                "Please refer to"
+                    + " https://developer.android.com/guide/topics/renderscript/migration-guide for"
+                    + " proposed alternatives.";
+        if (targetSdkVersion > VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            throw new UnsupportedOperationException(
+                    "ScriptC scripts are not supported when targeting a level above Android 14. "
+                            + linkToAlternatives);
+        } else {
+            Slog.w(TAG, "ScriptC scripts are deprecated. " + linkToAlternatives);
+        }
         byte[] pgm;
         int pgmLength;
         InputStream is = resources.openRawResource(resourceID);
