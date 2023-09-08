@@ -34,6 +34,24 @@
       "parentUuid": "73c91207_3779fc4a",
       "revId": "55490d0a48dfc33c5f4e480fb5c387ae1413b239",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8837f8c_a2a9ee76",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2023-09-08T09:05:18Z",
+      "side": 1,
+      "message": "There isn\u0027t anything wrong with checking null here.\n\nI just want to see if you can share the actual steps to cause this bug to happen, since we should probably be testing that automatically going forward. I repeated the question again on the bug as I\u0027m not sure what a \"UAT test\" is. Let\u0027s continue discussing there and come back to this CL when it\u0027s clarified on the bug.",
+      "parentUuid": "e452dcce_178f9355",
+      "revId": "55490d0a48dfc33c5f4e480fb5c387ae1413b239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
