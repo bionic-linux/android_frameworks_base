@@ -2633,6 +2633,17 @@ public final class Settings {
     public static final String CALL_METHOD_GET_CONFIG = "GET_config";
 
     /**
+     * @hide - Private call() method on SettingsProvider to read from 'package' table.
+     */
+    public static final String CALL_METHOD_GET_PACKAGE = "GET_package";
+
+    /**
+     * @hide - Private call() method on SettingsProvider to read from 'package' table.
+     */
+    public static final String CALL_METHOD_PUT_PACKAGE = "PUT_package";
+
+
+    /**
      * @hide - Specifies that the caller of the fast-path call()-based flow tracks
      * the settings generation in order to cache values locally. If this key is
      * mapped to a <code>null</code> string extra in the request bundle, the response
@@ -2730,6 +2741,9 @@ public final class Settings {
 
     /** @hide - Private call() method to delete from the 'global' table */
     public static final String CALL_METHOD_DELETE_GLOBAL = "DELETE_global";
+
+    /** @hide - Private call() method to delete from the 'package' table */
+    public static final String CALL_METHOD_DELETE_PACKAGE = "DELETE_package";
 
     /** @hide - Private call() method to reset to defaults the 'configuration' table */
     public static final String CALL_METHOD_DELETE_CONFIG = "DELETE_config";
@@ -19371,6 +19385,419 @@ public final class Settings {
 
         private static ContentResolver getContentResolver() {
             return ActivityThread.currentApplication().getContentResolver();
+        }
+    }
+
+    /**
+     * Package settings associated with an app and stored per user. When the app is uninstalled the
+     * settings for it are also removed. These settings are for supporting the platform storing per
+     * package settings vs a package storing settings for itself.
+     *
+     *  @hide
+     */
+    @SystemApi
+    @SuppressLint("StaticUtils")
+    public static final class Package extends NameValueTable {
+
+        /**
+         * The content:// style URL for this table
+         * @hide
+         */
+        public static final Uri CONTENT_URI =
+                Uri.parse("content://" + Settings.AUTHORITY + "/package");
+
+        private static final ContentProviderHolder sProviderHolder =
+                new ContentProviderHolder(CONTENT_URI);
+
+        // Populated lazily, guarded by class object:
+        private static final NameValueCache sNameValueCache = new NameValueCache(
+                CONTENT_URI,
+                CALL_METHOD_GET_PACKAGE,
+                CALL_METHOD_PUT_PACKAGE,
+                CALL_METHOD_DELETE_PACKAGE,
+                sProviderHolder,
+                Package.class);
+
+        /**
+         * Get a setting for a package.
+         *
+         * @param resolver to access the database with
+         * @param packageName for which to do the lookup
+         * @param name to look up
+         * @return the corresponding value or null if a setting by the given
+         * name can't be found.
+         *
+         * @hide
+         */
+        @RequiresPermission(Manifest.permission.READ_PACKAGE_SETTINGS)
+        @Nullable
+        @SystemApi
+        public static String getString(
+                @NonNull ContentResolver resolver,
+                @NonNull String packageName,
+                @NonNull String name) {
+            String compositeName = createCompositeName(packageName, name);
+            return sNameValueCache.getStringForUser(resolver, compositeName,
+                    resolver.getUserId());
+        }
+
+        /**
+         * Put a setting for a package.
+         *
+         * @param resolver to access the database with
+         * @param packageName for which to set the value
+         * @param name to set
+         * @param value to set
+         * @return whether the operation succeeded
+         *
+         * @hide
+         */
+        @RequiresPermission(Manifest.permission.WRITE_PACKAGE_SETTINGS)
+        @SystemApi
+        public static boolean putString(
+                @NonNull ContentResolver resolver,
+                @NonNull String packageName,
+                @NonNull String name,
+                @Nullable String value) {
+            Preconditions.checkNotNull(resolver);
+            final String compositeName = createCompositeName(packageName, name);
+            return sNameValueCache.putStringForUser(
+                    resolver,
+                    compositeName,
+                    value,
+                    null /*tag*/,
+                    false /*makeDefault*/,
+                    resolver.getUserId(),
+                    false /*overrideableByRestore*/);
+        }
+
+        /**
+         * Delete a setting for a package.
+         *
+         * @param resolver to access the database with
+         * @param packageName for which to set the value
+         * @param name to delete or fail if null
+         * @return whether the operation succeeded
+         *
+         * @hide
+         */
+        @RequiresPermission(Manifest.permission.WRITE_PACKAGE_SETTINGS)
+        @SystemApi
+        public static boolean remove(
+                @NonNull ContentResolver resolver,
+                @NonNull String packageName,
+                @NonNull String name) {
+            return putString(resolver, packageName, name, null /*value*/);
+        }
+
+        /**
+         * Get a setting for a package.
+         *
+         * @param resolver to access the database with
+         * @param packageName for which to do the lookup
+         * @param name to look up
+         * @param defaultValue to return if the setting is not set
+         * @return the corresponding value, or the default value if not present
+         *
+         * @hide
+         */
+        @RequiresPermission(Manifest.permission.READ_PACKAGE_SETTINGS)
+        @SystemApi
+        public static boolean getBoolean(
+                @NonNull ContentResolver resolver,
+                @NonNull String packageName,
+                @NonNull String name,
+                boolean defaultValue) {
+            final String value = getString(resolver, packageName, name);
+            return value != null ? Boolean.parseBoolean(value) : defaultValue;
+        }
+
+        /**
+         * Get a setting for a package.
+         *
+         * @param resolver to access the database with
+         * @param packageName for which to do the lookup
+         * @param name to look up
+         * @throws SettingNotFoundException Thrown if a setting by the given
+         * name can't be found.
+         *
+         * @hide
+         */
+        @RequiresPermission(Manifest.permission.READ_PACKAGE_SETTINGS)
+        @SystemApi
+        public static boolean getBoolean(
+                @NonNull ContentResolver resolver,
+                @NonNull String packageName,
+                @NonNull String name) throws SettingNotFoundException {
+            final String value = getString(resolver, packageName, name);
+            if (value != null) {
+                return Boolean.parseBoolean(value);
+            } else {
+                throw new SettingNotFoundException(createCompositeName(packageName, name));
+            }
+        }
+
+        /**
+         * Put a setting for a package.
+         *
+         * @param resolver to access the database with
+         * @param packageName for which to set the value
+         * @param name to set
+         * @param value to set
+         * @return whether the operation succeeded
+         *
+         * @hide
+         */
+        @RequiresPermission(Manifest.permission.WRITE_PACKAGE_SETTINGS)
+        @SystemApi
+        public static boolean putBoolean(
+                @NonNull ContentResolver resolver,
+                @NonNull String packageName,
+                @NonNull String name,
+                boolean value) {
+            return putString(resolver, packageName, name, Boolean.toString(value));
+        }
+
+        /**
+         * Get a setting for a package.
+         *
+         * @param resolver to access the database with
+         * @param packageName for which to do the lookup
+         * @param name to look up
+         * @param defaultValue to return if the setting is not set
+         * @return the corresponding value, or the default value if not present
+         *
+         * @hide
+         */
+        @RequiresPermission(Manifest.permission.READ_PACKAGE_SETTINGS)
+        @SystemApi
+        public static int getInt(
+                @NonNull ContentResolver resolver,
+                @NonNull String packageName,
+                @NonNull String name,
+                int defaultValue) {
+            final String value = getString(resolver, packageName, name);
+            try {
+                return value != null ? Integer.parseInt(value) : defaultValue;
+            } catch (NumberFormatException ignored) {
+                return defaultValue;
+            }
+        }
+
+        /**
+         * Get a setting for a package.
+         *
+         * @param resolver to access the database with
+         * @param packageName for which to do the lookup
+         * @param name to look up
+         * @throws SettingNotFoundException Thrown if a setting by the given
+         * name can't be found or the setting value is not an integer.
+         *
+         * @hide
+         */
+        @RequiresPermission(Manifest.permission.READ_PACKAGE_SETTINGS)
+        @SystemApi
+        public static int getInt(
+                @NonNull ContentResolver resolver,
+                @NonNull String packageName,
+                @NonNull String name) throws SettingNotFoundException {
+            final String value = getString(resolver, packageName, name);
+            try {
+                return Integer.parseInt(value);
+            } catch (NumberFormatException ignored) {
+                throw new SettingNotFoundException(createCompositeName(packageName, name));
+            }
+        }
+
+        /**
+         * Put a setting for a package.
+         *
+         * @param resolver to access the database with
+         * @param packageName for which to set the value
+         * @param name to set
+         * @param value to set
+         * @return whether the operation succeeded
+         *
+         * @hide
+         */
+        @RequiresPermission(Manifest.permission.WRITE_PACKAGE_SETTINGS)
+        @SystemApi
+        public static boolean putInt(
+                @NonNull ContentResolver resolver,
+                @NonNull String packageName,
+                @NonNull String name,
+                int value) {
+            return putString(resolver, packageName, name, Integer.toString(value));
+        }
+
+        /**
+         * Get a setting for a package.
+         *
+         * @param resolver to access the database with
+         * @param packageName for which to do the lookup
+         * @param name to look up
+         * @param defaultValue to return if the setting is not set
+         * @return the corresponding value, or the default value if not present
+         *
+         * @hide
+         */
+        @RequiresPermission(Manifest.permission.READ_PACKAGE_SETTINGS)
+        @SystemApi
+        public static long getLong(
+                @NonNull ContentResolver resolver,
+                @NonNull String packageName,
+                @NonNull String name,
+                long defaultValue) {
+            final String value = getString(resolver, packageName, name);
+            try {
+                return value != null ? Long.parseLong(value) : defaultValue;
+            } catch (NumberFormatException ignored) {
+                return defaultValue;
+            }
+        }
+
+        /**
+         * Get a setting for a package.
+         *
+         * @param resolver to access the database with
+         * @param packageName for which to do the lookup
+         * @param name to look up
+         * @throws SettingNotFoundException Thrown if a setting by the given
+         * name can't be found or the setting value is not a long.
+         *
+         * @hide
+         */
+        @RequiresPermission(Manifest.permission.READ_PACKAGE_SETTINGS)
+        @SystemApi
+        public static long getLong(
+                @NonNull ContentResolver resolver,
+                @NonNull String packageName,
+                @NonNull String name) throws SettingNotFoundException {
+            final String value = getString(resolver, packageName, name);
+            try {
+                return Long.parseLong(value);
+            } catch (NumberFormatException ignored) {
+                throw new SettingNotFoundException(createCompositeName(packageName, name));
+            }
+        }
+
+        /**
+         * Put a setting for a package.
+         *
+         * @param resolver to access the database with
+         * @param packageName for which to set the value
+         * @param name to set
+         * @param value to set
+         * @return whether the operation succeeded
+         *
+         * @hide
+         */
+        @RequiresPermission(Manifest.permission.WRITE_PACKAGE_SETTINGS)
+        @SystemApi
+        public static boolean putLong(
+                @NonNull ContentResolver resolver,
+                @NonNull String packageName,
+                @NonNull String name,
+                long value) {
+            return putString(resolver, packageName, name, Long.toString(value));
+        }
+
+        /**
+         * Get a setting for a package.
+         *
+         * @param resolver to access the database with
+         * @param packageName for which to do the lookup
+         * @param name to look up
+         * @param defaultValue to return if the setting is not set
+         * @return the corresponding value, or the default value if not present
+         *
+         * @hide
+         */
+        @RequiresPermission(Manifest.permission.READ_PACKAGE_SETTINGS)
+        @SystemApi
+        public static float getFloat(
+                @NonNull ContentResolver resolver,
+                @NonNull String packageName,
+                @NonNull String name,
+                float defaultValue) {
+            final String value = getString(resolver, packageName, name);
+            try {
+                return value != null ? Float.parseFloat(value) : defaultValue;
+            } catch (NumberFormatException ignored) {
+                return defaultValue;
+            }
+        }
+
+        /**
+         * Get a setting for a package.
+         *
+         * @param resolver to access the database with
+         * @param packageName for which to do the lookup
+         * @param name to look up
+         * @throws SettingNotFoundException Thrown if a setting by the given
+         * name can't be found or the setting value is not a float.
+         *
+         * @hide
+         */
+        @RequiresPermission(Manifest.permission.READ_PACKAGE_SETTINGS)
+        @SystemApi
+        public static float getFloat(
+                @NonNull ContentResolver resolver,
+                @NonNull String packageName,
+                @NonNull String name) throws SettingNotFoundException {
+            final String value = getString(resolver, packageName, name);
+            try {
+                return Float.parseFloat(value);
+            } catch (NumberFormatException ignored) {
+                throw new SettingNotFoundException(createCompositeName(packageName, name));
+            }
+        }
+
+        /**
+         * Put a setting for a package.
+         *
+         * @param resolver to access the database with
+         * @param packageName for which to set the value
+         * @param name to set
+         * @param value to set
+         * @return whether the operation succeeded
+         *
+         * @hide
+         */
+        @RequiresPermission(Manifest.permission.WRITE_PACKAGE_SETTINGS)
+        @SystemApi
+        public static boolean putFloat(
+                @NonNull ContentResolver resolver,
+                @NonNull String packageName,
+                @NonNull String name,
+                float value) {
+            return putString(resolver, packageName, name, Float.toString(value));
+        }
+
+
+        /**
+         * Construct the content URI for a particular package and setting for monitoring changes
+         * with a {@link ContentResolver}.
+         *
+         * @param packageName of interest
+         * @param name of interest
+         * @return the corresponding content URI, or null if not present
+         * @see ContentResolver#registerContentObserver(Uri, boolean, ContentObserver)
+         *
+         * @hide
+         */
+        @NonNull
+        @SystemApi
+        public static Uri getUriFor(@NonNull String packageName, @NonNull String name) {
+            final String path = createCompositeName(packageName, name);
+            return Uri.withAppendedPath(CONTENT_URI, path);
+        }
+
+        private static String createCompositeName(
+                @NonNull String packageName, @NonNull String name) {
+            Preconditions.checkNotNull(packageName);
+            Preconditions.checkNotNull(name);
+            return packageName + "/" + name;
         }
     }
 
