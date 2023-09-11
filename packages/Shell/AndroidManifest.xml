@@ -700,6 +700,10 @@
     <!-- Permission required for CTS test - CtsDevicePolicyManagerTestCases -->
     <uses-permission android:name="android.permission.READ_NEARBY_STREAMING_POLICY" />
 
+    <!-- Permission required for CTS test - CtsSettingsProviderHostTestCases -->
+    <uses-permission android:name="android.permission.READ_PACKAGE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_PACKAGE_SETTINGS" />
+
     <application android:label="@string/app_label"
                 android:theme="@android:style/Theme.DeviceDefault.DayNight"
                 android:defaultToDeviceProtectedStorage="true"
