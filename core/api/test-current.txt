@@ -1,4 +1,7 @@
 // Signature format: 2.0
+// - add-additional-overrides=yes
+// - migrating=Migration in progress see b/299366704
+// - overloaded-method-order=source
 package android {
 
   public static final class Manifest.permission {
@@ -1788,6 +1791,8 @@ package android.os {
 
   public abstract static class IpcDataCache.QueryHandler<Q, R> extends android.app.PropertyInvalidatedCache.QueryHandler<Q,R> {
     ctor public IpcDataCache.QueryHandler();
+    method @Nullable public abstract R apply(@NonNull Q);
+    method public boolean shouldBypassCache(@NonNull Q);
   }
 
   public final class MessageQueue {
@@ -3367,11 +3372,13 @@ package android.window {
   }
 
   public final class TaskFragmentCreationParams implements android.os.Parcelable {
+    method public int describeContents();
     method @NonNull public android.os.IBinder getFragmentToken();
     method @NonNull public android.graphics.Rect getInitialBounds();
     method @NonNull public android.window.TaskFragmentOrganizerToken getOrganizer();
     method @NonNull public android.os.IBinder getOwnerToken();
     method public int getWindowingMode();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.window.TaskFragmentCreationParams> CREATOR;
   }
 
@@ -3383,6 +3390,7 @@ package android.window {
   }
 
   public final class TaskFragmentInfo implements android.os.Parcelable {
+    method public int describeContents();
     method public boolean equalsForTaskFragmentOrganizer(@Nullable android.window.TaskFragmentInfo);
     method @NonNull public java.util.List<android.os.IBinder> getActivities();
     method @NonNull public android.content.res.Configuration getConfiguration();
@@ -3395,6 +3403,7 @@ package android.window {
     method public boolean isEmpty();
     method public boolean isTaskClearedForReuse();
     method public boolean isVisible();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.window.TaskFragmentInfo> CREATOR;
   }
 
@@ -3412,6 +3421,8 @@ package android.window {
   }
 
   public final class TaskFragmentOrganizerToken implements android.os.Parcelable {
+    method public int describeContents();
+    method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.window.TaskFragmentOrganizerToken> CREATOR;
   }
 
