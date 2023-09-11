@@ -39,6 +39,7 @@ import static com.android.providers.settings.SettingsState.getTypeFromKey;
 import static com.android.providers.settings.SettingsState.getUserIdFromKey;
 import static com.android.providers.settings.SettingsState.isConfigSettingsKey;
 import static com.android.providers.settings.SettingsState.isGlobalSettingsKey;
+import static com.android.providers.settings.SettingsState.isPackageSettingsKey;
 import static com.android.providers.settings.SettingsState.isSecureSettingsKey;
 import static com.android.providers.settings.SettingsState.isSsaidSettingsKey;
 import static com.android.providers.settings.SettingsState.isSystemSettingsKey;
@@ -47,6 +48,7 @@ import static com.android.providers.settings.SettingsState.makeKey;
 import android.Manifest;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.UserIdInt;
 import android.app.ActivityManager;
 import android.app.AppGlobals;
 import android.app.backup.BackupManager;
@@ -234,6 +236,7 @@ public class SettingsProvider extends ContentProvider {
     public static final int SETTINGS_TYPE_SECURE = SettingsState.SETTINGS_TYPE_SECURE;
     public static final int SETTINGS_TYPE_SSAID = SettingsState.SETTINGS_TYPE_SSAID;
     public static final int SETTINGS_TYPE_CONFIG = SettingsState.SETTINGS_TYPE_CONFIG;
+    public static final int SETTINGS_TYPE_PACKAGE = SettingsState.SETTINGS_TYPE_PACKAGE;
 
     private static final int CHANGE_TYPE_INSERT = 0;
     private static final int CHANGE_TYPE_DELETE = 1;
@@ -443,6 +446,12 @@ public class SettingsProvider extends ContentProvider {
                         setting, isTrackingGeneration(args));
             }
 
+            case Settings.CALL_METHOD_GET_PACKAGE: {
+                final Setting setting = getPackageSetting(name, requestingUserId);
+                return packageValueForCallResult(SETTINGS_TYPE_PACKAGE, name, requestingUserId,
+                        setting, isTrackingGeneration(args));
+            }
+
             case Settings.CALL_METHOD_PUT_CONFIG: {
                 String value = getSettingValue(args);
                 final boolean makeDefault = getSettingMakeDefault(args);
@@ -475,6 +484,12 @@ public class SettingsProvider extends ContentProvider {
                 boolean overrideableByRestore = getSettingOverrideableByRestore(args);
                 insertSystemSetting(name, value, requestingUserId, overrideableByRestore);
                 break;
+            }
+
+            case Settings.CALL_METHOD_PUT_PACKAGE: {
+                final String value = getSettingValue(args);
+                return insertPackageSetting(name, value, requestingUserId)
+                        ? null /*success*/ : NULL_SETTING_BUNDLE;
             }
 
             case Settings.CALL_METHOD_SET_ALL_CONFIG: {
@@ -543,6 +558,13 @@ public class SettingsProvider extends ContentProvider {
 
             case Settings.CALL_METHOD_DELETE_SYSTEM: {
                 int rows = deleteSystemSetting(name, requestingUserId) ? 1 : 0;
+                Bundle result = new Bundle();
+                result.putInt(RESULT_ROWS_DELETED, rows);
+                return result;
+            }
+
+            case Settings.CALL_METHOD_DELETE_PACKAGE: {
+                int rows = deletePackageSetting(name, requestingUserId) ? 1 : 0;
                 Bundle result = new Bundle();
                 result.putInt(RESULT_ROWS_DELETED, rows);
                 return result;
@@ -901,6 +923,32 @@ public class SettingsProvider extends ContentProvider {
                 Binder.restoreCallingIdentity(identity);
             }
             mSettingsRegistry.mGenerationRegistry.dump(pw);
+        }
+    }
+
+    void dumpPackageSettings(PrintWriter pw) {
+        synchronized (mLock) {
+            final long identity = Binder.clearCallingIdentity();
+            try {
+                final SparseBooleanArray users = mSettingsRegistry.getKnownUsersLocked();
+                final int userCount = users.size();
+                for (int i = 0; i < userCount; i++) {
+                    dumpPackageSettingsForUserLocked(users.keyAt(i), pw);
+                }
+            } finally {
+                Binder.restoreCallingIdentity(identity);
+            }
+        }
+    }
+
+    private void dumpPackageSettingsForUserLocked(int userId, PrintWriter pw) {
+        pw.println("PACKAGE SETTINGS (user " + userId + ")");
+        final SettingsState packageSettings = mSettingsRegistry.getSettingsLocked(
+                SETTINGS_TYPE_PACKAGE, userId);
+        if (packageSettings != null) {
+            dumpSettingsLocked(packageSettings, pw);
+            pw.println();
+            packageSettings.dumpHistoricalOperations(pw);
         }
     }
 
@@ -1982,6 +2030,91 @@ public class SettingsProvider extends ContentProvider {
         }
     }
 
+    private Setting getPackageSetting(String name, int requestingUserId) {
+        if (DEBUG) {
+            Slog.v(LOG_TAG, "getPackageSetting(" + name + ", " + requestingUserId + ")");
+        }
+
+        // Ensure the caller can access the setting.
+        getContext().enforceCallingOrSelfPermission(Manifest.permission
+                .READ_PACKAGE_SETTINGS, "getPackageSetting");
+
+        // Resolve the userId on whose behalf the call is made.
+        final int callingUserId = resolveCallingUserIdEnforcingPermissionsLocked(requestingUserId);
+
+        // If the setting is not for an existing package, bail.
+        if (isInvalidPackageSetting(name, callingUserId)) {
+            return null;
+        }
+
+        synchronized (mLock) {
+            return mSettingsRegistry.getSettingLocked(SETTINGS_TYPE_PACKAGE, callingUserId, name);
+        }
+    }
+
+    private boolean insertPackageSetting(String name, String value, int requestingUserId) {
+        if (DEBUG) {
+            Slog.v(LOG_TAG, "insertPackageSetting(" + name + ", " + value + ", "
+                    + requestingUserId + ")");
+        }
+
+        return mutatePackageSettings(name, value, requestingUserId, MUTATION_OPERATION_INSERT);
+    }
+
+
+    private boolean deletePackageSetting(String name, int requestingUserId) {
+        if (DEBUG) {
+            Slog.v(LOG_TAG, "deletePackageSetting(" + name + ", " + requestingUserId + ")");
+        }
+
+        return mutatePackageSettings(name, null, requestingUserId, MUTATION_OPERATION_DELETE);
+    }
+
+    private boolean mutatePackageSettings(
+            String name,
+            String value,
+            int runAsUserId,
+            int operation) {
+        // Make sure the caller can change the settings.
+        getContext().enforceCallingOrSelfPermission(Manifest.permission.WRITE_PACKAGE_SETTINGS,
+                "mutatePackageSettings");
+
+        // Resolve the userId on whose behalf the call is made.
+        final int callingUserId = resolveCallingUserIdEnforcingPermissionsLocked(runAsUserId);
+
+        // If the setting is not for an existing package, bail.
+        if (isInvalidPackageSetting(name, callingUserId)) {
+            return false;
+        }
+
+        // Mutate the value.
+        synchronized (mLock) {
+            switch (operation) {
+                case MUTATION_OPERATION_INSERT:
+                    return mSettingsRegistry.insertSettingLocked(SETTINGS_TYPE_PACKAGE,
+                            callingUserId, name, value, null /*tag*/, false /*makeDefault*/,
+                            getCallingPackage(), false /*forceNotify*/, null /*criticalSettings*/,
+                            Settings.DEFAULT_OVERRIDEABLE_BY_RESTORE /*overrideableByRestore*/);
+                case MUTATION_OPERATION_DELETE:
+                    return mSettingsRegistry.deleteSettingLocked(SETTINGS_TYPE_PACKAGE,
+                            callingUserId, name, false /*forceNotify*/, null /*criticalSettings*/);
+                default:
+                    return false;
+            }
+        }
+    }
+
+    private boolean isInvalidPackageSetting(String value, int userId) {
+        final String[] parts = value.split("/");
+        try {
+            if (mPackageManager.getPackageUid(
+                    parts[0], 0, userId) != Process.INVALID_UID) {
+                return false;
+            }
+        } catch (RemoteException ignored) {
+        }
+        return true;
+    }
     private boolean hasWriteSecureSettingsPermission() {
         // Write secure settings is a more protected permission. If caller has it we are good.
         return getContext().checkCallingOrSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
@@ -2378,10 +2511,10 @@ public class SettingsProvider extends ContentProvider {
 
     private Bundle packageValueForCallResult(int type, @NonNull String name, int userId,
             @Nullable Setting setting, boolean trackingGeneration) {
+        if (setting == null || setting.isNull()) {
+            return NULL_SETTING_BUNDLE;
+        }
         if (!trackingGeneration) {
-            if (setting == null || setting.isNull()) {
-                return NULL_SETTING_BUNDLE;
-            }
             return Bundle.forPair(Settings.NameValueTable.VALUE, setting.getValue());
         }
         Bundle result = new Bundle();
@@ -2825,6 +2958,7 @@ public class SettingsProvider extends ContentProvider {
         private static final String SETTINGS_FILE_GLOBAL = "settings_global.xml";
         private static final String SETTINGS_FILE_SYSTEM = "settings_system.xml";
         private static final String SETTINGS_FILE_SECURE = "settings_secure.xml";
+        private static final String SETTINGS_FILE_PACKAGE = "settings_package.xml";
         private static final String SETTINGS_FILE_SSAID = "settings_ssaid.xml";
         private static final String SETTINGS_FILE_CONFIG = "settings_config.xml";
 
@@ -3026,6 +3160,11 @@ public class SettingsProvider extends ContentProvider {
             final int ssaidKey = makeKey(SETTINGS_TYPE_SSAID, userId);
             ensureSettingsStateLocked(ssaidKey);
 
+            // Ensure package settings loaded.
+            final int packageKey = makeKey(SETTINGS_TYPE_PACKAGE, userId);
+            ensureSettingsStateLocked(packageKey);
+            pruneObsoletePackageSettingsLocked(userId);
+
             // Upgrade the settings to the latest version.
             UpgradeController upgrader = new UpgradeController(userId);
             upgrader.upgradeIfNeededLocked();
@@ -3041,6 +3180,55 @@ public class SettingsProvider extends ContentProvider {
             }
         }
 
+        private void pruneObsoletePackageSettingsLocked(@UserIdInt int userId) {
+            final long identity = Binder.clearCallingIdentity();
+            try {
+                final int packageKey = makeKey(SETTINGS_TYPE_PACKAGE, userId);
+                final SettingsState packageSettings = peekSettingsStateLocked(packageKey);
+                if (packageSettings == null) {  
+                    return;
+                }
+                final List<String> deletedNames = new ArrayList<>();
+                final List<String> names = packageSettings.getSettingNamesLocked();
+                for (final String name : names) {
+                    final String packageName = name.split("/")[0];
+                    if (mPackageManager.getPackageInfo(packageName, 0, userId) == null) {
+                        if (packageSettings.deleteSettingLocked(name)) {
+                            deletedNames.add(name);
+                        }
+                    }
+                }
+                for (String deletedName : deletedNames) {
+                    notifyForSettingsChange(packageKey, deletedName);
+                }
+            } catch (RemoteException ignore) {
+            } finally {
+                Binder.restoreCallingIdentity(identity);
+            }
+        }
+
+        private void pruneObsoletePackageSettingsLocked(@NonNull String packageName,
+                @UserIdInt int userId) {
+            final int packageKey = makeKey(SETTINGS_TYPE_PACKAGE, userId);
+            final SettingsState packageSettings = peekSettingsStateLocked(packageKey);
+            if (packageSettings == null) {
+                return;
+            }
+            final List<String> deletedNames = new ArrayList<>();
+            final List<String> names = packageSettings.getSettingNamesLocked();
+            final int nameCount = names.size();
+            for (int i = 0; i < nameCount; i++) {
+                final String name = names.get(i);
+                if (name.startsWith(packageName + "/")) {
+                    if (packageSettings.deleteSettingLocked(name)) {
+                        deletedNames.add(name);
+                    }
+                }
+            }
+            for (String deletedName : deletedNames) {
+                notifyForSettingsChange(packageKey, deletedName);
+            }
+        }
         public void removeUserStateLocked(int userId, boolean permanently) {
             // We always keep the global settings in memory.
 
@@ -3073,6 +3261,23 @@ public class SettingsProvider extends ContentProvider {
                         @Override
                         public void run() {
                             mSettingsStates.remove(secureKey);
+                        }
+                    });
+                }
+            }
+
+            // Nuke package settings.
+            final int packageKey = makeKey(SETTINGS_TYPE_PACKAGE, userId);
+            final SettingsState packageSettingsState = mSettingsStates.get(packageKey);
+            if (packageSettingsState != null) {
+                if (permanently) {
+                    mSettingsStates.remove(packageKey);
+                    packageSettingsState.destroyLocked(null);
+                } else {
+                    packageSettingsState.destroyLocked(new Runnable() {
+                        @Override
+                        public void run() {
+                            mSettingsStates.remove(packageKey);
                         }
                     });
                 }
@@ -3360,6 +3565,11 @@ public class SettingsProvider extends ContentProvider {
             if (systemSettings != null) {
                 systemSettings.removeSettingsForPackageLocked(packageName);
             }
+
+            // Package settings are removed if the composite key starts with
+            // the package, i.e. this is a setting for this package, and
+            // not based on the package that added the setting like above.
+            pruneObsoletePackageSettingsLocked(packageName, userId);
         }
 
         public void onUidRemovedLocked(int uid) {
@@ -3684,6 +3894,10 @@ public class SettingsProvider extends ContentProvider {
                 final int userId = getUserIdFromKey(key);
                 return new File(Environment.getUserSystemDirectory(userId),
                         SETTINGS_FILE_SECURE);
+            } else if (isPackageSettingsKey(key)) {
+                final int userId = getUserIdFromKey(key);
+                return new File(Environment.getUserSystemDirectory(userId),
+                        SETTINGS_FILE_PACKAGE);
             } else if (isSsaidSettingsKey(key)) {
                 final int userId = getUserIdFromKey(key);
                 return new File(Environment.getUserSystemDirectory(userId),
@@ -3703,6 +3917,9 @@ public class SettingsProvider extends ContentProvider {
             } else if (isSecureSettingsKey(key)) {
                 return (name != null) ? Uri.withAppendedPath(Settings.Secure.CONTENT_URI, name)
                         : Settings.Secure.CONTENT_URI;
+            } else if (isPackageSettingsKey(key)) {
+                return (name != null) ? Uri.withAppendedPath(Settings.Package.CONTENT_URI, name)
+                        : Settings.Package.CONTENT_URI;
             } else if (isSystemSettingsKey(key)) {
                 return (name != null) ? Uri.withAppendedPath(Settings.System.CONTENT_URI, name)
                         : Settings.System.CONTENT_URI;
@@ -3716,6 +3933,7 @@ public class SettingsProvider extends ContentProvider {
                 case SETTINGS_TYPE_CONFIG:
                 case SETTINGS_TYPE_GLOBAL:
                 case SETTINGS_TYPE_SECURE:
+                case SETTINGS_TYPE_PACKAGE:
                 case SETTINGS_TYPE_SSAID: {
                     return SettingsState.MAX_BYTES_PER_APP_PACKAGE_UNLIMITED;
                 }
@@ -3759,7 +3977,7 @@ public class SettingsProvider extends ContentProvider {
         }
 
         private final class UpgradeController {
-            private static final int SETTINGS_VERSION = 220;
+            private static final int SETTINGS_VERSION = 221;
 
             private final int mUserId;
 
@@ -3830,6 +4048,10 @@ public class SettingsProvider extends ContentProvider {
 
             private SettingsState getSecureSettingsLocked(int userId) {
                 return getSettingsLocked(SETTINGS_TYPE_SECURE, userId);
+            }
+
+            private SettingsState getPackageSettingsLocked(int userId) {
+                return getSettingsLocked(SETTINGS_TYPE_PACKAGE, userId);
             }
 
             private SettingsState getSsaidSettingsLocked(int userId) {
@@ -5850,6 +6072,11 @@ public class SettingsProvider extends ContentProvider {
                         }
                     }
                     currentVersion = 220;
+                }
+
+                if (currentVersion == 220) {
+                    // adding per package settings
+                    currentVersion = 221;
                 }
 
                 // vXXX: Add new settings above this point.

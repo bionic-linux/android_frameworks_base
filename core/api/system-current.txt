@@ -274,6 +274,7 @@ package android {
     field public static final String READ_INSTALL_SESSIONS = "android.permission.READ_INSTALL_SESSIONS";
     field public static final String READ_NETWORK_USAGE_HISTORY = "android.permission.READ_NETWORK_USAGE_HISTORY";
     field public static final String READ_OEM_UNLOCK_STATE = "android.permission.READ_OEM_UNLOCK_STATE";
+    field public static final String READ_PACKAGE_SETTINGS = "android.permission.READ_PACKAGE_SETTINGS";
     field public static final String READ_PEOPLE_DATA = "android.permission.READ_PEOPLE_DATA";
     field public static final String READ_PRINT_SERVICES = "android.permission.READ_PRINT_SERVICES";
     field public static final String READ_PRINT_SERVICE_RECOMMENDATIONS = "android.permission.READ_PRINT_SERVICE_RECOMMENDATIONS";
@@ -386,6 +387,7 @@ package android {
     field public static final String WRITE_EMBEDDED_SUBSCRIPTIONS = "android.permission.WRITE_EMBEDDED_SUBSCRIPTIONS";
     field @Deprecated public static final String WRITE_MEDIA_STORAGE = "android.permission.WRITE_MEDIA_STORAGE";
     field public static final String WRITE_OBB = "android.permission.WRITE_OBB";
+    field public static final String WRITE_PACKAGE_SETTINGS = "android.permission.WRITE_PACKAGE_SETTINGS";
     field public static final String WRITE_SECURITY_LOG = "android.permission.WRITE_SECURITY_LOG";
     field public static final String WRITE_SMS = "android.permission.WRITE_SMS";
   }
@@ -11737,6 +11739,26 @@ package android.provider {
     field public static final String WEBVIEW_MULTIPROCESS = "webview_multiprocess";
     field public static final String WIFI_BADGING_THRESHOLDS = "wifi_badging_thresholds";
     field @Deprecated public static final String WIFI_WAKEUP_ENABLED = "wifi_wakeup_enabled";
+  }
+
+  public static final class Settings.Package extends android.provider.Settings.NameValueTable {
+    ctor public Settings.Package();
+    method @RequiresPermission(android.Manifest.permission.READ_PACKAGE_SETTINGS) public static boolean getBoolean(@NonNull android.content.ContentResolver, @NonNull String, @NonNull String, boolean);
+    method @RequiresPermission(android.Manifest.permission.READ_PACKAGE_SETTINGS) public static boolean getBoolean(@NonNull android.content.ContentResolver, @NonNull String, @NonNull String) throws android.provider.Settings.SettingNotFoundException;
+    method @RequiresPermission(android.Manifest.permission.READ_PACKAGE_SETTINGS) public static float getFloat(@NonNull android.content.ContentResolver, @NonNull String, @NonNull String, float);
+    method @RequiresPermission(android.Manifest.permission.READ_PACKAGE_SETTINGS) public static float getFloat(@NonNull android.content.ContentResolver, @NonNull String, @NonNull String) throws android.provider.Settings.SettingNotFoundException;
+    method @RequiresPermission(android.Manifest.permission.READ_PACKAGE_SETTINGS) public static int getInt(@NonNull android.content.ContentResolver, @NonNull String, @NonNull String, int);
+    method @RequiresPermission(android.Manifest.permission.READ_PACKAGE_SETTINGS) public static int getInt(@NonNull android.content.ContentResolver, @NonNull String, @NonNull String) throws android.provider.Settings.SettingNotFoundException;
+    method @RequiresPermission(android.Manifest.permission.READ_PACKAGE_SETTINGS) public static long getLong(@NonNull android.content.ContentResolver, @NonNull String, @NonNull String, long);
+    method @RequiresPermission(android.Manifest.permission.READ_PACKAGE_SETTINGS) public static long getLong(@NonNull android.content.ContentResolver, @NonNull String, @NonNull String) throws android.provider.Settings.SettingNotFoundException;
+    method @Nullable @RequiresPermission(android.Manifest.permission.READ_PACKAGE_SETTINGS) public static String getString(@NonNull android.content.ContentResolver, @NonNull String, @NonNull String);
+    method @NonNull public static android.net.Uri getUriFor(@NonNull String, @NonNull String);
+    method @RequiresPermission(android.Manifest.permission.WRITE_PACKAGE_SETTINGS) public static boolean putBoolean(@NonNull android.content.ContentResolver, @NonNull String, @NonNull String, boolean);
+    method @RequiresPermission(android.Manifest.permission.WRITE_PACKAGE_SETTINGS) public static boolean putFloat(@NonNull android.content.ContentResolver, @NonNull String, @NonNull String, float);
+    method @RequiresPermission(android.Manifest.permission.WRITE_PACKAGE_SETTINGS) public static boolean putInt(@NonNull android.content.ContentResolver, @NonNull String, @NonNull String, int);
+    method @RequiresPermission(android.Manifest.permission.WRITE_PACKAGE_SETTINGS) public static boolean putLong(@NonNull android.content.ContentResolver, @NonNull String, @NonNull String, long);
+    method @RequiresPermission(android.Manifest.permission.WRITE_PACKAGE_SETTINGS) public static boolean putString(@NonNull android.content.ContentResolver, @NonNull String, @NonNull String, @Nullable String);
+    method @RequiresPermission(android.Manifest.permission.WRITE_PACKAGE_SETTINGS) public static boolean remove(@NonNull android.content.ContentResolver, @NonNull String, @NonNull String);
   }
 
   public static final class Settings.Secure extends android.provider.Settings.NameValueTable {
