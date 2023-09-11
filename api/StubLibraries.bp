@@ -83,6 +83,8 @@ module_libs = " --show-annotation android.annotation.SystemApi\\(" +
     "client=android.annotation.SystemApi.Client.MODULE_LIBRARIES" +
     "\\)"
 
+hide_missing_nullability = " --hide MissingNullability"
+
 droidstubs {
     name: "system-api-stubs-docs-non-updatable",
     srcs: [
@@ -92,7 +94,7 @@ droidstubs {
         "android-non-updatable-stubs-defaults",
         "module-classpath-stubs-defaults",
     ],
-    args: metalava_framework_docs_args + priv_apps,
+    args: metalava_framework_docs_args + priv_apps + hide_missing_nullability,
     check_api: {
         current: {
             api_file: ":non-updatable-system-current.txt",
@@ -135,7 +137,7 @@ droidstubs {
         "android-non-updatable-stubs-defaults",
         "module-classpath-stubs-defaults",
     ],
-    args: metalava_framework_docs_args + test + priv_apps_in_stubs,
+    args: metalava_framework_docs_args + test + priv_apps_in_stubs + hide_missing_nullability,
     check_api: {
         current: {
             api_file: ":non-updatable-test-current.txt",
