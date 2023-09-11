@@ -227,8 +227,12 @@ SamShouldBeLast: android.webkit.WebChromeClient#onShowFileChooser(android.webkit
     SAM-compatible parameters (such as parameter 2, "filePathCallback", in android.webkit.WebChromeClient.onShowFileChooser) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
 
 
+UnflaggedApi: android.Manifest.permission#READ_PACKAGE_SETTINGS:
+    New API must be flagged with @FlaggedApi: field android.Manifest.permission.READ_PACKAGE_SETTINGS
 UnflaggedApi: android.Manifest.permission#REGISTER_NSD_OFFLOAD_ENGINE:
     New API must be flagged with @FlaggedApi: field android.Manifest.permission.REGISTER_NSD_OFFLOAD_ENGINE
+UnflaggedApi: android.Manifest.permission#WRITE_PACKAGE_SETTINGS:
+    New API must be flagged with @FlaggedApi: field android.Manifest.permission.WRITE_PACKAGE_SETTINGS
 UnflaggedApi: android.content.Context#THREAD_NETWORK_SERVICE:
     New API must be flagged with @FlaggedApi: field android.content.Context.THREAD_NETWORK_SERVICE
 UnflaggedApi: android.nfc.cardemulation.AidGroup#CONTENTS_FILE_DESCRIPTOR:
@@ -243,6 +247,42 @@ UnflaggedApi: android.nfc.cardemulation.NfcFServiceInfo#CONTENTS_FILE_DESCRIPTOR
     New API must be flagged with @FlaggedApi: field android.nfc.cardemulation.NfcFServiceInfo.CONTENTS_FILE_DESCRIPTOR
 UnflaggedApi: android.nfc.cardemulation.NfcFServiceInfo#PARCELABLE_WRITE_RETURN_VALUE:
     New API must be flagged with @FlaggedApi: field android.nfc.cardemulation.NfcFServiceInfo.PARCELABLE_WRITE_RETURN_VALUE
+UnflaggedApi: android.provider.Settings.Package:
+    New API must be flagged with @FlaggedApi: class android.provider.Settings.Package
+UnflaggedApi: android.provider.Settings.Package#Package():
+    New API must be flagged with @FlaggedApi: constructor android.provider.Settings.Package()
+UnflaggedApi: android.provider.Settings.Package#getBoolean(android.content.ContentResolver, String, String):
+    New API must be flagged with @FlaggedApi: method android.provider.Settings.Package.getBoolean(android.content.ContentResolver,String,String)
+UnflaggedApi: android.provider.Settings.Package#getBoolean(android.content.ContentResolver, String, String, boolean):
+    New API must be flagged with @FlaggedApi: method android.provider.Settings.Package.getBoolean(android.content.ContentResolver,String,String,boolean)
+UnflaggedApi: android.provider.Settings.Package#getFloat(android.content.ContentResolver, String, String):
+    New API must be flagged with @FlaggedApi: method android.provider.Settings.Package.getFloat(android.content.ContentResolver,String,String)
+UnflaggedApi: android.provider.Settings.Package#getFloat(android.content.ContentResolver, String, String, float):
+    New API must be flagged with @FlaggedApi: method android.provider.Settings.Package.getFloat(android.content.ContentResolver,String,String,float)
+UnflaggedApi: android.provider.Settings.Package#getInt(android.content.ContentResolver, String, String):
+    New API must be flagged with @FlaggedApi: method android.provider.Settings.Package.getInt(android.content.ContentResolver,String,String)
+UnflaggedApi: android.provider.Settings.Package#getInt(android.content.ContentResolver, String, String, int):
+    New API must be flagged with @FlaggedApi: method android.provider.Settings.Package.getInt(android.content.ContentResolver,String,String,int)
+UnflaggedApi: android.provider.Settings.Package#getLong(android.content.ContentResolver, String, String):
+    New API must be flagged with @FlaggedApi: method android.provider.Settings.Package.getLong(android.content.ContentResolver,String,String)
+UnflaggedApi: android.provider.Settings.Package#getLong(android.content.ContentResolver, String, String, long):
+    New API must be flagged with @FlaggedApi: method android.provider.Settings.Package.getLong(android.content.ContentResolver,String,String,long)
+UnflaggedApi: android.provider.Settings.Package#getString(android.content.ContentResolver, String, String):
+    New API must be flagged with @FlaggedApi: method android.provider.Settings.Package.getString(android.content.ContentResolver,String,String)
+UnflaggedApi: android.provider.Settings.Package#getUriFor(String, String):
+    New API must be flagged with @FlaggedApi: method android.provider.Settings.Package.getUriFor(String,String)
+UnflaggedApi: android.provider.Settings.Package#putBoolean(android.content.ContentResolver, String, String, boolean):
+    New API must be flagged with @FlaggedApi: method android.provider.Settings.Package.putBoolean(android.content.ContentResolver,String,String,boolean)
+UnflaggedApi: android.provider.Settings.Package#putFloat(android.content.ContentResolver, String, String, float):
+    New API must be flagged with @FlaggedApi: method android.provider.Settings.Package.putFloat(android.content.ContentResolver,String,String,float)
+UnflaggedApi: android.provider.Settings.Package#putInt(android.content.ContentResolver, String, String, int):
+    New API must be flagged with @FlaggedApi: method android.provider.Settings.Package.putInt(android.content.ContentResolver,String,String,int)
+UnflaggedApi: android.provider.Settings.Package#putLong(android.content.ContentResolver, String, String, long):
+    New API must be flagged with @FlaggedApi: method android.provider.Settings.Package.putLong(android.content.ContentResolver,String,String,long)
+UnflaggedApi: android.provider.Settings.Package#putString(android.content.ContentResolver, String, String, String):
+    New API must be flagged with @FlaggedApi: method android.provider.Settings.Package.putString(android.content.ContentResolver,String,String,String)
+UnflaggedApi: android.provider.Settings.Package#remove(android.content.ContentResolver, String, String):
+    New API must be flagged with @FlaggedApi: method android.provider.Settings.Package.remove(android.content.ContentResolver,String,String)
 UnflaggedApi: android.telephony.mbms.vendor.MbmsDownloadServiceBase#DESCRIPTOR:
     New API must be flagged with @FlaggedApi: field android.telephony.mbms.vendor.MbmsDownloadServiceBase.DESCRIPTOR
 UnflaggedApi: android.telephony.mbms.vendor.MbmsStreamingServiceBase#DESCRIPTOR:

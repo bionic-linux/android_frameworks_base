@@ -842,6 +842,9 @@
     <uses-permission android:name="android.permission.QUERY_CLONED_APPS" />
     <!-- Permission required for accessing all content provider mime types -->
     <uses-permission android:name="android.permission.GET_ANY_PROVIDER_TYPE" />
+    <!-- Permission required for CTS test - CtsSettingsProviderHostTestCases -->
+    <uses-permission android:name="android.permission.READ_PACKAGE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_PACKAGE_SETTINGS" />
 
     <application
         android:label="@string/app_label"
