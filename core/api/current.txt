@@ -1,4 +1,7 @@
 // Signature format: 2.0
+// - add-additional-overrides=yes
+// - migrating=Migration in progress see b/299366704
+// - overloaded-method-order=source
 package android {
 
   public final class Manifest {
@@ -4077,6 +4080,7 @@ package android.app {
   @UiContext public class Activity extends android.view.ContextThemeWrapper implements android.content.ComponentCallbacks2 android.view.KeyEvent.Callback android.view.LayoutInflater.Factory2 android.view.View.OnCreateContextMenuListener android.view.Window.Callback {
     ctor public Activity();
     method public void addContentView(android.view.View, android.view.ViewGroup.LayoutParams);
+    method protected void attachBaseContext(android.content.Context);
     method public void closeContextMenu();
     method public void closeOptionsMenu();
     method public android.app.PendingIntent createPendingResult(int, @NonNull android.content.Intent, int);
@@ -4125,6 +4129,7 @@ package android.app {
     method public int getRequestedOrientation();
     method public final android.view.SearchEvent getSearchEvent();
     method @NonNull public final android.window.SplashScreen getSplashScreen();
+    method public Object getSystemService(@NonNull String);
     method public int getTaskId();
     method public final CharSequence getTitle();
     method public final int getTitleColor();
@@ -4155,6 +4160,7 @@ package android.app {
     method @CallSuper public void onActionModeStarted(android.view.ActionMode);
     method public void onActivityReenter(int, android.content.Intent);
     method protected void onActivityResult(int, int, android.content.Intent);
+    method protected void onApplyThemeResource(android.content.res.Resources.Theme, @StyleRes int, boolean);
     method @Deprecated public void onAttachFragment(android.app.Fragment);
     method public void onAttachedToWindow();
     method @Deprecated public void onBackPressed();
@@ -4215,6 +4221,7 @@ package android.app {
     method public boolean onPreparePanel(int, @Nullable android.view.View, @NonNull android.view.Menu);
     method public void onProvideAssistContent(android.app.assist.AssistContent);
     method public void onProvideAssistData(android.os.Bundle);
+    method public void onProvideKeyboardShortcuts(java.util.List<android.view.KeyboardShortcutGroup>, android.view.Menu, int);
     method public android.net.Uri onProvideReferrer();
     method public void onRequestPermissionsResult(int, @NonNull String[], @NonNull int[]);
     method @CallSuper protected void onRestart();
@@ -4248,6 +4255,7 @@ package android.app {
     method public void postponeEnterTransition();
     method public void recreate();
     method public void registerActivityLifecycleCallbacks(@NonNull android.app.Application.ActivityLifecycleCallbacks);
+    method public void registerComponentCallbacks(android.content.ComponentCallbacks);
     method public void registerForContextMenu(android.view.View);
     method public boolean releaseInstance();
     method @Deprecated public final void removeDialog(int);
@@ -4290,6 +4298,7 @@ package android.app {
     method public void setShouldDockBigOverlays(boolean);
     method public void setShowWhenLocked(boolean);
     method public void setTaskDescription(android.app.ActivityManager.TaskDescription);
+    method public void setTheme(int);
     method public void setTitle(CharSequence);
     method public void setTitle(int);
     method @Deprecated public void setTitleColor(int);
@@ -4307,6 +4316,10 @@ package android.app {
     method public void showLockTaskEscapeMessage();
     method @Nullable public android.view.ActionMode startActionMode(android.view.ActionMode.Callback);
     method @Nullable public android.view.ActionMode startActionMode(android.view.ActionMode.Callback, int);
+    method public void startActivities(android.content.Intent[]);
+    method public void startActivities(android.content.Intent[], @Nullable android.os.Bundle);
+    method public void startActivity(android.content.Intent);
+    method public void startActivity(android.content.Intent, @Nullable android.os.Bundle);
     method public void startActivityForResult(@RequiresPermission android.content.Intent, int);
     method public void startActivityForResult(@RequiresPermission android.content.Intent, int, @Nullable android.os.Bundle);
     method @Deprecated public void startActivityFromChild(@NonNull android.app.Activity, @RequiresPermission android.content.Intent, int);
@@ -4315,6 +4328,8 @@ package android.app {
     method @Deprecated public void startActivityFromFragment(@NonNull android.app.Fragment, @RequiresPermission android.content.Intent, int, @Nullable android.os.Bundle);
     method public boolean startActivityIfNeeded(@NonNull @RequiresPermission android.content.Intent, int);
     method public boolean startActivityIfNeeded(@NonNull @RequiresPermission android.content.Intent, int, @Nullable android.os.Bundle);
+    method public void startIntentSender(android.content.IntentSender, @Nullable android.content.Intent, int, int, int) throws android.content.IntentSender.SendIntentException;
+    method public void startIntentSender(android.content.IntentSender, @Nullable android.content.Intent, int, int, int, @Nullable android.os.Bundle) throws android.content.IntentSender.SendIntentException;
     method public void startIntentSenderForResult(android.content.IntentSender, int, @Nullable android.content.Intent, int, int, int) throws android.content.IntentSender.SendIntentException;
     method public void startIntentSenderForResult(android.content.IntentSender, int, @Nullable android.content.Intent, int, int, int, @Nullable android.os.Bundle) throws android.content.IntentSender.SendIntentException;
     method @Deprecated public void startIntentSenderFromChild(android.app.Activity, android.content.IntentSender, int, android.content.Intent, int, int, int) throws android.content.IntentSender.SendIntentException;
@@ -4332,6 +4347,7 @@ package android.app {
     method public void takeKeyEvents(boolean);
     method public void triggerSearch(String, @Nullable android.os.Bundle);
     method public void unregisterActivityLifecycleCallbacks(@NonNull android.app.Application.ActivityLifecycleCallbacks);
+    method public void unregisterComponentCallbacks(android.content.ComponentCallbacks);
     method public void unregisterForContextMenu(android.view.View);
     field public static final int DEFAULT_KEYS_DIALER = 1; // 0x1
     field public static final int DEFAULT_KEYS_DISABLE = 0; // 0x0
@@ -5407,6 +5423,7 @@ package android.app {
     ctor @Deprecated public FragmentBreadCrumbs(android.content.Context, android.util.AttributeSet);
     ctor @Deprecated public FragmentBreadCrumbs(android.content.Context, android.util.AttributeSet, int);
     method @Deprecated public void onBackStackChanged();
+    method @Deprecated protected void onLayout(boolean, int, int, int, int);
     method @Deprecated public void setActivity(android.app.Activity);
     method @Deprecated public void setMaxVisible(int);
     method @Deprecated public void setOnBreadCrumbClickListener(android.app.FragmentBreadCrumbs.OnBreadCrumbClickListener);
@@ -12826,6 +12843,7 @@ package android.content.res {
 
   public interface XmlResourceParser extends org.xmlpull.v1.XmlPullParser android.util.AttributeSet java.lang.AutoCloseable {
     method public void close();
+    method public String getAttributeNamespace(int);
   }
 
 }
@@ -19058,7 +19076,7 @@ package android.inputmethodservice {
     method @Deprecated public boolean isPreviewEnabled();
     method @Deprecated public boolean isProximityCorrectionEnabled();
     method @Deprecated public boolean isShifted();
-    method public void onClick(android.view.View);
+    method @Deprecated public void onClick(android.view.View);
     method @Deprecated public void onDetachedFromWindow();
     method @Deprecated public void onDraw(android.graphics.Canvas);
     method @Deprecated protected boolean onLongPress(android.inputmethodservice.Keyboard.Key);
@@ -23430,7 +23448,7 @@ package android.media {
 
   @Deprecated public class RemoteControlClient.MetadataEditor extends android.media.MediaMetadataEditor {
     method @Deprecated public void apply();
-    method public Object clone() throws java.lang.CloneNotSupportedException;
+    method @Deprecated public Object clone() throws java.lang.CloneNotSupportedException;
     method @Deprecated public android.media.RemoteControlClient.MetadataEditor putBitmap(int, android.graphics.Bitmap) throws java.lang.IllegalArgumentException;
     method @Deprecated public android.media.RemoteControlClient.MetadataEditor putLong(int, long) throws java.lang.IllegalArgumentException;
     method @Deprecated public android.media.RemoteControlClient.MetadataEditor putObject(int, Object) throws java.lang.IllegalArgumentException;
@@ -26119,6 +26137,7 @@ package android.media.tv {
     method public boolean dispatchUnhandledInputEvent(android.view.InputEvent);
     method public String getSelectedTrack(int);
     method public java.util.List<android.media.tv.TvTrackInfo> getTracks(int);
+    method protected void onLayout(boolean, int, int, int, int);
     method public boolean onUnhandledInputEvent(android.view.InputEvent);
     method public void overrideTvAppAttributionSource(@NonNull android.content.AttributionSource);
     method public void reset();
@@ -41957,7 +41976,6 @@ package android.telephony {
     method public int getLongitude();
     method public int getNetworkId();
     method public int getSystemId();
-    method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.telephony.CellIdentityCdma> CREATOR;
   }
 
@@ -41973,7 +41991,6 @@ package android.telephony {
     method @Nullable public String getMncString();
     method @Nullable public String getMobileNetworkOperator();
     method @Deprecated public int getPsc();
-    method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.telephony.CellIdentityGsm> CREATOR;
   }
 
@@ -41991,7 +42008,6 @@ package android.telephony {
     method @Nullable public String getMobileNetworkOperator();
     method public int getPci();
     method public int getTac();
-    method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.telephony.CellIdentityLte> CREATOR;
   }
 
@@ -42004,7 +42020,6 @@ package android.telephony {
     method @IntRange(from=0, to=3279165) public int getNrarfcn();
     method @IntRange(from=0, to=1007) public int getPci();
     method @IntRange(from=0, to=16777215) public int getTac();
-    method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.telephony.CellIdentityNr> CREATOR;
   }
 
@@ -42018,7 +42033,6 @@ package android.telephony {
     method @Nullable public String getMncString();
     method @Nullable public String getMobileNetworkOperator();
     method public int getUarfcn();
-    method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.telephony.CellIdentityTdscdma> CREATOR;
   }
 
@@ -42034,7 +42048,6 @@ package android.telephony {
     method @Nullable public String getMobileNetworkOperator();
     method public int getPsc();
     method public int getUarfcn();
-    method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.telephony.CellIdentityWcdma> CREATOR;
   }
 
@@ -42118,6 +42131,7 @@ package android.telephony {
 
   public final class CellSignalStrengthCdma extends android.telephony.CellSignalStrength implements android.os.Parcelable {
     method public int describeContents();
+    method public boolean equals(Object);
     method public int getAsuLevel();
     method public int getCdmaDbm();
     method public int getCdmaEcio();
@@ -42128,24 +42142,28 @@ package android.telephony {
     method public int getEvdoLevel();
     method public int getEvdoSnr();
     method @IntRange(from=android.telephony.CellSignalStrength.SIGNAL_STRENGTH_NONE_OR_UNKNOWN, to=android.telephony.CellSignalStrength.SIGNAL_STRENGTH_GREAT) public int getLevel();
+    method public int hashCode();
     method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.telephony.CellSignalStrengthCdma> CREATOR;
   }
 
   public final class CellSignalStrengthGsm extends android.telephony.CellSignalStrength implements android.os.Parcelable {
     method public int describeContents();
+    method public boolean equals(Object);
     method public int getAsuLevel();
     method public int getBitErrorRate();
     method public int getDbm();
     method @IntRange(from=android.telephony.CellSignalStrength.SIGNAL_STRENGTH_NONE_OR_UNKNOWN, to=android.telephony.CellSignalStrength.SIGNAL_STRENGTH_GREAT) public int getLevel();
     method public int getRssi();
     method public int getTimingAdvance();
+    method public int hashCode();
     method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.telephony.CellSignalStrengthGsm> CREATOR;
   }
 
   public final class CellSignalStrengthLte extends android.telephony.CellSignalStrength implements android.os.Parcelable {
     method public int describeContents();
+    method public boolean equals(Object);
     method public int getAsuLevel();
     method @IntRange(from=0, to=15) public int getCqi();
     method @IntRange(from=1, to=6) public int getCqiTableIndex();
@@ -42156,12 +42174,14 @@ package android.telephony {
     method public int getRssi();
     method public int getRssnr();
     method public int getTimingAdvance();
+    method public int hashCode();
     method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.telephony.CellSignalStrengthLte> CREATOR;
   }
 
   public final class CellSignalStrengthNr extends android.telephony.CellSignalStrength implements android.os.Parcelable {
     method public int describeContents();
+    method public boolean equals(Object);
     method public int getAsuLevel();
     method @IntRange(from=0, to=15) @NonNull public java.util.List<java.lang.Integer> getCsiCqiReport();
     method @IntRange(from=1, to=3) public int getCsiCqiTableIndex();
@@ -42173,26 +42193,31 @@ package android.telephony {
     method public int getSsRsrp();
     method public int getSsRsrq();
     method public int getSsSinr();
+    method public int hashCode();
     method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.telephony.CellSignalStrengthNr> CREATOR;
   }
 
   public final class CellSignalStrengthTdscdma extends android.telephony.CellSignalStrength implements android.os.Parcelable {
     method public int describeContents();
+    method public boolean equals(Object);
     method public int getAsuLevel();
     method public int getDbm();
     method @IntRange(from=0, to=4) public int getLevel();
     method public int getRscp();
+    method public int hashCode();
     method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.telephony.CellSignalStrengthTdscdma> CREATOR;
   }
 
   public final class CellSignalStrengthWcdma extends android.telephony.CellSignalStrength implements android.os.Parcelable {
     method public int describeContents();
+    method public boolean equals(Object);
     method public int getAsuLevel();
     method public int getDbm();
     method public int getEcNo();
     method @IntRange(from=android.telephony.CellSignalStrength.SIGNAL_STRENGTH_NONE_OR_UNKNOWN, to=android.telephony.CellSignalStrength.SIGNAL_STRENGTH_GREAT) public int getLevel();
+    method public int hashCode();
     method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.telephony.CellSignalStrengthWcdma> CREATOR;
   }
@@ -44886,6 +44911,7 @@ package android.text {
     method @Deprecated public int length();
     method @Deprecated public static android.text.AlteredCharSequence make(CharSequence, char[], int, int);
     method @Deprecated public CharSequence subSequence(int, int);
+    method @Deprecated public String toString();
   }
 
   @Deprecated public class AndroidCharacter {
@@ -45265,6 +45291,7 @@ package android.text {
     method public void removeSpan(Object);
     method public void setSpan(Object, int, int, int);
     method public CharSequence subSequence(int, int);
+    method public String toString();
   }
 
   public static final class PrecomputedText.Params {
@@ -45373,6 +45400,7 @@ package android.text {
     method public void setFilters(android.text.InputFilter[]);
     method public void setSpan(Object, int, int, int);
     method public CharSequence subSequence(int, int);
+    method public String toString();
     method public static android.text.SpannableStringBuilder valueOf(CharSequence);
   }
 
@@ -46984,7 +47012,9 @@ package android.util {
     method public boolean containsValue(Object);
     method public void ensureCapacity(int);
     method public java.util.Set<java.util.Map.Entry<K,V>> entrySet();
+    method public boolean equals(@Nullable Object);
     method public V get(Object);
+    method public int hashCode();
     method public int indexOfKey(Object);
     method public int indexOfValue(Object);
     method public boolean isEmpty();
@@ -47016,7 +47046,9 @@ package android.util {
     method public boolean contains(Object);
     method public boolean containsAll(java.util.Collection<?>);
     method public void ensureCapacity(int);
+    method public boolean equals(@Nullable Object);
     method public void forEach(java.util.function.Consumer<? super E>);
+    method public int hashCode();
     method public int indexOf(Object);
     method public boolean isEmpty();
     method public java.util.Iterator<E> iterator();
@@ -55249,6 +55281,7 @@ package android.widget {
     ctor @Deprecated public AbsoluteLayout(android.content.Context, android.util.AttributeSet);
     ctor @Deprecated public AbsoluteLayout(android.content.Context, android.util.AttributeSet, int);
     ctor @Deprecated public AbsoluteLayout(android.content.Context, android.util.AttributeSet, int, int);
+    method @Deprecated protected void onLayout(boolean, int, int, int, int);
   }
 
   @Deprecated public static class AbsoluteLayout.LayoutParams extends android.view.ViewGroup.LayoutParams {
@@ -55327,6 +55360,7 @@ package android.widget {
     method public long getSelectedItemId();
     method public int getSelectedItemPosition();
     method public abstract android.view.View getSelectedView();
+    method protected void onLayout(boolean, int, int, int, int);
     method public boolean performItemClick(android.view.View, int, long);
     method public abstract void setAdapter(T);
     method public void setEmptyView(android.view.View);
@@ -55971,6 +56005,7 @@ package android.widget {
     method public android.widget.FrameLayout.LayoutParams generateLayoutParams(android.util.AttributeSet);
     method @Deprecated public boolean getConsiderGoneChildrenWhenMeasuring();
     method public boolean getMeasureAllChildren();
+    method protected void onLayout(boolean, int, int, int, int);
     method public void setMeasureAllChildren(boolean);
   }
 
@@ -56024,6 +56059,7 @@ package android.widget {
     method public boolean getUseDefaultMargins();
     method public boolean isColumnOrderPreserved();
     method public boolean isRowOrderPreserved();
+    method protected void onLayout(boolean, int, int, int, int);
     method public void setAlignmentMode(int);
     method public void setColumnCount(int);
     method public void setColumnOrderPreserved(boolean);
@@ -56246,6 +56282,7 @@ package android.widget {
     method public float getWeightSum();
     method public boolean isBaselineAligned();
     method public boolean isMeasureWithLargestChildEnabled();
+    method protected void onLayout(boolean, int, int, int, int);
     method public void setBaselineAligned(boolean);
     method public void setBaselineAlignedChildIndex(int);
     method public void setDividerDrawable(android.graphics.drawable.Drawable);
@@ -56794,6 +56831,7 @@ package android.widget {
     method public android.widget.RelativeLayout.LayoutParams generateLayoutParams(android.util.AttributeSet);
     method public int getGravity();
     method public int getIgnoreGravity();
+    method protected void onLayout(boolean, int, int, int, int);
     method public void setGravity(int);
     method public void setHorizontalGravity(int);
     method public void setIgnoreGravity(int);
@@ -57248,6 +57286,7 @@ package android.widget {
     method @Deprecated public boolean isMoving();
     method @Deprecated public boolean isOpened();
     method @Deprecated public void lock();
+    method @Deprecated protected void onLayout(boolean, int, int, int, int);
     method @Deprecated public void open();
     method @Deprecated public void setOnDrawerCloseListener(android.widget.SlidingDrawer.OnDrawerCloseListener);
     method @Deprecated public void setOnDrawerOpenListener(android.widget.SlidingDrawer.OnDrawerOpenListener);
@@ -57879,6 +57918,7 @@ package android.widget {
     method public boolean hideOverflowMenu();
     method public void inflateMenu(@MenuRes int);
     method public boolean isOverflowMenuShowing();
+    method protected void onLayout(boolean, int, int, int, int);
     method public void setCollapseContentDescription(@StringRes int);
     method public void setCollapseContentDescription(@Nullable CharSequence);
     method public void setCollapseIcon(@DrawableRes int);
@@ -58033,7 +58073,7 @@ package android.widget {
     method @Deprecated public android.view.View getZoomControls();
     method @Deprecated public boolean isAutoDismissed();
     method @Deprecated public boolean isVisible();
-    method public boolean onTouch(android.view.View, android.view.MotionEvent);
+    method @Deprecated public boolean onTouch(android.view.View, android.view.MotionEvent);
     method @Deprecated public void setAutoDismissed(boolean);
     method @Deprecated public void setFocusable(boolean);
     method @Deprecated public void setOnZoomListener(android.widget.ZoomButtonsController.OnZoomListener);
