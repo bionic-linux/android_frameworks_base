@@ -216,6 +216,7 @@ final class SettingsState {
     public static final int SETTINGS_TYPE_SECURE = 2;
     public static final int SETTINGS_TYPE_SSAID = 3;
     public static final int SETTINGS_TYPE_CONFIG = 4;
+    public static final int SETTINGS_TYPE_PACKAGE = 5;
 
     public static final int SETTINGS_TYPE_MASK = 0xF0000000;
     public static final int SETTINGS_TYPE_SHIFT = 28;
@@ -273,6 +274,10 @@ final class SettingsState {
 
     public static boolean isSsaidSettingsKey(int key) {
         return getTypeFromKey(key) == SETTINGS_TYPE_SSAID;
+    }
+
+    public static boolean isPackageSettingsKey(int key) {
+        return getTypeFromKey(key) == SETTINGS_TYPE_PACKAGE;
     }
 
     public static String keyToString(int key) {

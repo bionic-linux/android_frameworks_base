@@ -109,6 +109,7 @@ final public class SettingsService extends Binder {
         int mUser = UserHandle.USER_NULL;
         CommandVerb mVerb = CommandVerb.UNSPECIFIED;
         String mTable = null;
+        String mPackage = null;
         String mKey = null;
         String mValue = null;
         String mPackageName = null;
@@ -162,7 +163,8 @@ final public class SettingsService extends Binder {
                 } else if (mTable == null) {
                     if (!"system".equalsIgnoreCase(arg)
                             && !"secure".equalsIgnoreCase(arg)
-                            && !"global".equalsIgnoreCase(arg)) {
+                            && !"global".equalsIgnoreCase(arg)
+                            && !"package".equalsIgnoreCase(arg)) {
                         perr.println("Invalid namespace '" + arg + "'");
                         return -1;
                     }
@@ -200,6 +202,8 @@ final public class SettingsService extends Binder {
                         perr.println("Too many arguments");
                         return -1;
                     }
+                } else if ("package".equalsIgnoreCase(mTable) && mPackage == null) {
+                    mPackage = arg;
                 } else if (mVerb == CommandVerb.GET || mVerb == CommandVerb.DELETE) {
                     mKey = arg;
                     if (peekNextArg() == null) {
@@ -268,6 +272,10 @@ final public class SettingsService extends Binder {
                 return -1;
             }
 
+            if ("package".equalsIgnoreCase(mTable)) {
+                mKey = mPackage + "/" + mKey;
+            }
+
             final IContentProvider iprovider = mProvider.getIContentProvider();
             final PrintWriter pout = getOutPrintWriter();
             switch (mVerb) {
@@ -328,7 +336,9 @@ final public class SettingsService extends Binder {
             if ("system".equals(table)) callGetCommand = Settings.CALL_METHOD_GET_SYSTEM;
             else if ("secure".equals(table)) callGetCommand = Settings.CALL_METHOD_GET_SECURE;
             else if ("global".equals(table)) callGetCommand = Settings.CALL_METHOD_GET_GLOBAL;
-            else {
+            else if ("package".equals(table)) {
+                callGetCommand = Settings.CALL_METHOD_GET_PACKAGE;
+            } else {
                 getErrPrintWriter().println("Invalid table; no put performed");
                 throw new IllegalArgumentException("Invalid table " + table);
             }
@@ -362,7 +372,9 @@ final public class SettingsService extends Binder {
                 }
             } else if ("secure".equals(table)) callPutCommand = Settings.CALL_METHOD_PUT_SECURE;
             else if ("global".equals(table)) callPutCommand = Settings.CALL_METHOD_PUT_GLOBAL;
-            else {
+            else if ("package".equals(table)) {
+                callPutCommand = Settings.CALL_METHOD_PUT_PACKAGE;
+            } else {
                 getErrPrintWriter().println("Invalid table; no put performed");
                 return;
             }
@@ -395,6 +407,8 @@ final public class SettingsService extends Binder {
                 callDeleteCommand = Settings.CALL_METHOD_DELETE_SECURE;
             } else if ("global".equals(table)) {
                 callDeleteCommand = Settings.CALL_METHOD_DELETE_GLOBAL;
+            } else if ("package".equals(table)) {
+                callDeleteCommand = Settings.CALL_METHOD_DELETE_PACKAGE;
             } else {
                 getErrPrintWriter().println("Invalid table; no delete performed");
                 throw new IllegalArgumentException("Invalid table " + table);
@@ -472,12 +486,18 @@ final public class SettingsService extends Binder {
                 pw.println("Settings provider (settings) commands:");
                 pw.println("  help");
                 pw.println("      Print this help text.");
-                pw.println("  get [--user <USER_ID> | current] NAMESPACE KEY");
+                pw.println("  get [--user <USER_ID> | current] NAMESPACE [PACKAGE] KEY");
                 pw.println("      Retrieve the current value of KEY.");
-                pw.println("  put [--user <USER_ID> | current] NAMESPACE KEY VALUE [TAG] [default]");
+                pw.println("      PACKAGE is the name of the package of the per package "
+                        + "setting to retrieve.");
+                pw.println("      NAMESPACE is one of {system, secure, global, package}, "
+                        + "case-insensitive");
+                pw.println("  put [--user <USER_ID> | current] NAMESPACE [PACKAGE] KEY VALUE [TAG] "
+                        + "[default]");
                 pw.println("      Change the contents of KEY to VALUE.");
                 pw.println("      TAG to associate with the setting.");
-                pw.println("      {default} to set as the default, case-insensitive only for global/secure namespace");
+                pw.println("      {default} to set as the default, case-insensitive only for "
+                        + "global/secure/package namespace");
                 pw.println("  delete [--user <USER_ID> | current] NAMESPACE KEY");
                 pw.println("      Delete the entry for KEY.");
                 pw.println("  reset [--user <USER_ID> | current] NAMESPACE {PACKAGE_NAME | RESET_MODE}");
