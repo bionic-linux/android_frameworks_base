@@ -1,4 +1,7 @@
 // Signature format: 2.0
+// - add-additional-overrides=yes
+// - migrating=Migration in progress see b/299366704
+// - overloaded-method-order=source
 package android {
 
   public static final class Manifest.permission {
@@ -3991,11 +3994,13 @@ package android.window {
   }
 
   public final class TaskFragmentCreationParams implements android.os.Parcelable {
+    method public int describeContents();
     method @NonNull public android.os.IBinder getFragmentToken();
     method @NonNull public android.graphics.Rect getInitialRelativeBounds();
     method @NonNull public android.window.TaskFragmentOrganizerToken getOrganizer();
     method @NonNull public android.os.IBinder getOwnerToken();
     method public int getWindowingMode();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.window.TaskFragmentCreationParams> CREATOR;
   }
 
@@ -4007,6 +4012,7 @@ package android.window {
   }
 
   public final class TaskFragmentInfo implements android.os.Parcelable {
+    method public int describeContents();
     method public boolean equalsForTaskFragmentOrganizer(@Nullable android.window.TaskFragmentInfo);
     method @NonNull public java.util.List<android.os.IBinder> getActivities();
     method @NonNull public java.util.List<android.os.IBinder> getActivitiesRequestedInTaskFragment();
@@ -4020,6 +4026,7 @@ package android.window {
     method public boolean isEmpty();
     method public boolean isTaskClearedForReuse();
     method public boolean isVisible();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.window.TaskFragmentInfo> CREATOR;
   }
 
@@ -4042,6 +4049,8 @@ package android.window {
   }
 
   public final class TaskFragmentOrganizerToken implements android.os.Parcelable {
+    method public int describeContents();
+    method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.window.TaskFragmentOrganizerToken> CREATOR;
   }
 
