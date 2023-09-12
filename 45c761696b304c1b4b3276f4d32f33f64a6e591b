@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad18a35c_347fb185",
+        "filename": "rs/java/android/renderscript/ScriptC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2023-09-12T14:43:42Z",
+      "side": 1,
+      "message": "probably better to say \"API level \u003e\u003d 35\" here; API levels are what developers are using in their manifests. OS versions are for marketing folks :-)",
+      "range": {
+        "startLine": 102,
+        "startChar": 70,
+        "endLine": 102,
+        "endChar": 94
+      },
+      "revId": "45c761696b304c1b4b3276f4d32f33f64a6e591b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "443e22c2_ae980458",
+        "filename": "rs/java/android/renderscript/ScriptC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2023-09-12T14:43:42Z",
+      "side": 1,
+      "message": "personally i\u0027d probably use the exact same message in both cases --- i think the \"\u003e\u003d 35\" message is more helpful. renderscript has been \"deprecated\" for a couple of years already --- \"unsupported \u003e\u003d 35\" makes it clear how much time you have before this needs to be addressed.",
+      "range": {
+        "startLine": 105,
+        "startChar": 25,
+        "endLine": 105,
+        "endChar": 55
+      },
+      "revId": "45c761696b304c1b4b3276f4d32f33f64a6e591b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
