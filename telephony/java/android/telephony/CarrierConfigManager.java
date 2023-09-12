@@ -8591,6 +8591,14 @@ public class CarrierConfigManager {
     public static final String KEY_HIDE_ENABLE_2G = "hide_enable_2g_bool";
 
     /**
+     * Default value for Allow 2G setting.
+     *
+     * @hide
+     */
+    public static final String KEY_CARRIER_DEFAULT_ENABLE_2G_BOOL =
+            "carrier_default_enable_2g_bool";
+
+    /**
      * Indicates the allowed APN types that can be used for LTE initial attach. The order of APN
      * types in the configuration is the order of APN types that will be used for initial attach.
      * Empty list indicates that no APN types are allowed for initial attach.
@@ -9341,6 +9349,7 @@ public class CarrierConfigManager {
         sDefaults.putInt(KEY_DEFAULT_RTT_MODE_INT, 0);
         sDefaults.putBoolean(KEY_STORE_SIM_PIN_FOR_UNATTENDED_REBOOT_BOOL, true);
         sDefaults.putBoolean(KEY_HIDE_ENABLE_2G, false);
+        sDefaults.putBoolean(KEY_CARRIER_DEFAULT_ENABLE_2G_BOOL, true);
         sDefaults.putStringArray(KEY_ALLOWED_INITIAL_ATTACH_APN_TYPES_STRING_ARRAY,
                 new String[]{"ia", "default"});
         sDefaults.putBoolean(KEY_CARRIER_PROVISIONS_WIFI_MERGED_NETWORKS_BOOL, false);
