@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b533d2a9_2eb3c6d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2023-09-12T17:31:30Z",
+      "side": 1,
+      "message": "no --- renderscript is still supported in V for apps whose target api level is less than V. i think what we need to do is change the tests so that their target api level is U. (and then we can come back in a couple of years and delete the tests when apps with such a low target api level are no longer allowed.)",
+      "parentUuid": "368fc89c_63555909",
+      "revId": "45c761696b304c1b4b3276f4d32f33f64a6e591b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad18a35c_347fb185",
