@@ -487,6 +487,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9c8b2b1_39d9a366",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceDenyList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1060750
+      },
+      "writtenOn": "2023-09-12T20:33:34Z",
+      "side": 1,
+      "message": "This is OK. It sounds like they have a reason not to do \"deny/permit\".",
+      "parentUuid": "a6807e77_0b2cfd4c",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 26
+      },
+      "revId": "0f6b240c8873606dca3014e545acc5a56d2dfbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f299491b_f6dce00b",
