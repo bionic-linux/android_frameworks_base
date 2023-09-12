@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "368fc89c_63555909",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1069898
+      },
+      "writtenOn": "2023-09-12T15:59:04Z",
+      "side": 1,
+      "message": "To clarify, after this lands, will CtsRsCppTestCases be completely removed from CTS (for \u003e\u003d35). Or does this disable only part of that test suite?",
+      "revId": "45c761696b304c1b4b3276f4d32f33f64a6e591b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad18a35c_347fb185",
