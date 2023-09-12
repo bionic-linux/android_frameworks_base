@@ -16,6 +16,24 @@
       "message": "We don\u0027t want to allow the \"installer\" (the permission management component - name is legacy) to access these as well as we don\u0027t have a role define that allows access. Both should be system|privileged",
       "revId": "1df711949796fdfbca5a9779f97a1b25b0edc9c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8a81879_3af92e80",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3807,
+      "author": {
+        "id": 1967850
+      },
+      "writtenOn": "2023-09-12T21:41:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07cc229f_a2946705",
+      "revId": "1df711949796fdfbca5a9779f97a1b25b0edc9c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
