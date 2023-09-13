@@ -88,6 +88,24 @@
       "parentUuid": "ce6b3482_853e7d8e",
       "revId": "92ceac3ac2224f182b807639a52eac6f5b4c3a32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e9df697_bd437e8a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2023-09-13T12:47:58Z",
+      "side": 1,
+      "message": "We appreciate the info in the bugreport - there is no recent progress on looking at the info you attached, but we still have it on the radar. It may take some more weeks to get a response back to you there.",
+      "parentUuid": "006e5479_4962d334",
+      "revId": "92ceac3ac2224f182b807639a52eac6f5b4c3a32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
