@@ -70,6 +70,24 @@
       "parentUuid": "8b04b1ec_add9614d",
       "revId": "92ceac3ac2224f182b807639a52eac6f5b4c3a32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "006e5479_4962d334",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2023786
+      },
+      "writtenOn": "2023-09-13T11:35:09Z",
+      "side": 1,
+      "message": "Hello, I have created an entry in issue tracker under the component framework and and uploaded relevant data a month ago. May I ask if there is any new progress on this issue?",
+      "parentUuid": "ce6b3482_853e7d8e",
+      "revId": "92ceac3ac2224f182b807639a52eac6f5b4c3a32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
