@@ -111,6 +111,30 @@
       },
       "revId": "74f17857d3e8246d5677b406b45f4fdee476912d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e3968cf_704f6749",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 5009,
+      "author": {
+        "id": 1943370
+      },
+      "writtenOn": "2023-09-13T17:08:10Z",
+      "side": 1,
+      "message": "@mpietal@google.com,\n\nCould you please help resolve the conflict and merge this CL?\n\nThanks.",
+      "parentUuid": "bee406e2_86cc7f1f",
+      "range": {
+        "startLine": 5009,
+        "startChar": 19,
+        "endLine": 5009,
+        "endChar": 50
+      },
+      "revId": "74f17857d3e8246d5677b406b45f4fdee476912d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
