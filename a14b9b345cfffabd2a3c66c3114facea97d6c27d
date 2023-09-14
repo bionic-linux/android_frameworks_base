@@ -16,6 +16,46 @@
       "message": "Actually, are these tests still needed?  They clearly haven\u0027t been run for years and it seems like they might be a subset of what\u0027s under https://cs.android.com/android/platform/superproject/main/+/main:cts/tests/tests/networksecurityconfig/",
       "revId": "a14b9b345cfffabd2a3c66c3114facea97d6c27d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "294dfa32_c56776c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2023-09-14T14:25:17Z",
+      "side": 1,
+      "message": "Thanks for doing this Pete!",
+      "revId": "a14b9b345cfffabd2a3c66c3114facea97d6c27d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed60b5ab_c9b04be7",
+        "filename": "tests/NetworkSecurityConfigTest/res/xml/domain_whitespace.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2023-09-14T14:25:17Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by AndroidLint: Invalid pin digest\n\nAnalyzer Description: Reports AndroidLint warnings.\nOwner: colefaust@google.com\n\nInvalid pin digest\n\n          \u003cpin digest\u003d\"SHA-256\"\u003e  zCTnfLwLKbS9S2sbp+uFz4KZOocFvXxkV06Ce9O5M2w\u003d  \u003c/pin\u003e\n                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\nEnsures that a `\u003cnetwork-security-config\u003e` file, which is pointed to by an `android:networkSecurityConfig` attribute in the manifest file, is valid\n\nLocal repro steps at go/ayeaye-android-lint\n\nThis warning was found on the git_main branch",
+      "range": {
+        "startLine": 8,
+        "startChar": 31,
+        "endLine": 8,
+        "endChar": 82
+      },
+      "revId": "a14b9b345cfffabd2a3c66c3114facea97d6c27d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
