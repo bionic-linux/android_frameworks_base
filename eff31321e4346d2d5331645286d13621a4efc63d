@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f982da65_3f650761",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-09-14T20:42:21Z",
+      "side": 1,
+      "message": "Also, you will need to use the flagging infra being added in this [CL](https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/24723050/3/core/java/android/nfc/cardemulation/AidGroup.java). You can wait for my CL to be submitted before rebasing on top of it to add the flags.",
+      "revId": "eff31321e4346d2d5331645286d13621a4efc63d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "938f3800_76fb874b",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1838,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-09-14T20:42:21Z",
+      "side": 1,
+      "message": "Are you comfortable with this API naming? If we want this to be symmetric with existing API - `enableReaderMode`, should we call this `enableCardEmulationMode`?",
+      "range": {
+        "startLine": 1838,
+        "startChar": 19,
+        "endLine": 1838,
+        "endChar": 37
+      },
+      "revId": "eff31321e4346d2d5331645286d13621a4efc63d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
