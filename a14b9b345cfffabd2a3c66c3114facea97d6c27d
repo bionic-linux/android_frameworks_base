@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "150e6b0f_70bc73e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2023-09-14T14:16:33Z",
+      "side": 1,
+      "message": "Actually, are these tests still needed?  They clearly haven\u0027t been run for years and it seems like they might be a subset of what\u0027s under https://cs.android.com/android/platform/superproject/main/+/main:cts/tests/tests/networksecurityconfig/",
+      "revId": "a14b9b345cfffabd2a3c66c3114facea97d6c27d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
