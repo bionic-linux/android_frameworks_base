@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6adddd37_de55c86c",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18156,
+      "author": {
+        "id": 2037182
+      },
+      "writtenOn": "2023-09-14T16:28:54Z",
+      "side": 1,
+      "message": "The main use case here is Notification Settings. Those are part of the device level settings, but should be set per package. In theory, one can use the system settings for this and create an abstraction on top of this to manage the keys per package. But that has the potential of duplicating this logic over and over again for other settings that are app specific, but on a device level.\nAs for the second question - this permission is a system permission. So only system apps can access it, not just any 3rd party app.",
+      "parentUuid": "438e09d0_ee199ca9",
+      "range": {
+        "startLine": 18156,
+        "startChar": 7,
+        "endLine": 18156,
+        "endChar": 67
+      },
+      "revId": "177d23b958b643ce216d972c6c5756cdbb354781",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e511f105_da66052a",
         "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2023-09-14T16:20:52Z",
       "side": 1,
       "message": "Iterating through the list of all the apps at boot can cause a significant delay if there are lots of packages installed. I see that you are already doing some cleaning up when a package is installed. Why is there still a need to do pruning during boot? Is it for system packages removed during OTA?",
+      "range": {
+        "startLine": 3073,
+        "startChar": 21,
+        "endLine": 3073,
+        "endChar": 55
+      },
+      "revId": "177d23b958b643ce216d972c6c5756cdbb354781",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "446f96b1_33aa371a",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3073,
+      "author": {
+        "id": 2037182
+      },
+      "writtenOn": "2023-09-14T16:28:54Z",
+      "side": 1,
+      "message": "Exactly - OTA can change the list of apps. If there is a cleaner way to do this it would be good.",
+      "parentUuid": "e511f105_da66052a",
       "range": {
         "startLine": 3073,
         "startChar": 21,
