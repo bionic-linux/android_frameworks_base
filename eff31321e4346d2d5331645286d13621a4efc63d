@@ -39,6 +39,30 @@
       },
       "revId": "eff31321e4346d2d5331645286d13621a4efc63d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44c55e17_5cfcf730",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1838,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-09-14T20:47:59Z",
+      "side": 1,
+      "message": "It is not quite CardEmulationMode, but rather an API to implicitly disable r/w operations in the stack, unless the ReaderMode is used explicitly. CardEmulationMode would be full alternative to the ReaderMode.",
+      "parentUuid": "938f3800_76fb874b",
+      "range": {
+        "startLine": 1838,
+        "startChar": 19,
+        "endLine": 1838,
+        "endChar": 37
+      },
+      "revId": "eff31321e4346d2d5331645286d13621a4efc63d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
