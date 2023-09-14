@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35ff192e_b7a39347",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2023-09-14T06:23:33Z",
+      "side": 1,
+      "message": "You may want to merge this into the internal branch first to avoid the merge conflict.",
+      "revId": "3923af2cfdc786a2a3a0e1462179e94d18da29d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
