@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f125ec95_d37d5179",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18156,
+      "author": {
+        "id": 1967850
+      },
+      "writtenOn": "2023-09-14T21:33:03Z",
+      "side": 1,
+      "message": "Song, long time no see :) I hope you are doing well. Say Hi to the team!\n\nHere is the doc we shared with G to see if we should upstream this work. Not sure who reviewed it on your side, but we got Okay to upstream. Maybe Pat has more context.\n\nhttps://docs.google.com/document/d/1NNXAlyBXDOZ9lRzAw6RoX0_vU3U3mQcRH_lf6uj572I/edit#heading\u003dh.th6i2dcguixt\n\nThe key use case is for the OS or trusted components (e.g, the Settings app) and putting settings per app. It is not for apps to store their state. Several AOSP systems roll their per user store - e.g. NotificationManagerService as Settings doesn\u0027t support that.\n\nIt is in the settings provider as it has the infra to store this, local caching, storage to disk, optimized to be loaded early before apps can run, etc. Think of this as the Settings.Secure but per-package.\n\nThe reason this is not folded in the settings.secure table is to allow separate security models (like DeviceConfig not folded in Settings.Secure) and also to avoid mixup of data from both worlds. Btw, we put privileged protection as a starting point which happens to be the same as the settings.secure table - this should be role based permission ideally.",
+      "parentUuid": "5d0cac24_b6dbe8a6",
+      "range": {
+        "startLine": 18156,
+        "startChar": 7,
+        "endLine": 18156,
+        "endChar": 67
+      },
+      "revId": "177d23b958b643ce216d972c6c5756cdbb354781",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e511f105_da66052a",
         "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
         "patchSetId": 2
