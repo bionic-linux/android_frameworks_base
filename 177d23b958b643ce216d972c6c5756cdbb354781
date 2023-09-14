@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "438e09d0_ee199ca9",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18156,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-09-14T16:20:52Z",
+      "side": 1,
+      "message": "Why should this data be kept in SettingsProvider; why not just use app data? What is your use case? Can the existing types of settings accommodate your usage?\n\nOn the other hand, does it mean that App A can see App B\u0027s setting as long as App A has READ_PACKAGE_SETTINGS permission? That means App A can know that App B is installed, which can violate the package visibility restriction.",
+      "range": {
+        "startLine": 18156,
+        "startChar": 7,
+        "endLine": 18156,
+        "endChar": 67
+      },
+      "revId": "177d23b958b643ce216d972c6c5756cdbb354781",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e511f105_da66052a",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3073,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-09-14T16:20:52Z",
+      "side": 1,
+      "message": "Iterating through the list of all the apps at boot can cause a significant delay if there are lots of packages installed. I see that you are already doing some cleaning up when a package is installed. Why is there still a need to do pruning during boot? Is it for system packages removed during OTA?",
+      "range": {
+        "startLine": 3073,
+        "startChar": 21,
+        "endLine": 3073,
+        "endChar": 55
+      },
+      "revId": "177d23b958b643ce216d972c6c5756cdbb354781",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
