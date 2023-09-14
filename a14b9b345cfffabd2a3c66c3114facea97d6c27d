@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "65896c77_9018df8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2023-09-14T14:28:59Z",
+      "side": 1,
+      "message": "Ah, race conditioned this comment with my own. Agreed that these are probably better to remove if they\u0027re a strict subset, and to amend the proper CTS tests otherwise.",
+      "parentUuid": "150e6b0f_70bc73e3",
+      "revId": "a14b9b345cfffabd2a3c66c3114facea97d6c27d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ed60b5ab_c9b04be7",
         "filename": "tests/NetworkSecurityConfigTest/res/xml/domain_whitespace.xml",
         "patchSetId": 3
