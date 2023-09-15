@@ -96,6 +96,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53a169c5_619cdf9f",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18156,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-09-15T18:43:26Z",
+      "side": 1,
+      "message": "Hi Svet, long time no see! Hope you are doing well, and thank you for still contributing to SettingsProvider! \n\nThanks for providing the context for this change. Given that this is mostly going to be used by system apps, I agree it makes more sense to not fold the new class in the existing Settings.Secure table.\n\nI\u0027ve requested access to read your doc. I will ask more questions there once I have access.",
+      "parentUuid": "f125ec95_d37d5179",
+      "range": {
+        "startLine": 18156,
+        "startChar": 7,
+        "endLine": 18156,
+        "endChar": 67
+      },
+      "revId": "177d23b958b643ce216d972c6c5756cdbb354781",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e511f105_da66052a",
