@@ -193,6 +193,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ed68fdcc_a6135db2",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3073,
+      "author": {
+        "id": 1967850
+      },
+      "writtenOn": "2023-09-17T19:09:35Z",
+      "side": 1,
+      "message": "There was a PackageManagerInternal API we could use to efficiently iterate on the packages we can use as we are running in the system process.\n\nIt is not safe to do this only on upgrade - ex: package is uninstalled and before get the broadcast battery dies. Next time we boot we need to reconcile.",
+      "parentUuid": "f51cb612_b7c471bb",
+      "range": {
+        "startLine": 3073,
+        "startChar": 21,
+        "endLine": 3073,
+        "endChar": 55
+      },
+      "revId": "177d23b958b643ce216d972c6c5756cdbb354781",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "58806d60_5a8f7285",
         "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
         "patchSetId": 2
