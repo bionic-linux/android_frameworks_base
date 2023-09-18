@@ -22,6 +22,30 @@
       },
       "revId": "088637f5a367e059533fd58213a4c42459e39abc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cced91b_aa6cc7ad",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4470,
+      "author": {
+        "id": 1790000
+      },
+      "writtenOn": "2023-09-18T17:54:44Z",
+      "side": 1,
+      "message": "In AOSP, it is used [here](https://cs.android.com/android/platform/superproject/main/+/main:packages/apps/Contacts/src/com/android/contacts/sdn/SdnRepository.kt;l\u003d77-100?q\u003dpackages%2Fapps%2FContacts%2Fsrc%2Fcom%2Fandroid%2Fcontacts%2Fsdn%2FSdnRepository.kt)\n\nAlso, this key is already used by OEMs to share the service numbers. [Bug](b/265139668#comment14)\n\nAlso, previous API is subset of newer one. And when the change was merged to AOSP, it was already using the new API design. I forgot to update this documentation when added the implementation. So, reusing this won\u0027t cause any breakage.",
+      "parentUuid": "6869cd89_fea98a43",
+      "range": {
+        "startLine": 4469,
+        "startChar": 7,
+        "endLine": 4470,
+        "endChar": 40
+      },
+      "revId": "088637f5a367e059533fd58213a4c42459e39abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
