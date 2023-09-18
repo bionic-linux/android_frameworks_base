@@ -70,6 +70,30 @@
       },
       "revId": "088637f5a367e059533fd58213a4c42459e39abc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5aea01af_18c3a400",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4470,
+      "author": {
+        "id": 1790000
+      },
+      "writtenOn": "2023-09-18T20:43:43Z",
+      "side": 1,
+      "message": "Yes, this is just the documentation update. The usage is already based the new design.\n\nAlso, created a bug to use TelecomManager. b/300976708",
+      "parentUuid": "49f9e94c_11489451",
+      "range": {
+        "startLine": 4469,
+        "startChar": 7,
+        "endLine": 4470,
+        "endChar": 40
+      },
+      "revId": "088637f5a367e059533fd58213a4c42459e39abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
