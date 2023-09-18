@@ -215,6 +215,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b454bf2_8eae6dbd",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3073,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-09-18T22:57:07Z",
+      "side": 1,
+      "message": "Regarding broadcast, `PackageMonitor` in Android V will be using callbacks instead of broadcast, so the chance of package uninstalled and battery dies before `onPackageRemoved` is called the will be very small. That said, I am okay with the new implementation of `pruneObsoletePackageSettingsLocked` not wrapped in `isDeviceUpgrading`, if we loop through the package names in the settings and not all the packages installed.",
+      "parentUuid": "ed68fdcc_a6135db2",
+      "range": {
+        "startLine": 3073,
+        "startChar": 21,
+        "endLine": 3073,
+        "endChar": 55
+      },
+      "revId": "177d23b958b643ce216d972c6c5756cdbb354781",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58806d60_5a8f7285",
@@ -238,6 +262,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "88867104_aaf40d3c",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3102,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-09-18T22:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58806d60_5a8f7285",
+      "range": {
+        "startLine": 3081,
+        "startChar": 16,
+        "endLine": 3102,
+        "endChar": 17
+      },
+      "revId": "177d23b958b643ce216d972c6c5756cdbb354781",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1da6a720_7b4c4837",
@@ -251,6 +299,30 @@
       "writtenOn": "2023-09-14T17:51:54Z",
       "side": 1,
       "message": "`packageName + \"/\"` to be more precise (in case two packages start with the same string)",
+      "range": {
+        "startLine": 3122,
+        "startChar": 40,
+        "endLine": 3122,
+        "endChar": 51
+      },
+      "revId": "177d23b958b643ce216d972c6c5756cdbb354781",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3884bb74_e0597124",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3122,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-09-18T22:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1da6a720_7b4c4837",
       "range": {
         "startLine": 3122,
         "startChar": 40,

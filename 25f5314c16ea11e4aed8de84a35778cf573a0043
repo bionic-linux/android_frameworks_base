@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b932b64_73075d4f",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 18183,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-09-18T22:57:07Z",
+      "side": 1,
+      "message": "`Package`",
+      "range": {
+        "startLine": 18183,
+        "startChar": 16,
+        "endLine": 18183,
+        "endChar": 22
+      },
+      "revId": "25f5314c16ea11e4aed8de84a35778cf573a0043",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f34998c1_e0fe3777",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 18300,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-09-18T22:57:07Z",
+      "side": 1,
+      "message": "nit: `createCompositeName`? This and below",
+      "range": {
+        "startLine": 18300,
+        "startChar": 51,
+        "endLine": 18300,
+        "endChar": 75
+      },
+      "revId": "25f5314c16ea11e4aed8de84a35778cf573a0043",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b940c16_518dbebe",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2094,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-09-18T22:57:07Z",
+      "side": 1,
+      "message": "Can we not wrap it under `clearCallingIdentity`? Otherwise we can\u0027t properly check if the caller has package visibility to the target package",
+      "range": {
+        "startLine": 2085,
+        "startChar": 8,
+        "endLine": 2094,
+        "endChar": 9
+      },
+      "revId": "25f5314c16ea11e4aed8de84a35778cf573a0043",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b170f836_aa75aa95",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3085,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-09-18T22:57:07Z",
+      "side": 1,
+      "message": "Let\u0027s add a loop below this line to add package names to a `Set`, before looping through them and check if they are installed",
+      "range": {
+        "startLine": 3085,
+        "startChar": 35,
+        "endLine": 3085,
+        "endChar": 40
+      },
+      "revId": "25f5314c16ea11e4aed8de84a35778cf573a0043",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5911d2c_941fc5c0",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3107,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-09-18T22:57:07Z",
+      "side": 1,
+      "message": "nit: return early if `packageSettings \u003d\u003d null`",
+      "range": {
+        "startLine": 3107,
+        "startChar": 11,
+        "endLine": 3107,
+        "endChar": 12
+      },
+      "revId": "25f5314c16ea11e4aed8de84a35778cf573a0043",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a20d5672_618deeb6",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-09-18T22:57:07Z",
+      "side": 1,
+      "message": "`name of the package`",
+      "range": {
+        "startLine": 491,
+        "startChar": 49,
+        "endLine": 491,
+        "endChar": 56
+      },
+      "revId": "25f5314c16ea11e4aed8de84a35778cf573a0043",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
