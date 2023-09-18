@@ -23,7 +23,7 @@ import static android.media.tv.tunerresourcemanager.TunerResourceManager.INVALID
  *
  * @hide
  */
-public class TunerResourceBasic {
+public class TunerResourceBasic implements Cloneable {
     /**
      * Handle of the current resource. Should not be changed and should be aligned with the driver
      * level implementation.
@@ -34,6 +34,11 @@ public class TunerResourceBasic {
      * If the current resource is in use.
      */
     boolean mIsInUse;
+
+    /**
+     * If the current resource is in primary use.
+     */
+    boolean mIsInPrimaryUse;
 
     /**
      * The owner client's id if this resource is occupied.
@@ -52,6 +57,10 @@ public class TunerResourceBasic {
         return mIsInUse;
     }
 
+    public boolean isInPrimaryUse() {
+        return mIsInPrimaryUse;
+    }
+
     public int getOwnerClientId() {
         return mOwnerClientId;
     }
@@ -62,8 +71,19 @@ public class TunerResourceBasic {
      * @param ownerClientId the id of the owner client.
      */
     public void setOwner(int ownerClientId) {
+        setOwner(ownerClientId, true);
+    }
+
+    /**
+     * Set an owner client on the resource.
+     *
+     * @param ownerClientId the id of the owner client.
+     * @param primaryUse whether the resource is in primary use.
+     */
+    public void setOwner(int ownerClientId, boolean primaryUse) {
         mIsInUse = true;
         mOwnerClientId = ownerClientId;
+        mIsInPrimaryUse = primaryUse;
     }
 
     /**
@@ -72,6 +92,18 @@ public class TunerResourceBasic {
     public void removeOwner() {
         mIsInUse = false;
         mOwnerClientId = INVALID_OWNER_ID;
+        mIsInPrimaryUse = false;
+    }
+
+    @Override
+    public TunerResourceBasic clone() {
+        TunerResourceBasic clone = null;
+        try {
+            clone = (TunerResourceBasic) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return clone;
     }
 
     /**
