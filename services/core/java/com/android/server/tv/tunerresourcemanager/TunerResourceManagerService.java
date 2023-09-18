@@ -50,6 +50,7 @@ import com.android.server.SystemService;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -81,8 +82,6 @@ public class TunerResourceManagerService extends SystemService implements IBinde
 
     // Map of the current available frontend resources
     private Map<Integer, FrontendResource> mFrontendResources = new HashMap<>();
-    // SparseIntArray of the max usable number for each frontend resource type
-    private SparseIntArray mFrontendMaxUsableNums = new SparseIntArray();
     // SparseIntArray of the currently used number for each frontend resource type
     private SparseIntArray mFrontendUsedNums = new SparseIntArray();
     // SparseIntArray of the existing number for each frontend resource type
@@ -91,7 +90,6 @@ public class TunerResourceManagerService extends SystemService implements IBinde
     // Backups for the frontend resource maps for enabling testing with custom resource maps
     // such as TunerTest.testHasUnusedFrontend1()
     private Map<Integer, FrontendResource> mFrontendResourcesBackup = new HashMap<>();
-    private SparseIntArray mFrontendMaxUsableNumsBackup = new SparseIntArray();
     private SparseIntArray mFrontendUsedNumsBackup = new SparseIntArray();
     private SparseIntArray mFrontendExistingNumsBackup = new SparseIntArray();
 
@@ -101,6 +99,14 @@ public class TunerResourceManagerService extends SystemService implements IBinde
     private Map<Integer, CasResource> mCasResources = new HashMap<>();
     // Map of the current available CiCam resources
     private Map<Integer, CiCamResource> mCiCamResources = new HashMap<>();
+
+    // The frontend resource restriction to restrict to the frontend resource usage that
+    // satisfies a maximum usable number limit of frontend resources for each frontend type
+    private FrontendMaxUsableNumRestriction mFrontendMaxUsableNumRestriction =
+            new FrontendMaxUsableNumRestriction();
+
+    // List of the frontend resource restrictions
+    private List<FrontendResourceRestriction> mFrontendResourceRestrictions = new ArrayList<>();
 
     @GuardedBy("mLock")
     private Map<Integer, ResourcesReclaimListenerRecord> mListeners = new HashMap<>();
@@ -124,6 +130,8 @@ public class TunerResourceManagerService extends SystemService implements IBinde
 
     public TunerResourceManagerService(@Nullable Context context) {
         super(context);
+        mFrontendResourceRestrictions.add(new FrontendExclusiveGroupRestriction());
+        mFrontendResourceRestrictions.add(mFrontendMaxUsableNumRestriction);
     }
 
     @Override
@@ -612,13 +620,35 @@ public class TunerResourceManagerService extends SystemService implements IBinde
             synchronized (mLock) {
                 dumpMap(mClientProfiles, "ClientProfiles:", "\n", pw);
                 dumpMap(mFrontendResources, "FrontendResources:", "\n", pw);
-                dumpSIA(mFrontendExistingNums, "FrontendExistingNums:", ", ", pw);
-                dumpSIA(mFrontendUsedNums, "FrontendUsedNums:", ", ", pw);
-                dumpSIA(mFrontendMaxUsableNums, "FrontendMaxUsableNums:", ", ", pw);
+                for (int i = 0; i < mFrontendExistingNums.size(); i++) {
+                    int frontendType = mFrontendExistingNums.keyAt(i);
+                    pw.println("FrontendNums: FrontendType = " + frontendType);
+                    pw.increaseIndent();
+                    pw.println("ExistingNumber : "
+                            + mFrontendExistingNums.get(frontendType, INVALID_FE_COUNT));
+                    pw.println("UsedNumber : "
+                            + mFrontendUsedNums.get(frontendType, INVALID_FE_COUNT));
+                    pw.println("MaxUsableNumber : "
+                            + mFrontendMaxUsableNumRestriction
+                                .getMaxNumberOfFrontends(frontendType));
+                    pw.println();
+                    pw.decreaseIndent();
+                }
                 dumpMap(mFrontendResourcesBackup, "FrontendResourcesBackUp:", "\n", pw);
-                dumpSIA(mFrontendExistingNumsBackup, "FrontendExistingNumsBackup:", ", ", pw);
-                dumpSIA(mFrontendUsedNumsBackup, "FrontendUsedNumsBackup:", ", ", pw);
-                dumpSIA(mFrontendMaxUsableNumsBackup, "FrontendUsedNumsBackup:", ", ", pw);
+                for (int i = 0; i < mFrontendExistingNums.size(); i++) {
+                    int frontendType = mFrontendExistingNums.keyAt(i);
+                    pw.println("FrontendNums: FrontendType = " + frontendType);
+                    pw.increaseIndent();
+                    pw.println("ExistingNumberBackup : "
+                            + mFrontendExistingNumsBackup.get(frontendType, INVALID_FE_COUNT));
+                    pw.println("UsedNumberBackup : "
+                            + mFrontendUsedNumsBackup.get(frontendType, INVALID_FE_COUNT));
+                    pw.println("MaxUsableNumberBackup : "
+                            + mFrontendMaxUsableNumRestriction
+                                .getStoredMaxNumberOfFrontends(frontendType));
+                    pw.println();
+                    pw.decreaseIndent();
+                }
                 dumpMap(mLnbResources, "LnbResource:", "\n", pw);
                 dumpMap(mCasResources, "CasResource:", "\n", pw);
                 dumpMap(mCiCamResources, "CiCamResource:", "\n", pw);
@@ -775,7 +805,7 @@ public class TunerResourceManagerService extends SystemService implements IBinde
                 replaceFeResourceMap(mFrontendResources, mFrontendResourcesBackup);
                 replaceFeCounts(mFrontendExistingNums, mFrontendExistingNumsBackup);
                 replaceFeCounts(mFrontendUsedNums, mFrontendUsedNumsBackup);
-                replaceFeCounts(mFrontendMaxUsableNums, mFrontendMaxUsableNumsBackup);
+                mFrontendMaxUsableNumRestriction.storeMaxNumberOfFrontends();
                 break;
                 // TODO: implement for other resource type when needed
             default:
@@ -789,7 +819,7 @@ public class TunerResourceManagerService extends SystemService implements IBinde
                 replaceFeResourceMap(null, mFrontendResources);
                 replaceFeCounts(null, mFrontendExistingNums);
                 replaceFeCounts(null, mFrontendUsedNums);
-                replaceFeCounts(null, mFrontendMaxUsableNums);
+                mFrontendMaxUsableNumRestriction.clearMaxNumberOfFrontends();
                 break;
                 // TODO: implement for other resource type when needed
             default:
@@ -803,7 +833,7 @@ public class TunerResourceManagerService extends SystemService implements IBinde
                 replaceFeResourceMap(mFrontendResourcesBackup, mFrontendResources);
                 replaceFeCounts(mFrontendExistingNumsBackup, mFrontendExistingNums);
                 replaceFeCounts(mFrontendUsedNumsBackup, mFrontendUsedNums);
-                replaceFeCounts(mFrontendMaxUsableNumsBackup, mFrontendMaxUsableNums);
+                mFrontendMaxUsableNumRestriction.restoreMaxNumberOfFrontends();
                 break;
                 // TODO: implement for other resource type when needed
             default:
@@ -933,62 +963,163 @@ public class TunerResourceManagerService extends SystemService implements IBinde
         }
         clientPriorityUpdateOnRequest(requestClient);
         int grantingFrontendHandle = TunerResourceManager.INVALID_RESOURCE_HANDLE;
-        int inUseLowestPriorityFrHandle = TunerResourceManager.INVALID_RESOURCE_HANDLE;
-        // Priority max value is 1000
-        int currentLowestPriority = MAX_CLIENT_PRIORITY + 1;
-        for (FrontendResource fr : getFrontendResources().values()) {
-            if (fr.getType() == request.frontendType) {
-                if (!fr.isInUse()) {
-                    // Unused resource cannot be acquired if the max is already reached, but
-                    // TRM still has to look for the reclaim candidate
-                    if (isFrontendMaxNumUseReached(request.frontendType)) {
-                        continue;
-                    }
-                    // Grant unused frontend with no exclusive group members first.
-                    if (fr.getExclusiveGroupMemberFeHandles().isEmpty()) {
-                        grantingFrontendHandle = fr.getHandle();
-                        break;
-                    } else if (grantingFrontendHandle
-                            == TunerResourceManager.INVALID_RESOURCE_HANDLE) {
-                        // Grant the unused frontend with lower id first if all the unused
-                        // frontends have exclusive group members.
-                        grantingFrontendHandle = fr.getHandle();
-                    }
-                } else if (grantingFrontendHandle == TunerResourceManager.INVALID_RESOURCE_HANDLE) {
-                    // Record the frontend id with the lowest client priority among all the
-                    // in use frontends when no available frontend has been found.
-                    int priority = getFrontendHighestClientPriority(fr.getOwnerClientId());
-                    if (currentLowestPriority > priority) {
-                        inUseLowestPriorityFrHandle = fr.getHandle();
-                        currentLowestPriority = priority;
-                    }
+        List<Integer> reclaimingFrontendHandles = new ArrayList<>();
+
+        // Clone frontend resources for selecting a granting frontend resource and
+        // reclaiming frontend resources.
+        List<FrontendResource> workFrontendResources = new ArrayList<>();
+        mFrontendResources.values().forEach(
+                fr -> workFrontendResources.add((FrontendResource) fr.clone()));
+
+        // Check if there is an available frontend resource for the given frontend type.
+        for (FrontendResourceRestriction frr : mFrontendResourceRestrictions) {
+            if (!frr.hasAvailableFrontendResource(request, workFrontendResources)) {
+                // Cannot find an available frontend resource.
+                return false;
+            }
+        }
+
+        // Select reclaiming frontend resources by checking the frontend resource
+        // restrictions repeatedly until there is no conflict.
+        int primaryUseCount = (int) workFrontendResources.stream()
+                .filter(fr -> fr.isInPrimaryUse()).count();
+        for (int count = 0; count < primaryUseCount; count++) {
+            // Get conflicting frontend resources by checking the frontend resource restrictions.
+            List<List<FrontendResource>> conflictingFrontendResourcesList = new ArrayList<>();
+            for (FrontendResourceRestriction frr : mFrontendResourceRestrictions) {
+                List<FrontendResource> conflictingFrontendResources =
+                        frr.getConflictingFrontendResources(request, workFrontendResources);
+                if (!conflictingFrontendResources.isEmpty()) {
+                    conflictingFrontendResourcesList.add(conflictingFrontendResources);
+                }
+            }
+            // End the selecting reclaiming frontend resources if there is no conflict.
+            if (conflictingFrontendResourcesList.isEmpty()) {
+                break;
+            }
+            // Select a reclaiming frontend resource from the conlicting frontend resources.
+            FrontendResource reclaimingFrontendResource =
+                    getReclaimingFrontendResource(request, conflictingFrontendResourcesList);
+            if (reclaimingFrontendResource == null) {
+                // Cannot resolve the conflict as there is no frontend resource that can be
+                // reclaimed.
+                return false;
+            }
+            // Change the in-use state of the selected reclaiming frontend resource in the
+            // work frontend resources for the next frontend resource restrictions check.
+            for (FrontendResource fr : workFrontendResources) {
+                if (fr.getExclusiveGroupId()
+                        == reclaimingFrontendResource.getExclusiveGroupId()) {
+                    fr.removeOwner();
+                    reclaimingFrontendHandles.add(fr.getHandle());
                 }
             }
         }
 
-        // Grant frontend when there is unused resource.
+        // Select a granting frontend resource.
+        for (FrontendResource fr : workFrontendResources) {
+            if (fr.getType() == request.frontendType && !fr.isInUse()) {
+                if (fr.getExclusiveGroupMemberFeHandles().isEmpty()) {
+                    // Grant unused frontend with no exclusive group members first.
+                    grantingFrontendHandle = fr.getHandle();
+                    break;
+                } else if (grantingFrontendHandle
+                        == TunerResourceManager.INVALID_RESOURCE_HANDLE) {
+                    // Grant the unused frontend with lower id first if all the unused
+                    // frontends have exclusive group members.
+                    grantingFrontendHandle = fr.getHandle();
+                }
+            }
+        }
+
+        // Reclaim and grant the frontend resources.
         if (grantingFrontendHandle != TunerResourceManager.INVALID_RESOURCE_HANDLE) {
+            for (int fh : reclaimingFrontendHandles) {
+                FrontendResource reclaimingFrontendResource = getFrontendResource(fh);
+                if (!reclaimResource(reclaimingFrontendResource.getOwnerClientId(),
+                        TunerResourceManager.TUNER_RESOURCE_TYPE_FRONTEND)) {
+                    return false;
+                }
+            }
             frontendHandle[0] = grantingFrontendHandle;
             updateFrontendClientMappingOnNewGrant(grantingFrontendHandle, request.clientId);
             return true;
         }
-
-        // When all the resources are occupied, grant the lowest priority resource if the
-        // request client has higher priority.
-        if (inUseLowestPriorityFrHandle != TunerResourceManager.INVALID_RESOURCE_HANDLE
-                && (requestClient.getPriority() > currentLowestPriority)) {
-            if (!reclaimResource(
-                    getFrontendResource(inUseLowestPriorityFrHandle).getOwnerClientId(),
-                    TunerResourceManager.TUNER_RESOURCE_TYPE_FRONTEND)) {
-                return false;
-            }
-            frontendHandle[0] = inUseLowestPriorityFrHandle;
-            updateFrontendClientMappingOnNewGrant(
-                    inUseLowestPriorityFrHandle, request.clientId);
-            return true;
-        }
-
         return false;
+    }
+
+    /**
+     * Get a reclaiming frontend resource from the given conflicting frontend resources list.
+     *
+     * @param request the frontend resource request.
+     * @param conflictingFrontendResourcesList the conflicting frontend resources list for
+     *        the frontend resource restrictions.
+     *
+     * @return a reclaiming frontend resource to be reclaimed, null if there is no frontend
+     *         resource that can be reclaimed.
+     */
+    private FrontendResource getReclaimingFrontendResource(TunerFrontendRequest request,
+            List<List<FrontendResource>> conflictingFrontendResourcesList) {
+        int challengerClientId = request.clientId;
+        int challengerPriority = getClientProfile(challengerClientId).getPriority();
+
+        int lowestPriority = MAX_CLIENT_PRIORITY + 1;
+        FrontendResource lowestResource = null;
+
+        Map<FrontendResource, Integer> duplicatedCounts = new HashMap<>();
+        int maxDuplicatedCount = 0;
+        int maxDuplicatedPriority = MAX_CLIENT_PRIORITY + 1;
+        FrontendResource maxDuplicatedResource = null;
+
+        for (List<FrontendResource> conflictingFrontendResources :
+                conflictingFrontendResourcesList) {
+            int lowerPriorityCount = 0;
+            for (FrontendResource conflictingFrontendResource :
+                    conflictingFrontendResources) {
+                int ownerClientId = conflictingFrontendResource.getOwnerClientId();
+                int holderPriority = getFrontendHighestClientPriority(ownerClientId);
+                if (holderPriority >= challengerPriority) {
+                    // Skip if process id is different and the priority of the holder
+                    // is greater than or equal to the priority of the challenger.
+                    continue;
+                }
+                lowerPriorityCount++;
+
+                if (conflictingFrontendResources.size() == 1) {
+                    // The frontend resource that is the only one in the conflicting
+                    // frontend resources and lower priority than the challenger must be
+                    // reclaimed.
+                    return conflictingFrontendResource;
+                }
+
+                // Update the frontend resource handle that is lowest priority.
+                if (lowestPriority > holderPriority) {
+                    lowestPriority = holderPriority;
+                    lowestResource = conflictingFrontendResource;
+                }
+
+                // Update the frontend resource handle that is most duplicated in the
+                // conflicting frontend resources list and lowest priority.
+                int duplicatedCount =
+                        duplicatedCounts.getOrDefault(conflictingFrontendResource, 0) + 1;
+                duplicatedCounts.put(conflictingFrontendResource, duplicatedCount);
+                if (maxDuplicatedCount < duplicatedCount
+                        ||
+                        (maxDuplicatedCount == duplicatedCount
+                        &&
+                        maxDuplicatedPriority > holderPriority)) {
+                    maxDuplicatedCount = duplicatedCount;
+                    maxDuplicatedPriority = holderPriority;
+                    maxDuplicatedResource = conflictingFrontendResource;
+                }
+            }
+            if (lowerPriorityCount == 0) {
+                // There is no frontend resource that can be reclaimed in the conflicting
+                // frontend resources.
+                return null;
+            }
+        }
+        return (maxDuplicatedCount > 1) ? maxDuplicatedResource : lowestResource;
     }
 
     @VisibleForTesting
@@ -1661,7 +1792,7 @@ public class TunerResourceManagerService extends SystemService implements IBinde
         increFrontendNum(mFrontendUsedNums, grantingFrontend.getType());
         ownerProfile.useFrontend(grantingHandle);
         for (int exclusiveGroupMember : grantingFrontend.getExclusiveGroupMemberFeHandles()) {
-            getFrontendResource(exclusiveGroupMember).setOwner(ownerClientId);
+            getFrontendResource(exclusiveGroupMember).setOwner(ownerClientId, false);
             ownerProfile.useFrontend(exclusiveGroupMember);
         }
         ownerProfile.setPrimaryFrontend(grantingHandle);
@@ -1761,7 +1892,7 @@ public class TunerResourceManagerService extends SystemService implements IBinde
     private boolean setMaxNumberOfFrontendsInternal(int frontendType, int maxUsableNum) {
         int usedNum = mFrontendUsedNums.get(frontendType, INVALID_FE_COUNT);
         if (usedNum == INVALID_FE_COUNT || usedNum <= maxUsableNum) {
-            mFrontendMaxUsableNums.put(frontendType, maxUsableNum);
+            mFrontendMaxUsableNumRestriction.setMaxNumberOfFrontends(frontendType, maxUsableNum);
             return true;
         } else {
             Slog.e(TAG, "max number of frontend for frontendType: " + frontendType
@@ -1777,24 +1908,12 @@ public class TunerResourceManagerService extends SystemService implements IBinde
             Log.e(TAG, "existingNum is -1 for " + frontendType);
             return -1;
         }
-        int maxUsableNum = mFrontendMaxUsableNums.get(frontendType, INVALID_FE_COUNT);
-        if (maxUsableNum == INVALID_FE_COUNT) {
+        int maxUsableNum = mFrontendMaxUsableNumRestriction.getMaxNumberOfFrontends(frontendType);
+        if (maxUsableNum == FrontendMaxUsableNumRestriction.MAX_NUM_OF_FRONTENDS_NOT_SET) {
             return existingNum;
         } else {
             return maxUsableNum;
         }
-    }
-
-    private boolean isFrontendMaxNumUseReached(int frontendType) {
-        int maxUsableNum = mFrontendMaxUsableNums.get(frontendType, INVALID_FE_COUNT);
-        if (maxUsableNum == INVALID_FE_COUNT) {
-            return false;
-        }
-        int useNum = mFrontendUsedNums.get(frontendType, INVALID_FE_COUNT);
-        if (useNum == INVALID_FE_COUNT) {
-            useNum = 0;
-        }
-        return useNum >= maxUsableNum;
     }
 
     private void increFrontendNum(SparseIntArray targetNums, int frontendType) {
@@ -1840,20 +1959,6 @@ public class TunerResourceManagerService extends SystemService implements IBinde
             pw.increaseIndent();
             for (Map.Entry<?, ?> entry : targetMap.entrySet()) {
                 pw.print(entry.getKey() + " : " + entry.getValue());
-                pw.print(delimiter);
-            }
-            pw.println();
-            pw.decreaseIndent();
-        }
-    }
-
-    private void dumpSIA(SparseIntArray array, String headline, String delimiter,
-            IndentingPrintWriter pw) {
-        if (array != null) {
-            pw.println(headline);
-            pw.increaseIndent();
-            for (int i = 0; i < array.size(); i++) {
-                pw.print(array.keyAt(i) + " : " + array.valueAt(i));
                 pw.print(delimiter);
             }
             pw.println();

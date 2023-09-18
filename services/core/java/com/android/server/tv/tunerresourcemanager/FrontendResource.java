@@ -94,7 +94,17 @@ public final class FrontendResource extends TunerResourceBasic {
         return "FrontendResource[handle=" + this.mHandle + ", type=" + this.mType
                 + ", exclusiveGId=" + this.mExclusiveGroupId + ", exclusiveGMemeberHandles="
                 + this.mExclusiveGroupMemberHandles
-                + ", isInUse=" + this.mIsInUse + ", ownerClientId=" + this.mOwnerClientId + "]";
+                + ", isInUse=" + this.mIsInUse + ", isInPrimaryUse=" + this.mIsInPrimaryUse
+                + ", ownerClientId=" + this.mOwnerClientId + "]";
+    }
+
+    @Override
+    public FrontendResource clone() {
+        FrontendResource clone = (FrontendResource) super.clone();
+        if (clone != null) {
+            clone.mExclusiveGroupMemberHandles = new HashSet<>(mExclusiveGroupMemberHandles);
+        }
+        return clone;
     }
 
     /**
