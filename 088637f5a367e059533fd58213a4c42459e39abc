@@ -46,6 +46,30 @@
       },
       "revId": "088637f5a367e059533fd58213a4c42459e39abc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49f9e94c_11489451",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4470,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2023-09-18T18:07:51Z",
+      "side": 1,
+      "message": "This isn\u0027t a good use of a carrier config key; these should not be directly used from an app like Contacts.\n\nThis is something that should be exposed via a proper API in TelephonyManager rather than just assuming an app is going to query this out of carrier config directly. \n\nIf the API contract was incorrectly documented in the past, then I\u0027m fine with updating the docs.\n\nPlease consider an alternative to using carrier config keys diretly though.",
+      "parentUuid": "7cced91b_aa6cc7ad",
+      "range": {
+        "startLine": 4469,
+        "startChar": 7,
+        "endLine": 4470,
+        "endChar": 40
+      },
+      "revId": "088637f5a367e059533fd58213a4c42459e39abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
