@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6869cd89_fea98a43",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4470,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2023-09-18T17:43:44Z",
+      "side": 1,
+      "message": "This looks like a breaking API change.  The previous definition assumed only numbers and possibly a leading +.  \n\nSee the following API guidelines: go/android-api-guidelines#behavior\n\nUnfortunately carrier config keys can\u0027t really use target SDK or the compat lib. \n\nYou\u0027d be best to define a new key with the new semantics.\n\nAlso, where is this used?  I don\u0027t see this consumed in the platform anywhere, so it looks like this is probably not something that should even be an API.",
+      "range": {
+        "startLine": 4469,
+        "startChar": 7,
+        "endLine": 4470,
+        "endChar": 40
+      },
+      "revId": "088637f5a367e059533fd58213a4c42459e39abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
