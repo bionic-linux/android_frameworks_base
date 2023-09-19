@@ -189,6 +189,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5297ed0d_a2f85230",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3085,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-09-19T17:07:53Z",
+      "side": 1,
+      "message": "These are direct calls to IPackageManager so there\u0027s no caching. You could do something like the following:\n\n```\nfinal List\u003cString\u003e names \u003d packageSettings.getSettingNamesLocked();\nfinal Set\u003cString\u003e uninstalledPackageNames \u003d new HashSet\u003c\u003e();\nfor (final String name : names) {\n    final String packageName \u003d name.split(\"/\")[0];\n    if (uninstalledPackageNames.contains(packageName)\n            || mPackageManager.getPackageInfo(packageName, 0, userId) \u003d\u003d null) {\n       uninstalledPackageNames.add(packageName);\n       if (packageSettings.deleteSettingLocked(name)) {\n           notifyChange \u003d true;\n       }\n    }\n}\n```\n\nBut it\u0027s a small optimization and I\u0027m fine leave the code as is for easier readability. (Of course it depends on how many settings there are that share same package names)",
+      "parentUuid": "9e7b8a68_b4383363",
+      "range": {
+        "startLine": 3085,
+        "startChar": 35,
+        "endLine": 3085,
+        "endChar": 40
+      },
+      "revId": "25f5314c16ea11e4aed8de84a35778cf573a0043",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5911d2c_941fc5c0",

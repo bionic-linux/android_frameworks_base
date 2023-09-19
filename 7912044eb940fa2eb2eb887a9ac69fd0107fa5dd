@@ -16,6 +16,23 @@
       "message": "Thanks for the feedback. I made the changes but one (see my reply).",
       "revId": "7912044eb940fa2eb2eb887a9ac69fd0107fa5dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47e6f09a_2dd5ecdd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-09-19T17:07:53Z",
+      "side": 1,
+      "message": "Overall LGTM. Could you share the design doc with me, just in case I missed any thing in the code review?",
+      "revId": "7912044eb940fa2eb2eb887a9ac69fd0107fa5dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
