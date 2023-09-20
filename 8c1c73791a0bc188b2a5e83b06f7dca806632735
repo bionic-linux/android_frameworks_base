@@ -16,6 +16,23 @@
       "message": "please have a look",
       "revId": "8c1c73791a0bc188b2a5e83b06f7dca806632735",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b04b4a0_dd6795d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-20T13:31:58Z",
+      "side": 1,
+      "message": "Evan, do you know why we used `plugged` instead of `charging` to determine when to show the lightning bolt on the battery icon? I figure there\u0027s a good reason, but this code has existed long before I joined the team.",
+      "revId": "8c1c73791a0bc188b2a5e83b06f7dca806632735",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
