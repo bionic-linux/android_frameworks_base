@@ -33,6 +33,24 @@
       "message": "Overall LGTM. Could you share the design doc with me, just in case I missed any thing in the code review?",
       "revId": "7912044eb940fa2eb2eb887a9ac69fd0107fa5dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91c702a1_2967b584",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2037182
+      },
+      "writtenOn": "2023-09-20T10:25:32Z",
+      "side": 1,
+      "message": "Thanks! I shared the doc Svet linked with you. Also, can you review the CTS tests I created for this (under the same topic).",
+      "parentUuid": "47e6f09a_2dd5ecdd",
+      "revId": "7912044eb940fa2eb2eb887a9ac69fd0107fa5dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
