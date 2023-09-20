@@ -33,6 +33,24 @@
       "message": "Evan, do you know why we used `plugged` instead of `charging` to determine when to show the lightning bolt on the battery icon? I figure there\u0027s a good reason, but this code has existed long before I joined the team.",
       "revId": "8c1c73791a0bc188b2a5e83b06f7dca806632735",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9026f0af_c9838584",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2023-09-20T18:20:09Z",
+      "side": 1,
+      "message": "I honestly do not know the reason, as this code predates my tenure as well (so it\u0027s at least older than 7 years at this point). Assuming that `charged` and `plugged` mean what we expect them to (actually charging vs just having a wired connection that may not be charging) then this seems reasonable to me.",
+      "parentUuid": "4b04b4a0_dd6795d7",
+      "revId": "8c1c73791a0bc188b2a5e83b06f7dca806632735",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
