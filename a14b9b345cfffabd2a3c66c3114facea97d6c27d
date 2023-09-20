@@ -88,6 +88,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed37d672_c99223c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2023-09-20T11:01:27Z",
+      "side": 1,
+      "message": "Nope, looks like **this** is the superset (details on the bug), so might as well land this CL as a starting point.",
+      "parentUuid": "b540e838_cd23d95e",
+      "revId": "a14b9b345cfffabd2a3c66c3114facea97d6c27d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed60b5ab_c9b04be7",
@@ -125,6 +143,30 @@
       "side": 1,
       "message": "FWIW I think it\u0027s only linting as invalid because of the whitespace, the same digest is used elsewhere. And this particular case is used only in a test to ensure such pins actually work.",
       "parentUuid": "ed60b5ab_c9b04be7",
+      "range": {
+        "startLine": 8,
+        "startChar": 31,
+        "endLine": 8,
+        "endChar": 82
+      },
+      "revId": "a14b9b345cfffabd2a3c66c3114facea97d6c27d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b18d328_b4600736",
+        "filename": "tests/NetworkSecurityConfigTest/res/xml/domain_whitespace.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2023-09-20T11:01:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e382a3db_ff6cebd5",
       "range": {
         "startLine": 8,
         "startChar": 31,
