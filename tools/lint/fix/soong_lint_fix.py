@@ -183,7 +183,7 @@ class SoongLintFixOptions:
 
 
 def _setup_parser():
-    parser = argparse.ArgumentParser(description="""
+    parser = argparse.ArgumentParser(prog="lint_fix", description="""
         This is a python script that applies lint fixes to the platform:
         1. Set up the environment, etc.
         2. Run lint on the specified target.
@@ -213,5 +213,5 @@ def _setup_parser():
 
 if __name__ == "__main__":
     opts = SoongLintFixOptions()
-    opts.parse_args(sys.argv)
+    opts.parse_args(sys.argv[1:])
     SoongLintFix(opts).run()
