@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "55cea9a2_9e4f483b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2023-09-21T17:12:24Z",
+      "side": 1,
+      "message": "I believe you can fix this by setting `embedded_launcher: true` in your `Android.bp` file. Ideally you would pass the full argv to argparse because then it will figure out the program name for you.\n\n`__soong_entrypoint_redirector__.py` in general can be removed now that we\u0027re on python 3.11 as well, I just haven\u0027t got around to that yet.",
+      "revId": "45c4d841067a63aa59f1b2e723118a4bc2bceed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "5cb6daaa_085e4b35",
