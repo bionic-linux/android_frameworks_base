@@ -38,6 +38,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "c75ea4d4_9b0f2184",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2023-09-22T00:39:45Z",
+      "side": 1,
+      "message": "Sorry, I meant by not passing `sys.argv` to `parse_args()` in general. But this works",
+      "parentUuid": "dd614788_335d4de8",
+      "revId": "45c4d841067a63aa59f1b2e723118a4bc2bceed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "5cb6daaa_085e4b35",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
