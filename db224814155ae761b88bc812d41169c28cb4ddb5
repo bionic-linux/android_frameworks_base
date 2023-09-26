@@ -69,6 +69,29 @@
       "parentUuid": "352967ce_06efecc1",
       "revId": "db224814155ae761b88bc812d41169c28cb4ddb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb1c2a5d_282ee9bd",
+        "filename": "rs/java/android/renderscript/ScriptC.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2023-09-26T16:28:15Z",
+      "side": 1,
+      "message": "I keep reading this as it printing the warning if the SDK level is too high, but it throws the exception on that case. Is it worth changing the function name to better reflect that? Perhaps just get rid of the \"OrPrintWarning\" part of the name, and have it always print the warning to logcat.",
+      "range": {
+        "startLine": 93,
+        "startChar": 40,
+        "endLine": 93,
+        "endChar": 64
+      },
+      "revId": "db224814155ae761b88bc812d41169c28cb4ddb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
