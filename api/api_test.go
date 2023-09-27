@@ -52,6 +52,7 @@ func TestCombinedApisGeneral(t *testing.T) {
 			}
 			`,
 		},
+		ExpectedHandcraftedModules: []string{"foo-current.txt", "foo-system-current.txt", "foo-module-lib-current.txt", "foo-system-server-current.txt"},
 		ExpectedBazelTargets: []string{
 			bp2build.MakeBazelTargetNoRestrictions("merged_txts", "foo-current.txt", bp2build.AttrNameToString{
 				"scope": `"public"`,
