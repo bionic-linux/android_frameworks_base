@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "280e439a_d7e8fe88",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1102053
+      },
+      "writtenOn": "2023-09-27T16:55:49Z",
+      "side": 1,
+      "message": "+lorenzo\n\nPTAL\n\nNote that I will land https://android-review.git.corp.google.com/c/platform/cts/+/2763566 before this CL.",
+      "revId": "e6e30a807e5dbc0a6538c6d67a027b55a4c6bbef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

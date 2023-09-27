@@ -92,6 +92,30 @@
       },
       "revId": "db224814155ae761b88bc812d41169c28cb4ddb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c254c653_0d753229",
+        "filename": "rs/java/android/renderscript/ScriptC.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1102053
+      },
+      "writtenOn": "2023-09-27T16:55:49Z",
+      "side": 1,
+      "message": "I agree that the name of the function was confusing.\n\nI applied your suggested.",
+      "parentUuid": "fb1c2a5d_282ee9bd",
+      "range": {
+        "startLine": 93,
+        "startChar": 40,
+        "endLine": 93,
+        "endChar": 64
+      },
+      "revId": "db224814155ae761b88bc812d41169c28cb4ddb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
