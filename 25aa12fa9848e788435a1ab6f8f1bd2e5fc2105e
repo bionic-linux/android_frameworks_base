@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c6de55c_ce93b443",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-09-27T17:36:03Z",
+      "side": 1,
+      "message": "LGTM. Thanks for working on the iterations. The internal branch for SettingsProvider has changed since the last AOSP push. Would you like to wait till the next AOSP push (the Android 14 release on Oct 6th) and rebase for a clean merge, or would you like me to cherry-pick it internally before then?",
+      "revId": "25aa12fa9848e788435a1ab6f8f1bd2e5fc2105e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
