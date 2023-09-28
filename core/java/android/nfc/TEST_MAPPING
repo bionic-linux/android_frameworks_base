@@ -3,5 +3,10 @@
     {
       "name": "NfcManagerTests"
     }
+  ],
+  "postsubmit": [
+    {
+      "name": "CtsNfcTestCases"
+    }
   ]
 }
