@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52748351_e43a8bb0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1688644
+      },
+      "writtenOn": "2023-09-29T20:52:35Z",
+      "side": 1,
+      "message": "According to your comment under https://android-review.googlesource.com/c/platform/frameworks/base/+/1344220 I contributed to CLDR to make Esperanto reach basic coverage level.",
+      "revId": "4065a6f5b34bbe9305eed6194b86607bc0614afc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
