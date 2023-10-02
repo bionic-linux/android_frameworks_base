@@ -640,13 +640,13 @@ public class UserManagerService extends IUserManager.Stub {
         @Override
         public void onBootPhase(int phase) {
             if (phase == SystemService.PHASE_ACTIVITY_MANAGER_READY) {
+                mUms.registerStatsCallbacks();
+            } else if (phase == SystemService.PHASE_BOOT_COMPLETED) {
                 mUms.cleanupPartialUsers();
 
                 if (mUms.mPm.isDeviceUpgrading()) {
                     mUms.cleanupPreCreatedUsers();
                 }
-
-                mUms.registerStatsCallbacks();
             }
         }
 
