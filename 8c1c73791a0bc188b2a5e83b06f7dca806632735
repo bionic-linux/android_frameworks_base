@@ -68,6 +68,24 @@
       "message": "seems TreeHugger cannot merge",
       "revId": "8c1c73791a0bc188b2a5e83b06f7dca806632735",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9925f2c_7c24f100",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-10-02T18:45:45Z",
+      "side": 1,
+      "message": "I had a realization while working on a different feature: I believe one of the reasons we use `plugged` instead of `charging` is for when your device is plugged in but already at 100%. In this case, the device is not charging, but users still want to see the lightning bolt to know that the device is plugged in and the device will charge when the battery decreases again.\n\nBased on the CL description, there\u0027s a different UX issue where if the device is plugged in but also overheated, we\u0027re showing the lightning bolt but we shouldn\u0027t be. I do agree we need to solve that. Is there a framework callback that will tell us when the device isn\u0027t charging due to it being too hot? Can we use that information and send that to `BatteryMeterView` to not show the lightning bolt in this case, but still show it when plugged but not charging?",
+      "parentUuid": "9026f0af_c9838584",
+      "revId": "8c1c73791a0bc188b2a5e83b06f7dca806632735",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
