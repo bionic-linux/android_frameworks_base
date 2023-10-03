@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4da3147_0bc011ee",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1120,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2023-10-03T06:47:54Z",
+      "side": 1,
+      "message": "Per https://android-review.git.corp.google.com/c/platform/packages/modules/Connectivity/+/2764585/comment/87e08ee1_73da3b2e , this should be called setRestrictedToTestNetworks and take a boolean.\n\nIt\u0027s fine to leave this method here as @hide if you need to.",
+      "range": {
+        "startLine": 1120,
+        "startChar": 23,
+        "endLine": 1120,
+        "endChar": 45
+      },
+      "revId": "24f872ad32f0791671a0f3b2e8e9b7ee07d31315",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
