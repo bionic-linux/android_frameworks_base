@@ -33,6 +33,8 @@ import static com.android.net.module.util.NetworkStackConstants.IPV6_MIN_MTU;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresFeature;
+import android.annotation.SuppressLint;
+import android.annotation.TestApi;
 import android.content.pm.PackageManager;
 import android.net.ipsec.ike.IkeDerAsn1DnIdentification;
 import android.net.ipsec.ike.IkeFqdnIdentification;
@@ -1111,7 +1113,9 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
          *
          * @hide
          */
+        @TestApi
         @NonNull
+        @SuppressLint("BuilderSetStyle")
         @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNELS)
         public Builder restrictToTestNetworks() {
             mIsRestrictedToTestNetworks = true;

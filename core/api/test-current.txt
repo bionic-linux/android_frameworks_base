@@ -1678,6 +1678,10 @@ package android.media.tv.tuner {
 
 package android.net {
 
+  public static final class Ikev2VpnProfile.Builder {
+    method @NonNull public android.net.Ikev2VpnProfile.Builder restrictToTestNetworks();
+  }
+
   public class NetworkPolicyManager {
     method public boolean getRestrictBackground();
     method @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY) public boolean isUidNetworkingBlocked(int, boolean);
