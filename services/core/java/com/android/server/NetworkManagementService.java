@@ -77,7 +77,6 @@ import com.android.internal.util.DumpUtils;
 import com.android.internal.util.HexDump;
 import com.android.modules.utils.build.SdkLevel;
 import com.android.net.module.util.NetdUtils;
-import com.android.net.module.util.NetdUtils.ModifyOperation;
 import com.android.net.module.util.PermissionUtils;
 
 import com.google.android.collect.Maps;
@@ -755,18 +754,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
-    }
-
-    @Override
-    public void addRoute(int netId, RouteInfo route) {
-        PermissionUtils.enforceNetworkStackPermission(mContext);
-        NetdUtils.modifyRoute(mNetdService, ModifyOperation.ADD, netId, route);
-    }
-
-    @Override
-    public void removeRoute(int netId, RouteInfo route) {
-        PermissionUtils.enforceNetworkStackPermission(mContext);
-        NetdUtils.modifyRoute(mNetdService, ModifyOperation.REMOVE, netId, route);
     }
 
     @Override
