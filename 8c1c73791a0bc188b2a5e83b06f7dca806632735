@@ -86,6 +86,24 @@
       "parentUuid": "9026f0af_c9838584",
       "revId": "8c1c73791a0bc188b2a5e83b06f7dca806632735",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "968d1301_4c44a74e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2023-10-04T09:57:07Z",
+      "side": 1,
+      "message": "Sorry Caitlin, I am not sure I see the point of having the lightning bolt show if the device is not charging but connected. I think we may make this more complicated than it is 😊 . The overheating is just one scenario that leads to this bug another one could be as you say that the device is fully charged. It is possibly easier to see that the cable is inserted than looking at the icon and as you say if the charge is 100% then it is also quite obvious that there is nothing more to do.",
+      "parentUuid": "e9925f2c_7c24f100",
+      "revId": "8c1c73791a0bc188b2a5e83b06f7dca806632735",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
