@@ -16,6 +16,29 @@
       "message": "Adding hallstrom@ for API review. Thanks!",
       "revId": "65025baaa718357a50cf9db48554a3faa3467866",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3dad123_91052593",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1127992
+      },
+      "writtenOn": "2023-10-04T21:20:37Z",
+      "side": 1,
+      "message": "I see `enableReaderOption` above is currently system API, but wondering if it makes sense for this and the `enableReaderOption` method to follow setter/getter pattern?\n\ni.e. `setReaderOptionEnabled(boolean enable)` and `getReaderOptionEnabled`\n\nWDYT?",
+      "range": {
+        "startLine": 1900,
+        "startChar": 19,
+        "endLine": 1900,
+        "endChar": 21
+      },
+      "revId": "65025baaa718357a50cf9db48554a3faa3467866",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
