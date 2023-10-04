@@ -122,6 +122,24 @@
       "parentUuid": "968d1301_4c44a74e",
       "revId": "8c1c73791a0bc188b2a5e83b06f7dca806632735",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecc4614d_4e8ba203",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2023-10-04T15:07:04Z",
+      "side": 1,
+      "message": "Thanks Evan and Caitlin for the information and comments. Avoid people thinking the cable is broken is surely a good argument. I will check internally if we will align to AOSP behavior and if there are reasons to keep current Sony behavior I will get back with the config solution.",
+      "parentUuid": "a0130f79_581210a6",
+      "revId": "8c1c73791a0bc188b2a5e83b06f7dca806632735",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
