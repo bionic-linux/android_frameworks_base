@@ -226,16 +226,7 @@ public final class AudioMetadata {
          *
          * An Integer value representing presentation content classifier.
          *
-         * @see AudioPresentation.ContentClassifier
-         * One of {@link AudioPresentation#CONTENT_UNKNOWN},
-         *     {@link AudioPresentation#CONTENT_MAIN},
-         *     {@link AudioPresentation#CONTENT_MUSIC_AND_EFFECTS},
-         *     {@link AudioPresentation#CONTENT_VISUALLY_IMPAIRED},
-         *     {@link AudioPresentation#CONTENT_HEARING_IMPAIRED},
-         *     {@link AudioPresentation#CONTENT_DIALOG},
-         *     {@link AudioPresentation#CONTENT_COMMENTARY},
-         *     {@link AudioPresentation#CONTENT_EMERGENCY},
-         *     {@link AudioPresentation#CONTENT_VOICEOVER}.
+         * @see AudioPresentation
          */
         @NonNull public static final Key<Integer> KEY_PRESENTATION_CONTENT_CLASSIFIER =
                 createKey("presentation-content-classifier", Integer.class);
