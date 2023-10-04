@@ -11,6 +11,17 @@
         "VpnProfile\\.java",
         "NetworkUtilsInternal\\.java"
       ]
+    },
+    {
+      "name": "FrameworksCoreTests",
+      "options": [
+        {
+          "include-filter": "com.android.internal.net.ConnectivityBlobStoreTest"
+        }
+      ],
+      "file_patterns": [
+        "ConnectivityBlobStore\\.java"
+      ]
     }
   ]
 }
