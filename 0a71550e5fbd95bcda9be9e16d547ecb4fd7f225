@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f8e6868_821b7119",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-10-04T13:13:23Z",
+      "side": 1,
+      "message": "I renamed the baseline not to end with `.txt` to avoid triggering API-Review requirements",
+      "revId": "0a71550e5fbd95bcda9be9e16d547ecb4fd7f225",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
