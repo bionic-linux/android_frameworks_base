@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8cc84b4_34aa1914",
+        "filename": "media/java/android/media/AudioMetadata.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2023-10-04T14:29:40Z",
+      "side": 1,
+      "message": "Is this better? At least there was a list of what to use from `AudioPresentation`",
+      "range": {
+        "startLine": 229,
+        "startChar": 16,
+        "endLine": 229,
+        "endChar": 33
+      },
+      "revId": "eb3343e43074c11817d8f9b11d2c3efb9380790e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
