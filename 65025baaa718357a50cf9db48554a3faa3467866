@@ -63,6 +63,30 @@
       },
       "revId": "65025baaa718357a50cf9db48554a3faa3467866",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c95ac283_e947b854",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1127992
+      },
+      "writtenOn": "2023-10-04T21:53:57Z",
+      "side": 1,
+      "message": "Thanks Alisher, if this follows an existing pattern this should be ok AFAIK.\n\nWill go ahead and resolve this.",
+      "parentUuid": "3a21e92d_e2875f95",
+      "range": {
+        "startLine": 1900,
+        "startChar": 19,
+        "endLine": 1900,
+        "endChar": 21
+      },
+      "revId": "65025baaa718357a50cf9db48554a3faa3467866",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
