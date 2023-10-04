@@ -49,9 +49,9 @@ import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.android.internal.widget.LockPatternUtils;
-import com.android.server.PersistentDataBlockManagerInternal;
 import com.android.server.locksettings.LockSettingsStorage.CredentialHash;
 import com.android.server.locksettings.LockSettingsStorage.PersistentData;
+import com.android.server.pdb.PersistentDataBlockManagerInternal;
 
 import org.junit.After;
 import org.junit.Before;

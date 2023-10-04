@@ -46,7 +46,7 @@ import com.android.internal.util.Preconditions;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.LockPatternUtils.CredentialType;
 import com.android.server.LocalServices;
-import com.android.server.PersistentDataBlockManagerInternal;
+import com.android.server.pdb.PersistentDataBlockManagerInternal;
 import com.android.server.utils.WatchableImpl;
 
 import java.io.ByteArrayInputStream;

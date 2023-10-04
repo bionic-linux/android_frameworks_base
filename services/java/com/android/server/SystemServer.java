@@ -153,6 +153,7 @@ import com.android.server.os.BugreportManagerService;
 import com.android.server.os.DeviceIdentifiersPolicyService;
 import com.android.server.os.NativeTombstoneManagerService;
 import com.android.server.os.SchedulingPolicyService;
+import com.android.server.pdb.PersistentDataBlockService;
 import com.android.server.people.PeopleService;
 import com.android.server.pm.ApexManager;
 import com.android.server.pm.ApexSystemServiceInfo;
