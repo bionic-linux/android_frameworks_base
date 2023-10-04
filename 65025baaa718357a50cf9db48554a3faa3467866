@@ -39,6 +39,30 @@
       },
       "revId": "65025baaa718357a50cf9db48554a3faa3467866",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a21e92d_e2875f95",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-10-04T21:50:31Z",
+      "side": 1,
+      "message": "With these names we followed the NFC adapter pattern, where Get-methods are used to get extra interfaces,\nI think for simple boolean values Is-method is more readable and meaningful, however if you insist, we can change it. Do you also want them to be changed in the NFC service?",
+      "parentUuid": "c3dad123_91052593",
+      "range": {
+        "startLine": 1900,
+        "startChar": 19,
+        "endLine": 1900,
+        "endChar": 21
+      },
+      "revId": "65025baaa718357a50cf9db48554a3faa3467866",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
