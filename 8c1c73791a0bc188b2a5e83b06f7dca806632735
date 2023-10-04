@@ -104,6 +104,24 @@
       "parentUuid": "e9925f2c_7c24f100",
       "revId": "8c1c73791a0bc188b2a5e83b06f7dca806632735",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0130f79_581210a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2023-10-04T14:33:39Z",
+      "side": 1,
+      "message": "Caitlin and I chatted about this for a while this morning, and I\u0027m going to change my mind here and go back to being in favor of the `plugged` state as the most-correct thing here. There are a number of reasons:\n\n1. As far as we can tell from the git history, AOSP has behaved this way for at least a decade.\n2. We actually already consider the device to be `charging` if the battery is considered charging _or_ full. So we would still show the lightning bolt in the \"full but not charging\" case anyway\n3. Battery settings shows a more complete picture of the actual state\n4. Probably most importantly, I think that reflecting _only_ the charging state is going to make people think that their cables are broken. Correct or not, Android has had the equivalency of \"lightning bolt \u003d plugged in (and probably charging)\" for a long time, and users likely expect that instant feedback when they plug in a device. Just testing here this morning, I plugged in my device and the system took over 20 seconds to start reporting that it was charging. This delayed feedback I think would lead to a poor user experience, since you typically only need to know \"is my device plugged in\" and you trust that once it reports that accurately it will begin charging.\n\nAll of this said, I am in favor of supporting a config if other OEMs wish to more easily customize this behavior. If you wish to add a `config_preferBatteryStatusOverPlugged` (feel free to come up with a better name 😊) and rework this CL to use that config, we\u0027d be happy to merge that upstream. As far as AOSP is concerned, I would recommend that we keep the default behavior the same for the reasons stated above.\n\nWe will continue to keep this information in mind, as we are actively exploring ways to more accurately represent and communicate the detailed battery state of devices. And we really do appreciate your feedback and consideration here.",
+      "parentUuid": "968d1301_4c44a74e",
+      "revId": "8c1c73791a0bc188b2a5e83b06f7dca806632735",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
