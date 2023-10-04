@@ -22,6 +22,30 @@
       },
       "revId": "eb3343e43074c11817d8f9b11d2c3efb9380790e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7ae3549_7f3ca5b9",
+        "filename": "media/java/android/media/AudioMetadata.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-10-04T14:40:43Z",
+      "side": 1,
+      "message": "It wasn\u0027t a valid @see tag before. Check out https://developer.android.com/reference/android/media/AudioMetadata.Format#KEY_PRESENTATION_CONTENT_CLASSIFIER\n\nI could change it to something like this if you want, but it seems like a problem to keep the list updated. It will probably become stale:\n```\n@see AudioPresentation#CONTENT_UNKNOWN\n@see AudioPresentation#CONTENT_MAIN\n@see AudioPresentation#CONTENT_MUSIC_AND_EFFECTS\n@see AudioPresentation#CONTENT_VISUALLY_IMPAIRED\n@see AudioPresentation#CONTENT_HEARING_IMPAIRED\n...\n```",
+      "parentUuid": "a8cc84b4_34aa1914",
+      "range": {
+        "startLine": 229,
+        "startChar": 16,
+        "endLine": 229,
+        "endChar": 33
+      },
+      "revId": "eb3343e43074c11817d8f9b11d2c3efb9380790e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
