@@ -33,6 +33,24 @@
       "message": "Hi, thanks for uploading this fix!  However it turns out that an equivalent change was actually already submitted several months ago.  Unfortunately, it is on the internal branch.  Included with that were also other fixes for the \"work profile of non-primary user\" case.\n\nI tried cherry-picking the commits to AOSP, but there are conflicts.\n\nIf your company or organization has early access to the Android 14 source, you can find these changes there.  Otherwise, you\u0027ll be able to get them from AOSP after Android 14 is released.\n\nSo I have to abandon your change, but please let me know if you need any more information.",
       "revId": "9ab869a56bd3ae889b7e1778afb6a9f5b617e021",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "277b66ff_f1835adc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-06T17:25:09Z",
+      "side": 1,
+      "message": "The changes have now been released to AOSP.",
+      "parentUuid": "fbc92b1b_7f499afe",
+      "revId": "9ab869a56bd3ae889b7e1778afb6a9f5b617e021",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
