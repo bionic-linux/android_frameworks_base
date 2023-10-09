@@ -2063,7 +2063,8 @@ public class LockSettingsService extends ILockSettings.Stub {
         }
     }
 
-    private void unlockUserKeyIfUnsecured(@UserIdInt int userId) {
+    @Override
+    public void unlockUserKeyIfUnsecured(@UserIdInt int userId) {
         synchronized (mSpManager) {
             if (isUserKeyUnlocked(userId)) {
                 Slogf.d(TAG, "CE storage for user %d is already unlocked", userId);

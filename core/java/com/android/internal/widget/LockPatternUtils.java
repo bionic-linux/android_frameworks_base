@@ -1869,7 +1869,11 @@ public class LockPatternUtils {
     }
 
     public void unlockUserKeyIfUnsecured(@UserIdInt int userId) {
-        getLockSettingsInternal().unlockUserKeyIfUnsecured(userId);
+        try {
+            getLockSettings().unlockUserKeyIfUnsecured(userId);
+        } catch (RemoteException re) {
+            re.rethrowFromSystemServer();
+        }
     }
 
     public void createNewUser(@UserIdInt int userId, int userSerialNumber) {
