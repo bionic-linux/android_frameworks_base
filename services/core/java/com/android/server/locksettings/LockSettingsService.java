@@ -2063,7 +2063,10 @@ public class LockSettingsService extends ILockSettings.Stub {
         }
     }
 
-    private void unlockUserKeyIfUnsecured(@UserIdInt int userId) {
+    @Override
+    public void unlockUserKeyIfUnsecured(@UserIdInt int userId) {
+        mContext.enforceCallingOrSelfPermission(PERMISSION,
+                "LockSettingsUnlockUserKeyIfUnsecured");
         synchronized (mSpManager) {
             if (isUserKeyUnlocked(userId)) {
                 Slogf.d(TAG, "CE storage for user %d is already unlocked", userId);
@@ -3471,11 +3474,6 @@ public class LockSettingsService extends ILockSettings.Stub {
         @Override
         public void onThirdPartyAppsStarted() {
             LockSettingsService.this.onThirdPartyAppsStarted();
-        }
-
-        @Override
-        public void unlockUserKeyIfUnsecured(@UserIdInt int userId) {
-            LockSettingsService.this.unlockUserKeyIfUnsecured(userId);
         }
 
         @Override
