@@ -33,6 +33,52 @@
       "message": "Hi Rubin, could you please API review this change?\nIt\u0027s adding a new supported algorithm to KeyProperties",
       "revId": "06817a8dd1e8f1c6e9de1cdf94627e1446f8db7c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd1e6382_72fdaa1d",
+        "filename": "keystore/java/android/security/keystore/KeyProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-10-09T11:21:34Z",
+      "side": 1,
+      "message": "Needs flagging: @FlaggedApi",
+      "range": {
+        "startLine": 224,
+        "startChar": 4,
+        "endLine": 224,
+        "endChar": 10
+      },
+      "revId": "06817a8dd1e8f1c6e9de1cdf94627e1446f8db7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eac61ef5_23221905",
+        "filename": "keystore/java/android/security/keystore/KeyProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-10-09T11:21:34Z",
+      "side": 1,
+      "message": "Not super familiar with the standards here but if this is just for the Ed25519 curve, then shouldn\u0027t this be named KEY_ALGORITHM_ED25519? But given the existing algorithm names does not include the bit length in it, that might not be the right thing to do, but then you would need to distinguish between Ed25519 and Ed448 using some other parameter, and in this case it seems inapproprate to use ed25519\u0027s OID as KEY_ALGORITHM_EDDSA\u0027s value.",
+      "range": {
+        "startLine": 225,
+        "startChar": 45,
+        "endLine": 225,
+        "endChar": 51
+      },
+      "revId": "06817a8dd1e8f1c6e9de1cdf94627e1446f8db7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
