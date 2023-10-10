@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36db812b_fb36f5c3",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2067,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-10T17:43:13Z",
+      "side": 1,
+      "message": "This needs a permission check.",
+      "revId": "085f2e66f4719527ec2788798f7f500bc4a9418d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
