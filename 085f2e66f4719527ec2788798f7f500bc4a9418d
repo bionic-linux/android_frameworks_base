@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31a264b0_db683f83",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-10-10T18:53:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cad898e_0e0ba927",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 22
+      },
+      "revId": "085f2e66f4719527ec2788798f7f500bc4a9418d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3ec2cea_315956e6",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-10-10T17:46:03Z",
       "side": 1,
       "message": "do not have a lockscreen credential",
+      "range": {
+        "startLine": 19,
+        "startChar": 22,
+        "endLine": 19,
+        "endChar": 60
+      },
+      "revId": "085f2e66f4719527ec2788798f7f500bc4a9418d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6623dd0_ecdc0306",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-10-10T18:53:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3ec2cea_315956e6",
       "range": {
         "startLine": 19,
         "startChar": 22,
@@ -100,6 +148,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "167b352b_b3947ad9",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2067,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-10-10T18:53:05Z",
+      "side": 1,
+      "message": "Added the permission check.",
+      "parentUuid": "dc434a19_e0e4cb20",
+      "revId": "085f2e66f4719527ec2788798f7f500bc4a9418d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5eda5872_a7b81a68",
@@ -113,6 +179,24 @@
       "writtenOn": "2023-10-10T17:46:03Z",
       "side": 1,
       "message": "This method isn\u0027t needed anymore, right?  If so, it should be removed",
+      "revId": "085f2e66f4719527ec2788798f7f500bc4a9418d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5384df2_d7e1aba7",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3478,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-10-10T18:53:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5eda5872_a7b81a68",
       "revId": "085f2e66f4719527ec2788798f7f500bc4a9418d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
