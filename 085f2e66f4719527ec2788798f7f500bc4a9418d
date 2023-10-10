@@ -66,6 +66,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f6aa154c_1e6ba657",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2067,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-10-10T18:00:57Z",
+      "side": 1,
+      "message": "Should we define a new permission or use this check?\nhttps://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/locksettings/LockSettingsService.java;drc\u003d70468495b83418eb4a406b91daed502c74709745;bpv\u003d0;bpt\u003d1;l\u003d1107",
+      "parentUuid": "36db812b_fb36f5c3",
+      "revId": "085f2e66f4719527ec2788798f7f500bc4a9418d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5eda5872_a7b81a68",
         "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
         "patchSetId": 1
