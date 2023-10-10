@@ -84,6 +84,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dc434a19_e0e4cb20",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2067,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-10T18:02:44Z",
+      "side": 1,
+      "message": "It should check for ACCESS_KEYGUARD_SECURE_STORAGE, the same as most other methods in LockSettingsService.  The Settings app already has that permission.",
+      "parentUuid": "f6aa154c_1e6ba657",
+      "revId": "085f2e66f4719527ec2788798f7f500bc4a9418d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5eda5872_a7b81a68",
         "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
         "patchSetId": 1
