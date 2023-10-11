@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8ebd290_39b5669a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2023-10-11T16:14:54Z",
+      "side": 1,
+      "message": "Is this still relevant? I can\u0027t see any baseline changes in this change.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 37
+      },
+      "revId": "65370ed5ceb03ac853930d5e285bb6e24f204027",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
