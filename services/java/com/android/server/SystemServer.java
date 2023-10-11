@@ -261,6 +261,8 @@ public final class SystemServer implements Dumpable {
             "com.android.server.backup.BackupManagerService$Lifecycle";
     private static final String APPWIDGET_SERVICE_CLASS =
             "com.android.server.appwidget.AppWidgetService";
+    private static final String ARC_NETWORK_SERVICE_CLASS =
+            "com.android.server.arc.net.ArcNetworkService";
     private static final String VOICE_RECOGNITION_MANAGER_SERVICE_CLASS =
             "com.android.server.voiceinteraction.VoiceInteractionManagerService";
     private static final String APP_HIBERNATION_SERVICE_CLASS =
@@ -2000,7 +2002,11 @@ public final class SystemServer implements Dumpable {
             }
             t.traceEnd();
 
-            if (context.getPackageManager().hasSystemFeature(
+            if (isArc) {
+                t.traceBegin("StartArcNetworking");
+                mSystemServiceManager.startService(ARC_NETWORK_SERVICE_CLASS);
+                t.traceEnd();
+            } else if (context.getPackageManager().hasSystemFeature(
                     PackageManager.FEATURE_WIFI)) {
                 // Wifi Service must be started first for wifi-related services.
                 t.traceBegin("StartWifi");
