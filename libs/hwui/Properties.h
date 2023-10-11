@@ -285,6 +285,8 @@ public:
 
     static int contextPriority;
 
+    static int defaultMaxGpuFontAtlasBytes;
+
     static float defaultSdrWhitePoint;
 
     static bool useHintManager;

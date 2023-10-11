@@ -45,6 +45,13 @@ namespace renderthread {
 #define SURFACE_SIZE_MULTIPLIER (12.0f * 4.0f)
 #define BACKGROUND_RETENTION_PERCENTAGE (0.5f)
 
+namespace {
+size_t getMaxGpuFontAtlasBytes(const size_t maxSurfaceArea) {
+    const int propValue = Properties::defaultMaxGpuFontAtlasBytes;
+    return GrNextSizePow2(propValue > 0 ? static_cast<size_t>(propValue) : maxSurfaceArea);
+}
+}  // namespace
+
 CacheManager::CacheManager()
         : mMaxSurfaceArea(DeviceInfo::getWidth() * DeviceInfo::getHeight())
         , mMaxResourceBytes(mMaxSurfaceArea * SURFACE_SIZE_MULTIPLIER)
@@ -52,7 +59,7 @@ CacheManager::CacheManager()
         // This sets the maximum size for a single texture atlas in the GPU font cache. If
         // necessary, the cache can allocate additional textures that are counted against the
         // total cache limits provided to Skia.
-        , mMaxGpuFontAtlasBytes(GrNextSizePow2(mMaxSurfaceArea))
+        , mMaxGpuFontAtlasBytes(getMaxGpuFontAtlasBytes(mMaxSurfaceArea))
         // This sets the maximum size of the CPU font cache to be at least the same size as the
         // total number of GPU font caches (i.e. 4 separate GPU atlases).
         , mMaxCpuFontCacheBytes(

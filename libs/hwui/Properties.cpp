@@ -81,6 +81,7 @@ bool Properties::isolatedProcess = false;
 
 int Properties::contextPriority = 0;
 float Properties::defaultSdrWhitePoint = 200.f;
+int Properties::defaultMaxGpuFontAtlasBytes = -1;
 
 bool Properties::useHintManager = true;
 int Properties::targetCpuTimePercentage = 70;
@@ -143,6 +144,8 @@ bool Properties::load() {
     if (targetCpuTimePercentage <= 0 || targetCpuTimePercentage > 100) targetCpuTimePercentage = 70;
 
     enableWebViewOverlays = base::GetBoolProperty(PROPERTY_WEBVIEW_OVERLAYS_ENABLED, true);
+
+    defaultMaxGpuFontAtlasBytes = max_gpu_font_atlas_bytes().value_or(-1);
 
     // call isDrawingEnabled to force loading of the property
     isDrawingEnabled();
