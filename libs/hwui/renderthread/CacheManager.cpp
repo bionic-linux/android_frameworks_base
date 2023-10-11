@@ -57,18 +57,22 @@ static inline uint32_t nextPowerOfTwo(uint32_t n) {
     return n ? (1 << (32 - countLeadingZeros(n - 1))) : 1;
 }
 
+size_t getMaxGpuFontAtlasBytes(const size_t maxSurfaceArea) {
+    const int propValue = Properties::defaultMaxGpuFontAtlasBytes;
+    return nextPowerOfTwo(propValue > 0 ? static_cast<size_t>(propValue) : maxSurfaceArea);
+}
+
 void CacheManager::setupCacheLimits() {
     mMaxResourceBytes = mMaxSurfaceArea * mMemoryPolicy.surfaceSizeMultiplier;
     mBackgroundResourceBytes = mMaxResourceBytes * mMemoryPolicy.backgroundRetentionPercent;
     // This sets the maximum size for a single texture atlas in the GPU font cache. If
     // necessary, the cache can allocate additional textures that are counted against the
     // total cache limits provided to Skia.
-    mMaxGpuFontAtlasBytes = nextPowerOfTwo(mMaxSurfaceArea);
+    mMaxGpuFontAtlasBytes = getMaxGpuFontAtlasBytes(mMaxSurfaceArea);
     // This sets the maximum size of the CPU font cache to be at least the same size as the
     // total number of GPU font caches (i.e. 4 separate GPU atlases).
     mMaxCpuFontCacheBytes = std::max(mMaxGpuFontAtlasBytes * 4, SkGraphics::GetFontCacheLimit());
     mBackgroundCpuFontCacheBytes = mMaxCpuFontCacheBytes * mMemoryPolicy.backgroundRetentionPercent;
-
     SkGraphics::SetFontCacheLimit(mMaxCpuFontCacheBytes);
     if (mGrContext) {
         mGrContext->setResourceCacheLimit(mMaxResourceBytes);
