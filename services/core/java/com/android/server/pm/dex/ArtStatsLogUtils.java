@@ -156,16 +156,6 @@ public class ArtStatsLogUtils {
                 uid,
                 compilationReason,
                 compilerFilter,
-                ArtStatsLog.ART_DATUM_REPORTED__KIND__ART_DATUM_DEX2OAT_RESULT_CODE,
-                result,
-                dexMetadataType,
-                apkType,
-                isa);
-        logger.write(
-                sessionId,
-                uid,
-                compilationReason,
-                compilerFilter,
                 ArtStatsLog.ART_DATUM_REPORTED__KIND__ART_DATUM_DEX2OAT_DEX_CODE_COUNTER_BYTES,
                 getDexBytes(apkPath),
                 dexMetadataType,
