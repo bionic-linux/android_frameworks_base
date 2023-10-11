@@ -267,15 +267,6 @@ public final class ArtStatsLogUtilsTest {
     private void verifyWrites(int dexMetadataType) {
         InOrder inorder = inOrder(mockLogger);
         inorder.verify(mockLogger).write(
-                SESSION_ID, UID,
-                COMPILATION_REASON,
-                COMPILER_FILTER,
-                ArtStatsLog.ART_DATUM_REPORTED__KIND__ART_DATUM_DEX2OAT_RESULT_CODE,
-                RESULT_CODE,
-                dexMetadataType,
-                ArtStatsLog.ART_DATUM_REPORTED__APK_TYPE__ART_APK_TYPE_BASE,
-                INSTRUCTION_SET);
-        inorder.verify(mockLogger).write(
                 SESSION_ID,
                 UID,
                 COMPILATION_REASON,
