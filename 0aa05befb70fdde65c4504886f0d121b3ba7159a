@@ -16,6 +16,24 @@
       "message": "Can you verify that `atest com.android.server.locksettings` still passes?",
       "revId": "0aa05befb70fdde65c4504886f0d121b3ba7159a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a4c0841_e5d6db6c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-10-11T05:05:28Z",
+      "side": 1,
+      "message": "Modified SyntheticPasswordTests to use the binder method. Checked all the test cases are passing.",
+      "parentUuid": "4cf46b02_722f1b18",
+      "revId": "0aa05befb70fdde65c4504886f0d121b3ba7159a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
