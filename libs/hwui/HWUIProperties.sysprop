@@ -14,3 +14,10 @@ prop {
     scope: Public
     access: Readonly
 }
+prop {
+    api_name: "max_gpu_font_atlas_bytes"
+    type: Integer
+    prop_name: "ro.hwui.max_gpu_font_atlas_bytes"
+    scope: Public
+    access: Readonly
+}

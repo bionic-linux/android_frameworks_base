@@ -80,6 +80,7 @@ bool Properties::isolatedProcess = false;
 
 int Properties::contextPriority = 0;
 float Properties::defaultSdrWhitePoint = 200.f;
+int Properties::defaultMaxGpuFontAtlasBytes = -1;
 
 bool Properties::useHintManager = false;
 int Properties::targetCpuTimePercentage = 70;
@@ -155,6 +156,8 @@ bool Properties::load() {
     if (hdrHeadroom >= 1.f) {
         maxHdrHeadroomOn8bit = std::min(hdrHeadroom, 100.f);
     }
+
+    defaultMaxGpuFontAtlasBytes = max_gpu_font_atlas_bytes().value_or(-1);
 
     // call isDrawingEnabled to force loading of the property
     isDrawingEnabled();
