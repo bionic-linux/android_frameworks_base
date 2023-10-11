@@ -240,6 +240,10 @@ public class LockSettingsService extends ILockSettings.Stub {
     private static final String MIGRATED_FRP2 = "migrated_frp2";
     private static final String MIGRATED_KEYSTORE_NS = "migrated_keystore_namespace";
     private static final String MIGRATED_SP_CE_ONLY = "migrated_all_users_to_sp_and_bound_ce";
+    private static final String MIGRATED_SP_FULL = "migrated_all_users_to_sp_and_bound_keys";
+
+    private static final boolean FIX_UNLOCKED_DEVICE_REQUIRED_KEYS =
+            android.security.Flags.fixUnlockedDeviceRequiredKeys();
 
     // Duration that LockSettingsService will store the gatekeeper password for. This allows
     // multiple biometric enrollments without prompting the user to enter their password via
@@ -849,7 +853,8 @@ public class LockSettingsService extends ILockSettings.Stub {
     private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (Intent.ACTION_USER_ADDED.equals(intent.getAction())) {
+            if (Intent.ACTION_USER_ADDED.equals(intent.getAction())
+                    && !FIX_UNLOCKED_DEVICE_REQUIRED_KEYS) {
                 // Notify keystore that a new user was added.
                 final int userHandle = intent.getIntExtra(Intent.EXTRA_USER_HANDLE, 0);
                 AndroidKeyStoreMaintenance.onUserAdded(userHandle);
@@ -1006,24 +1011,53 @@ public class LockSettingsService extends ILockSettings.Stub {
             }
             mEarlyCreatedUsers = null; // no longer needed
 
-            // Also do a one-time migration of all users to SP-based credentials with the CE key
-            // encrypted by the SP.  This is needed for the system user on the first boot of a
-            // device, as the system user is special and never goes through the user creation flow
-            // that other users do.  It is also needed for existing users on a device upgraded from
-            // Android 13 or earlier, where users with no LSKF didn't necessarily have an SP, and if
-            // they did have an SP then their CE key wasn't encrypted by it.
+            // Do a one-time migration for any unsecured users: create the user's synthetic password
+            // if not already done, encrypt the user's CE key with the synthetic password if not
+            // already done, and create the user's Keystore super keys if not already done.
             //
-            // If this gets interrupted (e.g. by the device powering off), there shouldn't be a
-            // problem since this will run again on the next boot, and setUserKeyProtection() is
-            // okay with the key being already protected by the given secret.
-            if (getString(MIGRATED_SP_CE_ONLY, null, 0) == null) {
-                for (UserInfo user : mUserManager.getAliveUsers()) {
-                    removeStateForReusedUserIdIfNecessary(user.id, user.serialNumber);
-                    synchronized (mSpManager) {
-                        migrateUserToSpWithBoundCeKeyLocked(user.id);
+            // This is needed for the following cases:
+            //
+            // - Finalizing the creation of the system user on the first boot of a device, as the
+            //   system user is special and doesn't go through the normal user creation flow.
+            //
+            // - Upgrading from Android 13 or earlier, where unsecured users didn't necessarily have
+            //   a synthetic password, and if they did have a synthetic password their CE key wasn't
+            //   encrypted by it.  Also, unsecured users didn't have Keystore super keys.
+            //
+            // - Upgrading from Android 14, where unsecured users didn't have Keystore super keys.
+            //
+            // The end result is that all users, regardless of whether they are secured or
+            // unsecured, have a synthetic password with keys initialized and protected by it.
+            //
+            // Note: if this migration gets interrupted (e.g. by the device powering off), there
+            // shouldn't be a problem since this will run again on the next boot, and
+            // setUserKeyProtection() and initUserSuperKeys(..., true) are idempotent.
+            if (FIX_UNLOCKED_DEVICE_REQUIRED_KEYS) {
+                if (!getBoolean(MIGRATED_SP_FULL, false, 0)) {
+                    for (UserInfo user : mUserManager.getAliveUsers()) {
+                        removeStateForReusedUserIdIfNecessary(user.id, user.serialNumber);
+                        synchronized (mSpManager) {
+                            migrateUserToSpWithBoundKeysLocked(user.id);
+                        }
                     }
+                    setBoolean(MIGRATED_SP_FULL, true, 0);
                 }
-                setString(MIGRATED_SP_CE_ONLY, "true", 0);
+            } else {
+                if (getString(MIGRATED_SP_CE_ONLY, null, 0) == null) {
+                    for (UserInfo user : mUserManager.getAliveUsers()) {
+                        removeStateForReusedUserIdIfNecessary(user.id, user.serialNumber);
+                        synchronized (mSpManager) {
+                            migrateUserToSpWithBoundCeKeyLocked(user.id);
+                        }
+                    }
+                    setString(MIGRATED_SP_CE_ONLY, "true", 0);
+                }
+
+                if (getBoolean(MIGRATED_SP_FULL, false, 0)) {
+                    // The FIX_UNLOCKED_DEVICE_REQUIRED_KEYS flag was enabled but then got disabled.
+                    // Ensure the full migration runs again the next time the flag is enabled...
+                    setBoolean(MIGRATED_SP_FULL, false, 0);
+                }
             }
 
             mThirdPartyAppsStarted = true;
@@ -1052,6 +1086,37 @@ public class LockSettingsService extends ILockSettings.Stub {
             }
             setUserKeyProtection(userId, result.syntheticPassword.deriveFileBasedEncryptionKey());
         }
+    }
+
+    @GuardedBy("mSpManager")
+    private void migrateUserToSpWithBoundKeysLocked(@UserIdInt int userId) {
+        if (isUserSecure(userId)) {
+            Slogf.d(TAG, "User %d is secured; no migration needed", userId);
+            return;
+        }
+        long protectorId = getCurrentLskfBasedProtectorId(userId);
+        if (protectorId == SyntheticPasswordManager.NULL_PROTECTOR_ID) {
+            Slogf.i(TAG, "Migrating unsecured user %d to SP-based credential", userId);
+            initializeSyntheticPassword(userId);
+            return;
+        }
+        Slogf.i(TAG, "Existing unsecured user %d has a synthetic password", userId);
+        AuthenticationResult result = mSpManager.unlockLskfBasedProtector(
+                getGateKeeperService(), protectorId, LockscreenCredential.createNone(), userId,
+                null);
+        SyntheticPassword sp = result.syntheticPassword;
+        if (sp == null) {
+            Slogf.wtf(TAG, "Failed to unwrap synthetic password for unsecured user %d", userId);
+            return;
+        }
+        // While setUserKeyProtection() is idempotent, it does log some error messages when called
+        // again.  Skip it if we know it was already handled by an earlier upgrade to Android 14.
+        if (getString(MIGRATED_SP_CE_ONLY, null, 0) == null) {
+            Slogf.i(TAG, "Encrypting CE key of user %d with synthetic password", userId);
+            setUserKeyProtection(userId, sp.deriveFileBasedEncryptionKey());
+        }
+        Slogf.i(TAG, "Initializing Keystore super keys for user %d", userId);
+        initUserSuperKeys(userId, sp, true);
     }
 
     /**
@@ -2023,6 +2088,16 @@ public class LockSettingsService extends ILockSettings.Stub {
         }
     }
 
+    private void initUserSuperKeys(@UserIdInt int userId, SyntheticPassword sp,
+            boolean isMigration) {
+        int res = AndroidKeyStoreMaintenance.initUserSuperKeys(userId, sp.deriveKeyStorePassword(),
+                isMigration);
+        if (res != 0) {
+            throw new IllegalStateException("Failed to initialize Keystore super keys for user "
+                    + userId);
+        }
+    }
+
     private boolean isUserKeyUnlocked(int userId) {
         try {
             return mStorageManager.isUserKeyUnlocked(userId);
@@ -2345,6 +2420,16 @@ public class LockSettingsService extends ILockSettings.Stub {
     }
 
     private void createNewUser(@UserIdInt int userId, int userSerialNumber) {
+
+        // Delete all Keystore keys for userId, just in case any were left around from a removed
+        // user with the same userId.  This should be unnecessary, but we've been doing this for a
+        // long time, so for now we keep doing it just in case it's ever important.  Don't wait
+        // until initUserSuperKeys() to do this; that can be delayed if the user is being created
+        // during early boot, and maybe something will use Keystore before then.
+        if (FIX_UNLOCKED_DEVICE_REQUIRED_KEYS) {
+            AndroidKeyStoreMaintenance.onUserAdded(userId);
+        }
+
         synchronized (mUserCreationAndRemovalLock) {
             // During early boot, don't actually create the synthetic password yet, but rather
             // automatically delay it to later.  We do this because protecting the synthetic
@@ -2770,6 +2855,9 @@ public class LockSettingsService extends ILockSettings.Stub {
                     LockscreenCredential.createNone(), sp, userId);
             setCurrentLskfBasedProtectorId(protectorId, userId);
             setUserKeyProtection(userId, sp.deriveFileBasedEncryptionKey());
+            if (FIX_UNLOCKED_DEVICE_REQUIRED_KEYS) {
+                initUserSuperKeys(userId, sp, false);
+            }
             onSyntheticPasswordCreated(userId, sp);
             Slogf.i(TAG, "Successfully initialized synthetic password for user %d", userId);
             return sp;
@@ -2885,7 +2973,9 @@ public class LockSettingsService extends ILockSettings.Stub {
             if (!mSpManager.hasSidForUser(userId)) {
                 mSpManager.newSidForUser(getGateKeeperService(), sp, userId);
                 mSpManager.verifyChallenge(getGateKeeperService(), sp, 0L, userId);
-                setKeystorePassword(sp.deriveKeyStorePassword(), userId);
+                if (!FIX_UNLOCKED_DEVICE_REQUIRED_KEYS) {
+                    setKeystorePassword(sp.deriveKeyStorePassword(), userId);
+                }
             }
         } else {
             // Cache all profile password if they use unified work challenge. This will later be
@@ -2896,7 +2986,11 @@ public class LockSettingsService extends ILockSettings.Stub {
             gateKeeperClearSecureUserId(userId);
             unlockUserKey(userId, sp);
             unlockKeystore(sp.deriveKeyStorePassword(), userId);
-            setKeystorePassword(null, userId);
+            if (FIX_UNLOCKED_DEVICE_REQUIRED_KEYS) {
+                AndroidKeyStoreMaintenance.onUserLskfRemoved(userId);
+            } else {
+                setKeystorePassword(null, userId);
+            }
             removeBiometricsForUser(userId);
         }
         setCurrentLskfBasedProtectorId(newProtectorId, userId);
