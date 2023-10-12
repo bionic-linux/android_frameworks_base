@@ -68,6 +68,24 @@
       "parentUuid": "f9227631_7ed979f4",
       "revId": "76be3d052c9ea3993674c3cd03d279486b3684e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd6690a7_fcea3852",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2023-10-12T15:21:38Z",
+      "side": 1,
+      "message": "Thanks, hope for the best 😊",
+      "parentUuid": "93e35d34_a09d6277",
+      "revId": "76be3d052c9ea3993674c3cd03d279486b3684e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
