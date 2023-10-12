@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7d1be71_0bb75fcf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2023-10-12T19:38:26Z",
+      "side": 1,
+      "message": "Please add a bug #",
+      "revId": "24aac249ada5ef5dbc9d6c1cfd32f63412edb968",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
