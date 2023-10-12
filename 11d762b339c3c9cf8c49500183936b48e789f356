@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfe59acb_e3d13e07",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2023-10-12T00:42:30Z",
+      "side": 1,
+      "message": "Is this just an issue for precreated users? I believe that the entire concept of precreated users has been deprecated (as noted in UserManager.java), so it\u0027s probably not worth potentially dangerous changes for their sake.\n\nIf it\u0027s not just for precreated users, can you please elaborate?",
+      "range": {
+        "startLine": 11,
+        "startChar": 28,
+        "endLine": 11,
+        "endChar": 38
+      },
+      "revId": "11d762b339c3c9cf8c49500183936b48e789f356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16df41f8_8a8a2276",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2023-10-12T00:42:30Z",
+      "side": 1,
+      "message": "`",
+      "revId": "11d762b339c3c9cf8c49500183936b48e789f356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
