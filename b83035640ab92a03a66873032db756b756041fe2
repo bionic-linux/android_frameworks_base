@@ -33,6 +33,24 @@
       "message": "The presubmit failure is from a static analyzer error here:\n\n```\nError: ILockSettings permission check should be converted to @EnforcePermission annotation [SimpleManualPermissionEnforcement]\n        mContext.enforceCallingOrSelfPermission(PERMISSION,\n        ^\n```\n\nNothing in `LockSettingsService` actually uses `@EnforcePermission`, though.  For consistency with the existing code such as `checkCredential()`, how about changing this to call`checkPasswordReadPermission()` instead?  That should resolve the error. \n It still will result in the same permission being checked, `ACCESS_KEYGUARD_SECURE_STORAGE`.",
       "revId": "b83035640ab92a03a66873032db756b756041fe2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61b31fe6_c67c2519",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2068,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-10-12T02:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "780b6917_eccd56b1",
+      "revId": "b83035640ab92a03a66873032db756b756041fe2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
