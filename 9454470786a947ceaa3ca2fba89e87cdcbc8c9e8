@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "017bab9a_13290671",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1881539
+      },
+      "writtenOn": "2023-10-12T18:18:53Z",
+      "side": 1,
+      "message": "Hi Nicolas, it seems that Roland isn\u0027t an owner for this path.\n\nI re-added you for the owner review.\n\nThanks in advance !",
+      "revId": "9454470786a947ceaa3ca2fba89e87cdcbc8c9e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
