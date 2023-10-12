@@ -3142,9 +3142,16 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         if (mDisplayPolicy == null || mInitialDisplayCutout == null) {
             return null;
         }
+        // if display is not scale, such as fold, DisplayCutout not need scale follow display size
+        boolean isDisplayScalingDisabled = false;
+        if (mWmService.mDisplayManagerInternal != null) {
+            isDisplayScalingDisabled =
+                    mWmService.mDisplayManagerInternal.isDisplayScalingDisabled(mDisplayId);
+        }
         return DisplayCutout.fromResourcesRectApproximation(
                 mDisplayPolicy.getSystemUiContext().getResources(), mDisplayInfo.uniqueId,
-                mPhysicalDisplaySize.x, mPhysicalDisplaySize.y, displayWidth, displayHeight);
+                mPhysicalDisplaySize.x, mPhysicalDisplaySize.y, displayWidth, displayHeight,
+                isDisplayScalingDisabled);
     }
 
     RoundedCorners loadRoundedCorners(int displayWidth, int displayHeight) {

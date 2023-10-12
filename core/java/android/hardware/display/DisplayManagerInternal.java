@@ -266,6 +266,12 @@ public abstract class DisplayManagerInternal {
     public abstract void setDisplayScalingDisabled(int displayId, boolean disableScaling);
 
     /**
+     * @return {@code true} if display scaling is disabled, or {@code false} if the default scaling
+     * mode is used.
+     */
+    public abstract boolean isDisplayScalingDisabled(int displayId);
+
+    /**
      * Provide a list of UIDs that are present on the display and are allowed to access it.
      *
      * @param displayAccessUIDs Mapping displayId -> int array of UIDs.

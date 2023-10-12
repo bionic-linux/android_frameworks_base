@@ -4427,6 +4427,18 @@ public final class DisplayManagerService extends SystemService {
         }
 
         @Override
+        public boolean isDisplayScalingDisabled(int displayId) {
+            synchronized (mSyncRoot) {
+                final LogicalDisplay display = mLogicalDisplayMapper.getDisplayLocked(displayId);
+                if (display == null) {
+                    return false;
+                }
+
+                return display.isDisplayScalingDisabled();
+            }
+        }
+
+        @Override
         public void setDisplayAccessUIDs(SparseArray<IntArray> newDisplayAccessUIDs) {
             setDisplayAccessUIDsInternal(newDisplayAccessUIDs);
         }

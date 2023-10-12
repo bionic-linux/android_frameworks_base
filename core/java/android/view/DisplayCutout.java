@@ -1055,12 +1055,12 @@ public final class DisplayCutout {
      */
     public static DisplayCutout fromResourcesRectApproximation(Resources res,
             String displayUniqueId, int physicalDisplayWidth, int physicalDisplayHeight,
-            int displayWidth, int displayHeight) {
+            int displayWidth, int displayHeight, boolean isDisplayScalingDisabled) {
         return pathAndDisplayCutoutFromSpec(getDisplayCutoutPath(res, displayUniqueId),
                 getDisplayCutoutApproximationRect(res, displayUniqueId), physicalDisplayWidth,
                 physicalDisplayHeight, displayWidth, displayHeight,
                 DENSITY_DEVICE_STABLE / (float) DENSITY_DEFAULT,
-                getWaterfallInsets(res, displayUniqueId)).second;
+                getWaterfallInsets(res, displayUniqueId), isDisplayScalingDisabled).second;
     }
 
     /**
@@ -1073,7 +1073,7 @@ public final class DisplayCutout {
             int displayHeight, float density, Insets waterfallInsets) {
         return pathAndDisplayCutoutFromSpec(
                 pathSpec, null, displayWidth, displayHeight, displayWidth, displayHeight, density,
-                waterfallInsets).second;
+                waterfallInsets, false).second;
     }
 
     /**
@@ -1091,7 +1091,8 @@ public final class DisplayCutout {
      */
     private static Pair<Path, DisplayCutout> pathAndDisplayCutoutFromSpec(
             String pathSpec, String rectSpec, int physicalDisplayWidth, int physicalDisplayHeight,
-            int displayWidth, int displayHeight, float density, Insets waterfallInsets) {
+            int displayWidth, int displayHeight, float density, Insets waterfallInsets,
+            boolean isDisplayScalingDisabled) {
         // Always use the rect approximation spec to create the cutout if it's not null because
         // transforming and sending a Region constructed from a path is very costly.
         String spec = rectSpec != null ? rectSpec : pathSpec;
@@ -1099,7 +1100,8 @@ public final class DisplayCutout {
             return NULL_PAIR;
         }
 
-        final float physicalPixelDisplaySizeRatio = DisplayUtils.getPhysicalPixelDisplaySizeRatio(
+        final float physicalPixelDisplaySizeRatio =
+                isDisplayScalingDisabled ? 1.0f : DisplayUtils.getPhysicalPixelDisplaySizeRatio(
                 physicalDisplayWidth, physicalDisplayHeight, displayWidth, displayHeight);
 
         synchronized (CACHE_LOCK) {

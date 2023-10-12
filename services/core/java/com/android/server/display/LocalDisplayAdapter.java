@@ -702,7 +702,7 @@ final class LocalDisplayAdapter extends DisplayAdapter {
                 final int maxHeight =
                         maxDisplayMode == null ? mInfo.height : maxDisplayMode.getPhysicalHeight();
                 mInfo.displayCutout = DisplayCutout.fromResourcesRectApproximation(res,
-                        mInfo.uniqueId, maxWidth, maxHeight, mInfo.width, mInfo.height);
+                        mInfo.uniqueId, maxWidth, maxHeight, mInfo.width, mInfo.height, false);
 
                 mInfo.roundedCorners = RoundedCorners.fromResources(
                         res, mInfo.uniqueId, maxWidth, maxHeight, mInfo.width, mInfo.height);
