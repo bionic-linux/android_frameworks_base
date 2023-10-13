@@ -16,6 +16,24 @@
       "message": "Please add a bug #",
       "revId": "24aac249ada5ef5dbc9d6c1cfd32f63412edb968",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "782292b2_ed7b1336",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2023-10-13T09:11:41Z",
+      "side": 1,
+      "message": "Sorry for missing this part.\nI have created new issue as below:\nhttps://issuetracker.google.com/issues/305059658\n\nI also updated new patch set to include the bug number.\nCould you please help review this patch at your earliest convenience?\n\nThanks",
+      "parentUuid": "e7d1be71_0bb75fcf",
+      "revId": "24aac249ada5ef5dbc9d6c1cfd32f63412edb968",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
