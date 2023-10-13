@@ -1358,8 +1358,13 @@ public class LockSettingsService extends ILockSettings.Stub {
         AndroidKeyStoreMaintenance.onUserPasswordChanged(userHandle, password);
     }
 
-    private void unlockKeystore(byte[] password, int userHandle) {
-        Authorization.onLockScreenEvent(false, userHandle, password, null);
+    private void unlockKeystore(int userId, SyntheticPassword sp) {
+        final byte[] password = sp.deriveKeyStorePassword();
+        try {
+            Authorization.onLockScreenEvent(false, userHandle, password, null);
+        } finally {
+            Arrays.fill(password, (byte) 0);
+        }
     }
 
     @VisibleForTesting /** Note: this method is overridden in unit tests */
@@ -2830,7 +2835,7 @@ public class LockSettingsService extends ILockSettings.Stub {
             }
         }
 
-        unlockKeystore(sp.deriveKeyStorePassword(), userId);
+        unlockKeystore(userId, sp);
 
         unlockUserKey(userId, sp);
 
@@ -2897,7 +2902,7 @@ public class LockSettingsService extends ILockSettings.Stub {
             mSpManager.clearSidForUser(userId);
             gateKeeperClearSecureUserId(userId);
             unlockUserKey(userId, sp);
-            unlockKeystore(sp.deriveKeyStorePassword(), userId);
+            unlockKeystore(userId, sp);
             setKeystorePassword(null, userId);
             removeBiometricsForUser(userId);
         }
