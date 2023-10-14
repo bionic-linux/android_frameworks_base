@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3bcbeff_7e68635a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2023-10-14T11:36:25Z",
+      "side": 1,
+      "message": "Waiting for downstream to be submitted first.",
+      "revId": "0e5f4acebaf4e4b6e9046b13e8de703dd6fa2fd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
