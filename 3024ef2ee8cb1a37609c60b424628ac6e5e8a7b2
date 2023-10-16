@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfd440ea_662373df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2023-10-16T10:46:08Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "3024ef2ee8cb1a37609c60b424628ac6e5e8a7b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a79bc7c_2a75aece",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtStatsLogUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2023-10-16T10:46:08Z",
+      "side": 1,
+      "message": "Shall we remove them altogether?",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 21
+      },
+      "revId": "3024ef2ee8cb1a37609c60b424628ac6e5e8a7b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
