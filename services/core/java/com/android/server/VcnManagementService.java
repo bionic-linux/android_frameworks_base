@@ -68,6 +68,7 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
 import android.os.UserHandle;
+import android.provider.DeviceConfig;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -772,6 +773,18 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             throw new IllegalArgumentException("Mismatched caller and VcnConfig creator");
         }
         logInfo("VCN config updated for subGrp: " + subscriptionGroup);
+
+        // Test code begin: mendel flags
+        final long identity = Binder.clearCallingIdentity();
+        try {
+            final String flag = DeviceConfig.getProperty("vcn", "test_vcn_config");
+            logInfo("Mendel flag for test_vcn_config " + flag);
+        } catch (Exception e) {
+            logInfo("getProperty error " + e);
+        } finally {
+            Binder.restoreCallingIdentity(identity);
+        }
+        // Test code end
 
         mContext.getSystemService(AppOpsManager.class)
                 .checkPackage(mDeps.getBinderCallingUid(), config.getProvisioningPackageName());
