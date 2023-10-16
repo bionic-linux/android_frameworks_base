@@ -39,6 +39,30 @@
       },
       "revId": "3024ef2ee8cb1a37609c60b424628ac6e5e8a7b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "929f9141_8f3e6005",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtStatsLogUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1948615
+      },
+      "writtenOn": "2023-10-16T10:49:22Z",
+      "side": 1,
+      "message": "I was considering removing one metric first to have a feel of the end-to-end effort required for the whole process and remove the remaining two in following CLs, but I would not mind removing all three metrics in this CL if you prefer that.",
+      "parentUuid": "2a79bc7c_2a75aece",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 21
+      },
+      "revId": "3024ef2ee8cb1a37609c60b424628ac6e5e8a7b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
