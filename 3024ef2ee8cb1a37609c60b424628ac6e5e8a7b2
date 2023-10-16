@@ -104,6 +104,30 @@
       },
       "revId": "3024ef2ee8cb1a37609c60b424628ac6e5e8a7b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "358933d0_4fc1ad68",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtStatsLogUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1948615
+      },
+      "writtenOn": "2023-10-16T12:14:14Z",
+      "side": 1,
+      "message": "It is possible to deprecate the metrics without removing the originating code, yes - it sounds like we already have a plan for cleaning up this class later on, so for the time being I\u0027ll leave the code as it is (but please let me know if I should delete it instead).",
+      "parentUuid": "c35fa562_db9bc2c7",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 21
+      },
+      "revId": "3024ef2ee8cb1a37609c60b424628ac6e5e8a7b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
