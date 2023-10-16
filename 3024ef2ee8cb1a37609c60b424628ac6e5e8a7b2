@@ -128,6 +128,30 @@
       },
       "revId": "3024ef2ee8cb1a37609c60b424628ac6e5e8a7b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e2abfdc_287498b1",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtStatsLogUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2023-10-16T13:00:44Z",
+      "side": 1,
+      "message": "SG. Leave it as is for now. The deletion is tracked by b/260124949.",
+      "parentUuid": "358933d0_4fc1ad68",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 21
+      },
+      "revId": "3024ef2ee8cb1a37609c60b424628ac6e5e8a7b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
