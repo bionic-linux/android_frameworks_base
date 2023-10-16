@@ -68,6 +68,24 @@
       "parentUuid": "1f20757b_8352115b",
       "revId": "036ac807e7d6d7e9bad8efb9eb80406894908e6a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8c6dc8a_45d8dd95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2023-10-16T15:39:00Z",
+      "side": 1,
+      "message": "Yes, now it\u0027s a merge conflict. We\u0027re working on a fix for it but we haven\u0027t landed it yet. I\u0027ll keep this open until we\u0027re finished on our side and you\u0027ll be able to move forward with this change.",
+      "parentUuid": "522baad9_d901c3a5",
+      "revId": "036ac807e7d6d7e9bad8efb9eb80406894908e6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
