@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e78f31b8_e7fcf522",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2023-10-16T18:22:30Z",
+      "side": 1,
+      "message": "Can you come up with a CTS test that emulates the problem you described here and upload the change into gerrit?\n\nWhile I\u0027m OK with working around such an issue as long as the fix is reasonable, I\u0027m concerned about removing a null-check without any end-to-end test that programmatically describes why we needed to change the code in the first place.  In other words, what\u0027s more important is an automated test so that we don\u0027t need to manually verify that the issue remains to be fixed every time we change the source code in the future.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 307
+      },
+      "revId": "8a81256b935abb3a1a7a89c82a7353882dbb4ee7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
