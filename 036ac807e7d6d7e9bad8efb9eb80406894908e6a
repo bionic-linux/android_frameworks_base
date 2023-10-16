@@ -33,6 +33,23 @@
       "message": "Per OWNERS for this file, haptics/vibrator team owns this so over to Lais (\u0026 removing myself).",
       "revId": "036ac807e7d6d7e9bad8efb9eb80406894908e6a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f20757b_8352115b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2023-10-16T13:01:56Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "036ac807e7d6d7e9bad8efb9eb80406894908e6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
