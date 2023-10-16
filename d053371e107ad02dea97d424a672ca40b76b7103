@@ -16,6 +16,24 @@
       "message": "Ian,\nI have removed MediaMetadataRetrieverTest as it is now migrated to JUnit4 and doesn\u0027t extend AndroidTestCase.\n\nI have reviewed that other JUnit4 tests in this folder are also not included here or any other file this way.\n\nHope this is fine.",
       "revId": "d053371e107ad02dea97d424a672ca40b76b7103",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08fca481_4da0435e",
+        "filename": "media/tests/MediaFrameworkTest/src/com/android/mediaframeworktest/MediaFrameworkUnitTestRunner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2023-10-16T09:11:23Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "2bd89ffe_553c1148",
+      "revId": "d053371e107ad02dea97d424a672ca40b76b7103",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
