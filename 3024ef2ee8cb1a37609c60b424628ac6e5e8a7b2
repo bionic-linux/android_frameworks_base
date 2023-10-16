@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89507c6c_205e25cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2023-10-16T10:53:13Z",
+      "side": 1,
+      "message": "Actuall",
+      "revId": "3024ef2ee8cb1a37609c60b424628ac6e5e8a7b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2a79bc7c_2a75aece",
@@ -55,6 +72,30 @@
       "side": 1,
       "message": "I was considering removing one metric first to have a feel of the end-to-end effort required for the whole process and remove the remaining two in following CLs, but I would not mind removing all three metrics in this CL if you prefer that.",
       "parentUuid": "2a79bc7c_2a75aece",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 21
+      },
+      "revId": "3024ef2ee8cb1a37609c60b424628ac6e5e8a7b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c35fa562_db9bc2c7",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtStatsLogUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2023-10-16T10:53:13Z",
+      "side": 1,
+      "message": "Actually, this whole class is dead code because dexopt is now handled by ART Service. If you can deprecate the metrics without removing the code here, free feel to leave it. Later, we\u0027ll clean up all the dead code anyway.",
+      "parentUuid": "929f9141_8f3e6005",
       "range": {
         "startLine": 154,
         "startChar": 0,
