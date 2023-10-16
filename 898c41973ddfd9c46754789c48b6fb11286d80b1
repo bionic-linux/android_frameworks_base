@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58de95e4_ba201bdf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1413436
+      },
+      "writtenOn": "2023-10-16T08:08:57Z",
+      "side": 1,
+      "message": "Failing test passed from ABTD : https://android-build.corp.google.com/builds/abtd/run/L05600000963512126",
+      "revId": "898c41973ddfd9c46754789c48b6fb11286d80b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
