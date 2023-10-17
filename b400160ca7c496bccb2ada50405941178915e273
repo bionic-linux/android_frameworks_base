@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a15b97b2_45018f50",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3306,
+      "author": {
+        "id": 1947461
+      },
+      "writtenOn": "2023-10-17T10:34:22Z",
+      "side": 0,
+      "message": "NetworkManagementService#setDataSaverModeEnabled return if state is changed or not.\nI think ignoring the return value change the current behavior.",
+      "range": {
+        "startLine": 3306,
+        "startChar": 37,
+        "endLine": 3306,
+        "endChar": 60
+      },
+      "revId": "b400160ca7c496bccb2ada50405941178915e273",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
