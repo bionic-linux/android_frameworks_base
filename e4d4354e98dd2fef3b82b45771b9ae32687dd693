@@ -22,6 +22,30 @@
       },
       "revId": "e4d4354e98dd2fef3b82b45771b9ae32687dd693",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b94f655a_f2f1faba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-10-17T11:33:02Z",
+      "side": 1,
+      "message": "Nice catch.\n\nIIUC we need to make NMS calling CM instead, because isNetworkRestrictedInternal is called from AMS. Similar to NMS#setFirewallUidRules, NMS is responsible for caching these states, and these states still need to be updated.",
+      "parentUuid": "f8788e81_ce419e5a",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "e4d4354e98dd2fef3b82b45771b9ae32687dd693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
