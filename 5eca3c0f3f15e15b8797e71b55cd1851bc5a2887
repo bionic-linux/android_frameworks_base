@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65829745_f7af532e",
+        "filename": "libs/hwui/renderthread/CacheManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1967850
+      },
+      "writtenOn": "2023-10-17T23:14:07Z",
+      "side": 1,
+      "message": "Nit: indentation",
+      "revId": "5eca3c0f3f15e15b8797e71b55cd1851bc5a2887",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
