@@ -74,6 +74,7 @@ import com.android.internal.app.IBatteryStats;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.HexDump;
 import com.android.modules.utils.build.SdkLevel;
+import com.android.net.flags.Flags;
 import com.android.net.module.util.NetdUtils;
 import com.android.net.module.util.NetdUtils.ModifyOperation;
 import com.android.net.module.util.PermissionUtils;
@@ -1074,15 +1075,22 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
             }
             Trace.traceBegin(Trace.TRACE_TAG_NETWORK, "bandwidthEnableDataSaver");
             try {
-                final boolean changed = mNetdService.bandwidthEnableDataSaver(enable);
+                final boolean changed;
+                if (Flags.setDataSaverViaCm()) {
+                    mContext.getSystemService(ConnectivityManager.class)
+                            .setDataSaverEnabled(enable);
+                    changed = true;
+                } else {
+                    changed = mNetdService.bandwidthEnableDataSaver(enable);
+                }
                 if (changed) {
                     mDataSaverMode = enable;
                 } else {
-                    Log.w(TAG, "setDataSaverMode(" + enable + "): netd command silently failed");
+                    Log.e(TAG, "setDataSaverMode(" + enable + "): failed to set iptables");
                 }
                 return changed;
-            } catch (RemoteException e) {
-                Log.w(TAG, "setDataSaverMode(" + enable + "): netd command failed", e);
+            } catch (RemoteException | IllegalStateException e) {
+                Log.e(TAG, "setDataSaverMode(" + enable + "): netd command failed", e);
                 return false;
             } finally {
                 Trace.traceEnd(Trace.TRACE_TAG_NETWORK);
