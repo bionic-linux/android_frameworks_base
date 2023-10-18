@@ -102,6 +102,23 @@
       "message": "Thank you! I have already addressed this in the `main` branch by adding `android:enableOnBackInvokedCallback\u003d\"true\"` on line 7757 of AndroidManifest.xml; you will see this patch with the next AOSP drop but can apply it locally now.",
       "revId": "e0bd2ca415d3e84454e81b36cdff3d1c14f88dc2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac2663d5_10cf10b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003403
+      },
+      "writtenOn": "2023-10-18T13:18:34Z",
+      "side": 1,
+      "message": "On the other hand this patch should also be safe to merge, and will fix any other key events (unrelated to KEYCODE_BACK) that I broke with these overrides.\n\nThanks again for the fix.",
+      "revId": "e0bd2ca415d3e84454e81b36cdff3d1c14f88dc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
