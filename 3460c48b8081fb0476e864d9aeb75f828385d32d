@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e194d9c0_3718e926",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-18T22:01:49Z",
+      "side": 1,
+      "message": "Diya, not sure if you can approve your own CL here, but maybe it\u0027s fine for the cherrypick? Joe is out for a bit.",
+      "revId": "3460c48b8081fb0476e864d9aeb75f828385d32d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
