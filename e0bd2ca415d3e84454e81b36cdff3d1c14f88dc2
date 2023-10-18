@@ -85,6 +85,23 @@
       "message": "@dsandler@android.com, Please review this patch",
       "revId": "e0bd2ca415d3e84454e81b36cdff3d1c14f88dc2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe5d3172_855639cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003403
+      },
+      "writtenOn": "2023-10-18T13:15:51Z",
+      "side": 1,
+      "message": "Thank you! I have already addressed this in the `main` branch by adding `android:enableOnBackInvokedCallback\u003d\"true\"` on line 7757 of AndroidManifest.xml; you will see this patch with the next AOSP drop but can apply it locally now.",
+      "revId": "e0bd2ca415d3e84454e81b36cdff3d1c14f88dc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
