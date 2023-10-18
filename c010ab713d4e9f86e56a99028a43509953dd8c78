@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "56e402d8_cc259617",
+        "filename": "services/core/java/com/android/server/net/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-10-18T08:46:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "939b8965_f4cae239",
+      "range": {
+        "startLine": 1076,
+        "startChar": 55,
+        "endLine": 1076,
+        "endChar": 79
+      },
+      "revId": "c010ab713d4e9f86e56a99028a43509953dd8c78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fbd8a610_78239874",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "81c6ee2b_465f8530",
+        "filename": "services/core/java/com/android/server/net/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-10-18T08:46:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbd8a610_78239874",
+      "range": {
+        "startLine": 1085,
+        "startChar": 16,
+        "endLine": 1085,
+        "endChar": 17
+      },
+      "revId": "c010ab713d4e9f86e56a99028a43509953dd8c78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3818a9d_b63b0dff",
@@ -60,6 +108,30 @@
       "writtenOn": "2023-10-18T07:29:06Z",
       "side": 1,
       "message": "nits: This might be confusing if we will update ConnectivityService to use bpf for data saver.",
+      "range": {
+        "startLine": 1093,
+        "startChar": 62,
+        "endLine": 1093,
+        "endChar": 81
+      },
+      "revId": "c010ab713d4e9f86e56a99028a43509953dd8c78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62e133e7_404f6450",
+        "filename": "services/core/java/com/android/server/net/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-10-18T08:46:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3818a9d_b63b0dff",
       "range": {
         "startLine": 1093,
         "startChar": 62,
