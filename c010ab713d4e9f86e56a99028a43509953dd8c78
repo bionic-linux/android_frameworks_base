@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "939b8965_f4cae239",
+        "filename": "services/core/java/com/android/server/net/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1947461
+      },
+      "writtenOn": "2023-10-18T07:29:06Z",
+      "side": 1,
+      "message": "nits: this might be confusing assuming CM will use bpf in the future.",
+      "range": {
+        "startLine": 1076,
+        "startChar": 55,
+        "endLine": 1076,
+        "endChar": 79
+      },
+      "revId": "c010ab713d4e9f86e56a99028a43509953dd8c78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbd8a610_78239874",
+        "filename": "services/core/java/com/android/server/net/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1947461
+      },
+      "writtenOn": "2023-10-18T07:29:06Z",
+      "side": 1,
+      "message": "nits: I felt following code is a bit easier to understand.\nBut this is just personal preference.\n```\ntry{\n  if (Flags.setDataSaverViaCm()) {\n  　// setDataSaverEnabled throws if it fails to set data saver.\n    mContext.getSystemService(ConnectivityManager.class)\n            .setDataSaverEnabled(enable);\n    mDataSaverMode \u003d enable;\n    return true;\n  }else {\n    final boolean changed \u003d mNetdService.bandwidthEnableDataSaver(enable);\n    if (changed) {\n       mDataSaverMode \u003d enable;\n    } else {\n       Log.w(TAG, \"setDataSaverMode(\" + enable + \"): netd command silently failed\");        \n    }\n    return changed;\n  }\n} catch (){\n} finally{\n}\n```",
+      "range": {
+        "startLine": 1085,
+        "startChar": 16,
+        "endLine": 1085,
+        "endChar": 17
+      },
+      "revId": "c010ab713d4e9f86e56a99028a43509953dd8c78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3818a9d_b63b0dff",
+        "filename": "services/core/java/com/android/server/net/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1947461
+      },
+      "writtenOn": "2023-10-18T07:29:06Z",
+      "side": 1,
+      "message": "nits: This might be confusing if we will update ConnectivityService to use bpf for data saver.",
+      "range": {
+        "startLine": 1093,
+        "startChar": 62,
+        "endLine": 1093,
+        "endChar": 81
+      },
+      "revId": "c010ab713d4e9f86e56a99028a43509953dd8c78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
