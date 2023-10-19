@@ -153,6 +153,23 @@
       "message": "@ogunwale@google.com @hackbod@android.com @hackbod@google.com @akulian@google.com\nCan you please review this patch?",
       "revId": "e0bd2ca415d3e84454e81b36cdff3d1c14f88dc2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e79ef3b_449e78eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2012745
+      },
+      "writtenOn": "2023-10-19T10:23:15Z",
+      "side": 1,
+      "message": "@dsandler@android.com @jjaggi@google.com Can you please submit this manually? Auto-submit was unsuccessful",
+      "revId": "e0bd2ca415d3e84454e81b36cdff3d1c14f88dc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
