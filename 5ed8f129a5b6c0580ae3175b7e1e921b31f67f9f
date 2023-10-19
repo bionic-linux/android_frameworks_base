@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4aacc04b_90f2231d",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1619,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2023-10-19T23:20:03Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by API Guidelines: [error]: VisiblySynchronized\n\nAnalyzer Description: Ensures compliance Android API Guidelines.\nOwner: android-api-council+lint@google.com\n\n[error]: VisiblySynchronized\nInternal locks must not be exposed (synchronizing on this or class is still externally observable): method android.nfc.NfcAdapter.setReaderMode(boolean)\nFor more info see go/android-api-guidelines.\nContact android-api-council+tools@google.com if you have any questions.",
+      "range": {
+        "startLine": 1619,
+        "startChar": 0,
+        "endLine": 1619,
+        "endChar": 0
+      },
+      "revId": "5ed8f129a5b6c0580ae3175b7e1e921b31f67f9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
