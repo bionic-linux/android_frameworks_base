@@ -1176,6 +1176,7 @@ public class AudioRecord implements AudioRouting, MicrophoneDirection,
             case AudioFormat.ENCODING_PCM_FLOAT:
             case AudioFormat.ENCODING_PCM_16BIT:
             case AudioFormat.ENCODING_PCM_8BIT:
+            case AudioFormat.ENCODING_E_AC3_JOC:
                 mAudioFormat = audioFormat;
                 break;
             default:
