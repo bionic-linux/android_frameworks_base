@@ -1581,18 +1581,18 @@ public class StorageManager {
     }
 
     /** {@hide} */
-    public void createUserKey(int userId, int serialNumber, boolean ephemeral) {
+    public void createUserStorageKeys(int userId, int serialNumber, boolean ephemeral) {
         try {
-            mStorageManager.createUserKey(userId, serialNumber, ephemeral);
+            mStorageManager.createUserStorageKeys(userId, serialNumber, ephemeral);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
     }
 
     /** {@hide} */
-    public void destroyUserKey(int userId) {
+    public void destroyUserStorageKeys(int userId) {
         try {
-            mStorageManager.destroyUserKey(userId);
+            mStorageManager.destroyUserStorageKeys(userId);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
