@@ -16,6 +16,24 @@
       "message": "Is the desire to increase or decrease the size and can you elaborate a bit on why? These type of tuning knobs didn\u0027t age well previously so I\u0027m not super excited about adding some back (lots of people just blindly copy/pasted values from previous generations, not updating for newer screen resolutions, etc...)",
       "revId": "e564cb8e0fbd3b4c4fee50715f978e40c7d3a3ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b18f45d6_5329e014",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2005646
+      },
+      "writtenOn": "2023-10-19T23:40:09Z",
+      "side": 1,
+      "message": "At Meta we used this patch to _decrease_ the cache size, in order to reduce the memory footprint of some internal Android apps running on VR headsets. These apps get composited onto _small_, low-density virtual displays, and the underlying `Surface` then gets rendered in VR as a 2D panel.\n\nIIRC `mMaxGpuFontAtlasBytes` determines the size of each atlas texture allocated by `GlDrawOpAtlas` in Skia (`fGlyphCacheTextureMaximumBytes`), and this value is set by hwui based on the resolution of the built-in display (which is way bigger than the virtual displays we\u0027re using). In practice I believe we ended up with a 2048x2048 A8 atlas texture for text, and a 2048x1024 RGBA texture for emojis -- both larger than necessary, so reducing `mMaxGpuFontAtlasBytes` allowed us to shave a few megabytes off the graphics memory usage of those apps.\n\nI think ideally the default cache texture size would be set based on the size of a particular display, but not sure how difficult that would be to implement. A global setting worked for our VR use case, but, granted, may not generalize to all devices.\n\nMy recollection is that Skia will allocate additional atlas textures (pages) as needed so even setting `fGlyphCacheTextureMaximumBytes` too low may be fine, but I\u0027m not sure what the performance implications of that are.",
+      "parentUuid": "538058ad_37a2021b",
+      "revId": "e564cb8e0fbd3b4c4fee50715f978e40c7d3a3ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
