@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "538058ad_37a2021b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2023-10-19T14:57:49Z",
+      "side": 1,
+      "message": "Is the desire to increase or decrease the size and can you elaborate a bit on why? These type of tuning knobs didn\u0027t age well previously so I\u0027m not super excited about adding some back (lots of people just blindly copy/pasted values from previous generations, not updating for newer screen resolutions, etc...)",
+      "revId": "e564cb8e0fbd3b4c4fee50715f978e40c7d3a3ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
