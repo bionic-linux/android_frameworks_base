@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "239214cf_8fd04bac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-10-20T00:06:55Z",
+      "side": 1,
+      "message": "Addressed the comments. PTAL, Thanks!",
+      "revId": "5ed8f129a5b6c0580ae3175b7e1e921b31f67f9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4aacc04b_90f2231d",
@@ -14,6 +31,30 @@
       "writtenOn": "2023-10-19T23:20:03Z",
       "side": 1,
       "message": "Please fix this WARNING reported by API Guidelines: [error]: VisiblySynchronized\n\nAnalyzer Description: Ensures compliance Android API Guidelines.\nOwner: android-api-council+lint@google.com\n\n[error]: VisiblySynchronized\nInternal locks must not be exposed (synchronizing on this or class is still externally observable): method android.nfc.NfcAdapter.setReaderMode(boolean)\nFor more info see go/android-api-guidelines.\nContact android-api-council+tools@google.com if you have any questions.",
+      "range": {
+        "startLine": 1619,
+        "startChar": 0,
+        "endLine": 1619,
+        "endChar": 0
+      },
+      "revId": "5ed8f129a5b6c0580ae3175b7e1e921b31f67f9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a14fc1fc_0a87c86e",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1619,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-10-20T00:06:55Z",
+      "side": 1,
+      "message": "This is an existing pattern all over this class, the `sHasNfcFeature` static variable is guarded by static `NfcAdapter.clas`. So, access to this variable from all methods in this class are using it. Changing this now would require changing all existing APIs in this class.\n\nFrom go/android-api-guidelines#rules:\n\n```\nOne of the difficulties in concrete rules is applying them to a platform that was developed without strict guidelines from the beginning, so some of the existing APIs may not adhere. In some cases, the right choice might be to go with what is consistent with APIs in the same general area of the code, rather than in the ideal rules laid out herein.\n```",
+      "parentUuid": "4aacc04b_90f2231d",
       "range": {
         "startLine": 1619,
         "startChar": 0,
