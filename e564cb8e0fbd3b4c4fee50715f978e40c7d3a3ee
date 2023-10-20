@@ -88,6 +88,24 @@
       "parentUuid": "05aabe25_e0e8ed7c",
       "revId": "e564cb8e0fbd3b4c4fee50715f978e40c7d3a3ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6fcb578_a32ff60c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2007152
+      },
+      "writtenOn": "2023-10-20T19:44:54Z",
+      "side": 1,
+      "message": "Hello John, thanks for your inputs on this. \nUpon internal discussion we have decided to give sQuarterRes memory policy a try and see if it meets the desired output. \nI will abandon this patch for now. Thanks.",
+      "parentUuid": "a343bcfe_d7f3c520",
+      "revId": "e564cb8e0fbd3b4c4fee50715f978e40c7d3a3ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
