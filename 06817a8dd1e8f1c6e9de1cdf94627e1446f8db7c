@@ -79,6 +79,30 @@
       },
       "revId": "06817a8dd1e8f1c6e9de1cdf94627e1446f8db7c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c3a7fc0_d7af8371",
+        "filename": "keystore/java/android/security/keystore/KeyProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1896276
+      },
+      "writtenOn": "2023-10-20T12:33:30Z",
+      "side": 1,
+      "message": "Yes that is correct we should not add Algorithm name as OID but since conscrypt do not support Ed25519 keys yet, and when Ed25519 key certificate is parsed it\u0027s public key algorithm is OID and hence to match this Public key algorithm and AndroidKeyStore private key algorithm I have added this algorithm name as OID.",
+      "parentUuid": "eac61ef5_23221905",
+      "range": {
+        "startLine": 225,
+        "startChar": 45,
+        "endLine": 225,
+        "endChar": 51
+      },
+      "revId": "06817a8dd1e8f1c6e9de1cdf94627e1446f8db7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
