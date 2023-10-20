@@ -34,6 +34,24 @@
       "parentUuid": "538058ad_37a2021b",
       "revId": "e564cb8e0fbd3b4c4fee50715f978e40c7d3a3ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdc9bf7b_8fe9f20f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2023-10-20T01:05:12Z",
+      "side": 1,
+      "message": "Ah. There\u0027s now the `initialMaxSurfaceAreaScale` in MemoryPolicy which I think might be the knob you\u0027re looking for then: https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/libs/hwui/MemoryPolicy.h;drc\u003dd55fbc09a5f49fb5a5eabdfff6badc107c3b9f96;l\u003d44\n\nThis will size the initial caches based off of default display * that scale factor, but then if we ever are asked to render to something larger we will re-configure the cache limits to account for that new size ( https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/libs/hwui/renderthread/CacheManager.cpp;drc\u003dd55fbc09a5f49fb5a5eabdfff6badc107c3b9f96;l\u003d348 )\n\nAre you able to give that a try and see if it works out? We\u0027d still need a patch to define that new memory policy or let just the initialMaxSurfaceAreaScale factor be override-able, though, but I think that fits this scenario better as it\u0027ll also then  scale all the other caches, too.",
+      "parentUuid": "b18f45d6_5329e014",
+      "revId": "e564cb8e0fbd3b4c4fee50715f978e40c7d3a3ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
