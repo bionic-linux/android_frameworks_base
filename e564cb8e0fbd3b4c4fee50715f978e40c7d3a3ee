@@ -70,6 +70,24 @@
       "parentUuid": "fdc9bf7b_8fe9f20f",
       "revId": "e564cb8e0fbd3b4c4fee50715f978e40c7d3a3ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a343bcfe_d7f3c520",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2023-10-20T16:29:12Z",
+      "side": 1,
+      "message": "`sExtremeLowRam` is kind of an experiment to see how low we can push things until it breaks or a little past that point.\n\nBut maybe just adding another policy like `sQuarterRes` or something that just scales the `initialMaxSurfaceAreaScale` but leaves the rest at defaults?",
+      "parentUuid": "05aabe25_e0e8ed7c",
+      "revId": "e564cb8e0fbd3b4c4fee50715f978e40c7d3a3ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
