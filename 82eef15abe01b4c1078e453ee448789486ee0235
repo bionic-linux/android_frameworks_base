@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9281f4c_34d034bd",
+        "filename": "api/ApiDocs.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2023-10-20T13:56:00Z",
+      "side": 1,
+      "message": "Does doclava not allow you to use a symbol here like metalava does?",
+      "range": {
+        "startLine": 145,
+        "startChar": 11,
+        "endLine": 145,
+        "endChar": 14
+      },
+      "revId": "82eef15abe01b4c1078e453ee448789486ee0235",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
