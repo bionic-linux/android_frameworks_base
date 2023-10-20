@@ -52,6 +52,24 @@
       "parentUuid": "b18f45d6_5329e014",
       "revId": "e564cb8e0fbd3b4c4fee50715f978e40c7d3a3ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05aabe25_e0e8ed7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2005646
+      },
+      "writtenOn": "2023-10-20T16:26:43Z",
+      "side": 1,
+      "message": "Oh, cool -- yeah, that should work! While we originally focused on the texture atlas size (since that was one of the largest GPU allocations in tested apps), scaling `mMaxSurfaceArea` seems strictly better.\n\nPerhaps this CL could be updated to allow overriding `initialMaxSurfaceAreaScale` instead, although I think one of the existing policies (`sExtremeLowRam`) might be a good fit.",
+      "parentUuid": "fdc9bf7b_8fe9f20f",
+      "revId": "e564cb8e0fbd3b4c4fee50715f978e40c7d3a3ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
