@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6318a17e_d2b40698",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2023-10-23T13:46:39Z",
+      "side": 1,
+      "message": "fallback OWNERS+1, please follow up with a CL adding appropriate OWNERS for nfc-extras.",
+      "revId": "0091ec1a638ec960351af2358e1a43380705c819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
