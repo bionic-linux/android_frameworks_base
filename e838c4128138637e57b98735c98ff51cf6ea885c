@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ff27d8e_ae63258c",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/RemoteTransitionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-10-23T11:26:46Z",
+      "side": 1,
+      "message": "The same fix was included in u-qpr.",
+      "revId": "e838c4128138637e57b98735c98ff51cf6ea885c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
