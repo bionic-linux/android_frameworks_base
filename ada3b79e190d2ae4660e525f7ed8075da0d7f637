@@ -33,6 +33,24 @@
       "message": "ptal, picked from internal main",
       "revId": "ada3b79e190d2ae4660e525f7ed8075da0d7f637",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abba7363_98e4242d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1941946
+      },
+      "writtenOn": "2023-10-23T19:06:07Z",
+      "side": 1,
+      "message": "Same question as https://android-review.git.corp.google.com/c/platform/frameworks/native/+/2797326/comments/c6bb17bb_bcb7ada0.",
+      "parentUuid": "f08ab930_eb320455",
+      "revId": "ada3b79e190d2ae4660e525f7ed8075da0d7f637",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
