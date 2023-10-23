@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ec9bd42_b0f700df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-10-23T17:17:10Z",
+      "side": 1,
+      "message": "This change is just a cherry-pick from internal, so it\u0027s already been reviewed.",
+      "revId": "002c97ca4a6debab52234a0c171662bd6aa4bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
