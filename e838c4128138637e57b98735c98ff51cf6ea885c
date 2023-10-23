@@ -16,6 +16,24 @@
       "message": "The same fix was included in u-qpr.",
       "revId": "e838c4128138637e57b98735c98ff51cf6ea885c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62cd9c51_80fcab16",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/RemoteTransitionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2023-10-23T14:01:56Z",
+      "side": 1,
+      "message": "Cherrypicked: aosp/2799533 (better to merge the same CL to make branching simpler)",
+      "parentUuid": "7ff27d8e_ae63258c",
+      "revId": "e838c4128138637e57b98735c98ff51cf6ea885c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
