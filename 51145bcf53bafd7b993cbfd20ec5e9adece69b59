@@ -16,6 +16,23 @@
       "message": "It seems there are some failures from TreeHugger as below:\nTreeHugger finished with: 31 passed, 35 failed, 2 warning, 96 skipped, 1 nonblocking in progress.\n\nIs there anything I can do to correct it?\n\nThanks",
       "revId": "51145bcf53bafd7b993cbfd20ec5e9adece69b59",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c431518c_cee4a5db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2023-10-23T11:56:05Z",
+      "side": 1,
+      "message": "@evanlaird@google.com I noticed a deprecated tag on this class. How should this be handled?",
+      "revId": "51145bcf53bafd7b993cbfd20ec5e9adece69b59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
