@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb191c89_5029bea7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2023-10-23T00:47:19Z",
+      "side": 1,
+      "message": "PTAL. Cherry pick from ag/25024173.\n\nSome context for Etan: Trunk Stable team asked us to upstream all our divergences, and this particular one stops ARC++ from booting. Please let us know if you have any concerns.\n\nThanks.",
+      "revId": "0b9bd17b43b6aab82627a4eda3478a8f1723790c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
