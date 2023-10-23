@@ -33,6 +33,24 @@
       "message": "@evanlaird@google.com I noticed a deprecated tag on this class. How should this be handled?",
       "revId": "51145bcf53bafd7b993cbfd20ec5e9adece69b59",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "204da5d4_2ee9185d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2023-10-23T14:27:42Z",
+      "side": 1,
+      "message": "The deprecation tag is mostly the optimistic view that this logic should eventually live alongside the repositories in the statusbar/pipeline/ package. \n\nI ran `git log -S getCarrierHelpTextForSimState -- CarrierTextController.java` (the old name for this class) and am convinced that this method has been unused for at least as long as this class has been around. \n\nLGTM",
+      "parentUuid": "c431518c_cee4a5db",
+      "revId": "51145bcf53bafd7b993cbfd20ec5e9adece69b59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
