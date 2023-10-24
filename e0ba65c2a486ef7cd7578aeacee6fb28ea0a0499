@@ -98,6 +98,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9726909e_2f02abe0",
+        "filename": "core/java/android/os/storage/IStorageManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2023-10-24T18:46:44Z",
+      "side": 1,
+      "message": "Got it. Okay, `StorageKeys` probably makes sense then.\n\nOut of curiosity, why would you leave `User` in this method, but remove it from the other methods? The fact that it is for Keys (as opposed to actual Storage)? Or the fact that it is both CE and DE? Or because it\u0027s plural (keys), and you don\u0027t want people to think that it erases *all* Storage keys, even for other users? Or some other reason.\n\nI\u0027d recommend putting javadocs on the methods either way, where you can mention that it is both CE and DE. Right now, there is no javadoc on `StorageManager.destroyUserKey()`, etc..",
+      "parentUuid": "9544bacd_1e137be5",
+      "range": {
+        "startLine": 137,
+        "startChar": 19,
+        "endLine": 137,
+        "endChar": 26
+      },
+      "revId": "e0ba65c2a486ef7cd7578aeacee6fb28ea0a0499",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2b8a54b7_ecb8628b",
         "filename": "core/java/android/os/storage/StorageManager.java",
         "patchSetId": 1
