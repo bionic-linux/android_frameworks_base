@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "75557167_100dba77",
+        "filename": "core/java/android/os/storage/IStorageManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-24T18:15:07Z",
+      "side": 1,
+      "message": "The inclusion of `Storage` is to make this consistent with the other methods like `unlockCeStorage` and `lockCeStorage`.  Would you prefer just `createUserKeys` then?  Or `createUserFbeKeys` maybe?  I had `createUserFbeKeys` originally, but Paul felt that it was slightly inconsistent with the other methods.\n\nNote that in any case it is helpful to add the \"s\", given that this creates two keys, not one.",
+      "parentUuid": "2c344219_228399e5",
+      "range": {
+        "startLine": 137,
+        "startChar": 19,
+        "endLine": 137,
+        "endChar": 26
+      },
+      "revId": "e0ba65c2a486ef7cd7578aeacee6fb28ea0a0499",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2b8a54b7_ecb8628b",
         "filename": "core/java/android/os/storage/StorageManager.java",
         "patchSetId": 1
