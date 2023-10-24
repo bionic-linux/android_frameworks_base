@@ -144,6 +144,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "173dcf86_a1ce95d5",
+        "filename": "core/java/android/os/storage/IStorageManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-24T21:31:18Z",
+      "side": 1,
+      "message": "Javadoc has been added.\n\nI think I\u0027m going to stay with `CeStorage` instead of `UserCeStorage`, but let me know if you feel strongly otherwise.",
+      "parentUuid": "f1fc1e51_0ecd6ec0",
+      "range": {
+        "startLine": 137,
+        "startChar": 19,
+        "endLine": 137,
+        "endChar": 26
+      },
+      "revId": "e0ba65c2a486ef7cd7578aeacee6fb28ea0a0499",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b8a54b7_ecb8628b",
@@ -157,6 +181,30 @@
       "writtenOn": "2023-10-24T17:56:55Z",
       "side": 1,
       "message": "What about adding Javadocumentation here explaining what type of keys (CE, DE, both?) are affected.\n\n(same for the next method)",
+      "range": {
+        "startLine": 1583,
+        "startChar": 16,
+        "endLine": 1583,
+        "endChar": 17
+      },
+      "revId": "e0ba65c2a486ef7cd7578aeacee6fb28ea0a0499",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ddc683c_bd50bfa1",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-24T21:31:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b8a54b7_ecb8628b",
       "range": {
         "startLine": 1583,
         "startChar": 16,
