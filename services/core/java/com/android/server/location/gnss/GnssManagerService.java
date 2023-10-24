@@ -48,6 +48,8 @@ import com.android.internal.app.IBatteryStats;
 import com.android.server.FgThread;
 import com.android.server.location.gnss.hal.GnssNative;
 import com.android.server.location.injector.Injector;
+import com.android.server.location.injector.ScreenInteractiveHelper;
+import com.android.server.location.injector.ScreenInteractiveHelper.ScreenInteractiveChangedListener;
 
 import java.io.FileDescriptor;
 import java.util.List;
@@ -76,6 +78,15 @@ public class GnssManagerService {
 
     private final GnssMetrics mGnssMetrics;
 
+    private final ScreenInteractiveHelper mScreenInteractiveHelper;
+    private final ScreenInteractiveChangedListener mScreenInteractiveChangedListener =
+            new ScreenInteractiveChangedListener() {
+                @Override
+                public void onScreenInteractiveChanged(boolean screenInteractive) {
+                    mGnssNative.updateScreenInteractive(screenInteractive);
+                }
+            };
+
     public GnssManagerService(Context context, Injector injector, GnssNative gnssNative) {
         mContext = context.createAttributionContext(ATTRIBUTION_ID);
         mGnssNative = gnssNative;
@@ -94,9 +105,12 @@ public class GnssManagerService {
 
         mGeofenceHalModule = new GnssGeofenceHalModule(mGnssNative);
         mCapabilitiesHalModule = new GnssCapabilitiesHalModule(mGnssNative);
+        Log.d(TAG, "GnssManagerService get mScreenInteractiveHelper");
+        mScreenInteractiveHelper = injector.getScreenInteractiveHelper();
 
         // allow gnss access to begin - we must assume that callbacks can start immediately
         mGnssNative.register();
+        mScreenInteractiveHelper.addListener(mScreenInteractiveChangedListener);
     }
 
     /** Called when system is ready. */

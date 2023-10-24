@@ -438,6 +438,11 @@ static jboolean android_location_gnss_hal_GnssNative_stop(JNIEnv* /* env */, jcl
     return gnssHal->stop();
 }
 
+static void android_location_gnss_hal_GnssNative_update_screen_interactive(
+        JNIEnv* /* env */, jclass, jboolean interactive) {
+    gnssHal->updateScreenInteractive(interactive);
+}
+
 static jboolean android_location_gnss_hal_GnssNative_start_sv_status_collection(JNIEnv* /* env */,
                                                                                 jclass) {
     return gnssHal->startSvStatus();
@@ -953,6 +958,8 @@ static const JNINativeMethod sLocationProviderMethods[] = {
         {"native_start", "()Z",
          reinterpret_cast<void*>(android_location_gnss_hal_GnssNative_start)},
         {"native_stop", "()Z", reinterpret_cast<void*>(android_location_gnss_hal_GnssNative_stop)},
+        {"native_update_screen_interactive", "(Z)V",
+         reinterpret_cast<void*>(android_location_gnss_hal_GnssNative_update_screen_interactive)},
         {"native_delete_aiding_data", "(I)V",
          reinterpret_cast<void*>(android_location_gnss_hal_GnssNative_delete_aiding_data)},
         {"native_read_nmea", "([BI)I",

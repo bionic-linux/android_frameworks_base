@@ -261,6 +261,13 @@ jboolean GnssHal::stop() {
     return checkHidlReturn(result, "IGnss stop() failed.");
 }
 
+void GnssHal::updateScreenInteractive(jboolean interactive) {
+    if (gnssHalAidl != nullptr && gnssHalAidl->getInterfaceVersion() >= 4) {
+        auto status = gnssHalAidl->updateScreenInteractive(interactive);
+        checkAidlStatus(status, "IGnssAidl updateScreenInteractive() failed.");
+    }
+}
+
 jboolean GnssHal::startSvStatus() {
     isSvStatusRegistered = true;
     if (gnssHalAidl != nullptr && gnssHalAidl->getInterfaceVersion() >= 2) {

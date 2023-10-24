@@ -586,6 +586,14 @@ public class GnssNative {
     }
 
     /**
+     * Update screen interactive state.
+     */
+    public void updateScreenInteractive(boolean interactive) {
+        Preconditions.checkState(mRegistered);
+        mGnssHal.updateScreenInteractive(interactive);
+    }
+
+    /**
      * Sets the position mode.
      */
     public boolean setPositionMode(@GnssPositionMode int mode,
@@ -1312,6 +1320,10 @@ public class GnssNative {
             return native_stop();
         }
 
+        protected void updateScreenInteractive(boolean interactive) {
+            native_update_screen_interactive(interactive);
+        }
+
         protected boolean setPositionMode(@GnssPositionMode int mode,
                 @GnssPositionRecurrence int recurrence, int minInterval, int preferredAccuracy,
                 int preferredTime, boolean lowPowerMode) {
@@ -1516,6 +1528,8 @@ public class GnssNative {
     private static native boolean native_start();
 
     private static native boolean native_stop();
+
+    private static native void native_update_screen_interactive(boolean interactive);
 
     private static native boolean native_set_position_mode(int mode, int recurrence,
             int minInterval, int preferredAccuracy, int preferredTime, boolean lowPowerMode);

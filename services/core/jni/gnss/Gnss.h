@@ -87,6 +87,7 @@ public:
     jint readNmea(jbyteArray& nmeaArray, jint& buffer_size);
     void linkToDeath();
     void close();
+    void updateScreenInteractive(jboolean interactive);
     void deleteAidingData(jint flags);
     void injectTime(jlong time, jlong timeReference, jint uncertainty);
     void injectLocation(jint gnssLocationFlags, jdouble latitudeDegrees, jdouble longitudeDegrees,
