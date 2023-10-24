@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9544bacd_1e137be5",
+        "filename": "core/java/android/os/storage/IStorageManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-24T18:41:31Z",
+      "side": 1,
+      "message": "What `createUserStorageKeys` (currently called `createUserKey`) does is create the user\u0027s CE key and DE key, i.e. the keys for the user\u0027s CE storage and DE storage, respectively.  It does **not** create the actual CE and DE storage (directories); that\u0027s done by the existing method `prepareUserStorage`.  So having the `Keys` in there is important, IMO.\n\nLikewise, `destroyUserStorageKeys` (currently called `destroyUserKey`) destroys the CE and DE keys, not the CE and DE storage itself.  The existing method `destroyUserStorage` destroys the CE and DE storage.\n\nI think the only question is what do we call the keys.  It sounds like you\u0027d prefer `CeAndDeKeys` to `StorageKeys` or to `FbeKeys` (note, FBE stands for File Based Encryption) -- is that accurate?  Does the existence of `prepareUserStorage` and `destroyUserStorage`, which just use the word `Storage` to refer to CE and DE storage, change that at all?",
+      "parentUuid": "69e575b1_7dd96943",
+      "range": {
+        "startLine": 137,
+        "startChar": 19,
+        "endLine": 137,
+        "endChar": 26
+      },
+      "revId": "e0ba65c2a486ef7cd7578aeacee6fb28ea0a0499",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2b8a54b7_ecb8628b",
         "filename": "core/java/android/os/storage/StorageManager.java",
         "patchSetId": 1
