@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "69e575b1_7dd96943",
+        "filename": "core/java/android/os/storage/IStorageManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2023-10-24T18:24:22Z",
+      "side": 1,
+      "message": "So \"UserStorage\" is meant to indicate \"Ce and De Storage\"?\nAnd then you have to say \"Keys\" because otherwise it\u0027d be \"Storages\", which is weird?\n\nI don\u0027t think that\u0027s obvious, but I don\u0027t necessarily have a better suggestion.\nI have no idea what \"Fbe\" means, so I personally don\u0027t like it ;)\n\nSo, does this actually indicate `createDeAndCeStorages()` / `createDeCeStorages`?",
+      "parentUuid": "75557167_100dba77",
+      "range": {
+        "startLine": 137,
+        "startChar": 19,
+        "endLine": 137,
+        "endChar": 26
+      },
+      "revId": "e0ba65c2a486ef7cd7578aeacee6fb28ea0a0499",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2b8a54b7_ecb8628b",
         "filename": "core/java/android/os/storage/StorageManager.java",
         "patchSetId": 1
