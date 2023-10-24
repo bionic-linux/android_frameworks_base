@@ -122,6 +122,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f1fc1e51_0ecd6ec0",
+        "filename": "core/java/android/os/storage/IStorageManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-24T18:58:52Z",
+      "side": 1,
+      "message": "The methods I removed `User` from all refer to `CeStorage` now.  CE storage is always per-user, so it seems unnecessary to have `UserCeStorage`.\n\nWhen just talking about a user\u0027s `Storage`, though, it\u0027s helpful to explicitly write `User`.\n\nDo you think we should keep `User` even for `CeStorage`, i.e. use `UserCeStorage`, so that everything dealing with the user\u0027s file-based encryption storage or keys has `User`?  One thing to keep in mind is that `StorageManagerInternal` already has `markCeStoragePrepared` and `isCeStoragePrepared`.  So that already has some precedent for simply `CeStorage`.\n\nAnd yes, I\u0027ll add javadoc.",
+      "parentUuid": "9726909e_2f02abe0",
+      "range": {
+        "startLine": 137,
+        "startChar": 19,
+        "endLine": 137,
+        "endChar": 26
+      },
+      "revId": "e0ba65c2a486ef7cd7578aeacee6fb28ea0a0499",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2b8a54b7_ecb8628b",
         "filename": "core/java/android/os/storage/StorageManager.java",
         "patchSetId": 1
