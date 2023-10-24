@@ -633,9 +633,6 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
         }
         DisplayDeviceInfo deviceInfo = device.getDisplayDeviceInfoLocked();
 
-        // Remove any virtual device mapping which exists for the display.
-        mVirtualDeviceDisplayMapping.remove(device.getUniqueId());
-
         if (layoutDisplay.getAddress().equals(deviceInfo.address)) {
             layout.removeDisplayLocked(DEFAULT_DISPLAY);
 
@@ -680,6 +677,8 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
             final int displayId = mLogicalDisplays.keyAt(i);
             LogicalDisplay display = mLogicalDisplays.valueAt(i);
             assignDisplayGroupLocked(display);
+            String displayDeviceUniqueId = display.isValidLocked() ?
+                    display.getPrimaryDisplayDeviceLocked().getUniqueId() : null;
 
             boolean wasDirty = display.isDirtyLocked();
             mTempDisplayInfo.copyFrom(display.getDisplayInfoLocked());
@@ -699,6 +698,10 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
                         getDisplayGroupIdFromDisplayIdLocked(displayId));
                 if (displayGroup != null) {
                     displayGroup.removeDisplayLocked(display);
+                    // Remove any virtual device mapping which exists for the display.
+                    if (displayDeviceUniqueId != null) {
+                        mVirtualDeviceDisplayMapping.remove(displayDeviceUniqueId);
+                    }
                 }
 
                 if (wasPreviouslyUpdated) {
