@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a85e52d3_33c323af",
+        "filename": "core/java/com/android/internal/widget/LockPatternUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1939,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-10-25T11:22:04Z",
+      "side": 1,
+      "message": "Also unlocking keystore, if we want to be thorough.",
+      "range": {
+        "startLine": 1939,
+        "startChar": 86,
+        "endLine": 1939,
+        "endChar": 99
+      },
+      "revId": "912e35b698089b41083153e271ddef13e8e7261d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
