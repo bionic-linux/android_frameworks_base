@@ -22,6 +22,30 @@
       },
       "revId": "912e35b698089b41083153e271ddef13e8e7261d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f732601f_f6e38806",
+        "filename": "core/java/com/android/internal/widget/LockPatternUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1939,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-25T16:29:01Z",
+      "side": 1,
+      "message": "It doesn\u0027t actually do that yet, which for now is WAI because users only have Keystore super keys while they have an LSKF.  I\u0027m planning to change that and will be updating this comment at that time.",
+      "parentUuid": "a85e52d3_33c323af",
+      "range": {
+        "startLine": 1939,
+        "startChar": 86,
+        "endLine": 1939,
+        "endChar": 99
+      },
+      "revId": "912e35b698089b41083153e271ddef13e8e7261d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
