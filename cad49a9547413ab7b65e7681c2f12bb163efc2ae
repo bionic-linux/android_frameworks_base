@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05da9427_98cdfd5d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1746367
+      },
+      "writtenOn": "2023-10-25T15:24:05Z",
+      "side": 1,
+      "message": "Hello Google team,\n\nCould you please help to review this CL? \n\nThanks.",
+      "revId": "cad49a9547413ab7b65e7681c2f12bb163efc2ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
