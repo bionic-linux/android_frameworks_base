@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17b2ca04_3abba87c",
+        "filename": "core/java/android/app/Activity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8920,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2023-10-26T23:07:31Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t understand why this API needs to be flagged and why it is flagged with NFC mainline. Mind help me understand it?",
+      "revId": "3099cabfecb381c97a3009306da1c63093c04d57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
