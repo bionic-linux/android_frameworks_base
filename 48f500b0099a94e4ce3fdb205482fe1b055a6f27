@@ -22,6 +22,30 @@
       },
       "revId": "48f500b0099a94e4ce3fdb205482fe1b055a6f27",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ff22ae8_f0d6c456",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-10-26T15:50:05Z",
+      "side": 1,
+      "message": "Done. There was a typo in the commit message too. It\u0027s meant to be `--hide HiddenTypeParameter` that\u0027s getting removed, not `HiddenTypedef`.",
+      "parentUuid": "d59308a3_990a78ff",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "48f500b0099a94e4ce3fdb205482fe1b055a6f27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
