@@ -16,6 +16,24 @@
       "message": "Looks fine.  I think this fix should be applied to `USER_FRP` too, but that should be a separate change.  It looks like excluding `USER_FRP` from `setLockoutAttemptDeadline()` was done as a workaround for a bug that was already fixed 6 years ago by https://android.googlesource.com/platform/frameworks/base/+/a3e5582fac1cc259022c06d027e73c767dc1c117%5E%21/",
       "revId": "1b28b09df19599a20e06488a43932e0fbf68120e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1265f16_48c21872",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1566802
+      },
+      "writtenOn": "2023-10-27T06:23:54Z",
+      "side": 1,
+      "message": "b/308076873 is opened.",
+      "parentUuid": "fabd87e8_f47c81a9",
+      "revId": "1b28b09df19599a20e06488a43932e0fbf68120e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
