@@ -22,6 +22,30 @@
       },
       "revId": "36d0c9e029ee3809c7d1ddff2cbe47f2c7e19156",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8458c1d2_a69a8c68",
+        "filename": "core/java/com/android/internal/widget/LockPatternUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1566802
+      },
+      "writtenOn": "2023-10-27T01:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc1436ea_0557bb91",
+      "range": {
+        "startLine": 1109,
+        "startChar": 0,
+        "endLine": 1111,
+        "endChar": 40
+      },
+      "revId": "36d0c9e029ee3809c7d1ddff2cbe47f2c7e19156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
