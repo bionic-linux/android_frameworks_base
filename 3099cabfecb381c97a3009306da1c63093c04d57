@@ -16,6 +16,24 @@
       "message": "Sorry, I don\u0027t understand why this API needs to be flagged and why it is flagged with NFC mainline. Mind help me understand it?",
       "revId": "3099cabfecb381c97a3009306da1c63093c04d57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "789c8b75_33b39437",
+        "filename": "core/java/android/app/Activity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8920,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-10-27T03:29:52Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t understand why this API needs to be flagged\n\nAll APIs meant for Android V submitted to `git_main` branch needs to be flagged off to avoid it leaking to QPR2, QPR3 builds. See https://b.corp.google.com/issues/304478767#comment1\n\n\u003e why it is flagged with NFC mainline.\n\nThis API was added for NFC mainline work since the stack uses this API and we need to use formal APIs (not @hide usage). See original CL: aosp/2644833",
+      "parentUuid": "17b2ca04_3abba87c",
+      "revId": "3099cabfecb381c97a3009306da1c63093c04d57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
