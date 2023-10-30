@@ -34,6 +34,29 @@
       "parentUuid": "bd676bca_69f741d1",
       "revId": "55673dde91b6aa38cd9386cb426b07de4ec28588",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f5486dc_f79495d0",
+        "filename": "tools/lint/global/checks/src/main/java/com/google/android/lint/aidl/EnforcePermissionDetector.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1944206
+      },
+      "writtenOn": "2023-10-30T11:12:27Z",
+      "side": 1,
+      "message": "nit: I know it\u0027s not related to this change, but can we change `1`, `2` to `overridingAnnotation`, `overriddenAnnotation`?",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 28
+      },
+      "revId": "55673dde91b6aa38cd9386cb426b07de4ec28588",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
