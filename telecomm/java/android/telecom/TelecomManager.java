@@ -2352,6 +2352,9 @@ public class TelecomManager {
      * <p>
      * <b>Note</b>: {@link android.app.Notification.CallStyle} notifications should be posted after
      * the call is placed in order for the notification to be non-dismissible.
+     * <b>Note</b>: Call Forwarding MMI codes can only be dialed directly by applications fitting
+     * the following roles: the default dialer, the system dialer, and the sim call manager.
+     * Applications that do not one or more of those roles granted to them
      * @param address The address to make the call to.
      * @param extras Bundle of extras to use with the call.
      */
