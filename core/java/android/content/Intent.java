@@ -147,7 +147,7 @@ import java.util.TimeZone;
  *   </li>
  *   <li> <p><b>{@link #ACTION_VIEW} <i>tel:123</i></b> -- Display
  *     the phone dialer with the given number filled in.  Note how the
- *     VIEW action does what is considered the most reasonable thing for
+ *     VIEW action does what is considered the most reasonable thing forC
  *     a particular URI.</p>
  *   </li>
  *   <li> <p><b>{@link #ACTION_DIAL} <i>tel:123</i></b> -- Display
@@ -1160,6 +1160,11 @@ public class Intent implements Parcelable, Cloneable {
      * <p>Note: this Intent <strong>cannot</strong> be used to call emergency
      * numbers.  Applications can <strong>dial</strong> emergency numbers using
      * {@link #ACTION_DIAL}, however.
+     *
+     * <p>Note: this Intent can only be used to dial call forwarding MMI codes if the application
+     * using this intent is set as the default or system dialer. The system will treat any other
+     * application using this Intent for the purpose of dialing call forwarding MMI codes as if the
+     * {@link #ACTION_DIAL} Intent was used.
      *
      * <p>Note: An app filling the {@link android.app.role.RoleManager#ROLE_DIALER} role should use
      * {@link android.telecom.TelecomManager#placeCall(Uri, Bundle)} to place calls rather than
