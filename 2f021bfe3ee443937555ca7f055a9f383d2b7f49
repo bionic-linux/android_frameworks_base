@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3a6f222_b7a30556",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1746367
+      },
+      "writtenOn": "2023-10-31T12:58:46Z",
+      "side": 1,
+      "message": "Hi google team,\n\nIs there any update?",
+      "revId": "2f021bfe3ee443937555ca7f055a9f383d2b7f49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
