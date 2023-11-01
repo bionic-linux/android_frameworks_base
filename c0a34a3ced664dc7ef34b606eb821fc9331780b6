@@ -34,6 +34,24 @@
       "parentUuid": "ac075f3b_7594cccc",
       "revId": "c0a34a3ced664dc7ef34b606eb821fc9331780b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b55a323_e77f9b9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609189
+      },
+      "writtenOn": "2023-11-01T06:02:37Z",
+      "side": 1,
+      "message": "Safe to land?",
+      "parentUuid": "ee70ca5f_70cb564d",
+      "revId": "c0a34a3ced664dc7ef34b606eb821fc9331780b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
