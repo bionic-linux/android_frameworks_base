@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c71e8e83_675c89f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2037182
+      },
+      "writtenOn": "2023-11-01T12:08:55Z",
+      "side": 1,
+      "message": "Please ignore patch 15 here. It was created by accident.",
+      "revId": "f4dcc009059ce4ca22002392d062b18b95fd80a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
