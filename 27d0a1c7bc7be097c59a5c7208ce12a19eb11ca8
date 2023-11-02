@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61274363_8245e588",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1494236
+      },
+      "writtenOn": "2023-11-02T15:59:31Z",
+      "side": 1,
+      "message": "Adding top level OWNERs to fix OWNERS.",
+      "revId": "27d0a1c7bc7be097c59a5c7208ce12a19eb11ca8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
