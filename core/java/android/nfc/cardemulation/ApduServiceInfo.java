@@ -827,17 +827,23 @@ public final class ApduServiceInfo implements Parcelable {
 
 
     /**
-     * @hide
+     * Set state of CATEGORY_OTHER service state.
+     *
+     * @param selected true to indicate if user has enabled this service
      */
-    public void setOtherServiceState(boolean selected) {
+    @FlaggedApi(Flags.FLAG_ENABLE_NFC_MAINLINE)
+    public void setOtherServiceStateSelected(boolean selected) {
         mOtherServiceSelectionState = selected;
     }
 
 
     /**
-     * @hide
+     * Get state of CATEGORY_OTHER service state.
+     *
+     * @return true to indicate if user has enabled this service
      */
-    public boolean isSelectedOtherService() {
+    @FlaggedApi(Flags.FLAG_ENABLE_NFC_MAINLINE)
+    public boolean isOtherServiceStateSelected() {
         return mOtherServiceSelectionState;
     }
 
