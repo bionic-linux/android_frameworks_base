@@ -1,6 +1,52 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "4439b415_ee3fcc14",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2023-11-03T22:49:09Z",
+      "side": 1,
+      "message": "I\u0027m not really familiar with UserDataPreparer, nor what any of the consequences of this are, so I\u0027m not able to weigh in on this cl. (Looks like jsharkey@ has touched this code; I wonder if he\u0027d remember any details.)",
+      "range": {
+        "startLine": 11,
+        "startChar": 19,
+        "endLine": 11,
+        "endChar": 29
+      },
+      "revId": "5f6635d07463ed29f615f2f941d959033494d711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d1ca2ec_19ad31fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2023-11-03T22:49:09Z",
+      "side": 1,
+      "message": "So, with this cl, what will happen if someone tries to start a user whose prepareUserData had failed?\n(I\u0027m not sure it\u0027s okay to just silently ignore the failure here... what are the consequences of that?)",
+      "range": {
+        "startLine": 25,
+        "startChar": 29,
+        "endLine": 25,
+        "endChar": 34
+      },
+      "revId": "5f6635d07463ed29f615f2f941d959033494d711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "5ecbb6c9_d40cea7d",
@@ -14,6 +60,29 @@
       "writtenOn": "2023-11-03T20:45:30Z",
       "side": 1,
       "message": "Known flaky test b/290254916",
+      "revId": "5f6635d07463ed29f615f2f941d959033494d711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e0816ac_d76ebcdc",
+        "filename": "services/core/java/com/android/server/pm/UserDataPreparer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2023-11-03T22:49:09Z",
+      "side": 1,
+      "message": "So, even for the system user, you\u0027re not going to enter recovery if the system has been logged into before?\nWhat are the consequences of this?\nCan an OTA even recover this, given that the system user itself isn\u0027t working?",
+      "range": {
+        "startLine": 145,
+        "startChar": 24,
+        "endLine": 145,
+        "endChar": 36
+      },
       "revId": "5f6635d07463ed29f615f2f941d959033494d711",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
