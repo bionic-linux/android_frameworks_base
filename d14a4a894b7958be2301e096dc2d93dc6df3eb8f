@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93197ae0_310452ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2023-11-03T18:02:53Z",
+      "side": 1,
+      "message": "Ian,\nThis CL can be used to reproduce the issue reported in b/305160754.\nWe don\u0027t have permission to add this info on b/305160754.\nOnce the issue reported in b/305160754 is fixed, this can be merged.",
+      "revId": "d14a4a894b7958be2301e096dc2d93dc6df3eb8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
