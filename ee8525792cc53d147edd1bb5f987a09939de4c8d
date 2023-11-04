@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ecf5367_15446c6b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010247
+      },
+      "writtenOn": "2023-11-04T04:56:55Z",
+      "side": 1,
+      "message": "ackage com.android.server.usage;\n\nimport android.annotation.SystemApi;\nimport android.content.pm.PackageStats;\nimport android.os.UserHandle;\n\n/* compiled from: 29a9567405a2e6e7791d52b9de6d65022a56278794670fceea2d5021622ed951 */\n@SystemApi(client \u003d SystemApi.Client.SYSTEM_SERVER)\n/* loaded from: android/out/soong/.intermediates/frameworks/base/services/services/android_common/dex/classes2.dex */\npublic interface StorageStatsManagerLocal {\n\n    /* compiled from: 29a9567405a2e6e7791d52b9de6d65022a56278794670fceea2d5021622ed951 */\n    /* loaded from: android/out/soong/.intermediates/frameworks/base/services/services/android_common/dex/classes2.dex */\n    public interface StorageStatsAugmenter {\n        void augmentStatsForPackageForUser(PackageStats packageStats, String str, UserHandle userHandle, boolean z);\n\n        void augmentStatsForUid(PackageStats packageStats, int i, boolean z);\n\n        void augmentStatsForUser(PackageStats packageStats, UserHandle userHandle);\n    }\n\n    void registerStorageStatsAugmenter(StorageStatsAugmenter storageStatsAugmenter, String str);\n}",
+      "revId": "ee8525792cc53d147edd1bb5f987a09939de4c8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
