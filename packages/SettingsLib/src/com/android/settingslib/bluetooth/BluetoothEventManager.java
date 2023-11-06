@@ -31,6 +31,7 @@ import android.content.IntentFilter;
 import android.os.UserHandle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import com.android.settingslib.utils.ThreadUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,7 +40,7 @@ import androidx.annotation.VisibleForTesting;
 import com.android.settingslib.R;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -57,7 +58,7 @@ public class BluetoothEventManager {
     private final LocalBluetoothAdapter mLocalAdapter;
     private final CachedBluetoothDeviceManager mDeviceManager;
     private final IntentFilter mAdapterIntentFilter, mProfileIntentFilter;
-    private final Map<String, Handler> mHandlerMap;
+    private final ConcurrentHashMap<String, Handler> mHandlerMap;
     private final BroadcastReceiver mBroadcastReceiver = new BluetoothBroadcastReceiver();
     private final BroadcastReceiver mProfileBroadcastReceiver = new BluetoothBroadcastReceiver();
     private final Collection<BluetoothCallback> mCallbacks = new CopyOnWriteArrayList<>();
@@ -85,7 +86,7 @@ public class BluetoothEventManager {
         mDeviceManager = deviceManager;
         mAdapterIntentFilter = new IntentFilter();
         mProfileIntentFilter = new IntentFilter();
-        mHandlerMap = new HashMap<>();
+        mHandlerMap = new ConcurrentHashMap<>();
         mContext = context;
         mUserHandle = userHandle;
         mReceiverHandler = handler;
@@ -316,26 +317,28 @@ public class BluetoothEventManager {
     private class DeviceFoundHandler implements Handler {
         public void onReceive(Context context, Intent intent,
                 BluetoothDevice device) {
-            short rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
-            String name = intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
-            final boolean isCoordinatedSetMember =
+            ThreadUtils.postOnBackgroundThread(()->{
+                short rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
+                String name = intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
+                final boolean isCoordinatedSetMember =
                     intent.getBooleanExtra(BluetoothDevice.EXTRA_IS_COORDINATED_SET_MEMBER, false);
-            // TODO Pick up UUID. They should be available for 2.1 devices.
-            // Skip for now, there's a bluez problem and we are not getting uuids even for 2.1.
-            CachedBluetoothDevice cachedDevice = mDeviceManager.findDevice(device);
-            if (cachedDevice == null) {
-                cachedDevice = mDeviceManager.addDevice(device);
-                Log.d(TAG, "DeviceFoundHandler created new CachedBluetoothDevice "
+                // TODO Pick up UUID. They should be available for 2.1 devices.
+                // Skip for now, there's a bluez problem and we are not getting uuids even for 2.1.
+                CachedBluetoothDevice cachedDevice = mDeviceManager.findDevice(device);
+                if (cachedDevice == null) {
+                    cachedDevice = mDeviceManager.addDevice(device);
+                    Log.d(TAG, "DeviceFoundHandler created new CachedBluetoothDevice "
                         + cachedDevice.getDevice().getAnonymizedAddress());
-            } else if (cachedDevice.getBondState() == BluetoothDevice.BOND_BONDED
-                    && !cachedDevice.getDevice().isConnected()) {
-                // Dispatch device add callback to show bonded but
-                // not connected devices in discovery mode
-                dispatchDeviceAdded(cachedDevice);
-            }
-            cachedDevice.setRssi(rssi);
-            cachedDevice.setJustDiscovered(true);
-            cachedDevice.setIsCoordinatedSetMember(isCoordinatedSetMember);
+                } else if (cachedDevice.getBondState() == BluetoothDevice.BOND_BONDED
+                        && !cachedDevice.getDevice().isConnected()) {
+                    // Dispatch device add callback to show bonded but
+                    // not connected devices in discovery mode
+                    dispatchDeviceAdded(cachedDevice);
+                }
+                cachedDevice.setRssi(rssi);
+                cachedDevice.setJustDiscovered(true);
+                cachedDevice.setIsCoordinatedSetMember(isCoordinatedSetMember);
+            });
         }
     }
 
