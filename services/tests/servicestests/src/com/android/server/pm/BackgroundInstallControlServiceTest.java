@@ -16,6 +16,9 @@
 
 package com.android.server.pm;
 
+import static android.Manifest.permission.QUERY_ALL_PACKAGES;
+import static android.content.pm.PackageManager.PERMISSION_DENIED;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -108,6 +111,8 @@ public final class BackgroundInstallControlServiceTest {
     private UsageStatsManagerInternal mUsageStatsManagerInternal;
     @Mock
     private PermissionManagerServiceInternal mPermissionManager;
+    @Mock
+    private BackgroundInstallControlCallbackHelper mCallbackHelper;
     @Captor
     private ArgumentCaptor<PackageManagerInternal.PackageListObserver> mPackageListObserverCaptor;
     @Captor
@@ -414,7 +419,7 @@ public final class BackgroundInstallControlServiceTest {
     public void testHandleUsageEvent_permissionGranted() {
         assertEquals(0,
                 mBackgroundInstallControlService.getInstallerForegroundTimeFrames().numMaps());
-        doReturn(PackageManager.PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
+        doReturn(PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
                 anyString(), anyString(), anyInt());
         generateUsageEvent(UsageEvents.Event.ACTIVITY_RESUMED,
                 USER_ID_1, INSTALLER_NAME_1, 0);
@@ -427,7 +432,7 @@ public final class BackgroundInstallControlServiceTest {
     public void testHandleUsageEvent_ignoredEvent() {
         assertEquals(0,
                 mBackgroundInstallControlService.getInstallerForegroundTimeFrames().numMaps());
-        doReturn(PackageManager.PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
+        doReturn(PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
                 anyString(), anyString(), anyInt());
         generateUsageEvent(UsageEvents.Event.USER_INTERACTION,
                 USER_ID_1, INSTALLER_NAME_1, 0);
@@ -440,7 +445,7 @@ public final class BackgroundInstallControlServiceTest {
     public void testHandleUsageEvent_firstActivityResumedHalfTimeFrame() {
         assertEquals(0,
                 mBackgroundInstallControlService.getInstallerForegroundTimeFrames().numMaps());
-        doReturn(PackageManager.PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
+        doReturn(PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
                 anyString(), anyString(), anyInt());
         generateUsageEvent(UsageEvents.Event.ACTIVITY_RESUMED,
                 USER_ID_1, INSTALLER_NAME_1, USAGE_EVENT_TIMESTAMP_1);
@@ -463,7 +468,7 @@ public final class BackgroundInstallControlServiceTest {
     public void testHandleUsageEvent_firstActivityResumedOneTimeFrame() {
         assertEquals(0,
                 mBackgroundInstallControlService.getInstallerForegroundTimeFrames().numMaps());
-        doReturn(PackageManager.PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
+        doReturn(PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
                 anyString(), anyString(), anyInt());
         generateUsageEvent(UsageEvents.Event.ACTIVITY_RESUMED,
                 USER_ID_1, INSTALLER_NAME_1, USAGE_EVENT_TIMESTAMP_1);
@@ -488,7 +493,7 @@ public final class BackgroundInstallControlServiceTest {
     public void testHandleUsageEvent_firstActivityResumedOneAndHalfTimeFrame() {
         assertEquals(0,
                 mBackgroundInstallControlService.getInstallerForegroundTimeFrames().numMaps());
-        doReturn(PackageManager.PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
+        doReturn(PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
                 anyString(), anyString(), anyInt());
         generateUsageEvent(UsageEvents.Event.ACTIVITY_RESUMED,
                 USER_ID_1, INSTALLER_NAME_1, USAGE_EVENT_TIMESTAMP_1);
@@ -519,7 +524,7 @@ public final class BackgroundInstallControlServiceTest {
     public void testHandleUsageEvent_firstNoneActivityResumed() {
         assertEquals(0,
                 mBackgroundInstallControlService.getInstallerForegroundTimeFrames().numMaps());
-        doReturn(PackageManager.PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
+        doReturn(PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
                 anyString(), anyString(), anyInt());
         generateUsageEvent(Event.ACTIVITY_STOPPED,
                 USER_ID_1, INSTALLER_NAME_1, USAGE_EVENT_TIMESTAMP_1);
@@ -569,6 +574,7 @@ public final class BackgroundInstallControlServiceTest {
         assertNotNull(packages);
         assertEquals(1, packages.size());
         assertTrue(packages.contains(USER_ID_1, PACKAGE_NAME_1));
+        // TODO
     }
 
     @Test
@@ -604,7 +610,7 @@ public final class BackgroundInstallControlServiceTest {
         // The 2 usage events make the package adding inside a time frame.
         // So it's not a background install. Thus, it's null for the return of
         // mBackgroundInstallControlService.getBackgroundInstalledPackages()
-        doReturn(PackageManager.PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
+        doReturn(PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
                 anyString(), anyString(), anyInt());
         generateUsageEvent(UsageEvents.Event.ACTIVITY_RESUMED,
                 USER_ID_1, INSTALLER_NAME_1, USAGE_EVENT_TIMESTAMP_1);
@@ -650,7 +656,7 @@ public final class BackgroundInstallControlServiceTest {
         // Compared to testHandleUsageEvent_packageAddedInsideTimeFrame,
         // it's a background install. Thus, it's not null for the return of
         // mBackgroundInstallControlService.getBackgroundInstalledPackages()
-        doReturn(PackageManager.PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
+        doReturn(PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
                 anyString(), anyString(), anyInt());
         generateUsageEvent(UsageEvents.Event.ACTIVITY_RESUMED,
                 USER_ID_1, INSTALLER_NAME_1, USAGE_EVENT_TIMESTAMP_2);
@@ -664,6 +670,7 @@ public final class BackgroundInstallControlServiceTest {
         assertNotNull(packages);
         assertEquals(1, packages.size());
         assertTrue(packages.contains(USER_ID_1, PACKAGE_NAME_1));
+        // TODO
     }
     @Test
     public void testHandleUsageEvent_packageAddedOutsideTimeFrame2() throws
@@ -700,7 +707,7 @@ public final class BackgroundInstallControlServiceTest {
         // Compared to testHandleUsageEvent_packageAddedInsideTimeFrame,
         // it's a background install. Thus, it's not null for the return of
         // mBackgroundInstallControlService.getBackgroundInstalledPackages()
-        doReturn(PackageManager.PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
+        doReturn(PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
                 anyString(), anyString(), anyInt());
         generateUsageEvent(UsageEvents.Event.ACTIVITY_RESUMED,
                 USER_ID_2, INSTALLER_NAME_2, USAGE_EVENT_TIMESTAMP_2);
@@ -714,6 +721,7 @@ public final class BackgroundInstallControlServiceTest {
         assertNotNull(packages);
         assertEquals(1, packages.size());
         assertTrue(packages.contains(USER_ID_1, PACKAGE_NAME_1));
+        // TODO
     }
     @Test
     public void testHandleUsageEvent_packageAddedThroughAdb() throws
@@ -751,7 +759,7 @@ public final class BackgroundInstallControlServiceTest {
         // for ADB installs the initiatingPackageName used to be null, despite being detected
         // as a background install. Since we do not want to treat side-loaded apps as background
         // install getBackgroundInstalledPackages() is expected to return null
-        doReturn(PackageManager.PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
+        doReturn(PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
                 anyString(), anyString(), anyInt());
         generateUsageEvent(UsageEvents.Event.ACTIVITY_RESUMED,
                 USER_ID_1, INSTALLER_NAME_1, USAGE_EVENT_TIMESTAMP_2);
@@ -800,7 +808,7 @@ public final class BackgroundInstallControlServiceTest {
         // for ADB installs the initiatingPackageName is com.android.shell, despite being detected
         // as a background install. Since we do not want to treat side-loaded apps as background
         // install getBackgroundInstalledPackages() is expected to return null
-        doReturn(PackageManager.PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
+        doReturn(PERMISSION_GRANTED).when(mPermissionManager).checkPermission(
                 anyString(), anyString(), anyInt());
         generateUsageEvent(UsageEvents.Event.ACTIVITY_RESUMED,
                 USER_ID_1, INSTALLER_NAME_1, USAGE_EVENT_TIMESTAMP_2);
@@ -870,6 +878,20 @@ public final class BackgroundInstallControlServiceTest {
         assertFalse(resultPackages.getList().contains(packageInfo3));
     }
 
+    @Test(expected = SecurityException.class)
+    public void checkCallerPermissionsThrowsSecurityException() {
+        when(mContext.checkCallingPermission(QUERY_ALL_PACKAGES)).thenReturn(PERMISSION_DENIED);
+
+        mBackgroundInstallControlService.checkCallerPermissions();
+    }
+
+    @Test
+    public void checkCallerPermissionsPermissionGrantedDoesNotThrowException() {
+        when(mContext.checkCallingPermission(QUERY_ALL_PACKAGES)).thenReturn(PERMISSION_GRANTED);
+
+        mBackgroundInstallControlService.checkCallerPermissions();
+    }
+
     /**
      * Mock a usage event occurring.
      *
@@ -934,6 +956,11 @@ public final class BackgroundInstallControlServiceTest {
         @Override
         public File getDiskFile() {
             return mFile;
+        }
+
+        @Override
+        public BackgroundInstallControlCallbackHelper getBackgroundInstallControlCallbackHelper() {
+            return mCallbackHelper;
         }
     }
 }

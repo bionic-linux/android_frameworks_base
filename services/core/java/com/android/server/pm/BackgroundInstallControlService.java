@@ -16,12 +16,13 @@
 
 package com.android.server.pm;
 
+import static android.Manifest.permission.QUERY_ALL_PACKAGES;
+
 import android.annotation.NonNull;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStatsManagerInternal;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.IBackgroundInstallControlService;
 import android.content.pm.InstallSourceInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -30,6 +31,7 @@ import android.content.pm.ParceledListSlice;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.IRemoteCallback;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
@@ -55,10 +57,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 import java.util.TreeSet;
+import android.content.pm.IBackgroundInstallControlService;
 
 /**
  * @hide
@@ -86,6 +90,7 @@ public class BackgroundInstallControlService extends SystemService {
 
 
     private SparseSetArray<String> mBackgroundInstalledPackages = null;
+    private final BackgroundInstallControlCallbackHelper mCallbackHelper;
 
     // User ID -> package name -> set of foreground time frame
     private final SparseArrayMap<String,
@@ -106,6 +111,7 @@ public class BackgroundInstallControlService extends SystemService {
         mHandler = new EventHandler(injector.getLooper(), this);
         mDiskFile = injector.getDiskFile();
         mUsageStatsManagerInternal = injector.getUsageStatsManagerInternal();
+        mCallbackHelper = injector.getBackgroundInstallControlCallbackHelper();
         mUsageStatsManagerInternal.registerListener(
                 (userId, event) ->
                         mHandler.obtainMessage(MSG_USAGE_EVENT_RECEIVED,
@@ -118,14 +124,13 @@ public class BackgroundInstallControlService extends SystemService {
 
     private static final class BinderService extends IBackgroundInstallControlService.Stub {
         final BackgroundInstallControlService mService;
-
         BinderService(BackgroundInstallControlService service) {
             mService = service;
         }
-
         @Override
         public ParceledListSlice<PackageInfo> getBackgroundInstalledPackages(
                 @PackageManager.PackageInfoFlagsBits long flags, int userId) {
+            mService.checkCallerPermissions();
             if (!Build.IS_DEBUGGABLE) {
                 return mService.getBackgroundInstalledPackages(flags, userId);
             }
@@ -136,8 +141,28 @@ public class BackgroundInstallControlService extends SystemService {
             if (TextUtils.isEmpty(propertyString)) {
                 return mService.getBackgroundInstalledPackages(flags, userId);
             } else {
+                mService.mCallbackHelper.notifyAllCallbacks(propertyString);
                 return mService.getMockBackgroundInstalledPackages(propertyString);
             }
+        }
+
+        @Override
+        public void registerBackgroundInstallControlCallback(IRemoteCallback callback) {
+            mService.checkCallerPermissions();
+            mService.mCallbackHelper.registerBackgroundInstallControlCallback(callback);
+        }
+        @Override
+        public void unregisterBackgroundInstallControlCallback(IRemoteCallback callback) {
+            mService.checkCallerPermissions();
+            mService.mCallbackHelper.unregisterBackgroundInstallControlCallback(callback);
+        }
+
+
+    }
+
+    void checkCallerPermissions() throws SecurityException {
+        if(mContext.checkCallingPermission(QUERY_ALL_PACKAGES) != PackageManager.PERMISSION_GRANTED) {
+            throw new SecurityException("User is not permitted to call service.");
         }
     }
 
@@ -146,12 +171,16 @@ public class BackgroundInstallControlService extends SystemService {
             @PackageManager.PackageInfoFlagsBits long flags, int userId) {
         List<PackageInfo> packages = mPackageManager.getInstalledPackagesAsUser(
                     PackageManager.PackageInfoFlags.of(flags), userId);
-
         initBackgroundInstalledPackages();
+
+        Slog.d(TAG, "Calling getBackgroundInstallPackages size: " + mBackgroundInstalledPackages.size() + " " + mBackgroundInstalledPackages.get(UserHandle.USER_SYSTEM).size());
+
 
         ListIterator<PackageInfo> iter = packages.listIterator();
         while (iter.hasNext()) {
-            String packageName = iter.next().packageName;
+            PackageInfo pi = iter.next();
+            String packageName = pi.packageName;
+            Slog.d(TAG, packageName + " " + pi.applicationInfo.uid);
             if (!mBackgroundInstalledPackages.contains(userId, packageName)) {
                 iter.remove();
             }
@@ -249,7 +278,9 @@ public class BackgroundInstallControlService extends SystemService {
         }
 
         initBackgroundInstalledPackages();
+
         mBackgroundInstalledPackages.add(userId, packageName);
+        mCallbackHelper.notifyAllCallbacks(packageName);
         writeBackgroundInstalledPackagesToDisk();
     }
 
@@ -534,6 +565,8 @@ public class BackgroundInstallControlService extends SystemService {
         Looper getLooper();
 
         File getDiskFile();
+
+        BackgroundInstallControlCallbackHelper getBackgroundInstallControlCallbackHelper();
     }
 
     private static final class InjectorImpl implements Injector {
@@ -583,5 +616,12 @@ public class BackgroundInstallControlService extends SystemService {
             File file = new File(dir, DISK_FILE_NAME);
             return file;
         }
+
+        @Override
+        public BackgroundInstallControlCallbackHelper getBackgroundInstallControlCallbackHelper() {
+            return new BackgroundInstallControlCallbackHelper();
+        }
     }
+
+
 }
