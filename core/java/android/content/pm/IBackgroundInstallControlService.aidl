@@ -16,11 +16,17 @@
 
 package android.content.pm;
 
+
 import android.content.pm.ParceledListSlice;
+import android.os.IRemoteCallback;
 
 /**
  * {@hide}
  */
 interface IBackgroundInstallControlService {
     ParceledListSlice getBackgroundInstalledPackages(long flags, int userId);
+
+    void registerBackgroundInstallControlCallback(IRemoteCallback callback);
+
+    void unregisterBackgroundInstallControlCallback(IRemoteCallback callback);
 }

@@ -1,4 +1,4 @@
-/*
+ /*
  * Copyright (C) 2023 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -51,12 +51,22 @@ public final class BackgroundInstallControlServiceHostTest extends BaseHostJUnit
 
         assertThat(getDevice().setProperty("debug.transparency.bg-install-apps",
                     MOCK_PACKAGE_NAME_1 + "," + MOCK_PACKAGE_NAME_2)).isTrue();
-        runDeviceTest("testGetMockBackgroundInstalledPackages");
+        runDeviceTest("BackgroundInstallControlServiceTest", "testGetMockBackgroundInstalledPackages");
         assertThat(getDevice().uninstallPackage(MOCK_PACKAGE_NAME_1)).isNull();
         assertThat(getDevice().uninstallPackage(MOCK_PACKAGE_NAME_2)).isNull();
 
         assertThat(getDevice().getAppPackageInfo(MOCK_PACKAGE_NAME_1)).isNull();
         assertThat(getDevice().getAppPackageInfo(MOCK_PACKAGE_NAME_2)).isNull();
+    }
+
+    @Test
+    public void testRegisteCallback() throws Exception {
+        runDeviceTest("BackgroundInstallControlServiceTest", "testRegisterBackgroundInstallControlCallback");
+    }
+
+    @Test
+    public void testUnregisterCallback() throws Exception {
+        runDeviceTest("BackgroundInstallControlServiceTest", "testUnregisterBackgroundInstallControlCallback");
     }
 
     private void installPackage(String path) throws DeviceNotAvailableException {
@@ -65,9 +75,9 @@ public final class BackgroundInstallControlServiceHostTest extends BaseHostJUnit
         assertThat(result.getStatus() == CommandStatus.SUCCESS).isTrue();
     }
 
-    private void runDeviceTest(String method) throws DeviceNotAvailableException {
+    private void runDeviceTest(String testName, String method) throws DeviceNotAvailableException {
         var options = new DeviceTestRunOptions(PACKAGE_NAME);
-        options.setTestClassName(PACKAGE_NAME + ".BackgroundInstallControlServiceTest");
+        options.setTestClassName(PACKAGE_NAME + "." + testName);
         options.setTestMethodName(method);
         runDeviceTests(options);
     }

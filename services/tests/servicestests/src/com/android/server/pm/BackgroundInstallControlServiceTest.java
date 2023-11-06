@@ -108,6 +108,8 @@ public final class BackgroundInstallControlServiceTest {
     private UsageStatsManagerInternal mUsageStatsManagerInternal;
     @Mock
     private PermissionManagerServiceInternal mPermissionManager;
+    @Mock
+    private BackgroundInstallControlCallbackHelper mCallbackHelper;
     @Captor
     private ArgumentCaptor<PackageManagerInternal.PackageListObserver> mPackageListObserverCaptor;
     @Captor
@@ -569,6 +571,7 @@ public final class BackgroundInstallControlServiceTest {
         assertNotNull(packages);
         assertEquals(1, packages.size());
         assertTrue(packages.contains(USER_ID_1, PACKAGE_NAME_1));
+        // TODO
     }
 
     @Test
@@ -664,6 +667,7 @@ public final class BackgroundInstallControlServiceTest {
         assertNotNull(packages);
         assertEquals(1, packages.size());
         assertTrue(packages.contains(USER_ID_1, PACKAGE_NAME_1));
+        // TODO
     }
     @Test
     public void testHandleUsageEvent_packageAddedOutsideTimeFrame2() throws
@@ -714,6 +718,7 @@ public final class BackgroundInstallControlServiceTest {
         assertNotNull(packages);
         assertEquals(1, packages.size());
         assertTrue(packages.contains(USER_ID_1, PACKAGE_NAME_1));
+        // TODO
     }
     @Test
     public void testHandleUsageEvent_packageAddedThroughAdb() throws
@@ -934,6 +939,11 @@ public final class BackgroundInstallControlServiceTest {
         @Override
         public File getDiskFile() {
             return mFile;
+        }
+
+        @Override
+        public BackgroundInstallControlCallbackHelper getBackgroundInstallControlCallbackHelper() {
+            return mCallbackHelper;
         }
     }
 }

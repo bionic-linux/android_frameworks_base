@@ -23,6 +23,9 @@ import android.content.pm.IBackgroundInstallControlService;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ParceledListSlice;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.os.IRemoteCallback;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
@@ -33,6 +36,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -66,4 +70,49 @@ public class BackgroundInstallControlServiceTest {
                 .collect(Collectors.toSet());
         assertThat(actualPackageNames).containsExactlyElementsIn(expectedPackageNames);
     }
+
+    @Test
+    public void testRegisterBackgroundInstallControlCallback() throws RemoteException, InterruptedException {
+        String testValue = "test";
+        ArrayList<String> sharedResource = new ArrayList<>();
+        IRemoteCallback testCallback = new IRemoteCallback.Stub() {
+            private final ArrayList<String> array = sharedResource;
+            @Override
+            public void sendResult(Bundle data) throws RemoteException {
+                array.add(testValue);
+            }
+        };
+
+        mIBics.registerBackgroundInstallControlCallback(testCallback);
+        mIBics.getBackgroundInstalledPackages(PackageManager.MATCH_ALL,
+                UserHandle.USER_ALL);
+        Thread.sleep(1000);
+
+        assertThat(sharedResource).hasSize(1);
+        assertThat(sharedResource).contains(testValue);
+    }
+
+    @Test
+    public void testUnregisterBackgroundInstallControlCallback() throws RemoteException, InterruptedException {
+        String testValue = "test";
+        ArrayList<String> sharedResource = new ArrayList<>();
+        IRemoteCallback testCallback = new IRemoteCallback.Stub() {
+            private final ArrayList<String> array = sharedResource;
+            @Override
+            public void sendResult(Bundle data) throws RemoteException {
+                array.add(testValue);
+            }
+        };
+
+        mIBics.registerBackgroundInstallControlCallback(testCallback);
+        mIBics.unregisterBackgroundInstallControlCallback(testCallback);
+        mIBics.getBackgroundInstalledPackages(PackageManager.MATCH_ALL,
+                UserHandle.USER_ALL);
+        Thread.sleep(1000);
+
+        assertThat(sharedResource).isEmpty();
+    }
+
+
+
 }
