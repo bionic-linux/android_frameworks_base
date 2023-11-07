@@ -151,6 +151,8 @@ android_app {
             "simulated_device_launcher",
         ],
     },
+
+    use_rro_for_product: true,
 }
 
 java_genrule {
