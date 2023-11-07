@@ -700,6 +700,10 @@ class Session extends IWindowSession.Stub implements IBinder.DeathRecipient {
         }
     }
 
+    boolean isClientAlive() {
+        return !mClientDead;
+    }
+
     void windowAddedLocked() {
         if (mPackageName == null) {
             final WindowProcessController wpc = mService.mAtmService.mProcessMap.getProcess(mPid);
