@@ -23,6 +23,7 @@ import android.content.Context;
 import android.os.IBinder;
 import android.os.ServiceManager;
 
+import com.android.net.flags.Flags;
 import com.android.net.module.util.PermissionUtils;
 /**
  * Constants and utilities for client code communicating with the network stack service.
@@ -102,5 +103,14 @@ public class NetworkStack {
     public static void checkNetworkStackPermissionOr(final @NonNull Context context,
             final @NonNull String... otherPermissions) {
         PermissionUtils.enforceNetworkStackPermissionOr(context, otherPermissions);
+    }
+
+    /**
+     * Get setting of the "set_data_saver_via_cm" flag.
+     *
+     * @hide
+     */
+    public static boolean getDataSaverViaCmFlag() {
+        return Flags.setDataSaverViaCm();
     }
 }
