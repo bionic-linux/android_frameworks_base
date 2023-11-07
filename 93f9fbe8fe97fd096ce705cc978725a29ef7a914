@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "79f278cc_6edc32e8",
+        "filename": "tools/aapt2/link/FeatureFlagsFilter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1574225
+      },
+      "writtenOn": "2023-11-07T22:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d04900dc_3a6ade94",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "93f9fbe8fe97fd096ce705cc978725a29ef7a914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fef5fe06_aac77737",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-11-07T00:09:29Z",
       "side": 1,
       "message": "given that we don\u0027t expect thousands of flags it\u0027s probably more efficient to use `std::map\u003cstd::string, ..., std::less\u003c\u003e\u003e` for the flags, allowing heterogenous lookups for efficiency\n`unordered_map\u003c\u003e` doesn\u0027t have the feature yet, and having a copy of the key on each lookup negates all benefits of being faster inside the lookup code",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 66,
+        "endChar": 40
+      },
+      "revId": "93f9fbe8fe97fd096ce705cc978725a29ef7a914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33d42d6b_39b4ca0b",
+        "filename": "tools/aapt2/link/FeatureFlagsFilter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1574225
+      },
+      "writtenOn": "2023-11-07T22:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fef5fe06_aac77737",
       "range": {
         "startLine": 66,
         "startChar": 20,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "90f469d0_48d3a0b3",
+        "filename": "tools/aapt2/link/FeatureFlagsFilter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1574225
+      },
+      "writtenOn": "2023-11-07T22:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a9afcf8_775ee045",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "93f9fbe8fe97fd096ce705cc978725a29ef7a914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "46a5a57e_85cdf11b",
@@ -83,6 +155,30 @@
       "writtenOn": "2023-11-07T00:09:29Z",
       "side": 1,
       "message": "probably worth creating a type alias, I see it in quite a few places already",
+      "range": {
+        "startLine": 30,
+        "startChar": 9,
+        "endLine": 30,
+        "endChar": 61
+      },
+      "revId": "93f9fbe8fe97fd096ce705cc978725a29ef7a914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b151ffe_0272397e",
+        "filename": "tools/aapt2/link/FeatureFlagsFilter_test.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1574225
+      },
+      "writtenOn": "2023-11-07T22:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46a5a57e_85cdf11b",
       "range": {
         "startLine": 30,
         "startChar": 9,
