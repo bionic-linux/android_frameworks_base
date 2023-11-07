@@ -16,6 +16,24 @@
       "message": "Maybe use\n`android.os.Process.getUidForPid(mSession.mPid) \u003d\u003d mSession.mUid` ?\n\nBecause this is usually to kill an alive process which its binder buffer is full.",
       "revId": "1562169b009a9f476885273b499c6ac90c7fffbe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82a1fbdb_b0d37a1e",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3492,
+      "author": {
+        "id": 1092759
+      },
+      "writtenOn": "2023-11-07T07:46:38Z",
+      "side": 1,
+      "message": "Yes, it\u0027s a better choice.",
+      "parentUuid": "4092be4c_67e4b76c",
+      "revId": "1562169b009a9f476885273b499c6ac90c7fffbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
