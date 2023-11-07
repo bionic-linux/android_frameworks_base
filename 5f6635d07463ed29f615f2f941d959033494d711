@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a7d967cc_82f24f7f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-11-07T02:53:23Z",
+      "side": 1,
+      "message": "This file is missing a real owner, as I\u0027ve raised concerns about before, and this is an important fix, so I\u0027m afraid that people are going to have to weigh in whether they like it or not.  For the longer term, my suggestion that the storage team takes over ownership of the file.",
+      "parentUuid": "4439b415_ee3fcc14",
+      "range": {
+        "startLine": 11,
+        "startChar": 19,
+        "endLine": 11,
+        "endChar": 29
+      },
+      "revId": "5f6635d07463ed29f615f2f941d959033494d711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4d1ca2ec_19ad31fa",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -37,6 +61,30 @@
       "writtenOn": "2023-11-03T22:49:09Z",
       "side": 1,
       "message": "So, with this cl, what will happen if someone tries to start a user whose prepareUserData had failed?\n(I\u0027m not sure it\u0027s okay to just silently ignore the failure here... what are the consequences of that?)",
+      "range": {
+        "startLine": 25,
+        "startChar": 29,
+        "endLine": 25,
+        "endChar": 34
+      },
+      "revId": "5f6635d07463ed29f615f2f941d959033494d711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf6e010b_faca92ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-11-07T02:53:23Z",
+      "side": 1,
+      "message": "They will continue to be started.  Consequences will vary by the type of error.  In some cases the device might be unusable, while in other cases it might be usable enough to take an OTA that fixes the problem (and there is a recent example of this).",
+      "parentUuid": "4d1ca2ec_19ad31fa",
       "range": {
         "startLine": 25,
         "startChar": 29,
@@ -77,6 +125,30 @@
       "writtenOn": "2023-11-03T22:49:09Z",
       "side": 1,
       "message": "So, even for the system user, you\u0027re not going to enter recovery if the system has been logged into before?\nWhat are the consequences of this?\nCan an OTA even recover this, given that the system user itself isn\u0027t working?",
+      "range": {
+        "startLine": 145,
+        "startChar": 24,
+        "endLine": 145,
+        "endChar": 36
+      },
+      "revId": "5f6635d07463ed29f615f2f941d959033494d711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc4b3304_d7bef234",
+        "filename": "services/core/java/com/android/server/pm/UserDataPreparer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-11-07T02:53:23Z",
+      "side": 1,
+      "message": "The consequences of this is that the device is not force-rebooted to recovery, so depending on exactly what went wrong the device may still be able to take an OTA that fixes the problem (again, there is a recent example of this).",
+      "parentUuid": "8e0816ac_d76ebcdc",
       "range": {
         "startLine": 145,
         "startChar": 24,
