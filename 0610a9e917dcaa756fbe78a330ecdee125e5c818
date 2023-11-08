@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f3a0c3d_43b61171",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2023-11-08T02:28:52Z",
+      "side": 1,
+      "message": "you should specify the original package(@android:string/sms_short_code_remember_choice instead of string/sms_short_code_remember_choice)\n\nAnd I am not sure if it\u0027s okay to add id in overlay, please test it. and how about PRODUCT_ENFORCE_RRO_TARGETS and PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS for breaking targets?",
+      "revId": "0610a9e917dcaa756fbe78a330ecdee125e5c818",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
