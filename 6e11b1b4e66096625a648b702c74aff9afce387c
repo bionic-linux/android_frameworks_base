@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b91bf352_a3b6951f",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-11-09T01:28:40Z",
+      "side": 1,
+      "message": "Maybe add // comments to describe why we need this.",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 10
+      },
+      "revId": "6e11b1b4e66096625a648b702c74aff9afce387c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
