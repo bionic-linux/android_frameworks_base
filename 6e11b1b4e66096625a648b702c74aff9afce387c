@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a15a6c0e_df02bfd9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1349877
+      },
+      "writtenOn": "2023-11-09T09:21:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f41e346_cb11e2fc",
+      "range": {
+        "startLine": 11,
+        "startChar": 57,
+        "endLine": 11,
+        "endChar": 63
+      },
+      "revId": "6e11b1b4e66096625a648b702c74aff9afce387c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b91bf352_a3b6951f",
@@ -89,6 +113,54 @@
         "startChar": 26,
         "endLine": 113,
         "endChar": 47
+      },
+      "revId": "6e11b1b4e66096625a648b702c74aff9afce387c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85366b04_038740b5",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1349877
+      },
+      "writtenOn": "2023-11-09T09:21:33Z",
+      "side": 1,
+      "message": "NetworkManagementService is invisible for CTS. Stuff under \"service\" are not exported\n\n```\npackages/modules/Connectivity/tests/cts/hostside/app/src/com/android/cts/net/hostside/NetworkCallbackTest.java:42: error: cannot find symbol\nimport com.android.server.net.NetworkManagementService;\n                         ^\n  symbol:   class NetworkManagementService\n  location: package com.android.server\n\npackages/modules/Connectivity/tests/cts/hostside/app/src/com/android/cts/net/hostside/NetworkCallbackTest.java:234: error: cannot find symbol\n            mSetDataSaverViaCM \u003d NetworkManagementService.getDataSaverViaCmFlag();\n                                 ^\n  symbol:   variable NetworkManagementService\n  location: class NetworkCallbackTest\n2 errors\n```",
+      "parentUuid": "8e2be57a_28dcb05c",
+      "range": {
+        "startLine": 113,
+        "startChar": 26,
+        "endLine": 113,
+        "endChar": 47
+      },
+      "revId": "6e11b1b4e66096625a648b702c74aff9afce387c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e188f538_665309bf",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1349877
+      },
+      "writtenOn": "2023-11-09T09:21:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "337c8e61_13d9a274",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 10
       },
       "revId": "6e11b1b4e66096625a648b702c74aff9afce387c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
