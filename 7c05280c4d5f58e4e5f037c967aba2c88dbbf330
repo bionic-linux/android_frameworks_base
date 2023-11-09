@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e43fc2a7_298fa395",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-11-09T09:31:12Z",
+      "side": 1,
+      "message": "Sorry, but we should not be adding more \"random files\" into filegroups like this. Please migrate the file to a new library in frameworks/libs/modules-utils, and make framework, networkstack and IpSec depend on that new library\n\nSee this topic where Roshan is doing something very similar for a different file:\nhttps://android-review.git.corp.google.com/q/topic:%22fast_xml_serializer_utils%22\n\nThanks!",
+      "revId": "7c05280c4d5f58e4e5f037c967aba2c88dbbf330",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
