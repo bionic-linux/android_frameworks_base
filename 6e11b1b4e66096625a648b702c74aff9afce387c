@@ -69,6 +69,29 @@
       },
       "revId": "6e11b1b4e66096625a648b702c74aff9afce387c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e2be57a_28dcb05c",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1947461
+      },
+      "writtenOn": "2023-11-09T03:01:05Z",
+      "side": 1,
+      "message": "I realize setDataSaverViaCm is used in NetworkManagementService.\nI\u0027m wondering NetworkManagementService is a better place to have this.",
+      "range": {
+        "startLine": 113,
+        "startChar": 26,
+        "endLine": 113,
+        "endChar": 47
+      },
+      "revId": "6e11b1b4e66096625a648b702c74aff9afce387c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
