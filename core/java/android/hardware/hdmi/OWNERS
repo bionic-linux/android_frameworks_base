@@ -2,5 +2,9 @@
 
 include /services/core/java/com/android/server/display/OWNERS
 
+<<<<<<< HEAD   (c25a67 Merge "[DO NOT MERGE] Increase timeout for UIAutomation" int)
 marvinramin@google.com
 lcnathalie@google.com
+=======
+quxiangfang@google.com
+>>>>>>> BRANCH (ee000f Merge "Merge "Update OWNERS (cherry picked from https://goog)
