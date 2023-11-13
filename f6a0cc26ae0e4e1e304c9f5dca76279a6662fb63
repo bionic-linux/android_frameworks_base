@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03ea3c17_86fc9aab",
+        "filename": "services/core/java/com/android/server/pm/UserDataPreparer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-11-13T19:33:30Z",
+      "side": 1,
+      "message": "It\u0027s not as helpful, but it\u0027s theoretically possible that there is a transient failure (e.g. out of memory) and retrying makes it go away.",
+      "parentUuid": "430f7d96_c3347ca3",
+      "range": {
+        "startLine": 137,
+        "startChar": 15,
+        "endLine": 139,
+        "endChar": 31
+      },
+      "revId": "f6a0cc26ae0e4e1e304c9f5dca76279a6662fb63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad8a23d7_d39c36fb",
@@ -54,6 +78,30 @@
       "writtenOn": "2023-11-13T10:34:57Z",
       "side": 1,
       "message": "should we also check the recovery scenario and reboot on recovery only for new users?",
+      "range": {
+        "startLine": 129,
+        "startChar": 16,
+        "endLine": 129,
+        "endChar": 64
+      },
+      "revId": "f6a0cc26ae0e4e1e304c9f5dca76279a6662fb63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8808e7f2_461e5585",
+        "filename": "services/tests/PackageManagerServiceTests/server/src/com/android/server/pm/UserDataPreparerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-11-13T19:33:30Z",
+      "side": 1,
+      "message": "I don\u0027t know how to unit test that part.  It only applies to the system user, and it invokes a static method.",
+      "parentUuid": "ad8a23d7_d39c36fb",
       "range": {
         "startLine": 129,
         "startChar": 16,
