@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26e311c1_f3ac2900",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2002580
+      },
+      "writtenOn": "2023-11-13T07:16:04Z",
+      "side": 1,
+      "message": "@schfan@google.com, may you, please, reply to @yoelg@meta.com? Thanks!",
+      "revId": "56e0fd9282c11abb4e8c0cc546b2435e7713c497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
