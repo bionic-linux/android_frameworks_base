@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c24b6c1_00ed66d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1889245
+      },
+      "writtenOn": "2023-11-13T10:34:57Z",
+      "side": 1,
+      "message": "Thanks for picking this up @ebiggers@google.com.",
+      "revId": "f6a0cc26ae0e4e1e304c9f5dca76279a6662fb63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "430f7d96_c3347ca3",
+        "filename": "services/core/java/com/android/server/pm/UserDataPreparer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1889245
+      },
+      "writtenOn": "2023-11-13T10:34:57Z",
+      "side": 1,
+      "message": "will this yield a different result for existing users, now that we are not destroying their data? in other words, should we only try this for new users?",
+      "range": {
+        "startLine": 137,
+        "startChar": 15,
+        "endLine": 139,
+        "endChar": 31
+      },
+      "revId": "f6a0cc26ae0e4e1e304c9f5dca76279a6662fb63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad8a23d7_d39c36fb",
+        "filename": "services/tests/PackageManagerServiceTests/server/src/com/android/server/pm/UserDataPreparerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1889245
+      },
+      "writtenOn": "2023-11-13T10:34:57Z",
+      "side": 1,
+      "message": "should we also check the recovery scenario and reboot on recovery only for new users?",
+      "range": {
+        "startLine": 129,
+        "startChar": 16,
+        "endLine": 129,
+        "endChar": 64
+      },
+      "revId": "f6a0cc26ae0e4e1e304c9f5dca76279a6662fb63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
