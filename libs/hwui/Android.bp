@@ -208,6 +208,7 @@ java_sdk_library {
     },
     // TODO: remove this
     unsafe_ignore_missing_latest_api: true,
+    contribute_to_api: true,
 }
 
 filegroup {

@@ -38,4 +38,5 @@ java_sdk_library {
             "frameworks/base/core/java",
         ],
     },
+    contribute_to_api: true,
 }
