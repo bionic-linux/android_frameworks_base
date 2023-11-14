@@ -19,6 +19,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/google/blueprint"
 	"github.com/google/blueprint/proptools"
 
 	"android/soong/android"
@@ -69,6 +70,11 @@ type CombinedApis struct {
 	properties CombinedApisProperties
 }
 
+type dependencyTag struct {
+	blueprint.BaseDependencyTag
+	name string
+}
+
 func init() {
 	registerBuildComponents(android.InitRegistrationContext)
 }
@@ -79,7 +85,35 @@ func registerBuildComponents(ctx android.RegistrationContext) {
 
 var PrepareForCombinedApisTest = android.FixtureRegisterWithContext(registerBuildComponents)
 
+var sdkLibTag = dependencyTag{name: "java-sdk-library"}
+
+func (a *CombinedApis) DepsMutator(ctx android.BottomUpMutatorContext) {
+	for _, sdkLibraryName := range a.properties.Bootclasspath {
+		ctx.AddDependency(ctx.Module(), sdkLibTag, sdkLibraryName)
+	}
+}
+
 func (a *CombinedApis) GenerateAndroidBuildActions(ctx android.ModuleContext) {
+	var sdkLibs []*java.SdkLibrary
+	ctx.VisitDirectDeps(func(dep android.Module) {
+		tag := ctx.OtherModuleDependencyTag(dep)
+		switch tag {
+		case sdkLibTag:
+			if sdkLibModule, ok := dep.(*java.SdkLibrary); ok {
+				sdkLibs = append(sdkLibs, sdkLibModule)
+			} else {
+				ctx.ModuleErrorf("Only java_sdk_library module are allowed to be listed in "+
+					"combined_apis.bootclasspath and %s is not java_sdk_library.", dep.Name())
+			}
+		}
+	})
+
+	for _, sdkLib := range sdkLibs {
+		if !sdkLib.ContributeToApi() {
+			ctx.ModuleErrorf("Module %s property contribute_to_api should be marked true as "+
+				"the module contributes to the API surfaces.", sdkLib.Name())
+		}
+	}
 }
 
 type genruleProps struct {
