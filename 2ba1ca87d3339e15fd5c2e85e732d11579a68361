@@ -16,6 +16,92 @@
       "message": "LGTM. Paul to CR+2 if he\u0027s OK with the metalava-signature-reader dependency (which from previous discussions I assume he is).",
       "revId": "2ba1ca87d3339e15fd5c2e85e732d11579a68361",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e10f3678_dc652c44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2023-11-15T17:19:37Z",
+      "side": 1,
+      "message": "You should probably add a `java_genrule` in `frameworks/base/api/ApiDocs.bp` that uses this script to generate the protobuf and copy it to the dist.",
+      "revId": "2ba1ca87d3339e15fd5c2e85e732d11579a68361",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9377f8f8_06e50e64",
+        "filename": "api/coverage/tools/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2023-11-15T17:19:37Z",
+      "side": 1,
+      "message": "Nit: Copyright.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "2ba1ca87d3339e15fd5c2e85e732d11579a68361",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64dfb7da_1bf7c413",
+        "filename": "api/coverage/tools/ExtractFlaggedApis.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2023-11-15T17:19:37Z",
+      "side": 1,
+      "message": "You can probably combine these. e.g. replace the if with `if (flagValue \u003d\u003d null) ...` or `flagValue?.let {...`",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 38,
+        "endChar": 37
+      },
+      "revId": "2ba1ca87d3339e15fd5c2e85e732d11579a68361",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06cb5bb2_64a11f7e",
+        "filename": "api/coverage/tools/extract_flagged_apis.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2023-11-15T17:19:37Z",
+      "side": 1,
+      "message": "Nit: Copyright.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "2ba1ca87d3339e15fd5c2e85e732d11579a68361",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
