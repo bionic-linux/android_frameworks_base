@@ -83,6 +83,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2a299b9a_671a92a6",
+        "filename": "api/coverage/tools/ExtractFlaggedApis.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2023-11-15T17:21:18Z",
+      "side": 1,
+      "message": "Can you get this to write in pretty printed text proto form? It will make it much easier to manage the generated files.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 37
+      },
+      "revId": "2ba1ca87d3339e15fd5c2e85e732d11579a68361",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06cb5bb2_64a11f7e",
         "filename": "api/coverage/tools/extract_flagged_apis.proto",
         "patchSetId": 2
@@ -100,6 +123,23 @@
         "endLine": 1,
         "endChar": 18
       },
+      "revId": "2ba1ca87d3339e15fd5c2e85e732d11579a68361",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed641ad0_aa946ea9",
+        "filename": "api/coverage/tools/extract_flagged_apis.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2023-11-15T17:21:18Z",
+      "side": 1,
+      "message": "How is this proto going to be shared with the code that consumes the protobuf?",
       "revId": "2ba1ca87d3339e15fd5c2e85e732d11579a68361",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
