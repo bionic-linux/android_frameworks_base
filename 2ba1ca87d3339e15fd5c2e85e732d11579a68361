@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e7a9397_48e661c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1937565
+      },
+      "writtenOn": "2023-11-15T08:57:21Z",
+      "side": 1,
+      "message": "LGTM. Paul to CR+2 if he\u0027s OK with the metalava-signature-reader dependency (which from previous discussions I assume he is).",
+      "revId": "2ba1ca87d3339e15fd5c2e85e732d11579a68361",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

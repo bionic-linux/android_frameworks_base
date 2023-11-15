@@ -93,6 +93,30 @@
       },
       "revId": "0a8e0b95c0da0e739ad7a552ed3c86175605a525",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "996a7ed8_e6925446",
+        "filename": "api/coverage/tools/ExtractFlaggedApis.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1937565
+      },
+      "writtenOn": "2023-11-15T08:57:21Z",
+      "side": 1,
+      "message": "`$ extract-flagged-apis \u003ccurrent.txt \u003eout.pb`\n\nMy understanding of the build system is that is already assumes a Unix like environment, so this shouldn\u0027t be a problem. OTOH I don\u0027t feel too strongly about how the tool handles its arguments. If you feel the current impl is best, lets stick to it.",
+      "parentUuid": "9228aed2_329bf391",
+      "range": {
+        "startLine": 25,
+        "startChar": 41,
+        "endLine": 25,
+        "endChar": 50
+      },
+      "revId": "0a8e0b95c0da0e739ad7a552ed3c86175605a525",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
