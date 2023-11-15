@@ -1,0 +1,18 @@
+java_binary_host {
+    name: "extract-flagged-apis",
+    srcs: ["ExtractFlaggedApis.kt"],
+    main_class: "android.platform.coverage.ExtractFlaggedApisKt",
+    static_libs: [
+        "metalava-signature-reader",
+        "flagged_api_proto",
+    ],
+}
+
+java_library_host {
+    name: "flagged_api_proto",
+    srcs: ["flagged_api.proto"],
+    static_libs: ["libprotobuf-java-full"],
+    proto: {
+        type: "full",
+    },
+}
