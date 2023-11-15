@@ -213,7 +213,7 @@ public final class SplitLayout implements DisplayInsetsController.OnInsetsChange
 
     /** Gets bounds of divider window with parent based coordinate. */
     public Rect getRefDividerBounds() {
-        final Rect outBounds = getDividerBounds();
+        final Rect outBounds = getDividerBounds(); 
         outBounds.offset(-mRootBounds.left, -mRootBounds.top);
         return outBounds;
     }
