@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d412d09d_d5da7a69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2023-11-15T19:59:14Z",
+      "side": 1,
+      "message": "This change will be submitted once all bp modules listed in `frameworks-base-api.bootclasspath` are [modified](https://android-review.git.corp.google.com/q/owner:jihoonkang@google.com+Set+sdk_library.contribue_to_api+to+true).",
+      "revId": "37a70e734bbda937acbbc64794e43fc93bc2711d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
