@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "378f0490_33b86e34",
+        "filename": "api/coverage/tools/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1937565
+      },
+      "writtenOn": "2023-11-15T07:25:56Z",
+      "side": 1,
+      "message": "I would prefer this lib module to be named something that indicates that it\u0027s used by extract-flagged-apis, maybe extract_flagged_apis_proto. Reason: http://cs/h/android/platform/superproject/main/+/main:build/make/tools/aconfig/protos/aconfig.proto?l\u003d1 is the aconfig generic protobuf for aconfig flags, consumed by multiple clients, and I don\u0027t want devs to confuse the generic stuff and this proto that is only consumed by a single command.",
+      "range": {
+        "startLine": 12,
+        "startChar": 11,
+        "endLine": 12,
+        "endChar": 28
+      },
+      "revId": "0a8e0b95c0da0e739ad7a552ed3c86175605a525",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7599e1d9_c735f555",
+        "filename": "api/coverage/tools/ExtractFlaggedApis.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1937565
+      },
+      "writtenOn": "2023-11-15T07:25:56Z",
+      "side": 1,
+      "message": "(Personal nit: I would prefer the tool to read from stdin and write to stdout, that just feels more unix like.)",
+      "range": {
+        "startLine": 25,
+        "startChar": 41,
+        "endLine": 25,
+        "endChar": 50
+      },
+      "revId": "0a8e0b95c0da0e739ad7a552ed3c86175605a525",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
