@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17039e0a_b6916f27",
+        "filename": "api/coverage/tools/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1408266
+      },
+      "writtenOn": "2023-11-15T08:42:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "378f0490_33b86e34",
+      "range": {
+        "startLine": 12,
+        "startChar": 11,
+        "endLine": 12,
+        "endChar": 28
+      },
+      "revId": "0a8e0b95c0da0e739ad7a552ed3c86175605a525",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7599e1d9_c735f555",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-11-15T07:25:56Z",
       "side": 1,
       "message": "(Personal nit: I would prefer the tool to read from stdin and write to stdout, that just feels more unix like.)",
+      "range": {
+        "startLine": 25,
+        "startChar": 41,
+        "endLine": 25,
+        "endChar": 50
+      },
+      "revId": "0a8e0b95c0da0e739ad7a552ed3c86175605a525",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9228aed2_329bf391",
+        "filename": "api/coverage/tools/ExtractFlaggedApis.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1408266
+      },
+      "writtenOn": "2023-11-15T08:42:33Z",
+      "side": 1,
+      "message": "I\u0027m curious what this will look like. Do you mean read from stdin and write to stdout, then redirect stdin to the API signature file, and stdout to the output protobuf file?\n\nAlso note that this binary will be called in the build file like https://cs.android.com/android/platform/superproject/+/master:build/make/core/main.mk;l\u003d1927;drc\u003d136fa83d4e7f2e21386665a3d887579fc670fc3c. I wonder how this part will be affected if we make this tool more \"unix like\".",
+      "parentUuid": "7599e1d9_c735f555",
       "range": {
         "startLine": 25,
         "startChar": 41,
