@@ -1119,8 +1119,7 @@ public final class SplitLayout implements DisplayInsetsController.OnInsetsChange
                 if (mTargetYOffset == 0) {
                     mSplitLayoutHandler.setLayoutOffsetTarget(0, 0, SplitLayout.this);
                 } else {
-                    mSplitLayoutHandler.setLayoutOffsetTarget(0, mTargetYOffset - mLastYOffset,
-                            SplitLayout.this);
+                    mSplitLayoutHandler.setLayoutOffsetTarget(0, mTargetYOffset, SplitLayout.this);
                 }
             }
 
