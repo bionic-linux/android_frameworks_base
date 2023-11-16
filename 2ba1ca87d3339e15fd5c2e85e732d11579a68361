@@ -53,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "824f2dcc_4081ddfa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1408266
+      },
+      "writtenOn": "2023-11-16T17:36:19Z",
+      "side": 1,
+      "message": "\u003e You should probably add a java_genrule...\nYes, I chatted with someone from the Build team and they suggested the same thing. They will help me with this part.\n\nExample use of this tool:\n\nyimingpan@yimingpan:~/Android/aosp-main-with-phones$ cat ~/Documents/apitext/api_text_file_with_annotation.txt\n// Signature format: 2.0\n\npackage android.nfc.cardemulation {\n\n  @FlaggedApi(\"android.nfc.enable_nfc_mainline\") public final class AidGroup implements android.os.Parcelable {\n    ctor @FlaggedApi(\"android.nfc.enable_nfc_mainline\") public AidGroup(@NonNull java.util.List\u003cjava.lang.String\u003e, @Nullable String);\n    method @FlaggedApi(\"android.nfc.enable_nfc_mainline\") @Nullable public static android.nfc.cardemulation.AidGroup createFromXml(@NonNull org.xmlpull.v1.XmlPullParser) throws java.io.IOException, org.xmlpull.v1.XmlPullParserException;\n    method @FlaggedApi(\"android.nfc.enable_nfc_mainline\") public int describeContents();\n    method @FlaggedApi(\"android.nfc.enable_nfc_mainline\") public void dump(@NonNull android.util.proto.ProtoOutputStream);\n    method @FlaggedApi(\"android.nfc.enable_nfc_mainline\") @NonNull public java.util.List\u003cjava.lang.String\u003e getAids();\n    method @FlaggedApi(\"android.nfc.enable_nfc_mainline\") @NonNull public String getCategory();\n    method @FlaggedApi(\"android.nfc.enable_nfc_mainline\") public void writeAsXml(@NonNull org.xmlpull.v1.XmlSerializer) throws java.io.IOException;\n    method @FlaggedApi(\"android.nfc.enable_nfc_mainline\") public void writeToParcel(@NonNull android.os.Parcel, int);\n    method public void asdfdasfas(@NonNull android.os.Parcel, int);\n    field @FlaggedApi(\"android.nfc.enable_nfc_mainline\") @NonNull public static final android.os.Parcelable.Creator\u003candroid.nfc.cardemulation.AidGroup\u003e CREATOR;\n  }\n}\nyimingpan@yimingpan:~/Android/aosp-main-with-phones$ extract-flagged-apis ~/Documents/apitext/api_text_file_with_annotation.txt ~/Documents/apitext/map.textproto\nyimingpan@yimingpan:~/Android/aosp-main-with-phones$ cat ~/Documents/apitext/map.textproto\nflag_to_api {\n  key: \"android.nfc.enable_nfc_mainline\"\n  value {\n    flagged_api {\n      qualified_name: \"android.nfc.cardemulation.AidGroup.createFromXml\"\n    }\n    flagged_api {\n      qualified_name: \"android.nfc.cardemulation.AidGroup.describeContents\"\n    }\n    flagged_api {\n      qualified_name: \"android.nfc.cardemulation.AidGroup.dump\"\n    }\n    flagged_api {\n      qualified_name: \"android.nfc.cardemulation.AidGroup.getAids\"\n    }\n    flagged_api {\n      qualified_name: \"android.nfc.cardemulation.AidGroup.getCategory\"\n    }\n    flagged_api {\n      qualified_name: \"android.nfc.cardemulation.AidGroup.writeAsXml\"\n    }\n    flagged_api {\n      qualified_name: \"android.nfc.cardemulation.AidGroup.writeToParcel\"\n    }\n  }\n}",
+      "parentUuid": "4de818f6_6f4c5cd1",
+      "revId": "2ba1ca87d3339e15fd5c2e85e732d11579a68361",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9377f8f8_06e50e64",
