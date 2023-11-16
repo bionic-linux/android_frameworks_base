@@ -48,6 +48,7 @@ public interface SecurityController extends CallbackController<SecurityControlle
     boolean isNetworkLoggingEnabled();
     boolean isVpnEnabled();
     boolean isVpnRestricted();
+    boolean isVpnValidated();
     /** Whether the VPN app should use branded VPN iconography.  */
     boolean isVpnBranded();
     String getPrimaryVpnName();

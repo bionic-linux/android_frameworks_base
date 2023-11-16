@@ -15,6 +15,8 @@
  */
 package com.android.systemui.statusbar.policy;
 
+import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
+
 import android.annotation.Nullable;
 import android.app.admin.DeviceAdminInfo;
 import android.app.admin.DevicePolicyManager;
@@ -33,6 +35,7 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.VpnManager;
 import android.os.Handler;
@@ -99,6 +102,7 @@ public class SecurityControllerImpl implements SecurityController {
     private SparseArray<VpnConfig> mCurrentVpns = new SparseArray<>();
     private int mCurrentUserId;
     private int mVpnUserId;
+    private boolean mValidated = false;
 
     // Key: userId, Value: whether the user has CACerts installed
     // Needs to be cached here since the query has to be asynchronous
@@ -304,6 +308,11 @@ public class SecurityControllerImpl implements SecurityController {
     }
 
     @Override
+    public boolean isVpnValidated() {
+        return mValidated;
+    }
+
+    @Override
     public boolean hasCACertInCurrentUser() {
         Boolean hasCACerts = mHasCACerts.get(mCurrentUserId);
         return hasCACerts != null && hasCACerts.booleanValue();
@@ -494,6 +503,17 @@ public class SecurityControllerImpl implements SecurityController {
             updateState();
             fireCallbacks();
         };
+
+
+        @Override
+        public void onCapabilitiesChanged(Network network, NetworkCapabilities nc) {
+            boolean validated = nc.hasCapability(NET_CAPABILITY_VALIDATED);
+            if (validated != mValidated) {
+                mValidated = validated;
+                updateState();
+                fireCallbacks();
+            }
+        }
     };
 
     private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
