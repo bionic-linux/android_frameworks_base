@@ -105,6 +105,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "86fdc4b0_94bcabdb",
+        "filename": "api/coverage/tools/ExtractFlaggedApis.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1408266
+      },
+      "writtenOn": "2023-11-16T09:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64dfb7da_1bf7c413",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 38,
+        "endChar": 37
+      },
+      "revId": "2ba1ca87d3339e15fd5c2e85e732d11579a68361",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2a299b9a_671a92a6",
@@ -118,6 +142,30 @@
       "writtenOn": "2023-11-15T17:21:18Z",
       "side": 1,
       "message": "Can you get this to write in pretty printed text proto form? It will make it much easier to manage the generated files.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 37
+      },
+      "revId": "2ba1ca87d3339e15fd5c2e85e732d11579a68361",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0e6e820_825261c9",
+        "filename": "api/coverage/tools/ExtractFlaggedApis.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1408266
+      },
+      "writtenOn": "2023-11-16T09:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a299b9a_671a92a6",
       "range": {
         "startLine": 57,
         "startChar": 4,
@@ -188,6 +236,24 @@
       "writtenOn": "2023-11-15T17:21:18Z",
       "side": 1,
       "message": "How is this proto going to be shared with the code that consumes the protobuf?",
+      "revId": "2ba1ca87d3339e15fd5c2e85e732d11579a68361",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e3190b2_34f3f42f",
+        "filename": "api/coverage/tools/extract_flagged_apis.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1408266
+      },
+      "writtenOn": "2023-11-16T09:21:47Z",
+      "side": 1,
+      "message": "Have a copy of the proto in Google 3 so the protobuf can be parsed there.",
+      "parentUuid": "ed641ad0_aa946ea9",
       "revId": "2ba1ca87d3339e15fd5c2e85e732d11579a68361",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
