@@ -15,6 +15,8 @@
  */
 package com.android.systemui.statusbar.policy;
 
+import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
+
 import android.annotation.Nullable;
 import android.app.admin.DeviceAdminInfo;
 import android.app.admin.DevicePolicyManager;
@@ -32,7 +34,9 @@ import android.content.pm.UserInfo;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
+import android.net.LinkProperties;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.VpnManager;
 import android.os.Handler;
@@ -99,6 +103,8 @@ public class SecurityControllerImpl implements SecurityController {
     private SparseArray<VpnConfig> mCurrentVpns = new SparseArray<>();
     private int mCurrentUserId;
     private int mVpnUserId;
+    @GuardedBy("mNetworkProperties")
+    private SparseArray<NetworkProperties> mNetworkProperties = new SparseArray<>();
 
     // Key: userId, Value: whether the user has CACerts installed
     // Needs to be cached here since the query has to be asynchronous
@@ -304,6 +310,37 @@ public class SecurityControllerImpl implements SecurityController {
     }
 
     @Override
+    public boolean isVpnValidated() {
+        boolean haveInvalidationResult = false;
+        synchronized (mNetworkProperties) {
+            // For each active VPN network in profiles
+            for (int profileId : mUserManager.getEnabledProfileIds(mVpnUserId)) {
+                final VpnConfig vpnConfig = mCurrentVpns.get(profileId);
+                if (vpnConfig == null) {
+                    continue;
+                }
+                boolean validationResult = false;
+                // Find the network has the same interface as the VpnConfig
+                for (int i = 0; i < mNetworkProperties.size(); ++i) {
+                    if (mNetworkProperties.valueAt(i).interfaceName.equals(vpnConfig.interfaze)) {
+                        validationResult = mNetworkProperties.valueAt(i).validated;
+                        break;
+                    }
+                }
+                // If multiple VPN networks exist in profiles,
+                // prioritize reporting the network status of the parent user.
+                if (profileId == mVpnUserId) {
+                    return validationResult;
+                }
+                if (!validationResult) {
+                    haveInvalidationResult = true;
+                }
+            }
+        }
+        return !haveInvalidationResult;
+    }
+
+    @Override
     public boolean hasCACertInCurrentUser() {
         Boolean hasCACerts = mHasCACerts.get(mCurrentUserId);
         return hasCACerts != null && hasCACerts.booleanValue();
@@ -491,9 +528,47 @@ public class SecurityControllerImpl implements SecurityController {
         @Override
         public void onLost(Network network) {
             if (DEBUG) Log.d(TAG, "onLost " + network.getNetId());
+            synchronized (mNetworkProperties) {
+                mNetworkProperties.delete(network.getNetId());
+            }
             updateState();
             fireCallbacks();
         };
+
+
+        @Override
+        public void onCapabilitiesChanged(Network network, NetworkCapabilities nc) {
+            synchronized (mNetworkProperties) {
+                NetworkProperties properties =
+                        mNetworkProperties.get(network.getNetId());
+                if (properties == null) {
+                    return;
+                }
+                final boolean validated = nc.hasCapability(NET_CAPABILITY_VALIDATED);
+                if (properties.validated != validated) {
+                    properties.validated = validated;
+                    fireCallbacks();
+                }
+            }
+        }
+
+        @Override
+        public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
+            final String interfaceName = linkProperties.getInterfaceName();
+            if (interfaceName == null) {
+                return;
+            }
+            synchronized (mNetworkProperties) {
+                NetworkProperties properties = mNetworkProperties.get(network.getNetId());
+                if (properties == null) {
+                    mNetworkProperties.put(
+                            network.getNetId(),
+                            new NetworkProperties(interfaceName, false));
+                } else {
+                    properties.interfaceName = interfaceName;
+                }
+            }
+        }
     };
 
     private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
@@ -506,4 +581,14 @@ public class SecurityControllerImpl implements SecurityController {
             }
         }
     };
+
+    private class NetworkProperties {
+        public String interfaceName;
+        public boolean validated;
+
+        NetworkProperties(String interfaceName, boolean validated) {
+            this.interfaceName = interfaceName;
+            this.validated = validated;
+        }
+    }
 }
