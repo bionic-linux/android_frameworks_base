@@ -15,6 +15,9 @@
  */
 package com.android.systemui.statusbar.policy;
 
+import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
+import static android.net.NetworkCapabilities.TRANSPORT_VPN;
+
 import android.annotation.Nullable;
 import android.app.admin.DeviceAdminInfo;
 import android.app.admin.DevicePolicyManager;
@@ -32,7 +35,9 @@ import android.content.pm.UserInfo;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
+import android.net.LinkProperties;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.VpnManager;
 import android.os.Handler;
@@ -44,6 +49,7 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
+import android.util.SparseBooleanArray;
 
 import androidx.annotation.NonNull;
 
@@ -99,6 +105,7 @@ public class SecurityControllerImpl implements SecurityController {
     private SparseArray<VpnConfig> mCurrentVpns = new SparseArray<>();
     private int mCurrentUserId;
     private int mVpnUserId;
+    private SparseBooleanArray mValidationResults = new SparseBooleanArray();
 
     // Key: userId, Value: whether the user has CACerts installed
     // Needs to be cached here since the query has to be asynchronous
@@ -304,6 +311,21 @@ public class SecurityControllerImpl implements SecurityController {
     }
 
     @Override
+    public boolean isVpnValidated() {
+        // If multiple VPN networks exist in profiles,
+        // prioritize reporting the network status of the parent user.
+        if (mCurrentVpns.get(mVpnUserId) != null) {
+            return mValidationResults.get(mVpnUserId, true);
+        }
+        for (int profileId : mUserManager.getProfileIdsWithDisabled(mVpnUserId)) {
+            if (mCurrentVpns.get(profileId) != null && !mValidationResults.get(profileId, true)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
     public boolean hasCACertInCurrentUser() {
         Boolean hasCACerts = mHasCACerts.get(mCurrentUserId);
         return hasCACerts != null && hasCACerts.booleanValue();
@@ -442,6 +464,7 @@ public class SecurityControllerImpl implements SecurityController {
         for (UserInfo user : mUserManager.getUsers()) {
             VpnConfig cfg = mVpnManager.getVpnConfig(user.id);
             if (cfg == null) {
+                mValidationResults.delete(user.id);
                 continue;
             } else if (cfg.legacy) {
                 // Legacy VPNs should do nothing if the network is disconnected. Third-party
@@ -478,6 +501,31 @@ public class SecurityControllerImpl implements SecurityController {
         return isBranded;
     }
 
+    /** For the given network, determine if it is a VPN network and, if so,
+     *  return the user id of the profile where it was created.
+     */
+    private int getProfileIdFromVpnNetwork(Network network) {
+        final LinkProperties linkProperties =
+                mConnectivityManager.getLinkProperties(network);
+        final NetworkCapabilities capabilities =
+                mConnectivityManager.getNetworkCapabilities(network);
+        if (linkProperties != null
+                && linkProperties.getInterfaceName() != null
+                && capabilities != null
+                && capabilities.hasTransport(TRANSPORT_VPN)) {
+            final String interfaceName = linkProperties.getInterfaceName();
+            // Find the VpnConfig that has the same interface as the Network.
+            for (int i = 0; i < mCurrentVpns.size(); ++i) {
+                final VpnConfig vpnConfig = mCurrentVpns.valueAt(i);
+                if (vpnConfig != null
+                        && interfaceName.equals(vpnConfig.interfaze)) {
+                    return mCurrentVpns.keyAt(i);
+                }
+            }
+        }
+        return UserHandle.USER_NULL;
+    }
+
     private final NetworkCallback mNetworkCallback = new NetworkCallback() {
         @Override
         public void onAvailable(Network network) {
@@ -494,6 +542,21 @@ public class SecurityControllerImpl implements SecurityController {
             updateState();
             fireCallbacks();
         };
+
+
+        @Override
+        public void onCapabilitiesChanged(Network network, NetworkCapabilities nc) {
+            final int profileId = getProfileIdFromVpnNetwork(network);
+            if (profileId == UserHandle.USER_NULL) {
+                return;
+            }
+            final boolean validated = nc.hasCapability(NET_CAPABILITY_VALIDATED);
+            final Boolean oldResult = mValidationResults.get(profileId);
+            if (oldResult == null || oldResult != validated) {
+                mValidationResults.put(profileId, validated);
+                fireCallbacks();
+            }
+        }
     };
 
     private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
