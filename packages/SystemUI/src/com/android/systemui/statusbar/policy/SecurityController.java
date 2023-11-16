@@ -48,6 +48,7 @@ public interface SecurityController extends CallbackController<SecurityControlle
     boolean isNetworkLoggingEnabled();
     boolean isVpnEnabled();
     boolean isVpnRestricted();
+    boolean isVpnValidated();
     /** Whether the VPN app should use branded VPN iconography.  */
     boolean isVpnBranded();
     String getPrimaryVpnName();
@@ -63,6 +64,7 @@ public interface SecurityController extends CallbackController<SecurityControlle
     Drawable getIcon(DeviceAdminInfo info);
     /** Label for admin */
     CharSequence getLabel(DeviceAdminInfo info);
+
 
     public interface SecurityControllerCallback {
         void onStateChanged();
