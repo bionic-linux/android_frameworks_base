@@ -159,6 +159,10 @@ public class ScreenshotHelper {
                     public void onServiceConnected(ComponentName name, IBinder service) {
                         synchronized (mScreenshotLock) {
                             if (mScreenshotConnection != this) {
+                                Log.e(TAG, "Local connection is not same to mScreenshotConnection");
+                                if (handler.hasCallbacks(mScreenshotTimeout)) {
+                                    handler.removeCallbacks(mScreenshotTimeout);
+                                }
                                 return;
                             }
                             mScreenshotService = service;
