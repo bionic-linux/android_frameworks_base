@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3407554a_3d98af2e",
+        "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-11-17T13:26:02Z",
+      "side": 1,
+      "message": "Oops, this is not matching by prefix yet",
+      "range": {
+        "startLine": 181,
+        "startChar": 28,
+        "endLine": 181,
+        "endChar": 31
+      },
+      "revId": "e16a90e42e36c0e4b1ce4a66165fbac2cfb613a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5630b66d_2c2ac329",
+        "filename": "services/tests/servicestests/src/com/android/server/net/VpnBlobStoreTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-11-17T13:26:02Z",
+      "side": 1,
+      "message": "Should add some strings without a matching prefix.",
+      "range": {
+        "startLine": 92,
+        "startChar": 23,
+        "endLine": 92,
+        "endChar": 30
+      },
+      "revId": "e16a90e42e36c0e4b1ce4a66165fbac2cfb613a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
