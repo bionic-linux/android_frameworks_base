@@ -23,7 +23,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Binder;
-import android.security.LegacyVpnProfileStore;
 
 import java.util.Objects;
 
@@ -133,12 +132,6 @@ public class VpnBlobStore {
             }
         }
 
-        // TODO: Remove this after migration is complete
-        // Get from the legacy store
-        if (blob == null) {
-            return LegacyVpnProfileStore.get(alias);
-        }
-
         return blob;
     }
 
@@ -157,8 +150,7 @@ public class VpnBlobStore {
         final int res = db.delete(TABLENAME,
                 "owner=? AND alias=?" /* whereClause */,
                 new String[] {Integer.toString(callerUid), alias} /* whereArgs */);
-        // TODO: Remove the LegacyVpnProfileStore call
-        return LegacyVpnProfileStore.remove(alias) || res > 0;
+        return res > 0;
     }
 
     /** */
