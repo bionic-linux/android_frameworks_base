@@ -136,10 +136,19 @@ public class ConnectivityBlobStore {
         return null;
     }
 
-    /** */
+    /**
+     * Removes a blob by the name alias from the database.
+     * @param alias Name of the blob to be removed.
+     * @return True if a blob was removed. False if no such alias was found.
+     * @hide
+     */
     public boolean remove(@NonNull String alias) {
-        // TODO: implement this
-        return false;
+        final int callerUid = Binder.getCallingUid();
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        final int res = db.delete(TABLENAME,
+                "owner=? AND alias=?" /* whereClause */,
+                new String[] {Integer.toString(callerUid), alias} /* whereArgs */);
+        return res > 0;
     }
 
     /** */

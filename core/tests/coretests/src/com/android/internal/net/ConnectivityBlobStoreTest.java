@@ -17,6 +17,8 @@
 package com.android.internal.net;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
 
@@ -46,6 +48,11 @@ public class ConnectivityBlobStoreTest {
         assertTrue(mConnectivityBlobStore.put(alias, blob));
     }
 
+    private void doRemove(String alias) {
+        mAddedAlias.remove(alias);
+        assertTrue(mConnectivityBlobStore.remove(alias));
+    }
+
     @Before
     public void setUp() throws Exception {
         mConnectivityBlobStore = new ConnectivityBlobStore(InstrumentationRegistry.getContext());
@@ -70,5 +77,19 @@ public class ConnectivityBlobStoreTest {
         final byte[] newBlob = new byte[] {(byte) 15, (byte) 20};
         doPut(TEST_ALIAS, newBlob);
         assertArrayEquals(newBlob, mConnectivityBlobStore.get(TEST_ALIAS));
+    }
+
+    @Test
+    public void testRemove() throws Exception {
+        assertFalse(mConnectivityBlobStore.remove(TEST_ALIAS));
+
+        doPut(TEST_ALIAS, TEST_BLOB);
+        assertArrayEquals(TEST_BLOB, mConnectivityBlobStore.get(TEST_ALIAS));
+
+        doRemove(TEST_ALIAS);
+        assertNull(mConnectivityBlobStore.get(TEST_ALIAS));
+
+        // Removing again returns false
+        assertFalse(mConnectivityBlobStore.remove(TEST_ALIAS));
     }
 }
