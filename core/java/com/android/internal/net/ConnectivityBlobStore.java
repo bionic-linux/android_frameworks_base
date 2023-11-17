@@ -17,9 +17,13 @@
 package com.android.internal.net;
 
 import android.annotation.NonNull;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Binder;
 import android.util.Log;
 
 import java.util.Objects;
@@ -81,15 +85,54 @@ public class ConnectivityBlobStore {
         mDbHelper = new DbHelper(context);
     }
 
-    /** */
+    /**
+     * Stores the blob under the alias in the database. Existing blobs by the same alias will be
+     * replaced.
+     * @param alias The name of the blob
+     * @param blob The blob.
+     * @return true if the blob was successfully added. False otherwise.
+     * @hide
+     */
     public boolean put(@NonNull String alias, @NonNull byte[] blob) {
-        // TOOD: implement this
-        return false;
+        final int callerUid = Binder.getCallingUid();
+        final ContentValues values = new ContentValues();
+        values.put("owner", callerUid);
+        values.put("alias", alias);
+        values.put("blob", blob);
+
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        // No need for try-catch since it is done within db.replace
+        // nullColumnHack is for the case where values may be empty since SQL does not allow
+        // inserting a completely empty row. Since values is never empty, set this to null.
+        final long res = db.replace(TABLENAME, null /* nullColumnHack */, values);
+        return res > 0;
     }
 
-    /** */
+    /**
+     * Retrieves a blob by the name alias from the database.
+     * @param alias Name of the blob to retrieve.
+     * @return The unstructured blob, that is the blob that was stored using
+     *         {@link com.android.internal.net.ConnectivityBlobStore#put}.
+     *         Returns null if no blob was found.
+     * @hide
+     */
     public byte[] get(@NonNull String alias) {
-        // TODO: implement this
+        final int callerUid = Binder.getCallingUid();
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        try (Cursor cursor = db.query(TABLENAME,
+                new String[] {"blob"} /* columns */,
+                "owner=? AND alias=?" /* selection */,
+                new String[] {Integer.toString(callerUid), alias} /* selectionArgs */,
+                null /* groupBy */,
+                null /* having */,
+                null /* orderBy */)) {
+            if (cursor.moveToFirst()) {
+                return cursor.getBlob(0);
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "Error in get " + e);
+        }
+
         return null;
     }
 
