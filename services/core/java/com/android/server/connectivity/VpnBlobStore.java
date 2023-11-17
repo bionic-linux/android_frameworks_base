@@ -24,6 +24,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Binder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -153,9 +155,34 @@ public class VpnBlobStore {
         return res > 0;
     }
 
-    /** */
-    public String[] list(@NonNull String alias) {
-        // TODO: implement this
-        return null;
+    /**
+     * Lists the aliases stored in the database with the given prefix.
+     * @param prefix String of prefix to list the aliases.
+     * @return An array of strings representing the aliases stored in the database sorted ascending.
+     *         The return value may be empty but never null.
+     * @hide
+     */
+    public String[] list(@NonNull String prefix) {
+        return list(Binder.getCallingUid(), prefix);
+    }
+
+    private String[] list(int callerUid, @NonNull String prefix) {
+        final List<String> aliases = new ArrayList<String>();
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        try (Cursor cursor = db.query(TABLENAME,
+                new String[] {"alias"} /* columns */,
+                "owner=?" /* selection */,
+                new String[] {Integer.toString(callerUid)} /* selectionArgs */,
+                null /* groupBy */,
+                null /* having */,
+                "alias ASC" /* orderBy */)) {
+            if (cursor.moveToFirst()) {
+                do {
+                    aliases.add(cursor.getString(0));
+                } while (cursor.moveToNext());
+            }
+        }
+
+        return aliases.toArray(new String[0]);
     }
 }

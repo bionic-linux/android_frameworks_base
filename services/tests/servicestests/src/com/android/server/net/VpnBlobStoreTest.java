@@ -31,6 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -84,5 +85,22 @@ public class VpnBlobStoreTest {
 
         // Removing again returns false
         assertFalse(mVpnBlobStore.remove(TEST_ALIAS));
+    }
+
+    @Test
+    public void testList() throws Exception {
+        final String[] aliases = new String[] {
+                TEST_ALIAS + "1",
+                TEST_ALIAS + "2",
+                TEST_ALIAS + "0"
+        };
+        final String[] expected = aliases.clone();
+        Arrays.sort(expected);
+
+        for (int i = 0; i < aliases.length; i++) {
+            doPut(aliases[i], TEST_BLOB);
+        }
+        final String[] actual = mVpnBlobStore.list(TEST_ALIAS /* prefix */);
+        assertArrayEquals(expected, actual);
     }
 }
