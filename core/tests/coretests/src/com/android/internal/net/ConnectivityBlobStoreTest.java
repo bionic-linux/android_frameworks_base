@@ -92,4 +92,27 @@ public class ConnectivityBlobStoreTest {
         // Removing again returns false
         assertFalse(mConnectivityBlobStore.remove(TEST_ALIAS));
     }
+
+    @Test
+    public void testList() throws Exception {
+        final String[] unsortedAliases = new String[] {
+                TEST_ALIAS + "1",
+                TEST_ALIAS + "2",
+                TEST_ALIAS + "0",
+                "NON_MATCHING_PREFIX",
+                "MATCHING_SUFFIX_" + TEST_ALIAS
+        };
+        // Expected to match and discard the prefix and be in increasing sorted order.
+        final String[] expected = new String[] {
+                "0",
+                "1",
+                "2"
+        };
+
+        for (int i = 0; i < aliases.length; i++) {
+            doPut(unsortedAliases[i], TEST_BLOB);
+        }
+        final String[] actual = mConnectivityBlobStore.list(TEST_ALIAS /* prefix */);
+        assertArrayEquals(expected, actual);
+    }
 }

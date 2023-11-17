@@ -26,6 +26,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Binder;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -151,9 +153,38 @@ public class ConnectivityBlobStore {
         return res > 0;
     }
 
-    /** */
-    public String[] list(@NonNull String alias) {
-        // TODO: implement this
-        return null;
+    /**
+     * Lists the alias suffixes stored in the database matching the given prefix, sorted in
+     * ascending order.
+     * @param prefix String of prefix to list from the stored aliases.
+     * @return An array of strings representing the the alias suffixes stored in the database
+     *         matching the given prefix, sorted in ascending order.
+     *         The return value may be empty but never null.
+     * @hide
+     */
+    public String[] list(@NonNull String prefix) {
+        final int callerUid = Binder.getCallingUid();
+        final List<String> aliases = new ArrayList<String>();
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        try (Cursor cursor = db.query(TABLENAME,
+                new String[] {"alias"} /* columns */,
+                "owner=?" /* selection */,
+                new String[] {Integer.toString(callerUid)} /* selectionArgs */,
+                null /* groupBy */,
+                null /* having */,
+                "alias ASC" /* orderBy */)) {
+            if (cursor.moveToFirst()) {
+                do {
+                    final String alias = cursor.getString(0);
+                    if (alias.startsWith(prefix)) {
+                        aliases.add(alias.substring(prefix.length()));
+                    }
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "Error in list " + e);
+        }
+
+        return aliases.toArray(new String[aliases.size()]);
     }
 }
