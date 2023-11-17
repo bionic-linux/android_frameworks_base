@@ -142,10 +142,23 @@ public class VpnBlobStore {
         return blob;
     }
 
-    /** */
+    /**
+     * Removes a blob by the name alias from the database.
+     * @param alias Name of the blob to be removed.
+     * @return True if a blob was removed. False if no such alias was found.
+     * @hide
+     */
     public boolean remove(@NonNull String alias) {
-        // TODO: implement this
-        return false;
+        return remove(Binder.getCallingUid(), alias);
+    }
+
+    private boolean remove(int callerUid, @NonNull String alias) {
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final int res = db.delete(TABLENAME,
+                "owner=? AND alias=?" /* whereClause */,
+                new String[] {Integer.toString(callerUid), alias} /* whereArgs */);
+        // TODO: Remove the LegacyVpnProfileStore call
+        return LegacyVpnProfileStore.remove(alias) || res > 0;
     }
 
     /** */

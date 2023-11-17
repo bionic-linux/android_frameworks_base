@@ -17,6 +17,8 @@
 package com.android.server.connectivity;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
@@ -49,6 +51,11 @@ public class VpnBlobStoreTest {
         assertTrue(mVpnBlobStore.put(alias, blob));
     }
 
+    private void doRemove(String alias) {
+        mAddedAlias.remove(alias);
+        assertTrue(mVpnBlobStore.remove(alias));
+    }
+
     @Before
     public void setUp() throws Exception {
         mVpnBlobStore = new VpnBlobStore(InstrumentationRegistry.getContext());
@@ -74,5 +81,33 @@ public class VpnBlobStoreTest {
         LegacyVpnProfileStore.put(TEST_LEGACY_ALIAS, TEST_BLOB);
         assertArrayEquals(TEST_BLOB, mVpnBlobStore.get(TEST_LEGACY_ALIAS));
         LegacyVpnProfileStore.remove(TEST_LEGACY_ALIAS);
+    }
+
+    @Test
+    public void testRemove() throws Exception {
+        assertFalse(mVpnBlobStore.remove(TEST_ALIAS));
+
+        doPut(TEST_ALIAS, TEST_BLOB);
+        assertArrayEquals(TEST_BLOB, mVpnBlobStore.get(TEST_ALIAS));
+
+        doRemove(TEST_ALIAS);
+        assertNull(mVpnBlobStore.get(TEST_ALIAS));
+
+        // Removing again returns false
+        assertFalse(mVpnBlobStore.remove(TEST_ALIAS));
+    }
+
+    @Test
+    public void testRemoveLegacy() throws Exception {
+        assertFalse(mVpnBlobStore.remove(TEST_LEGACY_ALIAS));
+
+        LegacyVpnProfileStore.put(TEST_LEGACY_ALIAS, TEST_BLOB);
+        assertArrayEquals(TEST_BLOB, mVpnBlobStore.get(TEST_LEGACY_ALIAS));
+
+        assertTrue(mVpnBlobStore.remove(TEST_LEGACY_ALIAS));
+        assertNull(mVpnBlobStore.get(TEST_LEGACY_ALIAS));
+
+        // Removing again returns false
+        assertFalse(mVpnBlobStore.remove(TEST_LEGACY_ALIAS));
     }
 }
