@@ -17,9 +17,13 @@
 package com.android.server.connectivity;
 
 import android.annotation.NonNull;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Binder;
+import android.security.LegacyVpnProfileStore;
 
 import java.util.Objects;
 
@@ -78,16 +82,64 @@ public class VpnBlobStore {
         mOpenHelper = new DbHelper(context);
     }
 
-    /** */
+    /**
+     * Stores the blob under the alias in the database. Existing blobs by the same alias  will be
+     * replaced.
+     * @param alias The name of the blob
+     * @param blob The blob.
+     * @return true if the blob was successfully added. False otherwise.
+     * @hide
+     */
     public boolean put(@NonNull String alias, @NonNull byte[] blob) {
-        // TOOD: implement this
-        return false;
+        return put(Binder.getCallingUid(), alias, blob);
     }
 
-    /** */
+    private boolean put(int callerUid, @NonNull String alias, @NonNull byte[] blob) {
+        final ContentValues values = new ContentValues();
+        values.put("owner", callerUid);
+        values.put("alias", alias);
+        values.put("blob", blob);
+
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final long res = db.insertWithOnConflict(TABLENAME, null /* nullColumnHack */, values,
+                SQLiteDatabase.CONFLICT_REPLACE);
+        return res > 0;
+    }
+
+    /**
+     * Retrieves a blob by the name alias from the database.
+     * @param alias Name of the blob to retrieve.
+     * @return The unstructured blob, that is the blob that was stored using
+     *         {@link com.android.server.connectivity.VpnBlobStore#put}.
+     *         Returns null if no blob was found.
+     * @hide
+     */
     public byte[] get(@NonNull String alias) {
-        // TODO: implement this
-        return null;
+        return get(Binder.getCallingUid(), alias);
+    }
+
+    private byte[] get(int callerUid, @NonNull String alias) {
+        byte[] blob = null;
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        try (Cursor cursor = db.query(TABLENAME,
+                new String[] {"blob"} /* columns */,
+                "owner=? AND alias=?" /* selection */,
+                new String[] {Integer.toString(callerUid), alias} /* selectionArgs */,
+                null /* groupBy */,
+                null /* having */,
+                null /* orderBy */)) {
+            if (cursor.moveToFirst()) {
+                blob = cursor.getBlob(0);
+            }
+        }
+
+        // TODO: Remove this after migration is complete
+        // Get from the legacy store
+        if (blob == null) {
+            return LegacyVpnProfileStore.get(alias);
+        }
+
+        return blob;
     }
 
     /** */
