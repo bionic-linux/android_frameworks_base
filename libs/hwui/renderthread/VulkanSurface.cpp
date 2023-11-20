@@ -394,6 +394,45 @@ VulkanSurface::NativeBufferInfo* VulkanSurface::dequeueNativeBuffer() {
     int err =
             mNativeWindow->query(mNativeWindow.get(), NATIVE_WINDOW_TRANSFORM_HINT, &transformHint);
 
+    // Query max dequeue buffers, recalculate bufferCount
+    int min_undq;
+    int max_dq;
+    size_t oldBufferCount = mWindowInfo.bufferCount;
+    err =
+        mNativeWindow->query(mNativeWindow.get(), NATIVE_WINDOW_MIN_UNDEQUEUED_BUFFERS, &min_undq);
+    if (err != 0 || min_undq < 0) {
+        ALOGE("mNativeWindow->query failed: %s (%d) value=%d", strerror(-err), err, min_undq);
+    }
+    err =
+        mNativeWindow->query(mNativeWindow.get(), NATIVE_WINDOW_MAX_DEQUEUE_BUFFER_COUNT, &max_dq);
+    if (err != 0 || max_dq < 0) {
+        ALOGE("mNativeWindow->query failed: %s (%d) value=%d", strerror(-err), err, max_dq);
+    }
+    mWindowInfo.bufferCount = static_cast<size_t>(min_undq + max_dq);
+
+    if(mWindowInfo.bufferCount < oldBufferCount) {
+        // Release oldBufferCount's mNativeBuffers
+        for (uint32_t i = 0; i < oldBufferCount; i++) {
+            VulkanSurface::NativeBufferInfo& bufferInfo = mNativeBuffers[i];
+            if (bufferInfo.buffer.get() != nullptr && bufferInfo.dequeued) {
+                int err = mNativeWindow->cancelBuffer(mNativeWindow.get(), bufferInfo.buffer.get(),
+                                                      bufferInfo.dequeue_fence.release());
+                if (err != 0) {
+                    ALOGE("cancelBuffer[%u] failed during destroy: %s (%d)",
+                          i, strerror(-err), err);
+                }
+                bufferInfo.dequeued = false;
+                bufferInfo.dequeue_fence.reset();
+            }
+            LOG_ALWAYS_FATAL_IF(bufferInfo.dequeued);
+            LOG_ALWAYS_FATAL_IF(bufferInfo.dequeue_fence.ok());
+            bufferInfo.skSurface.reset();
+            bufferInfo.buffer.clear();
+            bufferInfo.hasValidContents = false;
+            bufferInfo.lastPresentedCount = 0;
+        }
+    }
+
     // Since auto pre-rotation is enabled, dequeueBuffer to get the consumer driven buffer size
     // from ANativeWindowBuffer.
     ANativeWindowBuffer* buffer;
