@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31220751_ae7623ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-11-20T07:56:38Z",
+      "side": 1,
+      "message": "You may want to also set up the TEST_MAPPING in frameworks/base/services/core/java/com/android/server/connectivity/TEST_MAPPING to also run this specific test for those changes on VPN related files. Otherwise, your change won\u0027t run the expected tests in presubmit.",
+      "revId": "15c3d89eb3a6ceb0c6750f678bcb80ad39bb51cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
