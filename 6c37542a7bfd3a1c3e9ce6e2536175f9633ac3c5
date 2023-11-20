@@ -72,6 +72,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "43e55ec9_bf5e00fc",
+        "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1882601
+      },
+      "writtenOn": "2023-11-20T22:09:57Z",
+      "side": 1,
+      "message": "Should we also catch any exceptions?",
+      "range": {
+        "startLine": 124,
+        "startChar": 8,
+        "endLine": 124,
+        "endChar": 11
+      },
+      "revId": "6c37542a7bfd3a1c3e9ce6e2536175f9633ac3c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9a2c2bb2_f6e63d31",
         "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
         "patchSetId": 1
@@ -88,6 +111,52 @@
         "startChar": 19,
         "endLine": 139,
         "endChar": 40
+      },
+      "revId": "6c37542a7bfd3a1c3e9ce6e2536175f9633ac3c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03e6579d_0ba725c5",
+        "filename": "services/tests/servicestests/src/com/android/server/net/VpnBlobStoreTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1882601
+      },
+      "writtenOn": "2023-11-20T22:09:57Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we should mock the `DbHelper` inside of the `VpnBlobStore`. IIUC when we run the current test cases, we\u0027ll be writing and removing entries from the actual database.\n\nDepending on what you had in mind, this might be the intended behavior. However, mocking would give us more control over the database\u0027s behavior (ex. what if the db throws an exception during `get`). That would also prevent us from writing to the actual database if it wasn\u0027t intended.",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 36
+      },
+      "revId": "6c37542a7bfd3a1c3e9ce6e2536175f9633ac3c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1930bb9_6fdf624d",
+        "filename": "services/tests/servicestests/src/com/android/server/net/VpnBlobStoreTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1882601
+      },
+      "writtenOn": "2023-11-20T22:09:57Z",
+      "side": 1,
+      "message": "Should `mAddedAliases` be reset during `tearDown`?",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 59,
+        "endChar": 39
       },
       "revId": "6c37542a7bfd3a1c3e9ce6e2536175f9633ac3c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
