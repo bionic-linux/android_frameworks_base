@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae2e6114_660be2a3",
+        "filename": "packages/SystemUI/src/com/android/systemui/shade/NotificationPanelViewController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 1786490
+      },
+      "writtenOn": "2023-11-20T01:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58533d91_56083ea1",
+      "range": {
+        "startLine": 2007,
+        "startChar": 9,
+        "endLine": 2007,
+        "endChar": 30
+      },
+      "revId": "10abdc767ee4673f0bdbaabe7f3bca93dcffabe4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20f880eb_f8583041",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "We don\u0027t need to care about AOD device, as this modifications is main for the CTS and local test case.\nIf google has more better method to check the devices\u0027 ON/Off state, please provide the accurate codes so that we can use to check with this case.",
       "parentUuid": "20f880eb_f8583041",
+      "range": {
+        "startLine": 1597,
+        "startChar": 4,
+        "endLine": 1599,
+        "endChar": 4
+      },
+      "revId": "10abdc767ee4673f0bdbaabe7f3bca93dcffabe4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "513da5a6_21ab6a52",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1599,
+      "author": {
+        "id": 1786490
+      },
+      "writtenOn": "2023-11-20T01:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "912846ba_498630d2",
       "range": {
         "startLine": 1597,
         "startChar": 4,
