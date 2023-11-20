@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "58533d91_56083ea1",
+        "filename": "packages/SystemUI/src/com/android/systemui/shade/NotificationPanelViewController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 1786490
+      },
+      "writtenOn": "2023-11-20T01:29:15Z",
+      "side": 1,
+      "message": "Yes, it\u0027s only set by tests. Not needed to address this issue on actual devices.",
+      "parentUuid": "47bbc38f_c323e10d",
+      "range": {
+        "startLine": 2007,
+        "startChar": 9,
+        "endLine": 2007,
+        "endChar": 30
+      },
+      "revId": "10abdc767ee4673f0bdbaabe7f3bca93dcffabe4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "20f880eb_f8583041",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimController.java",
         "patchSetId": 9
@@ -37,6 +61,30 @@
       "writtenOn": "2023-11-17T19:09:30Z",
       "side": 1,
       "message": "If always-on display is enabled, `mScreenOn` will always be true (since it is only set to `false` when the display physically powers off, which never happens with AOD enabled). You probably want to use `WakefulnessLifecycle` to check whether the device is awake (vs. asleep), since \u0027awake\u0027 means the screen is on and not in AOD.",
+      "range": {
+        "startLine": 1597,
+        "startChar": 4,
+        "endLine": 1599,
+        "endChar": 4
+      },
+      "revId": "10abdc767ee4673f0bdbaabe7f3bca93dcffabe4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "912846ba_498630d2",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1599,
+      "author": {
+        "id": 1786490
+      },
+      "writtenOn": "2023-11-20T01:29:15Z",
+      "side": 1,
+      "message": "We don\u0027t need to care about AOD device, as this modifications is main for the CTS and local test case.\nIf google has more better method to check the devices\u0027 ON/Off state, please provide the accurate codes so that we can use to check with this case.",
+      "parentUuid": "20f880eb_f8583041",
       "range": {
         "startLine": 1597,
         "startChar": 4,
