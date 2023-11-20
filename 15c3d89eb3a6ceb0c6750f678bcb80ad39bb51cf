@@ -16,6 +16,75 @@
       "message": "You may want to also set up the TEST_MAPPING in frameworks/base/services/core/java/com/android/server/connectivity/TEST_MAPPING to also run this specific test for those changes on VPN related files. Otherwise, your change won\u0027t run the expected tests in presubmit.",
       "revId": "15c3d89eb3a6ceb0c6750f678bcb80ad39bb51cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5987ded_34822d90",
+        "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1882601
+      },
+      "writtenOn": "2023-11-20T21:49:08Z",
+      "side": 1,
+      "message": "Just to check, is this file meant to be VPN-specific, or shared between VPN and Wifi?\n\nIf it\u0027s shared, I\u0027m wondering if we should update the name to something like `ConnectivityBlobStore`. Like we do in the exiting LegacyKeystore ([example](https://source.corp.google.com/h/googleplex-android/platform/frameworks/base/+/main:wifi/java/src/android/net/wifi/WifiKeystore.java;drc\u003de9d36a82494ebdd323e6cab6961b04b7d917d781;l\u003d55)), we could use the caller\u0027s UID to indicate the namespace.",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "15c3d89eb3a6ceb0c6750f678bcb80ad39bb51cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4645603b_35086e8e",
+        "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1882601
+      },
+      "writtenOn": "2023-11-20T21:49:08Z",
+      "side": 1,
+      "message": "Since this method is not implemented, I\u0027m wondering if we should leave the body empty.\n\nIf someone were to call this accidentally, the current implementation would clear all of the data.",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "15c3d89eb3a6ceb0c6750f678bcb80ad39bb51cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "311b5430_971a6e6c",
+        "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1882601
+      },
+      "writtenOn": "2023-11-20T21:49:08Z",
+      "side": 1,
+      "message": "Consider renaming to something like `mDbHelper`.\n\nThat might indicate the purpose of this object slightly better.",
+      "range": {
+        "startLine": 74,
+        "startChar": 27,
+        "endLine": 74,
+        "endChar": 38
+      },
+      "revId": "15c3d89eb3a6ceb0c6750f678bcb80ad39bb51cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
