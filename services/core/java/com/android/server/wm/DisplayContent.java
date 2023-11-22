@@ -6728,6 +6728,15 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
             if (!setDisplayMirroring()) {
                 return;
             }
+        } else {
+            int recordDisplayId = mContentRecorder.getContentRecordingSession().getDisplayToRecord();
+            int mirrorDisplayId = mWmService.mDisplayManagerInternal.getDisplayIdToMirror(mDisplayId);
+            if (recordDisplayId != mirrorDisplayId) {
+                mContentRecorder.stopRecording();
+                if (!setDisplayMirroring()) {
+                    return;
+                }
+            }
         }
 
         mContentRecorder.updateRecording();

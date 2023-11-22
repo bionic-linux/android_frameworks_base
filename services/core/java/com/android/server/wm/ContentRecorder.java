@@ -107,6 +107,10 @@ final class ContentRecorder implements WindowContainerListener {
         mContentRecordingSession = session;
     }
 
+    ContentRecordingSession getContentRecordingSession() {
+        return mContentRecordingSession;
+    }
+
     boolean isContentRecordingSessionSet() {
         return mContentRecordingSession != null;
     }
