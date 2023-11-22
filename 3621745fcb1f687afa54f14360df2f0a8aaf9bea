@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dee2d74_470e5da3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-11-22T16:53:51Z",
+      "side": 1,
+      "message": "Marking the comments as acknowledged, as they don\u0027t seem to be actionable, and adding two more reviewers: one from package manager team and one from storage team",
+      "revId": "3621745fcb1f687afa54f14360df2f0a8aaf9bea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
