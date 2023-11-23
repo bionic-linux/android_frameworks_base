@@ -43,6 +43,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b3d209aa_2c1a5002",
+        "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1857230
+      },
+      "writtenOn": "2023-11-23T11:22:21Z",
+      "side": 1,
+      "message": "Can I ask, when you upgrade are you deleting the old table and making a new one? Is that the right behavior?",
+      "range": {
+        "startLine": 57,
+        "startChar": 20,
+        "endLine": 57,
+        "endChar": 29
+      },
+      "revId": "15c3d89eb3a6ceb0c6750f678bcb80ad39bb51cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4645603b_35086e8e",
         "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
         "patchSetId": 1
