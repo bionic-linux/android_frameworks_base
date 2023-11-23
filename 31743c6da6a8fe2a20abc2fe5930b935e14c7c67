@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfe4e1a5_77427d31",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-11-23T07:03:15Z",
+      "side": 1,
+      "message": "We will merge this https://android-review.googlesource.com/c/platform/frameworks/base/+/2817121",
+      "revId": "31743c6da6a8fe2a20abc2fe5930b935e14c7c67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
