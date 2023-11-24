@@ -105,6 +105,29 @@
       "parentUuid": "529905b8_be2ea910",
       "revId": "3621745fcb1f687afa54f14360df2f0a8aaf9bea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5fb168b_7598e2ba",
+        "filename": "services/core/java/com/android/server/pm/UserDataPreparer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2023-11-24T14:55:17Z",
+      "side": 1,
+      "message": "I wonder if it\u0027s worthwhile differentiating a `prepareUserStorage` failure vs a serial number mismatch. The risk of allowing serial numbers to mismatch for existing users seems to be that users get to see data that they really shouldn\u0027t get to see. The question is whether there is a valid failure mode for a serial number mismatch which doesn\u0027t involve leaking data?",
+      "range": {
+        "startLine": 122,
+        "startChar": 17,
+        "endLine": 122,
+        "endChar": 26
+      },
+      "revId": "3621745fcb1f687afa54f14360df2f0a8aaf9bea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
