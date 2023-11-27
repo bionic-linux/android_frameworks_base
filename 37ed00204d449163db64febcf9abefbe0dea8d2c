@@ -16,6 +16,24 @@
       "message": "Is there a tracking bug for reenabling this one?",
       "revId": "37ed00204d449163db64febcf9abefbe0dea8d2c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "246b240c_90fd8f85",
+        "filename": "core/jni/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1087625
+      },
+      "writtenOn": "2023-11-27T14:15:58Z",
+      "side": 1,
+      "message": "No, we do not have a specific bug. The opt-outs are tracked by go/android-thinlto-optouts",
+      "parentUuid": "3a5a5079_9846716e",
+      "revId": "37ed00204d449163db64febcf9abefbe0dea8d2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
