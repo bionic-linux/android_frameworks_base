@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a5a5079_9846716e",
+        "filename": "core/jni/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-11-27T09:33:20Z",
+      "side": 1,
+      "message": "Is there a tracking bug for reenabling this one?",
+      "revId": "37ed00204d449163db64febcf9abefbe0dea8d2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
