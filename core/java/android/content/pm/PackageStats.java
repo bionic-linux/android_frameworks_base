@@ -55,6 +55,18 @@ public class PackageStats implements Parcelable {
     /** Size of cache used by the application. (e.g., /data/data/<app>/cache) */
     public long cacheSize;
 
+    /** Size of base.apk file of the application */
+    /** @hide */
+    public long apkSize;
+
+    /** Size of current profile of the application */
+    /** @hide */
+    public long curProfileSize;
+
+    /** Size of reference profile of the application */
+    /** @hide */
+    public long refProfileSize;
+
     /**
      * Size of the secure container on external storage holding the
      * application's code.
@@ -107,6 +119,18 @@ public class PackageStats implements Parcelable {
         if (cacheSize != 0) {
             sb.append(" cache=");
             sb.append(cacheSize);
+        }
+	if (apkSize != 0) {
+            sb.append(" apk=");
+	    sb.append(apkSize);
+        }
+        if (curProfileSize != 0) {
+            sb.append(" curProf=");
+            sb.append(curProfileSize);
+        }
+	if (refProfileSize != 0) {
+            sb.append(" refProf=");
+            sb.append(refProfileSize);
         }
         if (externalCodeSize != 0) {
             sb.append(" extCode=");

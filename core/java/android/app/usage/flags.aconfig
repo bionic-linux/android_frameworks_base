@@ -1,0 +1,8 @@
+package: "android.app.usage"
+
+flag {
+    name: "get_app_bytes_by_data_type"
+    namespace: "system_performance"
+    description: "Feature flag for collecting app data size by file type"
+    bug: "294088945"
+}

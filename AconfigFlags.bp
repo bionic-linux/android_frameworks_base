@@ -13,6 +13,7 @@
 // limitations under the License.
 
 aconfig_srcjars = [
+    ":android.app.usage.flags-aconfig-java{.generated_srcjars}",
     ":android.content.pm.flags-aconfig-java{.generated_srcjars}",
     ":android.hardware.biometrics.flags-aconfig-java{.generated_srcjars}",
     ":android.net.vcn.flags-aconfig-java{.generated_srcjars}",
@@ -239,5 +240,18 @@ aconfig_declarations {
 java_aconfig_library {
     name: "android.net.vcn.flags-aconfig-java",
     aconfig_declarations: "android.net.vcn.flags-aconfig",
+    defaults: ["framework-minus-apex-aconfig-java-defaults"],
+}
+
+// Usage
+aconfig_declarations {
+    name: "android.app.usage.flags-aconfig",
+    package: "android.app.usage",
+    srcs: ["core/java/android/app/usage/*.aconfig"],
+}
+
+java_aconfig_library {
+    name: "android.app.usage.flags-aconfig-java",
+    aconfig_declarations: "android.app.usage.flags-aconfig",
     defaults: ["framework-minus-apex-aconfig-java-defaults"],
 }

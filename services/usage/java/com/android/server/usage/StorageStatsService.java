@@ -411,6 +411,7 @@ public class StorageStatsService extends IStorageStatsManager.Stub {
         final long[] ceDataInodes = new long[packageNames.length];
         String[] codePaths = new String[0];
 
+	final PackageStats stats = new PackageStats(TAG);
         for (int i = 0; i < packageNames.length; i++) {
             try {
                 final ApplicationInfo appInfo = mPackage.getApplicationInfoAsUser(packageNames[i],
@@ -418,6 +419,30 @@ public class StorageStatsService extends IStorageStatsManager.Stub {
                 if (appInfo.isSystemApp() && !appInfo.isUpdatedSystemApp()) {
                     // We don't count code baked into system image
                 } else {
+		    String sourceDir = appInfo.sourceDir;
+		    File apkFile = new File(sourceDir, "base.apk");
+		    long apkSize = apkFile.length();
+                    if (apkFile.exists() && apkSize > 0) {
+                        stats.apkSize += apkSize;
+		    }
+
+                    String REF_PROFILES_BASE_DIR = "/data/misc/profiles/ref/";
+                    String CUR_PROFILES_BASE_DIR = "/data/misc/profiles/cur/0/";
+                    String PROFILE_FILE_NAME = "primary.prof";
+		    File referenceProfileFile = new File(
+                        new File(REF_PROFILES_BASE_DIR, packageNames[i]), PROFILE_FILE_NAME);
+                    long refProfileSize = referenceProfileFile.length();
+                    if (referenceProfileFile.exists() && refProfileSize > 0) {
+                        stats.refProfileSize += refProfileSize;
+                    }
+
+                    File currentProfileFile = new File(
+                        new File(CUR_PROFILES_BASE_DIR, packageNames[i]), PROFILE_FILE_NAME);
+                    long curProfileSize = currentProfileFile.length();
+                    if (currentProfileFile.exists() && curProfileSize > 0) {
+                        stats.curProfileSize += curProfileSize;
+                    }
+
                     codePaths = ArrayUtils.appendElement(String.class, codePaths,
                             appInfo.getCodePath());
                 }
@@ -426,7 +451,6 @@ public class StorageStatsService extends IStorageStatsManager.Stub {
             }
         }
 
-        final PackageStats stats = new PackageStats(TAG);
         try {
             mInstaller.getAppSize(volumeUuid, packageNames, userId, getDefaultFlags(),
                     appId, ceDataInodes, codePaths, stats);
