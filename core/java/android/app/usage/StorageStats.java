@@ -17,6 +17,8 @@
 package android.app.usage;
 
 import android.annotation.BytesLong;
+import android.annotation.FlaggedApi;
+import android.annotation.IntDef;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -33,6 +35,28 @@ public final class StorageStats implements Parcelable {
     /** {@hide} */ public long dataBytes;
     /** {@hide} */ public long cacheBytes;
     /** {@hide} */ public long externalCacheBytes;
+    /** {@hide} */ public long apkBytes;
+    /** {@hide} */ public long curProfileBytes;
+    /** {@hide} */ public long refProfileBytes;
+
+    /** {@hide} */ @IntDef({
+      FileType.APK, FileType.ART, FileType.ODEX,
+      FileType.VDEX, FileType.DM, FileType.LIB,
+      FileType.CUR_PROFILE, FileType.REF_PROFILE, FileType.OTHER})
+
+
+    public @interface FileType {
+      int APK = 0;
+      int ART = 1;
+      int ODEX = 2;
+      int VDEX = 3;
+      int DM = 4;
+      int LIB = 5;
+      int CUR_PROFILE = 6;
+      int REF_PROFILE = 7;
+      int RUNTIME_APP_IMAGE = 8;
+      int OTHER = 9;
+    }
 
     /**
      * Return the size of app. This includes {@code APK} files, optimized
@@ -45,6 +69,24 @@ public final class StorageStats implements Parcelable {
      */
     public @BytesLong long getAppBytes() {
         return codeBytes;
+    }
+
+    /**
+     * Return the size of the specified data type. This includes files stored under
+     * {@link Context#getPackageCodePath()}, /data/misc/ and
+     * /data/user_de/.
+     * <p>
+     * Data is isolated for each user on a multiuser device.
+     */
+    @FlaggedApi(Flags.FLAG_GET_APP_BYTES_BY_DATA_TYPE)
+    public long getAppBytesByDataType(int fileType) {
+        switch (fileType) {
+          case FileType.APK: return apkBytes;
+          case FileType.CUR_PROFILE: return curProfileBytes;
+          case FileType.REF_PROFILE: return refProfileBytes;
+          /* ... */			     
+	  default: return 0; /* ToDo: return others */
+        }
     }
 
     /**
@@ -99,6 +141,9 @@ public final class StorageStats implements Parcelable {
         this.dataBytes = in.readLong();
         this.cacheBytes = in.readLong();
         this.externalCacheBytes = in.readLong();
+	this.apkBytes = in.readLong();
+	this.curProfileBytes = in.readLong();
+	this.refProfileBytes = in.readLong();
     }
 
     @Override
@@ -112,6 +157,9 @@ public final class StorageStats implements Parcelable {
         dest.writeLong(dataBytes);
         dest.writeLong(cacheBytes);
         dest.writeLong(externalCacheBytes);
+	dest.writeLong(apkBytes);
+	dest.writeLong(curProfileBytes);
+	dest.writeLong(refProfileBytes);
     }
 
     public static final @android.annotation.NonNull Creator<StorageStats> CREATOR = new Creator<StorageStats>() {
