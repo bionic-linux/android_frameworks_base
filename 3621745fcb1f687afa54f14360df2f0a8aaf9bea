@@ -128,6 +128,30 @@
       },
       "revId": "3621745fcb1f687afa54f14360df2f0a8aaf9bea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "482037bb_33e7afc3",
+        "filename": "services/core/java/com/android/server/pm/UserDataPreparer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-11-27T19:55:48Z",
+      "side": 1,
+      "message": "The user serial number is stored in an extended attribute of certain top-level user directories.  A goal of this CL is to stop auto-deleting existing user data if there is an issue with extended attribute storage.  That implies not auto-deleting data if the serial number doesn\u0027t match.  \"Leaking data\" sounds bad, but I can\u0027t think of any way it would actually happen for an existing user, especially considering that each user gets their own CE and DE encryption keys.  Also, not all user directories are being labeled with the user\u0027s serial number, which suggests that the serial number labeling was never really thought out in the first place; if it was actually important, it would be applied to all user directories.  So, this CL seems right for now.  Of course, I\u0027d very be happy if the Storage team took ownership of this code and did an in-depth redesign; that is what I\u0027ve been asking for.",
+      "parentUuid": "a5fb168b_7598e2ba",
+      "range": {
+        "startLine": 122,
+        "startChar": 17,
+        "endLine": 122,
+        "endChar": 26
+      },
+      "revId": "3621745fcb1f687afa54f14360df2f0a8aaf9bea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
