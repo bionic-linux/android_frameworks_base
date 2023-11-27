@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09307b10_30d0dcb6",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/BluetoothEventManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 2013495
+      },
+      "writtenOn": "2023-11-27T16:29:41Z",
+      "side": 1,
+      "message": "This will make \"callback.onDeviceAdded\" run in background thread instead of main thread. It may break if there is already a client register a callback containing some UI operations.",
+      "range": {
+        "startLine": 320,
+        "startChar": 12,
+        "endLine": 320,
+        "endChar": 52
+      },
+      "revId": "786d5e7ee8b29bdd6c633f21d6623ef1c8316723",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
