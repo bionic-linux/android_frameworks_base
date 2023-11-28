@@ -34,6 +34,23 @@
       "parentUuid": "c258572f_9aa3d8cb",
       "revId": "42a17044dafcba8e1878d78e7ab3ce2a2c47a93a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c087372_c49ac699",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2023-11-28T21:55:48Z",
+      "side": 1,
+      "message": "From looking at this more, I still don\u0027t see how the patch can be correct. And in the screenshot in the bug the version of code being used for testing looks old.\n\nI see this similar fix in the tree of the CL, but the code in the screenshots seems to be missing it: https://android.googlesource.com/platform/frameworks/base/+/35a4968041dc0e35d924006a019e4ac2ae6cdc70\n\nAny feedback on that other fix for apparently the same problem? (matches the description in issue 311117928 comment4)",
+      "revId": "42a17044dafcba8e1878d78e7ab3ce2a2c47a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
