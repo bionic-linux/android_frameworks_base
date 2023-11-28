@@ -68,6 +68,7 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
 import android.os.UserHandle;
+import android.os.UserManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -438,9 +439,10 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                     "Calling identity was System Server. Was Binder calling identity cleared?");
         }
 
-        if (!UserHandle.getUserHandleForUid(uid).isSystem()) {
+        final UserManager userManager = mContext.getSystemService(UserManager.class);
+        if (!Objects.equals(userManager.getMainUser(), UserHandle.getUserHandleForUid(uid))) {
             throw new SecurityException(
-                    "VcnManagementService can only be used by callers running as the primary user");
+                    "VcnManagementService can only be used by callers running as the main user");
         }
     }
 
