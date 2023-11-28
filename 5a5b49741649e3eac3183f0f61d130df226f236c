@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9a9779b_ca25a8fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1345596
+      },
+      "writtenOn": "2023-11-28T21:26:30Z",
+      "side": 1,
+      "message": "Thanks for taking a look at this.",
+      "revId": "5a5b49741649e3eac3183f0f61d130df226f236c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65ab3efd_b89e984a",
+        "filename": "libs/hwui/Mesh.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1345596
+      },
+      "writtenOn": "2023-11-28T21:26:30Z",
+      "side": 1,
+      "message": "We should probably change this line to `LOG_ALWAYS_FATAL_IF(!mIndexCount)` and `LOG_ALWAYS_FATAL_IF(!mIndexOffset)` below.",
+      "revId": "5a5b49741649e3eac3183f0f61d130df226f236c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
