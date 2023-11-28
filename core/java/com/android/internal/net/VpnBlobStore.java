@@ -1,0 +1,191 @@
+/*
+ * Copyright (C) 2023 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.android.internal.net;
+
+import android.annotation.NonNull;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Binder;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * Database for storing blobs with a key of alias strings.
+ */
+public class VpnBlobStore {
+    private static final String TAG = VpnBlobStore.class.getSimpleName();
+    private static final String TABLENAME = "blob_table";
+
+    private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLENAME + " ("
+            + "owner INTEGER,"
+            + "alias BLOB,"
+            + "blob BLOB,"
+            + "UNIQUE(owner, alias));";
+
+    private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLENAME;
+
+    private static class DbHelper extends SQLiteOpenHelper {
+        private static final int SCHEMA_VERSION = 1;
+        private static final String DATABASE_FILENAME = "VpnBlobStore.db";
+
+        DbHelper(@NonNull final Context context) {
+            super(context, DATABASE_FILENAME, null /* factory */, SCHEMA_VERSION);
+        }
+
+        /** Called when the database is created */
+        @Override
+        public void onCreate(@NonNull final SQLiteDatabase db) {
+            db.execSQL(CREATE_TABLE);
+        }
+
+        /** Called when the database is upgraded */
+        @Override
+        public void onUpgrade(@NonNull final SQLiteDatabase db, final int oldVersion,
+                final int newVersion) {
+            // No upgrade supported yet.
+            db.execSQL(DROP_TABLE);
+            onCreate(db);
+        }
+
+        /** Called when the database is downgraded */
+        @Override
+        public void onDowngrade(@NonNull final SQLiteDatabase db, final int oldVersion,
+                final int newVersion) {
+            // Downgrades always nuke all data and recreate an empty table.
+            db.execSQL(DROP_TABLE);
+            onCreate(db);
+        }
+    }
+
+    private final DbHelper mOpenHelper;
+
+    public VpnBlobStore(@NonNull final Context context) {
+        Objects.requireNonNull(context);
+        mOpenHelper = new DbHelper(context);
+    }
+
+    /**
+     * Stores the blob under the alias in the database. Existing blobs by the same alias  will be
+     * replaced.
+     * @param alias The name of the blob
+     * @param blob The blob.
+     * @return true if the blob was successfully added. False otherwise.
+     * @hide
+     */
+    public boolean put(@NonNull String alias, @NonNull byte[] blob) {
+        return put(Binder.getCallingUid(), alias, blob);
+    }
+
+    private boolean put(int callerUid, @NonNull String alias, @NonNull byte[] blob) {
+        final ContentValues values = new ContentValues();
+        values.put("owner", callerUid);
+        values.put("alias", alias);
+        values.put("blob", blob);
+
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final long res = db.insertWithOnConflict(TABLENAME, null /* nullColumnHack */, values,
+                SQLiteDatabase.CONFLICT_REPLACE);
+        return res > 0;
+    }
+
+    /**
+     * Retrieves a blob by the name alias from the database.
+     * @param alias Name of the blob to retrieve.
+     * @return The unstructured blob, that is the blob that was stored using
+     *         {@link com.android.server.connectivity.VpnBlobStore#put}.
+     *         Returns null if no blob was found.
+     * @hide
+     */
+    public byte[] get(@NonNull String alias) {
+        return get(Binder.getCallingUid(), alias);
+    }
+
+    private byte[] get(int callerUid, @NonNull String alias) {
+        byte[] blob = null;
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        try (Cursor cursor = db.query(TABLENAME,
+                new String[] {"blob"} /* columns */,
+                "owner=? AND alias=?" /* selection */,
+                new String[] {Integer.toString(callerUid), alias} /* selectionArgs */,
+                null /* groupBy */,
+                null /* having */,
+                null /* orderBy */)) {
+            if (cursor.moveToFirst()) {
+                blob = cursor.getBlob(0);
+            }
+        }
+
+        return blob;
+    }
+
+    /**
+     * Removes a blob by the name alias from the database.
+     * @param alias Name of the blob to be removed.
+     * @return True if a blob was removed. False if no such alias was found.
+     * @hide
+     */
+    public boolean remove(@NonNull String alias) {
+        return remove(Binder.getCallingUid(), alias);
+    }
+
+    private boolean remove(int callerUid, @NonNull String alias) {
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final int res = db.delete(TABLENAME,
+                "owner=? AND alias=?" /* whereClause */,
+                new String[] {Integer.toString(callerUid), alias} /* whereArgs */);
+        return res > 0;
+    }
+
+    /**
+     * Lists the aliases stored in the database with the given prefix.
+     * @param prefix String of prefix to list the aliases.
+     * @return An array of strings representing the aliases stored in the database sorted ascending.
+     *         The return value may be empty but never null.
+     * @hide
+     */
+    public String[] list(@NonNull String prefix) {
+        return list(Binder.getCallingUid(), prefix);
+    }
+
+    private String[] list(int callerUid, @NonNull String prefix) {
+        final List<String> aliases = new ArrayList<String>();
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        try (Cursor cursor = db.query(TABLENAME,
+                new String[] {"alias"} /* columns */,
+                "owner=?" /* selection */,
+                new String[] {Integer.toString(callerUid)} /* selectionArgs */,
+                null /* groupBy */,
+                null /* having */,
+                "alias ASC" /* orderBy */)) {
+            if (cursor.moveToFirst()) {
+                do {
+                    final String alias = cursor.getString(0);
+                    if (alias.startsWith(prefix)) {
+                        aliases.add(alias.substring(prefix.length()));
+                    }
+                } while (cursor.moveToNext());
+            }
+        }
+
+        return aliases.toArray(new String[0]);
+    }
+}
