@@ -329,6 +329,7 @@ class ProcessErrorStateRecord {
         final boolean isSilentAnr;
         final int pid = mApp.getPid();
         final UUID errorId;
+        final BinderProcsInfo binderProcsInfo = BinderProcsInfo.getBinderTransactionInfo(pid);
         latencyTracker.waitingOnAMSLockStarted();
         synchronized (mService) {
             latencyTracker.waitingOnAMSLockEnded();
@@ -388,13 +389,23 @@ class ProcessErrorStateRecord {
                 }
                 if (parentPid != pid) firstPids.add(parentPid);
 
-                if (MY_PID != pid && MY_PID != parentPid) firstPids.add(MY_PID);
+                // Add binder procs info.
+                for (Integer jpid : ActivityManagerService.getJavaPids(binderProcsInfo.getPids())) {
+                    if (!firstPids.contains(jpid)) {
+                        firstPids.add(jpid);
+                    }
+                }
+
+                // Add system_server to lastPids if not already in firstPids.
+                if (!firstPids.contains(MY_PID)) {
+                    lastPids.put(MY_PID, true);
+                }
 
                 final int ppid = parentPid;
                 mService.mProcessList.forEachLruProcessesLOSP(false, r -> {
                     if (r != null && r.getThread() != null) {
                         int myPid = r.getPid();
-                        if (myPid > 0 && myPid != pid && myPid != ppid && myPid != MY_PID) {
+                        if (myPid > 0 && myPid != MY_PID && !firstPids.contains(myPid)) {
                             if (r.isPersistent()) {
                                 firstPids.add(myPid);
                                 if (DEBUG_ANR) Slog.i(TAG, "Adding persistent proc: " + r);
@@ -460,7 +471,7 @@ class ProcessErrorStateRecord {
         }
 
         StringBuilder report = new StringBuilder();
-
+        binderProcsInfo.toDropbox(report);
         latencyTracker.currentPsiStateCalled();
         String currentPsiState = ResourcePressureUtil.currentPsiState();
         latencyTracker.currentPsiStateReturned();

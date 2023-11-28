@@ -745,6 +745,8 @@ public class ActivityManagerService extends IActivityManager.Stub
 
     TraceErrorLogger mTraceErrorLogger;
 
+    private static int[] sZygotePids;
+
     BroadcastQueue broadcastQueueForIntent(Intent intent) {
         return broadcastQueueForFlags(intent.getFlags(), intent);
     }
@@ -20248,5 +20250,43 @@ public class ActivityManagerService extends IActivityManager.Stub
             final int index = mMediaProjectionTokenMap.indexOfKey(uid);
             return index >= 0 && !mMediaProjectionTokenMap.valueAt(index).isEmpty();
         }
+    }
+
+    private static synchronized void setZygotePids() {
+        if (sZygotePids == null) {
+            String[] zygoteCmds = {"zygote", "zygote64", "usap32", "usap64"};
+            sZygotePids = Process.getPidsForCommands(zygoteCmds);
+        }
+    }
+
+    private static boolean isJavaPid(int pid) {
+        setZygotePids();
+        int ppid = Process.getParentPid(pid);
+        while (ppid > -1) {
+            for (int zygotePid : sZygotePids) {
+                if (ppid == zygotePid) {
+                    return true;
+                }
+            }
+            ppid = Process.getParentPid(ppid);
+        }
+        return false;
+    }
+
+    /**
+     * Get the java pids from an array of pids.
+     * @param pids The array to be searched for java pids.
+     * @return A ArrayList with the java pids found in the input array.
+     */
+    public static ArrayList<Integer> getJavaPids(int[] pids) {
+        ArrayList<Integer> javaPids = new ArrayList<Integer>();
+        if (pids != null) {
+            for (int i = 0; i < pids.length; i++) {
+                if (isJavaPid(pids[i])) {
+                    javaPids.add(pids[i]);
+                }
+            }
+        }
+        return javaPids;
     }
 }

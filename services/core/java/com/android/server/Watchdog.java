@@ -56,6 +56,7 @@ import com.android.internal.os.ProcessCpuTracker;
 import com.android.internal.os.ZygoteConnectionConstants;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.server.am.ActivityManagerService;
+import com.android.server.am.BinderProcsInfo;
 import com.android.server.am.StackTracesDumpHelper;
 import com.android.server.am.TraceErrorLogger;
 import com.android.server.criticalevents.CriticalEventLog;
@@ -904,8 +905,18 @@ public class Watchdog implements Dumpable {
             FrameworkStatsLog.write(FrameworkStatsLog.SYSTEM_SERVER_WATCHDOG_OCCURRED, subject);
         }
 
+        // Add pids of processes connected with system_server process by binder.
+        final BinderProcsInfo binderProcsInfo =
+                BinderProcsInfo.getBinderTransactionInfo(Process.myPid());
+        for (Integer pid : ActivityManagerService.getJavaPids(binderProcsInfo.getPids())) {
+            if (!pids.contains(pid)) {
+                pids.add(pid);
+            }
+        }
+
         long anrTime = SystemClock.uptimeMillis();
         StringBuilder report = new StringBuilder();
+        binderProcsInfo.toDropbox(report);
         report.append(ResourcePressureUtil.currentPsiState());
         ProcessCpuTracker processCpuTracker = new ProcessCpuTracker(false);
         StringWriter tracesFileException = new StringWriter();
