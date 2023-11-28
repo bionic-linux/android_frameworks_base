@@ -17,6 +17,7 @@
 package com.android.server;
 
 import static android.Manifest.permission.DUMP;
+import static android.Manifest.permission.QUERY_USERS;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_TEST;
@@ -47,6 +48,7 @@ import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
+import android.net.vcn.Flags;
 import android.net.vcn.IVcnManagementService;
 import android.net.vcn.IVcnStatusCallback;
 import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
@@ -68,6 +70,7 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
 import android.os.UserHandle;
+import android.os.UserManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -438,7 +441,22 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                     "Calling identity was System Server. Was Binder calling identity cleared?");
         }
 
-        if (!UserHandle.getUserHandleForUid(uid).isSystem()) {
+        final UserHandle userHandle = UserHandle.getUserHandleForUid(uid);
+
+        if (Flags.enforceMainUser()) {
+            final UserManager userManager = mContext.getSystemService(UserManager.class);
+            final long identity = Binder.clearCallingIdentity();
+            try {
+                mContext.enforceCallingOrSelfPermission(QUERY_USERS, TAG);
+                if (!Objects.equals(userManager.getMainUser(), userHandle)) {
+                    throw new SecurityException(
+                            "VcnManagementService can only be used by callers running as the main"
+                                    + " user");
+                }
+            } finally {
+                Binder.restoreCallingIdentity(identity);
+            }
+        } else if (!Flags.enforceMainUser() && !userHandle.isSystem()) {
             throw new SecurityException(
                     "VcnManagementService can only be used by callers running as the primary user");
         }
