@@ -152,6 +152,30 @@
       },
       "revId": "3621745fcb1f687afa54f14360df2f0a8aaf9bea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81430e0d_6d934f4b",
+        "filename": "services/core/java/com/android/server/pm/UserDataPreparer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2023-11-29T13:02:10Z",
+      "side": 1,
+      "message": "That makes sense, I think the whole serial number scheme needs to be re-examined and see whether it still adds any value. It may have been added before we had per-user encryption? Anyway, given that encryption should protect against any possible leaks here, lgtm.",
+      "parentUuid": "482037bb_33e7afc3",
+      "range": {
+        "startLine": 122,
+        "startChar": 17,
+        "endLine": 122,
+        "endChar": 26
+      },
+      "revId": "3621745fcb1f687afa54f14360df2f0a8aaf9bea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
