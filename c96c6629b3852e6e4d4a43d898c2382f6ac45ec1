@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42dd5b62_026ff2d7",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-11-29T12:39:52Z",
+      "side": 1,
+      "message": "As you remmove sendArgumentsToDaemon(), the need for this no longer exists. This should be also removed.",
+      "range": {
+        "startLine": 444,
+        "startChar": 4,
+        "endLine": 446,
+        "endChar": 5
+      },
+      "revId": "c96c6629b3852e6e4d4a43d898c2382f6ac45ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
