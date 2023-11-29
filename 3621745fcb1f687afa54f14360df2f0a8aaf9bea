@@ -193,6 +193,29 @@
       },
       "revId": "3621745fcb1f687afa54f14360df2f0a8aaf9bea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4071330c_83f4b04f",
+        "filename": "services/core/java/com/android/server/pm/UserDataPreparer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-11-29T21:18:25Z",
+      "side": 1,
+      "message": "Will there be any issue if `destroyUserDataLI` was not called (for a non-new user) but `prepareUserDataLI` is called here as part of the recovery?",
+      "range": {
+        "startLine": 138,
+        "startChar": 16,
+        "endLine": 138,
+        "endChar": 33
+      },
+      "revId": "3621745fcb1f687afa54f14360df2f0a8aaf9bea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
