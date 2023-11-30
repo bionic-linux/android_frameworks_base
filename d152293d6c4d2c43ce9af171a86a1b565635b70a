@@ -16,6 +16,24 @@
       "message": "I think we need to flip these conditionals after the move from `SkAssert` to `LOG_ALWAYS_FATAL_IF`. The former will throw errors if the argument is false, whereas the latter will throw if the argument is true.\n\nI think this should be:\n\n```\nLOG_ALWAYS_FATAL_IF(mIndexCount !\u003d 0);\nLOG_ALWAYS_FATAL_IF(mIndexOffset !\u003d 0);\n```",
       "revId": "d152293d6c4d2c43ce9af171a86a1b565635b70a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "593bea37_3b358a6f",
+        "filename": "libs/hwui/Mesh.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2023-11-30T20:47:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79fc74e1_a8f8783d",
+      "revId": "d152293d6c4d2c43ce9af171a86a1b565635b70a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
