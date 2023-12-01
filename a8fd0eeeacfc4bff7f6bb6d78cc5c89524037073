@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5776040c_d1bf26fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1950315
+      },
+      "writtenOn": "2023-12-01T14:52:47Z",
+      "side": 1,
+      "message": "Please add more information in the description, like the bug this is solving.",
+      "revId": "a8fd0eeeacfc4bff7f6bb6d78cc5c89524037073",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a153a104_238dec11",
