@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "73de0148_65061b5e",
+        "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-01T13:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec39de64_fceb5c44",
+      "range": {
+        "startLine": 86,
+        "startChar": 89,
+        "endLine": 86,
+        "endChar": 90
+      },
+      "revId": "6c37542a7bfd3a1c3e9ce6e2536175f9633ac3c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd9484a7_868fb992",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-11-20T21:58:30Z",
       "side": 1,
       "message": "Would it be worth merging the public and private versions of this method?",
+      "range": {
+        "startLine": 93,
+        "startChar": 19,
+        "endLine": 93,
+        "endChar": 22
+      },
+      "revId": "6c37542a7bfd3a1c3e9ce6e2536175f9633ac3c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "252afe45_317594b8",
+        "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-01T13:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd9484a7_868fb992",
       "range": {
         "startLine": 93,
         "startChar": 19,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "337505b3_ca7a0cd0",
+        "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-01T13:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "674803c5_e4414f14",
+      "range": {
+        "startLine": 104,
+        "startChar": 68,
+        "endLine": 104,
+        "endChar": 82
+      },
+      "revId": "6c37542a7bfd3a1c3e9ce6e2536175f9633ac3c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43e55ec9_bf5e00fc",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc49cfd7_07ca43ef",
+        "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-01T13:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43e55ec9_bf5e00fc",
+      "range": {
+        "startLine": 124,
+        "startChar": 8,
+        "endLine": 124,
+        "endChar": 11
+      },
+      "revId": "6c37542a7bfd3a1c3e9ce6e2536175f9633ac3c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9a2c2bb2_f6e63d31",
@@ -106,6 +202,30 @@
       "writtenOn": "2023-11-20T21:58:30Z",
       "side": 1,
       "message": "Note: depending on the answer to [this comment](https://android-review.git.corp.google.com/c/platform/frameworks/base/+/2836715/comment/a5987ded_34822d90/) on the previous CL, this might be worth moving outside of this file.",
+      "range": {
+        "startLine": 139,
+        "startChar": 19,
+        "endLine": 139,
+        "endChar": 40
+      },
+      "revId": "6c37542a7bfd3a1c3e9ce6e2536175f9633ac3c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f678e24d_6b12279b",
+        "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-01T13:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a2c2bb2_f6e63d31",
       "range": {
         "startLine": 139,
         "startChar": 19,
@@ -141,6 +261,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fb09d263_7e35571e",
+        "filename": "services/tests/servicestests/src/com/android/server/net/VpnBlobStoreTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-01T13:11:49Z",
+      "side": 1,
+      "message": "I think the tests would be essentially useless if we mocked the `DbHelper` since the essence of the method will be just a simple call into it ? \n\nI see you point about affecting the actual database, I think since this uses the context of the test, i.e. `InstrumentationRegistry.getContext()`, I think it should not using the actual database ? (I will test this soon)\n\nIf it is using the actual database, then I propose using a different database name for the test and dropping the database at the end?",
+      "parentUuid": "03e6579d_0ba725c5",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 36
+      },
+      "revId": "6c37542a7bfd3a1c3e9ce6e2536175f9633ac3c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f1930bb9_6fdf624d",
         "filename": "services/tests/servicestests/src/com/android/server/net/VpnBlobStoreTest.java",
         "patchSetId": 1
@@ -152,6 +296,30 @@
       "writtenOn": "2023-11-20T22:09:57Z",
       "side": 1,
       "message": "Should `mAddedAliases` be reset during `tearDown`?",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 59,
+        "endChar": 39
+      },
+      "revId": "6c37542a7bfd3a1c3e9ce6e2536175f9633ac3c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4db7bd46_9300b4ac",
+        "filename": "services/tests/servicestests/src/com/android/server/net/VpnBlobStoreTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-01T13:11:49Z",
+      "side": 1,
+      "message": "Done. Not needed since it is not static, but why not.",
+      "parentUuid": "f1930bb9_6fdf624d",
       "range": {
         "startLine": 59,
         "startChar": 28,
