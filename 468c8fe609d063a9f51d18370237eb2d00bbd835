@@ -34,6 +34,24 @@
       "parentUuid": "1dfd4b4c_f3e48665",
       "revId": "468c8fe609d063a9f51d18370237eb2d00bbd835",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d07b009_ef614e3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1969336
+      },
+      "writtenOn": "2023-12-01T18:46:26Z",
+      "side": 1,
+      "message": "Will land the revert as part of the revert-first policy (go/revert-it)",
+      "parentUuid": "35ff725d_1bd3addd",
+      "revId": "468c8fe609d063a9f51d18370237eb2d00bbd835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
