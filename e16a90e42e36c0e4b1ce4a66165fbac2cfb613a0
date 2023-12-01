@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b4ebd5c5_cffc6e08",
+        "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-01T13:13:05Z",
+      "side": 1,
+      "message": "Just to follow the existing return type of LegacyVpnProfileStore / WifiKeyStore. Do you think it should just be a list?",
+      "parentUuid": "01b399b2_aff9d5f2",
+      "range": {
+        "startLine": 165,
+        "startChar": 11,
+        "endLine": 165,
+        "endChar": 19
+      },
+      "revId": "e16a90e42e36c0e4b1ce4a66165fbac2cfb613a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3407554a_3d98af2e",
         "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2023-11-17T13:26:02Z",
       "side": 1,
       "message": "Oops, this is not matching by prefix yet",
+      "range": {
+        "startLine": 181,
+        "startChar": 28,
+        "endLine": 181,
+        "endChar": 31
+      },
+      "revId": "e16a90e42e36c0e4b1ce4a66165fbac2cfb613a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd8225af_e18df863",
+        "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-01T13:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3407554a_3d98af2e",
       "range": {
         "startLine": 181,
         "startChar": 28,
@@ -60,6 +108,30 @@
       "writtenOn": "2023-11-20T22:29:23Z",
       "side": 1,
       "message": "It might be more efficient to use the list size here, rather than 0.\n\nSee [this line](https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:packages/modules/Wifi/service/java/com/android/server/wifi/util/HalAidlUtil.java;drc\u003dbbe85c6e5a7155bde44ceed258d92254d23f20f5;l\u003d119) as an example.",
+      "range": {
+        "startLine": 186,
+        "startChar": 42,
+        "endLine": 186,
+        "endChar": 43
+      },
+      "revId": "e16a90e42e36c0e4b1ce4a66165fbac2cfb613a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7798d1b_a2a3c994",
+        "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-01T13:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85487ac2_fa6c06ab",
       "range": {
         "startLine": 186,
         "startChar": 42,
@@ -106,6 +178,54 @@
       "writtenOn": "2023-11-20T22:29:23Z",
       "side": 1,
       "message": "nit: Consider renaming to something like `unsortedAliases`, just to distinguish from the `expected` list.",
+      "range": {
+        "startLine": 92,
+        "startChar": 23,
+        "endLine": 92,
+        "endChar": 30
+      },
+      "revId": "e16a90e42e36c0e4b1ce4a66165fbac2cfb613a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bb7bdae_a1c4c853",
+        "filename": "services/tests/servicestests/src/com/android/server/net/VpnBlobStoreTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-01T13:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5630b66d_2c2ac329",
+      "range": {
+        "startLine": 92,
+        "startChar": 23,
+        "endLine": 92,
+        "endChar": 30
+      },
+      "revId": "e16a90e42e36c0e4b1ce4a66165fbac2cfb613a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "571be27d_b0834d66",
+        "filename": "services/tests/servicestests/src/com/android/server/net/VpnBlobStoreTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-01T13:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63656a34_6a0197f8",
       "range": {
         "startLine": 92,
         "startChar": 23,
