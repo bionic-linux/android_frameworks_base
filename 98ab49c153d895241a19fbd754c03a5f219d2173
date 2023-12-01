@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "174950f6_18925e15",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2023-12-01T21:33:33Z",
+      "side": 1,
+      "message": "GA+1 since this is in the spirit of go/lsc",
+      "revId": "98ab49c153d895241a19fbd754c03a5f219d2173",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
