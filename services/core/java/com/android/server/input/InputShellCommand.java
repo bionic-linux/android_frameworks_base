@@ -448,7 +448,18 @@ public class InputShellCommand extends ShellCommand {
                     event, nextEventTime, 1 /* repeatCount */, KeyEvent.FLAG_LONG_PRESS);
             injectKeyEvent(longPressEvent, async);
         }
+<<<<<<< PATCH SET (5e3325 correct up eventTime)
+        event = KeyEvent.changeTimeRepeat(event, SystemClock.uptimeMillis(), 0);
+        injectKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
+    }
+
+    private void sendKeyDoubleTap(int inputSource, int keyCode, int displayId) {
+        sendKeyEvent(inputSource, keyCode, false, displayId);
+        sleep(ViewConfiguration.getDoubleTapMinTime());
+        sendKeyEvent(inputSource, keyCode, false, displayId);
+=======
         injectKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP), async);
+>>>>>>> BASE      (294917 Merge "Call jobFinished after ProfcollectBGJobService proces)
     }
 
     private void runTap(int inputSource, int displayId) {
