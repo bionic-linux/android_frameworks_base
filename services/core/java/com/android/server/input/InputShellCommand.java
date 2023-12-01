@@ -363,7 +363,9 @@ public class InputShellCommand extends ShellCommand {
             injectKeyEvent(KeyEvent.changeTimeRepeat(event, nextEventTime, 1 /* repeatCount */,
                     KeyEvent.FLAG_LONG_PRESS));
         }
-        injectKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
+        final long upEventTime = SystemClock.uptimeMillis();
+        KeyEvent upEvent = new KeyEvent(now, upEventTime, KeyEvent.ACTION_UP, keyCode, 0);
+        injectKeyEvent(upEvent);
     }
 
     private void sendKeyDoubleTap(int inputSource, int keyCode, int displayId) {
