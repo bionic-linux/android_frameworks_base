@@ -1,0 +1,16 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksNetTests",
+      "options": [
+        {
+          "exclude-annotation": "com.android.testutils.SkipPresubmit"
+        }
+      ],
+      "file_patterns": [
+        "VpnProfile\\.java",
+        "NetworkUtilsInternal\\.java"
+      ]
+    }
+  ]
+}
