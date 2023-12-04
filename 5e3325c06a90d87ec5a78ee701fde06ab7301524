@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6eb9ddf5_70f0eb0f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2023-12-04T18:21:29Z",
+      "side": 1,
+      "message": "Defer to Josep for +2",
+      "revId": "5e3325c06a90d87ec5a78ee701fde06ab7301524",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
