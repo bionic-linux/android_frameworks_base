@@ -74,14 +74,22 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
+import java.net.Socket;
+import java.net.ServerSocket;
+import java.net.InetSocketAddress;
+
+
 
 @RunWith(AndroidJUnit4.class)
 public class FileUtilsTest {
     private static final String TEST_DATA =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	private static Object mLock = new Object();
 
     private File mDir;
     private File mTestFile;
@@ -247,6 +255,115 @@ public class FileUtilsTest {
 
         actual = readFile(dest);
         assertArrayEquals(expected, actual);
+    }
+
+    class Client extends Thread {
+        private int mPort = 0;
+        private String mFileName = null;
+
+        public Client(int port, String name) {
+            mPort = port;
+            mFileName = name;
+        }
+        public void run() {
+            try (Socket socket = new Socket("localhost", mPort)) {
+                DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+
+                File file = new File(mTarget, mFileName);
+                FileInputStream fileInputStream = new FileInputStream(file);
+
+                long size = file.length();
+                // send the file size to server
+                dataOutputStream.writeLong(size);
+
+                // copy data from file to socket
+                FileUtils.copy(fileInputStream.getFD(), socket.getFileDescriptor$(), size, null, null, null);
+
+                dataOutputStream.close();
+                socket.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class Server extends Thread {
+        private int mPort = 0;
+        private ServerSocket mSrvSocket = null;
+        private String mFileName = null;
+
+        public Server(String name) {
+            mFileName = name;
+        }
+        public int getPortNum() {
+            return mPort;
+        }
+
+        public void run() {
+            try {
+                synchronized (mLock) {
+                    mSrvSocket = new ServerSocket();
+                    mSrvSocket.setReuseAddress(true);
+                    mSrvSocket.bind(new InetSocketAddress("localhost", 0));
+                    mPort = mSrvSocket.getLocalPort();
+                    mLock.notify();
+                }
+                Socket clientSocket = mSrvSocket.accept();
+                DataInputStream dataInputStream = new DataInputStream(clientSocket.getInputStream());
+
+                // read file size
+                long size = dataInputStream.readLong();
+
+                final File dest = new File(mTarget, mFileName);
+                FileOutputStream fileOutputStream = new FileOutputStream(dest);
+                // copy data from socket to file
+                FileUtils.copy(clientSocket.getFileDescriptor$(), fileOutputStream.getFD(), size, null, null, null);
+
+                dataInputStream.close();
+                clientSocket.close();
+                mSrvSocket.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Test
+    public void testCopy_SocketToFile_FileToSocket() throws Exception {
+
+        for (int size : DATA_SIZES ) {
+            final File src = new File(mTarget, "src");
+            final File dest = new File(mTarget, "dest");
+            byte[] expected = new byte[size];
+            byte[] actual = new byte[size];
+            new Random().nextBytes(expected);
+
+            // write test data in to src file
+            writeFile(src, expected);
+
+            // start server, get data from client and save to dest file (socket --> file)
+            Server srv = new Server("dest");
+            srv.start();
+
+            try {
+                // wait server start
+                synchronized (mLock) {
+                    mLock.wait();
+                }
+                // start client, get data from src file and send to server (file --> socket)
+                Client cli = new Client(srv.getPortNum(), "src");
+                cli.start();
+
+                cli.join();
+                srv.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            // read test data from dest file
+            actual = readFile(dest);
+            assertArrayEquals(expected, actual);
+        }
     }
 
     @Test
