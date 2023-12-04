@@ -22,6 +22,30 @@
       },
       "revId": "8a81256b935abb3a1a7a89c82a7353882dbb4ee7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56a32eaa_c6afdbcb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1976388
+      },
+      "writtenOn": "2023-12-04T12:30:30Z",
+      "side": 1,
+      "message": "I needed to use a third-party library to bypass the reflection restrictions to make mServedView null. I wasn\u0027t sure if I could use a third-party library in cts, so I wrote a demo to replicate the problem.\n\n```java\npublic class MainActivity extends AppCompatActivity {\n    private static final String TAG \u003d \"MainActivity\";\n    EditText mEditText;\n    Button mButton;\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        mEditText \u003d new EditText(this);\n        final LinearLayout layout \u003d new LinearLayout(this);\n        layout.setOrientation(LinearLayout.VERTICAL);\n        layout.addView(mEditText);\n        if (mEditText.requestFocus()) {\n            InputMethodManager imm \u003d (InputMethodManager)\n                    getSystemService(Context.INPUT_METHOD_SERVICE);\n            imm.showSoftInput(mEditText, 0);\n        }\n        setContentView(layout);\n    }\n    \n    @Override\n    protected void onDestroy() {\n        // make inputMethodManager#mServedView null\n        fixInputMethodLeak(this);\n        super.onDestroy();\n    }\n\n    @Override\n    protected void onStop() {\n        super.onStop();\n        // requests to close the input method \n        hideSoftKeyboard();\n    }\n\n    protected void hideSoftKeyboard() {\n        View focus \u003d getWindow().getDecorView().findFocus();\n        InputMethodManager inputMethodManager \u003d (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);\n        if (inputMethodManager \u003d\u003d null) {\n            return;\n        }\n        inputMethodManager.hideSoftInputFromWindow(focus.getWindowToken(), 0);\n    }\n\n    private static String[] inputLeakViewNames \u003d new String[]{\"mCurRootView\", \"mServedView\", \"mNextServedView\"};\n\n\n    public static void fixInputMethodLeak(Context context) {\n        if (context \u003d\u003d null) {\n            return;\n        }\n        InputMethodManager inputMethodManager \u003d (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);\n        if (inputMethodManager \u003d\u003d null) {\n            return;\n        }\n        Field field;\n        Object fieldObj;\n        for (String viewName : inputLeakViewNames) {\n            try {\n                field \u003d inputMethodManager.getClass().getDeclaredField(viewName);\n                field.setAccessible(true);\n                fieldObj \u003d field.get(inputMethodManager);\n                if (fieldObj instanceof View) {\n                    View fieldView \u003d (View) fieldObj;\n                    if (fieldView.getContext() \u003d\u003d context) {\n                        field.set(inputMethodManager, null);\n                        Log.e(TAG, \"fixInputMethodLeak: set \"+viewName+\"\u003dnull\");\n                    } else {\n                        break;\n                    }\n                }\n            } catch (Exception e) {\n                Log.e(TAG, \"Exception: \" + e);\n            }\n        }\n    }\n}\n```\n\nIn order to make fixInputMethodLeak effective, need to introduce the following third-party libraries (https://github.com/ChickenHook/RestrictionBypass)\n1 In your root settings.gradle:\n```javascript\nallprojects {\n        repositories {\n            [..]\n            jcenter()\n            maven { url \"https://jitpack.io\" }\n        }\n   }\n```\n2 In your library/build.gradle add:\n```javascript\n   dependencies {\n        implementation \u0027com.github.ChickenHook:RestrictionBypass:2.2\u0027\n   }\n```\n\nNow open the app along with the input method window, you can drop down the status bar and then switch to the dark mode, and finally slide up the notification bar to enter the app, the app will not be able to back by gesture",
+      "parentUuid": "e78f31b8_e7fcf522",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 307
+      },
+      "revId": "8a81256b935abb3a1a7a89c82a7353882dbb4ee7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
