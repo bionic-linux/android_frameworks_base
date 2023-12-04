@@ -285,6 +285,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cc5e2fa9_b712aa13",
+        "filename": "services/tests/servicestests/src/com/android/server/net/VpnBlobStoreTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1882601
+      },
+      "writtenOn": "2023-12-04T17:28:10Z",
+      "side": 1,
+      "message": "Got it, I think that makes sense.\n\nConsider verifying the best practice with someone more familiar with testing SQLite. Either way should work for me.",
+      "parentUuid": "fb09d263_7e35571e",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 36
+      },
+      "revId": "6c37542a7bfd3a1c3e9ce6e2536175f9633ac3c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f1930bb9_6fdf624d",
         "filename": "services/tests/servicestests/src/com/android/server/net/VpnBlobStoreTest.java",
         "patchSetId": 1
