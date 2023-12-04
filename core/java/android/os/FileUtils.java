@@ -457,7 +457,8 @@ public final class FileUtils {
                         }
                         throw e;
                     }
-                } else if (S_ISFIFO(st_in.st_mode) || S_ISFIFO(st_out.st_mode)) {
+                } else if (S_ISFIFO(st_in.st_mode) || S_ISFIFO(st_out.st_mode)
+                          || S_ISSOCK(st_in.st_mode) || S_ISSOCK(st_out.st_mode)) {
                     return copyInternalSplice(in, out, count, signal, executor, listener);
                 }
             } catch (ErrnoException e) {
