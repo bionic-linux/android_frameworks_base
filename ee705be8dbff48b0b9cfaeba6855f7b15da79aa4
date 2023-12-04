@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b10ad3a4_f9a0fe94",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1882601
+      },
+      "writtenOn": "2023-12-04T17:29:26Z",
+      "side": 1,
+      "message": "Just to check, does `db.delete` catch the exception internally similar to `db.replace`?",
+      "range": {
+        "startLine": 148,
+        "startChar": 27,
+        "endLine": 148,
+        "endChar": 33
+      },
+      "revId": "ee705be8dbff48b0b9cfaeba6855f7b15da79aa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
