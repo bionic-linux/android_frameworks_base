@@ -70,6 +70,8 @@ import org.junit.runner.RunWith;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
@@ -77,6 +79,9 @@ import java.io.FileOutputStream;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 @RunWith(AndroidJUnit4.class)
 public class FileUtilsTest {
@@ -247,6 +252,72 @@ public class FileUtilsTest {
 
         actual = readFile(dest);
         assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void testCopy_SocketToFile_FileToSocket() throws Exception {
+        for (int size : DATA_SIZES ) {
+            final File src = new File(mTarget, "src");
+            final File dest = new File(mTarget, "dest");
+            byte[] expected = new byte[size];
+            byte[] actual = new byte[size];
+            new Random().nextBytes(expected);
+
+            // write test data in to src file
+            writeFile(src, expected);
+
+            // start server, get data from client and save to dest file (socket --> file)
+            ServerSocket SrvSocket = new ServerSocket();
+            SrvSocket.setReuseAddress(true);
+            SrvSocket.bind(new InetSocketAddress("localhost", 0));
+            int Port = SrvSocket.getLocalPort();
+            final Thread srv = new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        Socket clientSocket = SrvSocket.accept();
+
+                        DataInputStream dataInputStream = new DataInputStream(clientSocket.getInputStream());
+                        // read file size
+                        long rcvFileSize = dataInputStream.readLong();
+
+                        FileOutputStream fileOutputStream = new FileOutputStream(dest);
+                        // copy data from socket to file
+                        FileUtils.copy(clientSocket.getFileDescriptor$(), fileOutputStream.getFD(), rcvFileSize, null, null, null);
+                        dataInputStream.close();
+                        fileOutputStream.close();
+                        clientSocket.close();
+                        SrvSocket.close();
+                    } catch (Exception e) {
+                    }
+                }
+            });
+
+            srv.start();
+
+            // start client, get data from dest file and send to server (file --> socket)
+            try (Socket socket = new Socket("localhost", Port)) {
+                DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                FileInputStream fileInputStream = new FileInputStream(src);
+                long sndFileSize = src.length();
+
+                // send the file size to server
+                dataOutputStream.writeLong(sndFileSize);
+
+                // copy data from file to socket
+                FileUtils.copy(fileInputStream.getFD(), socket.getFileDescriptor$(), sndFileSize, null, null, null);
+
+                dataOutputStream.close();
+                fileInputStream.close();
+                socket.close();
+            } catch (Exception e) {
+            }
+
+            srv.join();
+
+            // read test data from dest file
+            actual = readFile(dest);
+            assertArrayEquals(expected, actual);
+        }
     }
 
     @Test
