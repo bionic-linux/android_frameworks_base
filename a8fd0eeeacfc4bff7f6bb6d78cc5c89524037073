@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ccebafc_67e5d20e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1976388
+      },
+      "writtenOn": "2023-12-04T02:39:39Z",
+      "side": 1,
+      "message": "An incorrect up eventTime affects the value of  mHandledByLongPress of SingleKeyGestureDetector, which is set in SingleKeyGestureDetector#interceptKeyUp\n\nAt present, Xiaomi uses mHandledByLongPress to make some judgments, so this problem may only occur in Xiaomi\u0027s device",
+      "parentUuid": "5776040c_d1bf26fc",
+      "revId": "a8fd0eeeacfc4bff7f6bb6d78cc5c89524037073",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a153a104_238dec11",
