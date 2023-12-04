@@ -137,6 +137,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0cf83292_9cac6087",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-04T13:23:57Z",
+      "side": 1,
+      "message": "You assume only one VPN network will be available. But I think you may need to consider VPN on multi-users or personal profile/work profile co-exist cases. One boolean may not be enough to reflect all the cases.",
+      "parentUuid": "0321d939_41c06f87",
+      "range": {
+        "startLine": 311,
+        "startChar": 19,
+        "endLine": 311,
+        "endChar": 33
+      },
+      "revId": "a0a9cbe101be680d87e281b54c8d5995baa4dee3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "801414b1_f5c6de1c",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
         "patchSetId": 2
