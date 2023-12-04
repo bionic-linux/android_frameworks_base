@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "393b69d0_d575e7c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1882601
+      },
+      "writtenOn": "2023-12-04T17:13:26Z",
+      "side": 1,
+      "message": "Topic looks good overall! I might recommend getting +1 from someone more familiar with the SQL logic.",
+      "revId": "d9d39a7ad122060d13f7a8a9301eb09a8a92d30f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
