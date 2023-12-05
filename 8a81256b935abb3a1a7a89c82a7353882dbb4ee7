@@ -46,6 +46,30 @@
       },
       "revId": "8a81256b935abb3a1a7a89c82a7353882dbb4ee7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b3d8d95_7de94b52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2023-12-05T06:35:14Z",
+      "side": 1,
+      "message": "\u003e I needed to use a third-party library to bypass the reflection restrictions to make mServedView null. I wasn\u0027t sure if I could use a third-party library in cts, so I wrote a demo to replicate the problem.\n\nFor CTS, you can put `\u003coption name\u003d\"hidden-api-checks\" value\u003d\"false\" /\u003e` to `AndroidTest.xml` to bypass the reflection restrictions.\nhttps://cs.android.com/search?q\u003dhidden-api-checks%20file:AndroidTest.xml$\n\nIt is internally passing ```--no-hidden-api-checks``` option to ```adb shell am instrument``` command.\nhttps://developer.android.com/studio/test/command-line#am-instrument-flags\n\nWith that, the test in question can be part of CTS without having to introduce a new third_party library.",
+      "parentUuid": "56a32eaa_c6afdbcb",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 307
+      },
+      "revId": "8a81256b935abb3a1a7a89c82a7353882dbb4ee7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
