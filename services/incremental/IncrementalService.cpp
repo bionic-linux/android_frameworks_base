@@ -905,10 +905,10 @@ void IncrementalService::disallowReadLogs(StorageId storageId) {
     ifs->disallowReadLogs();
 
     const auto metadata = constants().readLogsDisabledMarkerName;
-    if (auto err = mIncFs->makeFile(ifs->control,
-                                    path::join(ifs->root, constants().mount,
-                                               constants().readLogsDisabledMarkerName),
-                                    0777, idFromMetadata(metadata), {})) {
+    if (mIncFs->makeFile(ifs->control,
+                         path::join(ifs->root, constants().mount,
+                                    constants().readLogsDisabledMarkerName),
+                         0777, idFromMetadata(metadata), {})) {
         //{.metadata = {metadata.data(), (IncFsSize)metadata.size()}})) {
         LOG(ERROR) << "Failed to make marker file for storageId: " << storageId;
         return;
