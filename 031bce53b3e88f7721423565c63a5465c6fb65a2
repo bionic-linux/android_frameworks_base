@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9a25838d_3e7debbc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-12-06T08:29:38Z",
+      "side": 1,
+      "message": "Unless someone utilize the callback and detect the layer to do something effective, once the surface is visible, it won\u0027t lose the ability to block touch.\nThere can be an optional flag to decide whether to filter. The invisible InputSink layers might be meaningful unless a test wants to verify.",
+      "parentUuid": "18b373b6_9129eb85",
+      "revId": "031bce53b3e88f7721423565c63a5465c6fb65a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f641b7ea_6d776e29",
         "filename": "services/core/java/com/android/server/wm/ActivityRecordInputSink.java",
         "patchSetId": 2
