@@ -161,6 +161,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e0500e57_3f88715f",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-06T03:33:18Z",
+      "side": 1,
+      "message": "For multi-users case, one possible way is to refer to getWorkProfileVpnName() design. You can map the interface between VpnConfig and LinkProperties so that you could know which network maps to which VPN.",
+      "parentUuid": "0cf83292_9cac6087",
+      "range": {
+        "startLine": 311,
+        "startChar": 19,
+        "endLine": 311,
+        "endChar": 33
+      },
+      "revId": "a0a9cbe101be680d87e281b54c8d5995baa4dee3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "801414b1_f5c6de1c",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
         "patchSetId": 2
