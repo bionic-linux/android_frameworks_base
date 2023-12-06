@@ -108,6 +108,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "abb52b14_0de50c40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1053813
+      },
+      "writtenOn": "2023-12-06T10:29:34Z",
+      "side": 1,
+      "message": "ActivityRecordInputSink should not be tied to the visibility of the ActivityRecord.\n\nResponding on the bug with further discussion",
+      "revId": "031bce53b3e88f7721423565c63a5465c6fb65a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f641b7ea_6d776e29",
