@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c8b904f7_3035dd53",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-12-06T08:42:22Z",
+      "side": 1,
+      "message": "This is just an option. The current approach is fine if other reviewers accept.",
+      "parentUuid": "4b190e71_a8d5a880",
+      "revId": "031bce53b3e88f7721423565c63a5465c6fb65a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f641b7ea_6d776e29",
         "filename": "services/core/java/com/android/server/wm/ActivityRecordInputSink.java",
         "patchSetId": 2
