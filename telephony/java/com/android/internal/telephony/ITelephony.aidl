@@ -291,6 +291,39 @@ interface ITelephony {
     List getRadioPowerOffReasons(int subId, String callingPackage, String callingFeatureId);
 
     /**
+     * Vote on disabling the access of the 5G core network in accordance with 3GPP TS 24.501 4.9.
+     * Multiple apps can vote to disable the access of the 5g core network. If there is a
+     * disabling request, FWK will disable it. Each app is responsible for its vote.
+     *
+     * <p>Note that FWK can enable access for the 5G core network at the
+     * specific case(e.g. emergency call start), even though there is a disabled request
+     * from clients. FWK will disable the 5G core network after the case
+     * ends(e.g. emergency call ends) if there is any client votes to disable the 5G
+     * core network.<p/>
+     * <p>The request will be automatically removed after 1 hour. If a client wants to
+     * disable more than this, it's required to request again and remove previous one.<p/>
+     * Reference: 3GPP TS 24.501 sec 4.9 Disabling and re-enabling UE's N1 mode capability.
+     *
+     * @param subId The subscription ID.
+     * @param cs The cancel signal for the request to disable the 5g core network.
+     * @param disableGlobally Disable 5g core network for all subscription IDs or not.
+     * @return true on success and false on failure.
+     *
+     * @hide
+     */
+    boolean requestDisable5gCoreNetwork(int subId, CancellationSignal cs, boolean disableGlobally);
+
+    /**
+     * Get the number of requests for disabling the 5G core network.
+     *
+     * @param subId The subscription ID.
+     * @return the number of requests for disabling the 5G core network.
+     *
+     * @hide
+     */
+    public int getNumberOfRequestsDisabling5gCoreNetwork(int subId);
+
+    /**
      * This method has been removed due to security and stability issues.
      */
     @UnsupportedAppUsage
