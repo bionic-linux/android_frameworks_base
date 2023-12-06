@@ -16,6 +16,24 @@
       "message": "If this is a cherry-pick, you need the `Merged-In` tag with the internal CL\u0027s Change-Id",
       "revId": "e170cf4ef991106d49f0189ee55635b4a07ae8bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f75739f8_190d6e40",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1981530
+      },
+      "writtenOn": "2023-12-06T20:35:34Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "caebef37_f968d69c",
+      "revId": "e170cf4ef991106d49f0189ee55635b4a07ae8bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
