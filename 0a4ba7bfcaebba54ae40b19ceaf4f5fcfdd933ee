@@ -46,6 +46,30 @@
       },
       "revId": "0a4ba7bfcaebba54ae40b19ceaf4f5fcfdd933ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9945a96_b1308b35",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7635,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-12-06T08:17:00Z",
+      "side": 0,
+      "message": "It may add a delay before dispatching transition ready by creating the surface.",
+      "parentUuid": "f79b6a1c_3486209c",
+      "range": {
+        "startLine": 7635,
+        "startChar": 16,
+        "endLine": 7635,
+        "endChar": 24
+      },
+      "revId": "0a4ba7bfcaebba54ae40b19ceaf4f5fcfdd933ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
