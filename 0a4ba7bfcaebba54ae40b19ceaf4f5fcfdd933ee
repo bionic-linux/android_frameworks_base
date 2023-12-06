@@ -94,6 +94,30 @@
       },
       "revId": "0a4ba7bfcaebba54ae40b19ceaf4f5fcfdd933ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee635a48_cff7b20c",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7635,
+      "author": {
+        "id": 1974312
+      },
+      "writtenOn": "2023-12-06T10:28:12Z",
+      "side": 0,
+      "message": "I test it. It can not add ActivityRecordInputSink. So I think this change is not better. Test step:\n1. Open Messaging\n2. Open Messaging Settings\n3. Open Messaging General Settings\n4. Press back key. Then Messaging Settings do not add ActivityRecordInputSink.",
+      "parentUuid": "152798a9_e5c036d3",
+      "range": {
+        "startLine": 7635,
+        "startChar": 16,
+        "endLine": 7635,
+        "endChar": 24
+      },
+      "revId": "0a4ba7bfcaebba54ae40b19ceaf4f5fcfdd933ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
