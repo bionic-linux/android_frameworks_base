@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2310f1d2_ef842877",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7635,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-12-06T07:24:51Z",
+      "side": 0,
+      "message": "It is enough to only remove the `show` condition. That avoids affecting transition.",
+      "range": {
+        "startLine": 7635,
+        "startChar": 16,
+        "endLine": 7635,
+        "endChar": 24
+      },
+      "revId": "0a4ba7bfcaebba54ae40b19ceaf4f5fcfdd933ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
