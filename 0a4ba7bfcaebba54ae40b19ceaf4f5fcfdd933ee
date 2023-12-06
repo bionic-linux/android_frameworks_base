@@ -22,6 +22,30 @@
       },
       "revId": "0a4ba7bfcaebba54ae40b19ceaf4f5fcfdd933ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f79b6a1c_3486209c",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7635,
+      "author": {
+        "id": 1974312
+      },
+      "writtenOn": "2023-12-06T08:15:31Z",
+      "side": 0,
+      "message": "It do not have any color, so I think it do not affect transition.",
+      "parentUuid": "2310f1d2_ef842877",
+      "range": {
+        "startLine": 7635,
+        "startChar": 16,
+        "endLine": 7635,
+        "endChar": 24
+      },
+      "revId": "0a4ba7bfcaebba54ae40b19ceaf4f5fcfdd933ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

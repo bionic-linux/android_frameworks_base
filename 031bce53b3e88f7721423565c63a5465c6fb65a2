@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18b373b6_9129eb85",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1974312
+      },
+      "writtenOn": "2023-12-06T08:15:31Z",
+      "side": 1,
+      "message": "\"ActivityRecordInputSink\" is to block touches from passing through activities. So I think it cannot to be filtered.",
+      "parentUuid": "a7fd0d70_0c2a18cb",
+      "revId": "031bce53b3e88f7721423565c63a5465c6fb65a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f641b7ea_6d776e29",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-12-06T07:24:51Z",
       "side": 1,
       "message": "This might add performance overhead to recreate the surface every time when switching between existing activities.",
+      "revId": "031bce53b3e88f7721423565c63a5465c6fb65a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffe1bbfc_e83cabbd",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecordInputSink.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1974312
+      },
+      "writtenOn": "2023-12-06T08:15:31Z",
+      "side": 1,
+      "message": "Yes, But I think it is better than app crash.",
+      "parentUuid": "f641b7ea_6d776e29",
       "revId": "031bce53b3e88f7721423565c63a5465c6fb65a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
