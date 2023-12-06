@@ -53,6 +53,7 @@ import android.content.ContextParams;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.annotation.FalggedApi;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.Uri;
@@ -60,6 +61,7 @@ import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CancellationSignal;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -13375,6 +13377,72 @@ public class TelephonyManager {
         } else {
             requestRadioPowerOffForReason(RADIO_POWER_REASON_CARRIER);
         }
+    }
+
+    /**
+     * Vote on disabling the access of the 5G core network in accordance with 3GPP TS 24.501 4.9.
+     * Multiple apps can vote to disable the access of the 5g core network. If there is a
+     * disabling request, FWK will disable it. Each app is responsible for its vote. 
+     *
+     * <p>Note that FWK can enable access for the 5G core network at the
+     * specific case(e.g. emergency call start), even though there is a disabled request
+     * from clients. FWK will disable the 5G core network after the case 
+     * ends(e.g. emergency call ends) if there is any client votes to disable the 5G 
+     * core network.<p/>
+     * <p>The request will be automatically removed after 1 hour. If a client wants to
+     * disable more than this, it's required to request again and remove previous one.<p/>
+     * Reference: 3GPP TS 24.501 sec 4.9 Disabling and re-enabling UE's N1 mode capability.
+     *
+     * @param cs The cancel signal for the request to disable the 5g core network.
+     * @param disableGlobally Disable 5g core network for all subscription IDs or not.
+     * @throws SecurityException if the caller does not have MODIFY_PHONE_STATE permission.
+     * @throws IllegalStateException if the Telephony service is not currently available.
+     *
+     * @hide
+     */
+    @FlaggedApi(Flags.FLAG_DISABLE_5G_CORE_NETWORK)
+    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    public void requestDisable5gCoreNetwork(CancellationSignal cs, boolean disableGlobally) {
+       try {
+           ITelephony telephony = getITelephony();
+           if (telephony != null) {
+               if (!telephony.requestDisable5gCoreNetwork(getSubId(), cs, disableGlobally)) {
+                   throw new IllegalStateException("Telephony service is not available.");
+               }
+           } else {
+               throw new IllegalStateException("Telephony service is null.");
+           }
+       } catch (RemoteException e) {
+           Log.e(TAG, "Error calling ITelephony#requestDisable5gCoreNetwork", e);
+           e.rethrowAsRuntimeException();
+       }
+    }
+
+    /**
+     * Get the number of requests for disabling the 5G core network.
+     *
+     * @return the number of requests for disabling the 5G core network.
+     * @throws SecurityException if the caller does not have READ_PRIVILEGED_PHONE_STATE permission.
+     * @throws IllegalStateException if the Telephony service is not currently available.
+     *
+     * @hide
+     */
+    @FlaggedApi(Flags.FLAG_DISABLE_5G_CORE_NETWORK)
+    @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public int getNumberOfRequestsDisabling5gCoreNetwork() {
+        int number = 0;
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null) {
+                number = telephony.getNumberOfRequestsDisabling5gCoreNetwork(getSubId());
+            } else {
+                throw new IllegalStateException("Telephony service is null.");
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling ITelephony#getNumberOfRequestsDisabling5gCoreNetwork", e);
+            e.rethrowAsRuntimeException();
+        }
+        return number;
     }
 
     /**
