@@ -16,6 +16,23 @@
       "message": "@flc@google.com the original change comes from you. Just reverting it is probably not a good solution, so this change is more like an open question :)\n\nThe scenario is that we currently don\u0027t have a DDC for our device (which seems to be fine from what I understand), but that isn\u0027t handled well anymore with your patch. Would be good to find a logic that handles our setup as well.",
       "revId": "fc38a5b7b982215ca0f4ce0b9e65e193d9fb9dfc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99263acf_83b6dcf9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1872390
+      },
+      "writtenOn": "2023-12-07T12:50:50Z",
+      "side": 1,
+      "message": "flc@google.com , any plan to address this problem ?",
+      "revId": "fc38a5b7b982215ca0f4ce0b9e65e193d9fb9dfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
