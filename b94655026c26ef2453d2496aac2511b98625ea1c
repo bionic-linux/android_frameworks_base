@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c684930_deb9b0f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-12-07T18:15:51Z",
+      "side": 1,
+      "message": "do you have any specific stats?",
+      "range": {
+        "startLine": 14,
+        "startChar": 24,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "b94655026c26ef2453d2496aac2511b98625ea1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
