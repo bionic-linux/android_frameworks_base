@@ -68,6 +68,24 @@
       "message": "We\u0027ve received internal push back regarding the necessity this feature. Using SettingsProvider to store app configs is in general discouraged because it\u0027s only a storage mechanism maintained by the system.\n\nCould you please file a bug and provide your justifications on how this feature can benefit the Android ecosystem? We can follow up in the bug with the reviewers.",
       "revId": "56e0fd9282c11abb4e8c0cc546b2435e7713c497",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a111fb1_2c3a8442",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2037182
+      },
+      "writtenOn": "2023-12-07T10:39:48Z",
+      "side": 1,
+      "message": "I am a bit confused - there was a doc shared with Google before hand (link in this thread by Svet) and I thought we were aligned. One use case here is Notification Settings. They are per app, but are system settings none the less.\nWill wait for @svet@meta.com to chime in here.",
+      "parentUuid": "51c3da0b_0af1d42d",
+      "revId": "56e0fd9282c11abb4e8c0cc546b2435e7713c497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
