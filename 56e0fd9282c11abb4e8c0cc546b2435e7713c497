@@ -51,6 +51,23 @@
       "parentUuid": "a3991ded_646ba416",
       "revId": "56e0fd9282c11abb4e8c0cc546b2435e7713c497",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51c3da0b_0af1d42d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-12-07T02:54:58Z",
+      "side": 1,
+      "message": "We\u0027ve received internal push back regarding the necessity this feature. Using SettingsProvider to store app configs is in general discouraged because it\u0027s only a storage mechanism maintained by the system.\n\nCould you please file a bug and provide your justifications on how this feature can benefit the Android ecosystem? We can follow up in the bug with the reviewers.",
+      "revId": "56e0fd9282c11abb4e8c0cc546b2435e7713c497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
