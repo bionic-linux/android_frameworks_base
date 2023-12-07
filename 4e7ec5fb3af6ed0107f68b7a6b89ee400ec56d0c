@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3d84fa9_7aeebd80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-07T05:21:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f817147b_a1b9a21f",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "4e7ec5fb3af6ed0107f68b7a6b89ee400ec56d0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4b69fdd_513e1adf",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-12-04T12:58:59Z",
       "side": 1,
       "message": "Can you provide a screenshot/picture how does the iocn looks like in the bug for reference?",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 14
+      },
+      "revId": "4e7ec5fb3af6ed0107f68b7a6b89ee400ec56d0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e4c5a72_b6e26bf4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-07T05:21:01Z",
+      "side": 1,
+      "message": "just updated in b/302424768",
+      "parentUuid": "c4b69fdd_513e1adf",
       "range": {
         "startLine": 14,
         "startChar": 5,
