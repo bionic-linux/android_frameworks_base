@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cdfb70d_30c2a4ee",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4773,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-08T18:48:37Z",
+      "side": 1,
+      "message": "and block model",
+      "range": {
+        "startLine": 4773,
+        "startChar": 64,
+        "endLine": 4773,
+        "endChar": 75
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c57ca55e_141c7b39",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4783,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-08T18:48:37Z",
+      "side": 1,
+      "message": "exception",
+      "range": {
+        "startLine": 4783,
+        "startChar": 78,
+        "endLine": 4783,
+        "endChar": 93
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c494ad3f_6b8f51b1",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4798,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-08T18:48:37Z",
+      "side": 1,
+      "message": "exception",
+      "range": {
+        "startLine": 4798,
+        "startChar": 80,
+        "endLine": 4798,
+        "endChar": 94
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c76082cf_dade4bcb",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4806,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-08T18:48:37Z",
+      "side": 1,
+      "message": "and block model",
+      "range": {
+        "startLine": 4806,
+        "startChar": 67,
+        "endLine": 4806,
+        "endChar": 83
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4e80523_047138c5",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4818,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-08T18:48:37Z",
+      "side": 1,
+      "message": "We will add a `setFrameParameters()` API in this file. Is this going to be added in this CL or the follow-up one?",
+      "range": {
+        "startLine": 4818,
+        "startChar": 0,
+        "endLine": 4818,
+        "endChar": 0
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e058792_412c4680",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-08T18:48:37Z",
+      "side": 1,
+      "message": "Description is not accurate because we support both positive and negative QP offsets, which I think we should also mention here.\n\n\"\nThe encoder in-turn uses this information to improve the overall viewing experience: to preserve the quality better than other regions of the frame if the corresponding QP offset is negative, or save bitrate if the corresponding QP offset is positive (eg for background regions). \n\"",
+      "range": {
+        "startLine": 698,
+        "startChar": 42,
+        "endLine": 698,
+        "endChar": 90
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ba7ee56_d31a4778",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-08T18:48:37Z",
+      "side": 1,
+      "message": "Should be \"encoder\"? I\u0027m not clear about this description, could you give more info here?",
+      "range": {
+        "startLine": 700,
+        "startChar": 44,
+        "endLine": 700,
+        "endChar": 45
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0b16b11_dc333ad9",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-08T18:48:37Z",
+      "side": 1,
+      "message": "We shall mention `FEATURE_ROI` for query support of this feature.",
+      "range": {
+        "startLine": 1371,
+        "startChar": 45,
+        "endLine": 1372,
+        "endChar": 27
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "731e3e0a_9fd65cbb",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-08T18:48:37Z",
+      "side": 1,
+      "message": "Framework should have a pre-check before sending the info to hardware, and raise an exception for this case.",
+      "range": {
+        "startLine": 1401,
+        "startChar": 53,
+        "endLine": 1401,
+        "endChar": 73
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0138f1a_e994c450",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1419,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-08T18:48:37Z",
+      "side": 1,
+      "message": "(same as above)\nFramework should have a pre-check before sending the info to hardware, and raise an exception for this case.",
+      "range": {
+        "startLine": 1419,
+        "startChar": 48,
+        "endLine": 1419,
+        "endChar": 73
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
