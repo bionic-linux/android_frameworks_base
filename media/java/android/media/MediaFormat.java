@@ -1366,6 +1366,74 @@ public final class MediaFormat {
     public @interface PictureType {}
 
     /**
+     * A key describing the region of interest type. This is an optional parameter that applies
+     * only to video encoders that advertise support for
+     * {@link MediaCodecInfo.CodecCapabilities#FEATURE_ROI}. Use
+     * {@link MediaCodec#getOutputFormat} after {@link MediaCodec#configure configure} to query
+     * if the encoder supports the desired RoI type. If the encoder does not support RoI type,
+     * the output format will not have an entry with this key.
+     * <p>
+     * The associated value is an integer.
+     * <p>
+     * Currently, supported values are :<br>
+     * <li> 0 : {@link MediaFormat#ROI_DISABLED}<br>
+     * <li> 1 : {@link MediaFormat#ROI_TYPE_QP_MAP}<br>
+     * <li> 2 : {@link MediaFormat#ROI_TYPE_RECTANGLE}<br>
+     */
+    public static final String KEY_ROI_TYPE = "roi-type";
+
+    /**
+     * Region of interest encoding disabled (default behavior)
+     */
+    public static final int ROI_DISABLED = 0;
+
+    /**
+     * Region of interest encoding enabled. The encoder receives RoI in the form of qp map.
+     * <p>
+     * The encoder shall receive qp offset for all 16x16 blocks of the frame. The application is
+     * expected to send a byteArray of size (((width + 15) * (height + 15)) / (16 * 16)). Each
+     * entry in the byteArray corresponds to a coding unit of size 16x16 in the frame and it
+     * contains QP offset information to be used. This offset SHALL be in the region [-128, 127].
+     * The QP of target LCU will be calculated as frameQP + offsetQP. If the result exceeds minQP
+     * or maxQP configured then the value may be clamped. Negative offsets result in lower QP
+     * than frame QP and is expected to improve quality of those LCUs thus improving the overall
+     * viewing experience.
+     * <p>
+     * If byte array size is too large or too small than the expected size, an exception is raised.
+     */
+    public static final int ROI_TYPE_QP_MAP = 1;
+
+    /**
+     * Region of interest encoding enabled. The encoder receives RoI as an array of bounding
+     * boxes paired with qpOffset.
+     * <p>
+     * The encoder shall receive RoI info as a string in the format "Top1,Left1-Bottom1,
+     * Right1=Offset1;Top2,Left2-Bottom2,Right2=Offset2;...". The Top, Left, Bottom, Right form
+     * the vertices of bounding box of region of interest. Offset is the suggested QP offset of
+     * the LCUs in the bounding box. This offset SHALL be in the region [-128, 127]. The QP of
+     * target LCU will be calculated as frameQP + offsetQP. If the result exceeds minQP and maxQP
+     * configured then the value may be clamped. Negative offsets result in lower QP than frame
+     * QP and is expected to improve quality of those LCUs thus improving the overall viewing
+     * experience.
+     * <p>
+     * If RoIs overlap, the later configuration wins.
+     * <p>
+     * If RoIs extend outside frame boundaries, an exception is raised.
+     * <p>
+     * RoIs can get stretched out if bounding box does not align to LCU boundaries
+     */
+    public static final int ROI_TYPE_RECTANGLE = 2;
+
+    /** @hide */
+    @IntDef({
+        ROI_DISABLED,
+        ROI_TYPE_QP_MAP,
+        ROI_TYPE_RECTANGLE,
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface RoIType {}
+
+    /**
      * A key describing the audio session ID of the AudioTrack associated
      * to a tunneled video codec.
      * The associated value is an integer.

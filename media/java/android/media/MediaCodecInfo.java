@@ -692,6 +692,21 @@ public final class MediaCodecInfo {
         public static final String FEATURE_HdrEditing = "hdr-editing";
 
         /**
+         * <b>video encoder only</b>: codec supports region of interest encoding.
+         * <p>
+         * RoI encoding support means the codec accepts information that segments the video frame
+         * in to two regions. 1. Foreground / desired / critical region. and 2. Background region.
+         * Besides this the codec also accepts qpOffset for foreground and background regions
+         * (suggestive) to be used during encoding. For instance, if encoder decides to encode
+         * the current frame at qpFrame, then actual qp of LCU will be qpFrame + qpOffset.
+         * A positive offset will quantizes the LCU more and a negative offset quantizes the LCU
+         * less. If critical regions suggest a negative offset then they are coded at better
+         * quality than the rest of the frame leading to an overall improved viewing experience.
+         */
+        @SuppressLint("AllUpper") // for consistency with other FEATURE_* constants
+        public static final String FEATURE_ROI = "region-of-interest";
+
+        /**
          * Query codec feature capabilities.
          * <p>
          * These features are supported to be used by the codec.  These
@@ -732,6 +747,7 @@ public final class MediaCodecInfo {
             new Feature(FEATURE_QpBounds, (1 << 3), false),
             new Feature(FEATURE_EncodingStatistics, (1 << 4), false),
             new Feature(FEATURE_HdrEditing, (1 << 5), false),
+            new Feature(FEATURE_ROI, (1 << 6), false),
             // feature to exclude codec from REGULAR codec list
             new Feature(FEATURE_SpecialCodec,     (1 << 30), false, true),
         };
