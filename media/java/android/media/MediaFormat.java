@@ -1366,6 +1366,146 @@ public final class MediaFormat {
     public @interface PictureType {}
 
     /**
+     * A key describing the region of interest type. This is an optional parameter that applies
+     * only to video encoders that advertise support for
+     * {@link MediaCodecInfo.CodecCapabilities#FEATURE_ROI}. Use
+     * {@link MediaCodec#getOutputFormat} after {@link MediaCodec#configure configure} to query
+     * if the encoder supports the desired RoI type. If the encoder does not support RoI type,
+     * the output format will not have an entry with this key.
+     * <p>
+     * The associated value is an integer.
+     * <p>
+     * Currently, supported values are :<br>
+     * <li> 0 : {@link MediaFormat#ROI_DISABLED}<br>
+     * <li> 1 : {@link MediaFormat#ROI_TYPE_QP_MAP}<br>
+     * <li> 2 : {@link MediaFormat#ROI_TYPE_RECTANGLE}<br>
+     */
+    public static final String KEY_ROI_TYPE = "roi-type";
+
+    /**
+     * Region of interest encoding disabled (default behavior)
+     */
+    public static final int ROI_DISABLED = 0;
+
+    /**
+     * Region of interest encoding enabled. The encoder receives RoI in the form of qp map.
+     * <p>
+     * The encoder shall receive qp offset for all 16x16 blocks of the frame. The application is
+     * expected to send a byteArray of size (((width + 15) * (height + 15)) / (16 * 16)). Each
+     * entry in the byteArray corresponds to a coding unit of size 16x16 in the frame and it
+     * contains QP offset information to be used. This offset SHALL be in the region [-128, 127].
+     * The QP of target LCU will be calculated as frameQP + offsetQP. If the result exceeds minQP
+     * or maxQP configured then the value may be clamped. Negative offsets result in lower QP
+     * than frame QP and is expected to improve quality of those LCUs thus improving the overall
+     * viewing experience.
+     * <p>
+     * If byte array size is too large or too small than the expected size, an exception is raised.
+     */
+    public static final int ROI_TYPE_QP_MAP = 1;
+
+    /**
+     * Region of interest encoding enabled. The encoder receives RoI as an array of bounding
+     * boxes paired with qpOffset.
+     * <p>
+     * The encoder shall receive RoI info as an array of RoIRect object. The boundingBox field of
+     * RoIRect points to region of interest and offset field indicates the QP offset to be used
+     * to encode the LCUs in the bounding box. This offset SHALL be in the region [-128, 127].
+     * The QP of target LCU will be calculated as frameQP + offsetQP. If the result exceeds minQP
+     * or maxQP configured then the value may be clamped. Negative offsets result in lower QP
+     * than QP and is expected to improve quality of those LCUs thus improving the overall
+     * viewing experience.
+     * <p>
+     * If RoIs overlap, the later configuration wins.
+     * <p>
+     * If RoIs extend outside frame boundaries, an exception is raised.
+     * <p>
+     * RoIs can get stretched out if bounding box does not align to LCU boundaries
+     */
+    public static final int ROI_TYPE_RECTANGLE = 2;
+
+    /** @hide */
+    @IntDef({
+        ROI_DISABLED,
+        ROI_TYPE_QP_MAP,
+        ROI_TYPE_RECTANGLE,
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface RoIType {}
+
+    /**
+     * RoIRect represents region of interest in an image or frame as a box.
+     * The four integer coordinates of the box are stored in field of type
+     * {@link android.graphics.Rect}. This is paired with a suggestive qp
+     * offset information that is to be used during encoding of the LCUs
+     * belonging to the box. The fields boundingBox, qpOffset can be accessed
+     * directly. Use width() and height() to retrieve the RoI's width and height.
+     */
+    public static final class RoIRect implements Parcelable {
+        public Rect boundingBox;
+        public int qpOffset;
+
+        /**
+         * Create a new region of interest with the specified coordinates and qpOffset. Note: no
+         * range checking is performed, so the caller must ensure that it is a valid bounding box
+         *
+         * @param box   bounding box
+         * @param qpOffset   qpOffset to be used for the LCUs of the bounding box
+         */
+        public RoIRect(Rect box, int qpOffset) {
+            this.boundingBox = box;
+            this.qpOffset = qpOffset;
+        }
+
+        public boolean isValid() {
+            return boundingBox.isValid();
+        }
+
+        /**
+         * @return the rectangle's width. This does not check for a valid rectangle
+         * (i.e. left <= right) so the result may be negative.
+         */
+        public int width() {
+            return boundingBox.width();
+        }
+
+        /**
+         * @return the rectangle's height. This does not check for a valid rectangle
+         * (i.e. top <= bottom) so the result may be negative.
+         */
+        public int height() {
+            return boundingBox.height();
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(boundingBox.left);
+            dest.writeInt(boundingBox.top);
+            dest.writeInt(boundingBox.right);
+            dest.writeInt(boundingBox.bottom);
+            dest.writeInt(qpOffset);
+        }
+
+        /**
+         * Set the RoI and qpOffset from the data stored in the specified
+         * parcel. To write RoIRect to a parcel, call writeToParcel().
+         *
+         * @param in The parcel to read from
+         */
+        public void readFromParcel(@NonNull Parcel in) {
+            boundingBox.left = in.readInt();
+            boundingBox.top = in.readInt();
+            boundingBox.right = in.readInt();
+            boundingBox.bottom = in.readInt();
+            qpOffset = in.readInt();
+        }
+    }
+
+    /**
      * A key describing the audio session ID of the AudioTrack associated
      * to a tunneled video codec.
      * The associated value is an integer.
