@@ -16,6 +16,24 @@
       "message": "I also found the issue when review code and it has been fixed in google internal repo (http://ag/25108831). Can we just wait for next public repo sync?",
       "revId": "b25ed35ed7ab8509824c14e581468e0a1401904d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47bed4de_a4c9f077",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/users/AvatarPhotoController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 2016516
+      },
+      "writtenOn": "2023-12-08T12:38:41Z",
+      "side": 1,
+      "message": "By the way, a more concise fix is leverage try-with-resources (https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html)",
+      "parentUuid": "a6a4e53e_e3b21d74",
+      "revId": "b25ed35ed7ab8509824c14e581468e0a1401904d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
