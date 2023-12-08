@@ -22,6 +22,30 @@
       },
       "revId": "b94655026c26ef2453d2496aac2511b98625ea1c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b36220a_604ecbd6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2023-12-08T02:17:53Z",
+      "side": 1,
+      "message": "Thanks for your reply! The test case is adb install XXX.apk. The adb install process include 2 stage: \n1. send XXX.apk file from host PC to device and save as a temp file \n2. unpack the temp file and do other install jobs.\nIn the stage 1, FileUtils.copy function is called, this case st_in is a Socket file and st_out is Regular file.  \nIn original code, it dose not match copy optimizations condition, so it will run copyInternalUserspace path.\nIf use this patch, socket file--\u003epipe--\u003eregular file, we can get better performance.  \n\nThe detail test information is as followed:\nTest condition:\nHardware：QCOM XR2130， OS: Android 10\nTest case:\nadb install com.MyDearest.Altdeus.local.apk  ----apk file size:1966.3MiB\n\nThe test data is the average of 10 tests\nstage 1 copy file duration:  from 16s reduce to 11s,  reduce about 30%\nwhole install duration:  from 98s reduce to 93s,  reduce about 5%",
+      "parentUuid": "8c684930_deb9b0f3",
+      "range": {
+        "startLine": 14,
+        "startChar": 24,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "b94655026c26ef2453d2496aac2511b98625ea1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
