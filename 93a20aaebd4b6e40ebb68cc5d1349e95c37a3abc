@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "13fa710c_491b4696",
+        "filename": "core/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 22614,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-08T21:51:03Z",
+      "side": 1,
+      "message": "Also remember using feature flags for the API change.",
+      "range": {
+        "startLine": 22614,
+        "startChar": 37,
+        "endLine": 22614,
+        "endChar": 68
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8cdfb70d_30c2a4ee",
         "filename": "media/java/android/media/MediaCodec.java",
         "patchSetId": 1
