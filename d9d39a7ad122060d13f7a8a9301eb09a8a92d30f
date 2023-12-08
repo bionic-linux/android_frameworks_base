@@ -60,6 +60,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1044b0fe_cb91dae0",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-08T07:13:10Z",
+      "side": 1,
+      "message": "also, which module do you expect to create this? I think this will also relate to how you implement the method.",
+      "range": {
+        "startLine": 77,
+        "startChar": 11,
+        "endLine": 77,
+        "endChar": 32
+      },
+      "revId": "d9d39a7ad122060d13f7a8a9301eb09a8a92d30f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2a391a60_5766c997",
         "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
         "patchSetId": 2
