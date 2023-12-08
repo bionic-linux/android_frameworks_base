@@ -104,6 +104,24 @@
       "parentUuid": "1a111fb1_2c3a8442",
       "revId": "56e0fd9282c11abb4e8c0cc546b2435e7713c497",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "710717d4_cb22a9f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1967850
+      },
+      "writtenOn": "2023-12-08T17:32:03Z",
+      "side": 1,
+      "message": "Wanted to make sure we capture in the bug that this is not an app storage mechanism, rather a mechanism for the platform to store data per app, for example the Settings app storing user\u0027s choices for a specific app while the app itself would not be able to read or write to the DB",
+      "parentUuid": "5e26cdea_4157ed72",
+      "revId": "56e0fd9282c11abb4e8c0cc546b2435e7713c497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
