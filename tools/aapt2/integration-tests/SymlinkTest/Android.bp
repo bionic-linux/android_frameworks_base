@@ -26,4 +26,7 @@ package {
 android_test {
     name: "AaptSymlinkTest",
     sdk_version: "current",
+    compile_data: [
+        "targets/*",
+    ],
 }
