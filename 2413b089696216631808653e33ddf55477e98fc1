@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a9a5806_8a4aba9c",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-08T10:17:30Z",
+      "side": 1,
+      "message": "Nit: please add a newline in l.91 to separate the comment and @param",
+      "range": {
+        "startLine": 90,
+        "startChar": 15,
+        "endLine": 90,
+        "endChar": 16
+      },
+      "revId": "2413b089696216631808653e33ddf55477e98fc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ec61a69_f0ae6c45",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-08T10:17:30Z",
+      "side": 1,
+      "message": "Why this is called `alias` instead of `name` if it\u0027s the name of the blob?",
+      "range": {
+        "startLine": 91,
+        "startChar": 14,
+        "endLine": 91,
+        "endChar": 19
+      },
+      "revId": "2413b089696216631808653e33ddf55477e98fc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f43eba91_36a915d8",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-08T10:17:30Z",
+      "side": 1,
+      "message": "For a query, I think you just need getReadableDatabase().",
+      "range": {
+        "startLine": 121,
+        "startChar": 44,
+        "endLine": 121,
+        "endChar": 63
+      },
+      "revId": "2413b089696216631808653e33ddf55477e98fc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64df1ce8_528e78e6",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-08T10:17:30Z",
+      "side": 1,
+      "message": "This means system cannot query the data from other uid but system should have the right to look at things in overall system",
+      "range": {
+        "startLine": 125,
+        "startChar": 47,
+        "endLine": 125,
+        "endChar": 56
+      },
+      "revId": "2413b089696216631808653e33ddf55477e98fc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
