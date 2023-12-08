@@ -4765,6 +4765,58 @@ final public class MediaCodec {
     public static final String PARAMETER_KEY_TUNNEL_PEEK = "tunnel-peek";
 
     /**
+     * Set the region of interest map on the next queued input frame.
+     *<p>
+     * Provide a byte array of size (((width + 15) * (height + 15)) / (16 * 16)).
+     *<p>
+     * When an encoder is configured to encode with roi-type set to {@link
+     * MediaFormat#ROI_TYPE_QP_MAP} and the encoder operates in byte buffer input mode
+     * (instead of surface input mode), this parameter sets the roi qp map on the next
+     * input buffer queued to the encoder. This info is applicable only for the next
+     * queued input. If the encoder drops it, it is not propagated to future queued inputs.
+     * The contents of byte array are expected to contain qp offsets in the approximate range
+     * [-51, 51]. The QP of target LCU will be calculated as frameQP + offsetQP. If the
+     * result exceeds minQP and maxQP configured then the value may be clamped. Negative
+     * offsets result in lower QP than frame QP and is expected to improve quality of those
+     * LCUs thus improving the overall viewing experience.
+     *<p>
+     * If byte array size is too large or too small than the prescribed size, info is ignored.
+     *<p>
+     * This parameter shouldn't be set if the encoder is not configured for roi-type
+     * {@link MediaFormat#ROI_TYPE_QP_MAP}, or if it's operating in surface input mode.
+     *<p>
+     *
+     * @see MediaFormat#ROI_TYPE_QP_MAP
+     */
+    public static final String PARAMETER_KEY_ROI_QP_MAP_CONFIG = "roi-qp-map-config";
+
+    /**
+     * Set the region of interest bounding box on the next queued input frame.
+     *<p>
+     * Provide a string in the format "Top1,Left1-Bottom1,Right1=Offset1;Top2,Left2-Bottom2,
+     * Right2=Offset2;...". The Top, Left, Bottom, Right form the vertices of bounding box of
+     * region of interest. If a bounding box exceeds frame boundaries then info may be ignored.
+     * The bounding box is accompanied by an offset that is to be applied for all LCUs of the
+     * roi. This offset SHALL be in the region [-51, 51]. The QP of target LCU will be calculated
+     * as frameQP + offsetQP. If the result exceeds minQP and maxQP configured then the value
+     * will be clamped. Negative offsets result in lower QP than frame QP and is expected to
+     * improve quality of those LCUs thus improving the overall viewing experience.
+     *<p>
+     * When an encoder is configured to encode with roi-type set to {@link
+     * MediaFormat#ROI_TYPE_RECTANGLE} and the encoder operates in byte buffer input mode
+     * (instead of surface input mode), this parameter sets the roi on the next
+     * input buffer queued to the encoder. This info is applicable only for the next
+     * queued input. If the encoder drops it, it is not propagated to future queued inputs.
+     *<p>
+     * This parameter shouldn't be set if the encoder is not configured for roi-type
+     * {@link MediaFormat#ROI_TYPE_RECTANGLE}, or if it's operating in surface input mode.
+     *<p>
+     *
+     * @see MediaFormat#ROI_TYPE_RECTANGLE
+     */
+    public static final String PARAMETER_KEY_ROI_RECTS_CONFIG = "roi-rects-config";
+
+    /**
      * Communicate additional parameter changes to the component instance.
      * <b>Note:</b> Some of these parameter changes may silently fail to apply.
      *

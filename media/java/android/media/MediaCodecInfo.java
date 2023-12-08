@@ -692,6 +692,18 @@ public final class MediaCodecInfo {
         public static final String FEATURE_HdrEditing = "hdr-editing";
 
         /**
+         * <b>video encoder only</b>: codec supports region of interest encoding
+         * <p>
+         * If supported, clients can signal desired / critical areas of video frame. The encoder
+         * in-turn uses this information to preserve the quality better than other regions of the
+         * frame there by improving the overall viewing experience.
+         * When the mode is enabled, the decoder doesn't hold input and output data more than
+         * required by the codec standards.
+         */
+        @SuppressLint("AllUpper") // for consistency with other FEATURE_* constants
+        public static final String FEATURE_ROI = "region-of-interest";
+
+        /**
          * Query codec feature capabilities.
          * <p>
          * These features are supported to be used by the codec.  These
@@ -732,6 +744,7 @@ public final class MediaCodecInfo {
             new Feature(FEATURE_QpBounds, (1 << 3), false),
             new Feature(FEATURE_EncodingStatistics, (1 << 4), false),
             new Feature(FEATURE_HdrEditing, (1 << 5), false),
+            new Feature(FEATURE_ROI, (1 << 6), false),
             // feature to exclude codec from REGULAR codec list
             new Feature(FEATURE_SpecialCodec,     (1 << 30), false, true),
         };
