@@ -289,7 +289,7 @@ class LegacyBluetoothRouteController implements BluetoothRouteController {
         newBtRoute.mBtDevice = device;
 
         String routeId = device.getAddress();
-        String deviceName = device.getName();
+        String deviceName = device.getAlias();
         if (TextUtils.isEmpty(deviceName)) {
             deviceName = mContext.getResources().getText(R.string.unknownName).toString();
         }
