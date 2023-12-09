@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5ebe49d_712e542c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2023-12-09T08:58:08Z",
+      "side": 1,
+      "message": "me",
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "13fa710c_491b4696",
@@ -47,6 +64,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6c6f390_bb7b084b",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4773,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2023-12-09T08:58:08Z",
+      "side": 1,
+      "message": "I think byte buffer input mode also include block model",
+      "parentUuid": "8cdfb70d_30c2a4ee",
+      "range": {
+        "startLine": 4773,
+        "startChar": 64,
+        "endLine": 4773,
+        "endChar": 75
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c57ca55e_141c7b39",
@@ -60,6 +101,30 @@
       "writtenOn": "2023-12-08T18:48:37Z",
       "side": 1,
       "message": "exception",
+      "range": {
+        "startLine": 4783,
+        "startChar": 78,
+        "endLine": 4783,
+        "endChar": 93
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c75985fd_dbc8155e",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4783,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2023-12-09T08:58:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c57ca55e_141c7b39",
       "range": {
         "startLine": 4783,
         "startChar": 78,
@@ -93,6 +158,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bb5def7_9e875477",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4798,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2023-12-09T08:58:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c494ad3f_6b8f51b1",
+      "range": {
+        "startLine": 4798,
+        "startChar": 80,
+        "endLine": 4798,
+        "endChar": 94
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c76082cf_dade4bcb",
@@ -106,6 +195,30 @@
       "writtenOn": "2023-12-08T18:48:37Z",
       "side": 1,
       "message": "and block model",
+      "range": {
+        "startLine": 4806,
+        "startChar": 67,
+        "endLine": 4806,
+        "endChar": 83
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3c295b5_63ee74e6",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4806,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2023-12-09T08:58:08Z",
+      "side": 1,
+      "message": "same",
+      "parentUuid": "c76082cf_dade4bcb",
       "range": {
         "startLine": 4806,
         "startChar": 67,
@@ -162,6 +275,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "482f505a_4d41236c",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2023-12-09T08:58:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e058792_412c4680",
+      "range": {
+        "startLine": 698,
+        "startChar": 42,
+        "endLine": 698,
+        "endChar": 90
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ba7ee56_d31a4778",
@@ -175,6 +312,30 @@
       "writtenOn": "2023-12-08T18:48:37Z",
       "side": 1,
       "message": "Should be \"encoder\"? I\u0027m not clear about this description, could you give more info here?",
+      "range": {
+        "startLine": 700,
+        "startChar": 44,
+        "endLine": 700,
+        "endChar": 45
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cb69fd9_94a37a40",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2023-12-09T08:58:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ba7ee56_d31a4778",
       "range": {
         "startLine": 700,
         "startChar": 44,
@@ -208,6 +369,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "872f2377_cd7dec18",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2023-12-09T08:58:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0b16b11_dc333ad9",
+      "range": {
+        "startLine": 1371,
+        "startChar": 45,
+        "endLine": 1372,
+        "endChar": 27
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "731e3e0a_9fd65cbb",
@@ -231,6 +416,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "398bd120_f27087b3",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2023-12-09T08:58:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "731e3e0a_9fd65cbb",
+      "range": {
+        "startLine": 1401,
+        "startChar": 53,
+        "endLine": 1401,
+        "endChar": 73
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0138f1a_e994c450",
@@ -244,6 +453,30 @@
       "writtenOn": "2023-12-08T18:48:37Z",
       "side": 1,
       "message": "(same as above)\nFramework should have a pre-check before sending the info to hardware, and raise an exception for this case.",
+      "range": {
+        "startLine": 1419,
+        "startChar": 48,
+        "endLine": 1419,
+        "endChar": 73
+      },
+      "revId": "93a20aaebd4b6e40ebb68cc5d1349e95c37a3abc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51077b7d_ab1b19e1",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1419,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2023-12-09T08:58:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0138f1a_e994c450",
       "range": {
         "startLine": 1419,
         "startChar": 48,
