@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69a7d700_8d27cf89",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-11T07:56:20Z",
+      "side": 1,
+      "message": "Not sure if the drawables should be defined by UX team or we can define it in this way by ourselves.",
+      "revId": "e3599df7ad011ad8caf68739a0ef1a796e1bdac8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
