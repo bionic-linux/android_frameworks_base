@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbda5f92_53d11098",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-11T12:58:56Z",
+      "side": 1,
+      "message": "I think we should explicitly close the opened SQLiteDatabase after accessing it to prevent leakage.",
+      "range": {
+        "startLine": 147,
+        "startChar": 29,
+        "endLine": 147,
+        "endChar": 31
+      },
+      "revId": "1c33da091ec6d79b3c3d54399e569d6ce3f25037",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "177393b9_79ce7a07",
+        "filename": "core/tests/coretests/src/com/android/internal/net/ConnectivityBlobStoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-11T12:58:56Z",
+      "side": 1,
+      "message": "Could you also verify remove multiple rows from database?  e.g. put twice and call the #remove()",
+      "range": {
+        "startLine": 82,
+        "startChar": 16,
+        "endLine": 82,
+        "endChar": 26
+      },
+      "revId": "1c33da091ec6d79b3c3d54399e569d6ce3f25037",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
