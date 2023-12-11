@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "230a749a_aec0f756",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4770,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2023-12-11T23:56:28Z",
+      "side": 1,
+      "message": "byte array meaning 8-bit signed integers?",
+      "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dac6785_e060c019",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4777,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2023-12-11T23:56:28Z",
+      "side": 1,
+      "message": "I suppose the range could be different for different coding standards. Do we know if 8-bit signed integer is sufficient for current \u0026 future use cases?",
+      "range": {
+        "startLine": 4777,
+        "startChar": 72,
+        "endLine": 4777,
+        "endChar": 82
+      },
+      "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b87b3bb_792b67ce",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4792,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2023-12-11T23:56:28Z",
+      "side": 1,
+      "message": "need @FlaggedApi annotation",
+      "range": {
+        "startLine": 4792,
+        "startChar": 15,
+        "endLine": 4792,
+        "endChar": 16
+      },
+      "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a50cfe19_87a4d726",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4797,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2023-12-11T23:56:28Z",
+      "side": 1,
+      "message": "Let\u0027s discuss if we can do it without parsing strings. For example, we could define a data structure for the RoI rects:\n\n```java\nclass MediaFormat {\n    class RoiRect implements Parcelable {\n        Rect rect;\n        int qpOffset;\n        // Parcelable implementation to be used with Bundle.putParcelableArray()\n    }\n    public void setRoiRects(RoiRect[] rects);\n}\n```",
+      "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d2a56b9_37cb3d70",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4813,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2023-12-11T23:56:28Z",
+      "side": 1,
+      "message": "out of curiosity --- what is supposed to happen if the rects overlap?",
+      "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
