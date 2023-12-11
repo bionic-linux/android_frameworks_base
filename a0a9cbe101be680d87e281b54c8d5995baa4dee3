@@ -88,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1711ee13_c4dbf225",
+        "filename": "packages/SystemUI/res/drawable/stat_sys_no_internet_branded_vpn.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-11T05:33:17Z",
+      "side": 1,
+      "message": "it\u0027s on the aosp/2843414 in the same Topic",
+      "parentUuid": "17f23dae_1a530302",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 9
+      },
+      "revId": "a0a9cbe101be680d87e281b54c8d5995baa4dee3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b41e1f79_e9c615e4",
@@ -173,6 +197,30 @@
       "side": 1,
       "message": "For multi-users case, one possible way is to refer to getWorkProfileVpnName() design. You can map the interface between VpnConfig and LinkProperties so that you could know which network maps to which VPN.",
       "parentUuid": "0cf83292_9cac6087",
+      "range": {
+        "startLine": 311,
+        "startChar": 19,
+        "endLine": 311,
+        "endChar": 33
+      },
+      "revId": "a0a9cbe101be680d87e281b54c8d5995baa4dee3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d96aa873_2dca3e4a",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-11T05:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0500e57_3f88715f",
       "range": {
         "startLine": 311,
         "startChar": 19,
