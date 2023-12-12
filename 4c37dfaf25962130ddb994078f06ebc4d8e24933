@@ -193,6 +193,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbe086b5_fc2252ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1874394
+      },
+      "writtenOn": "2023-12-12T16:29:42Z",
+      "side": 1,
+      "message": "We should align reviewing the language list and updating the available languages with the ICU upgrade to 74.1 / ICU 74.2. It doesn\u0027t make sense to update this before the next ICU integration.",
+      "parentUuid": "33d57f6f_8874af96",
+      "revId": "4c37dfaf25962130ddb994078f06ebc4d8e24933",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df262f11_5fd93723",
