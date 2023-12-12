@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "225657e5_9be69a58",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 13409,
+      "author": {
+        "id": 1886292
+      },
+      "writtenOn": "2023-12-12T05:52:20Z",
+      "side": 1,
+      "message": "We need to get ICancellationSignal as return of this from Telephony FWK.\nAnd then set it to cs by calling setRemote. cs.setRemote(ICancellationSignal).",
+      "range": {
+        "startLine": 13409,
+        "startChar": 30,
+        "endLine": 13409,
+        "endChar": 57
+      },
+      "revId": "bba487caf44cc8baa32cba3b43e2d07bf3d7efa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
