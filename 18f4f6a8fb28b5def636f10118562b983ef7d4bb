@@ -109,6 +109,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "819651a3_418e2d4e",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4777,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-12T18:00:10Z",
+      "side": 1,
+      "message": "I think it\u0027s good to mention here that for 8-bit AVC and HEVC encoding, if this configuration exceeds [-51, 51] range an exception will be raised.",
+      "parentUuid": "8efcdef6_95c82354",
+      "range": {
+        "startLine": 4777,
+        "startChar": 72,
+        "endLine": 4777,
+        "endChar": 82
+      },
+      "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7b87b3bb_792b67ce",
         "filename": "media/java/android/media/MediaCodec.java",
         "patchSetId": 2
