@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "72b16376_2a639842",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4770,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-12T01:19:32Z",
+      "side": 1,
+      "message": "Yes. We\u0027ll support both positive and negative values.",
+      "parentUuid": "230a749a_aec0f756",
+      "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8dac6785_e060c019",
         "filename": "media/java/android/media/MediaCodec.java",
         "patchSetId": 2
@@ -31,6 +49,30 @@
       "writtenOn": "2023-12-11T23:56:28Z",
       "side": 1,
       "message": "I suppose the range could be different for different coding standards. Do we know if 8-bit signed integer is sufficient for current \u0026 future use cases?",
+      "range": {
+        "startLine": 4777,
+        "startChar": 72,
+        "endLine": 4777,
+        "endChar": 82
+      },
+      "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a047a7e_2974ee5e",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4777,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-12T01:19:32Z",
+      "side": 1,
+      "message": "Currently ROI is only available for AVC and HEVC, and QP range for both are the same [0, 51], so it\u0027s sufficient now.\n\nThinking about future codecs, AV1 QP range is [0, 255], we will have some solution eg use two bytes to present one 16x16 block, or define some ladder for the configuration, and the configuration is still being passed through byte array, and it\u0027s out of scope of this change.\n\nCurrent solution, I\u0027d prefer noting downing [-51, 51] range is for AVC and HEVC here.",
+      "parentUuid": "8dac6785_e060c019",
       "range": {
         "startLine": 4777,
         "startChar": 72,
@@ -83,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "30f5e86f_8644ffd3",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4797,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-12T01:19:32Z",
+      "side": 1,
+      "message": "Yes I agree this is better. Reason I use String in my original design is that I want to take advantage of existing String related methods for block model setStringParameters etc, and looks like parsing a object parameter is not supported there. I.e. We\u0027ll add a `setObjectParameter()` in `MediaCodec.QueueRequest` and parse the parameter down to C2.\n\nFor byte buffer we can use `Bundle.putObject()`.\n\nHi Ram, could you please estimate addition code change needed there? Thanks!",
+      "parentUuid": "a50cfe19_87a4d726",
+      "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d2a56b9_37cb3d70",
         "filename": "media/java/android/media/MediaCodec.java",
         "patchSetId": 2
@@ -94,6 +154,24 @@
       "writtenOn": "2023-12-11T23:56:28Z",
       "side": 1,
       "message": "out of curiosity --- what is supposed to happen if the rects overlap?",
+      "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5c0fcad_72f7364e",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4813,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-12T01:19:32Z",
+      "side": 1,
+      "message": "The latter wins. I think it was mentioned in other CL. Hi Ram, could you add it here? Thanks!",
+      "parentUuid": "2d2a56b9_37cb3d70",
       "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
