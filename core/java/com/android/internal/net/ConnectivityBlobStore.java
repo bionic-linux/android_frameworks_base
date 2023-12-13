@@ -109,4 +109,23 @@ public class ConnectivityBlobStore {
 
         return null;
     }
+
+    /**
+     * Removes a blob by the name from the database.
+     *
+     * @param name Name of the blob to be removed.
+     * @return True if a blob was removed. False if no such name was found.
+     * @hide
+     */
+    public boolean remove(@NonNull String name) {
+        try {
+            final int res = mDb.delete(TABLENAME,
+                    "name=?" /* whereClause */,
+                    new String[] {name} /* whereArgs */);
+            return res > 0;
+        } catch (SQLException e) {
+            Log.e(TAG, "Error in remove " + e);
+            return false;
+        }
+    }
 }
