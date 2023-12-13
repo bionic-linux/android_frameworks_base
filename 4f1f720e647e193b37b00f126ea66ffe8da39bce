@@ -33,6 +33,42 @@
       "message": "Thanks for the fix. Can we also add a unit test for this?",
       "revId": "4f1f720e647e193b37b00f126ea66ffe8da39bce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d1f23a3_f54d735b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1869677
+      },
+      "writtenOn": "2023-12-13T02:47:40Z",
+      "side": 1,
+      "message": "DONE",
+      "parentUuid": "4b927d11_53bb674b",
+      "revId": "4f1f720e647e193b37b00f126ea66ffe8da39bce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d05384a6_0b786420",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1869677
+      },
+      "writtenOn": "2023-12-13T02:47:40Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "d023992c_148eb5ff",
+      "revId": "4f1f720e647e193b37b00f126ea66ffe8da39bce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
