@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d31ed0a3_81b74c06",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-13T03:27:46Z",
+      "side": 1,
+      "message": "This may be also useful for the default network validation status change. It\u0027s only used for VPN networks, and will be updated with the changes of VPN network. It should be better to rename to mVpnValidationResults or something similar so that other people will not misused it.\n\nOr if you consider to also be used for other non-VPN networks, you may want to update where to update this SparseBooleanArray.",
+      "range": {
+        "startLine": 108,
+        "startChar": 31,
+        "endLine": 108,
+        "endChar": 49
+      },
+      "revId": "7403906bccf5b44af7a237baf62b3ccdcde5eee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f81bc62f_feff722b",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-13T03:27:46Z",
+      "side": 1,
+      "message": "Why this is true here? If there is no key found, I think we should considered as unvalidated. A new network will always started from unvalidated to validated once the network complete the validation process. If there is no such item in your record, it\u0027s more likely a network which should be considered as unvalidated.",
+      "range": {
+        "startLine": 318,
+        "startChar": 54,
+        "endLine": 318,
+        "endChar": 58
+      },
+      "revId": "7403906bccf5b44af7a237baf62b3ccdcde5eee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "725d10ca_277f94ef",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-13T03:27:46Z",
+      "side": 1,
+      "message": "Nit: I see you may refer to the design in #isVpnEnabled(). Should we use getEnabledProfileIds instead of getProfileIdsWithDisabled? I think we should not have VPN network(or any other network) for disabled users. Though it may be no harm here, those disabled Ids are redundant information.",
+      "range": {
+        "startLine": 320,
+        "startChar": 42,
+        "endLine": 320,
+        "endChar": 67
+      },
+      "revId": "7403906bccf5b44af7a237baf62b3ccdcde5eee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee7812ff_35e4d35b",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-13T03:27:46Z",
+      "side": 1,
+      "message": "ditto concern here",
+      "range": {
+        "startLine": 321,
+        "startChar": 90,
+        "endLine": 321,
+        "endChar": 94
+      },
+      "revId": "7403906bccf5b44af7a237baf62b3ccdcde5eee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "442df44a_9a31d859",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-13T03:27:46Z",
+      "side": 1,
+      "message": "If you cannot find any VPN validated, I think it\u0027s usually considered as unvalidated since we have no clue that VPN is validated.",
+      "range": {
+        "startLine": 325,
+        "startChar": 15,
+        "endLine": 325,
+        "endChar": 19
+      },
+      "revId": "7403906bccf5b44af7a237baf62b3ccdcde5eee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "019c0b7f_5be244b0",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-13T03:27:46Z",
+      "side": 1,
+      "message": "Nit: The comment format should be:\n```\n/** \n *  For the given network, determine if it is a VPN network and, if so,\n *  return the user id of the profile where it was created.\n */\n```\n\nAlso,\nif you want to describe what is returned here. The format should be something like:\n```\n/**\n * Description\n *\n * @param aaa what is aaa\n * @return what the return value is\n */ \n```\n\nYou could refer to other java doc from other public APIs.",
+      "range": {
+        "startLine": 504,
+        "startChar": 4,
+        "endLine": 506,
+        "endChar": 7
+      },
+      "revId": "7403906bccf5b44af7a237baf62b3ccdcde5eee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bad7c3d2_a6c1fbba",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-13T03:27:46Z",
+      "side": 1,
+      "message": "When you update the design, try to return first if the target network is no a VPN network. In general, we prefer return first strategy.",
+      "range": {
+        "startLine": 507,
+        "startChar": 16,
+        "endLine": 507,
+        "endChar": 42
+      },
+      "revId": "7403906bccf5b44af7a237baf62b3ccdcde5eee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bab489d_15e8cadc",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-13T03:27:46Z",
+      "side": 1,
+      "message": "https://developer.android.com/reference/android/net/ConnectivityManager.NetworkCallback#onCapabilitiesChanged(android.net.Network,%20android.net.NetworkCapabilities)\n\nPlease do not call any synchronous ConnectivityManager methods in the NetworkCallback calls as this is prone to race conditions. If you need linkproperties, you should get it from the callback and store it locally.",
+      "range": {
+        "startLine": 509,
+        "startChar": 37,
+        "endLine": 509,
+        "endChar": 54
+      },
+      "revId": "7403906bccf5b44af7a237baf62b3ccdcde5eee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09961b97_3759338e",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-13T03:27:46Z",
+      "side": 1,
+      "message": "Ditto for this",
+      "range": {
+        "startLine": 511,
+        "startChar": 37,
+        "endLine": 511,
+        "endChar": 59
+      },
+      "revId": "7403906bccf5b44af7a237baf62b3ccdcde5eee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f65bbe4f_e53e0056",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-13T03:27:46Z",
+      "side": 1,
+      "message": "Nit: You\u0027re actually return a userId, not profileId. I think the method name should be getUserIdxxxxx or getProfileUserIdxxx",
+      "range": {
+        "startLine": 526,
+        "startChar": 15,
+        "endLine": 526,
+        "endChar": 35
+      },
+      "revId": "7403906bccf5b44af7a237baf62b3ccdcde5eee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c4baa18_d84e0087",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-13T03:27:46Z",
+      "side": 1,
+      "message": "Could you add a comment here to explain why it returns here?",
+      "range": {
+        "startLine": 550,
+        "startChar": 12,
+        "endLine": 550,
+        "endChar": 52
+      },
+      "revId": "7403906bccf5b44af7a237baf62b3ccdcde5eee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
