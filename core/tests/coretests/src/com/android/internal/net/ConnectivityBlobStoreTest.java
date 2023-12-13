@@ -70,4 +70,45 @@ public class ConnectivityBlobStoreTest {
         assertTrue(mConnectivityBlobStore.put(TEST_NAME, newBlob));
         assertArrayEquals(newBlob, mConnectivityBlobStore.get(TEST_NAME));
     }
+
+    @Test
+    public void testRemove() throws Exception {
+        assertNull(mConnectivityBlobStore.get(TEST_NAME));
+        assertFalse(mConnectivityBlobStore.remove(TEST_NAME));
+
+        assertTrue(mConnectivityBlobStore.put(TEST_NAME, TEST_BLOB));
+        assertArrayEquals(TEST_BLOB, mConnectivityBlobStore.get(TEST_NAME));
+
+        assertTrue(mConnectivityBlobStore.remove(TEST_NAME));
+        assertNull(mConnectivityBlobStore.get(TEST_NAME));
+
+        // Removing again returns false
+        assertFalse(mConnectivityBlobStore.remove(TEST_NAME));
+    }
+
+    @Test
+    public void testMultipleNames() throws Exception {
+        final String name1 = TEST_NAME + "1";
+        final String name2 = TEST_NAME + "2";
+        assertNull(mConnectivityBlobStore.get(name1));
+        assertNull(mConnectivityBlobStore.get(name2));
+        assertFalse(mConnectivityBlobStore.remove(name1));
+        assertFalse(mConnectivityBlobStore.remove(name2));
+
+        assertTrue(mConnectivityBlobStore.put(name1, TEST_BLOB));
+        assertTrue(mConnectivityBlobStore.put(name2, TEST_BLOB));
+        assertArrayEquals(TEST_BLOB, mConnectivityBlobStore.get(name1));
+        assertArrayEquals(TEST_BLOB, mConnectivityBlobStore.get(name2));
+
+        // Replace the blob for name1 only.
+        final byte[] newBlob = new byte[] {(byte) 16, (byte) 21};
+        assertTrue(mConnectivityBlobStore.put(name1, newBlob));
+        assertArrayEquals(newBlob, mConnectivityBlobStore.get(name1));
+
+        assertTrue(mConnectivityBlobStore.remove(name1));
+        assertNull(mConnectivityBlobStore.get(name1));
+        assertArrayEquals(TEST_BLOB, mConnectivityBlobStore.get(name2));
+
+        assertFalse(mConnectivityBlobStore.remove(name1));
+    }
 }
