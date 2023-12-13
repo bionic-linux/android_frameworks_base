@@ -26,6 +26,8 @@ import android.util.Log;
 import com.android.internal.annotations.VisibleForTesting;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Database for storing blobs with a key of name strings.
@@ -128,5 +130,37 @@ public class ConnectivityBlobStore {
         }
 
         return false;
+    }
+
+    /**
+     * Lists the name suffixes stored in the database matching the given prefix, sorted in
+     * ascending order.
+     *
+     * @param prefix String of prefix to list from the stored names.
+     * @return An array of strings representing the name suffixes stored in the database
+     *         matching the given prefix, sorted in ascending order.
+     *         The return value may be empty but never null.
+     * @hide
+     */
+    public String[] list(@NonNull String prefix) {
+        final List<String> names = new ArrayList<String>();
+        try (Cursor cursor = mDb.query(TABLENAME,
+                new String[] {"name"} /* columns */,
+                "name LIKE ?" /* selection */,
+                new String[] {prefix + "%"} /* selectionArgs */,
+                null /* groupBy */,
+                null /* having */,
+                "name ASC" /* orderBy */)) {
+            if (cursor.moveToFirst()) {
+                do {
+                    final String name = cursor.getString(0);
+                    names.add(name.substring(prefix.length()));
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "Error in list " + e);
+        }
+
+        return names.toArray(new String[names.size()]);
     }
 }
