@@ -16,7 +16,9 @@
 
 package com.android.internal.net;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
@@ -27,6 +29,7 @@ import androidx.test.filters.SmallTest;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
@@ -36,6 +39,8 @@ import java.io.File;
 public class ConnectivityBlobStoreTest {
     private static final String DATABASE_FILENAME = "ConnectivityBlobStore.db";
     private ConnectivityBlobStore mConnectivityBlobStore;
+    private static final String TEST_NAME = "TEST_NAME";
+    private static final byte[] TEST_BLOB = new byte[] {(byte) 10, (byte) 90, (byte) 45, (byte) 12};
 
     @Before
     public void setUp() throws Exception {
@@ -51,5 +56,18 @@ public class ConnectivityBlobStoreTest {
     public void tearDown() throws Exception {
         final Context context = InstrumentationRegistry.getContext();
         assertTrue(context.deleteDatabase(DATABASE_FILENAME));
+    }
+
+    @Test
+    public void testPutAndGet() throws Exception {
+        assertNull(mConnectivityBlobStore.get(TEST_NAME));
+
+        assertTrue(mConnectivityBlobStore.put(TEST_NAME, TEST_BLOB));
+        assertArrayEquals(TEST_BLOB, mConnectivityBlobStore.get(TEST_NAME));
+
+        // Test replacement
+        final byte[] newBlob = new byte[] {(byte) 15, (byte) 20};
+        assertTrue(mConnectivityBlobStore.put(TEST_NAME, newBlob));
+        assertArrayEquals(newBlob, mConnectivityBlobStore.get(TEST_NAME));
     }
 }
