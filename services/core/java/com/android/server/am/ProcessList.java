@@ -2989,10 +2989,19 @@ public final class ProcessList {
             }
         }
 
-        final int packageUID = UserHandle.getUid(userId, appId);
+        int packageUID = -1;
         final boolean doFreeze = appId >= Process.FIRST_APPLICATION_UID
                               && appId <= Process.LAST_APPLICATION_UID;
         if (doFreeze) {
+            if (userId >= 0) {
+                packageUID = UserHandle.getUid(userId, appId);
+            } else if (userId == UserHandle.USER_CURRENT) {
+                packageUID = UserHandle.getUid(ActivityManager.getCurrentUser(), appId);
+            } else {
+                // See b/316198981. Kills will work, but freezes will fail.
+                Slog.w(TAG, "Freeze kills for multiple users not currently supported");
+            }
+
             freezeBinderAndPackageCgroup(procs, packageUID);
         }
 
