@@ -86,6 +86,24 @@
       "message": "I have uploaded new winscope trace in issue 311117928, please check it",
       "revId": "42a17044dafcba8e1878d78e7ab3ce2a2c47a93a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ffdb7e5_369d6cd7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2023-12-13T20:35:40Z",
+      "side": 1,
+      "message": "Ping",
+      "parentUuid": "7c087372_c49ac699",
+      "revId": "42a17044dafcba8e1878d78e7ab3ce2a2c47a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
