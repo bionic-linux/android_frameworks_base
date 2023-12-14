@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63675661_4cd0885c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1562839
+      },
+      "writtenOn": "2023-12-14T21:01:14Z",
+      "side": 1,
+      "message": "Nice catch. We actually have an internal patch that fixed this exact issue in the same way you fixed (ag/24958509 - for other reviewers that may need to look at it), next release will contain the fix, in the meantime you can use your patch locally (unless there is a strong reason that we CP the patch before the next release?) but I don\u0027t think we need to land it in AOSP as it would conflict then conflict with our fix.",
+      "revId": "6465701e92cdb827c29364314bf61b9d2d144f85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
