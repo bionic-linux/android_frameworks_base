@@ -122,6 +122,24 @@
       "parentUuid": "6ffdb7e5_369d6cd7",
       "revId": "42a17044dafcba8e1878d78e7ab3ce2a2c47a93a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d88bc1e6_2a85c069",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2023-12-14T10:48:16Z",
+      "side": 1,
+      "message": "Unresolving the comment\n\n\u003e From looking at this more, I still don\u0027t see how the patch can be correct. And in the screenshot in the bug the version of code being used for testing looks old.\n\u003e \n\u003e I see this similar fix in the tree of the CL, but the code in the screenshots seems to be missing it: https://android.googlesource.com/platform/frameworks/base/+/35a4968041dc0e35d924006a019e4ac2ae6cdc70\n\u003e \n\u003e Any feedback on that other fix for apparently the same problem? (matches the description in issue 311117928 comment4)\n\nA winscope trace does not answer this question. Please answer this question.",
+      "parentUuid": "d6b6a29f_6af06278",
+      "revId": "42a17044dafcba8e1878d78e7ab3ce2a2c47a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
