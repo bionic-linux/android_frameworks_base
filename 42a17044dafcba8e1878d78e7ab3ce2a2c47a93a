@@ -158,6 +158,24 @@
       "parentUuid": "d88bc1e6_2a85c069",
       "revId": "42a17044dafcba8e1878d78e7ab3ce2a2c47a93a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fda97987_0594404f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2069110
+      },
+      "writtenOn": "2023-12-15T05:41:26Z",
+      "side": 1,
+      "message": "Please ignore the code in the screenshot. My intention was to show the code that caused the issue, and the fix you posted is not addressing the same issue as the change I submitted. I have already provided a detailed explanation of the root cause of the problem in issue 311117928 comment #14",
+      "parentUuid": "933a31f2_cdbf92c4",
+      "revId": "42a17044dafcba8e1878d78e7ab3ce2a2c47a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
