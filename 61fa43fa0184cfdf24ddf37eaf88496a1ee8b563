@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aaf28fdb_3d41a8ef",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-15T10:09:15Z",
+      "side": 1,
+      "message": "The prefix match is now done in the SQL using the LIKE clause.",
+      "range": {
+        "startLine": 149,
+        "startChar": 22,
+        "endLine": 149,
+        "endChar": 26
+      },
+      "revId": "61fa43fa0184cfdf24ddf37eaf88496a1ee8b563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
