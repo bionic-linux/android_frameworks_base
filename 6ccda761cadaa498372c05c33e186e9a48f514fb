@@ -16,6 +16,23 @@
       "message": "+Nolan for review-enforcement",
       "revId": "6ccda761cadaa498372c05c33e186e9a48f514fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02bddff4_616a246a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1739295
+      },
+      "writtenOn": "2023-12-15T03:50:04Z",
+      "side": 1,
+      "message": "Hi John, I don\u0027t have permission to these internal links, would you help to check the warning details? @jreck@google.com",
+      "revId": "6ccda761cadaa498372c05c33e186e9a48f514fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
