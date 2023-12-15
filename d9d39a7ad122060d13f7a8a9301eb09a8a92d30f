@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e939e95c_8b6a654d",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-15T10:05:02Z",
+      "side": 1,
+      "message": "It is now a base class and takes the name as a parameter.",
+      "parentUuid": "8b0e0a28_cb6d3393",
+      "range": {
+        "startLine": 43,
+        "startChar": 57,
+        "endLine": 43,
+        "endChar": 81
+      },
+      "revId": "d9d39a7ad122060d13f7a8a9301eb09a8a92d30f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1044b0fe_cb91dae0",
@@ -71,6 +95,30 @@
       "writtenOn": "2023-12-08T07:13:10Z",
       "side": 1,
       "message": "also, which module do you expect to create this? I think this will also relate to how you implement the method.",
+      "range": {
+        "startLine": 77,
+        "startChar": 11,
+        "endLine": 77,
+        "endChar": 32
+      },
+      "revId": "d9d39a7ad122060d13f7a8a9301eb09a8a92d30f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80ee3e7e_0e9cc7a1",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-15T10:05:02Z",
+      "side": 1,
+      "message": "Updated. Now it is expected that different modules can create this but it will still lead to the same database.",
+      "parentUuid": "1044b0fe_cb91dae0",
       "range": {
         "startLine": 77,
         "startChar": 11,
@@ -104,6 +152,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc79bb01_847fb02e",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-15T10:05:02Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "2a391a60_5766c997",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 49
+      },
+      "revId": "d9d39a7ad122060d13f7a8a9301eb09a8a92d30f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a9d549c_c0efad0e",
@@ -117,6 +189,30 @@
       "writtenOn": "2023-12-08T05:51:58Z",
       "side": 1,
       "message": "It\u0027s either you add these methods later or add the doc without leaving it empty(`/** */`).",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 5
+      },
+      "revId": "d9d39a7ad122060d13f7a8a9301eb09a8a92d30f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "523a66d6_7e64726f",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-15T10:05:02Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "3a9d549c_c0efad0e",
       "range": {
         "startLine": 84,
         "startChar": 4,
@@ -150,6 +246,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "faa07d73_c4b486b4",
+        "filename": "core/java/com/android/internal/net/TEST_MAPPING",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-15T10:05:02Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "ef431640_128cfc8a",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 5
+      },
+      "revId": "d9d39a7ad122060d13f7a8a9301eb09a8a92d30f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe67e5b5_bb1bbd39",
@@ -163,6 +283,30 @@
       "writtenOn": "2023-12-08T05:51:58Z",
       "side": 1,
       "message": "Do you verify if the db is created?",
+      "range": {
+        "startLine": 33,
+        "startChar": 37,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "d9d39a7ad122060d13f7a8a9301eb09a8a92d30f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55808409_3a1795d3",
+        "filename": "core/tests/coretests/src/com/android/internal/net/ConnectivityBlobStoreTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-15T10:05:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe67e5b5_bb1bbd39",
       "range": {
         "startLine": 33,
         "startChar": 37,
