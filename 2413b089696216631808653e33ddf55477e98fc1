@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "13d4c3f9_eb0ea6f5",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-15T10:07:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a9a5806_8a4aba9c",
+      "range": {
+        "startLine": 90,
+        "startChar": 15,
+        "endLine": 90,
+        "endChar": 16
+      },
+      "revId": "2413b089696216631808653e33ddf55477e98fc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ec61a69_f0ae6c45",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-12-08T10:17:30Z",
       "side": 1,
       "message": "Why this is called `alias` instead of `name` if it\u0027s the name of the blob?",
+      "range": {
+        "startLine": 91,
+        "startChar": 14,
+        "endLine": 91,
+        "endChar": 19
+      },
+      "revId": "2413b089696216631808653e33ddf55477e98fc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec1d25fb_e8c487c4",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-15T10:07:11Z",
+      "side": 1,
+      "message": "Just following the existing naming, but you are right, it makes sense to just use `name`",
+      "parentUuid": "2ec61a69_f0ae6c45",
       "range": {
         "startLine": 91,
         "startChar": 14,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1a71be3_e885ea55",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-15T10:07:11Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "f43eba91_36a915d8",
+      "range": {
+        "startLine": 121,
+        "startChar": 44,
+        "endLine": 121,
+        "endChar": 63
+      },
+      "revId": "2413b089696216631808653e33ddf55477e98fc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "64df1ce8_528e78e6",
@@ -83,6 +155,30 @@
       "writtenOn": "2023-12-08T10:17:30Z",
       "side": 1,
       "message": "This means system cannot query the data from other uid but system should have the right to look at things in overall system",
+      "range": {
+        "startLine": 125,
+        "startChar": 47,
+        "endLine": 125,
+        "endChar": 56
+      },
+      "revId": "2413b089696216631808653e33ddf55477e98fc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e10c7a75_b3e30421",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-15T10:07:11Z",
+      "side": 1,
+      "message": "Redesigned.",
+      "parentUuid": "64df1ce8_528e78e6",
       "range": {
         "startLine": 125,
         "startChar": 47,
