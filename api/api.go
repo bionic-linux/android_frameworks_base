@@ -64,6 +64,7 @@ type CombinedApisProperties struct {
 
 type CombinedApis struct {
 	android.ModuleBase
+	android.DefaultableModuleBase
 
 	properties CombinedApisProperties
 }
@@ -72,8 +73,13 @@ func init() {
 	registerBuildComponents(android.InitRegistrationContext)
 }
 
+var PrepareForTestWithCombinedApis = android.FixtureRegisterWithContext(func(ctx android.RegistrationContext) {
+	registerBuildComponents(ctx)
+})
+
 func registerBuildComponents(ctx android.RegistrationContext) {
 	ctx.RegisterModuleType("combined_apis", combinedApisModuleFactory)
+	ctx.RegisterModuleType("combined_apis_defaults", CombinedApisModuleDefaultsFactory)
 }
 
 var PrepareForCombinedApisTest = android.FixtureRegisterWithContext(registerBuildComponents)
@@ -409,6 +415,7 @@ func combinedApisModuleFactory() android.Module {
 	module := &CombinedApis{}
 	module.AddProperties(&module.properties)
 	android.InitAndroidModule(module)
+	android.InitDefaultableModule(module)
 	android.AddLoadHook(module, func(ctx android.LoadHookContext) { module.createInternalModules(ctx) })
 	return module
 }
@@ -444,4 +451,17 @@ func remove(s []string, v string) []string {
 		}
 	}
 	return s2
+}
+
+// Defaults
+type CombinedApisModuleDefaults struct {
+	android.ModuleBase
+	android.DefaultsModuleBase
+}
+
+func CombinedApisModuleDefaultsFactory() android.Module {
+	module := &CombinedApisModuleDefaults{}
+	module.AddProperties(&CombinedApisProperties{})
+	android.InitDefaultsModule(module)
+	return module
 }
