@@ -72,6 +72,10 @@ func init() {
 	registerBuildComponents(android.InitRegistrationContext)
 }
 
+var PrepareForTestWithCombinedApis = android.FixtureRegisterWithContext(func(ctx android.RegistrationContext) {
+	registerBuildComponents(ctx)
+})
+
 func registerBuildComponents(ctx android.RegistrationContext) {
 	ctx.RegisterModuleType("combined_apis", combinedApisModuleFactory)
 }
