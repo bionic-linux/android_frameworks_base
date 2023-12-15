@@ -22,6 +22,30 @@
       },
       "revId": "ee705be8dbff48b0b9cfaeba6855f7b15da79aa4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ac9a457_7e5fd0b8",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-15T10:08:00Z",
+      "side": 1,
+      "message": "Nice catch. No it does not.\n\nAdded the try catch.",
+      "parentUuid": "b10ad3a4_f9a0fe94",
+      "range": {
+        "startLine": 148,
+        "startChar": 27,
+        "endLine": 148,
+        "endChar": 33
+      },
+      "revId": "ee705be8dbff48b0b9cfaeba6855f7b15da79aa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2f30391_c573e100",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-15T10:08:00Z",
+      "side": 1,
+      "message": "I think the close() should be called when the DbHelper is no longer needed,",
+      "parentUuid": "fbda5f92_53d11098",
+      "range": {
+        "startLine": 147,
+        "startChar": 29,
+        "endLine": 147,
+        "endChar": 31
+      },
+      "revId": "1c33da091ec6d79b3c3d54399e569d6ce3f25037",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "177393b9_79ce7a07",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-12-11T12:58:56Z",
       "side": 1,
       "message": "Could you also verify remove multiple rows from database?  e.g. put twice and call the #remove()",
+      "range": {
+        "startLine": 82,
+        "startChar": 16,
+        "endLine": 82,
+        "endChar": 26
+      },
+      "revId": "1c33da091ec6d79b3c3d54399e569d6ce3f25037",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ef73c4f_a68ea90e",
+        "filename": "core/tests/coretests/src/com/android/internal/net/ConnectivityBlobStoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-15T10:08:00Z",
+      "side": 1,
+      "message": "Not sure what you mean by multiple rows? #remove() should only ever remove one row? Did you mean the case where there are multiple rows and it should only remove one?\n\nAdded a test where there are multiple names in the database.",
+      "parentUuid": "177393b9_79ce7a07",
       "range": {
         "startLine": 82,
         "startChar": 16,
