@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3023ced5_60b616e7",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1882601
+      },
+      "writtenOn": "2023-12-15T22:53:14Z",
+      "side": 1,
+      "message": "nit: Consider moving the `return false` line into the catch block",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 21
+      },
+      "revId": "c00ae56a23b178939e4659e1fba218629b272c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d08b482b_e6bb31fa",
+        "filename": "core/tests/coretests/src/com/android/internal/net/ConnectivityBlobStoreTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1882601
+      },
+      "writtenOn": "2023-12-15T22:53:14Z",
+      "side": 1,
+      "message": "Should we also remove `name2` at the end of the test?",
+      "range": {
+        "startLine": 112,
+        "startChar": 43,
+        "endLine": 112,
+        "endChar": 56
+      },
+      "revId": "c00ae56a23b178939e4659e1fba218629b272c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
