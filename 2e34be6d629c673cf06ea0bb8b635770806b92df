@@ -166,6 +166,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7b882a31_5753a768",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-18T08:20:39Z",
+      "side": 1,
+      "message": "yes, the key icon will still be displayed when the only VPN network is within the work profile.",
+      "parentUuid": "ab7735dc_48f67479",
+      "range": {
+        "startLine": 317,
+        "startChar": 12,
+        "endLine": 340,
+        "endChar": 39
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c2a85b9a_7c532cc1",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
         "patchSetId": 8
