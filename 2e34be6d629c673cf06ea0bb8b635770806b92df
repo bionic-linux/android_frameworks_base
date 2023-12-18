@@ -142,6 +142,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ab7735dc_48f67479",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-18T08:05:36Z",
+      "side": 1,
+      "message": "The idea is to align with the key icon. If we will show key icon for work profile only, then we need to reflect the validation status. Does system UI display it only for work profile?",
+      "parentUuid": "1c18e263_f83e7ad8",
+      "range": {
+        "startLine": 317,
+        "startChar": 12,
+        "endLine": 340,
+        "endChar": 39
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c2a85b9a_7c532cc1",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
         "patchSetId": 8
