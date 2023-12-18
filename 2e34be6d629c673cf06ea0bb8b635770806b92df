@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0b3d52f_c9a67791",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-18T07:36:33Z",
+      "side": 1,
+      "message": "final (to also address the errorprone warning)",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 13
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73748cb7_9b7044b5",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-18T07:36:33Z",
+      "side": 1,
+      "message": "You may want to dump mNetworkProperties array status here for debugging.",
+      "range": {
+        "startLine": 169,
+        "startChar": 8,
+        "endLine": 169,
+        "endChar": 9
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11648748_c227fd98",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-18T07:36:33Z",
+      "side": 1,
+      "message": "In this case, haveInvalidationResult will be updated to true as a final result. You can actually return here",
+      "range": {
+        "startLine": 336,
+        "startChar": 20,
+        "endLine": 336,
+        "endChar": 50
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b146bca1_ffad80dc",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-18T07:36:33Z",
+      "side": 1,
+      "message": "Prevent to have double negative coding which it not easily to understand. See go/tott/685",
+      "range": {
+        "startLine": 340,
+        "startChar": 15,
+        "endLine": 340,
+        "endChar": 38
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f76f453_3623d2b1",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-18T07:36:33Z",
+      "side": 1,
+      "message": "I think you do not need so many local intermediary variables. The logic can be reduced to the logic below. IIUC, the concept here is to mainly refer to the status from parent user. I expect we should always have a parent user(?). If so, the result of parent user should dominate the result. If we cannot find a parent user, maybe just fallback to previous design to always report validated since this may be a unusual case. WDYT?\n\n \n```\npublic boolean isVpnValidated() {\n    for (int profileId : mUserManager.getEnabledProfileIds(mVpnUserId)) {\n        final VpnConfig vpnConfig \u003d mCurrentVpns.get(profileId);\n        if (vpnConfig \u003d\u003d null) {\n            continue;\n        }\n                \n        // If multiple VPN networks exist in profiles, prioritize reporting\n        // the network status of the parent user.\n        if (profileId \u003d\u003d mVpnUserId) {\n            return getVpnValidationStatus(vpnConfig.interfaze);\n        }\n    }\n\n    // No result for current userId. Fallback to previous design to always\n    // report validated.\n    return true;\n}\n\n// Find the network has the same interface as the VpnConfig\nprivate boolean getVpnValidationStatus(String interfaceName) {\n    synchronized (mNetworkProperties) {\n        for (int i \u003d 0; i \u003c mNetworkProperties.size(); ++i) {\n            if (mNetworkProperties.valueAt(i).interfaceName.equals(interfaceName)) {\n                return mNetworkProperties.valueAt(i).validated;\n            }\n        }\n    }\n    // No matched result. Return fallback result as validated.\n    return true; \n}\n```",
+      "range": {
+        "startLine": 317,
+        "startChar": 12,
+        "endLine": 340,
+        "endChar": 39
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2a85b9a_7c532cc1",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-18T07:36:33Z",
+      "side": 1,
+      "message": "Nit: final",
+      "range": {
+        "startLine": 542,
+        "startChar": 16,
+        "endLine": 542,
+        "endChar": 17
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73275e08_b9ccb3d9",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-18T07:36:33Z",
+      "side": 1,
+      "message": "This may be worthy to have a comment here to explain the callback sequence here. Because onCapabilitiesChanged() will be called before onLinkPropertiesChanged(). It\u0027s OK to just return here since the new network should be updated soon in the followed onLinkPropertiesChanged call.",
+      "range": {
+        "startLine": 544,
+        "startChar": 16,
+        "endLine": 544,
+        "endChar": 17
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a7beaee_2abd720b",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-18T07:36:33Z",
+      "side": 1,
+      "message": "Do you need any error log here? \n\nThe only place to add into the SparseArray is onLinkPropertiesChanged. If it may return here, the follow up decision may be different because of this. We may not want to silently return here.",
+      "range": {
+        "startLine": 559,
+        "startChar": 16,
+        "endLine": 559,
+        "endChar": 23
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76b6aa14_285e3673",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-18T07:36:33Z",
+      "side": 1,
+      "message": "Nit: final",
+      "range": {
+        "startLine": 562,
+        "startChar": 16,
+        "endLine": 562,
+        "endChar": 17
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2232a39_4ef44165",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-18T07:36:33Z",
+      "side": 1,
+      "message": "Nit: Can you make a documentation what should be expected to put in the NetworkProperties class since it\u0027s a very general naming?",
+      "range": {
+        "startLine": 585,
+        "startChar": 18,
+        "endLine": 585,
+        "endChar": 35
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46792058_1c5cc3e5",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-18T07:36:33Z",
+      "side": 1,
+      "message": "static to address the warning.",
+      "range": {
+        "startLine": 585,
+        "startChar": 12,
+        "endLine": 585,
+        "endChar": 13
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9da4dfba_ba014ccb",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-18T07:36:33Z",
+      "side": 1,
+      "message": "Annotation the nullability. I expect it\u0027s @NonNull in your current design.",
+      "range": {
+        "startLine": 589,
+        "startChar": 26,
+        "endLine": 589,
+        "endChar": 27
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
