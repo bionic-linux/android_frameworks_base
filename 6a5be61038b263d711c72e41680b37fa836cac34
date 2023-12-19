@@ -16,6 +16,24 @@
       "message": "presubmit verified -1 due to merge conflict.",
       "revId": "6a5be61038b263d711c72e41680b37fa836cac34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78748d06_7435ddfc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1786490
+      },
+      "writtenOn": "2023-12-19T09:55:04Z",
+      "side": 1,
+      "message": "Can you help point the conflict, I have rebased, seems no conflicts ？anything wrong in my side ? Thanks",
+      "parentUuid": "63f9ab4a_55d35bd6",
+      "revId": "6a5be61038b263d711c72e41680b37fa836cac34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
