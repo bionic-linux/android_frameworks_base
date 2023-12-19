@@ -69,6 +69,30 @@
       },
       "revId": "b94655026c26ef2453d2496aac2511b98625ea1c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8c217a1_ef438c44",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2023-12-19T03:53:40Z",
+      "side": 1,
+      "message": "Thanks for your reply, sorry for my mistake. I fixed it. please review.",
+      "parentUuid": "2f84c46e_365f8bc8",
+      "range": {
+        "startLine": 462,
+        "startChar": 27,
+        "endLine": 462,
+        "endChar": 35
+      },
+      "revId": "b94655026c26ef2453d2496aac2511b98625ea1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
