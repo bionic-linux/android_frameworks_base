@@ -46,6 +46,29 @@
       },
       "revId": "b94655026c26ef2453d2496aac2511b98625ea1c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f84c46e_365f8bc8",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-12-19T02:56:54Z",
+      "side": 1,
+      "message": "this fails to compile:\n\n```\nframeworks/base/core/java/android/os/FileUtils.java:462: error: cannot find symbol\n                } else if (S_ISSOCK(st_in.st_mode) || S_ISSOCK(st_out.st_mode)) {\n                           ^\n  symbol:   method S_ISSOCK(int)\n  location: class FileUtils\n```\n\npresumably missing static import?",
+      "range": {
+        "startLine": 462,
+        "startChar": 27,
+        "endLine": 462,
+        "endChar": 35
+      },
+      "revId": "b94655026c26ef2453d2496aac2511b98625ea1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
