@@ -58,6 +58,8 @@ import android.os.RemoteException;
 import android.os.ServiceSpecificException;
 import android.os.UserManager;
 import android.platform.test.annotations.Presubmit;
+import android.platform.test.flag.junit.SetFlagsRule;
+import android.server.locksettings.Flags;
 
 import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
@@ -67,6 +69,7 @@ import com.android.internal.widget.RebootEscrowListener;
 import com.android.server.locksettings.ResumeOnRebootServiceProvider.ResumeOnRebootServiceConnection;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -104,6 +107,9 @@ public class RebootEscrowManagerTests {
             0x70, 0x70, 0x75, 0x25, 0x27, 0x31, 0x49, 0x09,
             0x26, 0x52, 0x72, 0x63, 0x63, 0x61, 0x78, 0x23,
     };
+
+    @Rule
+    public final SetFlagsRule mSetFlagsRule = new SetFlagsRule();
 
     private Context mContext;
     private UserManager mUserManager;
@@ -204,15 +210,6 @@ public class RebootEscrowManagerTests {
         @Override
         public boolean serverBasedResumeOnReboot() {
             return mServerBased;
-        }
-
-        @Override
-        public boolean waitForInternet() {
-            return mWaitForInternet;
-        }
-
-        public void setWaitForNetwork(boolean waitForNetworkEnabled) {
-            mWaitForInternet = waitForNetworkEnabled;
         }
 
         @Override
@@ -744,7 +741,7 @@ public class RebootEscrowManagerTests {
     public void loadRebootEscrowDataIfAvailable_serverBasedWaitForInternet_success()
             throws Exception {
         setServerBasedRebootEscrowProvider();
-        mMockInjector.setWaitForNetwork(true);
+        mSetFlagsRule.enableFlags(Flags.FLAG_WAIT_FOR_INTERNET_ROR);
 
         when(mInjected.getBootCount()).thenReturn(0);
         RebootEscrowListener mockListener = mock(RebootEscrowListener.class);
@@ -797,7 +794,7 @@ public class RebootEscrowManagerTests {
     public void loadRebootEscrowDataIfAvailable_serverBasedWaitForInternetRemoteException_Failure()
             throws Exception {
         setServerBasedRebootEscrowProvider();
-        mMockInjector.setWaitForNetwork(true);
+        mSetFlagsRule.enableFlags(Flags.FLAG_WAIT_FOR_INTERNET_ROR);
 
         when(mInjected.getBootCount()).thenReturn(0);
         RebootEscrowListener mockListener = mock(RebootEscrowListener.class);
@@ -852,7 +849,7 @@ public class RebootEscrowManagerTests {
     public void loadRebootEscrowDataIfAvailable_waitForInternet_networkUnavailable()
             throws Exception {
         setServerBasedRebootEscrowProvider();
-        mMockInjector.setWaitForNetwork(true);
+        mSetFlagsRule.enableFlags(Flags.FLAG_WAIT_FOR_INTERNET_ROR);
 
         when(mInjected.getBootCount()).thenReturn(0);
         RebootEscrowListener mockListener = mock(RebootEscrowListener.class);
@@ -899,7 +896,7 @@ public class RebootEscrowManagerTests {
     @Test
     public void loadRebootEscrowDataIfAvailable_waitForInternet_networkLost() throws Exception {
         setServerBasedRebootEscrowProvider();
-        mMockInjector.setWaitForNetwork(true);
+        mSetFlagsRule.enableFlags(Flags.FLAG_WAIT_FOR_INTERNET_ROR);
 
         when(mInjected.getBootCount()).thenReturn(0);
         RebootEscrowListener mockListener = mock(RebootEscrowListener.class);
@@ -955,7 +952,7 @@ public class RebootEscrowManagerTests {
     public void loadRebootEscrowDataIfAvailable_waitForInternet_networkAvailableWithDelay()
             throws Exception {
         setServerBasedRebootEscrowProvider();
-        mMockInjector.setWaitForNetwork(true);
+        mSetFlagsRule.enableFlags(Flags.FLAG_WAIT_FOR_INTERNET_ROR);
 
         when(mInjected.getBootCount()).thenReturn(0);
         RebootEscrowListener mockListener = mock(RebootEscrowListener.class);
@@ -1014,7 +1011,7 @@ public class RebootEscrowManagerTests {
     public void loadRebootEscrowDataIfAvailable_waitForInternet_timeoutExhausted()
             throws Exception {
         setServerBasedRebootEscrowProvider();
-        mMockInjector.setWaitForNetwork(true);
+        mSetFlagsRule.enableFlags(Flags.FLAG_WAIT_FOR_INTERNET_ROR);
 
         when(mInjected.getBootCount()).thenReturn(0);
         RebootEscrowListener mockListener = mock(RebootEscrowListener.class);
@@ -1074,7 +1071,7 @@ public class RebootEscrowManagerTests {
     public void loadRebootEscrowDataIfAvailable_serverBasedWaitForNetwork_retryCountExhausted()
             throws Exception {
         setServerBasedRebootEscrowProvider();
-        mMockInjector.setWaitForNetwork(true);
+        mSetFlagsRule.enableFlags(Flags.FLAG_WAIT_FOR_INTERNET_ROR);
 
         when(mInjected.getBootCount()).thenReturn(0);
         RebootEscrowListener mockListener = mock(RebootEscrowListener.class);
@@ -1130,7 +1127,7 @@ public class RebootEscrowManagerTests {
     public void loadRebootEscrowDataIfAvailable_ServerBasedWaitForInternet_RetrySuccess()
             throws Exception {
         setServerBasedRebootEscrowProvider();
-        mMockInjector.setWaitForNetwork(true);
+        mSetFlagsRule.enableFlags(Flags.FLAG_WAIT_FOR_INTERNET_ROR);
 
         when(mInjected.getBootCount()).thenReturn(0);
         RebootEscrowListener mockListener = mock(RebootEscrowListener.class);
