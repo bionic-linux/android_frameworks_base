@@ -44,6 +44,7 @@ import android.os.SystemProperties;
 import android.os.UserManager;
 import android.provider.DeviceConfig;
 import android.provider.Settings;
+import android.server.locksettings.Flags;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
@@ -264,11 +265,6 @@ class RebootEscrowManager {
                     "server_based_ror_enabled", false);
         }
 
-        public boolean waitForInternet() {
-            return DeviceConfig.getBoolean(
-                    DeviceConfig.NAMESPACE_OTA, "wait_for_internet_ror", false);
-        }
-
         public boolean isNetworkConnected() {
             final ConnectivityManager connectivityManager =
                     mContext.getSystemService(ConnectivityManager.class);
@@ -420,7 +416,7 @@ class RebootEscrowManager {
 
     /** Wrapper function to set error code serialized through handler, */
     private void setLoadEscrowDataErrorCode(@RebootEscrowErrorCode int value, Handler handler) {
-        if (mInjector.waitForInternet()) {
+        if (Flags.waitForInternetRor()) {
             mInjector.post(
                     handler,
                     () -> {
@@ -474,7 +470,7 @@ class RebootEscrowManager {
             mWakeLock.acquire(mInjector.getWakeLockTimeoutMillis());
         }
 
-        if (mInjector.waitForInternet()) {
+        if (Flags.waitForInternetRor()) {
             // Timeout to stop retrying same as the wake lock timeout.
             mInjector.postDelayed(
                     retryHandler,
@@ -511,7 +507,7 @@ class RebootEscrowManager {
             return;
         }
 
-        if (mInjector.waitForInternet()) {
+        if (Flags.waitForInternetRor()) {
             if (mRebootEscrowTimedOut) {
                 Slog.w(TAG, "Failed to load reboot escrow data within timeout");
                 compareAndSetLoadEscrowDataErrorCode(

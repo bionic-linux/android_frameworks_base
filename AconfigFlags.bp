@@ -24,6 +24,7 @@ aconfig_srcjars = [
     ":com.android.hardware.input-aconfig-java{.generated_srcjars}",
     ":com.android.text.flags-aconfig-java{.generated_srcjars}",
     ":com.android.net.flags-aconfig-java{.generated_srcjars}",
+    ":android.server.locksettings.flags-aconfig-java{.generated_srcjars}",
 ]
 
 filegroup {
@@ -244,5 +245,18 @@ aconfig_declarations {
 java_aconfig_library {
     name: "android.net.vcn.flags-aconfig-java",
     aconfig_declarations: "android.net.vcn.flags-aconfig",
+    defaults: ["framework-minus-apex-aconfig-java-defaults"],
+}
+
+// LockSettings
+aconfig_declarations {
+    name: "android.server.locksettings.flags-aconfig",
+    package: "android.server.locksettings",
+    srcs: ["services/core/java/com/android/server/locksettings/flags.aconfig"],
+}
+
+java_aconfig_library {
+    name: "android.server.locksettings.flags-aconfig-java",
+    aconfig_declarations: "android.server.locksettings.flags-aconfig",
     defaults: ["framework-minus-apex-aconfig-java-defaults"],
 }
