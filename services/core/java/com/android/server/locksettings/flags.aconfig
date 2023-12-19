@@ -1,0 +1,9 @@
+package: "android.server.locksettings"
+
+flag {
+     name: "wait_for_internet_ror"
+     namespace: "sudo"
+     is_fixed_read_only: true
+     description: "Feature flag to wait for internet connectivity before calling resume on reboot server."
+     bug: "231660348"
+}
