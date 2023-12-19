@@ -191,6 +191,7 @@ java_library_static {
         "ImmutabilityAnnotation",
         "securebox",
         "net_flags_lib",
+        "android.server.locksettings.flags-aconfig-java",
     ],
     javac_shard_size: 50,
     javacflags: [

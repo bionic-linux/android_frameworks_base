@@ -79,6 +79,7 @@ android_test {
         "securebox",
         "flag-junit",
         "net_flags_lib",
+        "android.server.locksettings.flags-aconfig-java",
     ],
 
     libs: [

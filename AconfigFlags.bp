@@ -25,6 +25,7 @@ aconfig_srcjars = [
     ":android.nfc.flags-aconfig-java{.generated_srcjars}",
     ":android.os.flags-aconfig-java{.generated_srcjars}",
     ":android.security.flags-aconfig-java{.generated_srcjars}",
+    ":android.server.locksettings.flags-aconfig-java{.generated_srcjars}",
     ":com.android.hardware.camera2-aconfig-java{.generated_srcjars}",
     ":com.android.hardware.input-aconfig-java{.generated_srcjars}",
     ":com.android.net.flags-aconfig-java{.generated_srcjars}",
@@ -312,5 +313,18 @@ aconfig_declarations {
 java_aconfig_library {
     name: "android.crashrecovery.flags-aconfig-java",
     aconfig_declarations: "android.crashrecovery.flags-aconfig",
+    defaults: ["framework-minus-apex-aconfig-java-defaults"],
+}
+
+// LockSettings
+aconfig_declarations {
+    name: "android.server.locksettings.flags-aconfig",
+    package: "android.server.locksettings",
+    srcs: ["services/core/java/com/android/server/locksettings/flags.aconfig"],
+}
+
+java_aconfig_library {
+    name: "android.server.locksettings.flags-aconfig-java",
+    aconfig_declarations: "android.server.locksettings.flags-aconfig",
     defaults: ["framework-minus-apex-aconfig-java-defaults"],
 }
