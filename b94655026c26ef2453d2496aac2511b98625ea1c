@@ -93,6 +93,30 @@
       },
       "revId": "b94655026c26ef2453d2496aac2511b98625ea1c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "358bf515_f8d932bd",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-12-19T23:54:03Z",
+      "side": 1,
+      "message": "thanks, btw I think we may also want an update in cts/tests/tests/os/src/android/os/cts/FileUtilsTest.java or frameworks/base/core/tests/coretests/src/android/os/FileUtilsTest.java to make sure we have testing coverage for this change, but I was waiting on the automated testing result first.",
+      "parentUuid": "c8c217a1_ef438c44",
+      "range": {
+        "startLine": 462,
+        "startChar": 27,
+        "endLine": 462,
+        "endChar": 35
+      },
+      "revId": "b94655026c26ef2453d2496aac2511b98625ea1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
