@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6e31893_dff87f42",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-19T04:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0b3d52f_c9a67791",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 13
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "73748cb7_9b7044b5",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e338cfc_6bad205b",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-19T04:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73748cb7_9b7044b5",
+      "range": {
+        "startLine": 169,
+        "startChar": 8,
+        "endLine": 169,
+        "endChar": 9
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11648748_c227fd98",
@@ -60,6 +108,30 @@
       "writtenOn": "2023-12-18T07:36:33Z",
       "side": 1,
       "message": "In this case, haveInvalidationResult will be updated to true as a final result. You can actually return here",
+      "range": {
+        "startLine": 336,
+        "startChar": 20,
+        "endLine": 336,
+        "endChar": 50
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91415765_dcd4df17",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-19T04:02:59Z",
+      "side": 1,
+      "message": "if there is no guarantee on the order of return ids (parent user id not in the first), i think it should not return here.\nNow this statement has been removed.",
+      "parentUuid": "11648748_c227fd98",
       "range": {
         "startLine": 336,
         "startChar": 20,
@@ -188,6 +260,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afb0fb02_649da708",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-19T04:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b882a31_5753a768",
+      "range": {
+        "startLine": 317,
+        "startChar": 12,
+        "endLine": 340,
+        "endChar": 39
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02591bd4_0b9128f2",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-19T04:02:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b146bca1_ffad80dc",
+      "range": {
+        "startLine": 340,
+        "startChar": 15,
+        "endLine": 340,
+        "endChar": 38
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2a85b9a_7c532cc1",
@@ -201,6 +321,30 @@
       "writtenOn": "2023-12-18T07:36:33Z",
       "side": 1,
       "message": "Nit: final",
+      "range": {
+        "startLine": 542,
+        "startChar": 16,
+        "endLine": 542,
+        "endChar": 17
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5529501_7d6d47cb",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-19T04:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2a85b9a_7c532cc1",
       "range": {
         "startLine": 542,
         "startChar": 16,
@@ -234,6 +378,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c886026c_55e957cf",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-19T04:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73275e08_b9ccb3d9",
+      "range": {
+        "startLine": 544,
+        "startChar": 16,
+        "endLine": 544,
+        "endChar": 17
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a7beaee_2abd720b",
@@ -257,6 +425,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3c735c8_798725c6",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-19T04:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a7beaee_2abd720b",
+      "range": {
+        "startLine": 559,
+        "startChar": 16,
+        "endLine": 559,
+        "endChar": 23
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "76b6aa14_285e3673",
@@ -270,6 +462,30 @@
       "writtenOn": "2023-12-18T07:36:33Z",
       "side": 1,
       "message": "Nit: final",
+      "range": {
+        "startLine": 562,
+        "startChar": 16,
+        "endLine": 562,
+        "endChar": 17
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8a62913_ece425fa",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-19T04:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76b6aa14_285e3673",
       "range": {
         "startLine": 562,
         "startChar": 16,
@@ -326,6 +542,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a50e2059_56bdeb6a",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-19T04:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2232a39_4ef44165",
+      "range": {
+        "startLine": 585,
+        "startChar": 18,
+        "endLine": 585,
+        "endChar": 35
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f86adb85_fc1bfdb7",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-19T04:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46792058_1c5cc3e5",
+      "range": {
+        "startLine": 585,
+        "startChar": 12,
+        "endLine": 585,
+        "endChar": 13
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9da4dfba_ba014ccb",
@@ -339,6 +603,30 @@
       "writtenOn": "2023-12-18T07:36:33Z",
       "side": 1,
       "message": "Annotation the nullability. I expect it\u0027s @NonNull in your current design.",
+      "range": {
+        "startLine": 589,
+        "startChar": 26,
+        "endLine": 589,
+        "endChar": 27
+      },
+      "revId": "2e34be6d629c673cf06ea0bb8b635770806b92df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "144a4de9_c19886aa",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-19T04:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9da4dfba_ba014ccb",
       "range": {
         "startLine": 589,
         "startChar": 26,
