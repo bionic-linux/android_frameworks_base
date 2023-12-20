@@ -462,3 +462,13 @@ genrule {
         targets: ["droid"],
     },
 }
+
+phony {
+    name: "checkapi",
+    add_deps_only: true,
+    dep_targets: [
+        "frameworks-base-api-current-compat",
+        "frameworks-base-api-system-current-compat",
+        "frameworks-base-api-module-lib-current-compat",
+    ],
+}
