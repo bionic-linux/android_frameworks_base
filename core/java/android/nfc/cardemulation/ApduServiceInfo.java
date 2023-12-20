@@ -133,6 +133,16 @@ public final class ApduServiceInfo implements Parcelable {
     private boolean mCategoryOtherServiceEnabled;
 
     /**
+     * List of Polling Loop Frames to match
+     */
+    private List<String> mPollingLoopFrames;
+    
+    /**
+     * List of Polling Loop Frame Prefixes to match
+     */
+    private List<String> mPollingLoopFramePrefixes;
+
+    /**
      * @hide
      */
     @UnsupportedAppUsage
@@ -282,6 +292,8 @@ public final class ApduServiceInfo implements Parcelable {
 
             mStaticAidGroups = new HashMap<String, AidGroup>();
             mDynamicAidGroups = new HashMap<String, AidGroup>();
+            mPollingLoopFramePrefixes = new ArrayList<String>();
+            mPollingLoopFrames = new ArrayList<String>();
             mOnHost = onHost;
 
             final int depth = parser.getDepth();
@@ -363,6 +375,22 @@ public final class ApduServiceInfo implements Parcelable {
                     } else {
                         Log.e(TAG, "Ignoring invalid or duplicate aid: " + aid);
                     }
+                    a.recycle();
+                } else if (eventType == XmlPullParser.START_TAG && "polling-loop-frame-filter".equals(tagName) &&
+                        currentGroup != null) {
+                    final TypedArray a = res.obtainAttributes(attrs,
+                            com.android.internal.R.styleable.PollingLoopFrameFilter);
+                    String frame = a.getString(com.android.internal.R.styleable.PollingLoopFrameFilter_name).
+                            toUpperCase();
+                    mPollingLoopFrames.add(frame);
+                    a.recycle();
+                } else if (eventType == XmlPullParser.START_TAG &&
+                        "polling-loop-frame-prefix-filter".equals(tagName) && currentGroup != null) {
+                    final TypedArray a = res.obtainAttributes(attrs,
+                            com.android.internal.R.styleable.PollingLoopFramePrefixFilter);
+                    String prefix = a.getString(com.android.internal.R.styleable.PollingLoopFramePrefixFilter_name).
+                            toUpperCase();
+                    mPollingLoopFramePrefixes.add(prefix);
                     a.recycle();
                 }
             }

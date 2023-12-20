@@ -4367,6 +4367,20 @@
         <attr name="name" />
     </declare-styleable>
 
+    <!-- Specify one or more <code>polling-loop-frame-filter</code> elements inside
+         inside a <code>host-apdu-service</code> that your service can recognize and handle. -->
+    <declare-styleable name="PollingLoopFrameFilter">
+        <!-- The Polling Loop Frame. This attribute is mandatory. -->
+        <attr name="name" />
+    </declare-styleable>
+
+    <!-- Specify one or more <code>polling-loop-frame-prefix-filter</code> elements inside
+         inside a <code>host-apdu-service</code> that your service can recognize and handle. -->
+    <declare-styleable name="PollingLoopFramePrefixFilter">
+        <!-- The Polling Loop Frame Prefix. This attribute is mandatory. -->
+        <attr name="name" />
+    </declare-styleable>
+
     <!-- Use <code>host-nfcf-service</code> as the root tag of the XML resource that
          describes an {@link android.nfc.cardemulation.HostNfcFService} service, which
          is referenced from its {@link android.nfc.cardemulation.HostNfcFService#SERVICE_META_DATA}
