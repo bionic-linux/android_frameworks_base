@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4264aba3_b5cb27e9",
+        "filename": "packages/SystemUI/res/drawable/stat_sys_no_internet_vpn_ic.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-21T03:52:07Z",
+      "side": 1,
+      "message": "Since the CLs are in the same Topic, it\u0027s likely they\u0027ll be submitted and merged together. It\u0027s not the right way to split a change into small CLs?",
+      "parentUuid": "5c3df417_a306b9f8",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 9
+      },
+      "revId": "89d859c7ccf919fee221d8618516135d97c19c1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "64e69ef6_f7b2bc53",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
         "patchSetId": 11
@@ -54,6 +78,30 @@
       "writtenOn": "2023-12-20T05:29:01Z",
       "side": 1,
       "message": "Can you append a sample dumpsys in the commit message? It will be clearer what will this commit affect the dumpsys.",
+      "range": {
+        "startLine": 171,
+        "startChar": 8,
+        "endLine": 185,
+        "endChar": 0
+      },
+      "revId": "89d859c7ccf919fee221d8618516135d97c19c1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c35e7c2_08ead459",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-21T03:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64e69ef6_f7b2bc53",
       "range": {
         "startLine": 171,
         "startChar": 8,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8e72ae7_093e195a",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-21T03:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "698334ee_46ed7881",
+      "range": {
+        "startLine": 329,
+        "startChar": 11,
+        "endLine": 329,
+        "endChar": 12
+      },
+      "revId": "89d859c7ccf919fee221d8618516135d97c19c1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb9b9ae6_0168d21c",
@@ -100,6 +172,30 @@
       "writtenOn": "2023-12-20T05:29:01Z",
       "side": 1,
       "message": "unvalidated?",
+      "range": {
+        "startLine": 334,
+        "startChar": 24,
+        "endLine": 334,
+        "endChar": 35
+      },
+      "revId": "89d859c7ccf919fee221d8618516135d97c19c1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e692cf09_43335321",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-21T03:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb9b9ae6_0168d21c",
       "range": {
         "startLine": 334,
         "startChar": 24,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dd5c068_299b24b3",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-21T03:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "823d338f_e53faeda",
+      "range": {
+        "startLine": 545,
+        "startChar": 12,
+        "endLine": 547,
+        "endChar": 67
+      },
+      "revId": "89d859c7ccf919fee221d8618516135d97c19c1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b05c899a_384accd8",
@@ -156,6 +276,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "958d7d18_f1b36f06",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-21T03:52:07Z",
+      "side": 1,
+      "message": "updated. thanks for the comments with detail information",
+      "parentUuid": "b05c899a_384accd8",
+      "range": {
+        "startLine": 548,
+        "startChar": 16,
+        "endLine": 549,
+        "endChar": 74
+      },
+      "revId": "89d859c7ccf919fee221d8618516135d97c19c1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "29cac126_7bf86a96",
@@ -169,6 +313,30 @@
       "writtenOn": "2023-12-20T05:29:01Z",
       "side": 1,
       "message": "Nit: interface(or interfaceName)\n\nI think it\u0027s usually say a null `method` but describe what is null.",
+      "range": {
+        "startLine": 565,
+        "startChar": 68,
+        "endLine": 565,
+        "endChar": 84
+      },
+      "revId": "89d859c7ccf919fee221d8618516135d97c19c1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9d64f0d_78d10c91",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2023-12-21T03:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29cac126_7bf86a96",
       "range": {
         "startLine": 565,
         "startChar": 68,
