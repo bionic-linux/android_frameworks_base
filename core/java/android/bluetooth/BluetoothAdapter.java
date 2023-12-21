@@ -684,6 +684,32 @@ public final class BluetoothAdapter {
     public static final int STATE_DISCONNECTING =
             BluetoothProtoEnums.CONNECTION_STATE_DISCONNECTING;
 
+    /**
+     * Indicates that the system is starting autoconnection to a Bluetooth device
+     * Always contains the extra fields {@link #EXTRA_AUTOCONNECT_BDADDR} containing
+     * the BDADDR of the remote device
+     *
+     * @hide
+     */
+    public static final String
+            ACTION_AUTO_CONNECT_STARTED = "android.bluetooth.action.AUTO_CONNECT_STARTED";
+
+    /**
+     * A string extra field in {@link #ACTION_AUTO_CONNECT_STARTED}
+     * intents to specify the BDADDR of the device to be connected
+     *
+     * @hide
+     */
+    public static final String EXTRA_AUTOCONNECT_BDADDR = "android.bluetooth.extra.AUTOCONNECT_BDADDR";
+
+    /**
+     * Used as a integer extra field in {@link #ACTION_AUTO_CONNECT_STARTED}
+     * intents to specify the Bluetooth profile to be connected
+     *
+     * @hide
+     */
+    public static final String EXTRA_AUTOCONNECT_PROFILE = "android.bluetooth.extra.AUTOCONNECT_PROFILE";
+
     /** @hide */
     public static final String BLUETOOTH_MANAGER_SERVICE = "bluetooth_manager";
     private final IBinder mToken;
