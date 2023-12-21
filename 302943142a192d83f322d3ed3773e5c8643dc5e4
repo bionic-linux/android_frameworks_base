@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15557c0a_fa23f11f",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-21T06:13:55Z",
+      "side": 1,
+      "message": "Not for this commit. If SecurityControllerImpl only monitor VPN status, the request may be better to restrict the transport type to TRANSPORT_VPN to reduce unnecessary callbacks. This can be observed from the sample dumpsys. Non-VPN networks are also tracked by SecurityController.",
+      "range": {
+        "startLine": 82,
+        "startChar": 40,
+        "endLine": 82,
+        "endChar": 47
+      },
+      "revId": "302943142a192d83f322d3ed3773e5c8643dc5e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7b9292a_59bd2500",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-21T06:13:55Z",
+      "side": 1,
+      "message": "Optional: do you want to apply similar log in the new added callbacks?(onCapabilitiesChanged/onLinkPropertiesChanged)",
+      "range": {
+        "startLine": 534,
+        "startChar": 12,
+        "endLine": 534,
+        "endChar": 66
+      },
+      "revId": "302943142a192d83f322d3ed3773e5c8643dc5e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "597a8406_3bc67e32",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-21T06:13:55Z",
+      "side": 1,
+      "message": "Nit: why do you remove the final? Can\u0027t this work?\n\n```\nfinal NetworkProperties properties;\nsynchronized (mNetworkProperties) {\n    properties \u003d mNetworkProperties.get(network.getNetId());\n}\n```",
+      "range": {
+        "startLine": 545,
+        "startChar": 12,
+        "endLine": 545,
+        "endChar": 13
+      },
+      "revId": "302943142a192d83f322d3ed3773e5c8643dc5e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

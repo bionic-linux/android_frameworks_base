@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ba716f16_b65420da",
+        "filename": "packages/SystemUI/res/drawable/stat_sys_no_internet_vpn_ic.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-12-21T06:13:55Z",
+      "side": 1,
+      "message": "I do not have strong opinion on this. In general, each split commit should be safe when the big commit is broken into small ones. I am OK with it if owner is fine with this.",
+      "parentUuid": "4264aba3_b5cb27e9",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 9
+      },
+      "revId": "89d859c7ccf919fee221d8618516135d97c19c1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "64e69ef6_f7b2bc53",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
         "patchSetId": 11
