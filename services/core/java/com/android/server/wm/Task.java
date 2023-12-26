@@ -4638,6 +4638,9 @@ class Task extends TaskFragment {
                     if (!isForceHidden()) {
                         final Task lastParentBeforePip = topActivity.getLastParentBeforePip();
                         if (lastParentBeforePip.isAttached()) {
+                            // Reset the activity windowing mode to match the parent.
+                            topActivity.getRequestedOverrideConfiguration()
+                                    .windowConfiguration.setWindowingMode(WINDOWING_MODE_UNDEFINED);
                             topActivity.reparent(lastParentBeforePip,
                                     lastParentBeforePip.getChildCount() /* top */,
                                     "movePinnedActivityToOriginalTask");
