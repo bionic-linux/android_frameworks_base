@@ -916,13 +916,11 @@ public class ActivityManagerService extends IActivityManager.Stub
      *     allowed associations for A or if A is debuggable.
      */
     private final class PackageAssociationInfo {
-        private final String mSourcePackage;
         private final ArraySet<String> mAllowedPackageAssociations;
         private boolean mIsDebuggable;
 
         PackageAssociationInfo(String sourcePackage, ArraySet<String> allowedPackages,
                 boolean isDebuggable) {
-            mSourcePackage = sourcePackage;
             mAllowedPackageAssociations = allowedPackages;
             mIsDebuggable = isDebuggable;
         }
@@ -2310,7 +2308,6 @@ public class ActivityManagerService extends IActivityManager.Stub
         private final Context mContext;
         private boolean mBlacklistDisabled;
         private String mExemptionsStr;
-        private List<String> mExemptions = Collections.emptyList();
         private int mLogSampleRate = -1;
         private int mStatslogSampleRate = -1;
         @HiddenApiEnforcementPolicy private int mPolicy = HIDDEN_API_ENFORCEMENT_DEFAULT;
@@ -2378,19 +2375,20 @@ public class ActivityManagerService extends IActivityManager.Stub
                     Settings.Global.HIDDEN_API_BLACKLIST_EXEMPTIONS);
             if (!TextUtils.equals(exemptions, mExemptionsStr)) {
                 mExemptionsStr = exemptions;
+                List<String> exemptionsList = Collections.emptyList();
                 if ("*".equals(exemptions)) {
                     mBlacklistDisabled = true;
-                    mExemptions = Collections.emptyList();
+                    exemptionsList = Collections.emptyList();
                 } else {
                     mBlacklistDisabled = false;
-                    mExemptions = TextUtils.isEmpty(exemptions)
+                    exemptionsList = TextUtils.isEmpty(exemptions)
                             ? Collections.emptyList()
                             : Arrays.asList(exemptions.split(","));
                 }
-                if (!ZYGOTE_PROCESS.setApiDenylistExemptions(mExemptions)) {
+                if (!ZYGOTE_PROCESS.setApiDenylistExemptions(exemptionsList)) {
                   Slog.e(TAG, "Failed to set API blacklist exemptions!");
                   // leave mExemptionsStr as is, so we don't try to send the same list again.
-                  mExemptions = Collections.emptyList();
+                  exemptionsList = Collections.emptyList();
                 }
             }
             mPolicy = getValidEnforcementPolicy(Settings.Global.HIDDEN_API_POLICY);
