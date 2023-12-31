@@ -131,7 +131,6 @@ public class PersistentDataBlockService extends SystemService {
     private static final int MAX_DATA_BLOCK_SIZE = 1024 * 100;
 
     public static final int DIGEST_SIZE_BYTES = 32;
-    private static final String OEM_UNLOCK_PROP = "sys.oem_unlock_allowed";
     private static final String FLASH_LOCK_PROP = "ro.boot.flash.locked";
     private static final String FLASH_LOCK_LOCKED = "1";
     private static final String FLASH_LOCK_UNLOCKED = "0";
@@ -219,8 +218,6 @@ public class PersistentDataBlockService extends SystemService {
                 formatPartitionLocked(true);
             }
         }
-
-        SystemProperties.set(OEM_UNLOCK_PROP, enabled ? "1" : "0");
     }
 
     private void enforceOemUnlockReadPermission() {
@@ -447,8 +444,6 @@ public class PersistentDataBlockService extends SystemService {
         } catch (IOException e) {
             Slog.e(TAG, "unable to access persistent partition", e);
             return;
-        } finally {
-            SystemProperties.set(OEM_UNLOCK_PROP, enabled ? "1" : "0");
         }
     }
 
