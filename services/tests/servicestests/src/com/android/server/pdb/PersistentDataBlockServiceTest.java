@@ -86,7 +86,6 @@ public class PersistentDataBlockServiceTest {
     private File mDataBlockFile;
     private File mFrpSecretFile;
     private File mFrpSecretTmpFile;
-    private String mOemUnlockPropertyValue;
     private boolean mIsUpgradingFromPreV = false;
 
     @Mock private UserManager mUserManager;
@@ -102,13 +101,6 @@ public class PersistentDataBlockServiceTest {
             // it registers the service, etc.  But we need to signal init done to prevent
             // `isFrpActive` from blocking.
             signalInitDone();
-        }
-
-        @Override
-        void setProperty(String key, String value) {
-            // Override to capture the value instead of actually setting the property.
-            assertThat(key).isEqualTo("sys.oem_unlock_allowed");
-            mOemUnlockPropertyValue = value;
         }
 
         @Override
