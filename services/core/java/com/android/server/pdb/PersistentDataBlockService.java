@@ -38,7 +38,6 @@ import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.ShellCallback;
 import android.os.ShellCommand;
-import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
@@ -170,7 +169,6 @@ public class PersistentDataBlockService extends SystemService {
     static final int MAX_DATA_BLOCK_SIZE = 1024 * 100;
 
     public static final int DIGEST_SIZE_BYTES = 32;
-    private static final String OEM_UNLOCK_PROP = "sys.oem_unlock_allowed";
     private static final String FLASH_LOCK_PROP = "ro.boot.flash.locked";
     private static final String FLASH_LOCK_LOCKED = "1";
     private static final String FLASH_LOCK_UNLOCKED = "0";
@@ -302,10 +300,6 @@ public class PersistentDataBlockService extends SystemService {
         }
     }
 
-    private void setOemUnlockEnabledProperty(boolean oemUnlockEnabled) {
-        setProperty(OEM_UNLOCK_PROP, oemUnlockEnabled ? "1" : "0");
-    }
-
     @Override
     public void onBootPhase(int phase) {
         // Wait for initialization in onStart to finish
@@ -341,7 +335,6 @@ public class PersistentDataBlockService extends SystemService {
                 formatPartitionLocked(true);
             }
         }
-        setOemUnlockEnabledProperty(enabled);
     }
 
     private void enforceOemUnlockReadPermission() {
@@ -808,9 +801,6 @@ public class PersistentDataBlockService extends SystemService {
             channel.force(true);
         } catch (IOException e) {
             Slog.e(TAG, "unable to access persistent partition", e);
-            return;
-        } finally {
-            setOemUnlockEnabledProperty(enabled);
         }
     }
 
