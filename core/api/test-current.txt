@@ -2189,6 +2189,14 @@ package android.net.wifi.sharedconnectivity.service {
 
 }
 
+package android.nfc {
+
+  public final class NfcAdapter {
+    method @FlaggedApi("android.nfc.nfc_read_polling_loop") public void notifyPollingLoop(@NonNull android.os.Bundle);
+  }
+
+}
+
 package android.os {
 
   public class BatteryManager {
