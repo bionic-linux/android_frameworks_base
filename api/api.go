@@ -71,11 +71,6 @@ type CombinedApis struct {
 func init() {
 	registerBuildComponents(android.InitRegistrationContext)
 }
-
-var PrepareForTestWithCombinedApis = android.FixtureRegisterWithContext(func(ctx android.RegistrationContext) {
-	registerBuildComponents(ctx)
-})
-
 func registerBuildComponents(ctx android.RegistrationContext) {
 	ctx.RegisterModuleType("combined_apis", combinedApisModuleFactory)
 }
@@ -83,6 +78,9 @@ func registerBuildComponents(ctx android.RegistrationContext) {
 var PrepareForCombinedApisTest = android.FixtureRegisterWithContext(registerBuildComponents)
 
 func (a *CombinedApis) GenerateAndroidBuildActions(ctx android.ModuleContext) {
+	fmt.Println(ctx.Config().VendorConfig("ANDROID").Bool("test_var"))
+	fmt.Println(a.properties.Bootclasspath)
+	fmt.Println(a.properties.System_server_classpath)
 }
 
 type genruleProps struct {
@@ -392,6 +390,7 @@ func (a *CombinedApis) createInternalModules(ctx android.LoadHookContext) {
 		bootclasspath = append(bootclasspath, a.properties.Conditional_bootclasspath...)
 		sort.Strings(bootclasspath)
 	}
+
 	createMergedTxts(ctx, bootclasspath, system_server_classpath)
 
 	createMergedPublicStubs(ctx, bootclasspath)
