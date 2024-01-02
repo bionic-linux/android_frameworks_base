@@ -34,9 +34,13 @@ gensrcs {
         ":ipconnectivity-proto-src",
         ":libstats_atom_enum_protos",
         ":libstats_atom_message_protos",
-        ":libtombstone_proto-src",
+        //":libtombstone_proto-src",
         "core/proto/**/*.proto",
         "libs/incident/**/*.proto",
+    ],
+
+    exclude_srcs: [
+        "core/proto/android/os/tombstone.proto",
     ],
 
     data: [
@@ -68,6 +72,10 @@ gensrcs {
         ":libstats_atom_message_protos",
         "core/proto/**/*.proto",
         "libs/incident/**/*.proto",
+    ],
+
+    exclude_srcs: [
+        "core/proto/android/os/tombstone.proto",
     ],
 
     data: [
@@ -119,6 +127,7 @@ java_library_host {
     srcs: [
         ":ipconnectivity-proto-src",
         ":libstats_internal_protos",
+        ":libtombstone_proto-src",
         ":statsd_internal_protos",
         "cmds/am/proto/instrumentation_data.proto",
         "cmds/statsd/src/**/*.proto",
@@ -213,6 +222,7 @@ cc_defaults {
 
     srcs: [
         ":ipconnectivity-proto-src",
+        ":libtombstone_proto-src",
         ":libstats_atom_enum_protos",
         ":libstats_atom_message_protos",
         "core/proto/**/*.proto",
@@ -288,5 +298,27 @@ cc_library {
                 enabled: false,
             },
         },
+    },
+}
+
+java_library {
+    name: "framework-core-protos-java-lite",
+    proto: {
+        type: "lite",
+        include_dirs: ["external/protobuf/src"],
+    },
+
+    srcs: [
+        "core/proto/android/os/tombstone.proto",
+    ],
+    static_libs: [
+        "libprotobuf-java-lite",
+        "libtombstone_proto_java",
+    ],
+    sdk_version: "current",
+    jarjar_rules: "jarjar-rules.txt",
+    // Protos have lots of MissingOverride and similar.
+    errorprone: {
+        enabled: false,
     },
 }
