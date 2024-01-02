@@ -394,6 +394,10 @@ func (a *CombinedApis) createInternalModules(ctx android.LoadHookContext) {
 		bootclasspath = append(bootclasspath, a.properties.Conditional_bootclasspath...)
 		sort.Strings(bootclasspath)
 	}
+	fmt.Println(ctx.Config().VendorConfig("ANDROID").Bool("test_var"))
+	fmt.Println(a.properties.Bootclasspath)
+	fmt.Println(a.properties.System_server_classpath)
+
 	createMergedTxts(ctx, bootclasspath, system_server_classpath)
 
 	createMergedPublicStubs(ctx, bootclasspath)
@@ -409,6 +413,10 @@ func (a *CombinedApis) createInternalModules(ctx android.LoadHookContext) {
 	createApiContributionDefaults(ctx, bootclasspath)
 
 	createFullApiLibraries(ctx)
+
+	fmt.Println(ctx.Config().VendorConfig("ANDROID").Bool("test_var"))
+	fmt.Println(a.properties.Bootclasspath)
+	fmt.Println(a.properties.System_server_classpath)
 }
 
 func combinedApisModuleFactory() android.Module {
