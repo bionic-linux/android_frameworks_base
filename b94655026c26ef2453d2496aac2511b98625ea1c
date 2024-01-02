@@ -165,6 +165,30 @@
       },
       "revId": "b94655026c26ef2453d2496aac2511b98625ea1c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bb48a89_4bd44de2",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-02T09:32:48Z",
+      "side": 1,
+      "message": "Thanks, I have added the test case in frameworks/base/core/tests/coretests/src/android/os/FileUtilsTest.java, please review again.",
+      "parentUuid": "535fb4e3_c98cd8ee",
+      "range": {
+        "startLine": 462,
+        "startChar": 27,
+        "endLine": 462,
+        "endChar": 35
+      },
+      "revId": "b94655026c26ef2453d2496aac2511b98625ea1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
