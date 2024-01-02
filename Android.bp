@@ -142,8 +142,12 @@ filegroup {
 
         // etc.
         ":framework-javastream-protos",
+        //":framework-protos-java-lite",
         ":statslog-framework-java-gen", // FrameworkStatsLog.java
         ":audio_policy_configuration_V7_0",
+
+        //":libtombstone_proto-src",
+        //":libtombstone_proto_java",
     ],
 }
 
@@ -254,6 +258,8 @@ java_library {
         "android.se.omapi-V1-java",
         "android.system.suspend.control.internal-java",
         "devicepolicyprotosnano",
+        "framework-core-protos-java-lite",
+        "libtombstone_proto_java",
 
         "com.android.sysprop.apex",
         "com.android.sysprop.init",
