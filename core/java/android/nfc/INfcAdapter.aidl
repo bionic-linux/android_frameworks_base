@@ -86,4 +86,6 @@ interface INfcAdapter
     boolean enableReaderOption(boolean enable);
     boolean isObserveModeSupported();
     boolean setObserveMode(boolean enabled);
+
+    void notifyPollingLoop(in Bundle frame);
 }

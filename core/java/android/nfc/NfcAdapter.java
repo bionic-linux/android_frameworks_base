@@ -2587,4 +2587,32 @@ public final class NfcAdapter {
             return false;
         }
     }
+    /**
+     * Notifies the system of a new polling loop.
+     *
+     * @param frame is the new frame.
+     *
+     * @hide
+     */
+    @FlaggedApi(Flags.FLAG_NFC_READ_POLLING_LOOP)
+    public void notifyPollingLoop(@NonNull Bundle frame) {
+        try {
+            if (sService == null) {
+                attemptDeadServiceRecovery(null);
+            }
+            sService.notifyPollingLoop(frame);
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            // Try one more time
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover NFC Service.");
+                return;
+            }
+            try {
+                sService.notifyPollingLoop(frame);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to recover NFC Service.");
+            }
+        }
+    }
 }
