@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0217a175_a2b53c8d",
+        "filename": "services/core/java/com/android/server/wm/TaskFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1887,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-01-02T15:32:33Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 1887,
+        "startChar": 0,
+        "endLine": 1887,
+        "endChar": 102
+      },
+      "revId": "2239c9d8bef63adcc153e3ceec2250baaacf1505",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
