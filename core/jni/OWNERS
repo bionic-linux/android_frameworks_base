@@ -84,7 +84,7 @@ per-file android_text_* = file:/core/java/android/text/OWNERS
 # These are highly common-use files
 per-file Android.bp = file:/graphics/java/android/graphics/OWNERS
 per-file AndroidRuntime.cpp = file:/graphics/java/android/graphics/OWNERS
-per-file AndroidRuntime.cpp = calin@google.com, ngeoffray@google.com, oth@google.com
+per-file AndroidRuntime.cpp = ngeoffray@google.com
 # Although marked "view" this is mostly graphics stuff
 per-file android_view_* = file:/graphics/java/android/graphics/OWNERS
 # File used for Android Studio layoutlib
