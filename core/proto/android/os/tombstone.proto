@@ -18,12 +18,18 @@ syntax = "proto2";
 
 package android.os;
 
+import "system/core/debuggerd/proto/tombstone.proto";
+
 option java_multiple_files = true;
 
 message TombstoneWithHeadersProto {
   // The original proto tombstone bytes.
   // Proto located at: system/core/debuggerd/proto/tombstone.proto
+  // deprecated.
   optional bytes tombstone = 1;
+
+  // The original tombstone proto.
+  optional Tombstone tombstone_proto = 3;
 
   // The count of dropped dropbox entries due to rate limiting.
   optional int32 dropped_count = 2;
