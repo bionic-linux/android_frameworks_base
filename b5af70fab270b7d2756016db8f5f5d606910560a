@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22f54422_faddb8f5",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2598,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-01-03T21:33:01Z",
+      "side": 1,
+      "message": "CTS tests should not use @hide APIs. I know there are some existing @hide tests, but those are no longer allowed.\n\ngo/ctswrite#development-checklist\n\n```\n\nNo @hide API as they are not public API nor are CTS enforceable. (ref: @hide doclava)\n```",
+      "range": {
+        "startLine": 2595,
+        "startChar": 0,
+        "endLine": 2598,
+        "endChar": 58
+      },
+      "revId": "b5af70fab270b7d2756016db8f5f5d606910560a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "148e426c_0210d4dd",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2603,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-01-03T21:33:01Z",
+      "side": 1,
+      "message": "Where is this plumbing?",
+      "range": {
+        "startLine": 2603,
+        "startChar": 0,
+        "endLine": 2603,
+        "endChar": 46
+      },
+      "revId": "b5af70fab270b7d2756016db8f5f5d606910560a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
