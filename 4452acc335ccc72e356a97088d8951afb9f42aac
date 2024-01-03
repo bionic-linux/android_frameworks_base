@@ -16,6 +16,24 @@
       "message": "@jihoonkang@google.com Wouldn\u0027t this be mimicking the behaviour of `soong_config_set` in the `.mk` ? How should I call soong_config_set for the test?",
       "revId": "4452acc335ccc72e356a97088d8951afb9f42aac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b99ccd8_d00e2f5e",
+        "filename": "api/api_test.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2024-01-03T18:24:56Z",
+      "side": 1,
+      "message": "Ah, you are right. However, the test failure message still implies missing modules (including `frameworks-existing` and `frameworks-test`). You would need to register the `java_sdk_library` module type (which is again done in `java.PrepareForTestWithJavaDefaultModules`) and define these modules in the test bp file to test if the config variable is behaving as expected.",
+      "parentUuid": "99170da0_d2ef2021",
+      "revId": "4452acc335ccc72e356a97088d8951afb9f42aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
