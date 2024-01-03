@@ -68,6 +68,24 @@
       "parentUuid": "0f8537c1_0031cb50",
       "revId": "3676123e94499fd66b3af6c65740a788c29ede06",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25d2f216_35129cf4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-01-03T15:14:35Z",
+      "side": 1,
+      "message": "Thank you for checking! We\u0027ll eventually migrate OTA dexopt tests to the new mainline OTA testing framework and remove them from TradeFed, so it\u0027s fine not to touch it for now.",
+      "parentUuid": "ce2ba110_bd33d465",
+      "revId": "3676123e94499fd66b3af6c65740a788c29ede06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
