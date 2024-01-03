@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1696ecb6_c74a3d24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2024-01-03T05:11:18Z",
+      "side": 1,
+      "message": "It seems there is conflict with patch set 10, so I uploaded new patch set 11 based on lastest branch head.\n\nThanks",
+      "revId": "e0be814fa17c70dd484c6154798b7a0357fa29f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
