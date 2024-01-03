@@ -22,6 +22,30 @@
       },
       "revId": "2239c9d8bef63adcc153e3ceec2250baaacf1505",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74533f16_9d978bcb",
+        "filename": "services/core/java/com/android/server/wm/TaskFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1887,
+      "author": {
+        "id": 1554880
+      },
+      "writtenOn": "2024-01-03T02:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0217a175_a2b53c8d",
+      "range": {
+        "startLine": 1887,
+        "startChar": 0,
+        "endLine": 1887,
+        "endChar": 102
+      },
+      "revId": "2239c9d8bef63adcc153e3ceec2250baaacf1505",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
