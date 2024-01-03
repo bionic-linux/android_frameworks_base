@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99170da0_d2ef2021",
+        "filename": "api/api_test.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-01-03T18:11:25Z",
+      "side": 1,
+      "message": "@jihoonkang@google.com Wouldn\u0027t this be mimicking the behaviour of `soong_config_set` in the `.mk` ? How should I call soong_config_set for the test?",
+      "revId": "4452acc335ccc72e356a97088d8951afb9f42aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
