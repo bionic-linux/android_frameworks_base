@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b558749_dee8f3c9",
+        "filename": "core/java/android/content/pm/dex/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2024-01-03T13:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15cab0c4_8c540c1d",
+      "revId": "a80f4364ce23a2e1f9bca79399babf019ea19dc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "775e947d_066b8593",
@@ -35,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c03ba16_b875118e",
+        "filename": "core/java/android/net/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2024-01-03T13:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "775e947d_066b8593",
+      "revId": "a80f4364ce23a2e1f9bca79399babf019ea19dc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "70dddcb0_35ebca02",
@@ -48,6 +84,30 @@
       "writtenOn": "2024-01-03T10:20:49Z",
       "side": 1,
       "message": "Can you add all art/OWNERS ?",
+      "range": {
+        "startLine": 87,
+        "startChar": 47,
+        "endLine": 87,
+        "endChar": 50
+      },
+      "revId": "a80f4364ce23a2e1f9bca79399babf019ea19dc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "849ec595_b4bbd8d1",
+        "filename": "core/jni/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2024-01-03T13:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70dddcb0_35ebca02",
       "range": {
         "startLine": 87,
         "startChar": 47,
@@ -81,6 +141,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5805ad37_f5ee7d7e",
+        "filename": "core/tests/coretests/src/android/net/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2024-01-03T13:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dd93f6e_d64dccdd",
+      "range": {
+        "startLine": 3,
+        "startChar": 25,
+        "endLine": 3,
+        "endChar": 26
+      },
+      "revId": "a80f4364ce23a2e1f9bca79399babf019ea19dc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a999ab60_9bbd3f0b",
@@ -104,6 +188,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bc993b3_c25860b1",
+        "filename": "services/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2024-01-03T13:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a999ab60_9bbd3f0b",
+      "range": {
+        "startLine": 4,
+        "startChar": 23,
+        "endLine": 4,
+        "endChar": 24
+      },
+      "revId": "a80f4364ce23a2e1f9bca79399babf019ea19dc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7216ffde_48da4ae3",
@@ -117,6 +225,24 @@
       "writtenOn": "2024-01-03T10:20:49Z",
       "side": 1,
       "message": "Add islamelbanna@",
+      "revId": "a80f4364ce23a2e1f9bca79399babf019ea19dc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c36a57f_b4893424",
+        "filename": "tests/BootImageProfileTest/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2024-01-03T13:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7216ffde_48da4ae3",
       "revId": "a80f4364ce23a2e1f9bca79399babf019ea19dc7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
