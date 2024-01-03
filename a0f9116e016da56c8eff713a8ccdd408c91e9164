@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fc7bf11_aac61e6c",
+        "filename": "services/core/java/com/android/server/wm/TaskFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2024-01-03T03:46:55Z",
+      "side": 1,
+      "message": "What if one of the TF requests `SENSOR` orientation while the adjacent TF requests `PORTRAIT` orientation?",
+      "revId": "a0f9116e016da56c8eff713a8ccdd408c91e9164",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
