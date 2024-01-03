@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b322c8ee_26a3e53e",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2598,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2024-01-03T22:20:55Z",
+      "side": 1,
+      "message": "Updated to a @TestAPI",
+      "parentUuid": "22f54422_faddb8f5",
+      "range": {
+        "startLine": 2595,
+        "startChar": 0,
+        "endLine": 2598,
+        "endChar": 58
+      },
+      "revId": "b5af70fab270b7d2756016db8f5f5d606910560a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "148e426c_0210d4dd",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-01-03T21:33:01Z",
       "side": 1,
       "message": "Where is this plumbing?",
+      "range": {
+        "startLine": 2603,
+        "startChar": 0,
+        "endLine": 2603,
+        "endChar": 46
+      },
+      "revId": "b5af70fab270b7d2756016db8f5f5d606910560a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72c328d1_ad150b94",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2603,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2024-01-03T22:20:55Z",
+      "side": 1,
+      "message": "aosp/2895790 was just added to this topic",
+      "parentUuid": "148e426c_0210d4dd",
       "range": {
         "startLine": 2603,
         "startChar": 0,
