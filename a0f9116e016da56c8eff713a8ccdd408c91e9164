@@ -16,6 +16,24 @@
       "message": "What if one of the TF requests `SENSOR` orientation while the adjacent TF requests `PORTRAIT` orientation?",
       "revId": "a0f9116e016da56c8eff713a8ccdd408c91e9164",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05951ce0_e709a62e",
+        "filename": "services/core/java/com/android/server/wm/TaskFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-01-03T04:28:28Z",
+      "side": 1,
+      "message": "I think it would make sense to return UNSPECIFIED in such case, can\u0027t really cover all cases without app input...\n\nFor example the same loop can also happen if the activity is request `LANDSCAPE`, for which I can\u0027t think of a good solution.",
+      "parentUuid": "5fc7bf11_aac61e6c",
+      "revId": "a0f9116e016da56c8eff713a8ccdd408c91e9164",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
