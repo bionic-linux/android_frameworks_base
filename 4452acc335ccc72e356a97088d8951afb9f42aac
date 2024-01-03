@@ -34,6 +34,24 @@
       "parentUuid": "99170da0_d2ef2021",
       "revId": "4452acc335ccc72e356a97088d8951afb9f42aac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d37cc078_c37f3965",
+        "filename": "api/api_test.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-01-03T19:26:08Z",
+      "side": 1,
+      "message": "There are some new errors, https://screenshot.googleplex.com/6GRH63TMDnp9vKm \nCan you suggest a fix please?\n\nAlso, previously what I meant was when I print the values in above method, `framework-test` doesn\u0027t show up.",
+      "parentUuid": "5b99ccd8_d00e2f5e",
+      "revId": "4452acc335ccc72e356a97088d8951afb9f42aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
