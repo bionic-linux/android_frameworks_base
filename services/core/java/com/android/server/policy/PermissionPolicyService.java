@@ -348,8 +348,14 @@ public final class PermissionPolicyService extends SystemService {
                 UserHandle user = UserHandle.getUserHandleForUid(uid);
                 PermissionControllerManager manager = mPermControllerManagers.get(user);
                 if (manager == null) {
-                    manager = new PermissionControllerManager(
-                            getUserContext(getContext(), user), PermissionThread.getHandler());
+                    try {
+                        manager = new PermissionControllerManager(
+                                getUserContext(getContext(), user), PermissionThread.getHandler());
+                    }
+                    catch (IllegalStateException e) {
+                        Slog.e(LOG_TAG, "Failed to create PermissionControllerManager for user " + uid + "error =" + e);
+                        return;
+                    }
                     mPermControllerManagers.put(user, manager);
                 }
                 manager.updateUserSensitiveForApp(uid);
