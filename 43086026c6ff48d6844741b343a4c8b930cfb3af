@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96a034c5_51fadeed",
+        "filename": "api/api.go",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2024-01-04T00:22:49Z",
+      "side": 1,
+      "message": "nit: define this in `api_test.go` instead.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 2
+      },
+      "revId": "43086026c6ff48d6844741b343a4c8b930cfb3af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ba0bfa5_45e05fbd",
+        "filename": "api/api_test.go",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2024-01-04T00:22:49Z",
+      "side": 1,
+      "message": "```suggestion\n\t\t\tmodule :\u003d result.ModuleForTests(\"foo\", \"\").Module().(*CombinedApis)\n\t\t\tandroid.AssertDeepEquals(t, \"bootclasspath\", test.expectedBootclasspath, module.properties.Bootclasspath)\n```",
+      "revId": "43086026c6ff48d6844741b343a4c8b930cfb3af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

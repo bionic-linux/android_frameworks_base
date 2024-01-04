@@ -52,6 +52,24 @@
       "parentUuid": "5b99ccd8_d00e2f5e",
       "revId": "4452acc335ccc72e356a97088d8951afb9f42aac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e370135e_5d93491c",
+        "filename": "api/api_test.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2024-01-04T00:22:49Z",
+      "side": 1,
+      "message": "\u003e Also, previously what I meant was when I print the values in above method, framework-test doesn\u0027t show up.\n\n\nI assume you mean `createInternalModules()` by the \"above method\", based on where the print statements are in this change. `createInternalModules()` is called in the module factory, which is run before the config variables are resolved. In order to check if the config works as expected, you should place the print statements in `GenerateAndroidBuildActions` instead.\n\n\u003e Can you suggest a fix please?\n\n`android_*_stubs_current` are being added to the mock test in `PrepareForTestWithJavaDefaultModules` [here](https://cs.android.com/android/platform/superproject/main/+/main:build/soong/java/testing.go;drc\u003dda739a30a6575ae0345e6694da6ff65b1eceabba;l\u003d398), while `combined_apis` create these modules in [`createFullApiLibraries`](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/api/api.go;drc\u003dc6420766f0a5755bd9d1f3701d198e12231dbd67;l\u003d359), thus leading to the module already defined error. In order to utilize `PrepareForTestWithJavaDefaultModules`, you would have to modify it to separate the extra modules from the ones that are generated in `combined_apis`. You could modify `PrepareForTestWithCombinedApis` to add all required components without modifying `PrepareForTestWithJavaDefaultModules`, but this will lead to divergence of the two which I would like to stay away from.\n\n\nLocally I could verify that the test cases work as intended.",
+      "parentUuid": "d37cc078_c37f3965",
+      "revId": "4452acc335ccc72e356a97088d8951afb9f42aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
