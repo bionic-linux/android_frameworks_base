@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d9995fb8_dd07d32b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-05T03:11:35Z",
+      "side": 1,
+      "message": "Yes, I update the test data.",
+      "parentUuid": "4fb13be3_8e86fc55",
+      "range": {
+        "startLine": 13,
+        "startChar": 44,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "c5b336366adc266e08014a9c5b1fe8e91d7a2dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "00c49da3_b7f2075f",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 5
@@ -58,6 +82,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "16e36807_571654b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-05T03:11:35Z",
+      "side": 1,
+      "message": "Thanks for your patient guidance, I fixed them, please review.",
+      "parentUuid": "fa264502_b4bd8add",
+      "revId": "c5b336366adc266e08014a9c5b1fe8e91d7a2dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b3da2b12_c939f6e8",
@@ -75,6 +117,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b665ae68_fefa9248",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-05T03:11:35Z",
+      "side": 1,
+      "message": "I hope someone can uinify these.",
+      "parentUuid": "b3da2b12_c939f6e8",
+      "revId": "c5b336366adc266e08014a9c5b1fe8e91d7a2dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b9a2d99_4937934a",
@@ -88,6 +148,30 @@
       "writtenOn": "2024-01-03T22:53:03Z",
       "side": 1,
       "message": "this could be \u0027true\u0027, because \u0027t\u0027 is always non-zero here, since this is also checked on L538.\n\nI think actually it could say \u0027while (count \u003e 0)\u0027 since that would save a system call when it completes",
+      "range": {
+        "startLine": 530,
+        "startChar": 14,
+        "endLine": 530,
+        "endChar": 21
+      },
+      "revId": "c5b336366adc266e08014a9c5b1fe8e91d7a2dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40b01218_38093b4b",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-05T03:11:35Z",
+      "side": 1,
+      "message": "OK, I changed to \u0027while (count \u003e 0)\u0027",
+      "parentUuid": "7b9a2d99_4937934a",
       "range": {
         "startLine": 530,
         "startChar": 14,
@@ -121,6 +205,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8740d616_0131accc",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-05T03:11:35Z",
+      "side": 1,
+      "message": "OK, I added error log.",
+      "parentUuid": "91436cda_42232ba8",
+      "range": {
+        "startLine": 538,
+        "startChar": 0,
+        "endLine": 540,
+        "endChar": 13
+      },
+      "revId": "c5b336366adc266e08014a9c5b1fe8e91d7a2dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aeef9155_e748d0b2",
@@ -134,6 +242,30 @@
       "writtenOn": "2024-01-03T22:53:03Z",
       "side": 1,
       "message": "The build error is a merge conflict here.\n\n```\n++\u003c\u003c\u003c\u003c\u003c\u003c\u003c HEAD\n +import java.io.IOException;\n +import java.io.InputStream;\n +import java.io.OutputStream;\n +import java.nio.file.Files;\n++\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n+ import java.io.DataInputStream;\n+ import java.io.DataOutputStream;\n++\u003e\u003e\u003e\u003e\u003e\u003e\u003e c5b336366adc (Add slice copy support for socket file type.)\n```\n\nIn order to resolve this simply, move these two additions above L73 (this would be alphabetical order anyway - so it\u0027s lucky the correct alphabetical order should prevent the conflict.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 32
+      },
+      "revId": "c5b336366adc266e08014a9c5b1fe8e91d7a2dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76f60995_00d36ebb",
+        "filename": "core/tests/coretests/src/android/os/FileUtilsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-05T03:11:35Z",
+      "side": 1,
+      "message": "OK, I fixed it.",
+      "parentUuid": "aeef9155_e748d0b2",
       "range": {
         "startLine": 77,
         "startChar": 0,
@@ -167,6 +299,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b489dea7_15885147",
+        "filename": "core/tests/coretests/src/android/os/FileUtilsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-05T03:11:35Z",
+      "side": 1,
+      "message": "Thanks for your good idea. I changed it, no class is used. But thread is still needed for the server and client work simultaneously.",
+      "parentUuid": "2dcda390_340d23da",
+      "range": {
+        "startLine": 353,
+        "startChar": 0,
+        "endLine": 357,
+        "endChar": 27
+      },
+      "revId": "c5b336366adc266e08014a9c5b1fe8e91d7a2dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b408e13_8c726b96",
@@ -180,6 +336,30 @@
       "writtenOn": "2024-01-03T22:53:03Z",
       "side": 1,
       "message": "this should probably be thrown from the test method, not caught here, so it results in an immediate failure, instead of assertArrayEquals below, which would (not even always) fail later if you hit this case.",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 359,
+        "endChar": 41
+      },
+      "revId": "c5b336366adc266e08014a9c5b1fe8e91d7a2dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b085c99f_9cf848b6",
+        "filename": "core/tests/coretests/src/android/os/FileUtilsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-05T03:11:35Z",
+      "side": 1,
+      "message": "ok, I leave catch process empty.\ncatch (Exception e) {}",
+      "parentUuid": "2b408e13_8c726b96",
       "range": {
         "startLine": 359,
         "startChar": 0,
