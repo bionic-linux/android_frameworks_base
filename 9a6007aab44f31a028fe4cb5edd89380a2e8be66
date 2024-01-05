@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52ce3c40_7a06c763",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1424137
+      },
+      "writtenOn": "2024-01-05T07:55:32Z",
+      "side": 1,
+      "message": "hi google friends,\n\nplease review this patch, this patch is designed to fix CTS module CtsInputMethodTestCases failure when use android14 gsi to run cts-on-gsi or cts test with display config(displaymode:1920x1080 density:240) when using 3 buttons navigation bar style.\n\nI also report a ticket to aosp, here is the link, the detailed info can be found in this link https://issuetracker.google.com/u/0/issues/318732724",
+      "revId": "9a6007aab44f31a028fe4cb5edd89380a2e8be66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
