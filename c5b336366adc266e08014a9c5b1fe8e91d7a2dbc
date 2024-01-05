@@ -323,6 +323,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "30f147de_1834d9e0",
+        "filename": "core/tests/coretests/src/android/os/FileUtilsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-05T21:40:14Z",
+      "side": 1,
+      "message": "Yeah, 2 threads are needed (server + client/test) not 3 (server + client + test). Also btw \u0027nit\u0027 means I\u0027m not necessarily expecting a change, but it\u0027s fine either way.",
+      "parentUuid": "b489dea7_15885147",
+      "range": {
+        "startLine": 353,
+        "startChar": 0,
+        "endLine": 357,
+        "endChar": 27
+      },
+      "revId": "c5b336366adc266e08014a9c5b1fe8e91d7a2dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b408e13_8c726b96",
@@ -360,6 +384,30 @@
       "side": 1,
       "message": "ok, I leave catch process empty.\ncatch (Exception e) {}",
       "parentUuid": "2b408e13_8c726b96",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 359,
+        "endChar": 41
+      },
+      "revId": "c5b336366adc266e08014a9c5b1fe8e91d7a2dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "affe31d6_d62ebc9d",
+        "filename": "core/tests/coretests/src/android/os/FileUtilsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-05T21:40:14Z",
+      "side": 1,
+      "message": "The test should say \"throws InterruptedException\" and you can remove the try/catch. That way, if there is an exception, it will fail the test. With empty catch, it will ignore the failure,and it won\u0027t fail the test.\n\nRunning presubmit to see if there is any other issue, but please do remove this case so we don\u0027t ignore errors here.",
+      "parentUuid": "b085c99f_9cf848b6",
       "range": {
         "startLine": 359,
         "startChar": 0,
