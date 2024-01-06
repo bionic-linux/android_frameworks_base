@@ -17,6 +17,7 @@
 package android.os.storage;
 
 import android.annotation.NonNull;
+import android.annotation.SuppressLint;
 
 import java.io.Closeable;
 import java.io.File;
@@ -26,6 +27,7 @@ import java.util.Objects;
 /**
  * A handle to an open storage area.
  */
+@SuppressLint("UnflaggedApi")
 public class OpenStorageArea implements Closeable {
 
     private final StorageManager mManager;
@@ -52,6 +54,7 @@ public class OpenStorageArea implements Closeable {
      * @return the directory path
      */
     @NonNull
+    @SuppressLint("UnflaggedApi")
     public File getDirectory() {
         return mDirectory;
     }
@@ -74,6 +77,7 @@ public class OpenStorageArea implements Closeable {
      * @throws IOException if the storage area failed to be properly closed
      */
     @Override
+    @SuppressLint("UnflaggedApi")
     public void close() throws IOException {
         if (!mClosed) {
             mManager.closeStorageArea(this);

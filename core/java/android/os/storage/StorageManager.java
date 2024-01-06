@@ -2962,6 +2962,7 @@ public class StorageManager {
      *         in a try-with-resources statement to ensure that the storage area gets closed.
      */
     @NonNull
+    @SuppressLint("UnflaggedApi")
     public OpenStorageArea openStorageArea(@NonNull String storageAreaName) throws IOException {
         // TODO: provide proper secret
         return openStorageArea(storageAreaName, new byte[STORAGE_AREA_KEY_LENGTH]);
@@ -2993,6 +2994,7 @@ public class StorageManager {
      *
      * @throws IOException if the storage area is currently open
      */
+    @SuppressLint("UnflaggedApi")
     public void deleteStorageArea(@NonNull String storageAreaName) throws IOException {
         try {
             mStorageManager.deleteStorageArea(mContext.getOpPackageName(), storageAreaName);
@@ -3007,6 +3009,7 @@ public class StorageManager {
      * @return the set of storage area names
      */
     @NonNull
+    @SuppressLint("UnflaggedApi")
     public Set<String> listStorageAreas() {
         File dir = Environment.getDataStorageAreaPackageDirectory(mContext.getOpPackageName());
         return Set.of(dir.list());
