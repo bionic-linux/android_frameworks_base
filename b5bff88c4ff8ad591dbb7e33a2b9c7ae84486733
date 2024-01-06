@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9bf89a1_b0563128",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-06T01:19:13Z",
+      "side": 1,
+      "message": "l",
+      "revId": "b5bff88c4ff8ad591dbb7e33a2b9c7ae84486733",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b575c275_7a02e239",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-06T01:19:13Z",
+      "side": 1,
+      "message": "so one change is, this should probably be t, in case \u0027t \u003c Math.min(count, COPY_CHECKPOINT_BYTES\u0027 but this isn\u0027t enough to fix the issue, only part of it",
+      "range": {
+        "startLine": 537,
+        "startChar": 53,
+        "endLine": 537,
+        "endChar": 91
+      },
+      "revId": "b5bff88c4ff8ad591dbb7e33a2b9c7ae84486733",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdbce6e3_5e00066f",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-06T01:19:13Z",
+      "side": 1,
+      "message": "hey I also just realized, imagine we change this line to be:\n\n```\n            int v \u003d Os.splice(pipes[0], null, out, null, Math.min(count, COPY_CHECKPOINT_BYTES),\n                          SPLICE_F_MOVE | SPLICE_F_MORE);\n```\n\nNow, if t \u003e 0, v \u003e\u003d 0, but! v \u003c t, then the current algorithm would fail because it would try to copy more data from the input FD than the original count. Either the input FD would be exhausted, causing an error, or the part of the FD after the initial bytes would be copied here, and the output would also be missing data (from the cases when v \u003c t).\n\nNoting also \u0027v \u003e t\u0027 is also possible, so left another comment for this case.",
+      "range": {
+        "startLine": 537,
+        "startChar": 12,
+        "endLine": 537,
+        "endChar": 13
+      },
+      "revId": "b5bff88c4ff8ad591dbb7e33a2b9c7ae84486733",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a80d01a4_bd176221",
+        "filename": "core/tests/coretests/src/android/os/FileUtilsTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-06T01:19:13Z",
+      "side": 1,
+      "message": "Presubmit is now failing because it\u0027s running in a configuration where getFileDescriptor$() is not available. Is there another way to test this algorithm which doesn\u0027t require using non-standard APIs?",
+      "range": {
+        "startLine": 285,
+        "startChar": 52,
+        "endLine": 285,
+        "endChar": 72
+      },
+      "revId": "b5bff88c4ff8ad591dbb7e33a2b9c7ae84486733",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
