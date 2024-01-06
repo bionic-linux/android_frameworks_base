@@ -413,7 +413,7 @@ public class NetworkPolicyLogger {
         private static final Date sDate = new Date();
 
         public LogBuffer(int capacity) {
-            super(Data.class, capacity);
+            super(Data::new, Data[]::new, capacity);
         }
 
         public void uidStateChanged(int uid, int procState, long procStateSeq,
@@ -689,11 +689,8 @@ public class NetworkPolicyLogger {
 
     /**
      * Container class for all networkpolicy events data.
-     *
-     * Note: This class needs to be public for RingBuffer class to be able to create
-     * new instances of this.
      */
-    public static final class Data {
+    private static final class Data {
         public int type;
         public long timeStamp;
 
