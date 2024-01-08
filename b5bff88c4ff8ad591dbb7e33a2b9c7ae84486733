@@ -64,6 +64,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0fe4375_a34268dc",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-08T11:52:53Z",
+      "side": 1,
+      "message": "please refer to the next comment answer.",
+      "parentUuid": "b575c275_7a02e239",
+      "range": {
+        "startLine": 537,
+        "startChar": 53,
+        "endLine": 537,
+        "endChar": 91
+      },
+      "revId": "b5bff88c4ff8ad591dbb7e33a2b9c7ae84486733",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "273e522a_8a2bcdcc",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-08T11:52:53Z",
+      "side": 1,
+      "message": "Thanks for your suggestion! I changed the algorithm, main idea is\n1. Use countToRead to indicate the unread data from fdIn\n2. Use countInPipe to indicate the data in pipe\n3. The size \u0027t\u0027 can be different between tow splice call\n4. When fdIn is exhausted, flush all the data in pipe\n5. Use waring log in first splice error. For in some case this is not real error,\nsuch as input count is larger than file size, the copy is sucess.",
+      "parentUuid": "cdbce6e3_5e00066f",
+      "range": {
+        "startLine": 537,
+        "startChar": 12,
+        "endLine": 537,
+        "endChar": 13
+      },
+      "revId": "b5bff88c4ff8ad591dbb7e33a2b9c7ae84486733",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a80d01a4_bd176221",
@@ -77,6 +125,30 @@
       "writtenOn": "2024-01-06T01:19:13Z",
       "side": 1,
       "message": "Presubmit is now failing because it\u0027s running in a configuration where getFileDescriptor$() is not available. Is there another way to test this algorithm which doesn\u0027t require using non-standard APIs?",
+      "range": {
+        "startLine": 285,
+        "startChar": 52,
+        "endLine": 285,
+        "endChar": 72
+      },
+      "revId": "b5bff88c4ff8ad591dbb7e33a2b9c7ae84486733",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3c0bd4f_fcbba809",
+        "filename": "core/tests/coretests/src/android/os/FileUtilsTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-08T11:52:53Z",
+      "side": 1,
+      "message": "Yes, I use OS.* API instead of Java Socket is is OK?",
+      "parentUuid": "a80d01a4_bd176221",
       "range": {
         "startLine": 285,
         "startChar": 52,
