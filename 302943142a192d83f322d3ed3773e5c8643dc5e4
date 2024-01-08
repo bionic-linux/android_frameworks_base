@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6c09c0d0_db128df2",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2024-01-08T15:40:24Z",
+      "side": 1,
+      "message": "It might make sense to do this now actually, that way we don\u0027t forget to address it in the future. Can we add a CL on top of this one to address, so we can consider this one done and also have the issue taken care of?",
+      "parentUuid": "15557c0a_fa23f11f",
+      "range": {
+        "startLine": 82,
+        "startChar": 40,
+        "endLine": 82,
+        "endChar": 47
+      },
+      "revId": "302943142a192d83f322d3ed3773e5c8643dc5e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c7b9292a_59bd2500",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
         "patchSetId": 12

@@ -91,6 +91,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4226c8fe_583503f8",
+        "filename": "packages/SystemUI/res/drawable/stat_sys_no_internet_vpn_ic.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2024-01-08T15:40:24Z",
+      "side": 1,
+      "message": "I would recommend combining the assets into a single CL, since this change by itself could produce breakages. \n\nAlternatively, if you wanted to keep the assets separate from the code changes, you could merge the assets _first_ as unreferenced files, and then simply add the usages here. That would make both CLs fully functional and still split.\n\nYou don\u0027t have to rework the CLs now, just for future reference.",
+      "parentUuid": "ba716f16_b65420da",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 9
+      },
+      "revId": "89d859c7ccf919fee221d8618516135d97c19c1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "64e69ef6_f7b2bc53",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
         "patchSetId": 11

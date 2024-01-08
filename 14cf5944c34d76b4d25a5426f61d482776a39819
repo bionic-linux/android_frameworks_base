@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "814f6c9f_7f973ba7",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2024-01-08T15:40:24Z",
+      "side": 1,
+      "message": "For future CLs: old lines that use `if (DEBUG)` like this should usually be converted to use the LogBuffer implementation, so that we just get the debug logs by default",
+      "range": {
+        "startLine": 545,
+        "startChar": 16,
+        "endLine": 545,
+        "endChar": 21
+      },
+      "revId": "14cf5944c34d76b4d25a5426f61d482776a39819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
