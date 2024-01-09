@@ -205,6 +205,30 @@
       },
       "revId": "b5bff88c4ff8ad591dbb7e33a2b9c7ae84486733",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58123f22_d34e319b",
+        "filename": "core/tests/coretests/src/android/os/FileUtilsTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-09T02:07:30Z",
+      "side": 1,
+      "message": "This failed for a similar reason \u0027java.lang.NoClassDefFoundError: android/system/OsConstants\u0027.\n\nLet me continue to check with the team if there is another way to get it in. I might need to move this patch internally and then merge it here in multiple steps.",
+      "parentUuid": "8be6fcb1_9ec97048",
+      "range": {
+        "startLine": 285,
+        "startChar": 52,
+        "endLine": 285,
+        "endChar": 72
+      },
+      "revId": "b5bff88c4ff8ad591dbb7e33a2b9c7ae84486733",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

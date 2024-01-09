@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4863a099_f0354b73",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-09T02:07:30Z",
+      "side": 1,
+      "message": "countToRead \u003e 0 || countInPipe \u003e 0",
+      "range": {
+        "startLine": 532,
+        "startChar": 15,
+        "endLine": 532,
+        "endChar": 30
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7860a53a_6b289c79",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-09T02:07:30Z",
+      "side": 1,
+      "message": "might put \u0027if (countToRead \u003e 0)\u0027 around this, to avoid calling splice(..., 0) once the while loop condition is updated",
+      "range": {
+        "startLine": 533,
+        "startChar": 0,
+        "endLine": 533,
+        "endChar": 25
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3c2ab2b_15545ad7",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-09T02:07:30Z",
+      "side": 1,
+      "message": "copied",
+      "range": {
+        "startLine": 537,
+        "startChar": 26,
+        "endLine": 537,
+        "endChar": 32
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18c71a4c_362aac05",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-09T02:07:30Z",
+      "side": 1,
+      "message": "read (irregular verb)",
+      "range": {
+        "startLine": 538,
+        "startChar": 26,
+        "endLine": 538,
+        "endChar": 32
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1e43cc7_7cbd761d",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-09T02:07:30Z",
+      "side": 1,
+      "message": "if the pipe is throwing an unexpected error, we should still consider this an error, rather than trying to continue?\n\nso if \u0027t \u003d -1\u0027 this should fail, but if \u0027t \u003d 0\u0027.\n\nalso use \u0027{\u0027 \u0027}\u0027 for if statement with else\n\ne.g.\n\n``` maybe\nif (t \u003c 0 || countInPipe \u003c\u003d 0) break;\n```\n\n(noting that L535 implies t\u003d0 here, \u003c\u003d for extra care)",
+      "range": {
+        "startLine": 540,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 26
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00ad3bdc_3311096b",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-09T02:07:30Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 552,
+        "startChar": 26,
+        "endLine": 553,
+        "endChar": 34
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cb0e922_4fd6efca",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-09T02:07:30Z",
+      "side": 1,
+      "message": "Please fix this ERROR reported by Common Typos: Common typo found: \"exhaused\" -- should it be \"exhausted\"?\n\nAnalyzer Description: Linter for catching common typos motivated by go/todo-fail and go/lol-codesearch. Shared with google3 common typos library go/common-typos.\nOwner: ayeaye-team@google.com\n\nCommon typo found: \"exhaused\" -- should it be \"exhausted\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 561,
+        "startChar": 25,
+        "endLine": 561,
+        "endChar": 33
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5020aaa_53e65b4b",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-09T02:07:30Z",
+      "side": 1,
+      "message": "note - two comments above on L532 (while statement) and L533 (on the first splice) would avoid needing to handle this case. As the code is here, countInPipe might be larger than COPY_CHECKPOINT_BYTES and further updates would be needed. Rather than add more copies of code here, I think you should remove this case and make the above suggested changes.",
+      "range": {
+        "startLine": 562,
+        "startChar": 0,
+        "endLine": 574,
+        "endChar": 13
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
