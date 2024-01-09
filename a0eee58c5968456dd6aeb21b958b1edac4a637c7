@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23ef0ec5_3443b3ff",
+        "filename": "core/tests/coretests/src/android/os/FileUtilsTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-01-09T22:17:34Z",
+      "side": 1,
+      "message": "Sorry for the trouble caused by ravenwood. I just merged a work around internally.\n\nCould you rename the test method to `testCopy_SocketToFile_FileToSocket_$noRavenwood`?\n\nThat should make Ravenwood ignore this method.\n\nPlease also add the following TODO comment:\n\n`TODO(ravenwood) Remove the _$noRavenwood suffix and add @RavenwoodIgnore instead`\n\nThanks!",
+      "range": {
+        "startLine": 261,
+        "startChar": 16,
+        "endLine": 261,
+        "endChar": 50
+      },
+      "revId": "a0eee58c5968456dd6aeb21b958b1edac4a637c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
