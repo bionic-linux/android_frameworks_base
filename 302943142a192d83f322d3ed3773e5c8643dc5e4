@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c28d8cdd_f713ce51",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2024-01-09T07:16:52Z",
+      "side": 1,
+      "message": "will be fixed in aosp/2902408",
+      "parentUuid": "6c09c0d0_db128df2",
+      "range": {
+        "startLine": 82,
+        "startChar": 40,
+        "endLine": 82,
+        "endChar": 47
+      },
+      "revId": "302943142a192d83f322d3ed3773e5c8643dc5e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7b9292a_59bd2500",

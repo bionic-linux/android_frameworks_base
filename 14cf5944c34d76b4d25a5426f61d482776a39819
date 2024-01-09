@@ -22,6 +22,30 @@
       },
       "revId": "14cf5944c34d76b4d25a5426f61d482776a39819",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bde753c6_b90be9c4",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2024-01-09T07:16:52Z",
+      "side": 1,
+      "message": "Acknowledged, thanks for the information.",
+      "parentUuid": "814f6c9f_7f973ba7",
+      "range": {
+        "startLine": 545,
+        "startChar": 16,
+        "endLine": 545,
+        "endChar": 21
+      },
+      "revId": "14cf5944c34d76b4d25a5426f61d482776a39819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

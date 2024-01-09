@@ -113,6 +113,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78762683_4b4bf213",
+        "filename": "packages/SystemUI/res/drawable/stat_sys_no_internet_vpn_ic.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2049445
+      },
+      "writtenOn": "2024-01-09T07:16:52Z",
+      "side": 1,
+      "message": "Acknowledged, thanks for the suggestions",
+      "parentUuid": "4226c8fe_583503f8",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 9
+      },
+      "revId": "89d859c7ccf919fee221d8618516135d97c19c1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "64e69ef6_f7b2bc53",
