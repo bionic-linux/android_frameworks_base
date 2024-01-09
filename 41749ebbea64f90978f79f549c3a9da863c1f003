@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8609af94_bb98b0f5",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3258,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-01-09T01:12:48Z",
+      "side": 1,
+      "message": "I agree that the `serialNumber` is not being used. Can you please confirm that we indeed don\u0027t need it? Keep in mind that userIds can be re-used after a user is removed, unlike serial numbers, and cleanup isn\u0027t always necessarily clean.",
+      "range": {
+        "startLine": 3258,
+        "startChar": 53,
+        "endLine": 3258,
+        "endChar": 54
+      },
+      "revId": "41749ebbea64f90978f79f549c3a9da863c1f003",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
