@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d58bd7a8_c303e46a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1583551
+      },
+      "writtenOn": "2024-01-09T19:44:19Z",
+      "side": 1,
+      "message": "will there be a subsequent change to remove the baseline map?",
+      "revId": "d35f1a1cc99a1406523ece163ebd8d45cd74a0cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
