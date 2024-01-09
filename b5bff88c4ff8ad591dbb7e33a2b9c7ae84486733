@@ -114,6 +114,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c602a7c7_fdcc8b7a",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-09T00:04:26Z",
+      "side": 1,
+      "message": "marking open, will check in detail soon. Thanks!",
+      "parentUuid": "273e522a_8a2bcdcc",
+      "range": {
+        "startLine": 537,
+        "startChar": 12,
+        "endLine": 537,
+        "endChar": 13
+      },
+      "revId": "b5bff88c4ff8ad591dbb7e33a2b9c7ae84486733",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a80d01a4_bd176221",
         "filename": "core/tests/coretests/src/android/os/FileUtilsTest.java",
         "patchSetId": 6
@@ -149,6 +173,30 @@
       "side": 1,
       "message": "Yes, I use OS.* API instead of Java Socket is is OK?",
       "parentUuid": "a80d01a4_bd176221",
+      "range": {
+        "startLine": 285,
+        "startChar": 52,
+        "endLine": 285,
+        "endChar": 72
+      },
+      "revId": "b5bff88c4ff8ad591dbb7e33a2b9c7ae84486733",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8be6fcb1_9ec97048",
+        "filename": "core/tests/coretests/src/android/os/FileUtilsTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-09T00:04:26Z",
+      "side": 1,
+      "message": "hey, let me try presubmit to check. I\u0027ll look at the changes you\u0027ve made in detail soon. Thanks!",
+      "parentUuid": "c3c0bd4f_fcbba809",
       "range": {
         "startLine": 285,
         "startChar": 52,
