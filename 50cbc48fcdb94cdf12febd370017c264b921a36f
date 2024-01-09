@@ -238,6 +238,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f7372848_57b94394",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-09T18:28:43Z",
+      "side": 1,
+      "message": "Can you return in this case rather than adding stopReadFlag? I don\u0027t think an additional flag should be needed, or can you say why it is needed?\n\nAlso it should be a boolean not an int how it is used, but I don\u0027t think it\u0027s needed?",
+      "parentUuid": "1467a461_ed2bb452",
+      "range": {
+        "startLine": 540,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 26
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "00ad3bdc_3311096b",
         "filename": "core/java/android/os/FileUtils.java",
         "patchSetId": 11
