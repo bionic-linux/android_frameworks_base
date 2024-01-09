@@ -229,6 +229,30 @@
       },
       "revId": "b5bff88c4ff8ad591dbb7e33a2b9c7ae84486733",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83f752aa_d5e59abc",
+        "filename": "core/tests/coretests/src/android/os/FileUtilsTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-09T07:55:48Z",
+      "side": 1,
+      "message": "Yes, I can not find another way to get FD, I hope you can help me.",
+      "parentUuid": "58123f22_d34e319b",
+      "range": {
+        "startLine": 285,
+        "startChar": 52,
+        "endLine": 285,
+        "endChar": 72
+      },
+      "revId": "b5bff88c4ff8ad591dbb7e33a2b9c7ae84486733",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

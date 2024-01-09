@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4f9e8c9_b62d972c",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-09T07:55:48Z",
+      "side": 1,
+      "message": "Yes, I fixed it.",
+      "parentUuid": "4863a099_f0354b73",
+      "range": {
+        "startLine": 532,
+        "startChar": 15,
+        "endLine": 532,
+        "endChar": 30
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7860a53a_6b289c79",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-01-09T02:07:30Z",
       "side": 1,
       "message": "might put \u0027if (countToRead \u003e 0)\u0027 around this, to avoid calling splice(..., 0) once the while loop condition is updated",
+      "range": {
+        "startLine": 533,
+        "startChar": 0,
+        "endLine": 533,
+        "endChar": 25
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "987106d4_8be09bb2",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-09T07:55:48Z",
+      "side": 1,
+      "message": "Yes, I fixed it.",
+      "parentUuid": "7860a53a_6b289c79",
       "range": {
         "startLine": 533,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d1f9672_00f134a2",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-09T07:55:48Z",
+      "side": 1,
+      "message": "Yes, I fixed it.",
+      "parentUuid": "e3c2ab2b_15545ad7",
+      "range": {
+        "startLine": 537,
+        "startChar": 26,
+        "endLine": 537,
+        "endChar": 32
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18c71a4c_362aac05",
@@ -83,6 +155,30 @@
       "writtenOn": "2024-01-09T02:07:30Z",
       "side": 1,
       "message": "read (irregular verb)",
+      "range": {
+        "startLine": 538,
+        "startChar": 26,
+        "endLine": 538,
+        "endChar": 32
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4884a1ae_d2a80b46",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-09T07:55:48Z",
+      "side": 1,
+      "message": "Yes, I fixed it.",
+      "parentUuid": "18c71a4c_362aac05",
       "range": {
         "startLine": 538,
         "startChar": 26,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1467a461_ed2bb452",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-09T07:55:48Z",
+      "side": 1,
+      "message": "Yes, I added a flag stopReadFlag to handle this case. t\u003d\u003d-1 means real error occured use Log.e, t\u003d\u003d0 means input count larger then real size use Log.w. \nThen if countInPipe\u003d\u003d0, then break, else write the data in pipe to fdOut, and break at next loop.",
+      "parentUuid": "f1e43cc7_7cbd761d",
+      "range": {
+        "startLine": 540,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 26
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "00ad3bdc_3311096b",
@@ -129,6 +249,30 @@
       "writtenOn": "2024-01-09T02:07:30Z",
       "side": 1,
       "message": "same",
+      "range": {
+        "startLine": 552,
+        "startChar": 26,
+        "endLine": 553,
+        "endChar": 34
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da26cbc5_36e8638b",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-09T07:55:48Z",
+      "side": 1,
+      "message": "Yes, I fixed it.",
+      "parentUuid": "00ad3bdc_3311096b",
       "range": {
         "startLine": 552,
         "startChar": 26,
@@ -162,6 +306,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5e66fda_4dd6bbc8",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-09T07:55:48Z",
+      "side": 1,
+      "message": "Yes, I removed this part.",
+      "parentUuid": "6cb0e922_4fd6efca",
+      "range": {
+        "startLine": 561,
+        "startChar": 25,
+        "endLine": 561,
+        "endChar": 33
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d5020aaa_53e65b4b",
@@ -175,6 +343,30 @@
       "writtenOn": "2024-01-09T02:07:30Z",
       "side": 1,
       "message": "note - two comments above on L532 (while statement) and L533 (on the first splice) would avoid needing to handle this case. As the code is here, countInPipe might be larger than COPY_CHECKPOINT_BYTES and further updates would be needed. Rather than add more copies of code here, I think you should remove this case and make the above suggested changes.",
+      "range": {
+        "startLine": 562,
+        "startChar": 0,
+        "endLine": 574,
+        "endChar": 13
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "effecd51_51652e3d",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-09T07:55:48Z",
+      "side": 1,
+      "message": "Yes, I removed this part.",
+      "parentUuid": "d5020aaa_53e65b4b",
       "range": {
         "startLine": 562,
         "startChar": 0,
