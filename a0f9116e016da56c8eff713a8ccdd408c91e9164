@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "58a71fac_a8cfb221",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-01-09T14:12:32Z",
+      "side": 1,
+      "message": "There is merge conflict. Will cherrypick to internal first.",
+      "revId": "a0f9116e016da56c8eff713a8ccdd408c91e9164",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5fc7bf11_aac61e6c",
         "filename": "services/core/java/com/android/server/wm/TaskFragment.java",
         "patchSetId": 3
