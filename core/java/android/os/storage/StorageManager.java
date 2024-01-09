@@ -29,6 +29,7 @@ import static android.os.UserHandle.PER_USER_RANGE;
 import android.annotation.BytesLong;
 import android.annotation.CallbackExecutor;
 import android.annotation.IntDef;
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
@@ -76,6 +77,7 @@ import android.os.UserHandle;
 import android.provider.DeviceConfig;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.security.Flags;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.OsConstants;
@@ -2962,7 +2964,7 @@ public class StorageManager {
      *         in a try-with-resources statement to ensure that the storage area gets closed.
      */
     @NonNull
-    @SuppressLint("UnflaggedApi")
+    @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
     public OpenStorageArea openStorageArea(@NonNull String storageAreaName) throws IOException {
         // TODO: provide proper secret
         return openStorageArea(storageAreaName, new byte[STORAGE_AREA_KEY_LENGTH]);
@@ -2994,7 +2996,7 @@ public class StorageManager {
      *
      * @throws IOException if the storage area is currently open
      */
-    @SuppressLint("UnflaggedApi")
+    @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
     public void deleteStorageArea(@NonNull String storageAreaName) throws IOException {
         try {
             mStorageManager.deleteStorageArea(mContext.getOpPackageName(), storageAreaName);
@@ -3009,7 +3011,7 @@ public class StorageManager {
      * @return the set of storage area names
      */
     @NonNull
-    @SuppressLint("UnflaggedApi")
+    @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
     public Set<String> listStorageAreas() {
         File dir = Environment.getDataStorageAreaPackageDirectory(mContext.getOpPackageName());
         return Set.of(dir.list());
