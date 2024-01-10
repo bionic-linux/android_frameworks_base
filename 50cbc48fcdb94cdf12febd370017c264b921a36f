@@ -286,6 +286,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2c2d7d4b_9d0635b7",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-10T23:44:36Z",
+      "side": 1,
+      "message": "re 1, \u0027countToRead \u003e 0 || countInPipe \u003e 0\u0027 should cover this condition?\n\nre case 2 - you could run the test for this case without your code, and then preserve the same behavior with your change. This is how I would generally resolve the ambiguity.",
+      "parentUuid": "621781c7_cd15a9e0",
+      "range": {
+        "startLine": 540,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 26
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "00ad3bdc_3311096b",
         "filename": "core/java/android/os/FileUtils.java",
         "patchSetId": 11
