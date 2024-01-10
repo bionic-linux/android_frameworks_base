@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fcc2472_c50b9db8",
+        "filename": "tests/Camera2Tests/CameraToo/tests/AndroidTest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1308044
+      },
+      "writtenOn": "2024-01-10T08:31:46Z",
+      "side": 1,
+      "message": "Remove this?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 49
+      },
+      "revId": "fbe79f7c4b891a2821f1c792fef0245e3fcc3e67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
