@@ -33,6 +33,24 @@
       "message": "Han, is there a particular reason that you\u0027re making this change now?  There\u0027s a merge conflict because we\u0027re making some changes to the internal branch.  I\u0027m happy to update the internal branch in early Feb, then you can update this to avoid the merge (or just wait until the next AOSP release).",
       "revId": "4aade0df0548b42641a98d3d7ce3a3732c58fe43",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3f5c0b0_7e7eef77",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1319385
+      },
+      "writtenOn": "2024-01-10T14:16:27Z",
+      "side": 1,
+      "message": "No problem, thanks!",
+      "parentUuid": "c8714040_e699e2d3",
+      "revId": "4aade0df0548b42641a98d3d7ce3a3732c58fe43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
