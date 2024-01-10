@@ -260,6 +260,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "621781c7_cd15a9e0",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-10T03:23:21Z",
+      "side": 1,
+      "message": "Thanks! I use stopReadFlag to deal followed corner cases: \n1. When splice_read in error(t\u003d\u003d-1), countInPipe\u003e0. This means that some data is still in the pipeline and has not been written to the out file. So I want to break after the wirte completed(countInPipe\u003d\u003d0).\n\n2. Input count larger than real file size, when read to the end of file(t\u003d\u003d0), countInPipe\u003e0, countToRead\u003e0. And then call splice_write to out file, but after one operation(countInPipe\u003e0), there is still incomplete data and more loops are needed. Use this variable to avoid calling splice_read operation in the next loop.\n \nOf course, case 1, under such error conditions, it is no longer possible to ensure data integrity, and the writing more data maybe not meaningful.\ncase 2, Maybe we needed handle it.\n\nSo if we don\u0027t handle these cornor case, I will remove the stopReadFlag. What is your opinion?",
+      "parentUuid": "f7372848_57b94394",
+      "range": {
+        "startLine": 540,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 26
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "00ad3bdc_3311096b",
