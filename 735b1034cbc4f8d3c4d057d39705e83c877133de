@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbab4564_408bebe9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1652576
+      },
+      "writtenOn": "2024-01-11T15:20:31Z",
+      "side": 1,
+      "message": "Hi, am I supposed to do something from my side?",
+      "revId": "735b1034cbc4f8d3c4d057d39705e83c877133de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
