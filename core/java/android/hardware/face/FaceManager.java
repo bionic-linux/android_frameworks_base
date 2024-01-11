@@ -641,9 +641,7 @@ public class FaceManager implements BiometricAuthenticator, BiometricFaceConstan
     /**
      * @hide
      */
-    @RequiresPermission(allOf = {
-            USE_BIOMETRIC_INTERNAL,
-            INTERACT_ACROSS_USERS})
+    @RequiresPermission(allOf = { USE_BIOMETRIC_INTERNAL, INTERACT_ACROSS_USERS })
     public boolean hasEnrolledTemplates(int userId) {
         final List<FaceSensorPropertiesInternal> faceSensorProperties =
                 getSensorPropertiesInternal();
@@ -651,11 +649,17 @@ public class FaceManager implements BiometricAuthenticator, BiometricFaceConstan
             Slog.e(TAG, "No sensors");
             return false;
         }
+        return hasEnrolledTemplates(faceSensorProperties.get(0).sensorId, userId);
+    }
 
+    /**
+     * @hide
+     */
+    @RequiresPermission(allOf = { USE_BIOMETRIC_INTERNAL, INTERACT_ACROSS_USERS })
+    public boolean hasEnrolledTemplates(int sensorId, int userId) {
         if (mService != null) {
             try {
-                return mService.hasEnrolledFaces(faceSensorProperties.get(0).sensorId, userId,
-                        mContext.getOpPackageName());
+                return mService.hasEnrolledFaces(sensorId, userId, mContext.getOpPackageName());
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }
