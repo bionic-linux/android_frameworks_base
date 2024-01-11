@@ -16,6 +16,24 @@
       "message": "Hi, am I supposed to do something from my side?",
       "revId": "735b1034cbc4f8d3c4d057d39705e83c877133de",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32c8a127_17bb4550",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1854976
+      },
+      "writtenOn": "2024-01-11T15:23:15Z",
+      "side": 1,
+      "message": "I trigger the presubmit and auto-merge",
+      "parentUuid": "bbab4564_408bebe9",
+      "revId": "735b1034cbc4f8d3c4d057d39705e83c877133de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
