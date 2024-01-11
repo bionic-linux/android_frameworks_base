@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8cdf6f5_3657e534",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-11T03:48:06Z",
+      "side": 1,
+      "message": "not return an error directly here? it\u0027s because you have to continue copying from the pipe out?\n\nsince \u0027progress\u0027 is not updated, I thought you could return? It would be simpler, and the pipes would be destroyed, so no need to worry about the data in the pipe\n\n(adding Zim because he\u0027s worked here and I think he could answer definitely about exceptions)",
+      "range": {
+        "startLine": 542,
+        "startChar": 0,
+        "endLine": 542,
+        "endChar": 31
+      },
+      "revId": "e4542506edb03a793a8377f5d71c00491bc722e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cab71421_b86289d1",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-11T03:48:06Z",
+      "side": 1,
+      "message": "this seems to be the same behavior as copyInternalUserspace - makes sense",
+      "range": {
+        "startLine": 549,
+        "startChar": 0,
+        "endLine": 549,
+        "endChar": 31
+      },
+      "revId": "e4542506edb03a793a8377f5d71c00491bc722e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b19d7501_bf4da1d5",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-11T03:48:06Z",
+      "side": 1,
+      "message": "nit: \"// D\"",
+      "range": {
+        "startLine": 559,
+        "startChar": 18,
+        "endLine": 559,
+        "endChar": 19
+      },
+      "revId": "e4542506edb03a793a8377f5d71c00491bc722e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f0cbdda_4b23cba6",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-11T03:48:06Z",
+      "side": 1,
+      "message": "should this throw an error in this case?",
+      "range": {
+        "startLine": 566,
+        "startChar": 14,
+        "endLine": 566,
+        "endChar": 26
+      },
+      "revId": "e4542506edb03a793a8377f5d71c00491bc722e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
