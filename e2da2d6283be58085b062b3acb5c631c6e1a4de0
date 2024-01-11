@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a374bbf4_ad20e3ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2024-01-11T09:04:45Z",
+      "side": 1,
+      "message": "I\u0027ll defer the decision to Paul😊",
+      "revId": "e2da2d6283be58085b062b3acb5c631c6e1a4de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
