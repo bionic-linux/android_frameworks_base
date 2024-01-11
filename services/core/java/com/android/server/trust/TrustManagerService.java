@@ -44,6 +44,10 @@ import android.content.res.XmlResourceParser;
 import android.graphics.drawable.Drawable;
 import android.hardware.biometrics.BiometricManager;
 import android.hardware.biometrics.BiometricSourceType;
+import android.hardware.biometrics.SensorProperties;
+import android.hardware.face.FaceManager;
+import android.hardware.face.FaceSensorProperties;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -895,7 +899,17 @@ public class TrustManagerService extends SystemService {
 
     private void notifyKeystoreOfDeviceLockState(int userId, boolean isLocked) {
         if (isLocked) {
-            Authorization.onDeviceLocked(userId, getBiometricSids(userId));
+            int authUserId = userId;
+            if (android.security.Flags.fixUnlockedDeviceRequiredKeysV2()
+                    && mLockPatternUtils.isProfileWithUnifiedChallenge(userId)) {
+                // A profile with unified challenge is unlockable not by its own biometrics and
+                // trust agents, but rather by those of the parent user.  Therefore, when protecting
+                // the profile's UnlockedDeviceRequired keys, we must use the parent's list of
+                // biometric SIDs and weak unlock methods, not the profile's.
+                authUserId = resolveProfileParent(userId);
+            }
+            Authorization.onDeviceLocked(userId, getBiometricSids(authUserId),
+                    isWeakUnlockMethodEnabled(authUserId));
         } else {
             // Notify Keystore that the device is now unlocked for the user.  Note that for unlocks
             // with LSKF, this is redundant with the call from LockSettingsService which provides
@@ -1442,14 +1456,64 @@ public class TrustManagerService extends SystemService {
         if (biometricManager == null) {
             return new long[0];
         }
-        if (android.security.Flags.fixUnlockedDeviceRequiredKeysV2()
-                && mLockPatternUtils.isProfileWithUnifiedChallenge(userId)) {
-            // Profiles with unified challenge have their own set of biometrics, but the device
-            // unlock happens via the parent user.  In this case Keystore needs to be given the list
-            // of biometric SIDs from the parent user, not the profile.
-            userId = resolveProfileParent(userId);
-        }
         return biometricManager.getAuthenticatorIds(userId);
+    }
+
+    // Returns whether the user can be unlocked by a non-strong biometric or a trust agent.
+    private boolean isWeakUnlockMethodEnabled(int userId) {
+        if (!android.security.Flags.fixUnlockedDeviceRequiredKeysV2()) {
+            return false;
+        }
+
+        // Check whether the system currently allows the use of non-strong biometrics for the user,
+        // *and* the user actually has a non-strong biometric enrolled.
+        //
+        // Currently we just check for fingerprint and face, matching Keyguard.  If Keyguard starts
+        // supporting other types of biometrics, this will need to be updated.
+        if (mStrongAuthTracker.isBiometricAllowedForUser(/* isStrongBiometric= */ false, userId)) {
+            DevicePolicyManager dpm = mLockPatternUtils.getDevicePolicyManager();
+            int disabledFeatures = dpm.getKeyguardDisabledFeatures(null, userId);
+
+            FingerprintManager fingerprintManager =
+                    mContext.getSystemService(FingerprintManager.class);
+            if (fingerprintManager != null
+                    && (disabledFeatures & DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT) == 0) {
+                for (SensorProperties sensor : fingerprintManager.getSensorProperties()) {
+                    if (isWeakOrConvenienceSensor(sensor)
+                            && fingerprintManager
+                                    .hasEnrolledFingerprints(sensor.getSensorId(), userId)) {
+                        Slog.i(TAG, "User is unlockable by non-strong fingerprint auth");
+                        return true;
+                    }
+                }
+            }
+
+            FaceManager faceManager = mContext.getSystemService(FaceManager.class);
+            if (faceManager != null
+                    && (disabledFeatures & DevicePolicyManager.KEYGUARD_DISABLE_FACE) == 0) {
+                for (FaceSensorProperties sensor : faceManager.getSensorProperties()) {
+                    if (isWeakOrConvenienceSensor(sensor)
+                            && faceManager.hasEnrolledTemplates(sensor.getSensorId(), userId)) {
+                        Slog.i(TAG, "User is unlockable by non-strong face auth");
+                        return true;
+                    }
+                }
+            }
+        }
+
+        // Check whether it's possible for the device to be actively unlocked by a trust agent.
+        if (getUserTrustStateInner(userId) == TrustState.TRUSTABLE
+                || (isAutomotive() && isTrustUsuallyManagedInternal(userId))) {
+            Slog.i(TAG, "User is unlockable by trust agent");
+            return true;
+        }
+
+        return false;
+    }
+
+    private static boolean isWeakOrConvenienceSensor(SensorProperties sensor) {
+        return sensor.getSensorStrength() == SensorProperties.STRENGTH_WEAK
+                || sensor.getSensorStrength() == SensorProperties.STRENGTH_CONVENIENCE;
     }
 
     // User lifecycle
