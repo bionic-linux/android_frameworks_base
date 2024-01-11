@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0950473a_b7d24f0d",
+        "filename": "services/core/java/com/android/server/wm/TaskFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1841,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-01-11T09:47:44Z",
+      "side": 1,
+      "message": "I agree that we need to update `shouldReportOrientationUnspecified`.\n\nWhat I mean here is that the TaskFragment will report orientation as `SCREEN_ORIENTATION_UNSET` instead of `SCREEN_ORIENTATION_SENSOR`. Wouldn\u0027t that cause other issue? For example, if you minimize the app, and reopen it again, it will stick to the last orientation request.",
+      "parentUuid": "f6691e7a_195e0464",
+      "range": {
+        "startLine": 1839,
+        "startChar": 8,
+        "endLine": 1841,
+        "endChar": 9
+      },
+      "revId": "a0f9116e016da56c8eff713a8ccdd408c91e9164",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5fc7bf11_aac61e6c",
         "filename": "services/core/java/com/android/server/wm/TaskFragment.java",
         "patchSetId": 3
