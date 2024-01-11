@@ -1190,6 +1190,22 @@ public class FingerprintManager implements BiometricAuthenticator, BiometricFing
     }
 
     /**
+     * @hide
+     */
+    @RequiresPermission(USE_BIOMETRIC_INTERNAL)
+    public boolean hasEnrolledFingerprints(int sensorId, int userId) {
+        if (mService != null) {
+            try {
+                return mService.hasEnrolledFingerprints(
+                        sensorId, userId, mContext.getOpPackageName());
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+        return false;
+    }
+
+    /**
      * Determine if fingerprint hardware is present and functional.
      *
      * @return true if hardware is present and functional, false otherwise.
