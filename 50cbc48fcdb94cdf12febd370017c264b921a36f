@@ -308,6 +308,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f43f6679_d63a03e1",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1835301
+      },
+      "writtenOn": "2024-01-11T02:07:05Z",
+      "side": 1,
+      "message": "Thanks! You\u0027re absolutely right. stopReadFlag is not necessary.  \u0027countToRead \u003e 0 || countInPipe \u003e 0\u0027 can cover all situations. We can set countToRead to zeor when in case 1 and case 2.",
+      "parentUuid": "2c2d7d4b_9d0635b7",
+      "range": {
+        "startLine": 540,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 26
+      },
+      "revId": "50cbc48fcdb94cdf12febd370017c264b921a36f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "00ad3bdc_3311096b",
