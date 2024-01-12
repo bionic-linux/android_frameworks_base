@@ -14,6 +14,9 @@
 
 aconfig_declarations_group {
     name: "framework-minus-apex-aconfig-declarations",
+    aconfig_declarations_groups: [
+        "audio-framework-aconfig",
+    ],
     java_aconfig_libraries: [
         // !!! KEEP THIS LIST ALPHABETICAL !!!
         "aconfig_mediacodec_flags_java_lib",
