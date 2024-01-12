@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f58390a2_8a10110a",
+        "filename": "services/core/java/com/android/server/pm/UserDataPreparer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-01-12T23:17:26Z",
+      "side": 1,
+      "message": "`Log.wtf` seemed to be intentional though? If we change it to `Log.e`, are we hiding an actual root cause?",
+      "range": {
+        "startLine": 142,
+        "startChar": 19,
+        "endLine": 142,
+        "endChar": 97
+      },
+      "revId": "02e3be620a9a0ed72a95bd9529b00756eabc41b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
