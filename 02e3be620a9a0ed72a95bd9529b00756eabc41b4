@@ -22,6 +22,30 @@
       },
       "revId": "02e3be620a9a0ed72a95bd9529b00756eabc41b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb174225_d73147b8",
+        "filename": "services/core/java/com/android/server/pm/UserDataPreparer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-01-12T23:21:17Z",
+      "side": 1,
+      "message": "`wtf` is equivalent to an assertion.  Since this code is reached by a unit test, it should not be `wtf`.\n\nAnd of course `wtf` only crashes the system server in eng builds, so even if we wanted that behavior, which we don\u0027t here, it can\u0027t be relied on to do that anyway.",
+      "parentUuid": "f58390a2_8a10110a",
+      "range": {
+        "startLine": 142,
+        "startChar": 19,
+        "endLine": 142,
+        "endChar": 97
+      },
+      "revId": "02e3be620a9a0ed72a95bd9529b00756eabc41b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
