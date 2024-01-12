@@ -52,6 +52,24 @@
       "parentUuid": "62fcf11e_9a1cc6d0",
       "revId": "0951fa4f06b5f215c7e75f261339bcc0c3992391",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a0d1449_134ea87f",
+        "filename": "core/java/android/hardware/fingerprint/FingerprintManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-01-12T04:40:09Z",
+      "side": 1,
+      "message": "For each biometric type supported by Keyguard (fingerprint and face), the mirrored state would have to be something like `Map\u003cInteger, Map\u003cInteger, Boolean\u003e\u003e`, to keep track of the enrollment state of each sensor for each user.  It seems unnecessarily complex to mirror this when it\u0027s already available in another service running in the same process.\n\nThe biometrics framework supports multiple fingerprint sensors, and Keyguard appears to allow the device to be unlocked using any one.  So I assumed that feature was there for a reason.  If we have approval from the biometrics team to disregard that and consider only one fingerprint sensor, we can use `FingerprintManager#hasEnrolledFingerprints(int userId)`, and this CL isn\u0027t necessary, and likewise for the face sensors.  (Or we can use the state listener to mirror a simplified state of two booleans per user, corresponding to whether the user has a non-strong fingerprint and face enrolled.)\n\nTrustManagerService needs to know whether these enrollments exist each time the device is locked.  So, that\u0027s when the calls would happen if we go with the direct calls.",
+      "parentUuid": "dc7009c6_7fcfde20",
+      "revId": "0951fa4f06b5f215c7e75f261339bcc0c3992391",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
