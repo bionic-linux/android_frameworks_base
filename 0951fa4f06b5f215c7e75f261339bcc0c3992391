@@ -34,6 +34,24 @@
       "parentUuid": "c7e5a471_07217745",
       "revId": "0951fa4f06b5f215c7e75f261339bcc0c3992391",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc7009c6_7fcfde20",
+        "filename": "core/java/android/hardware/fingerprint/FingerprintManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1565948
+      },
+      "writtenOn": "2024-01-12T03:28:58Z",
+      "side": 1,
+      "message": "Is that a problem? Devices don\u0027t have many sensors so there\u0027s isn\u0027t much state. These `sensorId`s are a bit misleading as having more than one fingerprint sensor has never been used or properly tested and we\u0027ve discussed removing it to simplify.\n\nHow often do you expect to call this? We\u0027ve been trying to limit / reduce these kinds of APIs because they have been a big source of jank (less concerning if it\u0027s all local calls, but I\u0027d still prefer avoid new APIs like this if possible).",
+      "parentUuid": "62fcf11e_9a1cc6d0",
+      "revId": "0951fa4f06b5f215c7e75f261339bcc0c3992391",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
