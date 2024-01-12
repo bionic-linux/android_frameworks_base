@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da8d179f_114c31fd",
+        "filename": "keystore/java/android/security/Authorization.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1858130
+      },
+      "writtenOn": "2024-01-12T19:08:05Z",
+      "side": 1,
+      "message": "Is there a way to flag guard this change as well? If someone else for some reason starts calling that API they would be getting the new logic as well. Also, if we abandoned the flag 5 years from now w/o launching, someone else might not realize this code change was part of that flag-guarded change.",
+      "revId": "2251ae7b073cb4b9a198b1a0a1e6a4895d1806d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "951ef374_92073850",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1858130
+      },
+      "writtenOn": "2024-01-12T19:08:05Z",
+      "side": 1,
+      "message": "A little unclear on the naming here. Maybe call it something longer? Does it mean authorizingUserId? i.e. the user authorizing the keystore unlock?",
+      "range": {
+        "startLine": 902,
+        "startChar": 16,
+        "endLine": 902,
+        "endChar": 26
+      },
+      "revId": "2251ae7b073cb4b9a198b1a0a1e6a4895d1806d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a78af0b9_8a1f624c",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1858130
+      },
+      "writtenOn": "2024-01-12T19:08:05Z",
+      "side": 1,
+      "message": "I recommend not interleaving the flag check this way. It\u0027s more clear and less errorprone (and thus safer if we need to roll back flags in a CP) to guard the entire logic change by the flag. Then, when you are de-flagging, you are able to completely delete the old code path along with the if(flag) check.\n\nif(flag) {\n  new code\n} else {\n  old code with ideally invalid value passed for 3rd argument to Authorization (but I guess it has to be false in this case b/c it\u0027s a boolean)\n}",
+      "revId": "2251ae7b073cb4b9a198b1a0a1e6a4895d1806d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad489feb_4f58b311",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1463,
+      "author": {
+        "id": 1858130
+      },
+      "writtenOn": "2024-01-12T19:08:05Z",
+      "side": 1,
+      "message": "may improve readability to match the authUserId (or renamed) variable name here so folks can tell this is not the calling user ID in some cases w/o having to look back through the call stack.",
+      "range": {
+        "startLine": 1463,
+        "startChar": 50,
+        "endLine": 1463,
+        "endChar": 56
+      },
+      "revId": "2251ae7b073cb4b9a198b1a0a1e6a4895d1806d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f54f3fc_b3891d57",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1858130
+      },
+      "writtenOn": "2024-01-12T19:08:05Z",
+      "side": 1,
+      "message": "The 3 logs added in this method feel more like debug logs to me.",
+      "range": {
+        "startLine": 1485,
+        "startChar": 28,
+        "endLine": 1485,
+        "endChar": 30
+      },
+      "revId": "2251ae7b073cb4b9a198b1a0a1e6a4895d1806d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75767bb1_247b9d62",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1858130
+      },
+      "writtenOn": "2024-01-12T19:08:05Z",
+      "side": 1,
+      "message": "this logic (and the fingerprint version) looks better placed inside DPM. Could we refactor to add a method in DPM that returns if the feature is disabled?\n\nHonestly, the whole API regarding how these features are disabled is pretty hard to use so maybe this is a bigger project. Do you see any quick wins?",
+      "range": {
+        "startLine": 1491,
+        "startChar": 12,
+        "endLine": 1493,
+        "endChar": 93
+      },
+      "revId": "2251ae7b073cb4b9a198b1a0a1e6a4895d1806d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4dc6a46_771aeb6e",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1505,
+      "author": {
+        "id": 1858130
+      },
+      "writtenOn": "2024-01-12T19:08:05Z",
+      "side": 1,
+      "message": "Also trusted?",
+      "range": {
+        "startLine": 1505,
+        "startChar": 46,
+        "endLine": 1505,
+        "endChar": 66
+      },
+      "revId": "2251ae7b073cb4b9a198b1a0a1e6a4895d1806d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
