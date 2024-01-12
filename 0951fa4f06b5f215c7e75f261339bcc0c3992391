@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7e5a471_07217745",
+        "filename": "core/java/android/hardware/fingerprint/FingerprintManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1565948
+      },
+      "writtenOn": "2024-01-12T00:43:58Z",
+      "side": 1,
+      "message": "Would something like `FingerprintManager#registerBiometricStateListener` work for your use case instead?\n\nFor example: https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:frameworks/base/packages/SystemUI/src/com/android/systemui/biometrics/AuthController.java;drc\u003d7f193a2c8d9c316f74509fa08d429104eb954209;l\u003d330",
+      "revId": "0951fa4f06b5f215c7e75f261339bcc0c3992391",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
