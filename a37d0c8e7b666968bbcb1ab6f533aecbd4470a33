@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c79229eb_17055f0d",
+        "filename": "core/java/android/hardware/face/FaceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1565948
+      },
+      "writtenOn": "2024-01-12T01:14:31Z",
+      "side": 1,
+      "message": "Same question as the related change for FingerprintManager.",
+      "revId": "a37d0c8e7b666968bbcb1ab6f533aecbd4470a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
