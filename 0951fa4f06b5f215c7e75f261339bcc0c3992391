@@ -70,6 +70,24 @@
       "parentUuid": "dc7009c6_7fcfde20",
       "revId": "0951fa4f06b5f215c7e75f261339bcc0c3992391",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75905ec9_73c0fe03",
+        "filename": "core/java/android/hardware/fingerprint/FingerprintManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1565948
+      },
+      "writtenOn": "2024-01-12T18:11:30Z",
+      "side": 1,
+      "message": "\u003e The biometrics framework supports multiple fingerprint sensors, and Keyguard appears to allow the device to be unlocked using any one.\n\nIn theory that\u0027s true, but like I said even though the APIs reflect that I\u0027m not sure that multiple sensors have ever actually worked. There are many cases in the code where it assumes there is only one sensor. Since it\u0027s never been used, those cases have never been fixed or reported as bugs. I\u0027d like to remove it from the API to clarify that but that takes time that we haven\u0027t had, and it hasn\u0027t caused any real harm beyond questions like this.\n\n\u003e Or we can use the state listener\n\nI\u0027d prefer this as this is the API that we migrated keyguard to also use. Using two booleans seems fine (though if you want to safeguard against the unlikely situation where multiple sensors is actually tested to stay in sync with the current API I don\u0027t think a `Map\u003cInteger, Map\u003cInteger, Boolean\u003e\u003e` or defining a custom DS to track that is that difficult either).\n\nThat said, we migrated keyguard to do this because of all the jank caused by excessive calls to this and similar APIs. In your case if everything is local I\u0027m not opposed to adding this API - my concern is largely because if we add it here it might end up being used in other parts of the platform again and that has caused problems in sysui, settings, etc. in the past.",
+      "parentUuid": "4a0d1449_134ea87f",
+      "revId": "0951fa4f06b5f215c7e75f261339bcc0c3992391",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
