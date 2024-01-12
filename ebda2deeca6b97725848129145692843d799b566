@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d7736da_15a4ced6",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2194,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-01-12T14:56:50Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 2194,
+        "startChar": 0,
+        "endLine": 2194,
+        "endChar": 107
+      },
+      "revId": "ebda2deeca6b97725848129145692843d799b566",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
