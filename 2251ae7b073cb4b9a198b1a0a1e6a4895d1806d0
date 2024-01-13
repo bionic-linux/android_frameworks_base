@@ -304,6 +304,30 @@
       },
       "revId": "2251ae7b073cb4b9a198b1a0a1e6a4895d1806d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3edce8f_3db80a9c",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1505,
+      "author": {
+        "id": 1858130
+      },
+      "writtenOn": "2024-01-13T00:47:10Z",
+      "side": 1,
+      "message": "Ok I think the logic is correct because this method is only called when the branch checking if we are locking or unlocking shows the device is currently becoming locked...\n\nWe should document this limitation on the correctness in the method comment.",
+      "parentUuid": "30c30bc6_43fbf684",
+      "range": {
+        "startLine": 1505,
+        "startChar": 46,
+        "endLine": 1505,
+        "endChar": 66
+      },
+      "revId": "2251ae7b073cb4b9a198b1a0a1e6a4895d1806d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
