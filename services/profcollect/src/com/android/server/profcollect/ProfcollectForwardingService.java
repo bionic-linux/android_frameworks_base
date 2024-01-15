@@ -41,8 +41,10 @@ import android.util.Log;
 import com.android.internal.R;
 import com.android.internal.os.BackgroundThread;
 import com.android.server.IoThread;
+import com.android.server.LocalManagerRegistry;
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
+import com.android.server.art.ArtManagerLocal;
 import com.android.server.wm.ActivityMetricsLaunchObserver;
 import com.android.server.wm.ActivityMetricsLaunchObserverRegistry;
 import com.android.server.wm.ActivityTaskManagerInternal;
@@ -261,6 +263,7 @@ public final class ProfcollectForwardingService extends SystemService {
         BackgroundThread.get().getThreadHandler().post(
                 () -> {
                     registerAppLaunchObserver();
+                    registerDex2oatObserver();
                     registerOTAObserver();
                 });
     }
@@ -301,6 +304,39 @@ public final class ProfcollectForwardingService extends SystemService {
         @Override
         public void onIntentStarted(Intent intent, long timestampNanos) {
             traceOnAppStart(intent.getPackage());
+        }
+    }
+  
+    private void registerDex2oatObserver() {
+        ArtManagerLocal aml = LocalManagerRegistry.getManager(ArtManagerLocal.class);
+        if (aml == null) {
+            return;
+        }
+        aml.setBatchDexoptStartCallback(ForkJoinPool.commonPool(),
+                (snapshot, reason, defaultPackages, builder, passedSignal) -> {
+                    traceOnDex2OatStart();
+                });
+    }
+
+    private void traceOnDex2OatStart() {
+        if (mIProfcollect == null) {
+            return;
+        }
+        // Sample for a fraction of dex2oat runs.
+        int traceFrequency = DeviceConfig.getInt(DeviceConfig.NAMESPACE_PROFCOLLECT_NATIVE_BOOT,
+                "dex2oat_trace_freq", 2);
+        int randomNum = ThreadLocalRandom.current().nextInt(100);
+        if (randomNum < traceFrequency) {
+            if (DEBUG) {
+                Log.d(LOG_TAG, "Tracing on app launch event: " + packageName);
+            }
+            BackgroundThread.get().getThreadHandler().post(() -> {
+                try {
+                    mIProfcollect.trace_once("dex2oat");
+                } catch (RemoteException e) {
+                    Log.e(LOG_TAG, "Failed to initiate trace: " + e.getMessage());
+                }
+            });
         }
     }
 
