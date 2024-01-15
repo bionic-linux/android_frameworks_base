@@ -15,6 +15,8 @@
  */
 package com.android.server.audio;
 
+import static android.media.audio.Flags.scoManagedByAudio;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.compat.CompatChanges;
@@ -53,6 +55,7 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.sysprop.BluetoothProperties;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.PrintWriterPrinter;
@@ -71,7 +74,6 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 
 /**
  * @hide
@@ -166,6 +168,15 @@ public class AudioDeviceBroker {
     @EnabledSince(targetSdkVersion = android.os.Build.VERSION_CODES.S_V2)
     public static final long USE_SET_COMMUNICATION_DEVICE = 243827847L;
 
+    /** Indicates if headset profile connection and SCO audio control use the new implementation
+     * aligned with other BT profiles. True if both the feature flag Flags.scoManagedByAudio() and
+     * the system property audio.sco.managed.by.audio are true.
+     */
+    private final boolean mScoManagedByAudio;
+    /*package*/ boolean isScoManagedByAudio() {
+        return mScoManagedByAudio;
+    }
+
     //-------------------------------------------------------------------
     /*package*/ AudioDeviceBroker(@NonNull Context context, @NonNull AudioService service,
             @NonNull AudioSystemAdapter audioSystem) {
@@ -175,7 +186,8 @@ public class AudioDeviceBroker {
         mDeviceInventory = new AudioDeviceInventory(this);
         mSystemServer = SystemServerAdapter.getDefaultAdapter(mContext);
         mAudioSystem = audioSystem;
-
+        mScoManagedByAudio = scoManagedByAudio()
+                && BluetoothProperties.isScoManagedByAudioEnabled().orElse(false);
         init();
     }
 
@@ -191,7 +203,8 @@ public class AudioDeviceBroker {
         mDeviceInventory = mockDeviceInventory;
         mSystemServer = mockSystemServer;
         mAudioSystem = audioSystem;
-
+        mScoManagedByAudio = scoManagedByAudio()
+                && BluetoothProperties.isScoManagedByAudioEnabled().orElse(false);
         init();
     }
 
@@ -1657,6 +1670,8 @@ public class AudioDeviceBroker {
 
         pw.println("\n" + prefix + "mAudioModeOwner: " + mAudioModeOwner);
 
+        pw.println("\n" + prefix + "mScoManagedByAudio: " + mScoManagedByAudio);
+
         mBtHelper.dump(pw, prefix);
     }
 
@@ -1796,7 +1811,9 @@ public class AudioDeviceBroker {
                                             ? mAudioService.getBluetoothContextualVolumeStream()
                                             : AudioSystem.STREAM_DEFAULT);
                             if (btInfo.mProfile == BluetoothProfile.LE_AUDIO
-                                    || btInfo.mProfile == BluetoothProfile.HEARING_AID) {
+                                    || btInfo.mProfile == BluetoothProfile.HEARING_AID
+                                    || (mScoManagedByAudio
+                                            && btInfo.mProfile == BluetoothProfile.HEADSET)) {
                                 onUpdateCommunicationRouteClient(isBluetoothScoRequested(),
                                         "setBluetoothActiveDevice");
                             }
@@ -2713,4 +2730,5 @@ public class AudioDeviceBroker {
     void clearDeviceInventory() {
         mDeviceInventory.clearDeviceInventory();
     }
+
 }

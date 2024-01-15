@@ -32,6 +32,7 @@ import static android.media.AudioManager.RINGER_MODE_SILENT;
 import static android.media.AudioManager.RINGER_MODE_VIBRATE;
 import static android.media.AudioManager.STREAM_MUSIC;
 import static android.media.AudioManager.STREAM_SYSTEM;
+import static android.media.audio.Flags.scoManagedByAudio;
 import static android.os.Process.FIRST_APPLICATION_UID;
 import static android.os.Process.INVALID_UID;
 import static android.provider.Settings.Secure.VOLUME_HUSH_MUTE;
@@ -1370,7 +1371,9 @@ public class AudioService extends IAudioService.Stub
         // Register for device connection intent broadcasts.
         IntentFilter intentFilter =
                 new IntentFilter(BluetoothHeadset.ACTION_AUDIO_STATE_CHANGED);
-        intentFilter.addAction(BluetoothHeadset.ACTION_ACTIVE_DEVICE_CHANGED);
+        if (!mDeviceBroker.isScoManagedByAudio()) {
+            intentFilter.addAction(BluetoothHeadset.ACTION_ACTIVE_DEVICE_CHANGED);
+        }
         intentFilter.addAction(Intent.ACTION_DOCK_EVENT);
         intentFilter.addAction(Intent.ACTION_SCREEN_ON);
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
@@ -4363,6 +4366,13 @@ public class AudioService extends IAudioService.Stub
                 null /* playbackConfigs */, configs /* recordConfigs */);
         mDeviceBroker.updateCommunicationRouteClientsActivity(
                 null /* playbackConfigs */, configs /* recordConfigs */);
+    }
+
+    private void dumpFlags(PrintWriter pw) {
+
+        pw.println("\nFun with Flags:");
+        pw.println("\tandroid.media.audio.scoManagedByAudio:"
+                + scoManagedByAudio());
     }
 
     private void dumpAudioMode(PrintWriter pw) {
@@ -7599,7 +7609,8 @@ public class AudioService extends IAudioService.Stub
         if (profile != BluetoothProfile.A2DP && profile != BluetoothProfile.A2DP_SINK
                 && profile != BluetoothProfile.LE_AUDIO
                 && profile != BluetoothProfile.LE_AUDIO_BROADCAST
-                && profile != BluetoothProfile.HEARING_AID) {
+                && profile != BluetoothProfile.HEARING_AID
+                && !(mDeviceBroker.isScoManagedByAudio() && profile == BluetoothProfile.HEADSET)) {
             throw new IllegalArgumentException("Illegal BluetoothProfile profile for device "
                     + previousDevice + " -> " + newDevice + ". Got: " + profile);
         }
@@ -11083,6 +11094,7 @@ public class AudioService extends IAudioService.Stub
         } else {
             pw.println("\nMessage handler is null");
         }
+        dumpFlags(pw);
         mMediaFocusControl.dump(pw);
         dumpStreamStates(pw);
         dumpVolumeGroups(pw);
