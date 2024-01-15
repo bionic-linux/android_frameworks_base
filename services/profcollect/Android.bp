@@ -41,5 +41,6 @@ java_library_static {
   name: "services.profcollect",
   defaults: ["platform_service_defaults"],
   srcs: [":services.profcollect-sources"],
-  libs: ["services.core"],
+  static_libs: ["services.core"],
+  libs: ["service-art.stubs.system_server"],
 }
