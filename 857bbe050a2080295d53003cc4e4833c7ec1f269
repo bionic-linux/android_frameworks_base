@@ -18,6 +18,63 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af62d686_533e9d3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2024-01-16T14:32:05Z",
+      "side": 1,
+      "message": "LGTM, feel free to address the comments in a follow-up, or not at all.",
+      "revId": "857bbe050a2080295d53003cc4e4833c7ec1f269",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5d78951_b41462f7",
+        "filename": "core/java/android/net/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2024-01-16T14:32:05Z",
+      "side": 1,
+      "message": "These appear to be the same as libcore/OWNERS_net_tests, maybe use that? (And perhaps rename OWNERS_net_tests to OWNERS_net or similar, so it\u0027s not just for tests?)",
+      "range": {
+        "startLine": 6,
+        "startChar": 26,
+        "endLine": 6,
+        "endChar": 102
+      },
+      "revId": "857bbe050a2080295d53003cc4e4833c7ec1f269",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56432dbd_7472ac1b",
+        "filename": "core/jni/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2024-01-16T14:32:05Z",
+      "side": 1,
+      "message": "No need to fix in this CL, but would prefer:\n\n\u003d file:platform/packages/modules/Connectivity:main:/OWNERS_core_networking",
+      "revId": "857bbe050a2080295d53003cc4e4833c7ec1f269",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8ea27a69_d307a64a",
