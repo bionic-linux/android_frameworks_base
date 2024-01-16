@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3d36ff4_f8154b0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-01-16T15:41:42Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with the hdr listener, so moving myself to cc.",
+      "revId": "d16924f02f2e9b8b9db641f289b846879777c2a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
