@@ -39,6 +39,30 @@
       },
       "revId": "857bbe050a2080295d53003cc4e4833c7ec1f269",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7491b4c8_41bc6e75",
+        "filename": "core/jni/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2024-01-16T13:49:44Z",
+      "side": 1,
+      "message": "This change was [suggested by Lorenzo](https://android-review.git.corp.google.com/c/platform/frameworks/base/+/2894221/comment/fbd46dd9_511f5fe7/), as a way to make `OWNERS` management easier; see the [documentation of the `file` keyword](https://android-review.googlesource.com/plugins/code-owners/Documentation/backend-find-owners.html#fileKeyword) for more information. IIUC the expectation here is that `OWNERS` files in branch `main` are more likely to be up-to-date than in older branches.",
+      "parentUuid": "8ea27a69_d307a64a",
+      "range": {
+        "startLine": 87,
+        "startChar": 48,
+        "endLine": 87,
+        "endChar": 52
+      },
+      "revId": "857bbe050a2080295d53003cc4e4833c7ec1f269",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
