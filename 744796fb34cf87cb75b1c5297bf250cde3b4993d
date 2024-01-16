@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0bc45f8_fae468b4",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-16T18:26:02Z",
+      "side": 1,
+      "message": "the one thing I was unsure about was throwing ErrnoException, but I see it will get caught here, so nice.",
+      "range": {
+        "startLine": 467,
+        "startChar": 3,
+        "endLine": 469,
+        "endChar": 13
+      },
+      "revId": "744796fb34cf87cb75b1c5297bf250cde3b4993d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9638bc2c_b4d1a7cb",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-16T18:26:02Z",
+      "side": 1,
+      "message": "noting that this matches the behavior in copyInternalSplice.",
+      "range": {
+        "startLine": 543,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 26
+      },
+      "revId": "744796fb34cf87cb75b1c5297bf250cde3b4993d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
