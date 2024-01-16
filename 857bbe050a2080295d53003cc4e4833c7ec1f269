@@ -120,6 +120,30 @@
       },
       "revId": "857bbe050a2080295d53003cc4e4833c7ec1f269",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26bc318f_8950ee74",
+        "filename": "core/jni/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2024-01-16T18:36:40Z",
+      "side": 1,
+      "message": "Hmm, ok. It can also break older branches if we decide to refactor the specialised `OWNERS_\u003csomething\u003e` files. That\u0027s not an argument for the main `OWNERS` though.",
+      "parentUuid": "7491b4c8_41bc6e75",
+      "range": {
+        "startLine": 87,
+        "startChar": 48,
+        "endLine": 87,
+        "endChar": 52
+      },
+      "revId": "857bbe050a2080295d53003cc4e4833c7ec1f269",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
