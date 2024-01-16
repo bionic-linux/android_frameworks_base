@@ -16,6 +16,29 @@
       "message": "Thank you all for reviewing this CL; unfortunately, my latest patch set reset all the existing Code-Review+2 votes… Please take another look. Thanks!",
       "revId": "857bbe050a2080295d53003cc4e4833c7ec1f269",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ea27a69_d307a64a",
+        "filename": "core/jni/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2024-01-16T12:10:18Z",
+      "side": 1,
+      "message": "Is it beneficial to make the branch explicit? This can potentially become an inter-branch dependency and affect other branches in non-obvious ways. I think it\u0027s easier to reason about things if the branch is the same and hence as self-contained as possible.",
+      "range": {
+        "startLine": 87,
+        "startChar": 48,
+        "endLine": 87,
+        "endChar": 52
+      },
+      "revId": "857bbe050a2080295d53003cc4e4833c7ec1f269",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
