@@ -717,4 +717,52 @@ public class VpnManager {
             throw e.rethrowFromSystemServer();
         }
     }
+
+    /**
+     * Get a profile from the vpn database.
+     * @hide
+     */
+    public @Nullable byte[] profileStoreGet(@NonNull String name) {
+        try {
+            return mService.profileStoreGet(name);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Put a profile into the vpn database.
+     * @hide
+     */
+    public void profileStorePut(@NonNull String name, @NonNull byte[] blob) {
+        try {
+            mService.profileStorePut(name, blob);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Remove a profile from the vpn database.
+     * @hide
+     */
+    public void profileStoreRemove(@NonNull String name) {
+        try {
+            mService.profileStoreRemove(name);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Lists the vpn profiles stored in the database with the given prefix.
+     * @hide
+     */
+    public @NonNull String[] profileStoreList(@NonNull String prefix) {
+        try {
+            return mService.profileStoreList(prefix);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 }

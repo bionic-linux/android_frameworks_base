@@ -1007,6 +1007,38 @@ public class VpnManagerService extends IVpnManager.Stub {
         }
     }
 
+    /**
+     * Get a profile from the vpn database.
+     * @hide
+     */
+    public @Nullable byte[] profileStoreGet(@NonNull String name) {
+        return mVpnProfileStore.get(name);
+    }
+
+    /**
+     * Put a profile into the vpn database.
+     * @hide
+     */
+    public void profileStorePut(@NonNull String name, @NonNull byte[] blob) {
+        mVpnProfileStore.put(name, blob);
+    }
+
+    /**
+     * Remove a profile from the vpn database.
+     * @hide
+     */
+    public void profileStoreRemove(@NonNull String name) {
+        mVpnProfileStore.remove(name);
+    }
+
+    /**
+     * Lists the vpn profiles stored in the database with the given prefix.
+     * @hide
+     */
+    public @NonNull String[] profileStoreList(@NonNull String prefix) {
+        return mVpnProfileStore.list(prefix);
+    }
+
     private void ensureRunningOnHandlerThread() {
         if (mHandler.getLooper().getThread() != Thread.currentThread()) {
             throw new IllegalStateException(
