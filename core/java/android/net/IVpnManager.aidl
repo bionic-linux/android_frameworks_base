@@ -60,6 +60,12 @@ interface IVpnManager {
     LegacyVpnInfo getLegacyVpnInfo(int userId);
     boolean updateLockdownVpn();
 
+    /** Profile store APIs */
+    byte[] getVpnProfile(String name);
+    boolean putVpnProfile(String name, in byte[] blob);
+    boolean removeVpnProfile(String name);
+    String[] listVpnProfile(String prefix);
+
     /** General system APIs */
     VpnConfig getVpnConfig(int userId);
     void factoryReset();
