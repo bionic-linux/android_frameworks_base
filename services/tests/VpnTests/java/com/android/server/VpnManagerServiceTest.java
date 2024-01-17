@@ -397,4 +397,23 @@ public class VpnManagerServiceTest extends VpnTestBase {
         // Even lockdown is enabled but no Vpn is created for SECONDARY_USER.
         assertNull(mService.getVpnLockdownAllowlist(SECONDARY_USER.id));
     }
+
+    @Test
+    public void testVpnProfileStoreApi() {
+        final String name = Credentials.VPN + TEST_VPN_PKG;
+        final VpnProfile vpnProfile = new VpnProfile(TEST_VPN_PKG);
+        final byte[] encodedProfile = vpnProfile.encode();
+
+        mService.getVpnProfile(name);
+        verify(mVpnProfileStore).get(name);
+
+        mService.putVpnProfile(name, encodedProfile);
+        verify(mVpnProfileStore).put(name, encodedProfile);
+
+        mService.removeVpnProfile(name);
+        verify(mVpnProfileStore).remove(name);
+
+        mService.listVpnProfile(name);
+        verify(mVpnProfileStore).list(name);
+    }
 }

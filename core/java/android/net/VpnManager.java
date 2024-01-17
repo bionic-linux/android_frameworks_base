@@ -717,4 +717,57 @@ public class VpnManager {
             throw e.rethrowFromSystemServer();
         }
     }
+
+    /**
+     * Get the vpn profile with the given name from the vpn database. Returns null if no profile
+     * with the given name was found.
+     * @hide
+     */
+    @Nullable
+    public byte[] getVpnProfile(@NonNull String name) {
+        try {
+            return mService.getVpnProfile(name);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Put the given vpn profile with the given name into the vpn database. Existing profiles with
+     * the same name will be replaced.
+     * @hide
+     */
+    public boolean putVpnProfile(@NonNull String name, @NonNull byte[] blob) {
+        try {
+            return mService.putVpnProfile(name, blob);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Removes the vpn profile with the given name from the vpn database.
+     * @hide
+     */
+    public boolean removeVpnProfile(@NonNull String name) {
+        try {
+            return mService.removeVpnProfile(name);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Returns a list of the name suffixes of the vpn profiles stored in the vpn database matching
+     * the given prefix, sorted in ascending order.
+     * @hide
+     */
+    @NonNull
+    public String[] listVpnProfile(@NonNull String prefix) {
+        try {
+            return mService.listVpnProfile(prefix);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 }
