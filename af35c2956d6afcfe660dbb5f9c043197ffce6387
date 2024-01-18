@@ -16,6 +16,24 @@
       "message": "Waiting for ag/25912170 be merged.",
       "revId": "af35c2956d6afcfe660dbb5f9c043197ffce6387",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f9943e3_f65d82f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1307893
+      },
+      "writtenOn": "2024-01-18T06:00:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b6d1d63_2877645e",
+      "revId": "af35c2956d6afcfe660dbb5f9c043197ffce6387",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
