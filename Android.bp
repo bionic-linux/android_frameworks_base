@@ -511,6 +511,7 @@ java_library {
     lint: {
         baseline_filename: "lint-baseline.xml",
     },
+    jarjar_prefix: "bbb",
 }
 
 java_library {
