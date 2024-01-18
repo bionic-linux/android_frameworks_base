@@ -1,5 +1,29 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f063eec9_35da404a",
+        "filename": "services/profcollect/src/com/android/server/profcollect/ProfcollectForwardingService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-01-18T16:12:41Z",
+      "side": 1,
+      "message": "Sorry, I realized a problem with this just now. This callback is blocking because we need to wait for the inputs from the callback, so it\u0027s not meaningful to use an async executor. We added the executor as a parameter just for complying with the API guidelines. So,\n\n1. Please use `Runnable::run` (the synchronous executor) here.\n2. Optional: Move the entire `traceOnDex2oatStart()` to the background thread. What you are doing there is fairly cheap so it probably doesn\u0027t matter, but in theory, anything there should not be blocking because it doesn\u0027t provide any inputs that we are waiting for.",
+      "range": {
+        "startLine": 317,
+        "startChar": 40,
+        "endLine": 317,
+        "endChar": 65
+      },
+      "revId": "f8add98cbb1179825cdbc50b07000e7d480b9c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
