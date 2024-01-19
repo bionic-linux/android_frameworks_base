@@ -16,6 +16,24 @@
       "message": "Instead of going to the kernel to get this info, I think we should just plumb through the UID in addition to the PID on the setProcessGroup JNI call like the others in this file.",
       "revId": "6d07d8e247821e355bf00e96b38aa4888b245f4a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb3451b9_6b00a952",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1869780
+      },
+      "writtenOn": "2024-01-19T18:58:02Z",
+      "side": 1,
+      "message": "I don\u0027t think that this is possible for every setProcessGroup() caller. Here is an example of a context where the UID information is not available (see also CarShellCommand.java):\n```\n    private void setProcessGroup(String[] args, IndentingPrintWriter writer) {\n        if (args.length !\u003d 3) {\n            showInvalidArguments(writer);\n            return;\n        }\n\n        int pid \u003d Integer.parseInt(args[1]);\n        int group \u003d Integer.parseInt(args[2]);\n        Slogf.d(TAG, \"Setting process group for pid %d, group %d\", pid, group);\n\n        CarServiceHelperWrapper.getInstance().setProcessGroup(pid, group);\n\n        writer.printf(\"  Successfully set pid %s to group %s\\n\", args[1], args[2]);\n    }\n```",
+      "parentUuid": "9c692780_f3a0c518",
+      "revId": "6d07d8e247821e355bf00e96b38aa4888b245f4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
