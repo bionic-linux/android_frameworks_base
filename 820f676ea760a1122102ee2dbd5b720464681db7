@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f2a6ce7_07090980",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2024-01-19T23:28:39Z",
+      "side": 1,
+      "message": "Hi Linnan!\n\nThanks for fixing this! And sorry for the delay. I just have one suggestion.",
+      "revId": "820f676ea760a1122102ee2dbd5b720464681db7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9088a0e3_d2559822",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2024-01-19T23:28:39Z",
+      "side": 1,
+      "message": "Can we change the function signature so that we return the `std::pair` here instead of having to pass a pointer?\n\n```suggestion\n    using WindowListenerRegisterConsumer \u003d std::function\u003c\n            std::pair\u003cstd::vector\u003cgui::WindowInfo\u003e, std::vector\u003cgui::DisplayInfo\u003e\u003e(const sp\u003candroid::gui::WindowInfosListener\u003e\u0026)\u003e;\n```",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 91
+      },
+      "revId": "820f676ea760a1122102ee2dbd5b720464681db7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
