@@ -34,6 +34,24 @@
       "parentUuid": "9c692780_f3a0c518",
       "revId": "6d07d8e247821e355bf00e96b38aa4888b245f4a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "583ad05d_ded3a78e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2024-01-19T22:17:03Z",
+      "side": 1,
+      "message": "`set-process-profile` there already requires the UID as an argument, so `set-process-group` looks like it can too. But even if not, doesn\u0027t `Process.setProcessGroup` get called for all top app state transitions? The carservice callsite should be much less frequent than those, so I\u0027d prefer to avoid reading procfs for the more frequent usecase, and make the carservice go look it up if they want to call this.\n\nhttps://cs.android.com/android/platform/superproject/main/+/main:packages/services/Car/service/src/com/android/car/CarShellCommand.java;l\u003d930-936;drc\u003d7bd4e30170a53d3c7889d28e360d8bf7ead083a7",
+      "parentUuid": "fb3451b9_6b00a952",
+      "revId": "6d07d8e247821e355bf00e96b38aa4888b245f4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
