@@ -39,6 +39,30 @@
       },
       "revId": "820f676ea760a1122102ee2dbd5b720464681db7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1c954e4_83b4fc5b",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2024-01-22T03:06:10Z",
+      "side": 1,
+      "message": "Hi Prabir, thanks for the review and suggesting the changes, I will make the changes as suggested. Also, I found that this patch has a lot of merge conflicts on the internal V version of the branch, so to avoid unnecessary hassle, I will re-upload this patch on partner\u0027s gerrit.",
+      "parentUuid": "9088a0e3_d2559822",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 91
+      },
+      "revId": "820f676ea760a1122102ee2dbd5b720464681db7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
