@@ -52,6 +52,24 @@
       "parentUuid": "fb3451b9_6b00a952",
       "revId": "6d07d8e247821e355bf00e96b38aa4888b245f4a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "917e5532_bc59be26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2024-01-22T18:51:08Z",
+      "side": 1,
+      "message": "As discussed offline, AMS uses a separate thread to call `setProcessGroup` so defer passing the UID to avoid a perf regression due to reading procfs to a later bug.",
+      "parentUuid": "583ad05d_ded3a78e",
+      "revId": "6d07d8e247821e355bf00e96b38aa4888b245f4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
