@@ -69,6 +69,24 @@
       "parentUuid": "a56a09d3_87f94049",
       "revId": "16c09591abe1f982887b05d89e264f69316f383d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bb6d811_e88783d2",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1869780
+      },
+      "writtenOn": "2024-01-22T22:27:19Z",
+      "side": 1,
+      "message": "Is this really necessary? There are other contexts in which -1 is passed to a uid_t argument type. See also https://www.man7.org/linux/man-pages/man2/setreuid.2.html.",
+      "parentUuid": "ba86210b_bb232041",
+      "revId": "16c09591abe1f982887b05d89e264f69316f383d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
