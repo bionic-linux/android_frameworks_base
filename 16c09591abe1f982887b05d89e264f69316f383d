@@ -51,6 +51,24 @@
       "parentUuid": "c0f4c956_4289aa0e",
       "revId": "16c09591abe1f982887b05d89e264f69316f383d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba86210b_bb232041",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2024-01-22T22:17:36Z",
+      "side": 1,
+      "message": "Except `SetProcessProfilesCached` takes a `uid_t`, which is unsigned and this would result in a different, non-zero, still-incorrect UID for that call. So we need to check the return of `uid_from_pid` before passing as a `uid_t`.",
+      "parentUuid": "a56a09d3_87f94049",
+      "revId": "16c09591abe1f982887b05d89e264f69316f383d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
