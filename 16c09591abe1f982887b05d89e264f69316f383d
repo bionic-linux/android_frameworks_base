@@ -16,6 +16,23 @@
       "message": "Tested w/ Pixel 5a which sets the IO priority correctly given UID.",
       "revId": "16c09591abe1f982887b05d89e264f69316f383d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0f4c956_4289aa0e",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2024-01-22T19:47:33Z",
+      "side": 1,
+      "message": "It\u0027s not explicitly stated, but reading b/320456702 makes me think we were trying to apply attributes where `pid` does not exist under `uid_0`, so this `setProcessGroup` was failing. Probably with \"Failed to write \u003cval\u003e to /sys/fs/cgroup/uid_0/pid_\u003cpid\u003e/io.weight\" type error logs? Is that correct?\n\nSuppose this `pid` dies before we get here, and the read fails. We return 0 knowing that the `SetProcesProfilesCached` call that follows will also fail since that 0 UID is not correct. Should we return -1 instead and fail earlier in `android_os_Process_setProcessGroup` in that case? It\u0027d be kinda non-obvious to tell what happened from a \"Failed to write...\" log if that\u0027s what was happening.",
+      "revId": "16c09591abe1f982887b05d89e264f69316f383d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
