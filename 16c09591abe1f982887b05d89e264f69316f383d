@@ -105,6 +105,24 @@
       "parentUuid": "8bb6d811_e88783d2",
       "revId": "16c09591abe1f982887b05d89e264f69316f383d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d21893f_4c224ef6",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2024-01-23T00:27:29Z",
+      "side": 1,
+      "message": "I see build failures, but not test failures. But it sounds like it might be the type of error I\u0027m talking about. Trying to assign a negative UID to `uid_t` results in a large positive number like this in the absence of sign checks:\n```\nActivityManager: Force stopping com.android.cts.install.lib.testapp.A appid\u003d10109 user\u003d-1: deletePackageX\nlibprocessgroup: No such cgroup attribute: /sys/fs/cgroup/uid_4294877405/cgroup.freeze\n```\nUnfortunately the compiler doesn\u0027t currently warn about these, even though it could. A negative value should never be passed into a `uid_t`. If you know of places where that\u0027s done for this library, please point me to them so they can be fixed.",
+      "parentUuid": "dd1134ac_9adf0f3e",
+      "revId": "16c09591abe1f982887b05d89e264f69316f383d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
