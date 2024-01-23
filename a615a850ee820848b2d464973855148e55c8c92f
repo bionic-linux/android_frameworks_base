@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8550b66_ba19fc9e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2024-01-23T19:48:09Z",
+      "side": 1,
+      "message": "LGTM for now (though would agree on trying to pass in UID in the long term)",
+      "revId": "a615a850ee820848b2d464973855148e55c8c92f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
