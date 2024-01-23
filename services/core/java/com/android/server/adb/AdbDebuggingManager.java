@@ -246,16 +246,6 @@ public class AdbDebuggingManager {
 
         @Override
         public void run() {
-            if (mGuid.isEmpty()) {
-                Slog.e(TAG, "adbwifi guid was not set");
-                return;
-            }
-            mPort = native_pairing_start(mGuid, mPairingCode);
-            if (mPort <= 0 || mPort > 65535) {
-                Slog.e(TAG, "Unable to start pairing server");
-                return;
-            }
-
             // Register the mdns service
             NsdServiceInfo serviceInfo = new NsdServiceInfo();
             serviceInfo.setServiceName(mServiceName);
@@ -286,6 +276,21 @@ public class AdbDebuggingManager {
                                              AdbDebuggingHandler.MSG_RESPONSE_PAIRING_RESULT,
                                              bundle);
             mHandler.sendMessage(message);
+        }
+
+        public void startPairingServer() {
+            if (mGuid.isEmpty()) {
+                Slog.e(TAG, "adbwifi guid was not set");
+                return;
+            }
+            mPort = native_pairing_start(mGuid, mPairingCode);
+            if (mPort <= 0 || mPort > 65535) {
+                Slog.e(TAG, "Unable to start pairing server");
+                return;
+            }
+
+            Thread thread = new Thread(this);
+            thread.start();
         }
 
         public void cancelPairing() {
@@ -1179,7 +1184,7 @@ public class AdbDebuggingManager {
                     String pairingCode = createPairingCode(PAIRING_CODE_LENGTH);
                     updateUIPairCode(pairingCode);
                     mPairingThread = new PairingThread(pairingCode, null);
-                    mPairingThread.start();
+                    mPairingThread.startPairingServer();
                     break;
                 }
                 case MSG_PAIR_QR_CODE: {
@@ -1187,7 +1192,7 @@ public class AdbDebuggingManager {
                     String serviceName = bundle.getString("serviceName");
                     String password = bundle.getString("password");
                     mPairingThread = new PairingThread(password, serviceName);
-                    mPairingThread.start();
+                    mPairingThread.startPairingServer();
                     break;
                 }
                 case MSG_PAIRING_CANCEL:
