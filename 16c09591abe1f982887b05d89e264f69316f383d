@@ -123,6 +123,24 @@
       "parentUuid": "dd1134ac_9adf0f3e",
       "revId": "16c09591abe1f982887b05d89e264f69316f383d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c6cb815_55ec619f",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1869780
+      },
+      "writtenOn": "2024-01-23T00:34:00Z",
+      "side": 1,
+      "message": "The boot failure report is available here: https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/25969349",
+      "parentUuid": "5d21893f_4c224ef6",
+      "revId": "16c09591abe1f982887b05d89e264f69316f383d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
