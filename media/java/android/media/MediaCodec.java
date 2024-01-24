@@ -4765,6 +4765,22 @@ final public class MediaCodec {
     public static final String PARAMETER_KEY_TUNNEL_PEEK = "tunnel-peek";
 
     /**
+     * Set the region of interest as QpOffset-Map on the next queued input frame.
+     * <p>
+     * @see MediaFormat#KEY_QP_OFFSET_MAP_INFO
+     */
+    public static final String PARAMETER_KEY_QP_OFFSET_MAP_INFO =
+            MediaFormat.KEY_QP_OFFSET_MAP_INFO;
+
+    /**
+     * Set the region of interest as QpOffset-Rects on the next queued input frame.
+     * <p>
+     * @see MediaFormat#KEY_QP_OFFSET_RECTS_INFO
+     */
+    public static final String PARAMETER_KEY_QP_OFFSET_RECTS_INFO =
+            MediaFormat.KEY_QP_OFFSET_RECTS_INFO;
+
+    /**
      * Communicate additional parameter changes to the component instance.
      * <b>Note:</b> Some of these parameter changes may silently fail to apply.
      *
