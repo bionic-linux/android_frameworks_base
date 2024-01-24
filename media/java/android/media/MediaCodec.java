@@ -16,6 +16,10 @@
 
 package android.media;
 
+import static android.media.codec.Flags.FLAG_REGION_OF_INTEREST;
+
+import static com.android.media.codec.flags.Flags.FLAG_LARGE_AUDIO_FRAME;
+
 import android.Manifest;
 import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
@@ -51,7 +55,6 @@ import java.util.BitSet;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -62,7 +65,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static com.android.media.codec.flags.Flags.FLAG_LARGE_AUDIO_FRAME;
 /**
  MediaCodec class can be used to access low-level media codecs, i.e. encoder/decoder components.
  It is part of the Android low-level multimedia support infrastructure (normally used together
@@ -4934,6 +4936,59 @@ final public class MediaCodec {
      * @see #setParameters(Bundle)
      */
     public static final String PARAMETER_KEY_TUNNEL_PEEK = "tunnel-peek";
+
+    /**
+     * Set the region of interest as QpOffset-Map on the next queued input frame.
+     * <p>
+     * The associated value is a ByteBuffer containing Qp Offsets for all coding units of the
+     * video frame. The coding unit size is fixed at 16x16. So the size of the ByteBuffer
+     * shall be (((width + 15) * (height + 15)) / (16 * 16)). The Qp Offset is integral and
+     * shall be in the range [-128, 127]. The QP of target coding unit will be calculated as
+     * frameQP + offsetQP. If the result exceeds minQP or maxQP configured then the value may
+     * be clamped. Negative offset results in coding units encoded at lower QP than frame QP and
+     * positive offsets will result in encoding coding units encoded at higher QP than frame QP.
+     * If the areas of negative QP and positive QP are chosen wisely, the overall viewing
+     * experience can be improved.
+     * <p>
+     * If byte array size is too large or too small than the expected size, components may ignore
+     * the configuration silently.
+     * <p>
+     * The scope of this key is throughout the encoding session until it is reconfigured during
+     * running state.
+     * <p>
+     */
+    @FlaggedApi(FLAG_REGION_OF_INTEREST)
+    public static final String PARAMETER_KEY_QP_OFFSET_MAP = "qp-offset-map";
+
+    /**
+     * Set the region of interest as QpOffset-Rects on the next queued input frame.
+     * <p>
+     * The associated value is a String in the format "Top1,Left1-Bottom1,Right1=Offset1;Top2,
+     * Left2-Bottom2,Right2=Offset2;...". The Top, Left, Bottom, Right form the vertices of
+     * bounding box of region of interest. This box can get stretched outwards to align to LCU
+     * boundaries during encoding. Offset is the suggested QP offset of the LCUs in the
+     * bounding box. The Qp Offset is integral and shall be in the range [-128, 127]. The QP of
+     * target coding unit will be calculated as frameQP + offsetQP. If the result exceeds minQP
+     * or maxQP configured then the value may be clamped. Negative offset results in coding units
+     * encoded at lower QP than frame QP and positive offsets will result in encoding coding
+     * units encoded at higher QP than frame QP. If the areas of negative QP and positive QP
+     * are chosen wisely, the overall viewing experience can be improved.
+     * <p>
+     * If RoIs extend outside frame boundaries, components may ignore the configuration silently
+     * or return error.
+     * <p>
+     * The scope of this key is throughout the encoding session until it is reconfigured during
+     * running state.
+     * <p>
+     * The maximum number of contours (rectangles) that can be specified for a given input frame
+     * is device specific. Implementations will drop/ignore the rectangles that are beyond their
+     * supported limit. Hence it is preferable to place the rects in descending order of
+     * importance. Transitively, if the bounding boxes overlap, then the most preferred
+     * rectangle's qp offset (earlier rectangle qp offset) will be used to quantize the LCU.
+     * <p>
+     */
+    @FlaggedApi(FLAG_REGION_OF_INTEREST)
+    public static final String PARAMETER_KEY_QP_OFFSET_RECTS = "qp-offset-rects";
 
     /**
      * Communicate additional parameter changes to the component instance.
