@@ -4276,6 +4276,9 @@ public abstract class PackageManager {
      * the Android Keystore backed by an isolated execution environment. The version indicates
      * which features are implemented in the isolated execution environment:
      * <ul>
+     * <li>300: Ability to include a second IMEI in the ID attestation record, see
+     * {@link android.app.admin.DevicePolicyManager#ID_TYPE_IMEI}.
+     * <li>200: Hardware support for Curve 25519 (Both Ed25519 and X25519 key exchange).
      * <li>100: Hardware support for ECDH (see {@link javax.crypto.KeyAgreement}) and support
      * for app-generated attestation keys (see {@link
      * android.security.keystore.KeyGenParameterSpec.Builder#setAttestKeyAlias(String)}).
