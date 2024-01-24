@@ -16,6 +16,10 @@
 
 package android.media;
 
+import static android.media.codec.Flags.FLAG_REGION_OF_INTEREST;
+
+import static com.android.media.codec.flags.Flags.FLAG_LARGE_AUDIO_FRAME;
+
 import android.Manifest;
 import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
@@ -51,7 +55,6 @@ import java.util.BitSet;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -62,7 +65,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static com.android.media.codec.flags.Flags.FLAG_LARGE_AUDIO_FRAME;
 /**
  MediaCodec class can be used to access low-level media codecs, i.e. encoder/decoder components.
  It is part of the Android low-level multimedia support infrastructure (normally used together
@@ -4934,6 +4936,24 @@ final public class MediaCodec {
      * @see #setParameters(Bundle)
      */
     public static final String PARAMETER_KEY_TUNNEL_PEEK = "tunnel-peek";
+
+    /**
+     * Set the region of interest as QpOffset-Map on the next queued input frame.
+     * <p>
+     * @see MediaFormat#KEY_QP_OFFSET_MAP_INFO
+     */
+    @FlaggedApi(FLAG_REGION_OF_INTEREST)
+    public static final String PARAMETER_KEY_QP_OFFSET_MAP_INFO =
+            MediaFormat.KEY_QP_OFFSET_MAP_INFO;
+
+    /**
+     * Set the region of interest as QpOffset-Rects on the next queued input frame.
+     * <p>
+     * @see MediaFormat#KEY_QP_OFFSET_RECTS_INFO
+     */
+    @FlaggedApi(FLAG_REGION_OF_INTEREST)
+    public static final String PARAMETER_KEY_QP_OFFSET_RECTS_INFO =
+            MediaFormat.KEY_QP_OFFSET_RECTS_INFO;
 
     /**
      * Communicate additional parameter changes to the component instance.

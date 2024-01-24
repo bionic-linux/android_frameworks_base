@@ -16,6 +16,8 @@
 
 package android.media;
 
+import static android.media.codec.Flags.FLAG_REGION_OF_INTEREST;
+
 import static com.android.media.codec.flags.Flags.FLAG_CODEC_IMPORTANCE;
 import static com.android.media.codec.flags.Flags.FLAG_LARGE_AUDIO_FRAME;
 
@@ -32,6 +34,8 @@ import java.nio.ByteOrder;
 import java.util.AbstractSet;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -81,6 +85,10 @@ import java.util.stream.Collectors;
  *         to a surface only</b>, optional</td></tr>
  * <tr><td>{@link #KEY_TEMPORAL_LAYERING}</td><td>String</td><td><b>encoder only</b>, optional,
  *         temporal-layering schema</td></tr>
+ * <tr><td>{@link #KEY_QP_OFFSET_MAP_INFO}</td><td>String</td><td><b>encoder only</b>,
+ *         optional</td></tr>
+ * <tr><td>{@link #KEY_QP_OFFSET_RECTS_INFO}</td><td>String</td><td><b>encoder only</b>,
+ *         optional</td></tr>
  * </table>
  * Specify both {@link #KEY_MAX_WIDTH} and {@link #KEY_MAX_HEIGHT} to enable
  * adaptive playback (seamless resolution change) for a video decoder that
@@ -1416,6 +1424,151 @@ public final class MediaFormat {
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface PictureType {}
+
+    /**
+     * A key describing the region of interest type. This is an optional parameter that applies
+     * only to video encoders that advertise support for
+     * {@link MediaCodecInfo.CodecCapabilities#FEATURE_ROI}. Use
+     * {@link MediaCodec#getOutputFormat} after {@link MediaCodec#configure configure} to query
+     * if the encoder supports the desired RoI type. If the encoder does not support RoI type,
+     * the output format will not have an entry with this key.
+     * <p>
+     * The associated value is a ByteBuffer containing Qp Offsets for all coding units of the
+     * video frame. The coding unit size is fixed at 16x16. So the size of the ByteBuffer
+     * shall be (((width + 15) * (height + 15)) / (16 * 16)). The Qp Offset is integral and
+     * shall be in the range [-128, 127]. The QP of target coding unit will be calculated as
+     * frameQP + offsetQP. If the result exceeds minQP or maxQP configured then the value may
+     * be clamped. Negative offset results in coding units encoded at lower QP than frame QP and
+     * positive offsets will result in encoding coding units encoded at higher QP than frame QP.
+     * If the areas of negative QP and positive QP are chosen wisely, the overall viewing
+     * experience can be improved.
+     * <p>
+     * If byte array size is too large or too small than the expected size, an exception is
+     * raised.
+     * <p>
+     * The scope of this key is throughout the encoding session until it is reconfigured during
+     * running state.
+     * <p>
+     * This key shouldn't be set if the encoder is operating in surface input mode.
+     */
+    @FlaggedApi(FLAG_REGION_OF_INTEREST)
+    public static final String KEY_QP_OFFSET_MAP_INFO = "qp-offset-map-info";
+
+    /**
+     * A key describing the region of interest type. This is an optional parameter that applies
+     * only to video encoders that advertise support for
+     * {@link MediaCodecInfo.CodecCapabilities#FEATURE_ROI}. Use
+     * {@link MediaCodec#getOutputFormat} after {@link MediaCodec#configure configure} to query
+     * if the encoder supports the desired RoI type. If the encoder does not support RoI type,
+     * the output format will not have an entry with this key.
+     * <p>
+     * The associated value is a String in the format "Top1,Left1-Bottom1,Right1=Offset1;Top2,
+     * Left2-Bottom2,Right2=Offset2;...". The Top, Left, Bottom, Right form the vertices of
+     * bounding box of region of interest. This box can get stretched outwards to align to LCU
+     * boundaries during encoding. Offset is the suggested QP offset of the LCUs in the
+     * bounding box. The Qp Offset is integral and shall be in the range [-128, 127]. The QP of
+     * target coding unit will be calculated as frameQP + offsetQP. If the result exceeds minQP
+     * or maxQP configured then the value may be clamped. Negative offset results in coding units
+     * encoded at lower QP than frame QP and positive offsets will result in encoding coding
+     * units encoded at higher QP than frame QP. If the areas of negative QP and positive QP
+     * are chosen wisely, the overall viewing experience can be improved.
+     * <p>
+     * {@link MediaFormat.QpOffsetRect#flattenToString} can be used to prepare the value for this
+     * key.
+     * <p>
+     * If RoIs extend outside frame boundaries, an exception is raised.
+     * <p>
+     * The scope of this key is throughout the encoding session until it is reconfigured during
+     * running state.
+     * <p>
+     * There is no upper limit on the number of contours that can be configured for a given input
+     * frame. However platforms can mandate a limit. Implementations are allowed to drop/ignore
+     * the rectangles that are beyond the supported limits. Hence it is preferable to place the
+     * rects in descending order of importance. Transitively, if the bounding boxes overlap, then
+     * the most preferred rectangle's qp offset (earlier rectangle) qp offset will be used to
+     * quantize the LCU.
+     * <p>
+     * This key shouldn't be set if the encoder is operating in surface input mode.
+     */
+    @FlaggedApi(FLAG_REGION_OF_INTEREST)
+    public static final String KEY_QP_OFFSET_RECTS_INFO = "qp-offset-rects-info";
+
+    /**
+     * QpOffsetRect constitutes the metadata required for encoding a region of interest in an
+     * image or a video frame. The region of interest is represented by a rectangle. The four
+     * integer coordinates of the rectangle are stored in fields left, top, right, bottom. This
+     * is paired with a suggestive qp offset information that is to be used during encoding of
+     * the LCUs belonging to the to the box. The fields left, top, right, bottom, qpOffset can be
+     * accessed directly. Use width() and height() to retrieve the box width and height.
+     */
+    @FlaggedApi(FLAG_REGION_OF_INTEREST)
+    public static final class QpOffsetRect {
+        public final int left;
+        public final int top;
+        public final int right;
+        public final int bottom;
+        public final int qpOffset;
+
+        /**
+         * Create a new region of interest with the specified coordinates and qpOffset. Note: no
+         * range checking is performed, so the caller must ensure that left <= right and
+         * top <= bottom.
+         *
+         * @param left   The X coordinate of the left side of the rectangle
+         * @param top    The Y coordinate of the top of the rectangle
+         * @param right  The X coordinate of the right side of the rectangle
+         * @param bottom The Y coordinate of the bottom of the rectangle
+         * @param qpOffset   qpOffset to be used for the LCUs of the bounding box
+         */
+        public QpOffsetRect(int left, int top, int right, int bottom, int qpOffset) {
+            this.left = left;
+            this.top = top;
+            this.right = right;
+            this.bottom = bottom;
+            this.qpOffset = qpOffset;
+        }
+
+        public boolean isValid() {
+            return left <= right && top <= bottom;
+        }
+
+        /**
+         * @return the rectangle's width. This does not check for a valid rectangle
+         * (i.e. left <= right) so the result may be negative.
+         */
+        public int width()  {
+            return right - left;
+        }
+
+        /**
+         * @return the rectangle's height. This does not check for a valid rectangle
+         * (i.e. top <= bottom) so the result may be negative.
+         */
+        public int height()  {
+            return bottom - top;
+        }
+
+        /**
+         * @return Return a string representation of qpOffsetRect in a compact form.
+         */
+        @NonNull
+        public String flattenToString() {
+            return String.format(Locale.getDefault(), "%d,%d-%d,%d=%d;", top, left, bottom,
+                    right, qpOffset);
+        }
+
+        /**
+         * Helper function to insert key {@link #KEY_QP_OFFSET_RECTS_INFO} in MediaFormat
+         */
+        @NonNull
+        public static String flattenToString(@NonNull List<QpOffsetRect> qpOffsetRects) {
+            StringBuilder builder = new StringBuilder();
+            for (QpOffsetRect qpOffsetRect : qpOffsetRects) {
+                builder.append(qpOffsetRect.toString());
+            }
+            return builder.toString();
+        }
+    }
 
     /**
      * A key describing the audio session ID of the AudioTrack associated
