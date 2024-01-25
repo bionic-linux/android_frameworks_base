@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5590764f_4024ba5d",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2024-01-25T11:53:21Z",
+      "side": 1,
+      "message": "Not a blocker (so feel free to decline), since I realize there were no prior tests (the only test I see is static: https://android.googlesource.com/platform/frameworks/base/+/refs/heads/main/services/tests/servicestests/src/com/android/server/adb/AdbDebuggingManagerTest.java#875): Any way to consider adding a relevant test (perhaps dispatch MSG_PAIR_PAIRING_CODE, MSG_PAIR_QR_CODE and MSG_PAIRING_CANCEL in succession) to enforce that startPairingServer() and cancelPairing() are invoked on the (same) user-interface thread?",
+      "range": {
+        "startLine": 281,
+        "startChar": 8,
+        "endLine": 281,
+        "endChar": 41
+      },
+      "revId": "0b6c09a8b655128c3d487876a2e0bc949b3b812f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
