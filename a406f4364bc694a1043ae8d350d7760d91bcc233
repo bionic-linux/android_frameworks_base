@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c79c3e1_58dbd78f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1083168
+      },
+      "writtenOn": "2024-01-25T02:03:30Z",
+      "side": 1,
+      "message": "This needs to be rephrased.\n\nAvoid destruction of the pairing server while it is being initialized by ensuring that both native_pairing_start and native_pairing_cancel run on the same FgThread.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 167
+      },
+      "revId": "a406f4364bc694a1043ae8d350d7760d91bcc233",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "64f4218b_1166f8dd",
