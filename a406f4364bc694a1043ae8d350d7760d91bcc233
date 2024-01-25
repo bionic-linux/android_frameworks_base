@@ -239,6 +239,30 @@
       },
       "revId": "a406f4364bc694a1043ae8d350d7760d91bcc233",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54070cf6_e5108931",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1083168
+      },
+      "writtenOn": "2024-01-25T23:21:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00931d81_86ea5349",
+      "range": {
+        "startLine": 281,
+        "startChar": 20,
+        "endLine": 281,
+        "endChar": 38
+      },
+      "revId": "a406f4364bc694a1043ae8d350d7760d91bcc233",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
