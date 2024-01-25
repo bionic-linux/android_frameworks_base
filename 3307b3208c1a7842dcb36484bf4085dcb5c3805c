@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b672cec_deb26a62",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4281,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2024-01-25T12:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45545c0c_4b61cdcc",
+      "range": {
+        "startLine": 4281,
+        "startChar": 50,
+        "endLine": 4281,
+        "endChar": 51
+      },
+      "revId": "3307b3208c1a7842dcb36484bf4085dcb5c3805c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "abe41613_8a5c96fc",
@@ -54,6 +78,24 @@
       "writtenOn": "2024-01-24T14:47:10Z",
       "side": 1,
       "message": "Also need an update here (which probably needs to be a bit different than the text above, as curve 25519 support in v2 doesn\u0027t affect StrongBox).",
+      "revId": "3307b3208c1a7842dcb36484bf4085dcb5c3805c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7563a507_f06c5366",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4311,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2024-01-25T12:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abe41613_8a5c96fc",
       "revId": "3307b3208c1a7842dcb36484bf4085dcb5c3805c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
