@@ -50,6 +50,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "4e1298cc_83d73538",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1083168
+      },
+      "writtenOn": "2024-01-25T23:21:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb839c1e_ce9511fb",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 167
+      },
+      "revId": "a406f4364bc694a1043ae8d350d7760d91bcc233",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "64f4218b_1166f8dd",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
@@ -136,6 +160,30 @@
       "side": 1,
       "message": "Thread.join() is still used in line 1209, \"extends Thread\" should be retained.",
       "parentUuid": "d79f709a_64b52534",
+      "range": {
+        "startLine": 215,
+        "startChar": 10,
+        "endLine": 215,
+        "endChar": 23
+      },
+      "revId": "a406f4364bc694a1043ae8d350d7760d91bcc233",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87491dac_07381c56",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1083168
+      },
+      "writtenOn": "2024-01-25T23:21:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d007c5d_e4fbba50",
       "range": {
         "startLine": 215,
         "startChar": 10,
