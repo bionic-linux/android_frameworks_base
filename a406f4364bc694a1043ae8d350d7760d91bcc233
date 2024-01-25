@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb839c1e_ce9511fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1939396
+      },
+      "writtenOn": "2024-01-25T11:21:59Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6c79c3e1_58dbd78f",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 167
+      },
+      "revId": "a406f4364bc694a1043ae8d350d7760d91bcc233",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "64f4218b_1166f8dd",
@@ -100,6 +124,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2d007c5d_e4fbba50",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1939396
+      },
+      "writtenOn": "2024-01-25T11:21:59Z",
+      "side": 1,
+      "message": "Thread.join() is still used in line 1209, \"extends Thread\" should be retained.",
+      "parentUuid": "d79f709a_64b52534",
+      "range": {
+        "startLine": 215,
+        "startChar": 10,
+        "endLine": 215,
+        "endChar": 23
+      },
+      "revId": "a406f4364bc694a1043ae8d350d7760d91bcc233",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "80a78fc5_71333c58",
         "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
         "patchSetId": 2
@@ -111,6 +159,30 @@
       "writtenOn": "2024-01-25T01:45:51Z",
       "side": 1,
       "message": "nit: Rename to `startOnFgThread`?\n\nThis also need a comment to explain what is going on. Something like this:\n\n// If a user is fast enough to click cancel, native_pairing_cancel can be invoked while native_pairing_start is running which run the destruction of the object while it is being constructed. Here we start the pairing server on fgThread so native_pairing_cancel can never be called concurrently. The we let the pairing server run on a background Thread.\npublic void startOnFgThread() {\n....",
+      "range": {
+        "startLine": 281,
+        "startChar": 20,
+        "endLine": 281,
+        "endChar": 38
+      },
+      "revId": "a406f4364bc694a1043ae8d350d7760d91bcc233",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00931d81_86ea5349",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1939396
+      },
+      "writtenOn": "2024-01-25T11:21:59Z",
+      "side": 1,
+      "message": "Thank you for your suggestion. It has been modified.",
+      "parentUuid": "80a78fc5_71333c58",
       "range": {
         "startLine": 281,
         "startChar": 20,
