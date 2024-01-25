@@ -50,6 +50,52 @@
       "message": "Replied in the bug report.",
       "revId": "a406f4364bc694a1043ae8d350d7760d91bcc233",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d79f709a_64b52534",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1083168
+      },
+      "writtenOn": "2024-01-25T01:45:51Z",
+      "side": 1,
+      "message": "This needs to become a Runnable and renamed `PairingRunnable` since we no longer use Thread.start().",
+      "range": {
+        "startLine": 215,
+        "startChar": 10,
+        "endLine": 215,
+        "endChar": 23
+      },
+      "revId": "a406f4364bc694a1043ae8d350d7760d91bcc233",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80a78fc5_71333c58",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1083168
+      },
+      "writtenOn": "2024-01-25T01:45:51Z",
+      "side": 1,
+      "message": "nit: Rename to `startOnFgThread`?\n\nThis also need a comment to explain what is going on. Something like this:\n\n// If a user is fast enough to click cancel, native_pairing_cancel can be invoked while native_pairing_start is running which run the destruction of the object while it is being constructed. Here we start the pairing server on fgThread so native_pairing_cancel can never be called concurrently. The we let the pairing server run on a background Thread.\npublic void startOnFgThread() {\n....",
+      "range": {
+        "startLine": 281,
+        "startChar": 20,
+        "endLine": 281,
+        "endChar": 38
+      },
+      "revId": "a406f4364bc694a1043ae8d350d7760d91bcc233",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
