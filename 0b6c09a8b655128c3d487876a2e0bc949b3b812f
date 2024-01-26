@@ -46,6 +46,30 @@
       },
       "revId": "0b6c09a8b655128c3d487876a2e0bc949b3b812f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bc695c4_6d467d3a",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2024-01-26T06:42:14Z",
+      "side": 1,
+      "message": "Under the assumption that both of these are being invoked on the UI thread, I\u0027m resolving this thread - thanks for the resolution!",
+      "parentUuid": "47a8fd89_2d7a779d",
+      "range": {
+        "startLine": 281,
+        "startChar": 8,
+        "endLine": 281,
+        "endChar": 41
+      },
+      "revId": "0b6c09a8b655128c3d487876a2e0bc949b3b812f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
