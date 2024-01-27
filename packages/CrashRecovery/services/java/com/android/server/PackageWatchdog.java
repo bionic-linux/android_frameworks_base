@@ -21,7 +21,9 @@ import static android.service.watchdog.ExplicitHealthCheckService.PackageConfig;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 import android.annotation.IntDef;
+import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -78,7 +80,9 @@ import java.util.concurrent.TimeUnit;
  * Monitors the health of packages on the system and notifies interested observers when packages
  * fail. On failure, the registered observer with the least user impacting mitigation will
  * be notified.
+ * @hide
  */
+@SystemApi(client = SystemApi.Client.SYSTEM_SERVER)
 public class PackageWatchdog {
     private static final String TAG = "PackageWatchdog";
 
@@ -94,13 +98,18 @@ public class PackageWatchdog {
             TimeUnit.SECONDS.toMillis(30);
     private static final long NUMBER_OF_NATIVE_CRASH_POLLS = 10;
 
-
+    /** @hide */
     public static final int FAILURE_REASON_UNKNOWN = 0;
+    /** @hide */
     public static final int FAILURE_REASON_NATIVE_CRASH = 1;
+    /** @hide */
     public static final int FAILURE_REASON_EXPLICIT_HEALTH_CHECK = 2;
+    /** @hide */
     public static final int FAILURE_REASON_APP_CRASH = 3;
+    /** @hide */
     public static final int FAILURE_REASON_APP_NOT_RESPONDING = 4;
 
+    /** @hide */
     @IntDef(prefix = { "FAILURE_REASON_" }, value = {
             FAILURE_REASON_UNKNOWN,
             FAILURE_REASON_NATIVE_CRASH,
@@ -244,7 +253,7 @@ public class PackageWatchdog {
     }
 
     /** Creates or gets singleton instance of PackageWatchdog. */
-    public static PackageWatchdog getInstance(Context context) {
+    public static @NonNull PackageWatchdog getInstance(@NonNull Context context) {
         synchronized (PackageWatchdog.class) {
             if (sPackageWatchdog == null) {
                 new PackageWatchdog(context);
@@ -276,7 +285,7 @@ public class PackageWatchdog {
      * <p>Observers are expected to call this on boot. It does not specify any packages but
      * it will resume observing any packages requested from a previous boot.
      */
-    public void registerHealthObserver(PackageHealthObserver observer) {
+    public void registerHealthObserver(@NonNull PackageHealthObserver observer) {
         synchronized (mLock) {
             ObserverInternal internalObserver = mAllObservers.get(observer.getName());
             if (internalObserver != null) {
@@ -308,8 +317,8 @@ public class PackageWatchdog {
      * <p>If {@code durationMs} is less than 1, a default monitoring duration
      * {@link #DEFAULT_OBSERVING_DURATION_MS} will be used.
      */
-    public void startObservingHealth(PackageHealthObserver observer, List<String> packageNames,
-            long durationMs) {
+    public void startObservingHealth(@NonNull PackageHealthObserver observer,
+            @NonNull List<String> packageNames, @NonNull long durationMs) {
         if (packageNames.isEmpty()) {
             Slog.wtf(TAG, "No packages to observe, " + observer.getName());
             return;
@@ -371,7 +380,7 @@ public class PackageWatchdog {
      * Additionally, this stops observing any packages that may have previously been observed
      * even from a previous boot.
      */
-    public void unregisterHealthObserver(PackageHealthObserver observer) {
+    public void unregisterHealthObserver(@NonNull PackageHealthObserver observer) {
         mLongTaskHandler.post(() -> {
             synchronized (mLock) {
                 mAllObservers.remove(observer.getName());
@@ -388,8 +397,8 @@ public class PackageWatchdog {
      *
      * <p>This method could be called frequently if there is a severe problem on the device.
      */
-    public void onPackageFailure(List<VersionedPackage> packages,
-            @FailureReasons int failureReason) {
+    public void onPackageFailure(@NonNull List<VersionedPackage> packages,
+            @NonNull @FailureReasons int failureReason) {
         if (packages == null) {
             Slog.w(TAG, "Could not resolve a list of failing packages");
             return;
@@ -567,6 +576,7 @@ public class PackageWatchdog {
      * Since this method can eventually trigger a rollback, it should be called
      * only once boot has completed {@code onBootCompleted} and not earlier, because the install
      * session must be entirely completed before we try to rollback.
+     * @hide
      */
     public void scheduleCheckAndMitigateNativeCrashes() {
         Slog.i(TAG, "Scheduling " + mNumberOfNativeCrashPollsRemaining + " polls to check "
@@ -574,7 +584,9 @@ public class PackageWatchdog {
         mShortTaskHandler.post(()->checkAndMitigateNativeCrashes());
     }
 
-    /** Possible severity values of the user impact of a {@link PackageHealthObserver#execute}. */
+    /** Possible severity values of the user impact of a {@link PackageHealthObserver#execute}.
+     * @hide
+     */
     @Retention(SOURCE)
     @IntDef(value = {PackageHealthObserverImpact.USER_IMPACT_LEVEL_0,
                      PackageHealthObserverImpact.USER_IMPACT_LEVEL_10,
@@ -1344,6 +1356,7 @@ public class PackageWatchdog {
         }
     }
 
+    /** @hide */
     @Retention(SOURCE)
     @IntDef(value = {
             HealthCheckState.ACTIVE,
