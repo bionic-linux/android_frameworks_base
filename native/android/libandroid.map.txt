@@ -334,6 +334,17 @@ LIBANDROID {
     APerformanceHint_reportActualWorkDuration; # introduced=Tiramisu
     APerformanceHint_closeSession; # introduced=Tiramisu
     APerformanceHint_setThreads; # introduced=UpsideDownCake
+    AMemtagCrashInfo_get; # introduced=VanillaIceCream
+    AMemtagCrashInfo_getSize; # introduced=VanillaIceCream
+    AMemtagError_get; # introduced=VanillaIceCream
+    AMemtagError_getCause; # introduced=VanillaIceCream
+    AMemtagCause_getType; # introduced=VanillaIceCream
+    AMemtagCause_getAllocationAddress; # introduced=VanillaIceCream
+    AMemtagCause_getAllocationStack; # introduced=VanillaIceCream
+    AMemtagCause_getAllocationTid; # introduced=VanillaIceCream
+    AMemtagCause_getFreeStack; # introduced=VanillaIceCream
+    AMemtagCause_getFreeTid; # introduced=VanillaIceCream
+    AMemtagStackTrace_getPC; # introduced=VanillaIceCream
   local:
     *;
 };
