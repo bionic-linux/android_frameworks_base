@@ -16,6 +16,23 @@
       "message": "plz review my fix code",
       "revId": "84781859711c0c6ea286370b09bf62b337d637b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e09c8870_7f0b57fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060522
+      },
+      "writtenOn": "2024-01-29T19:22:48Z",
+      "side": 1,
+      "message": "This has been resolved at ToT and will be in the next release.",
+      "revId": "84781859711c0c6ea286370b09bf62b337d637b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
