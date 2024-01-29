@@ -2838,8 +2838,10 @@ public class DisplayPolicy {
             mSystemGestures.dump(pw, prefix);
         }
 
-        pw.print(prefix); pw.println("Looper state:");
-        mHandler.getLooper().dump(new PrintWriterPrinter(pw), prefix + "  ");
+        if (mDisplayContent.isDefaultDisplay) {
+            pw.print(prefix); pw.println("Looper state:");
+            mHandler.getLooper().dump(new PrintWriterPrinter(pw), prefix + "  ");
+        }
     }
 
     private boolean supportsPointerLocation() {
