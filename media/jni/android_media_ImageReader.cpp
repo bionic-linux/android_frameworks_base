@@ -45,6 +45,8 @@
 
 #include <ui/Rect.h>
 
+#include "jni_wrappers.h"
+
 #define ANDROID_MEDIA_IMAGEREADER_CTX_JNI_ID       "mNativeContext"
 #define ANDROID_MEDIA_SURFACEIMAGE_BUFFER_JNI_ID   "mNativeBuffer"
 #define ANDROID_MEDIA_SURFACEIMAGE_TS_JNI_ID       "mTimestamp"
@@ -989,10 +991,10 @@ static const JNINativeMethod gImageMethods[] = {
 
 int register_android_media_ImageReader(JNIEnv *env) {
 
-    int ret1 = AndroidRuntime::registerNativeMethods(env,
+    int ret1 = RegisterMethodsOrDie(env,
                    "android/media/ImageReader", gImageReaderMethods, NELEM(gImageReaderMethods));
 
-    int ret2 = AndroidRuntime::registerNativeMethods(env,
+    int ret2 = RegisterMethodsOrDie(env,
                    "android/media/ImageReader$SurfaceImage", gImageMethods, NELEM(gImageMethods));
 
     return (ret1 || ret2);
