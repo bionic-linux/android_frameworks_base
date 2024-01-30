@@ -113,6 +113,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -2983,7 +2984,16 @@ public class StorageManager {
     }
 
     /** {@hide} */
-    public void closeStorageArea(@NonNull OpenStorageArea storageArea) throws IOException {
+    public void closeStorageArea(@NonNull OpenStorageArea storageArea) throws IOException, NoSuchElementException {
+        // throw an error if the storage area does not exist
+        // note: dealing with this error here instead of in vold in order to avoid 
+        // having to distinguish vold errors based on the error code (ENOENT, etc)
+        // we want this error to be a different type of Exception than other vold errors
+        // so users can deal with it differently or ignore it easily if they choose
+        if (!this.listStorageAreas().contains(storageArea.getName())) {
+            throw new NoSuchElementException("storage area " + storageArea.getName() + 
+                        " does not exist for package " + mContext.getOpPackageName());
+        }
         try {
             mStorageManager.closeStorageArea(mContext.getOpPackageName(), storageArea.getName());
         } catch (RemoteException e) {
@@ -2995,9 +3005,19 @@ public class StorageManager {
      * If the app has a storage area with the given name, deletes it as securely as possible.
      *
      * @throws IOException if the storage area is currently open
+     * @throws NoSuchElementException if no storage area with the specified name exists
      */
     @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
-    public void deleteStorageArea(@NonNull String storageAreaName) throws IOException {
+    public void deleteStorageArea(@NonNull String storageAreaName) throws IOException, NoSuchElementException {
+        // throw an error if the storage area does not exist
+        // note: dealing with this error here instead of in vold in order to avoid 
+        // having to distinguish vold errors based on the error code (ENOENT, etc)
+        // we want this error to be a different type of Exception than other vold errors
+        // so users can deal with it differently or ignore it easily if they choose
+        if (!this.listStorageAreas().contains(storageAreaName)) {
+            throw new NoSuchElementException("storage area " + storageAreaName + 
+                        " does not exist for package " + mContext.getOpPackageName());
+        }
         try {
             mStorageManager.deleteStorageArea(mContext.getOpPackageName(), storageAreaName);
         } catch (RemoteException e) {

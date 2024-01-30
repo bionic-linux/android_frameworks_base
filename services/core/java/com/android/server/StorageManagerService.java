@@ -4662,6 +4662,7 @@ class StorageManagerService extends IStorageManager.Stub
     public void deleteStorageArea(String packageName, String storageAreaName)
             throws RemoteException {
         final int uid = Binder.getCallingUid();
+        
         enforceValidStorageAreaParams(uid, packageName, storageAreaName);
 
         synchronized (mOpenStorageAreas) {
