@@ -18,8 +18,8 @@
 
 #include <utils/misc.h>
 #include <ui/PublicFormat.h>
-#include <android_runtime/AndroidRuntime.h>
 #include <jni.h>
+#include "jni_wrappers.h"
 
 using namespace android;
 
@@ -53,7 +53,7 @@ static const JNINativeMethod gMethods[] = {
 };
 
 int register_android_media_PublicFormatUtils(JNIEnv *env) {
-    return AndroidRuntime::registerNativeMethods(env,
+    return RegisterMethodsOrDie(env,
              "android/media/PublicFormatUtils", gMethods, NELEM(gMethods));
 }
 

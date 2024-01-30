@@ -169,11 +169,6 @@ static int register_jni_procs(const std::unordered_map<std::string, RegJNIRec>& 
     return 0;
 }
 
-int AndroidRuntime::registerNativeMethods(JNIEnv* env,
-        const char* className, const JNINativeMethod* gMethods, int numMethods) {
-    return jniRegisterNativeMethods(env, className, gMethods, numMethods);
-}
-
 JNIEnv* AndroidRuntime::getJNIEnv() {
     JNIEnv* env;
     if (javaVM->GetEnv((void**) &env, JNI_VERSION_1_6) != JNI_OK)
