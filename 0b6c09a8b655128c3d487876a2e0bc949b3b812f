@@ -70,6 +70,30 @@
       },
       "revId": "0b6c09a8b655128c3d487876a2e0bc949b3b812f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5467e49_6c6405a2",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1939396
+      },
+      "writtenOn": "2024-01-30T11:11:54Z",
+      "side": 1,
+      "message": "Hi shaju, Presubmit-Verified has expired. I don\u0027t have permission, could you please trigger it and merge this change",
+      "parentUuid": "2bc695c4_6d467d3a",
+      "range": {
+        "startLine": 281,
+        "startChar": 8,
+        "endLine": 281,
+        "endChar": 41
+      },
+      "revId": "0b6c09a8b655128c3d487876a2e0bc949b3b812f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
