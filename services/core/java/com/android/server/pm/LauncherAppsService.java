@@ -520,7 +520,8 @@ public class LauncherAppsService extends SystemService {
             final int callingUid = injectBinderCallingUid();
             final long ident = injectClearCallingIdentity();
             try {
-                if (mUm.getUserInfo(user.getIdentifier()).isManagedProfile()) {
+                if (mUm.getUserInfo(user.getIdentifier()) &&
+                        mUm.getUserInfo(user.getIdentifier()).isManagedProfile()) {
                     // Managed profile should not show hidden apps
                     return launcherActivities;
                 }
