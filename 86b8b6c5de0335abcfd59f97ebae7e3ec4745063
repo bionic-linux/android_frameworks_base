@@ -16,6 +16,29 @@
       "message": "Please review for me. Thank you.",
       "revId": "86b8b6c5de0335abcfd59f97ebae7e3ec4745063",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0aa249af_fc37f2e4",
+        "filename": "services/core/java/com/android/server/pm/LauncherAppsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-01-31T18:17:05Z",
+      "side": 1,
+      "message": "It seems extremely unlikely that this can become null if the API is being called by the same user. Is your test calling the API from a different user? Is there a way to reproduce this issue reliably?",
+      "range": {
+        "startLine": 523,
+        "startChar": 31,
+        "endLine": 523,
+        "endChar": 39
+      },
+      "revId": "86b8b6c5de0335abcfd59f97ebae7e3ec4745063",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
