@@ -127,7 +127,7 @@
     <!-- France: 5 digits, free: 3xxxx, premium [4-8]xxxx, plus EU:
          http://clients.txtnation.com/entries/161972-france-premium-sms-short-code-requirements,
          visual voicemail code for Orange: 21101 -->
-    <shortcode country="fr" premium="[4-8]\\d{4}" free="3\\d{4}|116\\d{3}|21101|20366|555|2051" />
+    <shortcode country="fr" premium="[4-8]\\d{4}" free="3\\d{4}|116\\d{3}|21101|20366|555|2051|33033" />
 
     <!-- United Kingdom (Great Britain): 4-6 digits, common codes [5-8]xxxx, plus EU:
          http://www.short-codes.com/media/Co-regulatoryCodeofPracticeforcommonshortcodes170206.pdf,
