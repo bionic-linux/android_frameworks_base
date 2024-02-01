@@ -87,6 +87,30 @@
       },
       "revId": "71c1ac32aed6c4b5a2a92ed54e977bfc690c31d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b28e3a53_99ba2025",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1337780
+      },
+      "writtenOn": "2024-02-01T14:11:11Z",
+      "side": 1,
+      "message": "\u003e I think that is a different constant. This is us waiting for the initial Zygote connection; the one you are referring to is how long we wait for a wrapped PID to spawn, which is only after the zygote is up.\n\nOh right. SG then.",
+      "parentUuid": "d4ff2992_45f14bc8",
+      "range": {
+        "startLine": 74,
+        "startChar": 57,
+        "endLine": 74,
+        "endChar": 62
+      },
+      "revId": "71c1ac32aed6c4b5a2a92ed54e977bfc690c31d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
