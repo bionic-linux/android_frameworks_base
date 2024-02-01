@@ -16,6 +16,29 @@
       "message": "+Olivier FYI; I don\u0027t think this would affect any watchdog since the Zygote connect is done very early in system_server boot.",
       "revId": "71c1ac32aed6c4b5a2a92ed54e977bfc690c31d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb6aa2ba_f3f8cef6",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1337780
+      },
+      "writtenOn": "2024-02-01T13:31:56Z",
+      "side": 1,
+      "message": "It will prevent decreasing the watchdog timeout for the beta population: https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/Watchdog.java;l\u003d588?q\u003dWatchdog.java\u0026sq\u003drepo:googleplex-android%2Fplatform%2Fsuperproject%2Fmain%20b:main\n\n\nCan we use the Build.HW_TIMEOUT_MULTIPLIER to only increase it for low end device? Maybe\n\n20_000 *  Build.HW_TIMEOUT_MULTIPLIER?",
+      "range": {
+        "startLine": 74,
+        "startChar": 57,
+        "endLine": 74,
+        "endChar": 62
+      },
+      "revId": "71c1ac32aed6c4b5a2a92ed54e977bfc690c31d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
