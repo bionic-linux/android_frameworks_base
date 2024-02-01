@@ -2998,7 +2998,7 @@
     <permission android:name="android.permission.READ_CARRIER_APP_INFO"
         android:protectionLevel="signature" />
 
-    <!-- Must be required by an GbaService to ensure that only the
+    <!-- Must be required by a GbaService to ensure that only the
          system can bind to it.
          <p>Protection level: signature
          @SystemApi
@@ -5758,7 +5758,7 @@
     <permission android:name="android.permission.CONTROL_DISPLAY_COLOR_TRANSFORMS"
         android:protectionLevel="signature|privileged" />
 
-    <!-- Allows an application to collect usage infomation about brightness slider changes.
+    <!-- Allows an application to collect usage information about brightness slider changes.
          <p>Not for use by third-party applications.</p>
          @hide
          @SystemApi
