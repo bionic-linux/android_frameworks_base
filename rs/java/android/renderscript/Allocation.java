@@ -324,7 +324,7 @@ public class Allocation extends BaseObj {
      *
      * <p> When enabled:
      *     The array just needs to have at least 6 integers, with the first 3 integers
-     *     copied to the the first cell as data components, and the next 3 copied to
+     *     copied to the first cell as data components, and the next 3 copied to
      *     the second cell. There is no mapping for the padding components.
      *
      * <p> Similarly, when copying a byte array to an Allocation of two {@link
