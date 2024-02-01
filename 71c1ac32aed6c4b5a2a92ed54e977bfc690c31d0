@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ca15662_b61a0a9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2024-02-01T10:12:48Z",
+      "side": 1,
+      "message": "+Olivier FYI; I don\u0027t think this would affect any watchdog since the Zygote connect is done very early in system_server boot.",
+      "revId": "71c1ac32aed6c4b5a2a92ed54e977bfc690c31d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
