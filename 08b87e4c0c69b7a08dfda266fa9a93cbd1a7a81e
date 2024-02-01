@@ -1,5 +1,29 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2db91f2_e8abebad",
+        "filename": "tools/aapt2/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1308044
+      },
+      "writtenOn": "2024-02-01T06:45:22Z",
+      "side": 1,
+      "message": "adding dist for this cc_genrule?\n\n$(call dist-for-goals,aapt2_run_host_unit_tests,$(aapt2_results):gtest/aapt2_host_unit_tests_result.xml)",
+      "range": {
+        "startLine": 240,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 10
+      },
+      "revId": "08b87e4c0c69b7a08dfda266fa9a93cbd1a7a81e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
