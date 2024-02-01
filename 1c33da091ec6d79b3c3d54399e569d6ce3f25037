@@ -93,6 +93,30 @@
       },
       "revId": "1c33da091ec6d79b3c3d54399e569d6ce3f25037",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf12b864_3bb21903",
+        "filename": "core/tests/coretests/src/com/android/internal/net/ConnectivityBlobStoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1857230
+      },
+      "writtenOn": "2024-02-01T12:06:17Z",
+      "side": 1,
+      "message": "There is also a need to deleteAll, at least that is how Keystore currently has it. We can delete the whole database, but Im not sure when you would need that.",
+      "parentUuid": "7ef73c4f_a68ea90e",
+      "range": {
+        "startLine": 82,
+        "startChar": 16,
+        "endLine": 82,
+        "endChar": 26
+      },
+      "revId": "1c33da091ec6d79b3c3d54399e569d6ce3f25037",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
