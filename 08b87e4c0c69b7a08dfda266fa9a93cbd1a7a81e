@@ -22,6 +22,30 @@
       },
       "revId": "08b87e4c0c69b7a08dfda266fa9a93cbd1a7a81e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cf38a42_e3e44230",
+        "filename": "tools/aapt2/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1307893
+      },
+      "writtenOn": "2024-02-02T07:30:16Z",
+      "side": 1,
+      "message": "Fixed in aosp/2946185",
+      "parentUuid": "b2db91f2_e8abebad",
+      "range": {
+        "startLine": 240,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 10
+      },
+      "revId": "08b87e4c0c69b7a08dfda266fa9a93cbd1a7a81e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
