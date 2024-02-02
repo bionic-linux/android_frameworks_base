@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a4f57de_2883ec01",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3747,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2024-02-02T07:13:48Z",
+      "side": 1,
+      "message": "This doesn\u0027t throw. l.2103\nDo you mean enfore?",
+      "revId": "b665970f8dcf4472bdf877eceba10689435bddf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
