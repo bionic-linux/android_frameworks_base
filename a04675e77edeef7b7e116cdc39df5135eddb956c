@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e24ff3a_7b679e56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1063563
+      },
+      "writtenOn": "2024-02-02T22:48:18Z",
+      "side": 1,
+      "message": "Should probably fix in frameworks/rs/support/java/src/androidx/renderscript/Allocation.java also",
+      "revId": "a04675e77edeef7b7e116cdc39df5135eddb956c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
