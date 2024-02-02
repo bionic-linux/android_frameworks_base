@@ -24298,6 +24298,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                     migratePermittedInputMethodsPolicyLocked();
                     migrateAccountManagementDisabledPolicyLocked();
                     migrateUserControlDisabledPackagesLocked();
+                    migrateUserRestrictionsLocked();
 
                     mOwners.markMigrationToPolicyEngine();
                     return true;
@@ -24489,6 +24490,37 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                                 enforcingAdmin,
                                 new StringSetPolicyValue(new HashSet<>(admin.protectedPackages)),
                                 admin.getUserHandle().getIdentifier());
+                    }
+                }
+            }
+        });
+    }
+
+    private void migrateUserRestrictionsLocked() {
+        Binder.withCleanCallingIdentity(() -> {
+            List<UserInfo> users = mUserManager.getUsers();
+            for (UserInfo userInfo : users) {
+                ActiveAdmin admin = getProfileOwnerOrDeviceOwnerLocked(userInfo.id);
+                if (admin != null && admin.userRestrictions.size() > 0) {
+                    EnforcingAdmin enforcingAdmin = EnforcingAdmin.createEnterpriseEnforcingAdmin(
+                            admin.info.getComponent(),
+                            admin.getUserHandle().getIdentifier(),
+                            admin);
+                    for (final String restriction : admin.userRestrictions.keySet()) {
+                        PolicyDefinition<Boolean> policyDefinition =
+                                PolicyDefinition.getPolicyDefinitionForUserRestriction(restriction);
+                        if (isDeviceOwner(admin)) {
+                            mDevicePolicyEngine.setGlobalPolicy(
+                                    policyDefinition,
+                                    enforcingAdmin,
+                                    new BooleanPolicyValue(true));
+                        } else {
+                            mDevicePolicyEngine.setLocalPolicy(
+                                    policyDefinition,
+                                    enforcingAdmin,
+                                    new BooleanPolicyValue(true),
+                                    admin.getUserHandle().getIdentifier());
+                        }
                     }
                 }
             }
