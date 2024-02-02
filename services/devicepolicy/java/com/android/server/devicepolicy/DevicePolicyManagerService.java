@@ -3394,6 +3394,9 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                     if (shouldMigrateToDevicePolicyEngine()) {
                         migratePoliciesToDevicePolicyEngine();
                     }
+                    if (shouldMigrateUserRestrictionsToDevicePolicyEngine()) {
+                        migrateUserRestrictionsLocked();
+                    }
                 }
                 maybeStartSecurityLogMonitorOnActivityManagerReady();
                 break;
@@ -24281,6 +24284,12 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                         && !mOwners.isMigratedToPolicyEngine());
     }
 
+    private boolean shouldMigrateUserRestrictionsToDevicePolicyEngine() {
+        return mInjector.binderWithCleanCallingIdentity(() ->
+                (isPermissionCheckFlagEnabled() || isPolicyEngineForFinanceFlagEnabled())
+                        && !mOwners.isUserRestrictionsMigratedToPolicyEngine());
+    }
+
     /**
      * @return {@code true} if policies were migrated successfully, {@code false} otherwise.
      */
@@ -24298,6 +24307,10 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                     migratePermittedInputMethodsPolicyLocked();
                     migrateAccountManagementDisabledPolicyLocked();
                     migrateUserControlDisabledPackagesLocked();
+                    if (!mOwners.isUserRestrictionsMigratedToPolicyEngine()) {
+                        migrateUserRestrictionsLocked();
+                        mOwners.markUserRestrictionsMigrationToPolicyEngine();
+                    }
 
                     mOwners.markMigrationToPolicyEngine();
                     return true;
@@ -24489,6 +24502,62 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                                 enforcingAdmin,
                                 new StringSetPolicyValue(new HashSet<>(admin.protectedPackages)),
                                 admin.getUserHandle().getIdentifier());
+                    }
+                }
+            }
+        });
+    }
+
+    private void migrateUserRestrictionsLocked() {
+        Binder.withCleanCallingIdentity(() -> {
+            List<UserInfo> users = mUserManager.getUsers();
+            for (UserInfo userInfo : users) {
+                ActiveAdmin admin = getProfileOwnerOrDeviceOwnerLocked(userInfo.id);
+                if (admin != null && admin.hasUserRestrictions()) {
+                    EnforcingAdmin enforcingAdmin = EnforcingAdmin.createEnterpriseEnforcingAdmin(
+                            admin.info.getComponent(),
+                            admin.getUserHandle().getIdentifier(),
+                            admin);
+                    for (final String restriction : admin.userRestrictions.keySet()) {
+                        PolicyDefinition<Boolean> policyDefinition =
+                                PolicyDefinition.getPolicyDefinitionForUserRestriction(restriction);
+                        if (isDeviceOwner(admin) &&
+                                UserRestrictionsUtils.isGlobal(OWNER_TYPE_DEVICE_OWNER,
+                                        restriction)) {
+                            mDevicePolicyEngine.setGlobalPolicy(
+                                    policyDefinition,
+                                    enforcingAdmin,
+                                    new BooleanPolicyValue(true));
+                        } else {
+                            mDevicePolicyEngine.setLocalPolicy(
+                                    policyDefinition,
+                                    enforcingAdmin,
+                                    new BooleanPolicyValue(true),
+                                    admin.getUserHandle().getIdentifier());
+                        }
+                    }
+
+                    if (admin.getParentActiveAdmin() != null &&
+                            admin.getParentActiveAdmin().hasUserRestrictions()) {
+                        for (final String restriction :
+                                admin.getParentActiveAdmin().userRestrictions.keySet()) {
+                            PolicyDefinition<Boolean> policyDefinition =
+                                    PolicyDefinition.
+                                            getPolicyDefinitionForUserRestriction(restriction);
+                            if (UserRestrictionsUtils.isGlobal(OWNER_TYPE_DEVICE_OWNER,
+                                    restriction)) {
+                                mDevicePolicyEngine.setGlobalPolicy(
+                                        policyDefinition,
+                                        enforcingAdmin,
+                                        new BooleanPolicyValue(true));
+                            } else {
+                                mDevicePolicyEngine.setLocalPolicy(
+                                        policyDefinition,
+                                        enforcingAdmin,
+                                        new BooleanPolicyValue(true),
+                                        admin.getUserHandle().getIdentifier());
+                            }
+                        }
                     }
                 }
             }
