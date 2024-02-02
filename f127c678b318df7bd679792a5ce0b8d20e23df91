@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99ac3bff_c38580ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2024-02-02T17:54:53Z",
+      "side": 1,
+      "message": "Proto is somewhat discouraged due to size of the gencode, which is why protostream is used. Giving owners for the proto change but please get LGTM from system server folks as well.",
+      "revId": "f127c678b318df7bd679792a5ce0b8d20e23df91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
