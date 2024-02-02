@@ -16,6 +16,29 @@
       "message": "Hello Google team, please help me review this change,thanks",
       "revId": "960d6d3b32d75975ba7a302e151d8aa3ccb110d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "992a7445_1a96c295",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24303,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2024-02-02T13:42:12Z",
+      "side": 1,
+      "message": "IIUC, Devices that already went through this upgrade won\u0027t call this method again, so it will only solve the issue on devices that are upgrading to Android 14 for the first time.",
+      "range": {
+        "startLine": 24303,
+        "startChar": 20,
+        "endLine": 24303,
+        "endChar": 58
+      },
+      "revId": "960d6d3b32d75975ba7a302e151d8aa3ccb110d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
