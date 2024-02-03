@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cfe1f67_cf28d675",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-02-03T02:51:51Z",
+      "side": 1,
+      "message": "Consider using `setFeatureEnabled` API (https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/media/java/android/media/MediaFormat.java;l\u003d2215;drc\u003d40eac6ed7a76a6ec813759bcbd5c998e0b8ac949) instead of releasing `KEY_QP_OFFSET_MAP_INFO` and `KEY_QP_OFFSET_RECTS_INFO` here, so that these keys will only be added in MediaCodec.java and being completely run-time configuration.\n\n(The native code need to be changed accordingly.)",
+      "revId": "f91f74ad341a4d1757f7948c56b44a44b54a9be6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
