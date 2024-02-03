@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69d41a5d_65cf3be6",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4770,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2024-02-03T01:05:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72b16376_2a639842",
+      "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8dac6785_e060c019",
@@ -131,6 +149,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c69e27a_66e4450c",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4777,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2024-02-03T01:05:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "819651a3_418e2d4e",
+      "range": {
+        "startLine": 4777,
+        "startChar": 72,
+        "endLine": 4777,
+        "endChar": 82
+      },
+      "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b87b3bb_792b67ce",
@@ -144,6 +186,30 @@
       "writtenOn": "2023-12-11T23:56:28Z",
       "side": 1,
       "message": "need @FlaggedApi annotation",
+      "range": {
+        "startLine": 4792,
+        "startChar": 15,
+        "endLine": 4792,
+        "endChar": 16
+      },
+      "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eea2e30d_96683d86",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4792,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2024-02-03T01:05:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b87b3bb_792b67ce",
       "range": {
         "startLine": 4792,
         "startChar": 15,
@@ -220,6 +286,24 @@
       "side": 1,
       "message": "The latter wins. I think it was mentioned in other CL. Hi Ram, could you add it here? Thanks!",
       "parentUuid": "2d2a56b9_37cb3d70",
+      "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba8bc9d2_d4ac8804",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4813,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2024-02-03T01:05:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5c0fcad_72f7364e",
       "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
