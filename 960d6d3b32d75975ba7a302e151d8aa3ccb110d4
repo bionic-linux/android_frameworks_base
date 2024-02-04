@@ -39,6 +39,30 @@
       },
       "revId": "960d6d3b32d75975ba7a302e151d8aa3ccb110d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e650369_9dea9008",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24303,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2024-02-04T03:00:13Z",
+      "side": 1,
+      "message": "Yes, this place should consider devices that have already been upgraded to Android 14. I have resubmitted the code and added a flag to determine whether user restrictions need to be migrated on Android 14 devices that have already been upgraded.",
+      "parentUuid": "992a7445_1a96c295",
+      "range": {
+        "startLine": 24303,
+        "startChar": 20,
+        "endLine": 24303,
+        "endChar": 58
+      },
+      "revId": "960d6d3b32d75975ba7a302e151d8aa3ccb110d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
