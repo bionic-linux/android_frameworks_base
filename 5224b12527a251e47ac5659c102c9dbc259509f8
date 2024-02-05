@@ -62,6 +62,24 @@
       "message": "in cases where we don\u0027t actually start the thread, doesn\u0027t this introduce a bug when we later call join()? you can\u0027t call join() on a non-started thread in Java, right?\n\nseems like moving this into the constructor, having the constructor throw, and handling that correctly is the right way to do this? (not as onerous as it sounds, since there are only two callers and you can factor this out into a new method.)",
       "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcf15268_f1f63bad",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2024-02-05T17:30:51Z",
+      "side": 1,
+      "message": "Would isAlive() be an alternative (when handling MSG_PAIRING_CANCEL), to allay this concern? (unless super.start() is invoked, this will return false).\nPS: That said, I feel that join() is robust (I might be mistaken, tbh :)",
+      "parentUuid": "fcce7ec9_b5693047",
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
