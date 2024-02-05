@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5e294eb_cf190c31",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-02-05T16:43:15Z",
+      "side": 1,
+      "message": "this looks like a variable name, but isn\u0027t? should this just be \"the foreground Thread\"?",
+      "range": {
+        "startLine": 286,
+        "startChar": 82,
+        "endLine": 286,
+        "endChar": 90
+      },
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf38537c_1e246c4d",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-02-05T16:43:15Z",
+      "side": 1,
+      "message": "(not a regression, but this can\u0027t happen, right? /me shakes head at half the error reporting from this code returning -1 and the other half returning 0...)",
+      "range": {
+        "startLine": 295,
+        "startChar": 26,
+        "endLine": 295,
+        "endChar": 43
+      },
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcce7ec9_b5693047",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-02-05T16:43:15Z",
+      "side": 1,
+      "message": "in cases where we don\u0027t actually start the thread, doesn\u0027t this introduce a bug when we later call join()? you can\u0027t call join() on a non-started thread in Java, right?\n\nseems like moving this into the constructor, having the constructor throw, and handling that correctly is the right way to do this? (not as onerous as it sounds, since there are only two callers and you can factor this out into a new method.)",
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
