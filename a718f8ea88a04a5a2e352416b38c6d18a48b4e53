@@ -91,6 +91,30 @@
       },
       "revId": "a718f8ea88a04a5a2e352416b38c6d18a48b4e53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccd5732d_f9306a4e",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1939396
+      },
+      "writtenOn": "2024-02-05T01:46:00Z",
+      "side": 1,
+      "message": "\"/**\" had been changed to \"/*\", please help review.",
+      "parentUuid": "bc095a00_f95e64bd",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 15
+      },
+      "revId": "a718f8ea88a04a5a2e352416b38c6d18a48b4e53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
