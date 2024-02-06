@@ -73,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d3da6523_3842a0f3",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1939396
+      },
+      "writtenOn": "2024-02-06T11:06:24Z",
+      "side": 1,
+      "message": "Available ports are between 0 and 65535, there should be considering \u0027PairingServerCtx::SetupServer()\u0027 returns an abnormal port",
+      "parentUuid": "cf38537c_1e246c4d",
+      "range": {
+        "startLine": 295,
+        "startChar": 26,
+        "endLine": 295,
+        "endChar": 43
+      },
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fcce7ec9_b5693047",
         "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
         "patchSetId": 8
