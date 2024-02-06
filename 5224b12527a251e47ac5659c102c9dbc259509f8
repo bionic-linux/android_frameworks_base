@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e51856ac_490331f8",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2024-02-06T02:47:45Z",
+      "side": 1,
+      "message": "Here the fgThread is actually the \"android.fg\" thread",
+      "parentUuid": "a5e294eb_cf190c31",
+      "range": {
+        "startLine": 286,
+        "startChar": 82,
+        "endLine": 286,
+        "endChar": 90
+      },
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cf38537c_1e246c4d",
         "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
         "patchSetId": 8
