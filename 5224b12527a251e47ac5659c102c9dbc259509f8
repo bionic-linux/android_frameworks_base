@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "689ac0d0_47e2f7e0",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-02-06T15:48:40Z",
+      "side": 1,
+      "message": "what is that? i find no references to \"android.fg\" in the code (anywhere, not just this file).",
+      "parentUuid": "e51856ac_490331f8",
+      "range": {
+        "startLine": 286,
+        "startChar": 82,
+        "endLine": 286,
+        "endChar": 90
+      },
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cf38537c_1e246c4d",
         "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
         "patchSetId": 8
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Available ports are between 0 and 65535, there should be considering \u0027PairingServerCtx::SetupServer()\u0027 returns an abnormal port",
       "parentUuid": "cf38537c_1e246c4d",
+      "range": {
+        "startLine": 295,
+        "startChar": 26,
+        "endLine": 295,
+        "endChar": 43
+      },
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5e6eef5_a50c811f",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-02-06T15:48:40Z",
+      "side": 1,
+      "message": "no, my point is that SetupServer() returns 0 or -1 on failure (and its return type is uint16_t) --- \"this can\u0027t happen\".",
+      "parentUuid": "d3da6523_3842a0f3",
       "range": {
         "startLine": 295,
         "startChar": 26,
@@ -144,6 +192,24 @@
       "side": 1,
       "message": "Yes, we can call join() on a non-started thread in Java safely.",
       "parentUuid": "bcf15268_f1f63bad",
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8acfa848_32e1bcd8",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-02-06T15:48:40Z",
+      "side": 1,
+      "message": "yeah, i just looked at the source and this is an area where Java\u0027s guarantee is different from c/c++ --- their joins both fail, but Java\u0027s is indeed a no-op on an unstarted thread.",
+      "parentUuid": "fb591044_c841e1ef",
       "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
