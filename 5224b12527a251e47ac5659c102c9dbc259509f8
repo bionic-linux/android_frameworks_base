@@ -80,6 +80,24 @@
       "parentUuid": "fcce7ec9_b5693047",
       "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb591044_c841e1ef",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2024-02-06T02:44:51Z",
+      "side": 1,
+      "message": "Yes, we can call join() on a non-started thread in Java safely.",
+      "parentUuid": "bcf15268_f1f63bad",
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
