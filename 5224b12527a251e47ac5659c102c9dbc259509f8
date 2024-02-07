@@ -122,6 +122,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d34a0942_19978aab",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2024-02-07T04:36:54Z",
+      "side": 1,
+      "message": "What I meant was: can we not use @MainThread (or @UIThread, alongside @Override) if there\u0027s any possible concern about the thread of execution (and also to serve as a static validator)?",
+      "parentUuid": "747ee9bb_9e40a33c",
+      "range": {
+        "startLine": 286,
+        "startChar": 82,
+        "endLine": 286,
+        "endChar": 90
+      },
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cf38537c_1e246c4d",
         "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
         "patchSetId": 8
