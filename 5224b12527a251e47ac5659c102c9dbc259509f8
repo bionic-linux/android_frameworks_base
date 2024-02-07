@@ -146,6 +146,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7e25ba32_cbadf8e9",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1939396
+      },
+      "writtenOn": "2024-02-07T06:24:44Z",
+      "side": 1,
+      "message": "Did you mean \u0027use\u0027 instead of \u0027not use\u0027.\nThe thread annotations as far as I know cannot designated as \"android.fg\" thread (perhaps there are other methods), but based on the initialization of Handler, it can only be executed on the \"android.fg\" thread, as shown below:\n\n\"mHandler \u003d new AdbDebuggingHandler(FgThread.get().getLooper(), mThread);\"",
+      "parentUuid": "d34a0942_19978aab",
+      "range": {
+        "startLine": 286,
+        "startChar": 82,
+        "endLine": 286,
+        "endChar": 90
+      },
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cf38537c_1e246c4d",
         "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
         "patchSetId": 8
