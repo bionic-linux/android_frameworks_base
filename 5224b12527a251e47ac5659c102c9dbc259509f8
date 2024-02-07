@@ -192,6 +192,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfc3913d_3ea6efcd",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-02-07T21:33:33Z",
+      "side": 1,
+      "message": "the thread annotations might be a good idea, but my experience of such things is that they\u0027re quite viral, so i assume that\u0027s probably a larger project making sure everything has the right annotations... this lgtm for now...",
+      "parentUuid": "4bba9c01_1f2a0541",
+      "range": {
+        "startLine": 286,
+        "startChar": 82,
+        "endLine": 286,
+        "endChar": 90
+      },
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cf38537c_1e246c4d",
