@@ -170,6 +170,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4bba9c01_1f2a0541",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2024-02-07T15:16:04Z",
+      "side": 1,
+      "message": "Assuming there\u0027s possible concern, can we use @MainThread as a way to address the question (in this comment thread)? If  there is no concern, feel free to resolve this comment thread.\nLike so:\n        @Override\n        @MainThread\n        public void start() { \u003csnip\u003e\n        \nPS: Apologies for my wording (my question was meant to convey \"Why can\u0027t we use @MainThread.. \")",
+      "parentUuid": "7e25ba32_cbadf8e9",
+      "range": {
+        "startLine": 286,
+        "startChar": 82,
+        "endLine": 286,
+        "endChar": 90
+      },
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cf38537c_1e246c4d",
         "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
         "patchSetId": 8
@@ -253,6 +277,30 @@
       "side": 1,
       "message": "You are right, \u0027mPort\u0027 is limited by its type, and it will not greater than 65535, I have removed this condition.",
       "parentUuid": "e5e6eef5_a50c811f",
+      "range": {
+        "startLine": 295,
+        "startChar": 26,
+        "endLine": 295,
+        "endChar": 43
+      },
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "803f63cb_d87e66a7",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2024-02-07T15:16:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b35f37f_22367dbc",
       "range": {
         "startLine": 295,
         "startChar": 26,
