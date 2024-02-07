@@ -98,6 +98,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "747ee9bb_9e40a33c",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1939396
+      },
+      "writtenOn": "2024-02-07T02:04:50Z",
+      "side": 1,
+      "message": "The annotation had been modified to make it look clearer.",
+      "parentUuid": "8ad50de9_fc007dee",
+      "range": {
+        "startLine": 286,
+        "startChar": 82,
+        "endLine": 286,
+        "endChar": 90
+      },
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cf38537c_1e246c4d",
         "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
         "patchSetId": 8
@@ -157,6 +181,30 @@
       "side": 1,
       "message": "no, my point is that SetupServer() returns 0 or -1 on failure (and its return type is uint16_t) --- \"this can\u0027t happen\".",
       "parentUuid": "d3da6523_3842a0f3",
+      "range": {
+        "startLine": 295,
+        "startChar": 26,
+        "endLine": 295,
+        "endChar": 43
+      },
+      "revId": "5224b12527a251e47ac5659c102c9dbc259509f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b35f37f_22367dbc",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1939396
+      },
+      "writtenOn": "2024-02-07T02:04:50Z",
+      "side": 1,
+      "message": "You are right, \u0027mPort\u0027 is limited by its type, and it will not greater than 65535, I have removed this condition.",
+      "parentUuid": "e5e6eef5_a50c811f",
       "range": {
         "startLine": 295,
         "startChar": 26,
