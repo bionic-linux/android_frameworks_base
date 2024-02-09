@@ -64,6 +64,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd7201e6_017d62ae",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2024-02-09T22:28:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9462a24e_110ef7fc",
+      "range": {
+        "startLine": 699,
+        "startChar": 11,
+        "endLine": 703,
+        "endChar": 90
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c6c924c5_b7d7bc6f",
@@ -77,6 +101,30 @@
       "writtenOn": "2024-02-09T18:13:25Z",
       "side": 1,
       "message": "we use camelcase for this part, so Roi?",
+      "range": {
+        "startLine": 712,
+        "startChar": 43,
+        "endLine": 712,
+        "endChar": 46
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b621b4d5_7d749c8b",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2024-02-09T22:28:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6c924c5_b7d7bc6f",
       "range": {
         "startLine": 712,
         "startChar": 43,
@@ -110,6 +158,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1fd7917_80355aa6",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2024-02-09T22:28:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd582851_4649a221",
+      "range": {
+        "startLine": 755,
+        "startChar": 24,
+        "endLine": 755,
+        "endChar": 35
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a8adbfb_6c606531",
@@ -123,6 +195,24 @@
       "writtenOn": "2024-02-09T18:13:25Z",
       "side": 1,
       "message": "is INFO needed in the name? ...OFFSET_MAP seems to describe what this is.",
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "baee50f2_52f93b9b",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2024-02-09T22:28:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a8adbfb_6c606531",
       "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -173,6 +263,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "844074d6_316b510e",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1465,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2024-02-09T22:28:59Z",
+      "side": 1,
+      "message": "Lajos, the white space is consumed here https://android-review.googlesource.com/c/platform/frameworks/av/+/2868674/14/media/codec2/sfplugin/CCodecConfig.cpp#1921.",
+      "parentUuid": "0adb42d2_6d50fe27",
+      "range": {
+        "startLine": 1465,
+        "startChar": 89,
+        "endLine": 1465,
+        "endChar": 93
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f882a5e_594719ed",
@@ -186,6 +300,30 @@
       "writtenOn": "2024-02-09T18:13:25Z",
       "side": 1,
       "message": "this sounds normative, but is simplistic.\n\nProbably we should describe how this works in only one place, and refer to it from here as we need to say the same at FEATURE_Roi, OFFSET_MAP and OFFSET_RECTS.",
+      "range": {
+        "startLine": 1469,
+        "startChar": 86,
+        "endLine": 1470,
+        "endChar": 66
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47b6a448_d06514f1",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2024-02-09T22:28:59Z",
+      "side": 1,
+      "message": "Few lines are repetitive. But I would like to keep it as it helps with the understanding.",
+      "parentUuid": "6f882a5e_594719ed",
       "range": {
         "startLine": 1469,
         "startChar": 86,
@@ -219,6 +357,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77e07f59_b6b732f1",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2024-02-09T22:28:59Z",
+      "side": 1,
+      "message": "Although mCodec.setParameters() does not return anything, once these values reach the C2Soft***Enc.cpp, basing on the information received there the implementation can push the component to error state albeit recoverable. Hence i chose to write this line.",
+      "parentUuid": "e9a1042d_dac7b8b3",
+      "range": {
+        "startLine": 1480,
+        "startChar": 7,
+        "endLine": 1480,
+        "endChar": 22
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9ec6b139_155e7a1c",
@@ -232,6 +394,30 @@
       "writtenOn": "2024-02-09T18:13:25Z",
       "side": 1,
       "message": "I think this sounds misleading/confusing. How about:\n\nThe maximum number of contours (rectangles) that can be specified for a given input frame is device specific, but is at least 10. Implementations will drop/ignore the rectangles that are beyond their supported limit.\n\n\n(We need to be specific on the initial limit as we are the platform. We may increase this in the future)",
+      "range": {
+        "startLine": 1485,
+        "startChar": 7,
+        "endLine": 1486,
+        "endChar": 52
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c12a8ca4_38430796",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1486,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2024-02-09T22:28:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ec6b139_155e7a1c",
       "range": {
         "startLine": 1485,
         "startChar": 7,
@@ -265,6 +451,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec05bb7d_4aff052e",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2024-02-09T22:28:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f78fa5a3_b58d7482",
+      "range": {
+        "startLine": 1495,
+        "startChar": 31,
+        "endLine": 1495,
+        "endChar": 55
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33e89f2f_e4c8429d",
@@ -278,6 +488,30 @@
       "writtenOn": "2024-02-09T18:13:25Z",
       "side": 1,
       "message": "could we handle if left/right is out of order?\n\ne.g.\n```\nthis.left \u003d min(left, right);\nthis.right \u003d max(left, right);\n...\n```",
+      "range": {
+        "startLine": 1525,
+        "startChar": 0,
+        "endLine": 1528,
+        "endChar": 37
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "beaaea9b_e54da49d",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1528,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2024-02-09T22:28:59Z",
+      "side": 1,
+      "message": "This is handled here lajos, https://android-review.googlesource.com/c/platform/frameworks/av/+/2868674/14/media/codec2/sfplugin/CCodecConfig.cpp#1922\n\nIf the bounding box is invalid (extends outside frame boundaries / width \u003c 0 /\nheight \u003c 0) we are dropping the configuration.",
+      "parentUuid": "33e89f2f_e4c8429d",
       "range": {
         "startLine": 1525,
         "startChar": 0,
