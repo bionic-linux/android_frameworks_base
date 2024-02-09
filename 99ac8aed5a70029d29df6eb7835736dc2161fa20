@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab0b3d2f_2b9b4104",
+        "filename": "services/core/java/com/android/server/selinux/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2024-02-09T22:05:00Z",
+      "side": 1,
+      "message": "It would be good to have more than one owner",
+      "revId": "99ac8aed5a70029d29df6eb7835736dc2161fa20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
