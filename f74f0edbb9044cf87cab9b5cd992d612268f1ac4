@@ -16,6 +16,276 @@
       "message": "Changing the API now requires flagging it. See aosp/2907159 and aosp/2952972.",
       "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c002b658_a8efbd5c",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4946,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-09T18:13:25Z",
+      "side": 1,
+      "message": "@wonsik@google.com, do you recommend adding PARAMETER for each new Format KEY value? We could also just admit that setParameter accepts most Format KEYs without always creating two consts.",
+      "range": {
+        "startLine": 4946,
+        "startChar": 31,
+        "endLine": 4946,
+        "endChar": 63
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9462a24e_110ef7fc",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-09T18:13:25Z",
+      "side": 1,
+      "message": "I think this may sound normative when in reality this is just infromation that the app provides on what parts of the frame should be prioritized.\n\nWhat about changing this to:\n\nROI encoding support means the codec accepts information that specifies the relative importance of different portions of each video frame. This allows, for\nexample, to separate a video frame into foreground and background regions, and\ntell the encoder to use higher quality (lower quantization) for the foreground portions. This can be done by using a negative of set for the foreground portions and a zero or positive offset for the negative portions.\n\nThe encoder accepts a range of offset values. At the simplest implementation if  the encoder decides to encode each frame with a uniform quantization value (qpFrame), then the actual qp of each LCU will be offset by (qpFrame + qpOffset), although the encoder may clamp or otherwise limit the resulting quantization value.\n\nNote that by offsetting the quantization of each LCU, the overall bit allocation will differ from the originally estimated bit allocation, and the encoder will adjust the frame quantization for subsequent frames to meet the bitrate target. Therefore, ROI encoding cannot be used to increase the quality of certain parts of the image without consequently decreasing the quality of the other parts.",
+      "range": {
+        "startLine": 699,
+        "startChar": 11,
+        "endLine": 703,
+        "endChar": 90
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6c924c5_b7d7bc6f",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-09T18:13:25Z",
+      "side": 1,
+      "message": "we use camelcase for this part, so Roi?",
+      "range": {
+        "startLine": 712,
+        "startChar": 43,
+        "endLine": 712,
+        "endChar": 46
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd582851_4649a221",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-09T18:13:25Z",
+      "side": 1,
+      "message": "this will need to be added based on the flag. We updated this code to allow that.",
+      "range": {
+        "startLine": 755,
+        "startChar": 24,
+        "endLine": 755,
+        "endChar": 35
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a8adbfb_6c606531",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-09T18:13:25Z",
+      "side": 1,
+      "message": "is INFO needed in the name? ...OFFSET_MAP seems to describe what this is.",
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "964d9b43_ca7e28a5",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-09T18:13:25Z",
+      "side": 1,
+      "message": "I thought that the framework will step in if the ROI type is not supported by the component. (That is to convert RECTS to MAP)",
+      "range": {
+        "startLine": 1462,
+        "startChar": 43,
+        "endLine": 1462,
+        "endChar": 46
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0adb42d2_6d50fe27",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1465,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-09T18:13:25Z",
+      "side": 1,
+      "message": "is space allowed after the ;?",
+      "range": {
+        "startLine": 1465,
+        "startChar": 89,
+        "endLine": 1465,
+        "endChar": 93
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f882a5e_594719ed",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-09T18:13:25Z",
+      "side": 1,
+      "message": "this sounds normative, but is simplistic.\n\nProbably we should describe how this works in only one place, and refer to it from here as we need to say the same at FEATURE_Roi, OFFSET_MAP and OFFSET_RECTS.",
+      "range": {
+        "startLine": 1469,
+        "startChar": 86,
+        "endLine": 1470,
+        "endChar": 66
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9a1042d_dac7b8b3",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-09T18:13:25Z",
+      "side": 1,
+      "message": "we don\u0027t allow returning an error in setParam, or in such cases in Codec2 API philosophy (as best effort is clearly ignoring the out-of-bounds parts, and likely reversing left/right if they are out of order)",
+      "range": {
+        "startLine": 1480,
+        "startChar": 7,
+        "endLine": 1480,
+        "endChar": 22
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ec6b139_155e7a1c",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1486,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-09T18:13:25Z",
+      "side": 1,
+      "message": "I think this sounds misleading/confusing. How about:\n\nThe maximum number of contours (rectangles) that can be specified for a given input frame is device specific, but is at least 10. Implementations will drop/ignore the rectangles that are beyond their supported limit.\n\n\n(We need to be specific on the initial limit as we are the platform. We may increase this in the future)",
+      "range": {
+        "startLine": 1485,
+        "startChar": 7,
+        "endLine": 1486,
+        "endChar": 52
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f78fa5a3_b58d7482",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-09T18:13:25Z",
+      "side": 1,
+      "message": "similarly here: ...OFFSET_RECTS?",
+      "range": {
+        "startLine": 1495,
+        "startChar": 31,
+        "endLine": 1495,
+        "endChar": 55
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33e89f2f_e4c8429d",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1528,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-09T18:13:25Z",
+      "side": 1,
+      "message": "could we handle if left/right is out of order?\n\ne.g.\n```\nthis.left \u003d min(left, right);\nthis.right \u003d max(left, right);\n...\n```",
+      "range": {
+        "startLine": 1525,
+        "startChar": 0,
+        "endLine": 1528,
+        "endChar": 37
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
