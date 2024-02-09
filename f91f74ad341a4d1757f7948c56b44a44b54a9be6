@@ -34,6 +34,24 @@
       "parentUuid": "8cfe1f67_cf28d675",
       "revId": "f91f74ad341a4d1757f7948c56b44a44b54a9be6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5637ce32_c6de478a",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2024-02-09T15:51:51Z",
+      "side": 1,
+      "message": "In this CL, https://android-review.googlesource.com/c/platform/frameworks/base/+/2956374, while setting ROI keys when feature is being enabled I would like to mark as hidden. Eventually we can squash all the changes to one.",
+      "parentUuid": "a1484501_315478bf",
+      "revId": "f91f74ad341a4d1757f7948c56b44a44b54a9be6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
