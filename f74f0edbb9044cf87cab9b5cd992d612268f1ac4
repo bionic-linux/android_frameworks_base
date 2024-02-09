@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41432450_7c6f6779",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-09T17:08:00Z",
+      "side": 1,
+      "message": "Changing the API now requires flagging it. See aosp/2907159 and aosp/2952972.",
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
