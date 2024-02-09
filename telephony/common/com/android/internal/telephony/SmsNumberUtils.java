@@ -291,7 +291,7 @@ public class SmsNumberUtils {
 
 
     /**
-     * Verify if the the destination number is a NANP number
+     * Verify if the destination number is a NANP number
      *
      * @param numberEntry including number and IDD array
      * @param allIDDs the IDD array list of the current network's country code
