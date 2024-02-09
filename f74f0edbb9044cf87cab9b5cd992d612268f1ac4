@@ -242,6 +242,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4b4c616a_68cf7f5b",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-02-09T22:44:54Z",
+      "side": 1,
+      "message": "Yes. Currently encoder must support both rect and qp map types to declare it supports ROI feature. In the future, we can add more type and if the type is not supported by the encoder, framework will step in to convert the type.",
+      "parentUuid": "964d9b43_ca7e28a5",
+      "range": {
+        "startLine": 1462,
+        "startChar": 43,
+        "endLine": 1462,
+        "endChar": 46
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0adb42d2_6d50fe27",
         "filename": "media/java/android/media/MediaFormat.java",
         "patchSetId": 9
