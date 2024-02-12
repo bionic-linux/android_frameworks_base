@@ -107,6 +107,54 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3d15b9af_7247ca5d",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4945,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-02-12T22:38:20Z",
+      "side": 1,
+      "message": "Yes I agree.",
+      "parentUuid": "2f3bbf90_38a4252e",
+      "range": {
+        "startLine": 4945,
+        "startChar": 16,
+        "endLine": 4945,
+        "endChar": 60
+      },
+      "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57045bbf_0ad5056f",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4945,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-02-12T22:38:20Z",
+      "side": 1,
+      "message": "Yes I agree.",
+      "parentUuid": "303b3f2f_6c8c36c9",
+      "range": {
+        "startLine": 4945,
+        "startChar": 61,
+        "endLine": 4945,
+        "endChar": 62
+      },
+      "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "61bec638_a382491a",
         "filename": "media/java/android/media/MediaCodec.java",
         "patchSetId": 13
@@ -118,6 +166,30 @@
       "writtenOn": "2024-02-12T22:25:59Z",
       "side": 1,
       "message": "technically, if the array is too large, the components should use the inital portion of the array.",
+      "range": {
+        "startLine": 4954,
+        "startChar": 25,
+        "endLine": 4954,
+        "endChar": 33
+      },
+      "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b2be791_7c8ce455",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4954,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-02-12T22:38:20Z",
+      "side": 1,
+      "message": "OK. Then we can specify that the target array size is `((frame_width + 15) / 16) * ((frame_height + 15) / 16)` which comes from `KEY_WIDTH` and `KEY_HEIGHT`. If input array size is smaller than this target, fail silently; if input array size is larger than this target, only the initial portion will be used.",
+      "parentUuid": "61bec638_a382491a",
       "range": {
         "startLine": 4954,
         "startChar": 25,
@@ -176,6 +248,54 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9a5ab69a_164b6612",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4968,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-02-12T22:38:20Z",
+      "side": 1,
+      "message": "Yes we\u0027ll update.",
+      "parentUuid": "b49b8efa_95eaca09",
+      "range": {
+        "startLine": 4968,
+        "startChar": 33,
+        "endLine": 4968,
+        "endChar": 41
+      },
+      "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f358567_28e8b49c",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4968,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-02-12T22:38:20Z",
+      "side": 1,
+      "message": "Yes we\u0027ll update.",
+      "parentUuid": "6c6958c8_c0d9f8b6",
+      "range": {
+        "startLine": 4968,
+        "startChar": 52,
+        "endLine": 4968,
+        "endChar": 55
+      },
+      "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6cf38ed7_2519b50c",
         "filename": "media/java/android/media/MediaCodec.java",
         "patchSetId": 13
@@ -187,6 +307,30 @@
       "writtenOn": "2024-02-12T22:25:59Z",
       "side": 1,
       "message": "components are not allowed to return an error here and must clamp. Recommend: \u0027will clamp the bounding box to the frame boundaries\u0027.",
+      "range": {
+        "startLine": 4977,
+        "startChar": 59,
+        "endLine": 4978,
+        "endChar": 23
+      },
+      "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "076f1317_2afc443e",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4978,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-02-12T22:38:20Z",
+      "side": 1,
+      "message": "Yes we\u0027ll update.",
+      "parentUuid": "6cf38ed7_2519b50c",
       "range": {
         "startLine": 4977,
         "startChar": 59,
