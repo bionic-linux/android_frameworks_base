@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e51b6c23_380f2a80",
+        "filename": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4332,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2024-02-12T17:24:12Z",
+      "side": 1,
+      "message": "Should we also update this to getLongVersionCode()?",
+      "range": {
+        "startLine": 4332,
+        "startChar": 45,
+        "endLine": 4332,
+        "endChar": 59
+      },
+      "revId": "062519538fa712df02128778b04098438f3b0bf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
