@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee0ae8f4_9f5ec4bb",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 4944,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-02-12T23:18:48Z",
+      "side": 1,
+      "message": "Sorry I should mention this earlier, but I prefer not using \"coding unit\" here because the actual coding unit size is not known and can be different from 16x16, and encoder shall merge the blocks if the actual coding unit is larger than this. So the term \"coding unit\" here can be confusing.\n\nMaybe\n\n`The associated value is a byte array containing QP offsets for 16x16 blocks in raster scan order of the entire frame, and the size of the byte array shall be ((frame_width + 15) / 16) * ((frame_height + 15) / 16). The ROI configuration may not be as fine grained as 16x16 blocks because the encoder may average the neighboring 16x16 blocks to the actual coding unit size it is using`",
+      "range": {
+        "startLine": 4943,
+        "startChar": 8,
+        "endLine": 4944,
+        "endChar": 80
+      },
+      "revId": "0c37af00294f4ac2e1adc0128d41fdf141ca9dd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de944e06_730718ef",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 4945,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-02-12T23:18:48Z",
+      "side": 1,
+      "message": "We should add: \"frame_width\" and \"frame_height\" come from \"KEY_WIDTH\" and \"KEY_HEIGHT\"",
+      "range": {
+        "startLine": 4945,
+        "startChar": 33,
+        "endLine": 4945,
+        "endChar": 44
+      },
+      "revId": "0c37af00294f4ac2e1adc0128d41fdf141ca9dd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
