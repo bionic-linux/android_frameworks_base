@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06930539_f857bde0",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4946,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2024-02-12T20:56:02Z",
+      "side": 1,
+      "message": "This is no longer applicable for this CL as the CL now contains only PARAMETER keys for ROI.",
+      "parentUuid": "c002b658_a8efbd5c",
+      "range": {
+        "startLine": 4946,
+        "startChar": 31,
+        "endLine": 4946,
+        "endChar": 63
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9462a24e_110ef7fc",

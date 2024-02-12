@@ -255,6 +255,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c146c99_d1a4b0ee",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4797,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2024-02-12T20:56:02Z",
+      "side": 1,
+      "message": "As discussed with Lajos and Dichen, will keep this as a string for now.",
+      "parentUuid": "30f5e86f_8644ffd3",
+      "revId": "18f4f6a8fb28b5def636f10118562b983ef7d4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d2a56b9_37cb3d70",
