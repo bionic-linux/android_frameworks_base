@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "052cd3d5_37a476c3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-12T18:16:56Z",
+      "side": 1,
+      "message": "Recommend creating a tracking task for CTS coverage, and adding:\n\nAPI-Coverage-Bug: \u003cbug id\u003e",
+      "revId": "bcb611f6035d0930f6141c8eed35094f5c2861c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
