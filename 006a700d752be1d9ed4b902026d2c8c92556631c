@@ -16,6 +16,29 @@
       "message": "This conflicts with aosp/2953177.\nOne of the CLs needs to be rebased.\n\nKeeping this open just to avoid submitting both at the same time.",
       "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "865ba70f_0b43b34a",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4945,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-02-12T21:50:59Z",
+      "side": 1,
+      "message": "`((frame_width + 15) / 16) * ((frame_height + 15) / 16)`",
+      "range": {
+        "startLine": 4945,
+        "startChar": 16,
+        "endLine": 4945,
+        "endChar": 60
+      },
+      "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
