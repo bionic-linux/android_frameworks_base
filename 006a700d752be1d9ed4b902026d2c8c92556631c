@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "726c9a41_714ddde3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-12T22:25:59Z",
+      "side": 1,
+      "message": "Thanks for the updates.",
+      "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "865ba70f_0b43b34a",
@@ -36,6 +53,145 @@
         "startChar": 16,
         "endLine": 4945,
         "endChar": 60
+      },
+      "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "303b3f2f_6c8c36c9",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4945,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-12T22:25:59Z",
+      "side": 1,
+      "message": "I think we will also need to specify that these are in raster scan order. (We could link here: https://en.wikipedia.org/wiki/Raster_scan)",
+      "range": {
+        "startLine": 4945,
+        "startChar": 61,
+        "endLine": 4945,
+        "endChar": 62
+      },
+      "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f3bbf90_38a4252e",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4945,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-12T22:25:59Z",
+      "side": 1,
+      "message": "+1.\n\nOne question. The app developer will not know the final frame size, and the component may not know the configured width/height. We should be explicit here that this is the configured width and height (as in KEY_WIDTH/HEIGHT). We then have to make sure that the component actually uses that and not the gralloc width/height.",
+      "parentUuid": "865ba70f_0b43b34a",
+      "range": {
+        "startLine": 4945,
+        "startChar": 16,
+        "endLine": 4945,
+        "endChar": 60
+      },
+      "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61bec638_a382491a",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4954,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-12T22:25:59Z",
+      "side": 1,
+      "message": "technically, if the array is too large, the components should use the inital portion of the array.",
+      "range": {
+        "startLine": 4954,
+        "startChar": 25,
+        "endLine": 4954,
+        "endChar": 33
+      },
+      "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c6958c8_c0d9f8b6",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4968,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-12T22:25:59Z",
+      "side": 1,
+      "message": "I think we are normative here: \u0027will\u0027?",
+      "range": {
+        "startLine": 4968,
+        "startChar": 52,
+        "endLine": 4968,
+        "endChar": 55
+      },
+      "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b49b8efa_95eaca09",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4968,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-12T22:25:59Z",
+      "side": 1,
+      "message": "nit: add \u0027in pixels\u0027",
+      "range": {
+        "startLine": 4968,
+        "startChar": 33,
+        "endLine": 4968,
+        "endChar": 41
+      },
+      "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cf38ed7_2519b50c",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4978,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-12T22:25:59Z",
+      "side": 1,
+      "message": "components are not allowed to return an error here and must clamp. Recommend: \u0027will clamp the bounding box to the frame boundaries\u0027.",
+      "range": {
+        "startLine": 4977,
+        "startChar": 59,
+        "endLine": 4978,
+        "endChar": 23
       },
       "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
