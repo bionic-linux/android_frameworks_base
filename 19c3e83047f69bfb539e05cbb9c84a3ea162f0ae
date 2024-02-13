@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "842aea09_5bf70ac7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-02-13T00:20:47Z",
+      "side": 1,
+      "message": "Thank you for making the update. Just one more minor one.",
+      "revId": "19c3e83047f69bfb539e05cbb9c84a3ea162f0ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07a7c520_398060c2",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 4946,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-02-13T00:20:47Z",
+      "side": 1,
+      "message": "`{@link MediaFormat#KEY_WIDTH}` and `{@link MediaFormat#KEY_HEIGHT}`",
+      "range": {
+        "startLine": 4946,
+        "startChar": 13,
+        "endLine": 4946,
+        "endChar": 61
+      },
+      "revId": "19c3e83047f69bfb539e05cbb9c84a3ea162f0ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
