@@ -16,6 +16,24 @@
       "message": "It would be good to have more than one owner",
       "revId": "99ac8aed5a70029d29df6eb7835736dc2161fa20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7995930_dc407557",
+        "filename": "services/core/java/com/android/server/selinux/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1929300
+      },
+      "writtenOn": "2024-02-13T09:46:38Z",
+      "side": 1,
+      "message": "Agreed. I wanted to add at least myself to unblock changes to the folder. I\u0027ll ask around in the team who would be a good second owner, and add that person in a follow-up CL.",
+      "parentUuid": "ab0b3d2f_2b9b4104",
+      "revId": "99ac8aed5a70029d29df6eb7835736dc2161fa20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
