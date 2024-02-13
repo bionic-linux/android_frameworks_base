@@ -312,6 +312,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d01754f_d73208cb",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2024-02-13T00:52:48Z",
+      "side": 1,
+      "message": "Marking this resolved as the CL has Code-Review +2.",
+      "parentUuid": "c653a1c5_8115c792",
+      "range": {
+        "startLine": 1462,
+        "startChar": 43,
+        "endLine": 1462,
+        "endChar": 46
+      },
+      "revId": "f74f0edbb9044cf87cab9b5cd992d612268f1ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0adb42d2_6d50fe27",
