@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e6e373d_9fda1141",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2024-02-13T17:18:05Z",
+      "side": 1,
+      "message": "Will mark this resolved as this CL has required votes and the other one is being updated.",
+      "parentUuid": "2e421e1a_88273388",
+      "revId": "006a700d752be1d9ed4b902026d2c8c92556631c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "865ba70f_0b43b34a",
