@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57d9f886_7ca90d71",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-02-13T19:53:02Z",
+      "side": 1,
+      "message": "The failures are not related to the current CL",
+      "revId": "89cf6a2b8030a8757298c2e6cd87456b7cf0ea3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
