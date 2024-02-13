@@ -68,6 +68,24 @@
       "parentUuid": "9f1b4db7_8b751d0d",
       "revId": "b3483feb264892b6867e75b6de87bd0f0ee2f4d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7976337e_fddb5d0b",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 2009035
+      },
+      "writtenOn": "2024-02-13T17:30:14Z",
+      "side": 1,
+      "message": "Yes, these HW_TIMEOUT_MULTIPLIER patches are originally from last June/July, and I haven\u0027t looked too closely at them while rebasing. I will refresh them and abandon as appropriate.",
+      "parentUuid": "1830444e_8246e997",
+      "revId": "b3483feb264892b6867e75b6de87bd0f0ee2f4d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
