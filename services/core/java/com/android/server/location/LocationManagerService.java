@@ -1321,7 +1321,11 @@ public class LocationManagerService extends ILocationManager.Stub implements
                     "setAutomotiveGnssSuspended only allowed on automotive devices");
         }
 
-        mGnssManagerService.setAutomotiveGnssSuspended(suspended);
+        boolean hasLocationFeature = mContext.getPackageManager().hasSystemFeature(
+                PackageManager.FEATURE_LOCATION);
+        if (hasLocationFeature && GnssNative.isSupported()) {
+             mGnssManagerService.setAutomotiveGnssSuspended(suspended);
+        }
     }
 
     @android.annotation.EnforcePermission(android.Manifest.permission.CONTROL_AUTOMOTIVE_GNSS)
@@ -1336,7 +1340,12 @@ public class LocationManagerService extends ILocationManager.Stub implements
                     "isAutomotiveGnssSuspended only allowed on automotive devices");
         }
 
-        return mGnssManagerService.isAutomotiveGnssSuspended();
+        boolean hasLocationFeature = mContext.getPackageManager().hasSystemFeature(
+                PackageManager.FEATURE_LOCATION);
+        if (hasLocationFeature && GnssNative.isSupported()) {
+             return mGnssManagerService.isAutomotiveGnssSuspended();
+        }
+        return false;
     }
 
     @Override
