@@ -16,6 +16,29 @@
       "message": "Proto is somewhat discouraged due to size of the gencode, which is why protostream is used. Giving owners for the proto change but please get LGTM from system server folks as well.",
       "revId": "f127c678b318df7bd679792a5ce0b8d20e23df91",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cf93983_d4365291",
+        "filename": "services/core/java/com/android/server/BootReceiver.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-02-13T17:01:24Z",
+      "side": 1,
+      "message": "Please fix this ERROR reported by Crash Detector: * JAVA_CRASH in `system_server`, [link to test invocation](http://ab/I63700010242876047) [(Silence Crash)](https://b.corp.google.com/issues/new?component\u003d184315\u0026title\u003dAdd%20crash%20cluster%20to%20ignorelist\u0026type\u003dPROCESS\u0026priority\u003dP0\u0026severity...\n\nAnalyzer Description: Detect crashes introduced by the CL.\nOwner: android-realtime-stability-team@google.com\n\n* JAVA_CRASH in `system_server`, [link to test invocation](http://ab/I63700010242876047) [(Silence Crash)](https://b.corp.google.com/issues/new?component\u003d184315\u0026title\u003dAdd%20crash%20cluster%20to%20ignorelist\u0026type\u003dPROCESS\u0026priority\u003dP0\u0026severity\u003dS0\u0026assignee\u003dkevcheng@google.com\u0026format\u003dMARKDOWN\u0026description\u003dPlease%20add%20this%20crash%20to%20the%20ignorelist:%0A*%20crash%20cluster:%2017918318747053691291%0A*%20cluster%20version:%204%0A*%20process%20name:%20system_server%0A*%20change%20numbers:%202939604%0A*%20hostname:%20android)\n  * Trace [link to artifact](https://android-build.googleplex.com/builds/bug_tool?url\u003dhttps%3A%2F%2Fandroid-build.googleplex.com%2Fbuilds%2FI63700010242876047%2FP69326416%2Fstub%2Finv_15965537769724555241%2Fsandbox-android.cts.gwp_asan.RecoverableTest%2523testCrashToDropboxRecoverable-127.0.0.1%3A45477-logcat-on-failure_3143607658721630667.txt):\n\n```\nFATAL EXCEPTION IN SYSTEM PROCESS: NativeTombstoneManager:tombstoneWatcher\njava.lang.UnsupportedOperationException: No factory is available for message type: com.android.server.os.TombstoneProtos$Tombstone\n\tat com.android.protobuf.ManifestSchemaFactory$CompositeMessageInfoFactory.messageInfoFor(ManifestSchemaFactory.java:148)\n\tat com.android.protobuf.ManifestSchemaFactory.createSchema(ManifestSchemaFactory.java:56)\n\tat com.android.protobuf.Protobuf.schemaFor(Protobuf.java:91)\n\tat com.android.protobuf.MessageSchema.getMessageFieldSchema(MessageSchema.java:4852)\n\tat com.android.protobuf.MessageSchema.makeImmutable(MessageSchema.java:5510)\n\tat com.android.protobuf.GeneratedMessageLite.makeImmutable(GeneratedMessageLite.java:226)\n\tat com.android.protobuf.GeneratedMessageLite$Builder.buildPartial(GeneratedMessageLite.java:500)\n\tat com.android.protobuf.GeneratedMessageLite$Builder.build(GeneratedMessageLite.java:506)\n\tat com.android.server.BootReceiver.addTombstoneToDropBox(BootReceiver.java:355)\n\tat com.android.server.os.NativeTombstoneManager.handleTombstone(NativeTombstoneManager.java:146)\n\tat com.android.server.os.NativeTombstoneManager.lambda$onSystemReady$0(NativeTombstoneManager.java:106)\n\tat com.android.server.os.NativeTombstoneManager.$r8$lambda$gBT9xmTreiWpNj0UDSi2eO2Yau4(NativeTombstoneManager.java:0)\n\tat com.android.server.os.NativeTombstoneManager$$ExternalSyntheticLambda1.run(R8$$SyntheticClass:0)\n\tat android.os.Handler.handleCallback(Handler.java:958)\n\tat android.os.Handler.dispatchMessage(Handler.java:99)\n\tat android.os.Looper.loopOnce(Looper.java:205)\n\tat android.os.Looper.loop(Looper.java:294)\n\tat android.os.HandlerThread.run(HandlerThread.java:67)\n\tat com.android.server.ServiceThread.run(ServiceThread.java:46)\n...\n```",
+      "range": {
+        "startLine": 355,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 0
+      },
+      "revId": "f127c678b318df7bd679792a5ce0b8d20e23df91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
