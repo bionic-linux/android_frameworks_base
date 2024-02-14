@@ -940,6 +940,144 @@ public class ApplicationExitInfoTest {
         }
     }
 
+    private ApplicationExitInfo createExitInfo(int i) {
+        ApplicationExitInfo info = new ApplicationExitInfo();
+        info.setPid(i);
+        info.setTimestamp(1000 + i);
+        info.setPackageUid(2000);
+        return info;
+    }
+
+    @SuppressWarnings("GuardedBy")
+    private ArrayList<ApplicationExitInfo> getExitInfosHelper(
+            AppExitInfoTracker.AppExitInfoContainer container, int filterPid, int maxNum) {
+        ArrayList<ApplicationExitInfo> infos = new ArrayList<ApplicationExitInfo>();
+        container.getExitInfosLocked(filterPid, maxNum, infos);
+        return infos;
+    }
+
+    @SuppressWarnings("GuardedBy")
+    private AppExitInfoTracker.AppExitInfoContainer createBasicContainer() {
+        AppExitInfoTracker.AppExitInfoContainer container =
+                mAppExitInfoTracker.new AppExitInfoContainer(3);
+        container.addExitInfoLocked(createExitInfo(10));
+        container.addExitInfoLocked(createExitInfo(30));
+        container.addExitInfoLocked(createExitInfo(20));
+        return container;
+    }
+
+    @Test
+    @SuppressWarnings("GuardedBy")
+    public void testContainerGetExitInfosIsSortedNewestFirst() throws Exception {
+        AppExitInfoTracker.AppExitInfoContainer container = createBasicContainer();
+        assertEquals(3, getExitInfosHelper(container, 0, 0).size());
+        assertEquals(30, getExitInfosHelper(container, 0, 0).get(0).getPid());
+        assertEquals(20, getExitInfosHelper(container, 0, 0).get(1).getPid());
+        assertEquals(10, getExitInfosHelper(container, 0, 0).get(2).getPid());
+    }
+
+    @Test
+    @SuppressWarnings("GuardedBy")
+    public void testContainerRemovesOldestReports() throws Exception {
+        AppExitInfoTracker.AppExitInfoContainer container = createBasicContainer();
+        container.addExitInfoLocked(createExitInfo(40));
+        assertEquals(3, getExitInfosHelper(container, 0, 0).size());
+        assertEquals(40, getExitInfosHelper(container, 0, 0).get(0).getPid());
+        assertEquals(30, getExitInfosHelper(container, 0, 0).get(1).getPid());
+        assertEquals(20, getExitInfosHelper(container, 0, 0).get(2).getPid());
+
+        container.addExitInfoLocked(createExitInfo(50));
+        assertEquals(3, getExitInfosHelper(container, 0, 0).size());
+        assertEquals(50, getExitInfosHelper(container, 0, 0).get(0).getPid());
+        assertEquals(40, getExitInfosHelper(container, 0, 0).get(1).getPid());
+        assertEquals(30, getExitInfosHelper(container, 0, 0).get(2).getPid());
+
+        container.addExitInfoLocked(createExitInfo(45));
+        assertEquals(3, getExitInfosHelper(container, 0, 0).size());
+        assertEquals(50, getExitInfosHelper(container, 0, 0).get(0).getPid());
+        assertEquals(45, getExitInfosHelper(container, 0, 0).get(1).getPid());
+        assertEquals(40, getExitInfosHelper(container, 0, 0).get(2).getPid());
+
+        // Adding an older report shouldn't remove the newer ones.
+        container.addExitInfoLocked(createExitInfo(15));
+        assertEquals(3, getExitInfosHelper(container, 0, 0).size());
+        assertEquals(50, getExitInfosHelper(container, 0, 0).get(0).getPid());
+        assertEquals(45, getExitInfosHelper(container, 0, 0).get(1).getPid());
+        assertEquals(40, getExitInfosHelper(container, 0, 0).get(2).getPid());
+    }
+
+    @Test
+    @SuppressWarnings("GuardedBy")
+    public void testContainerFilterByPid() throws Exception {
+        AppExitInfoTracker.AppExitInfoContainer container = createBasicContainer();
+        assertEquals(1, getExitInfosHelper(container, 30, 0).size());
+        assertEquals(30, getExitInfosHelper(container, 0, 0).get(0).getPid());
+
+        assertEquals(1, getExitInfosHelper(container, 30, 0).size());
+        assertEquals(20, getExitInfosHelper(container, 20, 0).get(0).getPid());
+
+        assertEquals(1, getExitInfosHelper(container, 10, 0).size());
+        assertEquals(10, getExitInfosHelper(container, 10, 0).get(0).getPid());
+
+        assertEquals(0, getExitInfosHelper(container, 1337, 0).size());
+    }
+
+    @Test
+    @SuppressWarnings("GuardedBy")
+    public void testContainerLimitQuantityOfResults() throws Exception {
+        AppExitInfoTracker.AppExitInfoContainer container = createBasicContainer();
+        assertEquals(1, getExitInfosHelper(container, 30, 1).size());
+        assertEquals(30, getExitInfosHelper(container, 0, 1).get(0).getPid());
+        assertEquals(1, getExitInfosHelper(container, 30, 1000).size());
+        assertEquals(30, getExitInfosHelper(container, 0, 1000).get(0).getPid());
+
+        assertEquals(1, getExitInfosHelper(container, 20, 1).size());
+        assertEquals(20, getExitInfosHelper(container, 20, 1).get(0).getPid());
+        assertEquals(1, getExitInfosHelper(container, 20, 1000).size());
+        assertEquals(20, getExitInfosHelper(container, 20, 1000).get(0).getPid());
+
+        assertEquals(1, getExitInfosHelper(container, 10, 1).size());
+        assertEquals(10, getExitInfosHelper(container, 10, 1).get(0).getPid());
+        assertEquals(1, getExitInfosHelper(container, 10, 1000).size());
+        assertEquals(10, getExitInfosHelper(container, 10, 1000).get(0).getPid());
+
+        assertEquals(0, getExitInfosHelper(container, 1337, 1).size());
+        assertEquals(0, getExitInfosHelper(container, 1337, 1000).size());
+        assertEquals(null, container.getLastExitInfoForPid(1337));
+    }
+
+    @Test
+    @SuppressWarnings("GuardedBy")
+    public void testContainerCanHoldMultipleFromSamePid() throws Exception {
+        AppExitInfoTracker.AppExitInfoContainer container = createBasicContainer();
+        ApplicationExitInfo info = createExitInfo(100);
+        ApplicationExitInfo info2 = createExitInfo(100);
+        ApplicationExitInfo info3 = createExitInfo(100);
+        info2.setTimestamp(1337);
+        info3.setTimestamp(31337);
+        container.addExitInfoLocked(info);
+        container.addExitInfoLocked(info2);
+        container.addExitInfoLocked(info3);
+        assertEquals(3, getExitInfosHelper(container, 0, 0).size());
+        assertEquals(100, getExitInfosHelper(container, 0, 0).get(0).getPid());
+        assertEquals(100, getExitInfosHelper(container, 0, 0).get(1).getPid());
+        assertEquals(100, getExitInfosHelper(container, 0, 0).get(2).getPid());
+        assertEquals(31337, getExitInfosHelper(container, 0, 0).get(0).getTimestamp());
+        assertEquals(1337, getExitInfosHelper(container, 0, 0).get(1).getTimestamp());
+        assertEquals(1100, getExitInfosHelper(container, 0, 0).get(2).getTimestamp());
+
+        assertEquals(3, getExitInfosHelper(container, 100, 0).size());
+        assertEquals(31337, getExitInfosHelper(container, 100, 0).get(0).getTimestamp());
+        assertEquals(1337, getExitInfosHelper(container, 100, 0).get(1).getTimestamp());
+        assertEquals(1100, getExitInfosHelper(container, 100, 0).get(2).getTimestamp());
+
+        assertEquals(2, getExitInfosHelper(container, 100, 2).size());
+        assertEquals(31337, getExitInfosHelper(container, 100, 2).get(0).getTimestamp());
+        assertEquals(1337, getExitInfosHelper(container, 100, 2).get(1).getTimestamp());
+
+        assertEquals(31337, container.getLastExitInfoForPid(100).getTimestamp());
+    }
+
     private static int makeExitStatus(int exitCode) {
         return (exitCode << 8) & 0xff00;
     }
