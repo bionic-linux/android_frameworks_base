@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d494c52a_ae5130c4",
+        "filename": "services/core/java/com/android/server/location/LocationManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1325,
+      "author": {
+        "id": 1970380
+      },
+      "writtenOn": "2024-02-15T17:01:33Z",
+      "side": 1,
+      "message": "We can guard with Gnssmanagerservice !\u003d null as well as that object is annotated with nullable.\n\nhttps://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/location/LocationManagerService.java;l\u003d254?q\u003dLocationmanagerService\n\nI checked the feature and GnssHal support due to initialization happens as same in below code \n\nhttps://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/location/LocationManagerService.java;l\u003d447?q\u003dLocationmanagerService\n\nhttps://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/location/LocationManagerService.java;l\u003d450?q\u003dLocationmanagerService",
+      "parentUuid": "6753634a_65c8df5f",
+      "range": {
+        "startLine": 1325,
+        "startChar": 31,
+        "endLine": 1325,
+        "endChar": 47
+      },
+      "revId": "95d3417c2f67fba2a5fd4de4884f47fbaf187c34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8776ca9c_dd0a1482",
