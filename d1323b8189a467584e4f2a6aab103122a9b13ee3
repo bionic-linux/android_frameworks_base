@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "50b403e0_cbb057a7",
+        "filename": "services/core/java/com/android/server/location/LocationManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1146013
+      },
+      "writtenOn": "2024-02-15T20:43:04Z",
+      "side": 1,
+      "message": "I had assumed from the bug that this was expected behavior - but perhaps not? What are the circumstances that this function would be called on a car when mGnssManagerService is null?",
+      "parentUuid": "f7738bda_50a040d3",
+      "range": {
+        "startLine": 1324,
+        "startChar": 12,
+        "endLine": 1324,
+        "endChar": 31
+      },
+      "revId": "d1323b8189a467584e4f2a6aab103122a9b13ee3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3451dce9_fcc10dc9",
         "filename": "services/core/java/com/android/server/location/LocationManagerService.java",
         "patchSetId": 8
