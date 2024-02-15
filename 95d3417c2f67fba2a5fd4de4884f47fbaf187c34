@@ -96,6 +96,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1baf32a3_25864258",
+        "filename": "services/core/java/com/android/server/location/LocationManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1325,
+      "author": {
+        "id": 1627027
+      },
+      "writtenOn": "2024-02-15T20:12:36Z",
+      "side": 1,
+      "message": "If you want to check for hasLocationFeature, I recommend doing this in CarLocationService.",
+      "parentUuid": "aa5c1b61_76f58d3b",
+      "range": {
+        "startLine": 1325,
+        "startChar": 31,
+        "endLine": 1325,
+        "endChar": 47
+      },
+      "revId": "95d3417c2f67fba2a5fd4de4884f47fbaf187c34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8776ca9c_dd0a1482",
