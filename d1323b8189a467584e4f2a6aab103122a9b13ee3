@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7738bda_50a040d3",
+        "filename": "services/core/java/com/android/server/location/LocationManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1627027
+      },
+      "writtenOn": "2024-02-15T20:21:21Z",
+      "side": 1,
+      "message": "This would silently fail if mGnssManagerSerivce is null. A suggestion might be to thrown an exception with an error message when mGnssManagerSerivce is null, otherwise call the set function.",
+      "range": {
+        "startLine": 1324,
+        "startChar": 12,
+        "endLine": 1324,
+        "endChar": 31
+      },
+      "revId": "d1323b8189a467584e4f2a6aab103122a9b13ee3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3451dce9_fcc10dc9",
+        "filename": "services/core/java/com/android/server/location/LocationManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1627027
+      },
+      "writtenOn": "2024-02-15T20:21:21Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 1341,
+        "startChar": 8,
+        "endLine": 1341,
+        "endChar": 42
+      },
+      "revId": "d1323b8189a467584e4f2a6aab103122a9b13ee3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
