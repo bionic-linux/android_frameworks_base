@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa5c1b61_76f58d3b",
+        "filename": "services/core/java/com/android/server/location/LocationManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1325,
+      "author": {
+        "id": 1970380
+      },
+      "writtenOn": "2024-02-15T17:33:25Z",
+      "side": 1,
+      "message": "Done\n\nRequesting Eva to provide her review as well as She wrote this piece of code",
+      "parentUuid": "73a160a5_47fae467",
+      "range": {
+        "startLine": 1325,
+        "startChar": 31,
+        "endLine": 1325,
+        "endChar": 47
+      },
+      "revId": "95d3417c2f67fba2a5fd4de4884f47fbaf187c34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8776ca9c_dd0a1482",
@@ -85,6 +109,30 @@
       "writtenOn": "2024-02-15T16:25:01Z",
       "side": 1,
       "message": "This should be checked within GnssManagerService most likely - it\u0027s not LocationManagerService\u0027s job to run gnss/auto logic.",
+      "range": {
+        "startLine": 1326,
+        "startChar": 34,
+        "endLine": 1326,
+        "endChar": 58
+      },
+      "revId": "95d3417c2f67fba2a5fd4de4884f47fbaf187c34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a04bbdaf_c17ec05f",
+        "filename": "services/core/java/com/android/server/location/LocationManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1326,
+      "author": {
+        "id": 1970380
+      },
+      "writtenOn": "2024-02-15T17:33:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8776ca9c_dd0a1482",
       "range": {
         "startLine": 1326,
         "startChar": 34,
