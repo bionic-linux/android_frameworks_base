@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "73a160a5_47fae467",
+        "filename": "services/core/java/com/android/server/location/LocationManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1325,
+      "author": {
+        "id": 1146013
+      },
+      "writtenOn": "2024-02-15T17:21:15Z",
+      "side": 1,
+      "message": "Yes, it\u0027s not this piece of code\u0027s responsibility to check whether gnss should be created or not. By duplicating logic this creates the potential for future bugs (imagine that we later update the code that you\u0027ve linked with different logic, but this remains unchange - bug). Instead, allow the code you\u0027ve linked to decide whether mGnssManagerService should be created or not, and simply check for it\u0027s existence here as proposed.",
+      "parentUuid": "d494c52a_ae5130c4",
+      "range": {
+        "startLine": 1325,
+        "startChar": 31,
+        "endLine": 1325,
+        "endChar": 47
+      },
+      "revId": "95d3417c2f67fba2a5fd4de4884f47fbaf187c34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8776ca9c_dd0a1482",
