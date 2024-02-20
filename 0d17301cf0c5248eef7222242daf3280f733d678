@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4c85424_b066362a",
+        "filename": "core/java/android/net/IVpnManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-02-20T07:27:15Z",
+      "side": 1,
+      "message": "I think the APIs are usually started with the \u0027action\u0027, instead of putting the action in the suffixes.\n\nThe APIs will be something like:\n```\ngetVpnProfile()\nsetVpnProfile()\nremoveVpnProfile()\nlistVpnProfile()\n```",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 45
+      },
+      "revId": "0d17301cf0c5248eef7222242daf3280f733d678",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed3d1267_d36559f9",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-02-20T07:27:15Z",
+      "side": 1,
+      "message": "Suggest to return a boolean so that caller can do the error handling.",
+      "range": {
+        "startLine": 737,
+        "startChar": 11,
+        "endLine": 737,
+        "endChar": 15
+      },
+      "revId": "0d17301cf0c5248eef7222242daf3280f733d678",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce3f544d_944708e0",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-02-20T07:27:15Z",
+      "side": 1,
+      "message": "ditto for this",
+      "range": {
+        "startLine": 749,
+        "startChar": 11,
+        "endLine": 749,
+        "endChar": 15
+      },
+      "revId": "0d17301cf0c5248eef7222242daf3280f733d678",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f86643e1_33662b61",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-02-20T07:27:15Z",
+      "side": 1,
+      "message": "These methods should also have test. \n\nWe may consider to move VpnManagerServiceTest out to framework.",
+      "range": {
+        "startLine": 1014,
+        "startChar": 28,
+        "endLine": 1014,
+        "endChar": 43
+      },
+      "revId": "0d17301cf0c5248eef7222242daf3280f733d678",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f67f841_9781212b",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-02-20T07:27:15Z",
+      "side": 1,
+      "message": "@Override",
+      "range": {
+        "startLine": 1014,
+        "startChar": 4,
+        "endLine": 1014,
+        "endChar": 5
+      },
+      "revId": "0d17301cf0c5248eef7222242daf3280f733d678",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3460762_8a30084d",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-02-20T07:27:15Z",
+      "side": 1,
+      "message": "This returns only the suffixes. This should be clearly documented.",
+      "range": {
+        "startLine": 1035,
+        "startChar": 17,
+        "endLine": 1035,
+        "endChar": 29
+      },
+      "revId": "0d17301cf0c5248eef7222242daf3280f733d678",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
