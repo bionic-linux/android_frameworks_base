@@ -117,6 +117,30 @@
       },
       "revId": "1c33da091ec6d79b3c3d54399e569d6ce3f25037",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b146581d_6f78bb43",
+        "filename": "core/tests/coretests/src/com/android/internal/net/ConnectivityBlobStoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-02-20T06:06:29Z",
+      "side": 1,
+      "message": "Yes, something similar as testMultipleNames(). I think it does not need to be in another test case. You may combine them together.",
+      "parentUuid": "cf12b864_3bb21903",
+      "range": {
+        "startLine": 82,
+        "startChar": 16,
+        "endLine": 82,
+        "endChar": 26
+      },
+      "revId": "1c33da091ec6d79b3c3d54399e569d6ce3f25037",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
