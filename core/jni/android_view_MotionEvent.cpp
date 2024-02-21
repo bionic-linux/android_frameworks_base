@@ -367,6 +367,8 @@ static jlong android_view_MotionEvent_nativeInitialize(
             jniThrowNullPointerException(env, "pointerCoords");
             return 0;
         }
+        // The value of pointerCoordsObj is after being transformed
+        // The value of rawPointerCoords is not correct
         pointerCoordsToNative(env, pointerCoordsObj, xOffset, yOffset, &rawPointerCoords[i]);
         env->DeleteLocalRef(pointerCoordsObj);
     }
@@ -374,6 +376,8 @@ static jlong android_view_MotionEvent_nativeInitialize(
     ui::Transform transform;
     transform.set(xOffset, yOffset);
     ui::Transform identityTransform;
+    // test
+    identityTransform.set(xOffset, yOffset);
     event->initialize(InputEvent::nextId(), deviceId, source, displayId, INVALID_HMAC, action, 0,
                       flags, edgeFlags, metaState, buttonState,
                       static_cast<MotionClassification>(classification), transform, xPrecision,

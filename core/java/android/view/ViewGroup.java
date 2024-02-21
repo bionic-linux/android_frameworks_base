@@ -3128,6 +3128,7 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
             }
             transformedEvent = MotionEvent.obtain(event);
         } else {
+            // split
             transformedEvent = event.split(newPointerIdBits);
         }
 

@@ -3834,6 +3834,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
 
                 final long eventTimeNanos = nativeGetEventTimeNanos(mNativePtr, historyPos);
                 if (h == 0) {
+                    // initialization
                     ev.initialize(nativeGetDeviceId(mNativePtr), nativeGetSource(mNativePtr),
                             nativeGetDisplayId(mNativePtr),
                             newAction, nativeGetFlags(mNativePtr),
@@ -3844,6 +3845,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
                             nativeGetDownTimeNanos(mNativePtr), eventTimeNanos,
                             newPointerCount, pp, pc);
                 } else {
+                    // batch
                     nativeAddBatch(ev.mNativePtr, eventTimeNanos, pc, 0);
                 }
             }
