@@ -20,7 +20,6 @@ package {
 
 java_library {
     name: "monet",
-    platform_apis: true,
     static_libs: [
         "androidx.annotation_annotation",
         "androidx.core_core",
