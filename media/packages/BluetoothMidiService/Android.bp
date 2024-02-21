@@ -28,7 +28,6 @@ android_library {
     srcs: [
         "src/**/*.java",
     ],
-    platform_apis: true,
     manifest: "AndroidManifestBase.xml",
 }
 

@@ -8,7 +8,10 @@ package {
 }
 
 // used both for the android_app and android_library
-shell_srcs = ["src/**/*.java",":dumpstate_aidl"]
+shell_srcs = [
+    "src/**/*.java",
+    ":dumpstate_aidl",
+]
 shell_static_libs = ["androidx.legacy_legacy-support-v4"]
 
 android_app {
@@ -38,6 +41,5 @@ android_library {
     },
     resource_dirs: ["res"],
     static_libs: shell_static_libs,
-    platform_apis: true,
     manifest: "AndroidManifest.xml",
 }
