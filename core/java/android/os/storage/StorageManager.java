@@ -107,15 +107,19 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -2984,14 +2988,14 @@ public class StorageManager {
     }
 
     /** {@hide} */
-    public void closeStorageArea(@NonNull OpenStorageArea storageArea) throws IOException, NoSuchElementException {
+    public void closeStorageArea(@NonNull OpenStorageArea storageArea) throws IOException, FileNotFoundException {
         // throw an error if the storage area does not exist
         // note: dealing with this error here instead of in vold in order to avoid 
         // having to distinguish vold errors based on the error code (ENOENT, etc)
         // we want this error to be a different type of Exception than other vold errors
         // so users can deal with it differently or ignore it easily if they choose
         if (!this.listStorageAreas().contains(storageArea.getName())) {
-            throw new NoSuchElementException("storage area " + storageArea.getName() + 
+            throw new FileNotFoundException("storage area " + storageArea.getName() + 
                         " does not exist for package " + mContext.getOpPackageName());
         }
         try {
@@ -3008,16 +3012,30 @@ public class StorageManager {
      * @throws NoSuchElementException if no storage area with the specified name exists
      */
     @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
-    public void deleteStorageArea(@NonNull String storageAreaName) throws IOException, NoSuchElementException {
+    public void deleteStorageArea(@NonNull String storageAreaName) throws IOException, FileNotFoundException {
         // throw an error if the storage area does not exist
         // note: dealing with this error here instead of in vold in order to avoid 
         // having to distinguish vold errors based on the error code (ENOENT, etc)
         // we want this error to be a different type of Exception than other vold errors
         // so users can deal with it differently or ignore it easily if they choose
         if (!this.listStorageAreas().contains(storageAreaName)) {
-            throw new NoSuchElementException("storage area " + storageAreaName + 
+            throw new FileNotFoundException("storage area " + storageAreaName + 
                         " does not exist for package " + mContext.getOpPackageName());
         }
+        // delete the contents of the storage area -- this is done in app space
+        // to avoid giving write permission to the app data in storage areas to a service (like vold)
+        // not wrapped in a try-catch b/c errors here will throw an IOException
+        Path storageAreaDirPath = this.getPackageDirectoryOfStorageAreas().toPath().resolve(storageAreaName);
+        Stream<Path> fileStream = Files.walk(storageAreaDirPath) // depth-first walk
+                                    // reverse order, so we delete files in subdirs before the subdir
+                                    .sorted(Comparator.reverseOrder()); 
+        for (Path subPath: (Iterable<Path>)fileStream::iterator) { 
+                // don't delete the storage area itself (vold_prepare_subdirs does this)
+                if(subPath != storageAreaDirPath) { 
+                    Files.delete(subPath);
+                }
+        }
+        // dispatch the deletion of the (now empty) storage area directory
         try {
             mStorageManager.deleteStorageArea(mContext.getOpPackageName(), storageAreaName);
         } catch (RemoteException e) {
@@ -3033,8 +3051,11 @@ public class StorageManager {
     @NonNull
     @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
     public Set<String> listStorageAreas() {
-        File dir = Environment.getDataStorageAreaPackageDirectory(mContext.getOpPackageName());
-        return Set.of(dir.list());
+        return Set.of(this.getPackageDirectoryOfStorageAreas().list());
+    }
+
+    private File getPackageDirectoryOfStorageAreas() {
+        return Environment.getDataStorageAreaPackageDirectory(mContext.getOpPackageName());
     }
 
     private final Object mFuseAppLoopLock = new Object();
