@@ -75,6 +75,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c06cb3d8_5aaa5035",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3397,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2024-02-22T09:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17389145_a7185e27",
+      "range": {
+        "startLine": 3397,
+        "startChar": 41,
+        "endLine": 3397,
+        "endChar": 52
+      },
+      "revId": "3ac979abf0e3fa026fd6983ac84714f851acbeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc926c72_2e36168c",
@@ -88,6 +112,30 @@
       "writtenOn": "2024-02-21T21:39:11Z",
       "side": 1,
       "message": "You would also need to look at admin.getParentActiveAdmin().userRestrictions. They will be set by the same enforcingAdmin except the userId part will the profile\u0027s parent user (if it\u0027s a local restriction)",
+      "range": {
+        "startLine": 24521,
+        "startChar": 52,
+        "endLine": 24521,
+        "endChar": 74
+      },
+      "revId": "3ac979abf0e3fa026fd6983ac84714f851acbeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34670c67_19eff051",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24521,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2024-02-22T09:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc926c72_2e36168c",
       "range": {
         "startLine": 24521,
         "startChar": 52,
@@ -123,6 +171,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ed5bc185_ca960933",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24529,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2024-02-22T09:25:59Z",
+      "side": 1,
+      "message": "@rubinxu@google.com \nHello Google team, I have incorporated considerations for ParentActiveAdmin and referred to the logic in setBackwardCompatibleUserRestriction() for setting either GlobalPolicy or LocalPolicy. I am uncertain if this modification meets your expectations for this area. Additionally, I\u0027d like to ask if it\u0027s necessary to consider the ProfileOwner scenario here? My understanding of the DPC (Device Policy Controller) module is somewhat limited (as my main area of work lies in package management services, and addressing this issue is part of compliance testing requested by international carriers, and we lack an internal owner for this module), which may have limited the scope of my considerations during the modification.",
+      "parentUuid": "9dbc7688_858ff75d",
+      "range": {
+        "startLine": 24525,
+        "startChar": 0,
+        "endLine": 24529,
+        "endChar": 0
+      },
+      "revId": "3ac979abf0e3fa026fd6983ac84714f851acbeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "65f8b1a5_acad25f9",
         "filename": "services/devicepolicy/java/com/android/server/devicepolicy/OwnersData.java",
         "patchSetId": 5
@@ -134,6 +206,30 @@
       "writtenOn": "2024-02-21T21:39:11Z",
       "side": 1,
       "message": "nit: TAG_USER_RESTRICTIONS_POLICY_ENGINE_MIGRATION",
+      "range": {
+        "startLine": 70,
+        "startChar": 54,
+        "endLine": 70,
+        "endChar": 55
+      },
+      "revId": "3ac979abf0e3fa026fd6983ac84714f851acbeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5630ee1f_a2b4ffa4",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/OwnersData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2024-02-22T09:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65f8b1a5_acad25f9",
       "range": {
         "startLine": 70,
         "startChar": 54,
@@ -157,6 +253,30 @@
       "writtenOn": "2024-02-21T21:39:11Z",
       "side": 1,
       "message": "Please fix this ERROR reported by Common Typos: Common typo found: \"RESTICTIONS\" -- should it be \"RESTRICTIONS\"?\n\nAnalyzer Description: Linter for catching common typos motivated by go/todo-fail and go/lol-codesearch. Shared with google3 common typos library go/common-typos.\nOwner: ayeaye-team@google.com\n\nCommon typo found: \"RESTICTIONS\" -- should it be \"RESTRICTIONS\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 92,
+        "startChar": 42,
+        "endLine": 92,
+        "endChar": 53
+      },
+      "revId": "3ac979abf0e3fa026fd6983ac84714f851acbeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f51cb1cc_99ee8518",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/OwnersData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2024-02-22T09:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e541723a_316ff6a9",
       "range": {
         "startLine": 92,
         "startChar": 42,
