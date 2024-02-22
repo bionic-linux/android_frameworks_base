@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9faf301c_8654b875",
+        "filename": "services/core/java/com/android/server/pm/dex/PackageDynamicCodeLoading.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1929575
+      },
+      "writtenOn": "2024-02-22T01:00:39Z",
+      "side": 1,
+      "message": "should we also remove this wrong fileinfo in mFileUsageMap?",
+      "revId": "79a4f575d671231987c8fb85743d03f556707a41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
