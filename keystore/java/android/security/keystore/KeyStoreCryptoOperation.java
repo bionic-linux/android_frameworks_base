@@ -16,10 +16,8 @@
 
 package android.security.keystore;
 
-import android.security.KeyStore;
-
 /**
- * Cryptographic operation backed by {@link KeyStore}.
+ * Cryptographic operation backed by KeyStore.
  *
  * @hide
  */

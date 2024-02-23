@@ -19,9 +19,9 @@ package android.security.keystore;
 import android.annotation.NonNull;
 import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
-import android.security.KeyStore;
 
 import java.io.IOException;
+import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -47,8 +47,7 @@ public class AndroidKeyStoreProvider extends Provider {
     }
 
     /**
-     * Gets the {@link KeyStore} operation handle corresponding to the provided JCA crypto
-     * primitive.
+     * Gets the KeyStore operation handle corresponding to the provided JCA crypto primitive.
      *
      * <p>The following primitives are supported: {@link Cipher} and {@link Mac}.
      *
@@ -67,10 +66,9 @@ public class AndroidKeyStoreProvider extends Provider {
     }
 
     /**
-     * Returns an {@code AndroidKeyStore} {@link java.security.KeyStore}} of the specified UID.
-     * The {@code KeyStore} contains keys and certificates owned by that UID. Such cross-UID
-     * access is permitted to a few system UIDs and only to a few other UIDs (e.g., Wi-Fi, VPN)
-     * all of which are system.
+     * Returns an {@code AndroidKeyStore} {@link KeyStore} of the specified UID.  The KeyStore
+     * contains keys and certificates owned by that UID. Such cross-UID access is permitted to a few
+     * system UIDs and only to a few other UIDs (e.g., Wi-Fi, VPN) all of which are system.
      *
      * <p>Note: the returned {@code KeyStore} is already initialized/loaded. Thus, there is
      * no need to invoke {@code load} on it.
@@ -84,12 +82,12 @@ public class AndroidKeyStoreProvider extends Provider {
      */
     @SystemApi
     @NonNull
-    public static java.security.KeyStore getKeyStoreForUid(int uid)
+    public static KeyStore getKeyStoreForUid(int uid)
             throws KeyStoreException, NoSuchProviderException {
-        final java.security.KeyStore.LoadStoreParameter loadParameter =
+        final KeyStore.LoadStoreParameter loadParameter =
                 new android.security.keystore2.AndroidKeyStoreLoadStoreParameter(
                         KeyProperties.legacyUidToNamespace(uid));
-        java.security.KeyStore result = java.security.KeyStore.getInstance(PROVIDER_NAME);
+        KeyStore result = KeyStore.getInstance(PROVIDER_NAME);
         try {
             result.load(loadParameter);
         } catch (NoSuchAlgorithmException | CertificateException | IOException e) {
