@@ -195,6 +195,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8d27f2a3_b7d7e864",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24529,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2024-02-23T17:32:09Z",
+      "side": 1,
+      "message": "To avoid duplication of logic, I have to refactor the existing setBackwardCompatibleUserRestriction and end up with this. @kholoudm@google.com do you mind taking a look?\n```\n    private void migrateUserRestrictionsLocked() {\n        Binder.withCleanCallingIdentity(() -\u003e {\n            List\u003cUserInfo\u003e users \u003d mUserManager.getUsers();\n            for (UserInfo userInfo : users) {\n                ActiveAdmin admin \u003d getProfileOwnerOrDeviceOwnerLocked(userInfo.id);\n                if (admin \u003d\u003d null) continue;\n                ComponentName adminComponent \u003d admin.info.getComponent();\n                int userId \u003d userInfo.id;\n                EnforcingAdmin enforcingAdmin \u003d EnforcingAdmin.createEnterpriseEnforcingAdmin(\n                        adminComponent,\n                        userId,\n                        admin);\n                int ownerType;\n                if (isDeviceOwner(admin)) {\n                    ownerType \u003d OWNER_TYPE_DEVICE_OWNER;\n                } else if (isProfileOwnerOfOrganizationOwnedDevice(adminComponent, userId)) {\n                    ownerType \u003d OWNER_TYPE_PROFILE_OWNER_OF_ORGANIZATION_OWNED_DEVICE;\n                } else if (isProfileOwner(adminComponent, userId)) {\n                    ownerType \u003d OWNER_TYPE_PROFILE_OWNER;\n                } else {\n                    throw new IllegalStateException(\"Invalid DO/PO state\");\n                }\n\n                for (final String restriction : admin.ensureUserRestrictions().keySet()) {\n                    setBackwardCompatibleUserRestrictionLocked(ownerType, enforcingAdmin, userId, \n                            restriction, /* enabled */ true, /* parent */ false);\n                }\n                for (final String restriction : admin.getParentActiveAdmin()\n                        .ensureUserRestrictions().keySet()) {\n                    setBackwardCompatibleUserRestrictionLocked(ownerType, enforcingAdmin, userId,\n                            restriction, /* enabled */ true, /* parent */ true);\n                }\n            }\n        });\n    }\n\n    private void setBackwardCompatibleUserRestriction(\n            CallerIdentity caller, EnforcingAdmin admin, String key, boolean enabled,\n            boolean parent) {\n        synchronized (getLockObject()) {\n\n            int ownerType;\n            if (isDeviceOwner(caller)) {\n                ownerType \u003d OWNER_TYPE_DEVICE_OWNER;\n            } else if (isProfileOwnerOfOrganizationOwnedDevice(caller)) {\n                ownerType \u003d OWNER_TYPE_PROFILE_OWNER_OF_ORGANIZATION_OWNED_DEVICE;\n            } else if (isProfileOwner(caller)) {\n                ownerType \u003d OWNER_TYPE_PROFILE_OWNER;\n            } else {\n                throw new IllegalStateException(\"Non-DO/Non-PO cannot set restriction \" + key\n                        + \" while targetSdkVersion is less than UPSIDE_DOWN_CAKE\");\n            }\n            setBackwardCompatibleUserRestrictionLocked(ownerType, admin, caller.getUserId(), key,\n                    enabled, parent);\n        }\n    }\n    private void setBackwardCompatibleUserRestrictionLocked(\n            int ownerType, EnforcingAdmin admin, int userId, String key, boolean enabled,\n            boolean parent) {\n            if (ownerType \u003d\u003d OWNER_TYPE_DEVICE_OWNER) {\n                if (UserRestrictionsUtils.isGlobal(OWNER_TYPE_DEVICE_OWNER, key)) {\n                    setGlobalUserRestrictionInternal(admin, key, enabled);\n                } else {\n                    setLocalUserRestrictionInternal(admin, key, enabled, userId);\n                }\n            } else if (ownerType \u003d\u003d OWNER_TYPE_PROFILE_OWNER\n                || ownerType \u003d\u003d OWNER_TYPE_PROFILE_OWNER_OF_ORGANIZATION_OWNED_DEVICE) {\n                if (UserRestrictionsUtils.isGlobal(OWNER_TYPE_PROFILE_OWNER, key)\n                        || (parent \u0026\u0026 ownerType \u003d\u003d OWNER_TYPE_PROFILE_OWNER_OF_ORGANIZATION_OWNED_DEVICE\n                        \u0026\u0026 UserRestrictionsUtils.isGlobal(\n                        OWNER_TYPE_PROFILE_OWNER_OF_ORGANIZATION_OWNED_DEVICE, key))) {\n                    setGlobalUserRestrictionInternal(admin, key, enabled);\n                } else {\n                    int affectedUserId \u003d parent\n                            ? getProfileParentId(userId) : userId;\n                    setLocalUserRestrictionInternal(admin, key, enabled, affectedUserId);\n                }\n            } else {\n                throw new IllegalStateException(\"Non-DO/Non-PO cannot set restriction \" + key\n                        + \" while targetSdkVersion is less than UPSIDE_DOWN_CAKE\");\n            }\n        }\n    }\n\n```",
+      "parentUuid": "ed5bc185_ca960933",
+      "range": {
+        "startLine": 24525,
+        "startChar": 0,
+        "endLine": 24529,
+        "endChar": 0
+      },
+      "revId": "3ac979abf0e3fa026fd6983ac84714f851acbeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "65f8b1a5_acad25f9",
         "filename": "services/devicepolicy/java/com/android/server/devicepolicy/OwnersData.java",
         "patchSetId": 5
