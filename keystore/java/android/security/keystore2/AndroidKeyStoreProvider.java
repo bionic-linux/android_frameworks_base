@@ -17,7 +17,6 @@
 package android.security.keystore2;
 
 import android.annotation.NonNull;
-import android.security.KeyStore;
 import android.security.KeyStore2;
 import android.security.KeyStoreSecurityLevel;
 import android.security.keymaster.KeymasterDefs;
@@ -161,8 +160,7 @@ public class AndroidKeyStoreProvider extends Provider {
     }
 
     /**
-     * Gets the {@link KeyStore} operation handle corresponding to the provided JCA crypto
-     * primitive.
+     * Gets the KeyStore operation handle corresponding to the provided JCA crypto primitive.
      *
      * <p>The following primitives are supported: {@link Cipher}, {@link Signature} and {@link Mac}.
      *
