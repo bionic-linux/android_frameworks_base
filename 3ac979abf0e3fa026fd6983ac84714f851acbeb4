@@ -219,6 +219,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e1538183_e4704c17",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24529,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2024-02-24T07:51:25Z",
+      "side": 1,
+      "message": "@rubinxu@google.com It looks like this can indeed reduce duplicated code. I have already submitted it to our server for functional verification. If there are no issues, I will upload the new code that includes your optimization.",
+      "parentUuid": "8d27f2a3_b7d7e864",
+      "range": {
+        "startLine": 24525,
+        "startChar": 0,
+        "endLine": 24529,
+        "endChar": 0
+      },
+      "revId": "3ac979abf0e3fa026fd6983ac84714f851acbeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "65f8b1a5_acad25f9",
         "filename": "services/devicepolicy/java/com/android/server/devicepolicy/OwnersData.java",
         "patchSetId": 5
