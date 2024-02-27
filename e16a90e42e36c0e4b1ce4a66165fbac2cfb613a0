@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d77721e1_5881fc8f",
+        "filename": "services/core/java/com/android/server/connectivity/VpnBlobStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-02-27T09:28:32Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a5d3cc75_e6c16f6c",
+      "range": {
+        "startLine": 165,
+        "startChar": 11,
+        "endLine": 165,
+        "endChar": 19
+      },
+      "revId": "e16a90e42e36c0e4b1ce4a66165fbac2cfb613a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3407554a_3d98af2e",
