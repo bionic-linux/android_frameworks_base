@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b56181df_73e325f3",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-02-27T07:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d43a2ceb_8c9db9b7",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 26
+      },
+      "revId": "67ee406a744894594a6c6d7233f3550749f02fd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "145fdaf3_8bcbb5ef",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-02-20T02:56:10Z",
       "side": 1,
       "message": "I think we do not usually do the verification in setup() or teardown(). If you would like to verify this, suggest to move to other test, e.g. testBlobStoreInit() or something similar.",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "67ee406a744894594a6c6d7233f3550749f02fd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e966bbf_01ae7864",
+        "filename": "core/tests/coretests/src/com/android/internal/net/ConnectivityBlobStoreTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-02-27T07:51:09Z",
+      "side": 1,
+      "message": "Done. Moved to a test.",
+      "parentUuid": "145fdaf3_8bcbb5ef",
       "range": {
         "startLine": 44,
         "startChar": 8,
