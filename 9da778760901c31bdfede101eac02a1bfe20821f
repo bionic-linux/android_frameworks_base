@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "df54bf95_16d56769",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-02-27T08:01:17Z",
+      "side": 1,
+      "message": "My guess is that callers also needs the suffix only in some cases, i.e. `VpnProfile.decode()`. Either way, it is easy to combine and split so it should not matter that much.",
+      "parentUuid": "cb89730d_3836886c",
+      "range": {
+        "startLine": 142,
+        "startChar": 22,
+        "endLine": 142,
+        "endChar": 30
+      },
+      "revId": "9da778760901c31bdfede101eac02a1bfe20821f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "16401d47_bedd7dbc",
@@ -54,6 +78,30 @@
       "writtenOn": "2024-02-20T06:46:28Z",
       "side": 1,
       "message": "Nit: listing or list()?",
+      "range": {
+        "startLine": 168,
+        "startChar": 33,
+        "endLine": 168,
+        "endChar": 37
+      },
+      "revId": "9da778760901c31bdfede101eac02a1bfe20821f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e040285f_af492e69",
+        "filename": "core/java/com/android/internal/net/ConnectivityBlobStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-02-27T08:01:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16401d47_bedd7dbc",
       "range": {
         "startLine": 168,
         "startChar": 33,
