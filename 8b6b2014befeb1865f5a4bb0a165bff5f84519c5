@@ -16,6 +16,24 @@
       "message": "You need to add both patches into the same topic because if one is merged and the other is not this will result in a broken build.",
       "revId": "8b6b2014befeb1865f5a4bb0a165bff5f84519c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ff53ffa_f596e5d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1757736
+      },
+      "writtenOn": "2024-02-28T20:04:19Z",
+      "side": 1,
+      "message": "Done, I\u0027ve uploaded aosp/2982695 and have updated the topic applied here so that it is submitted with this one, instead of subsequent change aosp/2977412. Thanks!",
+      "parentUuid": "24ac97d3_505bf77d",
+      "revId": "8b6b2014befeb1865f5a4bb0a165bff5f84519c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
