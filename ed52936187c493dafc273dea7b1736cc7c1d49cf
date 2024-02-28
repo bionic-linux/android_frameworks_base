@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52fd5884_0efd6db3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1879319
+      },
+      "writtenOn": "2024-02-28T11:16:27Z",
+      "side": 1,
+      "message": "@roosa@google.com I used the tool you suggested for cherry picking, but even for a clean cherry-pick, gerrit needs a code owner approval, can you PTAL?",
+      "revId": "ed52936187c493dafc273dea7b1736cc7c1d49cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
