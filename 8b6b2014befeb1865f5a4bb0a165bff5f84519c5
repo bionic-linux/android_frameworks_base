@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24ac97d3_505bf77d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2024-02-28T18:26:17Z",
+      "side": 1,
+      "message": "You need to add both patches into the same topic because if one is merged and the other is not this will result in a broken build.",
+      "revId": "8b6b2014befeb1865f5a4bb0a165bff5f84519c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
