@@ -1034,6 +1034,8 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      *
      * {@hide}
      */
+    @SystemApi
+    @Nullable
     public String seInfo;
 
     /**

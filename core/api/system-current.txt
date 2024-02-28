@@ -3681,6 +3681,7 @@ package android.content.pm {
     method public boolean isProduct();
     method public boolean isVendor();
     field public String credentialProtectedDataDir;
+    field @Nullable public String seInfo;
     field public int targetSandboxVersion;
   }
 
