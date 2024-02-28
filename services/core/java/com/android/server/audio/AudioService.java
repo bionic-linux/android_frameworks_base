@@ -4558,6 +4558,13 @@ public class AudioService extends IAudioService.Stub
             mDeviceBroker.postSetHearingAidVolumeIndex(index, streamType);
         }
 
+        // HDMI ARC volume should be updated by CEC message reported by ARC device
+        if (mHdmiTvClient != null && mHdmiSystemAudioSupported &&
+            (device & AudioSystem.DEVICE_OUT_HDMI_ARC) != 0 &&
+            (flags & AudioManager.FLAG_HDMI_SYSTEM_AUDIO_VOLUME) == 0) {
+            return;
+        }
+
         flags &= ~AudioManager.FLAG_FIXED_VOLUME;
         if (streamTypeAlias == AudioSystem.STREAM_MUSIC && isFixedVolumeDevice(device)) {
             flags |= AudioManager.FLAG_FIXED_VOLUME;
