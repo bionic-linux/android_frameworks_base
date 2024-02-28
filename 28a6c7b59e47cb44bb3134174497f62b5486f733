@@ -52,6 +52,24 @@
       "parentUuid": "81f31d3b_12601ed3",
       "revId": "28a6c7b59e47cb44bb3134174497f62b5486f733",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6ecf846_cbff4408",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-02-28T09:49:43Z",
+      "side": 1,
+      "message": "@lsandrade@google.com , thanks a lot, unfortunately we cannot set auto-submit on this one and we are not allowed to press the submit button, can you please help with the submission too?",
+      "parentUuid": "afadc74f_463ee7c5",
+      "revId": "28a6c7b59e47cb44bb3134174497f62b5486f733",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
