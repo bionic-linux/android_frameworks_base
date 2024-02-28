@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a76418dc_fe0dd018",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2024-02-28T16:38:54Z",
+      "side": 1,
+      "message": "Since this resulted in an app compat breakage previously (as indicated by the TODO), this will need to be a flagged change with a rollout which is hard to do from AOSP.\n\nIs this fixing any particular issue being observed currently?",
+      "revId": "337c90643dc9fa19f517760845cab5ab54b0f11c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
