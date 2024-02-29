@@ -16,6 +16,24 @@
       "message": "Hi Deeraj, \n\nI\u0027m confused how the framework outside of HdmiControlService calls setStreamVolume during an ARC long press (it should only call adjustStreamVolume). I couldn\u0027t find KeyPolicyManager in the framework - is it custom code?",
       "revId": "4200f60c3b215953612c7bd4238470f2fba6ac8f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c2acce8_9b969ea6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2066470
+      },
+      "writtenOn": "2024-02-29T13:51:54Z",
+      "side": 1,
+      "message": "Yes KeyPolicyManager is a custom code. KeyPolicyManager is a service overrides behaviors of input keys and handles these key events before they are enqueued/dispatched to the system.",
+      "parentUuid": "14b6623c_6bb16180",
+      "revId": "4200f60c3b215953612c7bd4238470f2fba6ac8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
