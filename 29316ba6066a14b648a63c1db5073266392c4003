@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0f1332b_3a676ed5",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2024-02-29T18:23:08Z",
+      "side": 1,
+      "message": "nit, can this also be added in the audio service dumpsys?",
+      "range": {
+        "startLine": 427,
+        "startChar": 20,
+        "endLine": 427,
+        "endChar": 23
+      },
+      "revId": "29316ba6066a14b648a63c1db5073266392c4003",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
