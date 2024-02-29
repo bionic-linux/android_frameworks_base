@@ -398,6 +398,11 @@ non_updatable_api_deps_on_modules = [
     "sdk_system_current_android",
 ]
 
+java_defaults {
+    name: "module-classpath-java-defaults",
+    libs: non_updatable_api_deps_on_modules,
+}
+
 // Defaults with module APIs in the classpath (mostly from prebuilts).
 // Suitable for compiling android-non-updatable.
 stubs_defaults {
