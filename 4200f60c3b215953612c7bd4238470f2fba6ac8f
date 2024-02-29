@@ -52,6 +52,24 @@
       "parentUuid": "4c2acce8_9b969ea6",
       "revId": "4200f60c3b215953612c7bd4238470f2fba6ac8f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25cc8d50_2f2767e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2024-02-29T16:35:13Z",
+      "side": 1,
+      "message": "It\u0027s currently intentional that setStreamVolume sets volume immediately when using ARC, unlike adjustStreamVolume. But I agree that in the long run, it might be better for it to behave like adjustStreamVolume - rely on HdmiControlService to update stream volume, instead of doing it immediately. \n\nThe complete implementation would be more complicated than this patch though, because it requires changing HdmiControlService as well, and possibly changing the API for registering absolute volume listeners.\n\nI\u0027ll discuss this with the Audio team.",
+      "parentUuid": "9cd51a5e_6e4441f0",
+      "revId": "4200f60c3b215953612c7bd4238470f2fba6ac8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
