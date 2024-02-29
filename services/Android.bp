@@ -291,6 +291,9 @@ soong_config_module_type_import {
 
 stubs_defaults {
     name: "services-stubs-default",
+    sdk_version: "none",
+    system_modules: "none",
+    java_version: "1.8",
     installable: false,
     flags: [
         "--show-annotation android.annotation.SystemApi\\(client=android.annotation.SystemApi.Client.SYSTEM_SERVER\\)",
