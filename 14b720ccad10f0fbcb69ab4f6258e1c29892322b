@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e61a6695_96c132b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-01T04:35:50Z",
+      "side": 1,
+      "message": "For lint, these tests are moved from FrameworksNetTests which were in the presubmit already.",
+      "revId": "14b720ccad10f0fbcb69ab4f6258e1c29892322b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
