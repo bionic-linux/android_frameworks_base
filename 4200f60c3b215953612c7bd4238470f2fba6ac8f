@@ -70,6 +70,24 @@
       "parentUuid": "9cd51a5e_6e4441f0",
       "revId": "4200f60c3b215953612c7bd4238470f2fba6ac8f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c11c7ed4_474c7562",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2066470
+      },
+      "writtenOn": "2024-03-01T10:39:26Z",
+      "side": 1,
+      "message": "Thanks for the response. is there any other info required from us or do you suggest any alternatives to try out ?",
+      "parentUuid": "25cc8d50_2f2767e6",
+      "revId": "4200f60c3b215953612c7bd4238470f2fba6ac8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
