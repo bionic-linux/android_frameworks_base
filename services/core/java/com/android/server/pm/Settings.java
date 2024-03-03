@@ -3216,7 +3216,12 @@ public final class Settings implements Watchable, Snappable, ResilientAtomicFile
                         ver.fingerprint = XmlUtils.readStringAttribute(parser, ATTR_FINGERPRINT);
                     } else if (tagName.equals(
                             DomainVerificationPersistence.TAG_DOMAIN_VERIFICATIONS)) {
-                        mDomainVerificationManager.readSettings(computer, parser);
+                        try {
+                            mDomainVerificationManager.readSettings(computer, parser);
+                        } catch (IllegalArgumentException e) {
+                            Slog.w(PackageManagerService.TAG,
+                                    "Discard invalid domain-verifications: " + e.getMessage());
+                        }
                     } else if (tagName.equals(
                             DomainVerificationLegacySettings.TAG_DOMAIN_VERIFICATIONS_LEGACY)) {
                         mDomainVerificationManager.readLegacySettings(parser);
