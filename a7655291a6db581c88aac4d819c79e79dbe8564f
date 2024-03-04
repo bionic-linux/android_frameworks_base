@@ -22,6 +22,30 @@
       },
       "revId": "a7655291a6db581c88aac4d819c79e79dbe8564f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab4b6cb4_a615997b",
+        "filename": "services/core/java/com/android/server/connectivity/TEST_MAPPING",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-04T12:23:17Z",
+      "side": 1,
+      "message": "SkipPresubmit annotation won\u0027t work with the postsubmit. We won\u0027t have that kind of data so I think it does not matter.\n\nI will add it back in aosp/2984457 when the test can be moved to presubmit. I expect the annotation will start to work from here.",
+      "parentUuid": "272ea8b2_406a2bad",
+      "range": {
+        "startLine": 32,
+        "startChar": 18,
+        "endLine": 32,
+        "endChar": 36
+      },
+      "revId": "a7655291a6db581c88aac4d819c79e79dbe8564f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
