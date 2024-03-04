@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e8a31dc_b143fa43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-03-04T17:44:55Z",
+      "side": 1,
+      "message": "Thanks for the fix!",
+      "revId": "fc414bd2e6f822d02f183cacd4c2ebc06ffcca70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df0e5332_f9b50148",
+        "filename": "services/core/java/com/android/server/pm/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3221,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-03-04T17:44:55Z",
+      "side": 1,
+      "message": "Move to line 3236",
+      "range": {
+        "startLine": 3221,
+        "startChar": 33,
+        "endLine": 3221,
+        "endChar": 57
+      },
+      "revId": "fc414bd2e6f822d02f183cacd4c2ebc06ffcca70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
