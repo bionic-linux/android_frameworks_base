@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "013d7617_40aca242",
+        "filename": "services/core/java/com/android/server/TEST_MAPPING",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2024-03-04T03:34:08Z",
+      "side": 1,
+      "message": "Should you run both `FrameworksNetTests` and `FrameworksVpnTests` tests when VpnManagerService is changed?",
+      "range": {
+        "startLine": 89,
+        "startChar": 21,
+        "endLine": 89,
+        "endChar": 39
+      },
+      "revId": "1e521760f99cc6f7a1c864b5e9848feb00394177",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56e883fd_27659942",
+        "filename": "services/core/java/com/android/server/connectivity/TEST_MAPPING",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2024-03-04T03:34:08Z",
+      "side": 1,
+      "message": "Please fix this ERROR reported by TestMappingSloChecker: Test module \"FrameworksVpnTests\" is being added to presubmit. It needs to meet SLO in postsubmit on all configured targets.\n\nAnalyzer Description: Validates test modules added to presubmit in TEST_MAPPING.\nOwner: android-testing-at-scale@google.com\n\nTest module \"FrameworksVpnTests\" is being added to presubmit. It needs to meet SLO in postsubmit on all configured targets.\n\nBranch: main, Target: aosp_cf_x86_64_phone-trunk_staging-userdebug\nERROR: No data found for this config.\nDoes not meet SLO. Please consult go/test-mapping-slo-guide\n\nFAIL: This test module does not meet SLO and is not ready to be in presubmit.",
+      "range": {
+        "startLine": 0,
+        "startChar": 0,
+        "endLine": 0,
+        "endChar": 0
+      },
+      "revId": "1e521760f99cc6f7a1c864b5e9848feb00394177",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
