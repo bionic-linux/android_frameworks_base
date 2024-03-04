@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "272ea8b2_406a2bad",
+        "filename": "services/core/java/com/android/server/connectivity/TEST_MAPPING",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-03-04T12:14:53Z",
+      "side": 1,
+      "message": "Why was the option `\"exclude-annotation\": \"com.android.testutils.SkipPresubmit\"` removed? \n\nIIUC, the linter checks the SLO using module name + options. So if the option is not in the postsubmit test, it may not be added in the presbumit?",
+      "range": {
+        "startLine": 32,
+        "startChar": 18,
+        "endLine": 32,
+        "endChar": 36
+      },
+      "revId": "a7655291a6db581c88aac4d819c79e79dbe8564f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
