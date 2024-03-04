@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a094fbd_ae0ee4a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-04T11:59:46Z",
+      "side": 1,
+      "message": "I think you can move the test to FrameworksVpnTests.",
+      "revId": "898c2fca53ae697a0cbba32c7c812910db1ebfaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
