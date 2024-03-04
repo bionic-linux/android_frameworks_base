@@ -33,6 +33,24 @@
       "message": "Why remove set noparent? I think it\u0027s what we use in all the other connectivity files.",
       "revId": "b9a77c45ecd398d4fdc1d105e84c385d64c52ce0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c0bd523_bacaaa02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-04T04:43:25Z",
+      "side": 1,
+      "message": "It comes from the review comment from michaelwr@.\n\nhttps://android-review.git.corp.google.com/c/platform/frameworks/base/+/2981831/comment/27a2c665_840115c0/\n\nDo we prefer to use it as all the other connectivity files?",
+      "parentUuid": "becaa053_16873e64",
+      "revId": "b9a77c45ecd398d4fdc1d105e84c385d64c52ce0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
