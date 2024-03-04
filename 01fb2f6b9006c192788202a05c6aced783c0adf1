@@ -16,6 +16,23 @@
       "message": "Test had been in the presubmit. This commit only moves the file. This is a false alarm. Lint +2 to  bypass it.",
       "revId": "01fb2f6b9006c192788202a05c6aced783c0adf1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e2d5d8d_f6f79a14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2024-03-04T03:30:57Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "01fb2f6b9006c192788202a05c6aced783c0adf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
