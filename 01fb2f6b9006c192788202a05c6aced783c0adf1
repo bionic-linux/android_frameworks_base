@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce0925c5_ad60ef91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-04T01:49:41Z",
+      "side": 1,
+      "message": "Test had been in the presubmit. This commit only moves the file. This is a false alarm. Lint +2 to  bypass it.",
+      "revId": "01fb2f6b9006c192788202a05c6aced783c0adf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
