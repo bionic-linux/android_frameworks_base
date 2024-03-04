@@ -16,6 +16,23 @@
       "message": "LGTM",
       "revId": "b9a77c45ecd398d4fdc1d105e84c385d64c52ce0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "becaa053_16873e64",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2024-03-04T03:57:22Z",
+      "side": 1,
+      "message": "Why remove set noparent? I think it\u0027s what we use in all the other connectivity files.",
+      "revId": "b9a77c45ecd398d4fdc1d105e84c385d64c52ce0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
