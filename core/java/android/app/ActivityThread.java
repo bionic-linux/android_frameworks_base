@@ -429,7 +429,7 @@ public final class ActivityThread extends ClientTransactionHandler
     @UnsupportedAppUsage
     Application mInitialApplication;
     @UnsupportedAppUsage
-    final ArrayList<Application> mAllApplications = new ArrayList<>();
+    private final ArrayList<Application> mAllApplications = new ArrayList<>();
     /**
      * Bookkeeping of instantiated backup agents indexed first by user id, then by package name.
      * Indexing by user id supports parallel backups across users on system packages as they run in
@@ -7057,6 +7057,8 @@ public final class ActivityThread extends ClientTransactionHandler
             }
         }
 
+        VMDebug.onUserIdKnown(UserHandle.myUserId());
+        VMDebug.onApplicationAdded(data.appInfo.packageName);
         // send up app name; do this *before* waiting for debugger
         Process.setArgV0(data.processName);
         android.ddm.DdmHandleAppName.setAppName(data.processName,
@@ -8601,6 +8603,12 @@ public final class ActivityThread extends ClientTransactionHandler
         } catch (RemoteException ignored) {
         }
         return false;
+    }
+
+    @UnsupportedAppUsage
+    void addApplication(@NonNull Application app) {
+        mAllApplications.add(app);
+        VMDebug.onApplicationAdded(app.mLoadedApk.mPackageName);
     }
 
     @Override
