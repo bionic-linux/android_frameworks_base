@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a3cfcc4_ac9ef3ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1318142
+      },
+      "writtenOn": "2024-03-05T20:11:59Z",
+      "side": 1,
+      "message": "It looks file pathmap.mk can be also removed.",
+      "range": {
+        "startLine": 10,
+        "startChar": 25,
+        "endLine": 10,
+        "endChar": 35
+      },
+      "revId": "9148f7eef73180645863ead0c26052543d632d6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64afaed3_16ae56d0",
+        "filename": "Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1318142
+      },
+      "writtenOn": "2024-03-05T20:11:59Z",
+      "side": 1,
+      "message": "We might need to keep this file but make it empty, in case it can not be added to androidmk_denylist.go",
+      "revId": "9148f7eef73180645863ead0c26052543d632d6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
