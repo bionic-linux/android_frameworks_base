@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "255b8bbf_a935ac93",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-03-05T14:36:31Z",
+      "side": 1,
+      "message": "Is there a bug with more info tracking the problem this is aiming to fix?",
+      "revId": "9ad50412e4d1684fb2376319adc5b13b65319396",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd92a886_8f29a52a",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2048,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-03-05T14:36:31Z",
+      "side": 1,
+      "message": "I don\u0027t think we should close this `InputStream` that is passed in as a parameter. This might be the `InputStream` passed from the `ExifInterface(@NonNull InputStream inputStream)` or `ExifInterface(@NonNull InputStream inputStream, @ExifStreamType int streamType)` constructors, both of which [explicitly document](https://developer.android.com/reference/android/media/ExifInterface#ExifInterface(java.io.InputStream)) that they **won\u0027t** close the stream:\n\u003e Developers should close the input stream after use\n\n---\n\nThis problem also applies to closing a `BufferedInputStream` instance that wraps the `in` parameter, since [that also closes the underlying stream](https://cs.android.com/android/platform/superproject/main/+/main:libcore/ojluni/src/main/java/java/io/BufferedInputStream.java;l\u003d476;drc\u003dc3a7b624abdc4bf9283c1458c9bcfbf2f579b97c).",
+      "range": {
+        "startLine": 2048,
+        "startChar": 0,
+        "endLine": 2048,
+        "endChar": 31
+      },
+      "revId": "9ad50412e4d1684fb2376319adc5b13b65319396",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc4ea622_50226288",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2051,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-03-05T14:36:31Z",
+      "side": 1,
+      "message": "`ByteOrderedDataInputStream` doesn\u0027t override `InputStream.close` and the default implementation is a no-op, so this call is a no-op and can be removed.",
+      "revId": "9ad50412e4d1684fb2376319adc5b13b65319396",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
