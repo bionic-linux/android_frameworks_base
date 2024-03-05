@@ -37,6 +37,7 @@ import android.webkit.WebViewZygote;
 import com.android.internal.os.SomeArgs;
 import com.android.internal.util.Preconditions;
 
+import dalvik.system.VMDebug;
 import dalvik.system.VMRuntime;
 
 import libcore.io.IoUtils;
@@ -1378,6 +1379,9 @@ public class Process {
     public static void setArgV0(@NonNull String text) {
         sArgV0 = text;
         setArgV0Native(text);
+        if (true || com.android.libcore.Flags.appinfo()) {
+            VMDebug.setCurrentProcessName(text);
+        }
     }
 
     private static native void setArgV0Native(String text);
