@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f601ab48_b5e8766f",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 24307,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2024-03-05T15:23:06Z",
+      "side": 1,
+      "message": "Yeah, but I don\u0027t know if this is overall better, either approach has blind spots:\n\n1. migrate if no user restriction is in policy engine: might miss user restrictions where the DPC only makes incremental changes to policy and not re-apply existing restrictions\n2. migrate using a fixed flag: might re-introduce obsolete restrictions if the DPC removes restrictions after OTA\u0027ed to 14.\n\nComparing the two, 2 seems less bad than 1?",
+      "parentUuid": "e252ec46_784a3bd3",
+      "revId": "e2ad0bfaad6c99819155e730fcddc7dd1ee1423b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "461cb682_9b83aa29",
         "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
         "patchSetId": 8
@@ -48,6 +66,30 @@
       "writtenOn": "2024-03-05T13:42:47Z",
       "side": 1,
       "message": "what does this return on non COPE devices?",
+      "range": {
+        "startLine": 24557,
+        "startChar": 48,
+        "endLine": 24557,
+        "endChar": 76
+      },
+      "revId": "e2ad0bfaad6c99819155e730fcddc7dd1ee1423b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a01f56a_56664798",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 24557,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2024-03-05T15:23:06Z",
+      "side": 1,
+      "message": "A non-null empty ActiveAdmin.",
+      "parentUuid": "461cb682_9b83aa29",
       "range": {
         "startLine": 24557,
         "startChar": 48,
