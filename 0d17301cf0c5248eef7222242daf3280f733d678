@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4c51b46_a2036171",
+        "filename": "core/java/android/net/IVpnManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-03-05T09:09:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4c85424_b066362a",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 45
+      },
+      "revId": "0d17301cf0c5248eef7222242daf3280f733d678",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed3d1267_d36559f9",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "04a4b021_cba66917",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-03-05T09:09:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed3d1267_d36559f9",
+      "range": {
+        "startLine": 737,
+        "startChar": 11,
+        "endLine": 737,
+        "endChar": 15
+      },
+      "revId": "0d17301cf0c5248eef7222242daf3280f733d678",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce3f544d_944708e0",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-02-20T07:27:15Z",
       "side": 1,
       "message": "ditto for this",
+      "range": {
+        "startLine": 749,
+        "startChar": 11,
+        "endLine": 749,
+        "endChar": 15
+      },
+      "revId": "0d17301cf0c5248eef7222242daf3280f733d678",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0996e05b_fa595b65",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-03-05T09:09:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce3f544d_944708e0",
       "range": {
         "startLine": 749,
         "startChar": 11,
@@ -116,6 +188,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "248fc827_0474df90",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-03-05T09:09:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f86643e1_33662b61",
+      "range": {
+        "startLine": 1014,
+        "startChar": 28,
+        "endLine": 1014,
+        "endChar": 43
+      },
+      "revId": "0d17301cf0c5248eef7222242daf3280f733d678",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b69a037_5111a4f1",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-03-05T09:09:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f67f841_9781212b",
+      "range": {
+        "startLine": 1014,
+        "startChar": 4,
+        "endLine": 1014,
+        "endChar": 5
+      },
+      "revId": "0d17301cf0c5248eef7222242daf3280f733d678",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3460762_8a30084d",
@@ -129,6 +249,30 @@
       "writtenOn": "2024-02-20T07:27:15Z",
       "side": 1,
       "message": "This returns only the suffixes. This should be clearly documented.",
+      "range": {
+        "startLine": 1035,
+        "startChar": 17,
+        "endLine": 1035,
+        "endChar": 29
+      },
+      "revId": "0d17301cf0c5248eef7222242daf3280f733d678",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc297555_ca1ea912",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-03-05T09:09:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3460762_8a30084d",
       "range": {
         "startLine": 1035,
         "startChar": 17,
