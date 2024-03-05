@@ -88,6 +88,24 @@
       "parentUuid": "25cc8d50_2f2767e6",
       "revId": "4200f60c3b215953612c7bd4238470f2fba6ac8f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c1f7827_1aa5d9ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2024-03-05T13:14:09Z",
+      "side": 1,
+      "message": "In general, I would recommend not using setStreamVolume when using CEC volume - it only works when the connected CEC speaker supports \u003cSet Audio Volume Level\u003e, which is not often. \n\nThis is why the default framework behavior on volume key press is to call adjustStreamVolume instead, which sends the much more widely supported \u003cUser Control Pressed\u003e.",
+      "parentUuid": "c11c7ed4_474c7562",
+      "revId": "4200f60c3b215953612c7bd4238470f2fba6ac8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
