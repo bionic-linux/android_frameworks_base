@@ -114,7 +114,17 @@ public final class Debug
         "opengl-tracing",
         "view-hierarchy",
         "support_boot_stages",
+        "app_info,"
     };
+
+    /** @hide */
+    static native void onProcessNamed(@NonNull String processName);
+
+    /** @hide */
+    public static native void onApplicationAdded(@NonNull String packageName);
+
+    /** @hide */
+    public static native void onUserIdKnown(int userId);
 
     /**
      * This class is used to retrieved various statistics about the memory mappings for this
@@ -989,7 +999,6 @@ public final class Debug
         }
     }
 
-
     /**
      * Wait until a debugger attaches. As soon as a debugger attaches,
      * suspend all Java threads and send VM_START (a.k.a VM_INIT)
@@ -1016,14 +1025,14 @@ public final class Debug
         // send VM_START.
         System.out.println("Waiting for debugger first packet");
 
-        mWaiting = true;
+        setWaitingForDebugger(true);
         while (!isDebuggerConnected()) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException ie) {
             }
         }
-        mWaiting = false;
+        setWaitingForDebugger(false);
 
         System.out.println("Debug.suspendAllAndSentVmStart");
         VMDebug.suspendAllAndSendVmStart();
@@ -1049,12 +1058,12 @@ public final class Debug
         Chunk waitChunk = new Chunk(ChunkHandler.type("WAIT"), data, 0, 1);
         DdmServer.sendChunk(waitChunk);
 
-        mWaiting = true;
+        setWaitingForDebugger(true);
         while (!isDebuggerConnected()) {
             try { Thread.sleep(SPIN_DELAY); }
             catch (InterruptedException ie) {}
         }
-        mWaiting = false;
+        setWaitingForDebugger(false);
 
         System.out.println("Debugger has connected");
 
@@ -1109,6 +1118,23 @@ public final class Debug
      */
     public static String[] getVmFeatureList() {
         return VMDebug.getVmFeatureList();
+    }
+
+    /**
+     * Signal to ART we are waiting for the debugger
+     *
+     * @hide
+     */
+    private static native void onWaitingForDebugger(boolean waiting);
+
+    /**
+     * Set whether the app is waiting for a debugger to connect
+     *
+     * @hide
+     */
+    private static void setWaitingForDebugger(boolean waiting) {
+        mWaiting = waiting;
+        onWaitingForDebugger(waiting);
     }
 
     /**

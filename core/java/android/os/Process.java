@@ -1378,6 +1378,7 @@ public class Process {
     public static void setArgV0(@NonNull String text) {
         sArgV0 = text;
         setArgV0Native(text);
+        Debug.onProcessNamed(text);
     }
 
     private static native void setArgV0Native(String text);
