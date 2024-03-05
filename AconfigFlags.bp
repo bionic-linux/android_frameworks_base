@@ -72,6 +72,7 @@ aconfig_declarations_group {
         "com.android.server.flags.pinner-aconfig-java",
         "com.android.text.flags-aconfig-java",
         "com.android.window.flags.window-aconfig-java",
+        "core_exported_aconfig_flags_lib",
         "device_policy_aconfig_flags_lib",
         "display_flags_lib",
         "framework-jobscheduler-job.flags-aconfig-java",
@@ -115,6 +116,14 @@ java_defaults {
 java_aconfig_library {
     name: "camera_platform_flags_core_java_lib",
     aconfig_declarations: "camera_platform_flags",
+    defaults: ["framework-minus-apex-aconfig-java-defaults"],
+}
+
+// Core
+java_aconfig_library {
+    name: "core_exported_aconfig_flags_lib",
+    aconfig_declarations: "libcore_aconfig_flags",
+    mode: "exported",
     defaults: ["framework-minus-apex-aconfig-java-defaults"],
 }
 
