@@ -48,7 +48,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -110,11 +112,17 @@ public final class Debug
     private static final String DEFAULT_TRACE_BODY = "dmtrace";
     private static final String DEFAULT_TRACE_EXTENSION = ".trace";
 
-    private static final String[] FRAMEWORK_FEATURES = new String[] {
-        "opengl-tracing",
-        "view-hierarchy",
-        "support_boot_stages",
-    };
+    private static final String[] FRAMEWORK_FEATURES;
+    static {
+        List<String> features = new ArrayList<String>();
+        features.add("opengl-tracing");
+        features.add("view-hierarchy");
+        features.add("support_boot_stages");
+        if (com.android.libcore.Flags.appinfo()) {
+            features.add("appinfo");
+        }
+        FRAMEWORK_FEATURES = features.toArray(new String[0]);
+    }
 
     /**
      * This class is used to retrieved various statistics about the memory mappings for this
@@ -1016,14 +1024,14 @@ public final class Debug
         // send VM_START.
         System.out.println("Waiting for debugger first packet");
 
-        mWaiting = true;
+        setWaitingForDebugger(true);
         while (!isDebuggerConnected()) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException ie) {
             }
         }
-        mWaiting = false;
+        setWaitingForDebugger(false);
 
         System.out.println("Debug.suspendAllAndSentVmStart");
         VMDebug.suspendAllAndSendVmStart();
@@ -1049,12 +1057,12 @@ public final class Debug
         Chunk waitChunk = new Chunk(ChunkHandler.type("WAIT"), data, 0, 1);
         DdmServer.sendChunk(waitChunk);
 
-        mWaiting = true;
+        setWaitingForDebugger(true);
         while (!isDebuggerConnected()) {
             try { Thread.sleep(SPIN_DELAY); }
             catch (InterruptedException ie) {}
         }
-        mWaiting = false;
+        setWaitingForDebugger(false);
 
         System.out.println("Debugger has connected");
 
@@ -1109,6 +1117,18 @@ public final class Debug
      */
     public static String[] getVmFeatureList() {
         return VMDebug.getVmFeatureList();
+    }
+
+    /**
+     * Set whether the app is waiting for a debugger to connect
+     *
+     * @hide
+     */
+    private static void setWaitingForDebugger(boolean waiting) {
+        mWaiting = waiting;
+        if (com.android.libcore.Flags.appinfo()) {
+            VMDebug.setWaitingForDebugger(waiting);
+        }
     }
 
     /**
