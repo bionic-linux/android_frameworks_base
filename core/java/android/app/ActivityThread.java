@@ -6753,6 +6753,7 @@ public final class ActivityThread extends ClientTransactionHandler
         android.ddm.DdmHandleAppName.setAppName(data.processName,
                                                 data.appInfo.packageName,
                                                 UserHandle.myUserId());
+        Debug.onAppNamed(data.appInfo.packageName, data.processName);
         VMRuntime.setProcessPackageName(data.appInfo.packageName);
 
         // Pass data directory path to ART. This is used for caching information and

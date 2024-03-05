@@ -109,6 +109,9 @@ public final class Debug
     private static final String DEFAULT_TRACE_BODY = "dmtrace";
     private static final String DEFAULT_TRACE_EXTENSION = ".trace";
 
+    /** @hide */
+    public native static void onAppNamed(@NonNull String packageName, @NonNull String processName);
+
     /**
      * This class is used to retrieved various statistics about the memory mappings for this
      * process. The returned info is broken down by dalvik, native, and other. All results are in kB.
