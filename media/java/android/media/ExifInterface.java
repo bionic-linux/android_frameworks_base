@@ -1967,6 +1967,7 @@ public class ExifInterface {
         if (in == null) {
             throw new NullPointerException("inputstream shouldn't be null");
         }
+        ByteOrderedDataInputStream inputStream = null;
         try {
             // Initialize mAttributes.
             for (int i = 0; i < EXIF_TAGS.length; ++i) {
@@ -1980,7 +1981,7 @@ public class ExifInterface {
             }
 
             // Create byte-ordered input stream
-            ByteOrderedDataInputStream inputStream = new ByteOrderedDataInputStream(in);
+            inputStream = new ByteOrderedDataInputStream(in);
 
             if (!mIsExifDataOnly) {
                 switch (mMimeType) {
@@ -2042,7 +2043,16 @@ public class ExifInterface {
                     + "or a corrupted JPEG file to ExifInterface.", e);
         } finally {
             addDefaultValuesForCompatibility();
-
+            try {
+                if (in != null) {
+                    in.close();
+                }
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            } catch (Exception e) {
+                Log.d(TAG, "loadAttributes e:" + e);
+            }
             if (DEBUG) {
                 printAttributes();
             }
