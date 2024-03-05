@@ -16,6 +16,46 @@
       "message": "Hello @rubinxu@google.com,I had verified successfully in local, I have re-uploaded the code based on your latest modification suggestions. Could you please help to continue reviewing it? Thank you.",
       "revId": "e2ad0bfaad6c99819155e730fcddc7dd1ee1423b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e252ec46_784a3bd3",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 24307,
+      "author": {
+        "id": 1491633
+      },
+      "writtenOn": "2024-03-05T13:42:47Z",
+      "side": 1,
+      "message": "@rubinxu@google.com I think you also suggested that we don\u0027t do the migration if the policy engine already has any user restrictions set.",
+      "revId": "e2ad0bfaad6c99819155e730fcddc7dd1ee1423b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "461cb682_9b83aa29",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 24557,
+      "author": {
+        "id": 1491633
+      },
+      "writtenOn": "2024-03-05T13:42:47Z",
+      "side": 1,
+      "message": "what does this return on non COPE devices?",
+      "range": {
+        "startLine": 24557,
+        "startChar": 48,
+        "endLine": 24557,
+        "endChar": 76
+      },
+      "revId": "e2ad0bfaad6c99819155e730fcddc7dd1ee1423b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
