@@ -53,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a097f1b9_559f2521",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 24307,
+      "author": {
+        "id": 1491633
+      },
+      "writtenOn": "2024-03-05T18:46:12Z",
+      "side": 1,
+      "message": "Good point",
+      "parentUuid": "f601ab48_b5e8766f",
+      "revId": "e2ad0bfaad6c99819155e730fcddc7dd1ee1423b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "461cb682_9b83aa29",
