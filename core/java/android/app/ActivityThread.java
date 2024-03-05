@@ -129,6 +129,7 @@ import android.os.CancellationSignal;
 import android.os.DdmSyncStageUpdater;
 import android.os.DdmSyncState.Stage;
 import android.os.Debug;
+import android.os.Debug.State;
 import android.os.Environment;
 import android.os.FileUtils;
 import android.os.GraphicsEnvironment;
@@ -429,7 +430,7 @@ public final class ActivityThread extends ClientTransactionHandler
     @UnsupportedAppUsage
     Application mInitialApplication;
     @UnsupportedAppUsage
-    final ArrayList<Application> mAllApplications = new ArrayList<>();
+    private final ArrayList<Application> mAllApplications = new ArrayList<>();
     /**
      * Bookkeeping of instantiated backup agents indexed first by user id, then by package name.
      * Indexing by user id supports parallel backups across users on system packages as they run in
@@ -7057,6 +7058,7 @@ public final class ActivityThread extends ClientTransactionHandler
             }
         }
 
+        Debug.onUserIdKnown(UserHandle.myUserId());
         // send up app name; do this *before* waiting for debugger
         Process.setArgV0(data.processName);
         android.ddm.DdmHandleAppName.setAppName(data.processName,
@@ -7267,6 +7269,7 @@ public final class ActivityThread extends ClientTransactionHandler
         final StrictMode.ThreadPolicy savedPolicy = StrictMode.allowThreadDiskWrites();
         final StrictMode.ThreadPolicy writesAllowedPolicy = StrictMode.getThreadPolicy();
 
+        Debug.setState(State.RUNNING);
         if (data.debugMode != ApplicationThreadConstants.DEBUG_OFF) {
             mDdmSyncStageUpdater.next(Stage.Debugger);
             if (data.debugMode == ApplicationThreadConstants.DEBUG_WAIT) {
@@ -8601,6 +8604,12 @@ public final class ActivityThread extends ClientTransactionHandler
         } catch (RemoteException ignored) {
         }
         return false;
+    }
+
+    @UnsupportedAppUsage
+    void addApplication(@NonNull Application app) {
+        mAllApplications.add(app);
+        Debug.onApplicationAdded(app.mLoadedApk.mPackageName);
     }
 
     @Override
