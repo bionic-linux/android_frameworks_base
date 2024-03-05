@@ -110,6 +110,15 @@ public final class Debug
     private static final String DEFAULT_TRACE_BODY = "dmtrace";
     private static final String DEFAULT_TRACE_EXTENSION = ".trace";
 
+    /** @hide */
+    static native void onProcessNamed(@NonNull String processName);
+
+    /** @hide */
+    public static native void onApplicationAdded(@NonNull String packageName);
+
+    /** @hide */
+    public static native void onUserIdKnown(int userId);
+
     /**
      * This class is used to retrieved various statistics about the memory mappings for this
      * process. The returned info is broken down by dalvik, native, and other. All results are in kB.
@@ -985,6 +994,40 @@ public final class Debug
 
 
     /**
+     * The debug state of the app.
+     * - Running is the normal state.
+     * - Waiting for debugger: Resume as soon as debugger connects.
+     * - Suspended for debugger: Resume only after debugger resumes VM.
+     * @hide
+     */
+    public enum State {
+        RUNNING(0),
+        WAIT_FOR_DEBUGGER(1),
+        SUSPENDED_FOR_DEBUGGER(2);
+
+        private final int mValue;
+        State(int v) {
+            mValue = v;
+        }
+    }
+
+    /**
+     * Signal app state to adb
+     *
+     * @hide
+     */
+    private static native void onSetstate(int state);
+
+    /**
+     * Signal app state to adb
+     *
+     * @hide
+     */
+    public static void setState(@NonNull State state) {
+        onSetstate(state.mValue);
+    }
+
+    /**
      * Wait until a debugger attaches. As soon as a debugger attaches,
      * suspend all Java threads and send VM_START (a.k.a VM_INIT)
      * packet.
@@ -1011,12 +1054,14 @@ public final class Debug
         System.out.println("Waiting for debugger first packet");
 
         mWaiting = true;
+        setState(State.SUSPENDED_FOR_DEBUGGER);
         while (!isDebuggerConnected()) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException ie) {
             }
         }
+        setState(State.RUNNING);
         mWaiting = false;
 
         System.out.println("Debug.suspendAllAndSentVmStart");
@@ -1044,10 +1089,12 @@ public final class Debug
         DdmServer.sendChunk(waitChunk);
 
         mWaiting = true;
+        setState(State.WAIT_FOR_DEBUGGER);
         while (!isDebuggerConnected()) {
             try { Thread.sleep(SPIN_DELAY); }
             catch (InterruptedException ie) {}
         }
+        setState(State.RUNNING);
         mWaiting = false;
 
         System.out.println("Debugger has connected");
