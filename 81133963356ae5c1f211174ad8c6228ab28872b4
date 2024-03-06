@@ -22,6 +22,30 @@
       },
       "revId": "81133963356ae5c1f211174ad8c6228ab28872b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b355254_3f080ef3",
+        "filename": "api/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2024-03-06T16:50:13Z",
+      "side": 1,
+      "message": "Will fix this in the follow up change aosp/2982300, as this change has been created only to resolve merge conflict with `git_main`.",
+      "parentUuid": "4b4e0b42_27cd6c61",
+      "range": {
+        "startLine": 312,
+        "startChar": 15,
+        "endLine": 312,
+        "endChar": 27
+      },
+      "revId": "81133963356ae5c1f211174ad8c6228ab28872b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
