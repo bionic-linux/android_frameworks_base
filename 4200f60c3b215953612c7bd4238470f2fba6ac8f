@@ -124,6 +124,24 @@
       "parentUuid": "0c1f7827_1aa5d9ac",
       "revId": "4200f60c3b215953612c7bd4238470f2fba6ac8f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac157c81_566bb6bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2024-03-06T10:28:38Z",
+      "side": 1,
+      "message": "That\u0027s pretty much correct. Some clarifications:\n\n- Yes, we recommend adjustStreamVolume over setStreamVolume when using CEC volume - regardless of whether we change setStreamVolume in the way I proposed. But if you want to use setStreamVolume where possible, it\u0027s reliable when using CEC volume when the audio output device uses volume behavior DEVICE_VOLUME_BEHAVIOR_ABSOLUTE - this indicates that we can send \u003cSet Audio Volume Level\u003e.\n\n- There\u0027s need to file a bug; I\u0027ve already done so internally. But if you\u0027d like to follow the issue you can file one and I\u0027ll make sure it\u0027s updated when the internal one is resolved. The proper fix might take a while though, as it\u0027s a relatively low impact issue.\n\n- You should abandon this Gerrit, as the complete fix needs significant changes elsewhere in the framework.\n\nLet me know if you have any other questions.",
+      "parentUuid": "7b04d993_7f6ab53b",
+      "revId": "4200f60c3b215953612c7bd4238470f2fba6ac8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
