@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e92dc097_6d935c2b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2024-03-06T21:46:11Z",
+      "side": 1,
+      "message": "Pls fix the build error:\n```\nframeworks/base/media/java/android/media/audio/common/AidlConversion.java:375: error: cannot find symbol\ncase AudioChannelLayout.LAYOUT_13POINT0:\n^\nsymbol:   variable LAYOUT_13POINT0\nlocation: class AudioChannelLayout\n```",
+      "revId": "3ff55900310a7e9d319ff499749f53823b943e60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
