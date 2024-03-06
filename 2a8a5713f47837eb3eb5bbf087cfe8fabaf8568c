@@ -16,6 +16,24 @@
       "message": "Before we merge... Is there any documentation to tell whether this will override the components dictated in OWNERS files that import this file?",
       "revId": "2a8a5713f47837eb3eb5bbf087cfe8fabaf8568c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d935cf4d_67e2ae80",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-03-06T21:10:48Z",
+      "side": 1,
+      "message": "Great question. Based on go/atos-user-guide:\n\n\u003e Buganizer Component Inheritance: Bug components from included OWNERS files cannot be inherited.\n\nThere\u0027s a feature bug to support the inheritance, but it hasn\u0027t been implemented (b/191646497). Also, there\u0027s an ongoing effort to deprecate the buganizer components in OWNERS, see go/new-android-ownership-model This CL is added based on the feedback from @samgarg@google.com in the bug.",
+      "parentUuid": "0d68f99d_a1d50caa",
+      "revId": "2a8a5713f47837eb3eb5bbf087cfe8fabaf8568c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
