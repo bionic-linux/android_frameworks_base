@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d68f99d_a1d50caa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2024-03-06T20:55:34Z",
+      "side": 1,
+      "message": "Before we merge... Is there any documentation to tell whether this will override the components dictated in OWNERS files that import this file?",
+      "revId": "2a8a5713f47837eb3eb5bbf087cfe8fabaf8568c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
