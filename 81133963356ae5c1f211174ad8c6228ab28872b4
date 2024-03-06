@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b4e0b42_27cd6c61",
+        "filename": "api/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2024-03-06T11:56:22Z",
+      "side": 1,
+      "message": "This is either unnecessary or the sentence is incomplete. I know you only moved the comment but as you know what this is for would you mind fixing the comment.",
+      "range": {
+        "startLine": 312,
+        "startChar": 15,
+        "endLine": 312,
+        "endChar": 27
+      },
+      "revId": "81133963356ae5c1f211174ad8c6228ab28872b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
