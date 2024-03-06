@@ -28,8 +28,8 @@
       }
   ],
   "postsubmit":[
-      {
-          "name":"FrameworksVpnTests"
-      }
+    {
+      "name":"FrameworksVpnTests"
+    }
   ]
 }
