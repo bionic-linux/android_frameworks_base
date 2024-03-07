@@ -73,6 +73,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.Trace;
 import android.os.VibrationEffect;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.text.InputFilter;
@@ -2068,7 +2069,11 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                     row.anim.setIntValues(progress, newProgress);
                 }
                 row.animTargetProgress = newProgress;
-                row.anim.setDuration(UPDATE_ANIMATION_DURATION);
+                int animation_duration = UPDATE_ANIMATION_DURATION;
+                if(!SystemProperties.getBoolean("sys.volume_row_slider_anim", true)) {
+                    animation_duration = 0;
+                }
+                row.anim.setDuration(animation_duration);
                 row.anim.start();
             } else {
                 // update slider directly to clamped value
