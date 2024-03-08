@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c70c01d3_baacfa65",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-08T23:45:14Z",
+      "side": 1,
+      "message": "This is the full version of the API prior to applying the first set of suggested API changes. In particular: this version of the API follows the original design where `openStorageArea` only takes a storage area name as an argument, and an UnlockedDeviceRequired key is added to Keystore for each storage area, in the StorageManager and hidden from the user.",
+      "revId": "5940ea68b15d1ff02e7062a3905730f8fbed0db6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
