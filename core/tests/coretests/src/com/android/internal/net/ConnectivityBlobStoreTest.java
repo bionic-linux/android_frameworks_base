@@ -153,4 +153,22 @@ public class ConnectivityBlobStoreTest {
         final String[] actual = connectivityBlobStore.list(TEST_NAME /* prefix */);
         assertArrayEquals(expected, actual);
     }
+
+    @Test
+    public void testList_underscoreInPrefix() throws Exception {
+        final String prefix = TEST_NAME + "_";
+        final String[] unsortedNames = new String[] {
+                prefix + "000",
+                TEST_NAME + "123",
+        };
+        // The underscore in the prefix should not be treated as a wildcard.
+        final String[] expected = new String[] {"000"};
+        final ConnectivityBlobStore connectivityBlobStore = createConnectivityBlobStore();
+
+        for (int i = 0; i < unsortedNames.length; i++) {
+            assertTrue(connectivityBlobStore.put(unsortedNames[i], TEST_BLOB));
+        }
+        final String[] actual = connectivityBlobStore.list(prefix);
+        assertArrayEquals(expected, actual);
+    }
 }
