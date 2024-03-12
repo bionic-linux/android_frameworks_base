@@ -705,12 +705,14 @@ public class Vpn {
             case CONNECTED:
                 if (null != mNetworkAgent) {
                     mNetworkAgent.markConnected();
+                    mVpnMetricCollector.onVpnConnected(mNetworkAgent);
                 }
                 break;
             case DISCONNECTED:
             case FAILED:
                 if (null != mNetworkAgent) {
                     mNetworkAgent.unregister();
+                    mVpnMetricCollector.onVpnDisconnected(mNetworkAgent);
                     mNetworkAgent = null;
                 }
                 break;
@@ -1679,6 +1681,7 @@ public class Vpn {
     private void agentDisconnect(NetworkAgent networkAgent) {
         if (networkAgent != null) {
             networkAgent.unregister();
+            mVpnMetricCollector.onVpnDisconnected(networkAgent);
         }
     }
 

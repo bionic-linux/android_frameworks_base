@@ -3160,6 +3160,17 @@ public class VpnTest extends VpnTestBase {
         assertEquals(profile, ikev2VpnProfile.toVpnProfile());
     }
 
+    @Test
+    public void testUpdateStateUpdatesMetrics() {
+        final Vpn vpn = createVpn(PRIMARY_USER.id);
+        vpn.mNetworkAgent = mMockNetworkAgent;
+
+        vpn.updateState(DetailedState.CONNECTED, TAG);
+        verify(mVpnMetricCollector).onVpnConnected(mMockNetworkAgent);
+        vpn.updateState(DetailedState.DISCONNECTED, TAG);
+        verify(mVpnMetricCollector).onVpnDisconnected(mMockNetworkAgent);
+    }
+
     private void assertTransportInfoMatches(NetworkCapabilities nc, int type) {
         assertNotNull(nc);
         VpnTransportInfo ti = (VpnTransportInfo) nc.getTransportInfo();

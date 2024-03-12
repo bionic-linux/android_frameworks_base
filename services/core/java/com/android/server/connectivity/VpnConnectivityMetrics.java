@@ -16,6 +16,10 @@
 
 package com.android.server.connectivity;
 
+import android.net.NetworkAgent;
+import android.os.SystemClock;
+import android.util.Log;
+
 import com.android.internal.annotations.VisibleForTesting;
 
 import java.util.ArrayList;
@@ -28,27 +32,88 @@ import java.util.Map;
  * @hide
  */
 public class VpnConnectivityMetrics {
-    public VpnConnectivityMetrics() {}
-
     private List<VpnConnection> mVpnConnectionList = new ArrayList<>();
     private Map<Integer, VpnMetricCollector> mVpnMetricCollectorMap = new HashMap<>();
+    private final Dependencies mDependencies;
+
+    public VpnConnectivityMetrics() {
+        this(new Dependencies());
+    }
+
+    @VisibleForTesting
+    public VpnConnectivityMetrics(Dependencies dependencies) {
+        mDependencies = dependencies;
+    }
+
+    @VisibleForTesting
+    public static class Dependencies {
+        public long getElapsedRealtime() {
+            return SystemClock.elapsedRealtime();
+        }
+    }
 
     public class VpnMetricCollector {
         private final int mUserId;
+        private long mVpnConnectionPeriodMs = 0;
+        // Each user should have only 1 VPN network agent connected but in the case where the VPN is
+        // restarted, a new network agent will be connected before the old network is disconnected.
+        private Map<NetworkAgent, Long> mVpnConnectedTimestampMs = new HashMap<>();
+
         VpnMetricCollector(int userId) {
             mUserId = userId;
         }
 
         private VpnConnectionParams mVpnConnectionParams = null;
 
+        private void updateTimestamps(long timeNow) {
+            for (Map.Entry<NetworkAgent, Long> entry : mVpnConnectedTimestampMs.entrySet()) {
+                mVpnConnectionPeriodMs += timeNow - entry.getValue();
+                entry.setValue(timeNow);
+            }
+        }
+
         /** Build VpnConnection proto and add it to the stored list. */
         private void buildAndAppendVpnConnectionMetric() {
             if (mVpnConnectionParams == null) {
                 return;
             }
+            updateTimestamps(mDependencies.getElapsedRealtime());
             final VpnConnection vpnConnection = new VpnConnection();
             vpnConnection.setVpnConnectionParams(mVpnConnectionParams);
+            vpnConnection.setConnectedPeriodSeconds((int) (mVpnConnectionPeriodMs / 1000));
+
             mVpnConnectionList.add(vpnConnection);
+        }
+
+        /** Inform the VpnMetricCollector that an app starts a Vpn. */
+        public void onAppStarted() {
+            mVpnConnectionParams = new VpnConnectionParams();
+            // TODO: Fill the values of VpnConnectionParams.
+        }
+
+        /** Inform the VpnMetricCollector that a Vpn network is connected. */
+        public void onVpnConnected(NetworkAgent networkAgent) {
+            if (mVpnConnectedTimestampMs.containsKey(networkAgent)) {
+                Log.wtf(getTag(), "onVpnConnected called on an already connected NetworkAgent: "
+                        + networkAgent);
+            }
+            mVpnConnectedTimestampMs.put(networkAgent, mDependencies.getElapsedRealtime());
+        }
+
+        /** Inform the VpnMetricCollector that a Vpn network is disconnected. */
+        public void onVpnDisconnected(NetworkAgent networkAgent) {
+            if (!mVpnConnectedTimestampMs.containsKey(networkAgent)) {
+                Log.wtf(getTag(), "onVpnDisconnected called on an unknown NetworkAgent: "
+                        + networkAgent);
+                return;
+            }
+            mVpnConnectionPeriodMs +=
+                    mDependencies.getElapsedRealtime() - mVpnConnectedTimestampMs.get(networkAgent);
+            mVpnConnectedTimestampMs.remove(networkAgent);
+        }
+
+        private String getTag() {
+            return VpnMetricCollector.class.getSimpleName() + "/" + mUserId;
         }
     }
 
