@@ -18,10 +18,10 @@
 
 #include <androidfw/CursorWindow.h>
 
-#include <sys/mman.h>
-
 #include "android-base/logging.h"
 #include "cutils/ashmem.h"
+
+using android::base::MappedFile;
 
 namespace android {
 
@@ -39,7 +39,7 @@ CursorWindow::CursorWindow() {
 
 CursorWindow::~CursorWindow() {
     if (mAshmemFd != -1) {
-        ::munmap(mData, mSize);
+        mMappedFile.reset();
         ::close(mAshmemFd);
     } else {
         free(mData);
@@ -75,6 +75,7 @@ fail_silent:
 status_t CursorWindow::maybeInflate() {
     int ashmemFd = 0;
     void* newData = nullptr;
+    std::unique_ptr<MappedFile> mappedFile;
 
     // Bail early when we can't expand any further
     if (mReadOnly || mSize == mInflatedSize) {
@@ -95,11 +96,12 @@ status_t CursorWindow::maybeInflate() {
         goto fail_silent;
     }
 
-    newData = ::mmap(nullptr, mInflatedSize, PROT_READ | PROT_WRITE, MAP_SHARED, ashmemFd, 0);
-    if (newData == MAP_FAILED) {
+    mappedFile = MappedFile::FromFd(ashmemFd, 0, mInflatedSize, PROT_READ | PROT_WRITE);
+    if (mappedFile == nullptr) {
         PLOG(ERROR) << "Failed mmap";
         goto fail_silent;
     }
+    newData = mappedFile->data();
 
     if (ashmem_set_prot_region(ashmemFd, PROT_READ) < 0) {
         PLOG(ERROR) << "Failed ashmem_set_prot_region";
@@ -120,6 +122,7 @@ status_t CursorWindow::maybeInflate() {
         mData = newData;
         mSize = mInflatedSize;
         mSlotsOffset = newSlotsOffset;
+        mMappedFile = std::move(mappedFile);
 
         updateSlotsData();
     }
@@ -130,7 +133,7 @@ status_t CursorWindow::maybeInflate() {
 fail:
     LOG(ERROR) << "Failed maybeInflate";
 fail_silent:
-    ::munmap(newData, mInflatedSize);
+    mappedFile.reset();
     ::close(ashmemFd);
     return UNKNOWN_ERROR;
 }
@@ -167,11 +170,12 @@ status_t CursorWindow::createFromParcel(Parcel* parcel, CursorWindow** outWindow
             goto fail_silent;
         }
 
-        window->mData = ::mmap(nullptr, window->mSize, PROT_READ, MAP_SHARED, window->mAshmemFd, 0);
-        if (window->mData == MAP_FAILED) {
+        window->mMappedFile = MappedFile::FromFd(window->mAshmemFd, 0, window->mSize, PROT_READ);
+        if (window->mMappedFile == nullptr) {
             PLOG(ERROR) << "Failed mmap";
             goto fail_silent;
         }
+        window->mData = window->mMappedFile->data();
     } else {
         window->mAshmemFd = -1;
 
