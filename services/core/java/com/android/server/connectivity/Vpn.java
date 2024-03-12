@@ -2260,6 +2260,7 @@ public class Vpn {
         // Make defensive copy since the content of array might be altered by the caller.
         mConfig.underlyingNetworks =
                 (networks != null) ? Arrays.copyOf(networks, networks.length) : null;
+        mVpnMetricCollector.onSetUnderlyingNetworks(mConfig.underlyingNetworks);
         doSetUnderlyingNetworks(
                 mNetworkAgent,
                 (mConfig.underlyingNetworks != null)
@@ -3104,6 +3105,7 @@ public class Vpn {
                     final LinkProperties oldLp = makeLinkProperties();
 
                     mConfig.underlyingNetworks = new Network[] {network};
+                    mVpnMetricCollector.onSetUnderlyingNetworks(mConfig.underlyingNetworks);
                     mConfig.mtu = calculateVpnMtu();
 
                     final LinkProperties newLp = makeLinkProperties();

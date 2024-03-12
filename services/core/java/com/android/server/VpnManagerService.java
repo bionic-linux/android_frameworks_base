@@ -129,8 +129,8 @@ public class VpnManagerService extends IVpnManager.Stub {
         }
 
         /** Return the VpnConnectivityMetrics to be used by this class */
-        public VpnConnectivityMetrics getVpnConnectivityMetrics() {
-            return new VpnConnectivityMetrics();
+        public VpnConnectivityMetrics getVpnConnectivityMetrics(Context context) {
+            return new VpnConnectivityMetrics(context);
         }
 
         public INetd getNetd() {
@@ -169,7 +169,7 @@ public class VpnManagerService extends IVpnManager.Stub {
         mHandlerThread.start();
         mHandler = mHandlerThread.getThreadHandler();
         mVpnProfileStore = mDeps.getVpnProfileStore();
-        mVpnConnectivityMetrics = mDeps.getVpnConnectivityMetrics();
+        mVpnConnectivityMetrics = mDeps.getVpnConnectivityMetrics(mContext);
         mUserAllContext = mContext.createContextAsUser(UserHandle.ALL, 0 /* flags */);
         mNMS = mDeps.getINetworkManagementService();
         mNetd = mDeps.getNetd();

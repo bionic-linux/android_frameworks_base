@@ -16,6 +16,9 @@
 
 package com.android.server.connectivity;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
 import android.net.NetworkAgent;
 import android.os.SystemClock;
 import android.util.Log;
@@ -24,8 +27,10 @@ import com.android.internal.annotations.VisibleForTesting;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Class for logging VPN connectivity health event
@@ -35,14 +40,16 @@ public class VpnConnectivityMetrics {
     private List<VpnConnection> mVpnConnectionList = new ArrayList<>();
     private Map<Integer, VpnMetricCollector> mVpnMetricCollectorMap = new HashMap<>();
     private final Dependencies mDependencies;
+    private final ConnectivityManager mConnectivityManager;
 
-    public VpnConnectivityMetrics() {
-        this(new Dependencies());
+    public VpnConnectivityMetrics(Context context) {
+        this(context, new Dependencies());
     }
 
     @VisibleForTesting
-    public VpnConnectivityMetrics(Dependencies dependencies) {
+    public VpnConnectivityMetrics(Context context, Dependencies dependencies) {
         mDependencies = dependencies;
+        mConnectivityManager = context.getSystemService(ConnectivityManager.class);
     }
 
     @VisibleForTesting
@@ -58,6 +65,7 @@ public class VpnConnectivityMetrics {
         // Each user should have only 1 VPN network agent connected but in the case where the VPN is
         // restarted, a new network agent will be connected before the old network is disconnected.
         private Map<NetworkAgent, Long> mVpnConnectedTimestampMs = new HashMap<>();
+        private Set<Integer> mUnderlyingTypeSet = new HashSet<>();
 
         VpnMetricCollector(int userId) {
             mUserId = userId;
@@ -81,6 +89,9 @@ public class VpnConnectivityMetrics {
             final VpnConnection vpnConnection = new VpnConnection();
             vpnConnection.setVpnConnectionParams(mVpnConnectionParams);
             vpnConnection.setConnectedPeriodSeconds((int) (mVpnConnectionPeriodMs / 1000));
+            for (int type : mUnderlyingTypeSet) {
+                vpnConnection.addUnderlyingNetworkType(type);
+            }
 
             mVpnConnectionList.add(vpnConnection);
         }
@@ -112,8 +123,28 @@ public class VpnConnectivityMetrics {
             mVpnConnectedTimestampMs.remove(networkAgent);
         }
 
+        /** Inform the VpnMetricCollector that the underlying networks are updated. */
+        public void onSetUnderlyingNetworks(Network[] networks) {
+            for (Network network : networks) {
+                final int[] networkTypes = getNetworkTypes(network);
+                if (networkTypes == null) {
+                    Log.wtf(getTag(), "Unable to get network types of underlying network");
+                    continue;
+                }
+                for (int type : networkTypes) {
+                    mUnderlyingTypeSet.add(type);
+                }
+            }
+        }
+
         private String getTag() {
             return VpnMetricCollector.class.getSimpleName() + "/" + mUserId;
+        }
+
+        private int[] getNetworkTypes(Network network) {
+            final NetworkCapabilities nc = mConnectivityManager.getNetworkCapabilities(network);
+            if (nc == null) return null;
+            return nc.getTransportTypes();
         }
     }
 

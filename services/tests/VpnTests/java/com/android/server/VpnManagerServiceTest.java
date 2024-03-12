@@ -123,7 +123,7 @@ public class VpnManagerServiceTest extends VpnTestBase {
         }
 
         @Override
-        public VpnConnectivityMetrics getVpnConnectivityMetrics() {
+        public VpnConnectivityMetrics getVpnConnectivityMetrics(Context context) {
             return mVpnConnectivityMetrics;
         }
 

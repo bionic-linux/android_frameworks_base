@@ -20,6 +20,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.NetworkAgent;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -44,6 +46,8 @@ public class VpnConnectivityMetricsTest {
 
     @Mock private VpnConnectivityMetrics.Dependencies mDependencies;
     @Mock private NetworkAgent mNetworkAgent;
+    @Mock private Context mContext;
+    @Mock private ConnectivityManager mConnectivityManager;
 
     private void setElapsedRealtimeMs(long time) {
         doReturn(time).when(mDependencies).getElapsedRealtime();
@@ -52,9 +56,13 @@ public class VpnConnectivityMetricsTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+        doReturn(Context.CONNECTIVITY_SERVICE).when(mContext)
+                .getSystemServiceName(ConnectivityManager.class);
+        doReturn(mConnectivityManager).when(mContext)
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
 
         setElapsedRealtimeMs(0);
-        mVpnConnectivityMetrics = new VpnConnectivityMetrics(mDependencies);
+        mVpnConnectivityMetrics = new VpnConnectivityMetrics(mContext, mDependencies);
     }
 
     @Test
