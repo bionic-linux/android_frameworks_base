@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "017c871a_b32a8071",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4030,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-03-12T18:57:38Z",
+      "side": 1,
+      "message": "What about dispatching network configuration change event that we discussed? That is, should we be calling `ApplicationThread#clearDnsCache()` here instead?",
+      "range": {
+        "startLine": 4030,
+        "startChar": 20,
+        "endLine": 4030,
+        "endChar": 47
+      },
+      "revId": "7ae871e7c65972687b6d5aa1bb96ba8bb6128907",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
