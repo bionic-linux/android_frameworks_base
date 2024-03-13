@@ -63,6 +63,23 @@
       },
       "revId": "7ae871e7c65972687b6d5aa1bb96ba8bb6128907",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68ec251f_ea0fc674",
+        "filename": "core/java/android/app/network-policy.aconfig",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2024-03-13T23:48:00Z",
+      "side": 1,
+      "message": "which Android.bp file is going to be building this? Usually each aconfig file has to be explicitly listed.",
+      "revId": "7ae871e7c65972687b6d5aa1bb96ba8bb6128907",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
