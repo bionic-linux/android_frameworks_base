@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bba51a1_711ae5e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2024-03-13T18:12:36Z",
+      "side": 1,
+      "message": "Looks like android.app flags are not set up in aosp, in which case it may be fine skipping this CL if porting them proves to be complicated.",
+      "revId": "7ae871e7c65972687b6d5aa1bb96ba8bb6128907",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "017c871a_b32a8071",
@@ -14,6 +31,30 @@
       "writtenOn": "2024-03-12T18:57:38Z",
       "side": 1,
       "message": "What about dispatching network configuration change event that we discussed? That is, should we be calling `ApplicationThread#clearDnsCache()` here instead?",
+      "range": {
+        "startLine": 4030,
+        "startChar": 20,
+        "endLine": 4030,
+        "endChar": 47
+      },
+      "revId": "7ae871e7c65972687b6d5aa1bb96ba8bb6128907",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fd4722a_0c3e8d93",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4030,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2024-03-13T18:12:36Z",
+      "side": 1,
+      "message": "My understanding is that it is sent when CS sends the broadcast to clear dns cache... which happens for all apps.\n\nI don\u0027t see a reason to call it every time we restore network access. Besides, the callbacks are called synchronously so I don\u0027t want to call it `ApplicationThread#clearDnsCache` its current form.",
+      "parentUuid": "017c871a_b32a8071",
       "range": {
         "startLine": 4030,
         "startChar": 20,
