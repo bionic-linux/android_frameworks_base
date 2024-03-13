@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3d24b9e_10ccb509",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2024-03-13T10:43:16Z",
+      "side": 1,
+      "message": "vio",
+      "revId": "0b793600207c5fd5160bb73a83b7c1d1c84b0e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "624a7be9_fb7c8aec",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1732,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2024-03-13T10:43:16Z",
+      "side": 1,
+      "message": "By \"secret keys\", do you mean symmetric keys like AES and HMAC keys?  (Could you really use them in R?  That seems bizarre!)",
+      "revId": "0b793600207c5fd5160bb73a83b7c1d1c84b0e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81fa5c9f_53a0de70",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2024-03-13T10:43:16Z",
+      "side": 1,
+      "message": "I\u0027m not sure that we should be suggesting usage patterns like this in the API documentation.",
+      "range": {
+        "startLine": 1737,
+        "startChar": 68,
+        "endLine": 1740,
+        "endChar": 96
+      },
+      "revId": "0b793600207c5fd5160bb73a83b7c1d1c84b0e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aca45942_a5b42d13",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2024-03-13T10:43:16Z",
+      "side": 1,
+      "message": "Not sure I\u0027d want to describe these as \"bugs\", not least because there\u0027s no chance we\u0027re going to fix them (e.g. in QPR3).  How about something like \"the following differences in behavior\" or \"behavioral issues\" ?",
+      "range": {
+        "startLine": 1750,
+        "startChar": 57,
+        "endLine": 1750,
+        "endChar": 61
+      },
+      "revId": "0b793600207c5fd5160bb73a83b7c1d1c84b0e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cbc4d27_dccb3216",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1761,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2024-03-13T10:43:16Z",
+      "side": 1,
+      "message": "\"fixed\" as per \"bugs\" above",
+      "range": {
+        "startLine": 1761,
+        "startChar": 28,
+        "endLine": 1761,
+        "endChar": 33
+      },
+      "revId": "0b793600207c5fd5160bb73a83b7c1d1c84b0e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe968c49_3d01264d",
+        "filename": "keystore/java/android/security/keystore/KeyProtection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2024-03-13T10:43:16Z",
+      "side": 1,
+      "message": "(as above)",
+      "revId": "0b793600207c5fd5160bb73a83b7c1d1c84b0e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
