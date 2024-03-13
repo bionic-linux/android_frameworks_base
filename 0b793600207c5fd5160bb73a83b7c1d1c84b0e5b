@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "406f6039_8e7b6943",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1732,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-13T17:25:06Z",
+      "side": 1,
+      "message": "I mean all secret keys, both symmetric keys and the private part of asymmetric keys.  The code just allowed PURPOSE_ENCRYPT and PURPOSE_VERIFY regardless of the type of key; see https://android.googlesource.com/platform/system/security/+/refs/heads/android11-release/keystore/keymaster_enforcement.cpp#324.\n\nI think it\u0027s true that PURPOSE_ENCRYPT and PURPOSE_VERIFY are never used for asymmetric private key operations, though.  So we could write \"symmetric\" instead of \"secret\".",
+      "parentUuid": "624a7be9_fb7c8aec",
+      "revId": "0b793600207c5fd5160bb73a83b7c1d1c84b0e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "81fa5c9f_53a0de70",
         "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
         "patchSetId": 1
@@ -60,6 +78,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3619af57_2002e4d9",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-13T17:25:06Z",
+      "side": 1,
+      "message": "Is this because you think there is a better solution for this use case, or because you think a solution to this use case should not be documented?  This is one of the main use cases of this API, and it may not be obvious what to do for it, so I think it\u0027s helpful to mention something about it.",
+      "parentUuid": "81fa5c9f_53a0de70",
+      "range": {
+        "startLine": 1737,
+        "startChar": 68,
+        "endLine": 1740,
+        "endChar": 96
+      },
+      "revId": "0b793600207c5fd5160bb73a83b7c1d1c84b0e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aca45942_a5b42d13",
         "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
         "patchSetId": 1
@@ -71,6 +113,30 @@
       "writtenOn": "2024-03-13T10:43:16Z",
       "side": 1,
       "message": "Not sure I\u0027d want to describe these as \"bugs\", not least because there\u0027s no chance we\u0027re going to fix them (e.g. in QPR3).  How about something like \"the following differences in behavior\" or \"behavioral issues\" ?",
+      "range": {
+        "startLine": 1750,
+        "startChar": 57,
+        "endLine": 1750,
+        "endChar": 61
+      },
+      "revId": "0b793600207c5fd5160bb73a83b7c1d1c84b0e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3227ea40_bffcc8ab",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-13T17:25:06Z",
+      "side": 1,
+      "message": "They are bugs, and we are fixing them.  We can\u0027t retroactively fix things in previous versions of Android, at least such that they reach all devices.  The fixes are currently scheduled to go out in Android 14 QPR3.  But not all OEMs take QPRs, and apps don\u0027t know about QPRs anyway (there\u0027s no API level bump).  So we should just say fixed in Android 15.",
+      "parentUuid": "aca45942_a5b42d13",
       "range": {
         "startLine": 1750,
         "startChar": 57,
