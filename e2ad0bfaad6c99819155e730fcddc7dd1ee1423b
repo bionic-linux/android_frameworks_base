@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2aea5f0_5bf7482c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1491633
+      },
+      "writtenOn": "2024-03-13T17:35:36Z",
+      "side": 1,
+      "message": "We will not merge this into AOSP directly, I\u0027ve cherry-picked the change internally and Xiaomi will use a patch we provided in the meantime.",
+      "revId": "e2ad0bfaad6c99819155e730fcddc7dd1ee1423b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e252ec46_784a3bd3",
