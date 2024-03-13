@@ -80,6 +80,24 @@
       "message": "which Android.bp file is going to be building this? Usually each aconfig file has to be explicitly listed.",
       "revId": "7ae871e7c65972687b6d5aa1bb96ba8bb6128907",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "267d2d1c_ac8a32cd",
+        "filename": "core/java/android/app/network-policy.aconfig",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2024-03-13T23:52:13Z",
+      "side": 1,
+      "message": "frameworks/base/AconfigFlags.bp\n\nUse of *.aconfig seems quite common there.\nThat\u0027s just how it is for all flags in this directory.",
+      "parentUuid": "68ec251f_ea0fc674",
+      "revId": "7ae871e7c65972687b6d5aa1bb96ba8bb6128907",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
