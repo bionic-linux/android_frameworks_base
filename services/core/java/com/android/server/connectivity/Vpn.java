@@ -1573,11 +1573,6 @@ public class Vpn {
     }
 
     @GuardedBy("this")
-    private void agentConnect() {
-        agentConnect(null /* validationCallback */);
-    }
-
-    @GuardedBy("this")
     private void agentConnect(@Nullable ValidationStatusCallback validationCallback) {
         LinkProperties lp = makeLinkProperties();
 
@@ -1691,13 +1686,19 @@ public class Vpn {
 
     @GuardedBy("this")
     private void startNewNetworkAgent(NetworkAgent oldNetworkAgent, String reason) {
+        startNewNetworkAgent(oldNetworkAgent, reason, null /* validationCallback */);
+    }
+
+    @GuardedBy("this")
+    private void startNewNetworkAgent(NetworkAgent oldNetworkAgent, String reason,
+            ValidationStatusCallback validationCallback) {
         // Initialize the state for a new agent, while keeping the old one connected
         // in case this new connection fails.
         mNetworkAgent = null;
         updateState(DetailedState.CONNECTING, reason);
         // Bringing up a new NetworkAgent to prevent the data leakage before tearing down the old
         // NetworkAgent.
-        agentConnect();
+        agentConnect(validationCallback);
         agentDisconnect(oldNetworkAgent);
     }
 
@@ -3128,8 +3129,8 @@ public class Vpn {
                     // unconnected sockets on the new VPN network are closed and retried on the new
                     // VPN network.
                     if (!removedAddrs.isEmpty()) {
-                        startNewNetworkAgent(
-                                mNetworkAgent, "MTU too low for IPv6; restarting network agent");
+                        startNewNetworkAgent(mNetworkAgent, this::onValidationStatus,
+                                "MTU too low for IPv6; restarting network agent");
 
                         for (LinkAddress removed : removedAddrs) {
                             mTunnelIface.removeAddress(
