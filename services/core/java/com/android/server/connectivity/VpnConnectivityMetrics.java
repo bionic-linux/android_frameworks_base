@@ -20,6 +20,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkAgent;
+import android.net.NetworkCapabilities;
 import android.os.SystemClock;
 import android.util.Log;
 
@@ -66,6 +67,10 @@ public class VpnConnectivityMetrics {
         // restarted, a new network agent will be connected before the old network is disconnected.
         private Map<NetworkAgent, Long> mVpnConnectedTimestampMs = new HashMap<>();
         private Set<Integer> mUnderlyingTypeSet = new HashSet<>();
+        private long mVpnValidatedPeriodMs = 0;
+        private Map<NetworkAgent, Long> mVpnValidatedTimestampMs = new HashMap<>();
+        private int mValidationAttempts = 0;
+        private int mValidationAttemptsSuccess = 0;
 
         VpnMetricCollector(int userId) {
             mUserId = userId;
@@ -76,6 +81,10 @@ public class VpnConnectivityMetrics {
         private void updateTimestamps(long timeNow) {
             for (Map.Entry<NetworkAgent, Long> entry : mVpnConnectedTimestampMs.entrySet()) {
                 mVpnConnectionPeriodMs += timeNow - entry.getValue();
+                entry.setValue(timeNow);
+            }
+            for (Map.Entry<NetworkAgent, Long> entry : mVpnValidatedTimestampMs.entrySet()) {
+                mVpnValidatedPeriodMs += timeNow - entry.getValue();
                 entry.setValue(timeNow);
             }
         }
@@ -92,6 +101,9 @@ public class VpnConnectivityMetrics {
             for (int type : mUnderlyingTypeSet) {
                 vpnConnection.addUnderlyingNetworkType(type);
             }
+            vpnConnection.setVpnValidatedPeriodSeconds((int) (mVpnValidatedPeriodMs / 1000));
+            vpnConnection.setValidationAttempts(mValidationAttempts);
+            vpnConnection.setValidationAttemptsSuccess(mValidationAttemptsSuccess);
 
             mVpnConnectionList.add(vpnConnection);
         }
@@ -120,6 +132,11 @@ public class VpnConnectivityMetrics {
             }
             mVpnConnectionPeriodMs +=
                     mDependencies.getElapsedRealtime() - mVpnConnectedTimestampMs.get(networkAgent);
+            if (mVpnValidatedTimestampMs.containsKey(networkAgent)) {
+                mVpnValidatedPeriodMs += mDependencies.getElapsedRealtime()
+                        - mVpnValidatedTimestampMs.get(networkAgent);
+                mVpnValidatedTimestampMs.remove(networkAgent);
+            }
             mVpnConnectedTimestampMs.remove(networkAgent);
         }
 
@@ -134,6 +151,26 @@ public class VpnConnectivityMetrics {
                 for (int type : networkTypes) {
                     mUnderlyingTypeSet.add(type);
                 }
+            }
+        }
+
+        /** Inform the VpnMetricCollector of a validation attempt and the result. */
+        public void onValidationStatus(NetworkAgent networkAgent, int status) {
+            if (!mVpnConnectedTimestampMs.containsKey(networkAgent)) {
+                Log.wtf(getTag(), "onValidationStatus called on an unconnected NetworkAgent: "
+                        + networkAgent);
+            }
+            mValidationAttempts++;
+            if (status == NetworkAgent.VALIDATION_STATUS_VALID) {
+                mValidationAttemptsSuccess++;
+                mVpnValidatedTimestampMs.putIfAbsent(networkAgent,
+                        mDependencies.getElapsedRealtime());
+            } else if (status == NetworkAgent.VALIDATION_STATUS_NOT_VALID) {
+                if (mVpnValidatedTimestampMs.containsKey(networkAgent)) {
+                    mVpnValidatedPeriodMs += mDependencies.getElapsedRealtime()
+                            - mVpnValidatedTimestampMs.get(networkAgent);
+                }
+                mVpnValidatedTimestampMs.remove(networkAgent);
             }
         }
 

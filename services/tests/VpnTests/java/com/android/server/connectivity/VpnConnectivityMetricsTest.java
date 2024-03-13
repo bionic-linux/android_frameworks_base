@@ -110,4 +110,34 @@ public class VpnConnectivityMetricsTest {
         final int actualConnectedTimeSec = metrics.get(0).getConnectedPeriodSeconds();
         assertEquals(actualConnectedTimeSec, expectedConnectedTimeSec);
     }
+
+    @Test
+    public void testValidatedPeriod() {
+        final long timeConnectedMs = 5000;
+        final long timeValidationPassMs = 10021;
+        final long timePullMs = 50124;
+        final int expectedValidatedTimeSec = 40;
+        final int expectedValidationAttempts = 2;
+        final int expectedValidationSuccess = 1;
+        final VpnMetricCollector vpnMetricCollector =
+                mVpnConnectivityMetrics.newCollector(TEST_USER_ID);
+        vpnMetricCollector.onAppStarted();
+
+        setElapsedRealtimeMs(timeConnectedMs);
+        vpnMetricCollector.onVpnConnected(mNetworkAgent);
+        // first failure
+        vpnMetricCollector.onValidationStatus(
+                mNetworkAgent, NetworkAgent.VALIDATION_STATUS_NOT_VALID);
+        setElapsedRealtimeMs(timeValidationPassMs);
+        vpnMetricCollector.onValidationStatus(mNetworkAgent, NetworkAgent.VALIDATION_STATUS_VALID);
+        setElapsedRealtimeMs(timePullMs);
+        final List<VpnConnection> metrics = mVpnConnectivityMetrics.pullMetrics();
+
+        assertEquals(1, metrics.size());
+        final int actualValidatedTimeSec = metrics.get(0).getVpnValidatedPeriodSeconds();
+        assertEquals(expectedValidatedTimeSec, actualValidatedTimeSec);
+        assertEquals(expectedValidationAttempts, metrics.get(0).getValidationAttempts());
+        assertEquals(expectedValidationSuccess, metrics.get(0).getValidationAttemptsSuccess());
+    }
+
 }

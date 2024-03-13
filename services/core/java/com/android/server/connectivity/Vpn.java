@@ -1686,7 +1686,8 @@ public class Vpn {
 
     @GuardedBy("this")
     private void startNewNetworkAgent(NetworkAgent oldNetworkAgent, String reason) {
-        startNewNetworkAgent(oldNetworkAgent, reason, null /* validationCallback */);
+        startNewNetworkAgent(oldNetworkAgent, reason,
+                (status) -> mVpnMetricCollector.onValidationStatus(mNetworkAgent, status));
     }
 
     @GuardedBy("this")
@@ -2787,6 +2788,8 @@ public class Vpn {
         // mMobikeEnabled can only be updated after IKE AUTH is finished.
         private boolean mMobikeEnabled = false;
 
+        private NetworkAgent mNetworkAgentRunner = null;
+
         /**
          * The number of attempts to reset the IKE session since the last successful connection.
          *
@@ -3019,6 +3022,7 @@ public class Vpn {
                     // The below must be done atomically with the mConfig update, otherwise
                     // isRunningLocked() will be racy.
                     if (networkAgent == null) {
+                        mNetworkAgentRunner = mNetworkAgent;
                         if (isSettingsVpnLocked()) {
                             prepareStatusIntent();
                         }
@@ -3129,8 +3133,9 @@ public class Vpn {
                     // unconnected sockets on the new VPN network are closed and retried on the new
                     // VPN network.
                     if (!removedAddrs.isEmpty()) {
-                        startNewNetworkAgent(mNetworkAgent, this::onValidationStatus,
-                                "MTU too low for IPv6; restarting network agent");
+                        startNewNetworkAgent(mNetworkAgent,
+                                "MTU too low for IPv6; restarting network agent",
+                                this::onValidationStatus);
 
                         for (LinkAddress removed : removedAddrs) {
                             mTunnelIface.removeAddress(
@@ -3618,6 +3623,7 @@ public class Vpn {
         }
 
         public void onValidationStatus(int status) {
+            mVpnMetricCollector.onValidationStatus(mNetworkAgentRunner, status);
             mEventChanges.log("[Validation] validation status " + status);
             if (status == NetworkAgent.VALIDATION_STATUS_VALID) {
                 // No data stall now. Reset it.
