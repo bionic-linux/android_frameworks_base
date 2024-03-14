@@ -71,6 +71,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "704a154f_928319d3",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1732,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-14T17:46:46Z",
+      "side": 1,
+      "message": "Changed to \"symmetric\"",
+      "parentUuid": "1d6f556d_b079359b",
+      "revId": "0b793600207c5fd5160bb73a83b7c1d1c84b0e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81fa5c9f_53a0de70",
