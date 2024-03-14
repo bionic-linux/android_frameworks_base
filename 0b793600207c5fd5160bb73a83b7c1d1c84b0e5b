@@ -53,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d6f556d_b079359b",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1732,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2024-03-14T16:14:28Z",
+      "side": 1,
+      "message": "Thanks for explaining (and for the code archeology), either wording SGTM.",
+      "parentUuid": "406f6039_8e7b6943",
+      "revId": "0b793600207c5fd5160bb73a83b7c1d1c84b0e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81fa5c9f_53a0de70",
@@ -90,6 +108,30 @@
       "side": 1,
       "message": "Is this because you think there is a better solution for this use case, or because you think a solution to this use case should not be documented?  This is one of the main use cases of this API, and it may not be obvious what to do for it, so I think it\u0027s helpful to mention something about it.",
       "parentUuid": "81fa5c9f_53a0de70",
+      "range": {
+        "startLine": 1737,
+        "startChar": 68,
+        "endLine": 1740,
+        "endChar": 96
+      },
+      "revId": "0b793600207c5fd5160bb73a83b7c1d1c84b0e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2ad17a6_3974df40",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2024-03-14T16:14:28Z",
+      "side": 1,
+      "message": "Er, neither -- I was just being purist that API documentation should stick to describing what the API does.  But that only works if there\u0027s another place that can hold more general documentation -- and the the Keystore general documentation isn\u0027t in a great state, so here\u0027s as good a place as any.",
+      "parentUuid": "3619af57_2002e4d9",
       "range": {
         "startLine": 1737,
         "startChar": 68,
@@ -147,6 +189,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c1424ad_eabae838",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2024-03-14T16:14:28Z",
+      "side": 1,
+      "message": "Ok, let\u0027s call a bug a bug then.",
+      "parentUuid": "3227ea40_bffcc8ab",
+      "range": {
+        "startLine": 1750,
+        "startChar": 57,
+        "endLine": 1750,
+        "endChar": 61
+      },
+      "revId": "0b793600207c5fd5160bb73a83b7c1d1c84b0e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9cbc4d27_dccb3216",
@@ -170,6 +236,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2102515f_a2e20426",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1761,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2024-03-14T16:14:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9cbc4d27_dccb3216",
+      "range": {
+        "startLine": 1761,
+        "startChar": 28,
+        "endLine": 1761,
+        "endChar": 33
+      },
+      "revId": "0b793600207c5fd5160bb73a83b7c1d1c84b0e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe968c49_3d01264d",
@@ -183,6 +273,24 @@
       "writtenOn": "2024-03-13T10:43:16Z",
       "side": 1,
       "message": "(as above)",
+      "revId": "0b793600207c5fd5160bb73a83b7c1d1c84b0e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "191a43ef_fac17f45",
+        "filename": "keystore/java/android/security/keystore/KeyProtection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2024-03-14T16:14:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "fe968c49_3d01264d",
       "revId": "0b793600207c5fd5160bb73a83b7c1d1c84b0e5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
