@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7424171b_bc48f906",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-15T04:08:55Z",
+      "side": 1,
+      "message": "This is outdated",
+      "range": {
+        "startLine": 10,
+        "startChar": 36,
+        "endLine": 10,
+        "endChar": 72
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b02ba8c_3372624b",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-15T04:08:55Z",
+      "side": 1,
+      "message": "tries to lock",
+      "range": {
+        "startLine": 74,
+        "startChar": 70,
+        "endLine": 74,
+        "endChar": 85
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b7ec1af_6ab78327",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-15T04:08:55Z",
+      "side": 1,
+      "message": "locked",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 14
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d361a41_6eb1ce77",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2973,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-15T04:08:55Z",
+      "side": 1,
+      "message": "This needs to be reworded since this is not an internal API -- it\u0027s a public API.",
+      "range": {
+        "startLine": 2973,
+        "startChar": 23,
+        "endLine": 2973,
+        "endChar": 40
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d55f028f_e1e7fe6f",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2975,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-15T04:08:55Z",
+      "side": 1,
+      "message": "This should link to the Keystore documentation that explains what this means",
+      "range": {
+        "startLine": 2974,
+        "startChar": 75,
+        "endLine": 2975,
+        "endChar": 31
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf062969_2f06d6d4",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2987,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-15T04:08:55Z",
+      "side": 1,
+      "message": "These only apply to unlocked-only storage, not generic storage areas",
+      "range": {
+        "startLine": 2983,
+        "startChar": 0,
+        "endLine": 2987,
+        "endChar": 98
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55909802_becaa9b3",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3026,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-15T04:08:55Z",
+      "side": 1,
+      "message": "We should try to avoid listing all the storage areas whenever operating on a single one, since this won\u0027t scale well if there are a lot of storage areas.\n\nIn cases like this, where we\u0027re trying to detect error conditions, it\u0027s better to make the lower layers propagate the needed information to upper layers via the thrown exception.",
+      "range": {
+        "startLine": 3023,
+        "startChar": 0,
+        "endLine": 3026,
+        "endChar": 9
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68d2d1e6_1aa455ff",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3072,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-15T04:08:55Z",
+      "side": 1,
+      "message": "If we don\u0027t plan to guarantee atomic deletion, we need to document that and also carefully consider any recovery code that may be needed for cases where the deletion gets interrupted.  E.g. what if `openStorageArea`, or `deleteStorageArea`, is passed a storage area that has been partially deleted.",
+      "range": {
+        "startLine": 3067,
+        "startChar": 1,
+        "endLine": 3072,
+        "endChar": 9
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40ead81e_fd431b09",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3099,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-15T04:08:55Z",
+      "side": 1,
+      "message": "I think this is backwards.  It\u0027s registering a death recipient in the app for what to do if the system_server dies, as opposed to registering a death recipient in the system_server for what to do if the app does.",
+      "range": {
+        "startLine": 3099,
+        "startChar": 0,
+        "endLine": 3099,
+        "endChar": 51
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bdd08be_803274f1",
+        "filename": "core/java/android/security/flags.aconfig",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-15T04:08:55Z",
+      "side": 1,
+      "message": "It probably will be easier to add the flag in a separate CL, since adding the flag unblocks adding any code related to this feature (not just this CL).",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa97635e_43bbe8bc",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4613,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-15T04:08:55Z",
+      "side": 1,
+      "message": "times",
+      "range": {
+        "startLine": 4613,
+        "startChar": 45,
+        "endLine": 4613,
+        "endChar": 50
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
