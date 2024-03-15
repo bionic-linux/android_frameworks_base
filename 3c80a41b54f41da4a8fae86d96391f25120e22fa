@@ -50,6 +50,24 @@
       "message": "This is for robolectric, right?\n\nWhy don\u0027t we just use `#ifdef __linux__`? Using a trunk flag would be too painful and I don\u0027t think it\u0027s worth doing.\n\nWDYT @Lee?",
       "revId": "3c80a41b54f41da4a8fae86d96391f25120e22fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95b5f364_1d29dcc8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-03-15T22:45:39Z",
+      "side": 1,
+      "message": "I think I would use flags, because the end result would be cleaner - a single path that uses MappedFile.  It might take a quarter before the flag could be removed, of course.  Otherwise, flags are not that much trouble once the infrastructure is in place.  I\u0027m not sure it\u0027s in place in the jni directory.\n\nSo, an ``#ifdef`` would be okay from a stability standpoint.\n\nIn the meantime, I will commit the infrastructure to use sqlite flags in the jni directory.",
+      "parentUuid": "6acc76e3_7a1dcc82",
+      "revId": "3c80a41b54f41da4a8fae86d96391f25120e22fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
