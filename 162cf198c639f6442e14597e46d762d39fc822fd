@@ -24,6 +24,138 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f474e90b_abedb378",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "Some notes inline, but hopefully you\u0027re able to find an API sponsor; I\u0027ll defer to that final API sponsor. 😊",
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5490e10d_472d28bc",
+        "filename": "core/java/android/os/Environment.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "Slight nit: the local utility method `buildPath()` can make this a tiny bit more readable.",
+      "range": {
+        "startLine": 634,
+        "startChar": 15,
+        "endLine": 634,
+        "endChar": 41
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a934dd3_a794f575",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "2024?",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "314d799c_576a11ab",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "From an API reviewer PoV, could you expand these docs a bit more?  Specifically, help point the developer to the `StorageManager` API where they obtain one of these.\n\nAlso, I\u0027ll let you choose where you want to describe the refcounting semantics (either at the close() method where you have it now, or here at the class level), but the request I\u0027d make is to have them cross-reference each other.  For example, perhaps documenting at the class level \"An opened object represents a requirement for the storage area to remain accessible; more detailed semantics are documented in `close()`\".",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0e72c5c_908cb33f",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "Please mark `volatile` since closing can be done from multiple threads (finalizers run on their own threads).\n```suggestion\n    private volatile boolean mClosed;\n```\n\n(Or see suggestion later for `AtomicBoolean`.)",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 19
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4a37280_1019d0bc",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "For API completeness, I think it\u0027s reasonable to let developers see the name via this method as public API, as they passed it in when opening/creating the area.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b02ba8c_3372624b",
@@ -72,6 +204,167 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a61a8725_6e703687",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "Thanks for clarifying this behavior, could you also copy this sentence to the `getDirectory()` method?\n\nAdditionally, perhaps expand it a bit more to highlight the risks of the unspecified behavior, such as data loss or corruption?",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "558114ca_74fe1e7f",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "Slight nit, but using a `AtomicBoolean` here with a `compareAndSet` gives you a stronger guarantee that multiple threads don\u0027t accidentally over-close an object.\n\n(For example, consider where a developer passes around their `StorageArea` using a multi-threaded primitive such as coroutines, and mistakenly tries closing this same object twice; we\u0027d only want to decrement inside the system by 1.)",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f4619ce_0a58cf0f",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "Key lengths are one of those things which feel like they continually grow, especially as we move towards a post-quantum world.  Is there a way to put an upper-bound on the length, and allow common key lengths under that limit?  (Or is there perhaps a kernel limitation that limits this key size?)\n\nOr perhaps I\u0027m misunderstanding how this will be applied, and the \"secret\" is being applied as an input to something PBKDF2-ish?",
+      "range": {
+        "startLine": 309,
+        "startChar": 0,
+        "endLine": 311,
+        "endChar": 0
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81edc6b3_9d4485cc",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2966,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "Could you also expand these docs to explain the implications for apps that go through a backup/restore cycle?\n\n* https://developer.android.com/guide/topics/data/autobackup\n\nFor example, can storage area data be carried between devices, or are the underlying encryption keys here so tightly tied to a specific device that we can\u0027t ever migrate the data on their behalf?\n\n(If so, we should document that after a restore, the list of storage areas will be empty.)",
+      "range": {
+        "startLine": 2966,
+        "startChar": 16,
+        "endLine": 2966,
+        "endChar": 28
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7683ebce_868552a2",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2967,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "nit: I\u0027d avoid mentioning \"FBE\" here, as we haven\u0027t really told developers what it is in any other APIs.  (We\u0027ve historically just referenced it as \"Direct Boot\" or \"Credential/Device Encrypted\", and neither of those fit super well here, imo.)\n\nI might just leave this as \"secret that is used to derive an encryption key\".",
+      "range": {
+        "startLine": 2967,
+        "startChar": 59,
+        "endLine": 2967,
+        "endChar": 62
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e5fc251_a7b8c914",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2967,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "nit: `{@code byte[]}` can accomplish this a bit cleaner in javadocs  😊",
+      "range": {
+        "startLine": 2967,
+        "startChar": 7,
+        "endLine": 2967,
+        "endChar": 26
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06e2a9dc_990f6363",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2970,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "Based on my reading of this, it sounds like storage areas are then only usable when CE storage is available, right?\n\nIf so, could you add a doc sentence here to confirm the corollary that \"Storage areas can only be interacted with when `UserManager.isUserUnlocked()` is true.\"  (That `isUserUnlocked()` method pretty closely mirrors when Credential Encrypted storage is available.)\n\n[If you can do a one-time creation-and-population of a storage area when CE storage isn\u0027t yet available, we\u0027d likely want another paragraph explaining that nuance.]",
+      "range": {
+        "startLine": 2970,
+        "startChar": 69,
+        "endLine": 2970,
+        "endChar": 89
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4d361a41_6eb1ce77",
         "filename": "core/java/android/os/storage/StorageManager.java",
         "patchSetId": 11
@@ -83,6 +376,30 @@
       "writtenOn": "2024-03-15T04:08:55Z",
       "side": 1,
       "message": "This needs to be reworded since this is not an internal API -- it\u0027s a public API.",
+      "range": {
+        "startLine": 2973,
+        "startChar": 23,
+        "endLine": 2973,
+        "endChar": 40
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73018227_3e500585",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2973,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "Yeah this doesn\u0027t need as severe as a \"WARNING\"; I think it can just be a gentle nudge.  😊\n\nI\u0027d word this as something like \"This API is a lower-level primitive, and developers are encouraged to use higher-level libraries in Jetpack that offer richer features such as automatic integration with Keystore.\"",
+      "parentUuid": "4d361a41_6eb1ce77",
       "range": {
         "startLine": 2973,
         "startChar": 23,
@@ -134,6 +451,52 @@
         "startChar": 0,
         "endLine": 2987,
         "endChar": 98
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d0453d4_4b31ca28",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2998,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "Could you add @param docs describing the constraints on the secret?  For example, is there a length min/max?  Does it need to be power-of-two in length?",
+      "range": {
+        "startLine": 2998,
+        "startChar": 73,
+        "endLine": 2998,
+        "endChar": 94
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5751368f_30fb22a6",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2998,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "Could you add @param docs describing the security/sensitivity of the storage area name?  For example, is it equivalent to storing the name with DE protection?  (The background is that app devs might wanna consider carefully if they\u0027re okay storing things like an email, phone number, PII, etc in the area name.)\n\nOne final thing I\u0027m curious about is any kernel-level APIs related to keyrings which might accidentally \"leak\" the names of these areas that a given installed key could be used for?  @ebiggers@google.com may know more about that side of things.  😊",
+      "range": {
+        "startLine": 2998,
+        "startChar": 48,
+        "endLine": 2998,
+        "endChar": 70
       },
       "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
@@ -210,6 +573,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "405e7acb_7621af69",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3099,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "Yep, Eric is correct here; we\u0027d want to linkToDeath() inside the `StorageManagerService`, as it\u0027s the code that is long-running.  `StorageManager` here is running inside the app process, which is what can be killed/crashed.",
+      "parentUuid": "40ead81e_fd431b09",
+      "range": {
+        "startLine": 3099,
+        "startChar": 0,
+        "endLine": 3099,
+        "endChar": 51
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2bdd08be_803274f1",
         "filename": "core/java/android/security/flags.aconfig",
         "patchSetId": 11
@@ -225,6 +612,29 @@
         "startLine": 40,
         "startChar": 0,
         "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7204bad7_2abecb18",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4580,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "btw a slightly cheaper way of doing this is:\n       `mContext.getSystemService(AppOpsManager.class).checkPackage(callingUid, packageName);`\n       \n(Because internally AppOpsManager keeps a faster cache of the package/UID data.)",
+      "range": {
+        "startLine": 4578,
+        "startChar": 0,
+        "endLine": 4580,
         "endChar": 0
       },
       "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
@@ -249,6 +659,29 @@
         "startChar": 45,
         "endLine": 4613,
         "endChar": 50
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2065fadd_103dacaf",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4620,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2024-03-15T16:40:09Z",
+      "side": 1,
+      "message": "Could you expand the docs above to describe what this is a map from/to?  (Package+UserId to Area and Count?)\n\nI might make a slight suggestion to pivot the data structure slightly to avoid the extra object allocations for the `Pair` object; here\u0027s an example from another service:\n\n* https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/content/ContentService.java;l\u003d188?q\u003dfile:contentservice\n\n(Note that it uses userId instead of UID, and also uses several lighterweight containers such as `SparseArray` and `ArrayMap`.)\n\nFinally, storing your final refcount value as a `android.system.Int32Ref` value should make it slightly easier to modify your refcounts, as you\u0027re not replacing the map value every time you increment/decrement.  (You\u0027d be doing Int32Ref.value++ or value--.)",
+      "range": {
+        "startLine": 4620,
+        "startChar": 0,
+        "endLine": 4620,
+        "endChar": 100
       },
       "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
