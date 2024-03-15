@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d278d2a1_b893c0b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-03-15T22:16:05Z",
+      "side": 1,
+      "message": "(Sorry I overlooked the CL.)\n\nFor the same reason I mentioned in https://r.android.com/3002409, I don\u0027t think we want to make a churn here.\n\nLet\u0027s just use `#ifdef __linux__` to use the new code only on non-linux targets?",
+      "revId": "e32411f26e73d1e47860866bc6c7e60b07393f64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
