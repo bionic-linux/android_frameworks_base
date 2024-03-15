@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b35bf9a_66e72ccf",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2024-03-15T12:44:52Z",
+      "side": 1,
+      "message": "Should we mark it as deprecated too?",
+      "range": {
+        "startLine": 1678,
+        "startChar": 0,
+        "endLine": 1680,
+        "endChar": 54
+      },
+      "revId": "f137e334fd5143b85f09a35ed5418b5e9df7bcbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
