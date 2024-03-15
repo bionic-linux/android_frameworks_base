@@ -16,6 +16,23 @@
       "message": "Lee is the current owner, so I\u0027ll defer it to him, but given trunk-stable, I\u0027d say either:\n1. Protect it with a go/android-flags\nor\n2. Only use the new code path on non-linux targets.\n\nI\u0027d probably go with 2. We\u0027ve been having enough SQLite regressions lately, I don\u0027t think we want to introduce any churn here, because otherwise every time we see something weird, this would be one more culprit we\u0027d have to suspect.",
       "revId": "3c80a41b54f41da4a8fae86d96391f25120e22fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a296fdc3_718198e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-03-15T16:19:41Z",
+      "side": 1,
+      "message": "I will second the suggestion to use flagging.  The header file rearrangement should be fine but use a flag to choose between the legacy use of mmap() and the new MappedFile implementation.  The flag can go into ``frameworks/base/core/java/android/database/sqlite/flags.aconfig``.  We might need some extra work to make the flag visible to the jni file.\n\nAlso, I would suggest committing to main first, unless this needs to be in aosp quickly.",
+      "revId": "3c80a41b54f41da4a8fae86d96391f25120e22fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
