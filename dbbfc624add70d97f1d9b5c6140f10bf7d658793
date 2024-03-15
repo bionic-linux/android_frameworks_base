@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf6ac6d5_76fd1212",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2024-03-15T15:09:24Z",
+      "side": 1,
+      "message": "Nit: What the old documentation tried to say was that public key operations can still take place when the screen is locked. Do you think it\u0027s worth mentioning here, or link to the setter documentation?",
+      "range": {
+        "startLine": 883,
+        "startChar": 35,
+        "endLine": 883,
+        "endChar": 38
+      },
+      "revId": "dbbfc624add70d97f1d9b5c6140f10bf7d658793",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "492de888_20e7361b",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2024-03-15T15:09:24Z",
+      "side": 1,
+      "message": "I\u0027m not a native English speaker, but this is the first time I encounter this term...",
+      "range": {
+        "startLine": 1740,
+        "startChar": 71,
+        "endLine": 1740,
+        "endChar": 78
+      },
+      "revId": "dbbfc624add70d97f1d9b5c6140f10bf7d658793",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8904525e_936eb213",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2024-03-15T15:09:24Z",
+      "side": 1,
+      "message": "Nit: Suggesting highlighting this first because this was the biggest usability issue.",
+      "range": {
+        "startLine": 1756,
+        "startChar": 0,
+        "endLine": 1757,
+        "endChar": 79
+      },
+      "revId": "dbbfc624add70d97f1d9b5c6140f10bf7d658793",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
