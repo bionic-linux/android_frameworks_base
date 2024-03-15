@@ -33,6 +33,23 @@
       "message": "I will second the suggestion to use flagging.  The header file rearrangement should be fine but use a flag to choose between the legacy use of mmap() and the new MappedFile implementation.  The flag can go into ``frameworks/base/core/java/android/database/sqlite/flags.aconfig``.  We might need some extra work to make the flag visible to the jni file.\n\nAlso, I would suggest committing to main first, unless this needs to be in aosp quickly.",
       "revId": "3c80a41b54f41da4a8fae86d96391f25120e22fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6acc76e3_7a1dcc82",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-03-15T22:13:36Z",
+      "side": 1,
+      "message": "This is for robolectric, right?\n\nWhy don\u0027t we just use `#ifdef __linux__`? Using a trunk flag would be too painful and I don\u0027t think it\u0027s worth doing.\n\nWDYT @Lee?",
+      "revId": "3c80a41b54f41da4a8fae86d96391f25120e22fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
