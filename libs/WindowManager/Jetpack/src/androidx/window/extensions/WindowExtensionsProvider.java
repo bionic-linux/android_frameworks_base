@@ -16,7 +16,11 @@
 
 package androidx.window.extensions;
 
+import android.util.Log;
 import android.annotation.NonNull;
+import android.app.ActivityThread;
+import com.google.android.glasses.sdk.ApiFactory;
+import com.google.android.glasses.sdk.GlassesActivityServiceProxy;
 
 /**
  * Provides the OEM implementation of {@link WindowExtensions}.
@@ -33,6 +37,15 @@ public class WindowExtensionsProvider {
      */
     @NonNull
     public static WindowExtensions getWindowExtensions() {
+	Log.d("SplitCompute", "getWindowExtensions()");
+	try {
+	   GlassesActivityServiceProxy proxy = ApiFactory.getGlassesActivityServiceProxy(
+			   ActivityThread.currentApplication());
+          Log.d("SplitCompute", "proxy: "+ proxy);
+	}catch(ApiFactory.ClassLoadException exception) {
+		exception.printStackTrace();
+	}
+
         return sWindowExtensions;
     }
 }
