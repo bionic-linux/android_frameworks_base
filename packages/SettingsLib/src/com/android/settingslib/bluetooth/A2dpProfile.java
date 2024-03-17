@@ -297,19 +297,11 @@ public class A2dpProfile implements LocalBluetoothProfile {
         }
         // We want to get the highest priority codec, since that's the one that will be used with
         // this device, and see if it is high-quality (ie non-mandatory).
-        List<BluetoothCodecConfig> selectable = null;
-        if (mService.getCodecStatus(device) != null) {
-            selectable = mService.getCodecStatus(device).getCodecsSelectableCapabilities();
-            // To get the highest priority, we sort in reverse.
-            Collections.sort(selectable,
-                    (a, b) -> {
-                        return b.getCodecPriority() - a.getCodecPriority();
-                    });
+        BluetoothCodecConfig codecConfig = null;
+        if (mService != null && mService.getCodecStatus(bluetoothDevice) != null) {
+            codecConfig = mService.getCodecStatus(bluetoothDevice).getCodecConfig();
         }
-
-        final BluetoothCodecConfig codecConfig = (selectable == null || selectable.size() < 1)
-                ? null : selectable.get(0);
-        final int codecType = (codecConfig == null || codecConfig.isMandatoryCodec())
+        final int codecType = (codecConfig == null)
                 ? BluetoothCodecConfig.SOURCE_CODEC_TYPE_INVALID : codecConfig.getCodecType();
 
         int index = -1;
