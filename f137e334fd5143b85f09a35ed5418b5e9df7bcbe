@@ -22,6 +22,30 @@
       },
       "revId": "f137e334fd5143b85f09a35ed5418b5e9df7bcbe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35424a6f_8e59f028",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-18T17:42:48Z",
+      "side": 1,
+      "message": "Probably not.  go/android-api-guidelines has some pretty strict conditions for deprecation:\n\n\u003e we recommend deprecating APIs only in cases where:\n\u003e\n\u003e 1. The API will be @removed in a future release\n\u003e 2. Usage of the API leads to incorrect or undefined behavior that cannot be fixed without breaking compatibility\n\nIn this case, (1) does not apply because we don\u0027t have any immediate plans to remove this API.  (2) does not apply because this API works as expected in Android 11 and earlier, and developers could legitimately choose to use this API in Android 11 and earlier even when using the latest (Android 15) SDK; also, while the API does nothing on Android 12 and later, we\u0027re leaving open the possibility of restoring the original behavior.\n\nIn the past, API council has had me revert a deprecation because it didn\u0027t meet these strict conditions.\n\nSo I don\u0027t think we can deprecate this yet.",
+      "parentUuid": "3b35bf9a_66e72ccf",
+      "range": {
+        "startLine": 1678,
+        "startChar": 0,
+        "endLine": 1680,
+        "endChar": 54
+      },
+      "revId": "f137e334fd5143b85f09a35ed5418b5e9df7bcbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
