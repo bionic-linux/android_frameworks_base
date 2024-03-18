@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "7e79a320_5689f5e5",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-18T18:07:05Z",
+      "side": 1,
+      "message": "It already links to the setter documentation via `@see`.\n\nThe fact that public key operations are allowed is just one of the details about exactly how unlocked-device-required keys work.  These details are all covered in the setter documentation.  I think it\u0027s best to stay with a one-sentence summary here and link to the setter for the details.",
+      "parentUuid": "bf6ac6d5_76fd1212",
+      "range": {
+        "startLine": 883,
+        "startChar": 35,
+        "endLine": 883,
+        "endChar": 38
+      },
+      "revId": "dbbfc624add70d97f1d9b5c6140f10bf7d658793",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "492de888_20e7361b",
         "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2024-03-15T15:09:24Z",
       "side": 1,
       "message": "I\u0027m not a native English speaker, but this is the first time I encounter this term...",
+      "range": {
+        "startLine": 1740,
+        "startChar": 71,
+        "endLine": 1740,
+        "endChar": 78
+      },
+      "revId": "dbbfc624add70d97f1d9b5c6140f10bf7d658793",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0712a5e_cb54240f",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-18T18:07:05Z",
+      "side": 1,
+      "message": "I also considered \"wipe\", but \"zeroize\" (https://en.wikipedia.org/wiki/Zeroisation) is fairly common when talking about cryptographic keys and is a bit more precise.",
+      "parentUuid": "492de888_20e7361b",
       "range": {
         "startLine": 1740,
         "startChar": 71,
@@ -60,6 +108,30 @@
       "writtenOn": "2024-03-15T15:09:24Z",
       "side": 1,
       "message": "Nit: Suggesting highlighting this first because this was the biggest usability issue.",
+      "range": {
+        "startLine": 1756,
+        "startChar": 0,
+        "endLine": 1757,
+        "endChar": 79
+      },
+      "revId": "dbbfc624add70d97f1d9b5c6140f10bf7d658793",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5e439e5_c921debe",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-18T18:07:05Z",
+      "side": 1,
+      "message": "I actually think the first two items were the biggest usability issues.  For the face unlock bug, at least users could work around it by unlocking the device with LSKF instead, or with fingerprint if they had one enrolled.  And users only needed to do this when an unlocked-device-required key operation actually needed to be authorized, for an app actually using that feature.\n\nFor the issue where unlocked-device-required keys only worked for users with a secure lock screen, the only workaround was setting an LSKF and never removing it.  This impacted the user\u0027s whole experience on the device, not just their experience when using apps that use unlocked-device-required keys.  Also, if the user did remove their LSKF, unlocked-device-required keys were permanently deleted, potentially causing data loss.  That\u0027s bad.",
+      "parentUuid": "8904525e_936eb213",
       "range": {
         "startLine": 1756,
         "startChar": 0,
