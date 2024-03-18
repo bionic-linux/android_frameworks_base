@@ -22,6 +22,30 @@
       },
       "revId": "897ef3b4dd3d6dd45a68b45267956892090f62fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21a132ac_5a934659",
+        "filename": "core/java/android/view/PointerIcon.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-03-18T15:30:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e06d534a_86b48221",
+      "range": {
+        "startLine": 281,
+        "startChar": 0,
+        "endLine": 281,
+        "endChar": 1
+      },
+      "revId": "897ef3b4dd3d6dd45a68b45267956892090f62fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
