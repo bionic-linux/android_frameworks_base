@@ -16,6 +16,24 @@
       "message": "(Sorry I overlooked the CL.)\n\nFor the same reason I mentioned in https://r.android.com/3002409, I don\u0027t think we want to make a churn here.\n\nLet\u0027s just use `#ifdef __linux__` to use the new code only on non-linux targets?",
       "revId": "e32411f26e73d1e47860866bc6c7e60b07393f64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "728545bf_10f15ba5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1080076
+      },
+      "writtenOn": "2024-03-18T16:23:39Z",
+      "side": 1,
+      "message": "let\u0027s not add more macros, MappedFile is specifically the platform abstraction to get rid of them, and I keep refactoring libanroidfw in this direction\nThis change looks like a noop that doesn\u0027t warrant a flag either",
+      "parentUuid": "d278d2a1_b893c0b5",
+      "revId": "e32411f26e73d1e47860866bc6c7e60b07393f64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
