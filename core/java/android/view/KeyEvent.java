@@ -64,8 +64,8 @@ import java.util.concurrent.TimeUnit;
  * event: this is left to the IME's discretion, and in fact sending such events is
  * discouraged.  You should never rely on receiving KeyEvents for any key on a soft
  * input method.  In particular, the default software keyboard will never send any
- * key event to any application targetting Jelly Bean or later, and will only send
- * events for some presses of the delete and return keys to applications targetting
+ * key event to any application targeting Jelly Bean or later, and will only send
+ * events for some presses of the delete and return keys to applications targeting
  * Ice Cream Sandwich or earlier.  Be aware that other software input methods may
  * never send key events regardless of the version.  Consider using editor actions
  * like {@link android.view.inputmethod.EditorInfo#IME_ACTION_DONE} if you need
@@ -1623,7 +1623,7 @@ public class KeyEvent extends InputEvent implements Parcelable {
      * {@link InputDevice#SOURCE_KEYBOARD} for you.
      *
      * @param time The time (in {@link android.os.SystemClock#uptimeMillis})
-     * at which this event occured.
+     *             at which this event occurred.
      * @param characters The string of characters.
      * @param deviceId The device ID that generated the key event.
      * @param flags The flags for this key event
