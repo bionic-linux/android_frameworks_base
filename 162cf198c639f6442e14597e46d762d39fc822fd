@@ -273,6 +273,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6fea31de_3757c820",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-18T21:49:47Z",
+      "side": 1,
+      "message": "The `secret` for a storage area is planned to be used as input to a KDF without stretching to derive the AES-256-GCM key that encrypts the storage area\u0027s actual key.  So `secret` could be any length, but 32 bytes (256 bits) is pretty much the only reasonable length at the moment.  Less than that isn\u0027t taking proper advantage of the cryptographic primitives used, while more than that isn\u0027t considered necessary or useful for symmetric crypto, even considering post-quantum.  There are no indications that there is going to be e.g. an AES-512.  So, enforcing a length of 32 seems like the right choice.  Note that this could be relaxed in a future API level in the (very?) unlikely event that it\u0027s ever needed.",
+      "parentUuid": "4f4619ce_0a58cf0f",
+      "range": {
+        "startLine": 309,
+        "startChar": 0,
+        "endLine": 311,
+        "endChar": 0
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "81edc6b3_9d4485cc",
         "filename": "core/java/android/os/storage/StorageManager.java",
         "patchSetId": 11
@@ -492,6 +516,30 @@
       "writtenOn": "2024-03-15T16:40:09Z",
       "side": 1,
       "message": "Could you add @param docs describing the security/sensitivity of the storage area name?  For example, is it equivalent to storing the name with DE protection?  (The background is that app devs might wanna consider carefully if they\u0027re okay storing things like an email, phone number, PII, etc in the area name.)\n\nOne final thing I\u0027m curious about is any kernel-level APIs related to keyrings which might accidentally \"leak\" the names of these areas that a given installed key could be used for?  @ebiggers@google.com may know more about that side of things.  😊",
+      "range": {
+        "startLine": 2998,
+        "startChar": 48,
+        "endLine": 2998,
+        "endChar": 70
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1fb6f4d_d01ff177",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2998,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-03-18T21:49:47Z",
+      "side": 1,
+      "message": "\u003e Could you add @param docs describing the security/sensitivity of the storage area name? For example, is it equivalent to storing the name with DE protection?\n\nYes, unfortunately we aren\u0027t able to provide CE protection for the storage area names in the current design.  They\u0027ll just be covered by \"metadata encryption\" and therefore will be equivalent to DE.  (This differs from the contents of the storage areas, which will be protected at least as well as CE.)\n\n\u003e One final thing I\u0027m curious about is any kernel-level APIs related to keyrings which might accidentally \"leak\" the names of these areas that a given installed key could be used for?\n\nNo, there\u0027s nothing like that.",
+      "parentUuid": "5751368f_30fb22a6",
       "range": {
         "startLine": 2998,
         "startChar": 48,
