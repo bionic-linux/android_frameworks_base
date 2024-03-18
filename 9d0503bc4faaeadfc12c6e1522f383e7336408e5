@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cbf7ff0_81422618",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-18T13:06:46Z",
+      "side": 1,
+      "message": "We may also need to note that this will only return the profile owned by the calling uid.",
+      "range": {
+        "startLine": 1011,
+        "startChar": 7,
+        "endLine": 1012,
+        "endChar": 37
+      },
+      "revId": "9d0503bc4faaeadfc12c6e1522f383e7336408e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19771da5_ec84295f",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-18T13:06:46Z",
+      "side": 1,
+      "message": "For put and remove method, I think we may want to put a note that these methods should not be used to update the platform VPN profile. If caller would like to update it, it should be done via provisionVpnProfile()/deleteVpnProfile() to prevent a misuse.",
+      "range": {
+        "startLine": 1027,
+        "startChar": 19,
+        "endLine": 1027,
+        "endChar": 32
+      },
+      "revId": "9d0503bc4faaeadfc12c6e1522f383e7336408e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bc268fb_cc5c58ef",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-18T13:06:46Z",
+      "side": 1,
+      "message": "These methods naming are confusing with their current naming.\nIn the initial review, I had the review comment below:\n```\nWe may not need these two methods. \n\nputVpnProfile() should just use provisionVpnProfile() and set the value through the method in Vpn.java. Similarly, removeVpnProfile() should use deleteVpnProfile. Removing the profile from database should result in the VPN being disconnected. It should not just simply removed from the database.\n```\n\nThese methods looks like a method to control the VpnProfile but it\u0027s not so true. So I think it may be better to rename to putVpnProfileFromDb/removeVpnProfileFromDb/listVpnProfileFromDb. It may be clearer for the method user. WDYT?",
+      "range": {
+        "startLine": 1020,
+        "startChar": 0,
+        "endLine": 1038,
+        "endChar": 5
+      },
+      "revId": "9d0503bc4faaeadfc12c6e1522f383e7336408e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "126b9bce_8b521f3a",
+        "filename": "services/tests/VpnTests/java/com/android/server/VpnManagerServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-18T13:06:46Z",
+      "side": 1,
+      "message": "Can you separate this test to testSetVpnProfile/testRemoveVpnProfile/testListVpnProfile?",
+      "range": {
+        "startLine": 402,
+        "startChar": 16,
+        "endLine": 402,
+        "endChar": 38
+      },
+      "revId": "9d0503bc4faaeadfc12c6e1522f383e7336408e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
