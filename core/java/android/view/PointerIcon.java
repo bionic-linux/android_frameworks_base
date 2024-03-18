@@ -214,7 +214,7 @@ public final class PointerIcon implements Parcelable {
 
     /**
      * Gets a system pointer icon for the given type.
-     * If typeis not recognized, returns the default pointer icon.
+     * If type is not recognized, returns the default pointer icon.
      *
      * @param context The context.
      * @param type The pointer icon type.
@@ -278,9 +278,9 @@ public final class PointerIcon implements Parcelable {
         systemIcons.append(type, icon);
         return icon;
     }
-
+ 
     /**
-     * Updates wheter accessibility large icons are used or not.
+     * Updates whether the large icons for accessibility are used or not.
      * @hide
      */
     public static void setUseLargeIcons(boolean use) {
