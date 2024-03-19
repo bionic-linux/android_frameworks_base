@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40dc924a_eed58c8a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-03-19T21:36:02Z",
+      "side": 1,
+      "message": "What does this mean? Is `RenderThread` blocking other operations? Do you have Perfetto traces that show how this helps?\n\nThe code itself looks safe (though this class could use thread safety annotations to make this more obvious!), but I\u0027m not clear on what the advantage is.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 34
+      },
+      "revId": "0e8ae639a9636b4a2b24f39b705e32446f5b7cb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "378db435_f3bbbf49",
+        "filename": "libs/hwui/pipeline/skia/ShaderCache.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-03-19T21:36:02Z",
+      "side": 1,
+      "message": "nit: I think these should be named like constants, since they are. That makes it clearer why you can use these in your lambda.",
+      "range": {
+        "startLine": 90,
+        "startChar": 47,
+        "endLine": 90,
+        "endChar": 85
+      },
+      "revId": "0e8ae639a9636b4a2b24f39b705e32446f5b7cb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
