@@ -16,6 +16,52 @@
       "message": "I\u0027m sorry but I don\u0027t work on the team any more (will clean up OWNERS)\n\nAdded lajos@ for review (there might be a performance impact?)",
       "revId": "c187ef04664650fec88c1aebcc3ac01ac55259a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15d0b6cc_7f19967c",
+        "filename": "media/jni/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2024-03-19T16:08:25Z",
+      "side": 1,
+      "message": "to me, the implication of this wording is that we should be able to remove\nthis once that breakage is fixed.\n\nthat implies there should be a TODO(bug#) comment here.",
+      "range": {
+        "startLine": 126,
+        "startChar": 5,
+        "endLine": 126,
+        "endChar": 33
+      },
+      "revId": "c187ef04664650fec88c1aebcc3ac01ac55259a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3bcedc9_01ef7bba",
+        "filename": "media/jni/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2024-03-19T16:08:25Z",
+      "side": 1,
+      "message": "documentation is very thin here -- I\u0027m struggling to find any, even groping around in the android/build  tree didn\u0027t get yield a \"this is how the attribute maps to linker options\".\n\nSo there\u0027s a bunch of guesswork from here down.\n\nI\u0027m guessing that the 0 in \"lto_O0\" means we do no link time optimization; that fits with the bug description talking about saving build time by avoiding the LTO step. The bug acknowledges that this has a performance impact on the generated code. The -2 vote from the performance reviewbot implies that the performance difference is significant enough to trip its thresholds.\n\nIs the breakage solely \"longer build time\"? or does the build (eventually) fail?",
+      "range": {
+        "startLine": 127,
+        "startChar": 5,
+        "endLine": 127,
+        "endChar": 16
+      },
+      "revId": "c187ef04664650fec88c1aebcc3ac01ac55259a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
