@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0eba3651_22ddcbd7",
+        "filename": "core/res/res/xml/sms_short_codes.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1888595
+      },
+      "writtenOn": "2024-03-20T07:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "467a0466_9b5b748b",
+      "range": {
+        "startLine": 45,
+        "startChar": 20,
+        "endLine": 45,
+        "endChar": 21
+      },
+      "revId": "0b12e87df8d866f6ad62f8f1ecacea9cef54f525",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8211bfb7_0ba68f8f",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-03-19T00:23:08Z",
       "side": 1,
       "message": "1-5",
+      "range": {
+        "startLine": 140,
+        "startChar": 18,
+        "endLine": 140,
+        "endChar": 19
+      },
+      "revId": "0b12e87df8d866f6ad62f8f1ecacea9cef54f525",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "820748d2_760c9d69",
+        "filename": "core/res/res/xml/sms_short_codes.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1888595
+      },
+      "writtenOn": "2024-03-20T07:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8211bfb7_0ba68f8f",
       "range": {
         "startLine": 140,
         "startChar": 18,
