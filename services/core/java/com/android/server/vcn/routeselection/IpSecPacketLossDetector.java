@@ -210,6 +210,15 @@ public class IpSecPacketLossDetector extends NetworkMetricMonitor {
     }
 
     @Override
+    public void onLinkPropertiesOrCapabilitiesChanged() {
+        if (!isStarted()) return;
+
+        // Remove the scheduled polling event and poll immediately
+        mHandler.removeCallbacksAndEqualMessages(mCancellationToken);
+        mHandler.postDelayed(new PollIpSecStateRunnable(), mCancellationToken, 0L);
+    }
+
+    @Override
     protected void start() {
         super.start();
         clearTransformStateAndPollingEvents();
