@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f06ae8f3_9399aaf0",
+        "filename": "media/jni/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1087625
+      },
+      "writtenOn": "2024-03-20T13:39:47Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "15d0b6cc_7f19967c",
+      "range": {
+        "startLine": 126,
+        "startChar": 5,
+        "endLine": 126,
+        "endChar": 33
+      },
+      "revId": "c187ef04664650fec88c1aebcc3ac01ac55259a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b3bcedc9_01ef7bba",
@@ -54,6 +78,30 @@
       "writtenOn": "2024-03-19T16:08:25Z",
       "side": 1,
       "message": "documentation is very thin here -- I\u0027m struggling to find any, even groping around in the android/build  tree didn\u0027t get yield a \"this is how the attribute maps to linker options\".\n\nSo there\u0027s a bunch of guesswork from here down.\n\nI\u0027m guessing that the 0 in \"lto_O0\" means we do no link time optimization; that fits with the bug description talking about saving build time by avoiding the LTO step. The bug acknowledges that this has a performance impact on the generated code. The -2 vote from the performance reviewbot implies that the performance difference is significant enough to trip its thresholds.\n\nIs the breakage solely \"longer build time\"? or does the build (eventually) fail?",
+      "range": {
+        "startLine": 127,
+        "startChar": 5,
+        "endLine": 127,
+        "endChar": 16
+      },
+      "revId": "c187ef04664650fec88c1aebcc3ac01ac55259a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fba2d05_7346ef68",
+        "filename": "media/jni/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1087625
+      },
+      "writtenOn": "2024-03-20T13:39:47Z",
+      "side": 1,
+      "message": "Please see the more detailed explanation in the associated Soong change (https://r.android.com/2988057).\n\nTLDR, we saved 4.2% in memory usage when we first enabled ThinLTO (but without full optimization enabled). Now we turn on full optimization, that takes back 2.0% in memory usage but produces more performant binaries.\n\n\u003e Is the breakage solely \"longer build time\"? or does the build (eventually) fail?\n\nFull LTO optimization breaks build for libmedia_jni, the error is in the commit message. Lto_O0 essentially let libmedia_jni continue to use the current optimisation mode for now.",
+      "parentUuid": "b3bcedc9_01ef7bba",
       "range": {
         "startLine": 127,
         "startChar": 5,
