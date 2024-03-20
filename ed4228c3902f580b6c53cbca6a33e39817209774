@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c92942f4_39fc3faf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2024-03-20T15:24:48Z",
+      "side": 1,
+      "message": "needs to refer to the tool bug that we reference in the TODO. add:\nBug: 330503129\n\nthat\u0027ll make it more obvious what to back out once the tool bug is fixed. These will also act as good test cases to help convince ourselves that the tools are indeed fixed.",
+      "revId": "ed4228c3902f580b6c53cbca6a33e39817209774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdd17750_f68bb295",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2024-03-20T15:24:48Z",
+      "side": 1,
+      "message": "will approve once the extra bug: lines are added to the commit message.",
+      "revId": "ed4228c3902f580b6c53cbca6a33e39817209774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

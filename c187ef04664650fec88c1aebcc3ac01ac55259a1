@@ -110,6 +110,30 @@
       },
       "revId": "c187ef04664650fec88c1aebcc3ac01ac55259a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "329f93ce_95c29075",
+        "filename": "media/jni/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2024-03-20T15:24:48Z",
+      "side": 1,
+      "message": "so the real takeaway is that without this change\n-- the build fails\n-- keeping us from enabling an optimization with significant demonstrated space/time benefits",
+      "parentUuid": "9fba2d05_7346ef68",
+      "range": {
+        "startLine": 127,
+        "startChar": 5,
+        "endLine": 127,
+        "endChar": 16
+      },
+      "revId": "c187ef04664650fec88c1aebcc3ac01ac55259a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
