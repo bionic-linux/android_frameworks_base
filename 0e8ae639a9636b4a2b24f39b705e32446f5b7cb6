@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea923b25_ef94112b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-03-20T18:28:07Z",
+      "side": 1,
+      "message": "Thanks! Please add the bug number to the commit message.\n\nAlso, I\u0027m not really sure what I\u0027m looking at in the trace. This is before the fix, or after it? It looks like taobao missed a frame - does moving this to a separate thread allow it to skip missing the frame?",
+      "parentUuid": "7e63ebcb_e308f895",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 34
+      },
+      "revId": "0e8ae639a9636b4a2b24f39b705e32446f5b7cb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "378db435_f3bbbf49",
