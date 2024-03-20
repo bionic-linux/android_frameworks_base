@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "7e63ebcb_e308f895",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1945881
+      },
+      "writtenOn": "2024-03-20T13:18:11Z",
+      "side": 1,
+      "message": "I created an issue on issuetracker, with trace screenshots and instructions attached inside.\n\nhttps://issuetracker.google.com/issues/330501139",
+      "parentUuid": "40dc924a_eed58c8a",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 34
+      },
+      "revId": "0e8ae639a9636b4a2b24f39b705e32446f5b7cb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "378db435_f3bbbf49",
         "filename": "libs/hwui/pipeline/skia/ShaderCache.cpp",
         "patchSetId": 2
