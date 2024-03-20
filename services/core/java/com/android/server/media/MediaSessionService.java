@@ -1040,12 +1040,22 @@ public class MediaSessionService extends SystemService implements Monitor {
                 return;
             }
             MediaSessionRecord sessionRecord = (MediaSessionRecord) record;
-            mLastMediaButtonReceiverHolder = sessionRecord.getMediaButtonReceiver();
-            String mediaButtonReceiverInfo = (mLastMediaButtonReceiverHolder == null)
-                    ? "" : mLastMediaButtonReceiverHolder.flattenToString();
-            Settings.Secure.putString(mContentResolver,
-                    MEDIA_BUTTON_RECEIVER,
-                    mediaButtonReceiverInfo);
+            MediaButtonReceiverHolder receiverHolder = sessionRecord.getMediaButtonReceiver();
+            if (receiverHolder == null) {
+                return;
+            }
+
+            // Client can not override the receiver info set by others with a null value
+            String recordReceiverInfo = receiverHolder.flattenToString();
+            String holderPackageName = receiverHolder.getPackageName();
+            if (mLastMediaButtonReceiverHolder == null
+                    || !"".equals(recordReceiverInfo)
+                    || holderPackageName.equals(mLastMediaButtonReceiverHolder.getPackageName())) {
+                mLastMediaButtonReceiverHolder = receiverHolder;
+                Settings.Secure.putString(mContentResolver,
+                        MEDIA_BUTTON_RECEIVER,
+                        recordReceiverInfo);
+            }
         }
 
         private void pushAddressedPlayerChangedLocked(
