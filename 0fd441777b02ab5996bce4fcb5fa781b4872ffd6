@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b3a75d8_d65ea37b",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/IpSecPacketLossDetector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-03-21T18:52:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dd5852d_c1751e64",
+      "range": {
+        "startLine": 217,
+        "startChar": 8,
+        "endLine": 217,
+        "endChar": 16
+      },
+      "revId": "0fd441777b02ab5996bce4fcb5fa781b4872ffd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c34e3c0_83b24918",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-03-21T00:59:06Z",
       "side": 1,
       "message": "Just thinking this through, is it a feature or a bug that we can call setNetworkCapabilities in a loop to force a polling event?\n\nIf the network capabilities are actually the same as the old one... then this is a no-op other than a poll, right? 😎",
+      "range": {
+        "startLine": 295,
+        "startChar": 8,
+        "endLine": 295,
+        "endChar": 29
+      },
+      "revId": "0fd441777b02ab5996bce4fcb5fa781b4872ffd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07099141_15da5362",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-03-21T18:52:55Z",
+      "side": 1,
+      "message": "\u003e If the network capabilities are actually the same as the old one... then this is a no-op other than a poll, right?\n\nYes right\n\n\n\u003e Just thinking this through, is it a feature or a bug that we can call setNetworkCapabilities in a loop to force a polling event?\n\nHere we have the assumption that this is only called because `onCapabilitiesChanged` is called in `UnderlyingNetworkController`, and `onCapabilitiesChanged` is called when capabilities changed. It also applies to `setLp` and `setIsBlocked`\n\nI\u0027m not too worried that this method will be misused. Even if it is misused, the penalty should be very limited: we poll more often and do unnecessary calculation for network priority.\n\nIf we are going to add equal check, we should add for all the five setters. Kind of feel it\u0027s too much but no strong opinion.",
+      "parentUuid": "8c34e3c0_83b24918",
       "range": {
         "startLine": 295,
         "startChar": 8,
