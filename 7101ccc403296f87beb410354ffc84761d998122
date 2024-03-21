@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1902492_5a0d33e9",
+        "filename": "tests/vcn/java/com/android/server/vcn/routeselection/NetworkEvaluationTestBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-03-21T00:10:25Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 142,
+        "startChar": 56,
+        "endLine": 142,
+        "endChar": 69
+      },
+      "revId": "7101ccc403296f87beb410354ffc84761d998122",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
