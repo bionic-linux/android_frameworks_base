@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dd5852d_c1751e64",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/IpSecPacketLossDetector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-03-21T00:59:06Z",
+      "side": 1,
+      "message": "nit: would it be clearer to have a method like reschedulePolling() that does this?\n\nIf you think that\u0027s too much, then np.",
+      "range": {
+        "startLine": 217,
+        "startChar": 8,
+        "endLine": 217,
+        "endChar": 16
+      },
+      "revId": "0fd441777b02ab5996bce4fcb5fa781b4872ffd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c34e3c0_83b24918",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-03-21T00:59:06Z",
+      "side": 1,
+      "message": "Just thinking this through, is it a feature or a bug that we can call setNetworkCapabilities in a loop to force a polling event?\n\nIf the network capabilities are actually the same as the old one... then this is a no-op other than a poll, right? 😎",
+      "range": {
+        "startLine": 295,
+        "startChar": 8,
+        "endLine": 295,
+        "endChar": 29
+      },
+      "revId": "0fd441777b02ab5996bce4fcb5fa781b4872ffd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
