@@ -46,6 +46,30 @@
       },
       "revId": "7101ccc403296f87beb410354ffc84761d998122",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3483285f_2da8a93f",
+        "filename": "tests/vcn/java/com/android/server/vcn/routeselection/NetworkEvaluationTestBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-03-21T00:44:27Z",
+      "side": 1,
+      "message": "I assume you\u0027re going to correct in anyway...? Just because it works _now_ doesn\u0027t mean it will _keep working_. I suspected that it behaved as you say, but I think what will happen is that if a test accidentally uses getSystemService(CONNECTIVITY_SERVICE) it will break. If you want the code to ensure that nobody uses CONNECTIVITY_SERVICE, then you could intentionally register an invalid string here.",
+      "parentUuid": "8a4a9907_3a239e6c",
+      "range": {
+        "startLine": 142,
+        "startChar": 56,
+        "endLine": 142,
+        "endChar": 69
+      },
+      "revId": "7101ccc403296f87beb410354ffc84761d998122",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
