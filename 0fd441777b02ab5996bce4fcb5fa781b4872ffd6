@@ -93,6 +93,30 @@
       },
       "revId": "0fd441777b02ab5996bce4fcb5fa781b4872ffd6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a3c394e_bc4f2340",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-03-21T19:03:02Z",
+      "side": 1,
+      "message": "I think the side effect here being heavyweight and possibly \"useful\" makes it slightly different? I agree the risk is small. If it starts getting abused, we could always add a check or some kind of rate limiting mechanism (which is probably the actual answer if we needed it since I could easily angle-shoot around an equals check).",
+      "parentUuid": "07099141_15da5362",
+      "range": {
+        "startLine": 295,
+        "startChar": 8,
+        "endLine": 295,
+        "endChar": 29
+      },
+      "revId": "0fd441777b02ab5996bce4fcb5fa781b4872ffd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
