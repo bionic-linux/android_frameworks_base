@@ -16,6 +16,24 @@
       "message": "Hi, thanks for sending this change our way!\n\nWe need to gate this change with a flag before merging.\n\nAside, this is an issue we are aware of, but we had reached the conclusion that we should take an approach more similar to what we do for other operations: Using a stack-like structure to hold the button receivers. So, assuming we are able to do this relatively soon, I wonder if it\u0027s worth going through this fix at all (considering the soak time this change needs before it can reach a release). Is exploring this option something that you\u0027d be willing to pursue? Or would you rather wait for us to merge this?\n\nOr perhaps you don\u0027t think it\u0027s a good idea to hold the receivers in a stack? The issue we want to address with the stack is that some apps spuriously set-and-clear the holder. And I believe this change doesn\u0027t fix that problematic scenario, that\u0027s the one we see the most on our side.",
       "revId": "248aebb76761a13e3615b791112ec26a7ba732ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bfff37a_830c9c62",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1673919
+      },
+      "writtenOn": "2024-03-25T09:29:10Z",
+      "side": 1,
+      "message": "Yes, I think it is a better choice to use a stack to hold the receivers. I have tried to update the change, please help to review again, thank you!",
+      "parentUuid": "1cb7f7fd_fb508fa1",
+      "revId": "248aebb76761a13e3615b791112ec26a7ba732ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
