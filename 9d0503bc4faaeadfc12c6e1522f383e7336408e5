@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d46d9779_9d21c2bb",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-03-26T08:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cbf7ff0_81422618",
+      "range": {
+        "startLine": 1011,
+        "startChar": 7,
+        "endLine": 1012,
+        "endChar": 37
+      },
+      "revId": "9d0503bc4faaeadfc12c6e1522f383e7336408e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19771da5_ec84295f",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-03-18T13:06:46Z",
       "side": 1,
       "message": "For put and remove method, I think we may want to put a note that these methods should not be used to update the platform VPN profile. If caller would like to update it, it should be done via provisionVpnProfile()/deleteVpnProfile() to prevent a misuse.",
+      "range": {
+        "startLine": 1027,
+        "startChar": 19,
+        "endLine": 1027,
+        "endChar": 32
+      },
+      "revId": "9d0503bc4faaeadfc12c6e1522f383e7336408e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22bb0cca_de572cfb",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-03-26T08:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19771da5_ec84295f",
       "range": {
         "startLine": 1027,
         "startChar": 19,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "852c2d0e_2dd4fe70",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-03-26T08:05:45Z",
+      "side": 1,
+      "message": "Yeah initially this was called profileStoreGet()/profileStoreRemove()/etc because it should be clear these calls are direct to the database. But as you first mentioned, the action should be a prefix. \n\nSo updated to: getFromVpnProfileStore(), putIntoVpnProfileStore(), removeFromVpnProfileStore(), listFromVpnProfileStore().",
+      "parentUuid": "0bc268fb_cc5c58ef",
+      "range": {
+        "startLine": 1020,
+        "startChar": 0,
+        "endLine": 1038,
+        "endChar": 5
+      },
+      "revId": "9d0503bc4faaeadfc12c6e1522f383e7336408e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "126b9bce_8b521f3a",
@@ -83,6 +155,30 @@
       "writtenOn": "2024-03-18T13:06:46Z",
       "side": 1,
       "message": "Can you separate this test to testSetVpnProfile/testRemoveVpnProfile/testListVpnProfile?",
+      "range": {
+        "startLine": 402,
+        "startChar": 16,
+        "endLine": 402,
+        "endChar": 38
+      },
+      "revId": "9d0503bc4faaeadfc12c6e1522f383e7336408e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eeb4f7c4_bfcb40c7",
+        "filename": "services/tests/VpnTests/java/com/android/server/VpnManagerServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-03-26T08:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "126b9bce_8b521f3a",
       "range": {
         "startLine": 402,
         "startChar": 16,
