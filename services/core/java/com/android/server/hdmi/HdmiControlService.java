@@ -1320,6 +1320,11 @@ public class HdmiControlService extends SystemService {
                                         deviceType,
                                         HdmiControlManager.POWER_STATUS_ON, getCecVersion());
                                 localDevice.setDeviceInfo(deviceInfo);
+                                // Before replace local device, clear all action for old device.
+                                HdmiCecLocalDevice oldLocalDevice = mHdmiCecNetwork.getLocalDevice(deviceType);
+                                if (oldLocalDevice != null) {
+                                    oldLocalDevice.removeAllActions();
+                                }
                                 mHdmiCecNetwork.addLocalDevice(deviceType, localDevice);
                                 mHdmiCecNetwork.addCecDevice(localDevice.getDeviceInfo());
                                 mCecController.addLogicalAddress(logicalAddress);
