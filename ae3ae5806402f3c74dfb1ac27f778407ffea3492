@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "740b3164_6e192673",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2355,
+      "author": {
+        "id": 1092538
+      },
+      "writtenOn": "2024-03-27T20:00:33Z",
+      "side": 1,
+      "message": "Should be `RuntimeException`\n\noriginal Exception\n\n```\njava.lang.RuntimeException: Cannot read value from namespace codec_fwk from DeviceConfig. It could be that the code using flag executed before SettingsProvider initialization. Please use fixed read-only flag by adding is_fixed_read_only: true in flag declaration.\n    at android.media.codec.FeatureFlagsImpl.load_overrides_codec_fwk(FeatureFlagsImpl.java:51)\n    at android.media.codec.FeatureFlagsImpl.nullOutputSurface(FeatureFlagsImpl.java:130)\n    at android.media.codec.Flags.nullOutputSurface(Flags.java:60)\n    at android.media.MediaCodec.configure(MediaCodec.java:2354)\n    at android.media.MediaCodec.configure(MediaCodec.java:2302)\n```",
+      "range": {
+        "startLine": 2355,
+        "startChar": 27,
+        "endLine": 2355,
+        "endChar": 47
+      },
+      "revId": "ae3ae5806402f3c74dfb1ac27f778407ffea3492",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
