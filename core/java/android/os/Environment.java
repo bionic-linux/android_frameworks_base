@@ -627,6 +627,15 @@ public class Environment {
     }
 
     /**
+     * Returns the directory that contains the app's storage areas.
+     * {@hide}
+     */
+    public static File getDataStorageAreaPackageDirectory(String packageName) {
+        return buildPath(getDataDirectory(), "storage_area",
+            String.valueOf(UserHandle.myUserId()), packageName);
+    }
+
+    /**
      * Return preloads directory.
      * <p>This directory may contain pre-loaded content such as
      * {@link #getDataPreloadsDemoDirectory() demo videos} and

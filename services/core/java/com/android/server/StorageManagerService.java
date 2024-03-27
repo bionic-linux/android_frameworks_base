@@ -68,6 +68,7 @@ import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageManager;
 import android.content.pm.IPackageMoveObserver;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManagerInternal;
 import android.content.pm.ProviderInfo;
@@ -491,6 +492,7 @@ class StorageManagerService extends IStorageManager.Stub
     public static final Pattern KNOWN_APP_DIR_PATHS = Pattern.compile(
             "(?i)(^/storage/[^/]+/(?:([0-9]+)/)?Android/(?:data|media|obb|sandbox)/)([^/]+)(/.*)?");
 
+    private static final Pattern VALID_STORAGE_AREA_NAME = Pattern.compile("[a-zA-Z0-9-_]{1,128}");
 
     private VolumeInfo findVolumeByIdOrThrow(String id) {
         synchronized (mLock) {
@@ -4569,6 +4571,197 @@ class StorageManagerService extends IStorageManager.Stub
             // Should not happen
         }
         return StorageManager.MOUNT_MODE_EXTERNAL_NONE;
+    }
+
+    private void enforceValidStorageAreaParams(int callingUid, String packageName,
+            String storageAreaName) {
+        // check that the package belongs to the calling uid
+        mContext.getSystemService(AppOpsManager.class).checkPackage(callingUid, packageName);
+        // Storage area names are used as filenames, so limit the allowed names.
+        final Matcher matcher = VALID_STORAGE_AREA_NAME.matcher(storageAreaName);
+        if (!matcher.matches()) {
+            throw new IllegalArgumentException("Invalid storage area name: " + storageAreaName);
+        }
+    }
+
+    // Storage areas only work on internal storage.  Therefore, only allow storage areas to be
+    // created by apps that can never be moved to external storage.
+    private void enforceStorageAreasSupported(int uid, String packageName) {
+        final ApplicationInfo info;
+        try {
+            info = mIPackageManager.getApplicationInfo(packageName, 0, UserHandle.getUserId(uid));
+        } catch (RemoteException e) {
+            // should not happen
+            throw new SecurityException("Error looking up application info");
+        }
+        if (info == null) {
+            // should not happen, since enforceValidStorageAreaParams() already validated the name
+            throw new IllegalArgumentException("Invalid package name: " + packageName);
+        }
+        if (info.installLocation != PackageInfo.INSTALL_LOCATION_INTERNAL_ONLY
+                // Android treats unspecified the same as "internalOnly"
+                && info.installLocation != PackageInfo.INSTALL_LOCATION_UNSPECIFIED) {
+            throw new UnsupportedOperationException("Storage areas are only supported in apps "
+                    + "with android:installLocation set to \"internalOnly\" or unspecified");
+        }
+    }
+
+    // signed 32-bit integer reference
+    private class Int32Ref {
+        public int value;
+
+        public Int32Ref(int value) {
+            this.value = value;
+        }
+    }
+
+    /*
+     * This map keeps track of the number of times each storage area is currently open.  A storage
+     * area is closed for real only when its refcount drops to 0.
+     * It is a SparseArray indexed by the uid, that maps to a map of package name to a map of
+     * storage area name to reference count.
+     *
+     * This makes reentrant open+close of an already-open storage area work as expected.  The real
+     * close happens only when the last API-level close has been made.
+     */
+    @GuardedBy("itself")
+    private final SparseArray<ArrayMap<String, ArrayMap<String, Int32Ref>>> mOpenStorageAreas = new SparseArray<>();
+
+    /**
+     * Returns true if the given storage area is currently open.
+     */
+    @GuardedBy("mOpenStorageAreas")
+    private boolean isStorageAreaOpen(int uid, String packageName, String storageAreaName) {
+        ArrayMap<String, ArrayMap<String, Int32Ref>> uidAppAreas = mOpenStorageAreas.get(uid);
+        if (uidAppAreas == null) {
+            return false;
+        }
+        ArrayMap<String, Int32Ref> appAreas = uidAppAreas.get(packageName);
+        return appAreas != null && appAreas.get(storageAreaName) != null;
+    }
+
+    /**
+     * Increments the reference count for the given storage area.
+     */
+    @GuardedBy("mOpenStorageAreas")
+    private void incrementStorageAreaRefcount(int uid, String packageName, String storageAreaName) {
+        ArrayMap<String, ArrayMap<String, Int32Ref>> uidAppAreas = mOpenStorageAreas.get(uid);
+        if (uidAppAreas == null) {
+            uidAppAreas = new ArrayMap<>();
+            mOpenStorageAreas.put(uid, uidAppAreas);
+        }
+        ArrayMap<String, Int32Ref> appAreas = uidAppAreas.get(packageName);
+        if (appAreas == null)  {
+            appAreas = new ArrayMap<>();
+            uidAppAreas.put(packageName, appAreas);
+        }
+        Int32Ref refCount = appAreas.getOrDefault(storageAreaName, new Int32Ref(0));
+        if (refCount.value == 0) {
+            appAreas.put(storageAreaName, refCount);
+        }
+        ++refCount.value;
+    }
+
+    /**
+     * Decrements the reference count for the given storage area and returns true if there are no
+     * more references.
+     */
+    @GuardedBy("mOpenStorageAreas")
+    private boolean decrementStorageAreaRefcount(int uid, String packageName,
+            String storageAreaName) {
+        ArrayMap<String, ArrayMap<String, Int32Ref>> uidAppAreas = mOpenStorageAreas.get(uid);
+        if (uidAppAreas == null) {
+            return false;
+        }
+        ArrayMap<String, Int32Ref> appAreas = uidAppAreas.get(packageName);
+        if (appAreas == null)  {
+            return true;
+        }
+        Int32Ref refcount = appAreas.get(storageAreaName);
+        if (refcount == null) {
+            return true;
+        }
+        refcount.value--;
+        if (refcount.value <= 0) {
+            appAreas.remove(storageAreaName);
+            if (appAreas.isEmpty()) {
+                uidAppAreas.remove(packageName);
+                if (uidAppAreas.isEmpty()) {
+                    mOpenStorageAreas.remove(uid);
+                }
+            }
+            return true;
+        }
+        appAreas.put(storageAreaName, refcount);
+        return false;
+    }
+
+    public void linkStorageManagerToDeath(StorageManager appStorageManager, String packageName) {
+        // TODO FIX THIS
+        // // link the package's StorageManager to death, so if the app crashes
+        // // then the storage areas are still closed
+        // IBinder binder = appStorageManager.asBinder();
+        // final int uid = Binder.getCallingUid();
+        // if (binder != null) {
+        //     try {
+        //         binder.linkToDeath(new DeathRecipient() {
+        //             @Override
+        //             public void binderDied() {
+        //                 Slog.w(TAG, "app " + packageName + " died; closing its storage areas");
+        //                 Pair<Integer, String> key = new Pair<>(uid, packageName);
+        //                 Map<String, Long> appAreas = mOpenStorageAreas.get(key);
+        //                 for(Map.Entry<String, Long> entryPair: appAreas.entrySet()) {
+        //                     for(Long openCount = entryPair.getValue(); openCount > 0; --openCount)
+        //                         closeStorageArea(packageName, entryPair.getKey());
+        //                 }
+        //             }
+        //         }, 0);
+        //     } catch (RemoteException e) {}
+        // }
+    }
+
+    @Override
+    public String openStorageArea(String packageName, String storageAreaName, byte[] secret)
+            throws RemoteException {
+        Preconditions.checkArgument(secret.length == StorageManager.STORAGE_AREA_KEY_LENGTH);
+
+        final int uid = Binder.getCallingUid();
+        enforceValidStorageAreaParams(uid, packageName, storageAreaName);
+        enforceStorageAreasSupported(uid, packageName);
+
+        synchronized (mOpenStorageAreas) {
+            String directory = mVold.openStorageArea(uid, packageName, storageAreaName,
+                    HexDump.toHexString(secret));
+            incrementStorageAreaRefcount(uid, packageName, storageAreaName);
+            return directory;
+        }
+    }
+
+    @Override
+    public void closeStorageArea(String packageName, String storageAreaName)
+            throws RemoteException {
+        final int uid = Binder.getCallingUid();
+        enforceValidStorageAreaParams(uid, packageName, storageAreaName);
+
+        synchronized (mOpenStorageAreas) {
+            if (decrementStorageAreaRefcount(uid, packageName, storageAreaName)) {
+                mVold.lockStorageArea(uid, packageName, storageAreaName);
+            }
+        }
+    }
+
+    @Override
+    public void deleteStorageArea(String packageName, String storageAreaName)
+            throws RemoteException {
+        final int uid = Binder.getCallingUid();
+        enforceValidStorageAreaParams(uid, packageName, storageAreaName);
+
+        synchronized (mOpenStorageAreas) {
+            if (isStorageAreaOpen(uid, packageName, storageAreaName)) {
+                throw new IllegalStateException("Cannot delete open storage area");
+            }
+            mVold.deleteStorageArea(uid, packageName, storageAreaName);
+        }
     }
 
     private static class Callbacks extends Handler {
