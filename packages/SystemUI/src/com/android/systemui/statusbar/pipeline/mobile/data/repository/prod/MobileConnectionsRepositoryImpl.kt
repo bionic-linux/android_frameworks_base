@@ -411,7 +411,8 @@ constructor(
     }
 
     private suspend fun fetchSubscriptionsList(): List<SubscriptionInfo> =
-        withContext(bgDispatcher) { subscriptionManager.completeActiveSubscriptionInfoList }
+        withContext(bgDispatcher) {
+            subscriptionManager.completeActiveSubscriptionInfoList.filter{ it.simSlotIndex != -1 } }
 
     private fun SubscriptionInfo.toSubscriptionModel(): SubscriptionModel =
         SubscriptionModel(
