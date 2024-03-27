@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "1f73f8a2_4d9577df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7424171b_bc48f906",
+      "range": {
+        "startLine": 10,
+        "startChar": 36,
+        "endLine": 10,
+        "endChar": 72
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "f474e90b_abedb378",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 11
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c3485bf_510d7d1d",
+        "filename": "core/java/android/os/Environment.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Nice, thanks",
+      "parentUuid": "5490e10d_472d28bc",
+      "range": {
+        "startLine": 634,
+        "startChar": 15,
+        "endLine": 634,
+        "endChar": 41
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5a934dd3_a794f575",
@@ -77,6 +125,30 @@
       "writtenOn": "2024-03-15T16:40:09Z",
       "side": 1,
       "message": "2024?",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a064b952_54b070b1",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a934dd3_a794f575",
       "range": {
         "startLine": 2,
         "startChar": 17,
@@ -112,6 +184,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "99ce00ee_0e4fe3dc",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Makes sense -- sounds good! I\u0027ve added more detail to the docs.",
+      "parentUuid": "314d799c_576a11ab",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f0e72c5c_908cb33f",
         "filename": "core/java/android/os/storage/StorageArea.java",
         "patchSetId": 11
@@ -123,6 +219,30 @@
       "writtenOn": "2024-03-15T16:40:09Z",
       "side": 1,
       "message": "Please mark `volatile` since closing can be done from multiple threads (finalizers run on their own threads).\n```suggestion\n    private volatile boolean mClosed;\n```\n\n(Or see suggestion later for `AtomicBoolean`.)",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 19
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f229fd0_d014366c",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Good idea -- changed it to `AtomicBoolean`",
+      "parentUuid": "f0e72c5c_908cb33f",
       "range": {
         "startLine": 39,
         "startChar": 12,
@@ -158,6 +278,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "77eedfd2_8383c5e1",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Agreed, good idea.",
+      "parentUuid": "e4a37280_1019d0bc",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1b02ba8c_3372624b",
         "filename": "core/java/android/os/storage/StorageArea.java",
         "patchSetId": 11
@@ -169,6 +313,30 @@
       "writtenOn": "2024-03-15T04:08:55Z",
       "side": 1,
       "message": "tries to lock",
+      "range": {
+        "startLine": 74,
+        "startChar": 70,
+        "endLine": 74,
+        "endChar": 85
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bd5a4b9_25ef86c0",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b02ba8c_3372624b",
       "range": {
         "startLine": 74,
         "startChar": 70,
@@ -192,6 +360,30 @@
       "writtenOn": "2024-03-15T04:08:55Z",
       "side": 1,
       "message": "locked",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 14
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4d6be7c_3ecf7e05",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b7ec1af_6ab78327",
       "range": {
         "startLine": 77,
         "startChar": 7,
@@ -227,6 +419,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7b7809f4_7d483002",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Updated!",
+      "parentUuid": "a61a8725_6e703687",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "558114ca_74fe1e7f",
         "filename": "core/java/android/os/storage/StorageArea.java",
         "patchSetId": 11
@@ -238,6 +454,30 @@
       "writtenOn": "2024-03-15T16:40:09Z",
       "side": 1,
       "message": "Slight nit, but using a `AtomicBoolean` here with a `compareAndSet` gives you a stronger guarantee that multiple threads don\u0027t accidentally over-close an object.\n\n(For example, consider where a developer passes around their `StorageArea` using a multi-threaded primitive such as coroutines, and mistakenly tries closing this same object twice; we\u0027d only want to decrement inside the system by 1.)",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7260b6c9_3e393318",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Good idea -- done",
+      "parentUuid": "558114ca_74fe1e7f",
       "range": {
         "startLine": 89,
         "startChar": 0,
@@ -320,6 +560,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4a016eb7_5cfe098f",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2966,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Yes -- storage areas\u0027 encryption relies on hardware-bound keys and so they will be lost on a restore. I\u0027ve added a note to the docs.",
+      "parentUuid": "81edc6b3_9d4485cc",
+      "range": {
+        "startLine": 2966,
+        "startChar": 16,
+        "endLine": 2966,
+        "endChar": 28
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7683ebce_868552a2",
         "filename": "core/java/android/os/storage/StorageManager.java",
         "patchSetId": 11
@@ -364,6 +628,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "36a28306_78371955",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2967,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Oh nice, thanks!",
+      "parentUuid": "6e5fc251_a7b8c914",
+      "range": {
+        "startLine": 2967,
+        "startChar": 7,
+        "endLine": 2967,
+        "endChar": 26
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "558c0081_22c85645",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2967,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7683ebce_868552a2",
+      "range": {
+        "startLine": 2967,
+        "startChar": 59,
+        "endLine": 2967,
+        "endChar": 62
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06e2a9dc_990f6363",
@@ -377,6 +689,30 @@
       "writtenOn": "2024-03-15T16:40:09Z",
       "side": 1,
       "message": "Based on my reading of this, it sounds like storage areas are then only usable when CE storage is available, right?\n\nIf so, could you add a doc sentence here to confirm the corollary that \"Storage areas can only be interacted with when `UserManager.isUserUnlocked()` is true.\"  (That `isUserUnlocked()` method pretty closely mirrors when Credential Encrypted storage is available.)\n\n[If you can do a one-time creation-and-population of a storage area when CE storage isn\u0027t yet available, we\u0027d likely want another paragraph explaining that nuance.]",
+      "range": {
+        "startLine": 2970,
+        "startChar": 69,
+        "endLine": 2970,
+        "endChar": 89
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d13472a7_4281195c",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2970,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Yes -- storage areas can only be used when CE storage is available. That\u0027s because the FBE keys vold generates for the storage areas are stored in CE storage.\n\nGood catch, thanks!",
+      "parentUuid": "06e2a9dc_990f6363",
       "range": {
         "startLine": 2970,
         "startChar": 69,
@@ -436,6 +772,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "abcc4844_e6251b7d",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2973,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Sounds good! I\u0027ve reworded it, but am not marking this as resolved yet since I am not sure if I should cut down on the information about what the Jetpack library will provide.",
+      "parentUuid": "73018227_3e500585",
+      "range": {
+        "startLine": 2973,
+        "startChar": 23,
+        "endLine": 2973,
+        "endChar": 40
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d55f028f_e1e7fe6f",
         "filename": "core/java/android/os/storage/StorageManager.java",
         "patchSetId": 11
@@ -447,6 +807,30 @@
       "writtenOn": "2024-03-15T04:08:55Z",
       "side": 1,
       "message": "This should link to the Keystore documentation that explains what this means",
+      "range": {
+        "startLine": 2974,
+        "startChar": 75,
+        "endLine": 2975,
+        "endChar": 31
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76f416e3_3776d2f8",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2975,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Good point",
+      "parentUuid": "d55f028f_e1e7fe6f",
       "range": {
         "startLine": 2974,
         "startChar": 75,
@@ -470,6 +854,30 @@
       "writtenOn": "2024-03-15T04:08:55Z",
       "side": 1,
       "message": "These only apply to unlocked-only storage, not generic storage areas",
+      "range": {
+        "startLine": 2983,
+        "startChar": 0,
+        "endLine": 2987,
+        "endChar": 98
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e96073fb_9a6432ef",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2987,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Good catch",
+      "parentUuid": "bf062969_2f06d6d4",
       "range": {
         "startLine": 2983,
         "startChar": 0,
@@ -552,6 +960,54 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0abcf961_3895029d",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2998,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Done -- this needs to have length `STORAGE_AREA_KEY_LENGTH`; it\u0027s checked in the StorageManagerService\u0027s `openStorageArea`. I\u0027ve added a note to the docs.",
+      "parentUuid": "6d0453d4_4b31ca28",
+      "range": {
+        "startLine": 2998,
+        "startChar": 73,
+        "endLine": 2998,
+        "endChar": 94
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9b97e0c_ec85f3e3",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2998,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "I\u0027ve added a note about that in the docs the docs for this method.",
+      "parentUuid": "e1fb6f4d_d01ff177",
+      "range": {
+        "startLine": 2998,
+        "startChar": 48,
+        "endLine": 2998,
+        "endChar": 70
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "55909802_becaa9b3",
         "filename": "core/java/android/os/storage/StorageManager.java",
         "patchSetId": 11
@@ -575,6 +1031,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a5fc9c1f_2b47b38c",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3026,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Makes sense to avoid listing the areas -- good idea. I\u0027ve change the check to avoid the listing but left it in Java, because I think it is an error that app developers might choose to ignore, and so I think it would make sense to have it be a different type of error than those thrown up by vold.",
+      "parentUuid": "55909802_becaa9b3",
+      "range": {
+        "startLine": 3023,
+        "startChar": 0,
+        "endLine": 3026,
+        "endChar": 9
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "68d2d1e6_1aa455ff",
         "filename": "core/java/android/os/storage/StorageManager.java",
         "patchSetId": 11
@@ -586,6 +1066,30 @@
       "writtenOn": "2024-03-15T04:08:55Z",
       "side": 1,
       "message": "If we don\u0027t plan to guarantee atomic deletion, we need to document that and also carefully consider any recovery code that may be needed for cases where the deletion gets interrupted.  E.g. what if `openStorageArea`, or `deleteStorageArea`, is passed a storage area that has been partially deleted.",
+      "range": {
+        "startLine": 3067,
+        "startChar": 1,
+        "endLine": 3072,
+        "endChar": 9
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1656da9c_0758c7fa",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3072,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Good point -- I\u0027ve added a lock for the storage areas, so deletion and opening can\u0027t happen concurrently.",
+      "parentUuid": "68d2d1e6_1aa455ff",
       "range": {
         "startLine": 3067,
         "startChar": 1,
@@ -645,6 +1149,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "36fa5a4a_9f20adc3",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3099,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Ok that makes sense, thanks. I am stuck on figuring out how to link to the death of an app, since StorageManager is not a `Binder`. Do you have any pointers to some other code implementing links to app death?",
+      "parentUuid": "405e7acb_7621af69",
+      "range": {
+        "startLine": 3099,
+        "startChar": 0,
+        "endLine": 3099,
+        "endChar": 51
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2bdd08be_803274f1",
         "filename": "core/java/android/security/flags.aconfig",
         "patchSetId": 11
@@ -656,6 +1184,30 @@
       "writtenOn": "2024-03-15T04:08:55Z",
       "side": 1,
       "message": "It probably will be easier to add the flag in a separate CL, since adding the flag unblocks adding any code related to this feature (not just this CL).",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dde35d64_815f235e",
+        "filename": "core/java/android/security/flags.aconfig",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Makes sense!",
+      "parentUuid": "2bdd08be_803274f1",
       "range": {
         "startLine": 40,
         "startChar": 0,
@@ -691,6 +1243,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eff59eab_6f871641",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4580,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Nice, thanks!",
+      "parentUuid": "7204bad7_2abecb18",
+      "range": {
+        "startLine": 4578,
+        "startChar": 0,
+        "endLine": 4580,
+        "endChar": 0
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aa97635e_43bbe8bc",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 11
@@ -714,6 +1290,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3ac23b81_b2eebeb5",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4613,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Good catch",
+      "parentUuid": "aa97635e_43bbe8bc",
+      "range": {
+        "startLine": 4613,
+        "startChar": 45,
+        "endLine": 4613,
+        "endChar": 50
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2065fadd_103dacaf",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 11
@@ -725,6 +1325,30 @@
       "writtenOn": "2024-03-15T16:40:09Z",
       "side": 1,
       "message": "Could you expand the docs above to describe what this is a map from/to?  (Package+UserId to Area and Count?)\n\nI might make a slight suggestion to pivot the data structure slightly to avoid the extra object allocations for the `Pair` object; here\u0027s an example from another service:\n\n* https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/content/ContentService.java;l\u003d188?q\u003dfile:contentservice\n\n(Note that it uses userId instead of UID, and also uses several lighterweight containers such as `SparseArray` and `ArrayMap`.)\n\nFinally, storing your final refcount value as a `android.system.Int32Ref` value should make it slightly easier to modify your refcounts, as you\u0027re not replacing the map value every time you increment/decrement.  (You\u0027d be doing Int32Ref.value++ or value--.)",
+      "range": {
+        "startLine": 4620,
+        "startChar": 0,
+        "endLine": 4620,
+        "endChar": 100
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2ea7b69_d9155d7a",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4620,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "Good idea with the data structure; I\u0027ve changed it, and updated the docs as requested",
+      "parentUuid": "2065fadd_103dacaf",
       "range": {
         "startLine": 4620,
         "startChar": 0,

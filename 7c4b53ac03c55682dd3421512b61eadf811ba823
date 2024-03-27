@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "441c5021_16777833",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-27T16:50:38Z",
+      "side": 1,
+      "message": "I\u0027ve addressed the review comments, and left a couple follow-up questions. \n\nI\u0027m stuck on the implementation of the `linkToDeath` inside `StorageManagerService`, to close storage areas upon app death. The issue: the `StorageManager` is not a `Binder`, and I can\u0027t figure out how to link to it or to a corresponding `Binder` so that the death reaction gets triggered.",
+      "revId": "7c4b53ac03c55682dd3421512b61eadf811ba823",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
