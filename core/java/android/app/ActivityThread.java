@@ -121,6 +121,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.os.Debug;
+import android.os.Debug.State;
 import android.os.Environment;
 import android.os.FileUtils;
 import android.os.GraphicsEnvironment;
@@ -399,7 +400,7 @@ public final class ActivityThread extends ClientTransactionHandler
     @UnsupportedAppUsage
     Application mInitialApplication;
     @UnsupportedAppUsage
-    final ArrayList<Application> mAllApplications = new ArrayList<>();
+    private final ArrayList<Application> mAllApplications = new ArrayList<>();
     /**
      * Bookkeeping of instantiated backup agents indexed first by user id, then by package name.
      * Indexing by user id supports parallel backups across users on system packages as they run in
@@ -6753,7 +6754,6 @@ public final class ActivityThread extends ClientTransactionHandler
         android.ddm.DdmHandleAppName.setAppName(data.processName,
                                                 data.appInfo.packageName,
                                                 UserHandle.myUserId());
-        Debug.onAppNamed(data.appInfo.packageName, data.processName);
         VMRuntime.setProcessPackageName(data.appInfo.packageName);
 
         // Pass data directory path to ART. This is used for caching information and
@@ -6958,6 +6958,7 @@ public final class ActivityThread extends ClientTransactionHandler
         final StrictMode.ThreadPolicy savedPolicy = StrictMode.allowThreadDiskWrites();
         final StrictMode.ThreadPolicy writesAllowedPolicy = StrictMode.getThreadPolicy();
 
+         Debug.setState(State.RUNNING);
         if (data.debugMode != ApplicationThreadConstants.DEBUG_OFF) {
             if (data.debugMode == ApplicationThreadConstants.DEBUG_WAIT) {
                 waitForDebugger(data);
@@ -8271,6 +8272,12 @@ public final class ActivityThread extends ClientTransactionHandler
         } catch (RemoteException ignored) {
         }
         return false;
+    }
+
+    @UnsupportedAppUsage
+    void addApplication(@NonNull Application app) {
+        mAllApplications.add(app);
+        Debug.onApplicationAdded(app.mLoadedApk.mPackageName);
     }
 
     @Override

@@ -1,9 +1,21 @@
 // Baseline format: 1.0
+Enum: android.os.Debug.State:
+    Enums are discouraged in Android APIs
+
+
 UnflaggedApi: android.content.pm.PackageManager#FEATURE_THREAD_NETWORK:
     New API must be flagged with @FlaggedApi: field android.content.pm.PackageManager.FEATURE_THREAD_NETWORK
 UnflaggedApi: android.os.Build.VERSION_CODES#VANILLA_ICE_CREAM:
     New API must be flagged with @FlaggedApi: field android.os.Build.VERSION_CODES.VANILLA_ICE_CREAM
-UnflaggedApi: android.os.Debug#onAppNamed(String, String):
-    New API must be flagged with @FlaggedApi: method android.os.Debug.onAppNamed(String,String)
+UnflaggedApi: android.os.Debug#onProcessNamed(String):
+    New API must be flagged with @FlaggedApi: method android.os.Debug.onProcessName(String)
+UnflaggedApi: android.os.Debug.State:
+    New API must be flagged with @FlaggedApi: class android.os.Debug.State
+UnflaggedApi: android.os.Debug.State#RUNNING:
+    New API must be flagged with @FlaggedApi: enum constant android.os.Debug.State.RUNNING
+UnflaggedApi: android.os.Debug.State#SUSPENDED_FOR_DEBUGGER:
+    New API must be flagged with @FlaggedApi: enum constant android.os.Debug.State.SUSPENDED_FOR_DEBUGGER
+UnflaggedApi: android.os.Debug.State#WAIT_FOR_DEBUGGER:
+    New API must be flagged with @FlaggedApi: enum constant android.os.Debug.State.WAIT_FOR_DEBUGGER
 UnflaggedApi: android.os.UserManager#DISALLOW_NEAR_FIELD_COMMUNICATION_RADIO:
     New API must be flagged with @FlaggedApi: field android.os.UserManager.DISALLOW_NEAR_FIELD_COMMUNICATION_RADIO

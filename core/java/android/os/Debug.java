@@ -110,7 +110,10 @@ public final class Debug
     private static final String DEFAULT_TRACE_EXTENSION = ".trace";
 
     /** @hide */
-    public native static void onAppNamed(@NonNull String packageName, @NonNull String processName);
+    public native static void onProcessNamed(@NonNull String processName);
+
+    /** @hide */
+    public native static void onApplicationAdded(@NonNull String packageName);
 
     /**
      * This class is used to retrieved various statistics about the memory mappings for this
@@ -984,6 +987,28 @@ public final class Debug
     }
 
 
+    public enum State {
+        RUNNING(0),
+        WAIT_FOR_DEBUGGER(1),
+        SUSPENDED_FOR_DEBUGGER(2);
+
+        private final int value;
+        State(int v) {
+            value = v;
+        }
+    }
+
+    private native static void onSetstate(int state);
+
+    /**
+     * Signal state to adb
+     *
+     * @hide
+     */
+    public static void setState(@NonNull State state) {
+        onSetstate(state.value);
+    }
+
     /**
      * Wait until a debugger attaches. As soon as a debugger attaches,
      * suspend all Java threads and send VM_START (a.k.a VM_INIT)
@@ -1011,12 +1036,14 @@ public final class Debug
         System.out.println("Waiting for debugger first packet");
 
         mWaiting = true;
+        setState(State.SUSPENDED_FOR_DEBUGGER);
         while (!isDebuggerConnected()) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException ie) {
             }
         }
+        setState(State.RUNNING);
         mWaiting = false;
 
         System.out.println("Debug.suspendAllAndSentVmStart");
@@ -1044,10 +1071,12 @@ public final class Debug
         DdmServer.sendChunk(waitChunk);
 
         mWaiting = true;
+        setState(State.WAIT_FOR_DEBUGGER);
         while (!isDebuggerConnected()) {
             try { Thread.sleep(SPIN_DELAY); }
             catch (InterruptedException ie) {}
         }
+        setState(State.RUNNING);
         mWaiting = false;
 
         System.out.println("Debugger has connected");
