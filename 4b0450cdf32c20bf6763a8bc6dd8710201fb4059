@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92f68cd4_7edcd5bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-28T07:52:58Z",
+      "side": 1,
+      "message": "Assuming comments addressed",
+      "revId": "4b0450cdf32c20bf6763a8bc6dd8710201fb4059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "900e7823_f326eac5",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-28T07:52:58Z",
+      "side": 1,
+      "message": "@param name Name of the profile to retrieve.\n@return the unstructured blob for the matching vpn profile. \n        Returns null if no profile was found.",
+      "range": {
+        "startLine": 723,
+        "startChar": 7,
+        "endLine": 723,
+        "endChar": 64
+      },
+      "revId": "4b0450cdf32c20bf6763a8bc6dd8710201fb4059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88a05aef_a3e2cf5f",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-28T07:52:58Z",
+      "side": 1,
+      "message": "@param name The name of the profile\n@param blob The profile.\n@return true if the profile was successfully added. False otherwise.",
+      "range": {
+        "startLine": 743,
+        "startChar": 7,
+        "endLine": 743,
+        "endChar": 8
+      },
+      "revId": "4b0450cdf32c20bf6763a8bc6dd8710201fb4059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bbf4ef8_2c518413",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-28T07:52:58Z",
+      "side": 1,
+      "message": "@param name Name of the profile to be removed.\n@return true if a profile was removed. False if no such profile was found.",
+      "range": {
+        "startLine": 758,
+        "startChar": 7,
+        "endLine": 758,
+        "endChar": 8
+      },
+      "revId": "4b0450cdf32c20bf6763a8bc6dd8710201fb4059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33fe2b12_695df42b",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-28T07:52:58Z",
+      "side": 1,
+      "message": "@param prefix The prefix to match\n@return an array of strings representing the name suffixes stored in the profile database matching the given prefix. The return value may be empty but never null.",
+      "range": {
+        "startLine": 773,
+        "startChar": 7,
+        "endLine": 773,
+        "endChar": 8
+      },
+      "revId": "4b0450cdf32c20bf6763a8bc6dd8710201fb4059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81465493_73220fa6",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-28T07:52:58Z",
+      "side": 1,
+      "message": "Apply the same doc as VpnManager. Ditto for the others.",
+      "range": {
+        "startLine": 1032,
+        "startChar": 7,
+        "endLine": 1033,
+        "endChar": 12
+      },
+      "revId": "4b0450cdf32c20bf6763a8bc6dd8710201fb4059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
