@@ -752,6 +752,7 @@ public class InstallRepository {
         Uri uri = mIntent.getData();
         if (uri != null && SCHEME_PACKAGE.equals(uri.getScheme())) {
             try {
+                Log.d(LOG_TAG, "Installing $uri")
                 mPackageManager.installExistingPackage(mNewPackageInfo.packageName);
                 setStageBasedOnResult(PackageInstaller.STATUS_SUCCESS, -1, null, -1);
             } catch (PackageManager.NameNotFoundException e) {
@@ -802,9 +803,10 @@ public class InstallRepository {
 
     private void setStageBasedOnResult(int statusCode, int legacyStatus, String message,
         int serviceId) {
+            Log.d(LOG_TAG, "Status code: $statusCode")
         if (statusCode == PackageInstaller.STATUS_SUCCESS) {
             boolean shouldReturnResult = mIntent.getBooleanExtra(Intent.EXTRA_RETURN_RESULT, false);
-
+            Log.d(LOG_TAG, "shouldReturnResult: $shouldReturnResult")
             InstallSuccess.Builder successBuilder = new InstallSuccess.Builder(mAppSnippet)
                 .setShouldReturnResult(shouldReturnResult);
             Intent resultIntent;
