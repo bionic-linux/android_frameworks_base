@@ -206,6 +206,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c4632e5_95de0e28",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-30T00:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99ce00ee_0e4fe3dc",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0e72c5c_908cb33f",
@@ -290,6 +314,30 @@
       "side": 1,
       "message": "Agreed, good idea.",
       "parentUuid": "e4a37280_1019d0bc",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57cbb26f_14c69634",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-30T00:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77eedfd2_8383c5e1",
       "range": {
         "startLine": 54,
         "startChar": 0,
@@ -441,6 +489,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cee44a58_8f8c2f4b",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-30T00:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b7809f4_7d483002",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "558114ca_74fe1e7f",
@@ -572,6 +644,30 @@
       "side": 1,
       "message": "Yes -- storage areas\u0027 encryption relies on hardware-bound keys and so they will be lost on a restore. I\u0027ve added a note to the docs.",
       "parentUuid": "81edc6b3_9d4485cc",
+      "range": {
+        "startLine": 2966,
+        "startChar": 16,
+        "endLine": 2966,
+        "endChar": 28
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c50b3db_c4f101dc",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2966,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-30T00:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a016eb7_5cfe098f",
       "range": {
         "startLine": 2966,
         "startChar": 16,
@@ -1006,6 +1102,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fb29411_bd2faeff",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2998,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-30T00:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0abcf961_3895029d",
+      "range": {
+        "startLine": 2998,
+        "startChar": 73,
+        "endLine": 2998,
+        "endChar": 94
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3035712_6f1526ef",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2998,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-30T00:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9b97e0c_ec85f3e3",
+      "range": {
+        "startLine": 2998,
+        "startChar": 48,
+        "endLine": 2998,
+        "endChar": 70
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55909802_becaa9b3",
@@ -1090,6 +1234,30 @@
       "side": 1,
       "message": "Good point -- I\u0027ve added a lock for the storage areas, so deletion and opening can\u0027t happen concurrently.",
       "parentUuid": "68d2d1e6_1aa455ff",
+      "range": {
+        "startLine": 3067,
+        "startChar": 1,
+        "endLine": 3072,
+        "endChar": 9
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ef10884_4bca9ec6",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3072,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-30T00:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1656da9c_0758c7fa",
       "range": {
         "startLine": 3067,
         "startChar": 1,
@@ -1218,6 +1386,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad13eb5b_79d70b4d",
+        "filename": "core/java/android/security/flags.aconfig",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-30T00:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dde35d64_815f235e",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7204bad7_2abecb18",
@@ -1255,6 +1447,30 @@
       "side": 1,
       "message": "Nice, thanks!",
       "parentUuid": "7204bad7_2abecb18",
+      "range": {
+        "startLine": 4578,
+        "startChar": 0,
+        "endLine": 4580,
+        "endChar": 0
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67254263_042ed84f",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4580,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-30T00:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eff59eab_6f871641",
       "range": {
         "startLine": 4578,
         "startChar": 0,
@@ -1312,6 +1528,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d938542_c0d0cbcc",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4613,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-30T00:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ac23b81_b2eebeb5",
+      "range": {
+        "startLine": 4613,
+        "startChar": 45,
+        "endLine": 4613,
+        "endChar": 50
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2065fadd_103dacaf",
@@ -1349,6 +1589,30 @@
       "side": 1,
       "message": "Good idea with the data structure; I\u0027ve changed it, and updated the docs as requested",
       "parentUuid": "2065fadd_103dacaf",
+      "range": {
+        "startLine": 4620,
+        "startChar": 0,
+        "endLine": 4620,
+        "endChar": 100
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "094ba825_b76cb095",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4620,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-03-30T00:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2ea7b69_d9155d7a",
       "range": {
         "startLine": 4620,
         "startChar": 0,
