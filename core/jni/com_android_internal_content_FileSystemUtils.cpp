@@ -149,4 +149,42 @@ bool punchHolesInElf64(const char *filePath, const uint64_t zipOffset) {
     return punchHoles(filePath, zipOffset, programHeaders);
 }
 
+
+bool punchHolesInApk(const char* filePath, uint64_t zipOffset, uint64_t extraFieldOffset, uint64_t extraFieldLen) {
+
+    android::base::unique_fd fd(open(filePath, O_RDWR | O_CLOEXEC));
+    if (!fd.ok()) {
+        ALOGE("Can't open file to punch %s", filePath);
+        return false;
+    }
+
+    uint64_t extraFieldStart = zipOffset - extraFieldLen;
+
+    // Read the entire extra fields at once and punch file according to zero stretches.
+    // TODO: Check assumption that this will be always less than page size
+    std::vector<uint8_t> buffer(extraFieldLen);
+    ReadFullyAtOffset(fd, buffer.data(), extraFieldLen, extraFieldStart);
+    ALOGD("Extrafield content near offset: %lld, is  %s", zipOffset, HexString(buffer.data(), buffer.size()).c_str());
+
+    uint64_t currentSize = 0;
+    while (currentSize < extraFieldLen) {
+        uint64_t end = currentSize;
+        while (end < extraFieldLen && buffer[end] == 0) {
+            ++end;
+        }
+
+        uint64_t punchLen = end - currentSize;
+        // TODO: fix this comparison
+        if (punchLen > 10) {
+            ALOGE("Punching hole in apk start %lld len %lld", extraFieldStart + currentSize, punchLen);
+            // Punch hole for this entire stretch.
+            fallocate(fd, FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE, extraFieldStart + currentSize,
+                              punchLen);
+        }
+        currentSize = end;
+        ++currentSize;
+    }
+    return true;
+}
+
 }; // namespace android
