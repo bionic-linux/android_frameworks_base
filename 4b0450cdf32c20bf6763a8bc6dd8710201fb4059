@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e33e49db_14cb14ac",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-04-01T13:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "900e7823_f326eac5",
+      "range": {
+        "startLine": 723,
+        "startChar": 7,
+        "endLine": 723,
+        "endChar": 64
+      },
+      "revId": "4b0450cdf32c20bf6763a8bc6dd8710201fb4059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88a05aef_a3e2cf5f",
@@ -54,6 +78,30 @@
       "writtenOn": "2024-03-28T07:52:58Z",
       "side": 1,
       "message": "@param name The name of the profile\n@param blob The profile.\n@return true if the profile was successfully added. False otherwise.",
+      "range": {
+        "startLine": 743,
+        "startChar": 7,
+        "endLine": 743,
+        "endChar": 8
+      },
+      "revId": "4b0450cdf32c20bf6763a8bc6dd8710201fb4059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8df81a9e_09430605",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-04-01T13:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88a05aef_a3e2cf5f",
       "range": {
         "startLine": 743,
         "startChar": 7,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f987e5e_0e3cfb80",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-04-01T13:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bbf4ef8_2c518413",
+      "range": {
+        "startLine": 758,
+        "startChar": 7,
+        "endLine": 758,
+        "endChar": 8
+      },
+      "revId": "4b0450cdf32c20bf6763a8bc6dd8710201fb4059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33fe2b12_695df42b",
@@ -110,6 +182,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef689637_73d7572e",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-04-01T13:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33fe2b12_695df42b",
+      "range": {
+        "startLine": 773,
+        "startChar": 7,
+        "endLine": 773,
+        "endChar": 8
+      },
+      "revId": "4b0450cdf32c20bf6763a8bc6dd8710201fb4059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81465493_73220fa6",
@@ -123,6 +219,30 @@
       "writtenOn": "2024-03-28T07:52:58Z",
       "side": 1,
       "message": "Apply the same doc as VpnManager. Ditto for the others.",
+      "range": {
+        "startLine": 1032,
+        "startChar": 7,
+        "endLine": 1033,
+        "endChar": 12
+      },
+      "revId": "4b0450cdf32c20bf6763a8bc6dd8710201fb4059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8974b87e_cd41022d",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2024-04-01T13:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81465493_73220fa6",
       "range": {
         "startLine": 1032,
         "startChar": 7,
