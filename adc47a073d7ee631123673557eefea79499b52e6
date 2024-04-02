@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90728309_d624da55",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-04-02T20:41:17Z",
+      "side": 1,
+      "message": "Can we avoid scanning?\n\nIs there enough information to do similar to the ELF punching?\n\n```\nhole \u003d [content1_offset + content1_size, content2_offset)\n```",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 5
+      },
+      "revId": "adc47a073d7ee631123673557eefea79499b52e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
