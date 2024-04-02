@@ -203,12 +203,9 @@ public abstract class KeyguardAbsKeyInputViewController<T extends KeyguardAbsKey
 
     protected void startErrorAnimation() { /* no-op */ }
 
-    protected void verifyPasswordAndUnlock() {
-        if (mDismissing) return; // already verified but haven't been dismissed; don't do it again.
-        if (mLockedOut) return;
-
-        final LockscreenCredential password = mView.getEnteredCredential();
+    private void verifyCredentialAndUnlock(LockscreenCredential password) {
         mView.setPasswordEntryInputEnabled(false);
+
         if (mPendingLockCheck != null) {
             mPendingLockCheck.cancel(false);
         }
@@ -218,8 +215,8 @@ public abstract class KeyguardAbsKeyInputViewController<T extends KeyguardAbsKey
             // to avoid accidental lockout, only count attempts that are long enough to be a
             // real password. This may require some tweaking.
             mView.setPasswordEntryInputEnabled(true);
-            onPasswordChecked(userId, false /* matched */, 0, false /* not valid - too short */);
-            password.zeroize();
+            onPasswordChecked(userId, false /* matched */,
+                    0, false /* not valid - too short */);
             return;
         }
 
@@ -239,7 +236,6 @@ public abstract class KeyguardAbsKeyInputViewController<T extends KeyguardAbsKey
 
                         onPasswordChecked(userId, true /* matched */, 0 /* timeoutMs */,
                                 true /* isValidPassword */);
-                        password.zeroize();
                     }
 
                     @Override
@@ -251,17 +247,25 @@ public abstract class KeyguardAbsKeyInputViewController<T extends KeyguardAbsKey
                             onPasswordChecked(userId, false /* matched */, timeoutMs,
                                     true /* isValidPassword */);
                         }
-                        password.zeroize();
                     }
 
                     @Override
                     public void onCancelled() {
-                        // We already got dismissed with the early matched callback, so we cancelled
-                        // the check. However, we still need to note down the latency.
+                        // We already got dismissed with the early matched callback,
+                        // so we cancelled the check. However, we still need to note
+                        // down the latency.
                         mLatencyTracker.onActionEnd(ACTION_CHECK_CREDENTIAL_UNLOCKED);
-                        password.zeroize();
                     }
                 });
+    }
+
+    protected void verifyPasswordAndUnlock() {
+        if (mDismissing) return; // already verified but haven't been dismissed; don't do it again.
+        if (mLockedOut) return;
+
+        try (LockscreenCredential password = mView.getEnteredCredential()) {
+            verifyCredentialAndUnlock(password);
+        }
     }
 
     @Override
