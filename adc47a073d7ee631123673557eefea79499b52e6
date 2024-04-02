@@ -22,6 +22,30 @@
       },
       "revId": "adc47a073d7ee631123673557eefea79499b52e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9024ead_0e71eeb0",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-04-02T22:13:48Z",
+      "side": 1,
+      "message": "When aligning apks, there can be existing data in extra field which will just get copied with additional padding : https://cs.android.com/android/platform/superproject/main/+/main:build/make/tools/zipalign/ZipEntry.cpp;l\u003d206;drc\u003d0d7190b41336d81d73a5e88047dd56d7cffef7bd\n\nAlso, For zip64 files, there can be extended fields which are stored inside of extra fields : https://cs.android.com/android/platform/superproject/main/+/main:system/libziparchive/zip_archive.cc;l\u003d439?q\u003dParseZip64ExtendedInfoInExtraField\u0026ss\u003dandroid%2Fplatform%2Fsuperproject%2Fmain\n\nIt is not a safe operation to punch without scanning.",
+      "parentUuid": "90728309_d624da55",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 5
+      },
+      "revId": "adc47a073d7ee631123673557eefea79499b52e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
