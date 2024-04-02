@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eeb88302_40f61185",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-04-02T21:01:07Z",
+      "side": 1,
+      "message": "Hi, as part of my TEST_MAPPING -\u003e Android.bp file work, this one TM file seems to need owners approval and you have it :)",
+      "revId": "a87a411c9d0a132717e30d014c547d3c420b816d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
