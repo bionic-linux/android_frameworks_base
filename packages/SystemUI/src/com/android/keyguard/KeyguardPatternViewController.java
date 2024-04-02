@@ -125,9 +125,19 @@ public class KeyguardPatternViewController
 
             mLatencyTracker.onActionStart(ACTION_CHECK_CREDENTIAL);
             mLatencyTracker.onActionStart(ACTION_CHECK_CREDENTIAL_UNLOCKED);
+            try (LockscreenCredential credential = LockscreenCredential.createPattern(pattern)) {
+                checkPatternAsync(credential, userId);
+            }
+            if (pattern.size() > MIN_PATTERN_BEFORE_POKE_WAKELOCK) {
+                getKeyguardSecurityCallback().userActivity();
+                getKeyguardSecurityCallback().onUserInput();
+            }
+        }
+
+        private void checkPatternAsync(LockscreenCredential credential, int userId) {
             mPendingLockCheck = LockPatternChecker.checkCredential(
                     mLockPatternUtils,
-                    LockscreenCredential.createPattern(pattern),
+                    credential,
                     userId,
                     new LockPatternChecker.OnCheckCallback() {
 
@@ -152,14 +162,11 @@ public class KeyguardPatternViewController
                         @Override
                         public void onCancelled() {
                             // We already got dismissed with the early matched callback, so we
-                            // cancelled the check. However, we still need to note down the latency.
+                            // cancelled the check. However, we still need to note down
+                            // the latency.
                             mLatencyTracker.onActionEnd(ACTION_CHECK_CREDENTIAL_UNLOCKED);
                         }
                     });
-            if (pattern.size() > MIN_PATTERN_BEFORE_POKE_WAKELOCK) {
-                getKeyguardSecurityCallback().userActivity();
-                getKeyguardSecurityCallback().onUserInput();
-            }
         }
 
         private void onPatternChecked(int userId, boolean matched, int timeoutMs,
