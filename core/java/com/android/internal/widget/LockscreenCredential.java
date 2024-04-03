@@ -31,6 +31,8 @@ import android.text.TextUtils;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.Preconditions;
 
+import dalvik.system.VMRuntime;
+
 import libcore.util.HexEncoding;
 
 import java.security.MessageDigest;
@@ -103,7 +105,10 @@ public class LockscreenCredential implements Parcelable, AutoCloseable {
             // even though the validation logic will ultimately reject the credential as too short.
         }
         mType = type;
-        mCredential = credential;
+        mCredential =
+            (byte[]) VMRuntime.getRuntime().newNonMovableArray(byte.class, credential.length);
+        for (int i = 0; i < credential.length; ++ i)
+            mCredential[i] = credential[i];
         mHasInvalidChars = hasInvalidChars;
     }
 
