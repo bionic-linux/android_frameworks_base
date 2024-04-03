@@ -16209,4 +16209,13 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         }
         requestsCollector.accept(requestBuilder.build());
     }
+
+    /** @hide */
+    public void clear() {
+        if (mText instanceof Editable) {
+            // from the docs: equivalent to replace(0, length(), "", 0, 0)
+            ((Editable) mText).clear();
+        }
+        setText("");
+    }
 }
