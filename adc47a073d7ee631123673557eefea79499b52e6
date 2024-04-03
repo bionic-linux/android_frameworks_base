@@ -3,6 +3,75 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7d7f4475_8a123464",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-04-03T01:14:21Z",
+      "side": 1,
+      "message": "How much data is typically at the beginning of these extra fields which is not 0?",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 194,
+        "endChar": 9
+      },
+      "revId": "adc47a073d7ee631123673557eefea79499b52e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b0f94a3_767ef6ec",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-04-03T01:14:21Z",
+      "side": 1,
+      "message": "is this the FS block size? Should we read it from the FS? Also, I thought that it should be 4096 since we have page size \u003d\u003d block size most of the time?",
+      "range": {
+        "startLine": 203,
+        "startChar": 23,
+        "endLine": 203,
+        "endChar": 26
+      },
+      "revId": "adc47a073d7ee631123673557eefea79499b52e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18fccb74_86812223",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-04-03T01:14:21Z",
+      "side": 1,
+      "message": "check error and log or return?",
+      "range": {
+        "startLine": 212,
+        "startChar": 12,
+        "endLine": 212,
+        "endChar": 21
+      },
+      "revId": "adc47a073d7ee631123673557eefea79499b52e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "90728309_d624da55",
         "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
         "patchSetId": 2
@@ -43,6 +112,29 @@
         "startChar": 0,
         "endLine": 216,
         "endChar": 5
+      },
+      "revId": "adc47a073d7ee631123673557eefea79499b52e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bdd1957_a23e2349",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-04-03T01:14:21Z",
+      "side": 1,
+      "message": "nit: punchHolesInZip, since apk just happens to be a zip file, this makes it clear, we only rely on the zip header, and we don\u0027t rely on the fact that it\u0027s an APK?",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 20
       },
       "revId": "adc47a073d7ee631123673557eefea79499b52e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
