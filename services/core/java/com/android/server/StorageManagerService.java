@@ -3270,7 +3270,7 @@ class StorageManagerService extends IStorageManager.Stub
             throws RemoteException {
         super.setCeStorageProtection_enforcePermission();
 
-        mVold.setCeStorageProtection(userId, HexDump.toHexString(secret));
+        mVold.setCeStorageProtection(userId, secret);
     }
 
     /* Only for use by LockSettingsService */
@@ -3280,7 +3280,7 @@ class StorageManagerService extends IStorageManager.Stub
         super.unlockCeStorage_enforcePermission();
 
         if (StorageManager.isFileEncrypted()) {
-            mVold.unlockCeStorage(userId, HexDump.toHexString(secret));
+            mVold.unlockCeStorage(userId, secret);
         }
         synchronized (mLock) {
             mCeUnlockedUsers.append(userId);
