@@ -61,8 +61,22 @@ public class KeyguardPasswordViewController
     private final KeyguardViewController mKeyguardViewController;
     private final boolean mShowImeAtScreenOn;
     private EditText mPasswordEntry;
+    private WipeOnFinalizeEditTextContainer mPasswordEntryWipeWrapper;
     private ImageView mSwitchImeButton;
     private boolean mPaused;
+
+    private class WipeOnFinalizeEditTextContainer {
+        private EditText mEditText;
+
+        WipeOnFinalizeEditTextContainer(EditText e) {
+            mEditText = e;
+        }
+
+        @Override
+        public void finalize() {
+            mEditText.clear();
+        }
+    }
 
     private final OnEditorActionListener mOnEditorActionListener = (v, actionId, event) -> {
         // Check if this was the result of hitting the IME done action
@@ -135,6 +149,7 @@ public class KeyguardPasswordViewController
         }
         mShowImeAtScreenOn = resources.getBoolean(R.bool.kg_show_ime_at_screen_on);
         mPasswordEntry = mView.findViewById(mView.getPasswordTextViewId());
+        mPasswordEntryWipeWrapper = new WipeOnFinalizeEditTextContainer(mPasswordEntry);
         mSwitchImeButton = mView.findViewById(R.id.switch_ime_button);
     }
 
@@ -182,6 +197,7 @@ public class KeyguardPasswordViewController
         super.onViewDetached();
         mPasswordEntry.setOnEditorActionListener(null);
         mPostureController.removeCallback(mPostureCallback);
+        mPasswordEntry.clear();
     }
 
     @Override
