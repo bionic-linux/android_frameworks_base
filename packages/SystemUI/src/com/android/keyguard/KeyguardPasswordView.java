@@ -65,6 +65,7 @@ import com.android.systemui.statusbar.policy.DevicePostureController;
 public class KeyguardPasswordView extends KeyguardAbsKeyInputView {
 
     private TextView mPasswordEntry;
+    private WipeOnFinalizeTextViewContainer mPasswordEntryWipeWrapper;
     private TextViewInputDisabler mPasswordEntryDisabler;
     private DisappearAnimationListener mDisappearAnimationListener;
     @Nullable private MotionLayout mContainerMotionLayout;
@@ -75,12 +76,38 @@ public class KeyguardPasswordView extends KeyguardAbsKeyInputView {
     private static final int[] DISABLE_STATE_SET = {-android.R.attr.state_enabled};
     private static final int[] ENABLE_STATE_SET = {android.R.attr.state_enabled};
 
+    private class WipeOnFinalizeTextViewContainer {
+        private TextView mTextView;
+
+        WipeOnFinalizeTextViewContainer(TextView t) {
+            mTextView = t;
+        }
+
+        @Override
+        public void finalize() {
+            mTextView.clear();
+        }
+    }
+
     public KeyguardPasswordView(Context context) {
         this(context, null);
     }
 
     public KeyguardPasswordView(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    /**
+     * Wipe the password entry.
+     */
+    public void wipePassword() {
+        mPasswordEntry.clear();
+    }
+
+    /** @hide */
+    @Override
+    public void finalize() {
+        wipePassword();
     }
 
     /**
@@ -168,6 +195,7 @@ public class KeyguardPasswordView extends KeyguardAbsKeyInputView {
         super.onFinishInflate();
 
         mPasswordEntry = findViewById(getPasswordTextViewId());
+        mPasswordEntryWipeWrapper = new WipeOnFinalizeTextViewContainer(mPasswordEntry);
         mPasswordEntryDisabler = new TextViewInputDisabler(mPasswordEntry);
 
         // EditText cursor can fail screenshot tests, so disable it when testing
