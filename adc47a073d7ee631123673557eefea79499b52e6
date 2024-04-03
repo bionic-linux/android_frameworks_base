@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "895187da_afcb6c50",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-04-03T03:37:32Z",
+      "side": 1,
+      "message": "stat always returns the number of blocks in terms of VFS block size (512). We should probably change this to page size chunks.\n\nYou should also page align the initial offset from where you start each scan (chunk)",
+      "parentUuid": "7b0f94a3_767ef6ec",
+      "range": {
+        "startLine": 203,
+        "startChar": 23,
+        "endLine": 203,
+        "endChar": 26
+      },
+      "revId": "adc47a073d7ee631123673557eefea79499b52e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "18fccb74_86812223",
         "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
         "patchSetId": 2
