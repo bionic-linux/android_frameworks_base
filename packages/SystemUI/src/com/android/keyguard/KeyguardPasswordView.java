@@ -41,6 +41,7 @@ import android.graphics.Insets;
 import android.graphics.Rect;
 import android.os.Trace;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.WindowInsets;
 import android.view.WindowInsetsAnimationControlListener;
 import android.view.WindowInsetsAnimationController;
@@ -53,6 +54,7 @@ import androidx.constraintlayout.motion.widget.MotionLayout;
 import com.android.app.animation.Interpolators;
 import com.android.internal.widget.LockscreenCredential;
 import com.android.internal.widget.TextViewInputDisabler;
+import com.android.keyguard.KeyguardPasswordView.DisappearAnimationListener;
 import com.android.systemui.DejankUtils;
 import com.android.systemui.res.R;
 import com.android.systemui.statusbar.policy.DevicePostureController;
@@ -65,6 +67,7 @@ import com.android.systemui.statusbar.policy.DevicePostureController;
 public class KeyguardPasswordView extends KeyguardAbsKeyInputView {
 
     private TextView mPasswordEntry;
+    private WipeOnFinalizeTextViewContainer mPasswordEntryWipeWrapper;
     private TextViewInputDisabler mPasswordEntryDisabler;
     private DisappearAnimationListener mDisappearAnimationListener;
     @Nullable private MotionLayout mContainerMotionLayout;
@@ -75,12 +78,35 @@ public class KeyguardPasswordView extends KeyguardAbsKeyInputView {
     private static final int[] DISABLE_STATE_SET = {-android.R.attr.state_enabled};
     private static final int[] ENABLE_STATE_SET = {android.R.attr.state_enabled};
 
+    private class WipeOnFinalizeTextViewContainer {
+        private TextView t;
+
+        public WipeOnFinalizeTextViewContainer(TextView t) {
+            this.t = t;
+        }
+
+        @Override
+        public void finalize() {
+            t.clear();
+        }
+    }
+
     public KeyguardPasswordView(Context context) {
         this(context, null);
     }
 
     public KeyguardPasswordView(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    public void wipePassword() {
+        mPasswordEntry.clear();
+    }
+
+    /** @hide */
+    @Override
+    public void finalize() {
+        wipePassword();
     }
 
     /**
@@ -168,6 +194,7 @@ public class KeyguardPasswordView extends KeyguardAbsKeyInputView {
         super.onFinishInflate();
 
         mPasswordEntry = findViewById(getPasswordTextViewId());
+        mPasswordEntryWipeWrapper = new WipeOnFinalizeTextViewContainer(mPasswordEntry);
         mPasswordEntryDisabler = new TextViewInputDisabler(mPasswordEntry);
 
         // EditText cursor can fail screenshot tests, so disable it when testing
