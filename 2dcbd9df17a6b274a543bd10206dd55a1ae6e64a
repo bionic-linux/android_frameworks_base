@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a09394da_9eb17467",
+        "filename": "core/res/res/xml/sms_short_codes.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1888595
+      },
+      "writtenOn": "2024-04-04T13:17:50Z",
+      "side": 1,
+      "message": "Pattern and comment digit mismatch.\n\nwhich one is correct ? could you check and update it?\n\n1. If this country\u0027s shortcode can have 4 to 6 digits, this comment should be modified from \u00276\u0027 to \u00274-6\u0027.\n\n2. If this country\u0027s shortcode can have 6 digits only, the pattern should be modified as follows:\nfrom : pattern\u003d\"\\d{4,6}\"\nto : pattern\u003d\"\\d{6}\"",
+      "range": {
+        "startLine": 175,
+        "startChar": 15,
+        "endLine": 175,
+        "endChar": 16
+      },
+      "revId": "2dcbd9df17a6b274a543bd10206dd55a1ae6e64a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e5edc6a_fd934307",
+        "filename": "core/res/res/xml/sms_short_codes.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1888595
+      },
+      "writtenOn": "2024-04-04T13:17:50Z",
+      "side": 1,
+      "message": "This country also mismatch Pattern and comment digit. so could yo please check and update it?",
+      "range": {
+        "startLine": 261,
+        "startChar": 19,
+        "endLine": 261,
+        "endChar": 20
+      },
+      "revId": "2dcbd9df17a6b274a543bd10206dd55a1ae6e64a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d184785_4b5d1c45",
+        "filename": "core/res/res/xml/sms_short_codes.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1888595
+      },
+      "writtenOn": "2024-04-04T13:17:50Z",
+      "side": 1,
+      "message": "This country also mismatch Pattern and comment digit. so could yo please check and update it?",
+      "range": {
+        "startLine": 320,
+        "startChar": 18,
+        "endLine": 320,
+        "endChar": 19
+      },
+      "revId": "2dcbd9df17a6b274a543bd10206dd55a1ae6e64a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
