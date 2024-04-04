@@ -44,6 +44,7 @@ android_test {
         "apct-perftests-utils",
         "collector-device-lib",
         "compatibility-device-util-axt",
+        "conscrypt",
         "junit",
         "junit-params",
         "core-tests-support",
