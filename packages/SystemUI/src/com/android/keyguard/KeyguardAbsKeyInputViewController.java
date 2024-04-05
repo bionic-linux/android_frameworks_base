@@ -269,8 +269,8 @@ public abstract class KeyguardAbsKeyInputViewController<T extends KeyguardAbsKey
         try (LockscreenCredential password = mView.getEnteredCredential()) {
             verifyCredentialAndUnlock(password);
         } finally {
-            if (mView instanceof KeyguardPasswordView) {
-                ((KeyguardPasswordView) mView).wipePassword();
+            if (mView instanceof KeyguardAbsKeyInputView) {
+                mView.wipePassword();
             }
         }
     }
