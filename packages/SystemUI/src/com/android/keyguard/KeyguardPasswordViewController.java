@@ -201,7 +201,6 @@ public class KeyguardPasswordViewController
         super.onViewDetached();
         mPasswordEntry.setOnEditorActionListener(null);
         mPostureController.removeCallback(mPostureCallback);
-        mPasswordEntry.clear();
     }
 
     @Override

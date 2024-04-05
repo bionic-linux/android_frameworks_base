@@ -35,7 +35,7 @@ public abstract class KeyguardPinBasedInputViewController<T extends KeyguardPinB
 
     private final LiftToActivateListener mLiftToActivateListener;
     private final FalsingCollector mFalsingCollector;
-    protected PasswordTextView mPasswordEntry;
+    protected KeyguardPinBasedInputView.WipeOnFinalizePasswordTextView mPasswordEntry;
 
     private final OnKeyListener mOnKeyListener = (v, keyCode, event) -> {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -71,7 +71,8 @@ public abstract class KeyguardPinBasedInputViewController<T extends KeyguardPinB
                 emergencyButtonController, featureFlags, selectedUserInteractor);
         mLiftToActivateListener = liftToActivateListener;
         mFalsingCollector = falsingCollector;
-        mPasswordEntry = mView.findViewById(mView.getPasswordTextViewId());
+        mPasswordEntry = (KeyguardPinBasedInputView.WipeOnFinalizePasswordTextView)
+                            mView.findViewById(mView.getPasswordTextViewId());
     }
 
     @Override

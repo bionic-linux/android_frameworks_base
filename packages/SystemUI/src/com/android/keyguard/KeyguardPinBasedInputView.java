@@ -49,10 +49,35 @@ import java.util.List;
  */
 public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView {
 
-    protected PasswordTextView mPasswordEntry;
+    protected WipeOnFinalizePasswordTextView mPasswordEntry;
     private NumPadButton mOkButton;
     private NumPadButton mDeleteButton;
     private NumPadKey[] mButtons = new NumPadKey[10];
+
+    protected class WipeOnFinalizePasswordTextView extends PasswordTextView {
+        public WipeOnFinalizePasswordTextView(Context context) {
+            super(context);
+        }
+
+        public WipeOnFinalizePasswordTextView(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public WipeOnFinalizePasswordTextView(Context context, AttributeSet attrs,
+                int defStyleAttr) {
+            super(context, attrs, defStyleAttr);
+        }
+
+        public WipeOnFinalizePasswordTextView(Context context, AttributeSet attrs,
+                int defStyleAttr, int defStyleRes) {
+            super(context, attrs, defStyleAttr, defStyleRes);
+        }
+
+        @Override
+        public void finalize() {
+            clear();
+        }
+    }
 
     public KeyguardPinBasedInputView(Context context) {
         this(context, null);
@@ -60,6 +85,16 @@ public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView 
 
     public KeyguardPinBasedInputView(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    public void wipePassword() {
+        mPasswordEntry.clear();
+    }
+
+    /** @hide */
+    @Override
+    public void finalize() {
+        wipePassword();
     }
 
     @Override
@@ -164,7 +199,7 @@ public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView 
     @CallSuper
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mPasswordEntry = findViewById(getPasswordTextViewId());
+        mPasswordEntry = (WipeOnFinalizePasswordTextView)findViewById(getPasswordTextViewId());
 
         // Set selected property on so the view can send accessibility events.
         mPasswordEntry.setSelected(true);
