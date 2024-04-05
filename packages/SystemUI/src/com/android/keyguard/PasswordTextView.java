@@ -146,6 +146,12 @@ public class PasswordTextView extends BasePasswordTextView {
         setWillNotDraw(false);
     }
 
+    /** @hide */
+    public void clear() {
+        mTextChars.forEach( c -> c.clear());
+        mTextChars.clear();
+    }
+
     @Override
     protected PinShapeInput inflatePinShapeInput(boolean isPinHinting) {
         if (isPinHinting) {
@@ -338,6 +344,15 @@ public class PasswordTextView extends BasePasswordTextView {
         boolean isDotSwapPending;
         float currentTextTranslationY = 1.0f;
         ValueAnimator textTranslateAnimator;
+
+        @Override
+        public void finalize() {
+            clear();
+        }
+
+        public void clear() {
+            whichChar = '.';
+        }
 
         Animator.AnimatorListener removeEndListener = new AnimatorListenerAdapter() {
             private boolean mCancelled;
