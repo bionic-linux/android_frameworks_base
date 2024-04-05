@@ -70,6 +70,8 @@ public abstract class KeyguardAbsKeyInputView extends KeyguardInputView {
     protected abstract void setPasswordEntryEnabled(boolean enabled);
     protected abstract void setPasswordEntryInputEnabled(boolean enabled);
 
+    protected abstract void wipePassword();
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return mKeyDownListener != null && mKeyDownListener.onKeyDown(keyCode, event);

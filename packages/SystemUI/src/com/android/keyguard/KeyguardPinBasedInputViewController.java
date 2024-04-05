@@ -36,6 +36,20 @@ public abstract class KeyguardPinBasedInputViewController<T extends KeyguardPinB
     private final LiftToActivateListener mLiftToActivateListener;
     private final FalsingCollector mFalsingCollector;
     protected PasswordTextView mPasswordEntry;
+    private WipeOnFinalizePasswordTextViewContainer mPasswordEntryWipeWrapper;
+
+    private class WipeOnFinalizePasswordTextViewContainer {
+        private PasswordTextView t;
+
+        public WipeOnFinalizePasswordTextViewContainer(PasswordTextView t) {
+            this.t = t;
+        }
+
+        @Override
+        public void finalize() {
+            t.clear();
+        }
+    }
 
     private final OnKeyListener mOnKeyListener = (v, keyCode, event) -> {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -72,6 +86,7 @@ public abstract class KeyguardPinBasedInputViewController<T extends KeyguardPinB
         mLiftToActivateListener = liftToActivateListener;
         mFalsingCollector = falsingCollector;
         mPasswordEntry = mView.findViewById(mView.getPasswordTextViewId());
+        mPasswordEntryWipeWrapper = new WipeOnFinalizePasswordTextViewContainer(mPasswordEntry);
     }
 
     @Override
@@ -129,6 +144,7 @@ public abstract class KeyguardPinBasedInputViewController<T extends KeyguardPinB
         for (NumPadKey button : mView.getButtons()) {
             button.setOnTouchListener(null);
         }
+        mPasswordEntry.clear();
     }
 
     @Override

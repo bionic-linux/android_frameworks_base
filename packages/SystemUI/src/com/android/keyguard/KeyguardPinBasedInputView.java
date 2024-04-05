@@ -34,7 +34,6 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
-
 import androidx.annotation.CallSuper;
 
 import com.android.app.animation.Interpolators;
@@ -50,9 +49,23 @@ import java.util.List;
 public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView {
 
     protected PasswordTextView mPasswordEntry;
+    private WipeOnFinalizePasswordTextViewContainer mPasswordEntryWipeWrapper;
     private NumPadButton mOkButton;
     private NumPadButton mDeleteButton;
     private NumPadKey[] mButtons = new NumPadKey[10];
+
+    private class WipeOnFinalizePasswordTextViewContainer {
+        private PasswordTextView t;
+
+        public WipeOnFinalizePasswordTextViewContainer(PasswordTextView t) {
+            this.t = t;
+        }
+
+        @Override
+        public void finalize() {
+            t.clear();
+        }
+    }
 
     public KeyguardPinBasedInputView(Context context) {
         this(context, null);
@@ -60,6 +73,16 @@ public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView 
 
     public KeyguardPinBasedInputView(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    public void wipePassword() {
+        mPasswordEntry.clear();
+    }
+
+    /** @hide */
+    @Override
+    public void finalize() {
+        wipePassword();
     }
 
     @Override
@@ -165,6 +188,7 @@ public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView 
     protected void onFinishInflate() {
         super.onFinishInflate();
         mPasswordEntry = findViewById(getPasswordTextViewId());
+        mPasswordEntryWipeWrapper = new WipeOnFinalizePasswordTextViewContainer(mPasswordEntry);
 
         // Set selected property on so the view can send accessibility events.
         mPasswordEntry.setSelected(true);
