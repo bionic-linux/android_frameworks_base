@@ -232,10 +232,7 @@ cc_genrule {
     name: "aapt2_results",
     srcs: [
         ":aapt2_tests",
-        "integration-tests/CompileTest/**/*",
-        "integration-tests/CommandTests/**/*",
-        "integration-tests/ConvertTest/**/*",
-        "integration-tests/DumpTest/**/*",
+        "integration-tests/**/*",
     ],
     host_supported: true,
     device_supported: false,
@@ -245,14 +242,18 @@ cc_genrule {
         },
     },
     out: ["result.xml"],
-    cmd: "mkdir -p $(genDir)/integration-tests/CompileTest/ && " +
-        "cp $(locations integration-tests/CompileTest/**/*) $(genDir)/integration-tests/CompileTest/ && " +
-        "mkdir -p $(genDir)/integration-tests/CommandTests/ && " +
-        "cp $(locations integration-tests/CommandTests/**/*) $(genDir)/integration-tests/CompileTest/ && " +
-        "mkdir -p $(genDir)/integration-tests/ConvertTest/ && " +
-        "cp $(locations integration-tests/ConvertTest/**/*) $(genDir)/integration-tests/ConvertTest/ && " +
-        "mkdir -p $(genDir)/integration-tests/DumpTest/ && " +
-        "cp $(locations integration-tests/DumpTest/**/*) $(genDir)/integration-tests/DumpTest/ && " +
+    // "$(locations integration-tests/**/*)" provides paths to the individual files under the
+    // "integration-tests" directory, in the form of
+    // "frameworks/base/tools/aapt2/integration-tests/...". aapt2_tests expects the files to be in
+    // in the "integration-tests" directory relative to where it is running. The command below
+    // copies each individual file to the sandbox `$(genDir)` to the correct directory relative to
+    // the sandbox root, where aapt2_tests will run from. The `cut` command removes the
+    // "frameworks/base/tools/aapt2/" part of the file path.
+    cmd: "for file in $(locations integration-tests/**/*); do " +
+        "  relative_dir=`dirname $$(echo $$file | cut -d '/' -f 5-)` && " +
+        "  mkdir -p $(genDir)/$$relative_dir && " +
+        "  cp $$file $(genDir)/$$relative_dir; " +
+        "done && " +
         "cp $(locations :aapt2_tests) $(genDir)/ && " +
         "$(genDir)/aapt2_tests " +
         "--gtest_output=xml:$(out) " +
