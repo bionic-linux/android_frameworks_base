@@ -70,6 +70,30 @@ public class KeyguardPatternView extends KeyguardInputView
     private final Rect mLockPatternScreenBounds = new Rect();
 
     private LockPatternView mLockPatternView;
+    private WipeOnFinalizeLockPatternViewContainer mLockPatternViewWipeWrapper;
+
+    private class WipeOnFinalizeLockPatternViewContainer {
+        private LockPatternView l;
+
+        public WipeOnFinalizeLockPatternViewContainer(LockPatternView l) {
+            this.l = l;
+        }
+
+        @Override
+        public void finalize() {
+            l.clear();
+        }
+    }
+
+    public void wipePassword() {
+        mLockPatternView.clear();
+    }
+
+    /** @hide */
+    @Override
+    public void finalize() {
+        wipePassword();
+    }
 
     /**
      * Keeps track of the last time we poked the wake lock during dispatching of the touch event.
@@ -227,6 +251,7 @@ public class KeyguardPatternView extends KeyguardInputView
         super.onFinishInflate();
 
         mLockPatternView = findViewById(R.id.lockPatternView);
+        mLockPatternViewWipeWrapper = new WipeOnFinalizeLockPatternViewContainer(mLockPatternView);
 
         mEcaView = findViewById(R.id.keyguard_selector_fade_container);
     }

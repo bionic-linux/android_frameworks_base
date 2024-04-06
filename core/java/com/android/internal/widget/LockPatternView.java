@@ -261,6 +261,22 @@ public class LockPatternView extends View {
         public float lineEndY = Float.MIN_VALUE;
         @Nullable
         Animator activationAnimator;
+
+        @Override
+        public void finalize() {
+            reset();
+        }
+
+        public void reset() {
+            row = 0;
+            col = 0;
+            hwRadius = CanvasProperty.createFloat(0);
+            hwCenterX = CanvasProperty.createFloat(0);
+            hwCenterY = CanvasProperty.createFloat(0);
+            radius = 0;
+            translationY = 0;
+            alpha = 0;
+        }
      }
 
     /**
@@ -633,6 +649,16 @@ public class LockPatternView extends View {
         sendAccessEvent(R.string.lockscreen_access_pattern_cleared);
         if (mOnPatternListener != null) {
             mOnPatternListener.onPatternCleared();
+        }
+    }
+
+    /** @hide */
+    public void clear() {
+        clearPattern();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                mCellStates[i][j].reset();
+            }
         }
     }
 
