@@ -65,8 +65,22 @@ public class KeyguardPatternViewController
     private final DevicePostureController.Callback mPostureCallback =
             posture -> mView.onDevicePostureChanged(posture);
     private LockPatternView mLockPatternView;
+    private WipeOnFinalizeLockPatternViewContainer mLockPatternViewWipeWrapper;
     private CountDownTimer mCountdownTimer;
     private AsyncTask<?, ?, ?> mPendingLockCheck;
+
+    private class WipeOnFinalizeLockPatternViewContainer {
+        private LockPatternView mLockPatternView;
+
+        WipeOnFinalizeLockPatternViewContainer(LockPatternView l) {
+            mLockPatternView = l;
+        }
+
+        @Override
+        public void finalize() {
+            mLockPatternView.clear();
+        }
+    }
 
     private EmergencyButtonCallback mEmergencyButtonCallback = new EmergencyButtonCallback() {
         @Override
@@ -218,6 +232,7 @@ public class KeyguardPatternViewController
         view.setIsLockScreenLandscapeEnabled(
                 featureFlags.isEnabled(LOCKSCREEN_ENABLE_LANDSCAPE));
         mLockPatternView = mView.findViewById(R.id.lockPatternView);
+        mLockPatternViewWipeWrapper = new WipeOnFinalizeLockPatternViewContainer(mLockPatternView);
         mPostureController = postureController;
     }
 
@@ -269,6 +284,7 @@ public class KeyguardPatternViewController
             cancelBtn.setOnClickListener(null);
         }
         mPostureController.removeCallback(mPostureCallback);
+        mLockPatternView.clear();
     }
 
     @Override
