@@ -50,6 +50,24 @@
       "message": "The import of HexDump is no longer needed and should be removed.\n\nDid you use `repo upload` to upload this CL?  It is recommended to use `repo upload` instead of direct `git push`, since `repo upload` runs checkstyle which warns about style issues like this:\n\n```\nFAILED] checkstyle_hook hook\n    Checkstyle ends with 58 errors.\n    Running Checkstyle on 192ea78274d1aab55010c7a2f497193fa90c7c4c commit\n    ERRORS:\n      [platform/frameworks/base] services/core/java/com/android/server/StorageManagerService.java:149:8: Unused import: com.android.internal.util.HexDump. Use Ctrl+Shift+O (Eclipse) or Ctrl+Alt+O (Intellij) to sort imports\n[FAILED] repohooks for platform/frameworks/base failed in 4.211s\n```",
       "revId": "192ea78274d1aab55010c7a2f497193fa90c7c4c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb181367_a15b02d0",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-10T17:57:13Z",
+      "side": 1,
+      "message": "Ah, good catch! Removed. \nAlso I am using `repo`, but I\u0027ve never seen any linter errors from an upload. I\u0027ll see what\u0027s going on there.",
+      "parentUuid": "e7ed2a8c_6fa1b7bf",
+      "revId": "192ea78274d1aab55010c7a2f497193fa90c7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
