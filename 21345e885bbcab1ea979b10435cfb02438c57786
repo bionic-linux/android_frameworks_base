@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbc95545_4d830a5a",
+        "filename": "core/java/android/ddm/DdmHandleHello.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1894735
+      },
+      "writtenOn": "2024-04-11T09:40:56Z",
+      "side": 0,
+      "message": "I guess this was removed because it is obsolete? Maybe add a comment about this in the CL description.",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 29
+      },
+      "revId": "21345e885bbcab1ea979b10435cfb02438c57786",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2941933f_d30aac3e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1894735
+      },
+      "writtenOn": "2024-04-11T09:40:56Z",
+      "side": 1,
+      "message": "Thanks lgtm from my side with a couple of minor suggestions. I am not an owner on any of the files though.\n\nAdding jji@ who reviewed changes around ActivityManagerShellCommand earlier. \njji@, could you PTAL or suggest another owner if you aren\u0027t the right person. Thanks!",
+      "revId": "46fdd5973236d450a50381f8d2c2accded3d85b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2137bc57_475bd0f2",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerShellCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1894735
+      },
+      "writtenOn": "2024-04-11T09:40:56Z",
+      "side": 1,
+      "message": "Maybe use Debug.getVmFeatureList here? That calls VMDebug.getVmFeatureList: https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/android/os/Debug.java;l\u003d1104\n```suggestion\n            String[] vmCapabilities \u003d Debug.getVmFeatureList();\n```",
+      "range": {
+        "startLine": 449,
+        "startChar": 38,
+        "endLine": 449,
+        "endChar": 64
+      },
+      "revId": "46fdd5973236d450a50381f8d2c2accded3d85b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
