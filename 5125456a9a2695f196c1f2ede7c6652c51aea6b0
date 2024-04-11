@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "3eea4edd_a1909fba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-04-11T22:16:18Z",
+      "side": 1,
+      "message": "Please use `git cherry-pick -x` so that the commit keeps the same author as the original commit and also gets a `cherry picked from` line.",
+      "revId": "5125456a9a2695f196c1f2ede7c6652c51aea6b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "f5da372e_4a10a5e8",
