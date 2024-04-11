@@ -183,4 +183,7 @@ interface IStorageManager {
      */
     @EnforcePermission("READ_PRIVILEGED_PHONE_STATE")
     int getInternalStorageRemainingLifetime() = 99;
+    String openStorageArea(in String packageName, in String storageAreaName, in byte[] secret) = 100;
+    void closeStorageArea(in String packageName, in String storageAreaName) = 101;
+    void deleteStorageArea(in String packageName, in String storageAreaName) = 102;
 }

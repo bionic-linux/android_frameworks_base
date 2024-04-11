@@ -1154,7 +1154,7 @@ static std::string getAppDataDirName(std::string_view parent_path, std::string_v
 // and create and bind mount app data in related_packages.
 static void isolateAppDataPerPackage(int userId, std::string_view package_name,
     std::string_view volume_uuid, long long ce_data_inode, std::string_view actualCePath,
-    std::string_view actualDePath, fail_fn_t fail_fn) {
+    std::string_view actualDePath, std::string_view actualStorageAreaPath, fail_fn_t fail_fn) {
 
   char mirrorCePath[PATH_MAX];
   char mirrorDePath[PATH_MAX];
@@ -1181,6 +1181,17 @@ static void isolateAppDataPerPackage(int userId, std::string_view package_name,
       return;
     }
     mountAppData(package_name, ce_data_path, mirrorCePath, actualCePath, fail_fn);
+  }
+
+  // don't need to do the same encryption check as for CE
+  // because, the storage areas that encrypted are per-app, not the whole user directory
+  // also storage areas are only supported on the default volume; for non-default
+  // volumes the area path will be empty and we do not proceed
+  if (!actualStorageAreaPath.empty()) {
+    char mirrorStorageAreaPath[PATH_MAX];
+    snprintf(mirrorStorageAreaPath, PATH_MAX, "/data_mirror/storage_area/%d", userId);
+    createAndMountAppData(package_name, package_name, mirrorStorageAreaPath,
+                          actualStorageAreaPath, fail_fn, true /*call_fail_fn*/);
   }
 }
 
@@ -1215,12 +1226,12 @@ static void relabelSubdirs(const char* path, const char* context, fail_fn_t fail
 }
 
 /**
- * Hide the CE and DE data directories of non-related apps.
+ * Hide the CE, DE, and storage area data directories of non-related apps.
  *
- * Without this, apps can detect if any app is installed by trying to "touch" the app's CE
- * or DE data directory, e.g. /data/data/com.whatsapp.  This fails with EACCES if the app
- * is installed, or ENOENT if it's not.  Traditional file permissions or SELinux can only
- * block accessing those directories but can't fix fingerprinting like this.
+ * Without this, apps can detect if any app is installed by trying to "touch" the app's CE,
+ * DE or storage area data directory, e.g. /data/data/com.whatsapp.  This fails with
+ * EACCES if the app is installed, or ENOENT if it's not.  Traditional file permissions
+ * or SELinux can only block accessing those directories but can't fix fingerprinting like this.
  *
  * Instead, we hide non-related apps' data directories from the filesystem entirely by
  * mounting tmpfs instances over their parent directories and bind-mounting in just the
@@ -1229,16 +1240,20 @@ static void relabelSubdirs(const char* path, const char* context, fail_fn_t fail
  * Steps:
  * (1) Collect a list of all related apps (apps with same uid and allowlisted apps) data info
  *     (package name, data stored volume uuid, and inode number of its CE data directory)
- * (2) Mount tmpfs on /data/data and /data/user{,_de}, and on /mnt/expand/$volume/user{,_de}
- *     for all adoptable storage volumes.  This hides all app data directories.
+ * (2) Mount tmpfs on /data/data and /data/user{,_de} and /data/storage_area,
+ *     and on /mnt/expand/$volume/user{,_de} for all adoptable storage volumes (but storage
+ *     areas are not supported for adoptable storage, so no need to have storage_area on /mnt/).
+ *     This hides all app data directories.
  * (3) For each related app, create stubs for its data directories in the relevant tmpfs
  *     instances, then bind mount in the actual directories from /data_mirror.  This works
- *     for both the CE and DE directories.  DE storage is always unlocked, whereas the
+ *     for all of CE, DE, and storage area directories.  DE storage is always unlocked, whereas the
  *     app's CE directory can be found via inode number if CE storage is locked.
+ *     The storage area directory itself is also always unlocked, because the areas are encrypted
+ *     individually (i.e., not the entire directory for a user or an app).
  *
  * Example assuming user 0, app "com.android.foo", no shared uid, and no adoptable storage:
  * (1) Info = ["com.android.foo", "null" (volume uuid "null"=default), "123456" (inode number)]
- * (2) Mount tmpfs on /data/data, /data/user, and /data/user_de.
+ * (2) Mount tmpfs on /data/data, /data/user, /data/user_de, and data/storage_area
  * (3) For DE storage, create a directory /data/user_de/0/com.android.foo and bind mount
  *     /data_mirror/data_de/0/com.android.foo onto it.
  * (4) Do similar for CE storage.  But if the device is in direct boot mode, then CE
@@ -1249,6 +1264,10 @@ static void relabelSubdirs(const char* path, const char* context, fail_fn_t fail
  *     the bind-mounted app CE data directory will remain locked.  It will be unlocked
  *     automatically if/when the user's CE storage is unlocked, since adding an encryption
  *     key takes effect on a whole filesystem instance including all its mounts.
+ * (5) For storage area, do the same as for DE storage: create a directory
+ *     /data/storage_area/0/com.android.foo and bind mount
+ *     /data_mirror/storage_area/0/com.android.foo onto it. This directory itself is not
+ *     encrypted: rather, storage areas created *within* it are individually encrypted.
  */
 static void isolateAppData(JNIEnv* env, const std::vector<std::string>& merged_data_info_list,
     uid_t uid, const char* process_name,
@@ -1263,10 +1282,12 @@ static void isolateAppData(JNIEnv* env, const std::vector<std::string>& merged_d
   char internalLegacyCePath[PATH_MAX];
   char internalDePath[PATH_MAX];
   char externalPrivateMountPath[PATH_MAX];
+  char internalStorageAreaPath[PATH_MAX];
 
   snprintf(internalCePath, PATH_MAX, "/data/user");
   snprintf(internalLegacyCePath, PATH_MAX, "/data/data");
   snprintf(internalDePath, PATH_MAX, "/data/user_de");
+  snprintf(internalStorageAreaPath, PATH_MAX, "/data/storage_area");
   snprintf(externalPrivateMountPath, PATH_MAX, "/mnt/expand");
 
   // Get the "u:object_r:system_userdir_file:s0" security context.  This can be
@@ -1286,8 +1307,10 @@ static void isolateAppData(JNIEnv* env, const std::vector<std::string>& merged_d
   MountAppDataTmpFs(internalLegacyCePath, fail_fn);
   MountAppDataTmpFs(internalCePath, fail_fn);
   MountAppDataTmpFs(internalDePath, fail_fn);
+  MountAppDataTmpFs(internalStorageAreaPath, fail_fn);
 
   // Mount tmpfs on all external vols DE and CE storage
+  // There is no storage_area support on external volumes
   DIR* dir = opendir(externalPrivateMountPath);
   if (dir == nullptr) {
     fail_fn(CREATE_ERROR("Failed to opendir %s", externalPrivateMountPath));
@@ -1322,8 +1345,10 @@ static void isolateAppData(JNIEnv* env, const std::vector<std::string>& merged_d
       if (result != 0) {
           fail_fn(CREATE_ERROR("Failed to create symlink /data/user/0 %s", strerror(errno)));
       }
-      PrepareDirIfNotPresent("/data/user_de/0", DEFAULT_DATA_DIR_PERMISSION, AID_ROOT, AID_ROOT,
-                             fail_fn);
+      PrepareDirIfNotPresent("/data/user_de/0", DEFAULT_DATA_DIR_PERMISSION,
+                              AID_ROOT, AID_ROOT, fail_fn);
+      PrepareDirIfNotPresent("/data/storage_area/0", DEFAULT_DATA_DIR_PERMISSION,
+                              AID_ROOT, AID_ROOT, fail_fn);
 
       for (int i = 0; i < size; i += 3) {
           std::string const& packageName = merged_data_info_list[i];
@@ -1333,7 +1358,7 @@ static void isolateAppData(JNIEnv* env, const std::vector<std::string>& merged_d
           std::string::size_type sz;
           long long ceDataInode = std::stoll(inode, &sz);
 
-          std::string actualCePath, actualDePath;
+          std::string actualCePath, actualDePath, actualStorageAreaPath;
           if (volUuid.compare("null") != 0) {
               // Volume that is stored in /mnt/expand
               char volPath[PATH_MAX];
@@ -1347,6 +1372,7 @@ static void isolateAppData(JNIEnv* env, const std::vector<std::string>& merged_d
               snprintf(volDePath, PATH_MAX, "%s/user_de", volPath);
               snprintf(volCeUserPath, PATH_MAX, "%s/%d", volCePath, userId);
               snprintf(volDeUserPath, PATH_MAX, "%s/%d", volDePath, userId);
+              // recall: no storage_area on external volumes
 
               PrepareDirIfNotPresent(volPath, DEFAULT_DATA_DIR_PERMISSION, AID_ROOT, AID_ROOT,
                                      fail_fn);
@@ -1378,9 +1404,15 @@ static void isolateAppData(JNIEnv* env, const std::vector<std::string>& merged_d
               PrepareDirIfNotPresent(internalDeUserPath, DEFAULT_DATA_DIR_PERMISSION, AID_ROOT,
                                      AID_ROOT, fail_fn);
               actualDePath = internalDeUserPath;
+
+              char internalStorageAreaUserPath[PATH_MAX];
+              snprintf(internalStorageAreaUserPath, PATH_MAX, "/data/storage_area/%d", userId);
+              PrepareDirIfNotPresent(internalStorageAreaUserPath, DEFAULT_DATA_DIR_PERMISSION,
+                      AID_ROOT, AID_ROOT, fail_fn);
+              actualStorageAreaPath = internalStorageAreaUserPath;
           }
           isolateAppDataPerPackage(userId, packageName, volUuid, ceDataInode, actualCePath,
-                                   actualDePath, fail_fn);
+                                   actualDePath, actualStorageAreaPath, fail_fn);
       }
   }
 
@@ -1402,7 +1434,14 @@ static void isolateAppData(JNIEnv* env, const std::vector<std::string>& merged_d
   // Relabel /data/user_de
   relabelDir(internalDePath, dataUserdirContext, fail_fn);
 
+  // Relabel /data/storage_area/$userId for all users
+  relabelSubdirs(internalStorageAreaPath, dataFileContext, fail_fn);
+
+  // Relabel /data/storage_area
+  relabelDir(internalStorageAreaPath, dataUserdirContext, fail_fn);
+
   // Relabel CE and DE dirs under /mnt/expand
+  // (no storage_area since this is external storage)
   dir = opendir(externalPrivateMountPath);
   if (dir == nullptr) {
     fail_fn(CREATE_ERROR("Failed to opendir %s", externalPrivateMountPath));
