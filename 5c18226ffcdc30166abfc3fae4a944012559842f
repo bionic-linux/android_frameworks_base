@@ -16,6 +16,24 @@
       "message": "please add a `Test:` line",
       "revId": "5c18226ffcdc30166abfc3fae4a944012559842f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a11f0760_623543d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1939216
+      },
+      "writtenOn": "2024-04-12T17:21:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d58a143_29019c87",
+      "revId": "5c18226ffcdc30166abfc3fae4a944012559842f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
