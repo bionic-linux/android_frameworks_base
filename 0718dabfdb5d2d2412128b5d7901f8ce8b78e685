@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2a8d886_987b32ed",
+        "filename": "core/java/com/android/internal/widget/LockscreenCredential.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-04-12T01:55:48Z",
+      "side": 1,
+      "message": "The non-movable array needs to be allocated by the caller, otherwise it\u0027s too late.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 88
+      },
+      "revId": "0718dabfdb5d2d2412128b5d7901f8ce8b78e685",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
