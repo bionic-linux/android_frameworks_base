@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da853511_fa989fce",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-04-12T06:19:52Z",
+      "side": 1,
+      "message": "There is no common pattern. When zipalign tools add padding, length of original extra fields is not preserved. https://cs.android.com/android/platform/superproject/main/+/main:build/make/tools/zipalign/ZipEntry.cpp;l\u003d218;drc\u003d0d7190b41336d81d73a5e88047dd56d7cffef7bd",
+      "parentUuid": "7d7f4475_8a123464",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 194,
+        "endChar": 9
+      },
+      "revId": "adc47a073d7ee631123673557eefea79499b52e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b0f94a3_767ef6ec",
@@ -119,6 +143,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1ce8ffc_ddb03ff8",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-04-12T06:19:52Z",
+      "side": 1,
+      "message": "Updated to blockSize.",
+      "parentUuid": "fe7ba84b_9e43dc72",
+      "range": {
+        "startLine": 203,
+        "startChar": 23,
+        "endLine": 203,
+        "endChar": 26
+      },
+      "revId": "adc47a073d7ee631123673557eefea79499b52e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18fccb74_86812223",
@@ -132,6 +180,30 @@
       "writtenOn": "2024-04-03T01:14:21Z",
       "side": 1,
       "message": "check error and log or return?",
+      "range": {
+        "startLine": 212,
+        "startChar": 12,
+        "endLine": 212,
+        "endChar": 21
+      },
+      "revId": "adc47a073d7ee631123673557eefea79499b52e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02dce9cc_9e671301",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-04-12T06:19:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18fccb74_86812223",
       "range": {
         "startLine": 212,
         "startChar": 12,
@@ -189,6 +261,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "26585b5a_f2ae73b2",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-04-12T06:19:52Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e9024ead_0e71eeb0",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 5
+      },
+      "revId": "adc47a073d7ee631123673557eefea79499b52e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9bdd1957_a23e2349",
@@ -202,6 +298,30 @@
       "writtenOn": "2024-04-03T01:14:21Z",
       "side": 1,
       "message": "nit: punchHolesInZip, since apk just happens to be a zip file, this makes it clear, we only rely on the zip header, and we don\u0027t rely on the fact that it\u0027s an APK?",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 20
+      },
+      "revId": "adc47a073d7ee631123673557eefea79499b52e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09256785_71c95731",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-04-12T06:19:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bdd1957_a23e2349",
       "range": {
         "startLine": 36,
         "startChar": 5,
