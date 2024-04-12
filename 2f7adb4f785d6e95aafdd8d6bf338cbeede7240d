@@ -22,6 +22,30 @@
       },
       "revId": "2f7adb4f785d6e95aafdd8d6bf338cbeede7240d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f0fc66e_617c7969",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-04-12T17:08:04Z",
+      "side": 1,
+      "message": "Added here: https://android-review.git.corp.google.com/c/platform/frameworks/base/+/3039899/1",
+      "parentUuid": "58e247b1_35d2ce34",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 245,
+        "endChar": 5
+      },
+      "revId": "2f7adb4f785d6e95aafdd8d6bf338cbeede7240d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
