@@ -16,6 +16,259 @@
       "message": "Adding @ibaker@google.com since he is our API sponsor (thanks!!)",
       "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9068bbf4_13337fb4",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-12T09:00:56Z",
+      "side": 1,
+      "message": "nit: No need to duplicate the method listing here imo, it will be auto-generated in the HTML page anyway, and this is likely to go stale if new methods are added in future.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 48
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef3f61ab_b45a7de0",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-12T09:00:56Z",
+      "side": 1,
+      "message": "supernit: drop `StorageArea` from here, so just `{@link #close}` - makes it super-clear to a reader that we\u0027re staying within the same type.\n\n(similar to how you wouldn\u0027t invoke a static method as `Foo.myMethod()` from inside `Foo`)",
+      "range": {
+        "startLine": 42,
+        "startChar": 52,
+        "endLine": 42,
+        "endChar": 63
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a51f0d3_3d414bb2",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-12T09:00:56Z",
+      "side": 1,
+      "message": "nit: I think this should be AutoCloseable?\n\ngo/android-api-guidelines#classes-autocloseable",
+      "range": {
+        "startLine": 48,
+        "startChar": 36,
+        "endLine": 48,
+        "endChar": 45
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df1941f4_2f994932",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-12T09:00:56Z",
+      "side": 1,
+      "message": "this can be final?",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 34
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3aeac41_26551a81",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-12T09:00:56Z",
+      "side": 1,
+      "message": "I think we should tighten this documentation (and/or the documentation elsewhere), to make it clear that the only supported flow is to use the returned `File` object (and anything derived from it, e.g. sub-paths) only while the originating `StorageArea` object is still open (so this means removing the wording above about \u0027without first re-opening it\u0027).\n\nConcretely I think we should explicitly declare code like this as unsupported (even if it works today):\n\n```\nFile dir;\ntry (StorageArea s \u003d storageManager.openStorageArea(\"foo\", secret)) {\n  dir \u003d storageArea.getDirectory()\n}\n\n// s is closed, so dir should now be considered \u0027invalid\u0027\n\ntry (StorageArea s \u003d storageManager.openStorageArea(\"foo\", secret)) {\n  // This isn\u0027t really allowed, because we\u0027re re-using dir\n  // which we got from a now-closed StorageArea instance.\n  File f \u003d new File(dir, \"bar\");\n  f.createNewFile();\n}\n```\n\nAs a hypothetical thought experiment, let\u0027s assume that every time you call `openStorageArea` you get a new `StorageArea` object that returns a different path from `getDirectory` (but there\u0027s some (perhaps actually impossible, bear with me) filesystem magic that maps them all back to the same underlying content). I think we would like apps to all write code that would work correctly with this implementation.\n\n---\n\nIf you agree with this, then I think we can tweak these docs a bit, to something like:\n\n\u003e Returns a directory that the app can read and write while this {@code StorageArea} is open.\n\u003e\n\u003e The returned directory (including any sub-paths derived from it) is only valid while this {@code StorageArea} object is open, and should therefore not be persisted beyond the call to {@link #close}. Re-using this directory after calling {@link #close} has unspecified behavior.\n\n---\n\nAnd I suggest removing this because it encodes too much impl detail into the API docs, and I don\u0027t think it\u0027s necessary:\n\n\u003e Since a closed storage area is locked, the name of the area is encrypted and so a path to the non-encrypted name of the area no longer points to the area.\n\nIf you want to reassure apps that area names are encrypted that can be documented as a standalone piece of info, without commenting on the effect it may (or may not) have on the actual directory path. I\u0027m not sure that belongs here though, probably better on `openStorageArea`?",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 48
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf9b9d90_1ba431c2",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-12T09:00:56Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to explicitly document this bit? It\u0027s implicit by the interface being present in the type hierarchy.",
+      "range": {
+        "startLine": 94,
+        "startChar": 32,
+        "endLine": 95,
+        "endChar": 56
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33637cac_45fdea0a",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-12T09:00:56Z",
+      "side": 1,
+      "message": "mixing fonts like this can look a bit ugly (g3, but still useful imo: go/java-practices/javadoc#formatting_code)\n\nMaybe \"If other {@link StorageArea} instances exist\"?\n\nSame elsewhere",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 36
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7069a399_3c0bfacd",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-12T09:00:56Z",
+      "side": 1,
+      "message": "I think it\u0027s useful to flag this, because it helps give a hint to apps hitting [the hypothetical problem I described](https://docs.google.com/document/d/1UwZNApHnu2IbFXNnpsvlAQsaU8_mPUjFamCZQ4-NRcw/edit?disco\u003dAAABKgokp-0) that it might be a different place in the same app holding the open file connection.\n\nHowever, I think the current docs are quite focussed on the existing implementation, and therefore quite restrictive if in future we were able to be stricter, e.g. imagine we can somehow detect that files derived from **this `StorageArea` object** are still open, in that case I think we would want to eagerly throw instead of waiting for the ref counter to decrement to zero.\n\nI wonder if we can loosen the wording a bit, while keeping the hint that `IOException` might not **always** be thrown.",
+      "range": {
+        "startLine": 97,
+        "startChar": 70,
+        "endLine": 100,
+        "endChar": 94
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f61d978b_512ca8f6",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2965,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-12T09:00:56Z",
+      "side": 1,
+      "message": "optional nit: you could write this in prose with a hyperlink with `linkplain`, like:\n\n```\n[..] when the current user is {@linkplain android.os.UserManager.isUserUnlocked unlocked}.\n```\n\nAnd that would render as:\n\n\u003e when the current user is [unlocked](https://developer.android.com/reference/android/os/UserManager#isUserUnlocked()).",
+      "range": {
+        "startLine": 2964,
+        "startChar": 84,
+        "endLine": 2965,
+        "endChar": 71
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c08829f2_27516544",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2972,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-12T09:00:56Z",
+      "side": 1,
+      "message": "+1 to this much, basically a signpost to the jetpack library with a short summary of why you might prefer it.\n\nBeyond this point though, I think you\u0027ve put too much detail here of the functionality of the jetpack library. That detail belongs on the jetpack library itself imo.",
+      "range": {
+        "startLine": 2970,
+        "startChar": 20,
+        "endLine": 2972,
+        "endChar": 20
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00c284fc_a6a2d22a",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2983,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-12T09:00:56Z",
+      "side": 1,
+      "message": "nit: can use `@code` here too",
+      "range": {
+        "startLine": 2983,
+        "startChar": 60,
+        "endLine": 2983,
+        "endChar": 66
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
