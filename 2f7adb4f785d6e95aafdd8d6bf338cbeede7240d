@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1afdeca6_208fe36c",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1080076
+      },
+      "writtenOn": "2024-04-12T20:03:05Z",
+      "side": 1,
+      "message": "nit: I\u0027m surprised this code doesn\u0027t have any error code checking for several syscalls",
+      "range": {
+        "startLine": 226,
+        "startChar": 4,
+        "endLine": 226,
+        "endChar": 11
+      },
+      "revId": "2f7adb4f785d6e95aafdd8d6bf338cbeede7240d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "526ad4e2_11cdb901",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1080076
+      },
+      "writtenOn": "2024-04-12T20:03:05Z",
+      "side": 1,
+      "message": "this variable is uint16_t, so it can\u0027t physically be \u003e64k",
+      "range": {
+        "startLine": 249,
+        "startChar": 8,
+        "endLine": 249,
+        "endChar": 21
+      },
+      "revId": "2f7adb4f785d6e95aafdd8d6bf338cbeede7240d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ba4ecbad_5c442068",
         "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
         "patchSetId": 3
@@ -19,6 +65,29 @@
         "startChar": 8,
         "endLine": 277,
         "endChar": 27
+      },
+      "revId": "2f7adb4f785d6e95aafdd8d6bf338cbeede7240d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54bef833_80f02c62",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1080076
+      },
+      "writtenOn": "2024-04-12T20:03:05Z",
+      "side": 1,
+      "message": "as I understand, it only makes sense to run for block-aligned offsets, otherwise it forcefully writes zeroes into the partially affected block. Should there be a check that there\u0027s a full block inside the [punchOffset, punchOffset + punchLen) and maybe it\u0027s better to trim it down just to the block boundaries to not cause extra zeroing.\n\nman:\n\u003eWithin the specified range, partial filesystem blocks are zeroed,\n       and whole filesystem blocks are removed from the file",
+      "range": {
+        "startLine": 299,
+        "startChar": 39,
+        "endLine": 299,
+        "endChar": 59
       },
       "revId": "2f7adb4f785d6e95aafdd8d6bf338cbeede7240d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
