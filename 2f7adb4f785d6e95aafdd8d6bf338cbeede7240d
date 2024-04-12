@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2ad061aa_d9e6499c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-04-12T20:52:25Z",
+      "side": 1,
+      "message": "This path won\u0027t get hit for incremental, and it would already be a problem since it copies the whole file directly.\n\nYou can see incremental files are handled here in a separate branch, so the copy is never invoked:\nhttps://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/com/android/internal/content/NativeLibraryHelper.java;l\u003d353;drc\u003d1030f5807e6b4fb593a675fb3f91e77bbadc5b94",
+      "parentUuid": "cea89c49_5d6ca296",
+      "revId": "2f7adb4f785d6e95aafdd8d6bf338cbeede7240d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1afdeca6_208fe36c",
         "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
         "patchSetId": 3
@@ -49,6 +67,30 @@
       "writtenOn": "2024-04-12T20:03:05Z",
       "side": 1,
       "message": "nit: I\u0027m surprised this code doesn\u0027t have any error code checking for several syscalls",
+      "range": {
+        "startLine": 226,
+        "startChar": 4,
+        "endLine": 226,
+        "endChar": 11
+      },
+      "revId": "2f7adb4f785d6e95aafdd8d6bf338cbeede7240d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ef0a858_86a737f8",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-04-12T20:52:25Z",
+      "side": 1,
+      "message": "+1. this should be checked 100%, if it fails, we might call punch holes too many times, which wouldn\u0027t really be useful",
+      "parentUuid": "1afdeca6_208fe36c",
       "range": {
         "startLine": 226,
         "startChar": 4,
