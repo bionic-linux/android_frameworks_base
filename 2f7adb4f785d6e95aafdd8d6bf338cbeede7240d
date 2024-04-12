@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ba4ecbad_5c442068",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-04-12T18:12:57Z",
+      "side": 1,
+      "message": "I think you can skip some of the checks below by doing:\n\n```\nwhile (buf[currentSize] !\u003d 0 \u0026\u0026 currentSize \u003c extraFieldLen-1) { currentSize++; }\n```\n\n\nSuggestion: you might simplify the loop like:\n\n\n```\n    int start \u003d -1; // -1 means we have not found a start\n    for (int i \u003d 0; i \u003c size; ++i) {\n        if (buf[i] \u003d\u003d 0 \u0026\u0026 start \u003d -1) {\n            start \u003d i;\n        } else if (buf[i] !\u003d 0 \u0026\u0026 start !\u003d -1) {\n            int end \u003d i - 1;\n            \n            // punchStart  \u003d start\n            // punchLen \u003d end-start+1\n            // Do fallocate work\n        }\n    }\n```\n\n```",
+      "range": {
+        "startLine": 277,
+        "startChar": 8,
+        "endLine": 277,
+        "endChar": 27
+      },
+      "revId": "2f7adb4f785d6e95aafdd8d6bf338cbeede7240d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "58e247b1_35d2ce34",
         "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
         "patchSetId": 3
