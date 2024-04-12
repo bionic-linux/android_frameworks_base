@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c6122cf7_7cb753f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-04-12T21:35:47Z",
+      "side": 1,
+      "message": "We zero compare the areas we changed for now.\n\nFuture investigation for saving more is saved in go/16kb-more-opts, along with all others. We\u0027ll do one pass of everything to measure impact and decide what to do, once 16kb dev option launches.",
+      "parentUuid": "55af9898_5b5c28fb",
+      "revId": "2f7adb4f785d6e95aafdd8d6bf338cbeede7240d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1afdeca6_208fe36c",
         "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
         "patchSetId": 3
