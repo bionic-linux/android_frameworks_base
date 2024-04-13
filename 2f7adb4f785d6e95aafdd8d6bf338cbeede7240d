@@ -108,6 +108,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d6a9612_e464a97e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1080076
+      },
+      "writtenOn": "2024-04-13T03:42:26Z",
+      "side": 1,
+      "message": "More so, there are optimized algorithms for zero-checking the pages that use heuristics to touch just a few bytes per page to reliably detect non-empty ones. Games often optimize this check first and last, then the middle, etc, for a few tries before doing a full search, and this eliminates most of the pages right away.\n\nI think a service that performs smart disk space freeing may save quite a bit of space on the devices",
+      "parentUuid": "075e17b1_2c1afea9",
+      "revId": "2f7adb4f785d6e95aafdd8d6bf338cbeede7240d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1afdeca6_208fe36c",
