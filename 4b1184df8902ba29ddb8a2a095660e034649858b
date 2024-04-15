@@ -22,6 +22,30 @@
       },
       "revId": "4b1184df8902ba29ddb8a2a095660e034649858b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45275f78_b70aaf1d",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-04-15T20:25:03Z",
+      "side": 1,
+      "message": "ExtraFieldLen will be always less than buffer size. buffer size here is 65536 and ExtraFieldLen(uint16_t) max is 65535. again, ExtraFieldLen is being checked for sanity in libziparchive: https://android-review.git.corp.google.com/c/platform/system/libziparchive/+/3019952/7/zip_archive.cc. It will always return at ReadFullyAtOffset if there is not enough data to be read for malformed file.",
+      "parentUuid": "ed2cef37_98050684",
+      "range": {
+        "startLine": 283,
+        "startChar": 40,
+        "endLine": 283,
+        "endChar": 58
+      },
+      "revId": "4b1184df8902ba29ddb8a2a095660e034649858b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
