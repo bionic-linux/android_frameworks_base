@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68482752_a9db5fdd",
+        "filename": "services/core/java/com/android/server/media/MediaSessionRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2024-04-15T20:31:53Z",
+      "side": 1,
+      "message": "It looks off that we are doing this for each iteration, but I don\u0027t want to change that in this CL, as it\u0027s less obviously safe.",
+      "range": {
+        "startLine": 801,
+        "startChar": 16,
+        "endLine": 809,
+        "endChar": 69
+      },
+      "revId": "6a026d2de876599914a2222f7b8d3ac64259274b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
