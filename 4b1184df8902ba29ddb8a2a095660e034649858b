@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed2cef37_98050684",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-04-15T20:03:59Z",
+      "side": 1,
+      "message": "nit: what makes sure that \u0027end\u0027 doesn\u0027t go past the end of the buffer, if the file is malformed? I guess it\u0027s that ReadFullyAtOffset will return false in that case, but you might want to add a CHECK for this as well to make it more clear?",
+      "range": {
+        "startLine": 283,
+        "startChar": 40,
+        "endLine": 283,
+        "endChar": 58
+      },
+      "revId": "4b1184df8902ba29ddb8a2a095660e034649858b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
