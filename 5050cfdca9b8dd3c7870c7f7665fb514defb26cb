@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2317c287_d9e542a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1456881
+      },
+      "writtenOn": "2024-04-15T13:35:41Z",
+      "side": 1,
+      "message": "I don\u0027t have DrNo in this branch",
+      "revId": "5050cfdca9b8dd3c7870c7f7665fb514defb26cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
