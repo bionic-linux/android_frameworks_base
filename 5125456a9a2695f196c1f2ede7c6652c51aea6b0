@@ -72,6 +72,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "77823f60_23b3d96e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-04-16T20:34:20Z",
+      "side": 1,
+      "message": "`Author` is correct now but `AuthorDate` is not.  It seems you\u0027re not cherry-picking directly from the original commit.  These are the steps to do it:\n\n```\ngit remote add goog sso://googleplex-android/platform/frameworks/base\ngit fetch goog main\ngit cherry-pick -x ce3f9f910111136c39deb6aaa82d6331480b85eb\n```\n\nTo find the original commit ID (ce3f9f9101111), the following can be used:\n`git log --no-merges -1 --grep\u003d\u0027Add storage health API\u0027 goog/main`",
+      "parentUuid": "bb7af885_bce92cf5",
+      "revId": "5125456a9a2695f196c1f2ede7c6652c51aea6b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "f5da372e_4a10a5e8",
