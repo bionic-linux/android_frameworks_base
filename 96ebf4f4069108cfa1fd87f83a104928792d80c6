@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ef641b3_d2f5ee99",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-04-16T19:49:31Z",
+      "side": 1,
+      "message": "This isn\u0027t the correct commit ID",
+      "range": {
+        "startLine": 16,
+        "startChar": 27,
+        "endLine": 16,
+        "endChar": 67
+      },
+      "revId": "96ebf4f4069108cfa1fd87f83a104928792d80c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c53b59f_ef93483b",
+        "filename": "core/java/android/os/flags.aconfig",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-04-16T19:49:31Z",
+      "side": 1,
+      "message": "This is adding flags that were not in the original commit.",
+      "revId": "96ebf4f4069108cfa1fd87f83a104928792d80c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
