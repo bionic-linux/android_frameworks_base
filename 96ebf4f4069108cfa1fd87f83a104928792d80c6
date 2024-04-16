@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe443407_dc66b754",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-16T20:03:01Z",
+      "side": 1,
+      "message": "Fixed manually (generated incorrectly through `git cherry-pick -x`).",
+      "parentUuid": "3ef641b3_d2f5ee99",
+      "range": {
+        "startLine": 16,
+        "startChar": 27,
+        "endLine": 16,
+        "endChar": 67
+      },
+      "revId": "96ebf4f4069108cfa1fd87f83a104928792d80c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c53b59f_ef93483b",
@@ -37,6 +61,24 @@
       "writtenOn": "2024-04-16T19:49:31Z",
       "side": 1,
       "message": "This is adding flags that were not in the original commit.",
+      "revId": "96ebf4f4069108cfa1fd87f83a104928792d80c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7eb999da_166be629",
+        "filename": "core/java/android/os/flags.aconfig",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-16T20:03:01Z",
+      "side": 1,
+      "message": "Hmm, not sure how these got added with the cherry-pick -- deleted now.",
+      "parentUuid": "2c53b59f_ef93483b",
       "revId": "96ebf4f4069108cfa1fd87f83a104928792d80c6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }

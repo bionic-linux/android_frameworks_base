@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb7af885_bce92cf5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-16T20:03:01Z",
+      "side": 1,
+      "message": "Hmm, I redid the cherry pick with the `-x` option this time -- maybe the author and commit ID were incorrectly generated because it\u0027s from a different repo (internal main)? I\u0027m not sure why it didn\u0027t work.\n\nFixed manually.",
+      "parentUuid": "8ab4cc79_126fbdc0",
+      "revId": "5125456a9a2695f196c1f2ede7c6652c51aea6b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "f5da372e_4a10a5e8",

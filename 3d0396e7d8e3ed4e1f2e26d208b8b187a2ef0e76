@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1800c75b_1a61dac1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-16T20:03:01Z",
+      "side": 1,
+      "message": "Fixing incorrectly generated metadata from the cherry-pick",
+      "revId": "3d0396e7d8e3ed4e1f2e26d208b8b187a2ef0e76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
