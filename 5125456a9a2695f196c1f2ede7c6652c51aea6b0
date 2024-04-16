@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ab4cc79_126fbdc0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-04-16T19:46:30Z",
+      "side": 1,
+      "message": "The author of the commit still needs to be corrected.",
+      "parentUuid": "43abdb00_e8d7968f",
+      "revId": "5125456a9a2695f196c1f2ede7c6652c51aea6b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "f5da372e_4a10a5e8",
