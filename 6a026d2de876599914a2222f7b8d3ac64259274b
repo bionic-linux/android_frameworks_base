@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "362454b2_7573aa66",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1949138
+      },
+      "writtenOn": "2024-04-16T10:18:36Z",
+      "side": 1,
+      "message": "Nice stuff! Generally LGTM, but please see my comment below.",
+      "revId": "6a026d2de876599914a2222f7b8d3ac64259274b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "68482752_a9db5fdd",
         "filename": "services/core/java/com/android/server/media/MediaSessionRecord.java",
         "patchSetId": 1
@@ -19,6 +36,29 @@
         "startChar": 16,
         "endLine": 809,
         "endChar": 69
+      },
+      "revId": "6a026d2de876599914a2222f7b8d3ac64259274b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "914ee16f_b7af95fc",
+        "filename": "services/core/java/com/android/server/media/MediaSessionRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1949138
+      },
+      "writtenOn": "2024-04-16T10:18:36Z",
+      "side": 1,
+      "message": "Why do we need to catch `Exception` and not just `RemoteException`? It feels particularly weird when any Exception adds the callback holder to `deadCallbackHolders` (as opposed to `RemoteException` or `DeadObjectException`).",
+      "range": {
+        "startLine": 888,
+        "startChar": 21,
+        "endLine": 888,
+        "endChar": 30
       },
       "revId": "6a026d2de876599914a2222f7b8d3ac64259274b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
