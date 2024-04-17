@@ -1487,7 +1487,7 @@ public class HdmiControlService extends SystemService {
      * Returns physical address of the device.
      */
     int getPhysicalAddress() {
-        return mCecController.getPhysicalAddress();
+        return mHdmiCecNetwork.getCachedPhysicalAddress();
     }
 
     /**
@@ -1780,11 +1780,10 @@ public class HdmiControlService extends SystemService {
     @ServiceThreadOnly
     void onHotplug(int portId, boolean connected) {
         assertRunOnServiceThread();
-        // initPortInfo at hotplug event.
-        mHdmiCecNetwork.initPortInfo();
-
         if (connected && !isTvDevice()
                 && getPortInfo(portId).getType() == HdmiPortInfo.PORT_OUTPUT) {
+            // initPortInfo at hotplug event.
+            mHdmiCecNetwork.initPortInfo();
             ArrayList<HdmiCecLocalDevice> localDevices = new ArrayList<>();
             for (int type : getCecLocalDeviceTypes()) {
                 HdmiCecLocalDevice localDevice = mHdmiCecNetwork.getLocalDevice(type);
@@ -2452,7 +2451,7 @@ public class HdmiControlService extends SystemService {
         public int getPhysicalAddress() {
             initBinderCall();
             synchronized (mLock) {
-                return mHdmiCecNetwork.getPhysicalAddress();
+                return mHdmiCecNetwork.getCachedPhysicalAddress();
             }
         }
 

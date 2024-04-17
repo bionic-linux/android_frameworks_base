@@ -100,6 +100,9 @@ public class HdmiCecNetwork {
     // Map from port ID to HdmiDeviceInfo.
     private UnmodifiableSparseArray<HdmiDeviceInfo> mPortDeviceMap;
 
+    // Cached physical address
+    private int mPhysicalAddress = Constants.INVALID_PHYSICAL_ADDRESS;
+
     HdmiCecNetwork(HdmiControlService hdmiControlService,
             HdmiCecController hdmiCecController,
             HdmiMhlControllerStub hdmiMhlController) {
@@ -426,6 +429,7 @@ public class HdmiCecNetwork {
     @VisibleForTesting
     public void initPortInfo() {
         assertRunOnServiceThread();
+        mPhysicalAddress = getPhysicalAddress();
         HdmiPortInfo[] cecPortInfo = null;
         // CEC HAL provides majority of the info while MHL does only MHL support flag for
         // each port. Return empty array if CEC HAL didn't provide the info.
@@ -857,6 +861,10 @@ public class HdmiCecNetwork {
 
     public int getPhysicalAddress() {
         return mHdmiCecController.getPhysicalAddress();
+    }
+
+    public int getCachedPhysicalAddress() {
+        return mPhysicalAddress;
     }
 
     @ServiceThreadOnly
