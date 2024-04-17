@@ -100,6 +100,9 @@ public class HdmiCecNetwork {
     // Map from port ID to HdmiDeviceInfo.
     private UnmodifiableSparseArray<HdmiDeviceInfo> mPortDeviceMap;
 
+    // Cached physical address
+    private int mPhysicalAddress = Constants.INVALID_PHYSICAL_ADDRESS;
+
     HdmiCecNetwork(HdmiControlService hdmiControlService,
             HdmiCecController hdmiCecController,
             HdmiMhlControllerStub hdmiMhlController) {
@@ -431,6 +434,7 @@ public class HdmiCecNetwork {
         // each port. Return empty array if CEC HAL didn't provide the info.
         if (mHdmiCecController != null) {
             cecPortInfo = mHdmiCecController.getPortInfos();
+            mPhysicalAddress = getPhysicalAddress();
         }
         if (cecPortInfo == null) {
             return;
@@ -857,6 +861,10 @@ public class HdmiCecNetwork {
 
     public int getPhysicalAddress() {
         return mHdmiCecController.getPhysicalAddress();
+    }
+
+    public int getCachedPhysicalAddress() {
+        return mPhysicalAddress;
     }
 
     @ServiceThreadOnly
