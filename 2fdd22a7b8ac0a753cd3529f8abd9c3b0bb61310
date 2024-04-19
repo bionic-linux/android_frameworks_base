@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "316b235a_4eb317fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-04-19T15:00:17Z",
+      "side": 1,
+      "message": "@helenqin@google.com do we have any benchmarks that would surface how this impacts startup performance for relevant CUJs? Seems fine to remove for now but would be nice to follow up before the next release.\n\n/cc @nishantpanwar@google.com @jernej@google.com as FYI, I guess a similar concern for SystemUI profiles per b/271887637.",
+      "revId": "2fdd22a7b8ac0a753cd3529f8abd9c3b0bb61310",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
