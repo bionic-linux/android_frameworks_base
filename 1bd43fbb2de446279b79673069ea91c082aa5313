@@ -52,6 +52,24 @@
       "parentUuid": "520517c0_5641dc12",
       "revId": "1bd43fbb2de446279b79673069ea91c082aa5313",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77c06667_78ae4fd0",
+        "filename": "packages/CredentialManager/profile.txt.prof",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1327199
+      },
+      "writtenOn": "2024-04-22T18:48:37Z",
+      "side": 0,
+      "message": "I agree that removing this is not ideal and I understand that reintroducing the profile is important.\n\n\u003e For android 14 (this change), would you be able to only remove the lines that rise the error as you suggested?\n\nI can try to restore the parts of the profile that do not give rise to the error (in a follow up, so that we can fix the build breakages). The problem with doing this is that it is not stable: Any change to the source code of CredentialManager may reintroduce the problem and cause postsubmit failures.\n\n\u003e For android 15, if I update the baseline profile with paths that are all recognizable, I won\u0027t run into this issue right?\n\nYou will still run into the bug on Android 15 unless: (1) b/335418838 is fixed in the build system, or (2) the profman prebuilts are updated to contain the fix from aosp/3047152.",
+      "parentUuid": "22ac068f_778432dd",
+      "revId": "1bd43fbb2de446279b79673069ea91c082aa5313",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
