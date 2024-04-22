@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dbbde26_e095bc82",
+        "filename": "packages/CredentialManager/profile.txt.prof",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-04-22T15:23:32Z",
+      "side": 0,
+      "message": "Can you add a comment in this file about restoring the profile after the build support is added, something like `# TODO(b/335418838): ...\"",
+      "revId": "1bd43fbb2de446279b79673069ea91c082aa5313",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
