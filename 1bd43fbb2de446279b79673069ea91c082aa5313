@@ -16,6 +16,24 @@
       "message": "Can you add a comment in this file about restoring the profile after the build support is added, something like `# TODO(b/335418838): ...\"",
       "revId": "1bd43fbb2de446279b79673069ea91c082aa5313",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "520517c0_5641dc12",
+        "filename": "packages/CredentialManager/profile.txt.prof",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1327199
+      },
+      "writtenOn": "2024-04-22T18:15:41Z",
+      "side": 0,
+      "message": "Done. Not sure what the time line for adding this to the build looks like. If this becomes an issue then one workaround could be to add a flag to R8 to not emit any empty classes (or add an empty class_data to each class_def). We could also consider removing only the parts of the profile that give rise to the error, but it is unclear how stable this would be.",
+      "parentUuid": "7dbbde26_e095bc82",
+      "revId": "1bd43fbb2de446279b79673069ea91c082aa5313",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
