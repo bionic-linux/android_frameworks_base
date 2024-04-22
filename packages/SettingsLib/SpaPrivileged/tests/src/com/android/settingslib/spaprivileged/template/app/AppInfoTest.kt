@@ -22,17 +22,19 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.android.settingslib.spa.testutils.waitUntilExists
+import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@OptIn(ExperimentalTestApi::class)
 @RunWith(AndroidJUnit4::class)
 class AppInfoTest {
     @get:Rule
@@ -41,7 +43,7 @@ class AppInfoTest {
     private val context: Context = ApplicationProvider.getApplicationContext()
 
     @Test
-    fun appInfoLabel_isDisplayed() {
+    fun appInfoLabel_isDisplayed() = runBlocking {
         val packageInfo = PackageInfo().apply {
             applicationInfo = APP
         }
@@ -53,7 +55,7 @@ class AppInfoTest {
             }
         }
 
-        composeTestRule.waitUntilExists(hasText(LABEL))
+        composeTestRule.waitUntilExactlyOneExists(hasText(LABEL))
     }
 
     @Test
@@ -150,6 +152,6 @@ class AppInfoTest {
         const val PACKAGE_NAME = "package.name"
         val APP = object : ApplicationInfo() {
             override fun loadLabel(pm: PackageManager) = LABEL
-        }
+        }.apply { packageName = PACKAGE_NAME }
     }
 }

@@ -28,6 +28,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.lifecycle.testing.TestLifecycleOwner
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
@@ -63,7 +64,7 @@ class DisposableBroadcastReceiverAsUserTest {
     }
 
     @Test
-    fun broadcastReceiver_registered() {
+    fun broadcastReceiver_registered() = runBlocking {
         composeTestRule.setContent {
             CompositionLocalProvider(
                 LocalContext provides context,
