@@ -34,6 +34,24 @@
       "parentUuid": "7dbbde26_e095bc82",
       "revId": "1bd43fbb2de446279b79673069ea91c082aa5313",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22ac068f_778432dd",
+        "filename": "packages/CredentialManager/profile.txt.prof",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1814094
+      },
+      "writtenOn": "2024-04-22T18:35:21Z",
+      "side": 0,
+      "message": "Hey, it would be quite important to have the baseline profile and I was going to update it according to the Android 15 updates. Removing it completely isn\u0027t ideal since we use Compose and baseline profile will improve the startup time overheads known to be introduced by compose.\n\n1. For android 14 (this change), would you be able to only remove the lines that rise the error as you suggested?\n2. For android 15, if I update the baseline profile with paths that are all recognizable, I won\u0027t run into this issue right?",
+      "parentUuid": "520517c0_5641dc12",
+      "revId": "1bd43fbb2de446279b79673069ea91c082aa5313",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
