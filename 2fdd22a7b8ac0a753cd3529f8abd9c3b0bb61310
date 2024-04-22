@@ -16,6 +16,23 @@
       "message": "@helenqin@google.com do we have any benchmarks that would surface how this impacts startup performance for relevant CUJs? Seems fine to remove for now but would be nice to follow up before the next release.\n\n/cc @nishantpanwar@google.com @jernej@google.com as FYI, I guess a similar concern for SystemUI profiles per b/271887637.",
       "revId": "2fdd22a7b8ac0a753cd3529f8abd9c3b0bb61310",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82b800cc_f007c85e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1327199
+      },
+      "writtenOn": "2024-04-22T08:47:53Z",
+      "side": 1,
+      "message": "Friendly ping to take a look at this. This is blocking R8 updates in aosp and blocking the fix for b/335209102 (presubmit failures for wear targets).\n\nI am happy to discuss how to add the profile back to CredentialManager.",
+      "revId": "2fdd22a7b8ac0a753cd3529f8abd9c3b0bb61310",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
