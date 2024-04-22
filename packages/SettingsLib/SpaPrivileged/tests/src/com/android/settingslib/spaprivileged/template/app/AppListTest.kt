@@ -39,6 +39,7 @@ import com.android.settingslib.spaprivileged.tests.testutils.TestAppListModel
 import com.android.settingslib.spaprivileged.tests.testutils.TestAppRecord
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -66,10 +67,7 @@ class AppListTest {
     fun whenHasOptions_couldSwitchOption() {
         setContent(options = listOf(OPTION_0, OPTION_1))
 
-        composeTestRule.waitUntilExactlyOneExists(
-            matcher = hasText(OPTION_0),
-            timeoutMillis = 5_000,
-        )
+        composeTestRule.waitUntilExactlyOneExists(hasText(OPTION_0))
         composeTestRule.onNodeWithText(OPTION_0).performClick()
         composeTestRule.onNodeWithText(OPTION_1).performClick()
 
@@ -78,33 +76,26 @@ class AppListTest {
     }
 
     @Test
-    fun whenNoApps() {
+    fun whenNoApps() = runBlocking {
         setContent(appEntries = emptyList())
 
         composeTestRule.waitUntilExactlyOneExists(
-            matcher = hasText(context.getString(R.string.no_applications)),
-            timeoutMillis = 5_000,
+            hasText(context.getString(R.string.no_applications))
         )
     }
 
     @Test
-    fun couldShowAppItem() {
+    fun couldShowAppItem() = runBlocking {
         setContent(appEntries = listOf(APP_ENTRY_A))
 
-        composeTestRule.waitUntilExactlyOneExists(
-            matcher = hasText(APP_ENTRY_A.label),
-            timeoutMillis = 5_000,
-        )
+        composeTestRule.waitUntilExactlyOneExists(hasText(APP_ENTRY_A.label))
     }
 
     @Test
-    fun couldShowHeader() {
+    fun couldShowHeader() = runBlocking {
         setContent(appEntries = listOf(APP_ENTRY_A), header = { Text(HEADER) })
 
-        composeTestRule.waitUntilExactlyOneExists(
-            matcher = hasText(HEADER),
-            timeoutMillis = 5_000,
-        )
+        composeTestRule.waitUntilExactlyOneExists(hasText(HEADER))
     }
 
     @Test
@@ -116,13 +107,10 @@ class AppListTest {
     }
 
     @Test
-    fun whenGrouped_groupTitleDisplayed() {
+    fun whenGrouped_groupTitleDisplayed(): Unit = runBlocking {
         setContent(appEntries = listOf(APP_ENTRY_A, APP_ENTRY_B), enableGrouping = true)
 
-        composeTestRule.waitUntilExactlyOneExists(
-            matcher = hasText(GROUP_A),
-            timeoutMillis = 5_000,
-        )
+        composeTestRule.waitUntilExactlyOneExists(hasText(GROUP_A))
         composeTestRule.onNodeWithText(GROUP_B).assertIsDisplayed()
     }
 
