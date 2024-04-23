@@ -5672,15 +5672,18 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
 
     private boolean resetPasswordInternal(String password, long tokenHandle, byte[] token,
             int flags, CallerIdentity caller) {
+        final boolean isPin = PasswordMetrics.isNumericOnly(password);
+        try (LockscreenCredential newCredential =
+                isPin ? LockscreenCredential.createPin(password) :
+                       LockscreenCredential.createPasswordOrNone(password)) {
+            return resetPasswordInternal(newCredential, tokenHandle, token, flags, caller);
+        }
+    }
+
+    private boolean resetPasswordInternal(LockscreenCredential newCredential,
+            long tokenHandle, byte[] token, int flags, CallerIdentity caller) {
         final int callingUid = caller.getUid();
         final int userHandle = UserHandle.getUserId(callingUid);
-        final boolean isPin = PasswordMetrics.isNumericOnly(password);
-        final LockscreenCredential newCredential;
-        if (isPin) {
-            newCredential = LockscreenCredential.createPin(password);
-        } else {
-            newCredential = LockscreenCredential.createPasswordOrNone(password);
-        }
         synchronized (getLockObject()) {
             final PasswordMetrics minMetrics = getPasswordMinimumMetricsUnchecked(userHandle);
             final int complexity = getAggregatedPasswordComplexityLocked(userHandle);
@@ -5721,7 +5724,8 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                     return false;
                 }
             }
-            boolean requireEntry = (flags & DevicePolicyManager.RESET_PASSWORD_REQUIRE_ENTRY) != 0;
+            boolean requireEntry =
+                    (flags & DevicePolicyManager.RESET_PASSWORD_REQUIRE_ENTRY) != 0;
             if (requireEntry) {
                 mLockPatternUtils.requireStrongAuth(STRONG_AUTH_REQUIRED_AFTER_DPM_LOCK_NOW,
                         UserHandle.USER_ALL);
