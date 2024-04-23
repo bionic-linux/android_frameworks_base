@@ -79,8 +79,8 @@ public class BootReceiver extends BroadcastReceiver {
     // Give userdebug builds a larger max to capture extra debug, esp. for last_kmsg.
     private static final int LOG_SIZE =
         SystemProperties.getInt("ro.debuggable", 0) == 1 ? 98304 : 65536;
-    private static final int LASTK_LOG_SIZE =
-        SystemProperties.getInt("ro.debuggable", 0) == 1 ? 196608 : 65536;
+    private static final int LASTK_LOG_SIZE = 65536; // reduce debug log testing
+        //SystemProperties.getInt("ro.debuggable", 0) == 1 ? 196608 : 65536;
     private static final int GMSCORE_LASTK_LOG_SIZE = 196608;
 
     private static final String TAG_TOMBSTONE = "SYSTEM_TOMBSTONE";
