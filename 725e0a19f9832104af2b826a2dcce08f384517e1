@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1ae362e_0bea00f5",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-23T22:00:06Z",
+      "side": 1,
+      "message": "Ah, makes sense! Thanks.",
+      "parentUuid": "9068bbf4_13337fb4",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 48
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef3f61ab_b45a7de0",
@@ -54,6 +78,30 @@
       "writtenOn": "2024-04-12T09:00:56Z",
       "side": 1,
       "message": "supernit: drop `StorageArea` from here, so just `{@link #close}` - makes it super-clear to a reader that we\u0027re staying within the same type.\n\n(similar to how you wouldn\u0027t invoke a static method as `Foo.myMethod()` from inside `Foo`)",
+      "range": {
+        "startLine": 42,
+        "startChar": 52,
+        "endLine": 42,
+        "endChar": 63
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0abea49_df61d282",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-23T22:00:06Z",
+      "side": 1,
+      "message": "Makes sense, thanks!",
+      "parentUuid": "ef3f61ab_b45a7de0",
       "range": {
         "startLine": 42,
         "startChar": 52,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e1a7c45_e92405f3",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-23T22:00:06Z",
+      "side": 1,
+      "message": "Yes, good catch, thanks!",
+      "parentUuid": "2a51f0d3_3d414bb2",
+      "range": {
+        "startLine": 48,
+        "startChar": 36,
+        "endLine": 48,
+        "endChar": 45
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df1941f4_2f994932",
@@ -100,6 +172,30 @@
       "writtenOn": "2024-04-12T09:00:56Z",
       "side": 1,
       "message": "this can be final?",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 34
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc3cc093_be8ac7e4",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-23T22:00:06Z",
+      "side": 1,
+      "message": "Nice catch!",
+      "parentUuid": "df1941f4_2f994932",
       "range": {
         "startLine": 53,
         "startChar": 0,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c50d3b8_51c7f535",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-23T22:00:06Z",
+      "side": 1,
+      "message": "Thanks -- well written/explained. I\u0027ve changed the docs as you suggested, it\u0027s a lot more clear this way.",
+      "parentUuid": "c3aeac41_26551a81",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 48
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bf9b9d90_1ba431c2",
@@ -156,6 +276,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f240b01a_a81f07d4",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-23T22:00:06Z",
+      "side": 1,
+      "message": "Noted, thanks",
+      "parentUuid": "bf9b9d90_1ba431c2",
+      "range": {
+        "startLine": 94,
+        "startChar": 32,
+        "endLine": 95,
+        "endChar": 56
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33637cac_45fdea0a",
@@ -169,6 +313,30 @@
       "writtenOn": "2024-04-12T09:00:56Z",
       "side": 1,
       "message": "mixing fonts like this can look a bit ugly (g3, but still useful imo: go/java-practices/javadoc#formatting_code)\n\nMaybe \"If other {@link StorageArea} instances exist\"?\n\nSame elsewhere",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 36
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1911488_69627fb5",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-23T22:00:06Z",
+      "side": 1,
+      "message": "Smart, thanks",
+      "parentUuid": "33637cac_45fdea0a",
       "range": {
         "startLine": 97,
         "startChar": 16,
@@ -204,6 +372,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dffacb17_a61e43af",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-23T22:00:06Z",
+      "side": 1,
+      "message": "Good point. I\u0027ve reworded it a bit but haven\u0027t marked it as resolved yet in case we want to iterate on the wording.",
+      "parentUuid": "7069a399_3c0bfacd",
+      "range": {
+        "startLine": 97,
+        "startChar": 70,
+        "endLine": 100,
+        "endChar": 94
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f61d978b_512ca8f6",
         "filename": "core/java/android/os/storage/StorageManager.java",
         "patchSetId": 19
@@ -215,6 +407,30 @@
       "writtenOn": "2024-04-12T09:00:56Z",
       "side": 1,
       "message": "optional nit: you could write this in prose with a hyperlink with `linkplain`, like:\n\n```\n[..] when the current user is {@linkplain android.os.UserManager.isUserUnlocked unlocked}.\n```\n\nAnd that would render as:\n\n\u003e when the current user is [unlocked](https://developer.android.com/reference/android/os/UserManager#isUserUnlocked()).",
+      "range": {
+        "startLine": 2964,
+        "startChar": 84,
+        "endLine": 2965,
+        "endChar": 71
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91d73b32_bf601c17",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2965,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-23T22:00:06Z",
+      "side": 1,
+      "message": "Oh nice, I like that! Thanks.",
+      "parentUuid": "f61d978b_512ca8f6",
       "range": {
         "startLine": 2964,
         "startChar": 84,
@@ -248,6 +464,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f68941a_5f5dc060",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2972,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-23T22:00:06Z",
+      "side": 1,
+      "message": "Makes sense; I\u0027ve removed the technical details, and will add them to the jetpack library documentation.",
+      "parentUuid": "c08829f2_27516544",
+      "range": {
+        "startLine": 2970,
+        "startChar": 20,
+        "endLine": 2972,
+        "endChar": 20
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "00c284fc_a6a2d22a",
@@ -261,6 +501,30 @@
       "writtenOn": "2024-04-12T09:00:56Z",
       "side": 1,
       "message": "nit: can use `@code` here too",
+      "range": {
+        "startLine": 2983,
+        "startChar": 60,
+        "endLine": 2983,
+        "endChar": 66
+      },
+      "revId": "725e0a19f9832104af2b826a2dcce08f384517e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca5b0100_cf046a36",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2983,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-23T22:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00c284fc_a6a2d22a",
       "range": {
         "startLine": 2983,
         "startChar": 60,

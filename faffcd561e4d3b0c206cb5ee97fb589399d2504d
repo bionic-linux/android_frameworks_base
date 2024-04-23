@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "158e19d9_a012a29d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-23T22:00:06Z",
+      "side": 1,
+      "message": "Thanks for the feedback on the new API! Changes uploaded.",
+      "revId": "faffcd561e4d3b0c206cb5ee97fb589399d2504d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
