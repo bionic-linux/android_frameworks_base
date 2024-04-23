@@ -1549,6 +1549,8 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
             primaryDisplay.getPendingTransaction().merge(transaction);
             mSyncId = -1;
             mOverrideOptions = null;
+            commitInVisibleActivities(transaction);
+            Slog.i(TAG, "Commit inVisible activities if transition is aborted.");
             cleanUpInternal();
             return;
         }
@@ -1895,6 +1897,23 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
                 ar.commitFinishDrawing(transaction);
             }
             ar.getTask().setDeferTaskAppear(false);
+        }
+    }
+
+    /** The transition is aborded. Make the activity InVisible. */
+    private void commitInVisibleActivities(SurfaceControl.Transaction transaction) {
+        for (int i = mParticipants.size() - 1; i >= 0; --i) {
+            final ActivityRecord ar = mParticipants.valueAt(i).asActivityRecord();
+            if (ar == null || ar.getTask() == null) {
+                continue;
+            }
+            if (ar.isVisibleRequested() == false) {
+                ar.commitVisibility(false /* visible */, false /* performLayout */,
+                        true /* fromTransition */);
+                if (mController != null) {
+                    mController.onCommittedInvisibles();
+                }
+            }
         }
     }
 
