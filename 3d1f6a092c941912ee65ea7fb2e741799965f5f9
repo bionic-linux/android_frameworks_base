@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "883696e3_aa794c39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2024-04-23T15:33:53Z",
+      "side": 1,
+      "message": "Changes to `mVisibleRequested` should not result in an aborted transition. If we are aborting, it means that \"nothing changed\".\n\nCan you describe the specific situation where this is not being picked-up? We should fix that instead. Eg. maybe something wasn\u0027t `collect`ed before changing its visibility.",
+      "range": {
+        "startLine": 11,
+        "startChar": 60,
+        "endLine": 12,
+        "endChar": 57
+      },
+      "revId": "3d1f6a092c941912ee65ea7fb2e741799965f5f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
