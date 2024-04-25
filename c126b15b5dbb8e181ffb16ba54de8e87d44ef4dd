@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d13cd2cf_7ee241ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-25T22:48:45Z",
+      "side": 1,
+      "message": "Good idea",
+      "parentUuid": "eaa75c62_fc5d4034",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "c126b15b5dbb8e181ffb16ba54de8e87d44ef4dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "182ae839_7f25a98f",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-04-25T21:48:45Z",
       "side": 1,
       "message": "Call `zeroize()` directly?",
+      "range": {
+        "startLine": 390,
+        "startChar": 0,
+        "endLine": 390,
+        "endChar": 16
+      },
+      "revId": "c126b15b5dbb8e181ffb16ba54de8e87d44ef4dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8c6e8bd_1c9e447d",
+        "filename": "core/java/com/android/internal/widget/LockscreenCredential.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-25T22:48:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "182ae839_7f25a98f",
       "range": {
         "startLine": 390,
         "startChar": 0,
