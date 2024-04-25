@@ -22,6 +22,30 @@
       },
       "revId": "c07942dbbadf2b26d6611e178d21e20610d4698b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d79c526_3a2fec3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-25T22:53:11Z",
+      "side": 1,
+      "message": "Good catch",
+      "parentUuid": "f5ccc922_e63372d5",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 10
+      },
+      "revId": "c07942dbbadf2b26d6611e178d21e20610d4698b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
