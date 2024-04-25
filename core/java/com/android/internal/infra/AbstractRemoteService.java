@@ -241,7 +241,7 @@ public abstract class AbstractRemoteService<S extends AbstractRemoteService<S, I
             mService.asBinder().unlinkToDeath(this, 0);
         }
         updateServicelicationExitInfo(mComponentName, mUserId);
-        mConnecting = true;
+        mConnecting = false;
         mService = null;
         mServiceDied = true;
         cancelScheduledUnbind();
@@ -559,7 +559,7 @@ public abstract class AbstractRemoteService<S extends AbstractRemoteService<S, I
         @Override
         public void onServiceDisconnected(ComponentName name) {
             if (mVerbose) Slog.v(mTag, "onServiceDisconnected()");
-            mConnecting = true;
+            mConnecting = false;
             mService = null;
         }
 
