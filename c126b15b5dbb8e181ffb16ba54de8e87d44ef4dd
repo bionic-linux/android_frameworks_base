@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eaa75c62_fc5d4034",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-04-25T21:48:45Z",
+      "side": 1,
+      "message": "Could you at least run the locksettings unit tests?  `atest com.android.server.locksettings`",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "c126b15b5dbb8e181ffb16ba54de8e87d44ef4dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "182ae839_7f25a98f",
+        "filename": "core/java/com/android/internal/widget/LockscreenCredential.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-04-25T21:48:45Z",
+      "side": 1,
+      "message": "Call `zeroize()` directly?",
+      "range": {
+        "startLine": 390,
+        "startChar": 0,
+        "endLine": 390,
+        "endChar": 16
+      },
+      "revId": "c126b15b5dbb8e181ffb16ba54de8e87d44ef4dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
