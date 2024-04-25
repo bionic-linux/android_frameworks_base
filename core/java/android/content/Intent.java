@@ -11345,16 +11345,13 @@ public class Intent implements Parcelable, Cloneable {
             mSourceBounds = new Rect(other.mSourceBounds);
             changes |= FILL_IN_SOURCE_BOUNDS;
         }
-        if (mExtras == null) {
-            if (other.mExtras != null) {
-                mExtras = new Bundle(other.mExtras);
-                mayHaveCopiedUris = true;
-            }
-        } else if (other.mExtras != null) {
+        if (other.mExtras != null) {
             try {
-                Bundle newb = new Bundle(other.mExtras);
-                newb.putAll(mExtras);
-                mExtras = newb;
+                if (mExtras == null) {
+                    mExtras = new Bundle(other.mExtras);
+                } else {
+                    mExtras.putAll(other.Extras);
+                }
                 mayHaveCopiedUris = true;
             } catch (RuntimeException e) {
                 // Modifying the extras can cause us to unparcel the contents
