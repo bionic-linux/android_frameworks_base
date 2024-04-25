@@ -16,6 +16,24 @@
       "message": "There is a `frameworks/base/core/jni/android_os_Debug.cpp`, do you want to move the JNI code there?",
       "revId": "ac577c122f5eadbd3f91de587977c05d9253a47f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e768d98_4dabc6c9",
+        "filename": "core/java/android/os/Debug.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1083168
+      },
+      "writtenOn": "2024-04-25T19:15:08Z",
+      "side": 1,
+      "message": "I moved these to `VMDebug`.",
+      "parentUuid": "388df89b_bc352e19",
+      "revId": "ac577c122f5eadbd3f91de587977c05d9253a47f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
