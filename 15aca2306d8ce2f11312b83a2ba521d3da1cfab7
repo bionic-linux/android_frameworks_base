@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4da2f6df_b54e89a6",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-25T07:38:34Z",
+      "side": 1,
+      "message": "nit: is there a `StorageManager` prefix missing here, and on `#deleteStorageArea` below?",
+      "range": {
+        "startLine": 38,
+        "startChar": 23,
+        "endLine": 38,
+        "endChar": 39
+      },
+      "revId": "15aca2306d8ce2f11312b83a2ba521d3da1cfab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a4b7988_edda994c",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-25T07:38:34Z",
+      "side": 1,
+      "message": "can this be final?\n\n\u003e Favor composition over inheritance (go/ej3e-18)",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 51
+      },
+      "revId": "15aca2306d8ce2f11312b83a2ba521d3da1cfab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de33f904_851a55ff",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-25T07:38:34Z",
+      "side": 1,
+      "message": "nit: A very literal person could interpret this to mean that the **only** reason this method will throw `IOException` is if there are open files - but I suspect there could actually be other causes (though probably a lot less common)?\n\nIf I\u0027m right, then we can probably just flip the sentence slightly to something like:\n\n\u003e If the underlying storage area still has open files, this method may throw an {@link IOException}.",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 48
+      },
+      "revId": "15aca2306d8ce2f11312b83a2ba521d3da1cfab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9c76b1b_8a097ada",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 2964,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-25T07:38:34Z",
+      "side": 1,
+      "message": "optional: is there an existing DAC page you can link to here? so a reader can immediately jump off to check they understand what \u0027credential encrypted\u0027 means.",
+      "range": {
+        "startLine": 2964,
+        "startChar": 69,
+        "endLine": 2964,
+        "endChar": 97
+      },
+      "revId": "15aca2306d8ce2f11312b83a2ba521d3da1cfab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d16f6a7d_8a90de03",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 2966,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-25T07:38:34Z",
+      "side": 1,
+      "message": "I defer to those more familiar with the actual feature here, but just checking what \u0027interacted with\u0027 means here? I would naively that means all reading and writing of files inside the storage area.\n\nHowever I understood from [your doc](https://docs.google.com/document/d/1UwZNApHnu2IbFXNnpsvlAQsaU8_mPUjFamCZQ4-NRcw/edit?pli\u003d1\u0026tab\u003dt.0) that only opening the storage area needs to happen while the device is unlocked, and any open storage areas are kept open when the device is locked? This part:\n\n\u003e Actions such as locking the device (if the Jetpack library is in use) have no effect on the open storage area; such checks only occur at opening time.",
+      "range": {
+        "startLine": 2965,
+        "startChar": 42,
+        "endLine": 2966,
+        "endChar": 75
+      },
+      "revId": "15aca2306d8ce2f11312b83a2ba521d3da1cfab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3076e1a_01984c5c",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 2972,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-25T07:38:34Z",
+      "side": 1,
+      "message": "do you want to add a TODO here to come back and update with a more concrete signpost once the exact name/library of the jetpack part is decided?",
+      "range": {
+        "startLine": 2972,
+        "startChar": 7,
+        "endLine": 2972,
+        "endChar": 35
+      },
+      "revId": "15aca2306d8ce2f11312b83a2ba521d3da1cfab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0cac82e_8520c538",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 2981,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-25T07:38:34Z",
+      "side": 1,
+      "message": "wording nit: wdyt about saying \u0027locked\u0027 here? (and elsewhere where you talk about the reference count decrementing to zero)",
+      "range": {
+        "startLine": 2981,
+        "startChar": 24,
+        "endLine": 2981,
+        "endChar": 36
+      },
+      "revId": "15aca2306d8ce2f11312b83a2ba521d3da1cfab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15da93de_348ab3c5",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 2984,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-25T07:38:34Z",
+      "side": 1,
+      "message": "I assume CE \u003d Credential Encryption and DE \u003d Device Encryption\n\nneither have been explicitly defined so far in this javadoc, so I think we should probably just expand both to their unacronymned form.",
+      "range": {
+        "startLine": 2984,
+        "startChar": 53,
+        "endLine": 2984,
+        "endChar": 92
+      },
+      "revId": "15aca2306d8ce2f11312b83a2ba521d3da1cfab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06916800_605aec15",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 2986,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-25T07:38:34Z",
+      "side": 1,
+      "message": "nit: the type of the parameter will be automatically clear in the rendered HTML, so you can just focus on the length here. Something like:\n\n\u003e this must be 32 bytes long",
+      "range": {
+        "startLine": 2985,
+        "startChar": 84,
+        "endLine": 2986,
+        "endChar": 35
+      },
+      "revId": "15aca2306d8ce2f11312b83a2ba521d3da1cfab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd4a7ffd_306a1a80",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 2993,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-25T07:38:34Z",
+      "side": 1,
+      "message": "you can annotate this with `@Size(max\u003d128)` and `secret` with `@Size(32)`\n\nhttps://developer.android.com/studio/write/annotations#value-constraint\n\nhttps://developer.android.com/reference/androidx/annotation/Size\n\n---\n\nRelated: Is an empty `storageAreaName` allowed?",
+      "range": {
+        "startLine": 2993,
+        "startChar": 39,
+        "endLine": 2993,
+        "endChar": 70
+      },
+      "revId": "15aca2306d8ce2f11312b83a2ba521d3da1cfab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "586422bd_68807dee",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 3026,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-25T07:38:34Z",
+      "side": 1,
+      "message": "nit (and a little outside API): this is the first usage of `storageAreaName` and it occurs before you\u0027ve null-checked it, which means this will append `\"_null\"` to the string\n\nTo avoid a future reader wondering what happens next, maybe just put explicit null, size (and valid char?) checks for both `storageAreaName` and `secret` right at the top of this method?",
+      "range": {
+        "startLine": 3026,
+        "startChar": 0,
+        "endLine": 3026,
+        "endChar": 91
+      },
+      "revId": "15aca2306d8ce2f11312b83a2ba521d3da1cfab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20022fc0_fdfdf5be",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 3064,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-25T07:38:34Z",
+      "side": 1,
+      "message": "I could be misunderstanding, but I think (?) the guidance here should be:\n\n1. If you used Jetpack to create your storage area, use Jetpack to delete it\n2. If you created your storage area directly with StorageManager (which itself is discouraged), you can delete it directly with this StorageManager method\n\nThese docs as worded seem to suggest that Jetpack should be used even in case (2) - but that seems a bit surprising.",
+      "range": {
+        "startLine": 3061,
+        "startChar": 0,
+        "endLine": 3064,
+        "endChar": 25
+      },
+      "revId": "15aca2306d8ce2f11312b83a2ba521d3da1cfab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20681cb0_2f8a6f56",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 3073,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-25T07:38:34Z",
+      "side": 1,
+      "message": "same eager null check suggestion here, because I think passing `null` here atm might throw `NoSuchElementException` instead of `NullPointerException`?",
+      "range": {
+        "startLine": 3073,
+        "startChar": 0,
+        "endLine": 3073,
+        "endChar": 68
+      },
+      "revId": "15aca2306d8ce2f11312b83a2ba521d3da1cfab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
