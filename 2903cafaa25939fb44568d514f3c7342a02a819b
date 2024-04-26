@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "856beeff_c4c5b864",
+        "filename": "services/core/java/com/android/server/display/DisplayPowerState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2024-04-26T13:06:57Z",
+      "side": 0,
+      "message": "I don\u0027t see how `run()` can run before this gets initialized, could you clarify?\n\nWhich line is the exception happening on? The bug says `DisplayPowerState$PhotonicModulator.run(DisplayPowerState.java:586)` but this file doesn\u0027t have line 586",
+      "revId": "2903cafaa25939fb44568d514f3c7342a02a819b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
