@@ -429,7 +429,7 @@ final class DisplayPowerState {
         private static final int INITIAL_SCREEN_STATE = Display.STATE_UNKNOWN;
         private static final float INITIAL_BACKLIGHT_FLOAT = PowerManager.BRIGHTNESS_INVALID_FLOAT;
 
-        private final Object mLock = new Object();
+        private final static Object mLock = new Object();
 
         private int mPendingState = INITIAL_SCREEN_STATE;
         private float mPendingBacklight = INITIAL_BACKLIGHT_FLOAT;
