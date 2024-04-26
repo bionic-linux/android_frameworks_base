@@ -607,6 +607,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8de399f_bd08b244",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-26T23:09:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fea31de_3757c820",
+      "range": {
+        "startLine": 309,
+        "startChar": 0,
+        "endLine": 311,
+        "endChar": 0
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81edc6b3_9d4485cc",
@@ -1211,6 +1235,30 @@
       "side": 1,
       "message": "Makes sense to avoid listing the areas -- good idea. I\u0027ve change the check to avoid the listing but left it in Java, because I think it is an error that app developers might choose to ignore, and so I think it would make sense to have it be a different type of error than those thrown up by vold.",
       "parentUuid": "55909802_becaa9b3",
+      "range": {
+        "startLine": 3023,
+        "startChar": 0,
+        "endLine": 3026,
+        "endChar": 9
+      },
+      "revId": "162cf198c639f6442e14597e46d762d39fc822fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6c16735_e91096ee",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3026,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-26T23:09:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5fc9c1f_2b47b38c",
       "range": {
         "startLine": 3023,
         "startChar": 0,
