@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c04b67af_192e4728",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-26T09:27:39Z",
+      "side": 1,
+      "message": "This change looks good so far. I also had a look at the CTS tests in aosp/2970672, and I think there also need to be tests for the new methods on `StorageManager` - I\u0027ll take a look once those are added (appropriate CTS coverage is required for API approval)",
+      "revId": "ac72609c1d66d1d2a29e5561e3fa30ede5b878e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57eb2d82_9e2aa484",
+        "filename": "core/api/current.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 33645,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-26T09:27:39Z",
+      "side": 1,
+      "message": "interesting - you\u0027ve annotated this `@hide` - is this just here because you haven\u0027t regenerated this file yet, or does metalava think this method really is public despite the `@hide`?",
+      "revId": "ac72609c1d66d1d2a29e5561e3fa30ede5b878e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc0cad30_fd390b4d",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-26T09:27:39Z",
+      "side": 1,
+      "message": "i think you can remove this, the annotation at the class-level is enough (same below)",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 48
+      },
+      "revId": "ac72609c1d66d1d2a29e5561e3fa30ede5b878e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "436de3a7_8656af29",
+        "filename": "core/java/android/os/storage/StorageArea.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-04-26T09:27:39Z",
+      "side": 1,
+      "message": "i think this paragraph can now be removed, since it basically duplicates the paragraph above?",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 10
+      },
+      "revId": "ac72609c1d66d1d2a29e5561e3fa30ede5b878e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
