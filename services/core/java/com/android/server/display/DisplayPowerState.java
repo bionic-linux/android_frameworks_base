@@ -59,7 +59,7 @@ final class DisplayPowerState {
     private final Choreographer mChoreographer;
     private final DisplayBlanker mBlanker;
     private final ColorFade mColorFade;
-    private final PhotonicModulator mPhotonicModulator;
+    private final volatile PhotonicModulator mPhotonicModulator;
     private final int mDisplayId;
 
     private int mScreenState;
