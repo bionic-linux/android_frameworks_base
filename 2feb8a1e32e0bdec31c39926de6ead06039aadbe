@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eae6e3ef_b5f0cf1b",
+        "filename": "services/core/java/com/android/server/display/DisplayPowerState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1989055
+      },
+      "writtenOn": "2024-04-26T11:32:31Z",
+      "side": 1,
+      "message": "DisplayPoweState (and PhotonicModulator) created per display and should not use shared static locl",
+      "revId": "2feb8a1e32e0bdec31c39926de6ead06039aadbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
