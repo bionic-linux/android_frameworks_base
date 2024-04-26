@@ -60,6 +60,7 @@ final class DisplayPowerState {
     private final DisplayBlanker mBlanker;
     private final ColorFade mColorFade;
     private final PhotonicModulator mPhotonicModulator;
+    private final Object mLock = new Object();
     private final int mDisplayId;
 
     private int mScreenState;
@@ -428,9 +429,6 @@ final class DisplayPowerState {
     private final class PhotonicModulator extends Thread {
         private static final int INITIAL_SCREEN_STATE = Display.STATE_UNKNOWN;
         private static final float INITIAL_BACKLIGHT_FLOAT = PowerManager.BRIGHTNESS_INVALID_FLOAT;
-
-        private final Object mLock = new Object();
-
         private int mPendingState = INITIAL_SCREEN_STATE;
         private float mPendingBacklight = INITIAL_BACKLIGHT_FLOAT;
         private float mPendingSdrBacklight = INITIAL_BACKLIGHT_FLOAT;
