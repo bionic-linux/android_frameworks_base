@@ -22,6 +22,30 @@
       },
       "revId": "94e596ec9c09779ad8911baf76834bb8c8445878",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d3aeba4_dd8dac52",
+        "filename": "keystore/java/android/security/keystore/KeyProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-04-29T19:26:28Z",
+      "side": 1,
+      "message": "`UID_SELF` just gets translated into `NAMESPACE_APPLICATION`, so there is no difference between them.  I think you might mean that `UID_SELF` is only used from the system uid (is it?), and that should be documented here?",
+      "parentUuid": "6118c759_70a9454a",
+      "range": {
+        "startLine": 1010,
+        "startChar": 22,
+        "endLine": 1010,
+        "endChar": 41
+      },
+      "revId": "94e596ec9c09779ad8911baf76834bb8c8445878",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
