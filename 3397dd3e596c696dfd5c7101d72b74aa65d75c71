@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47ac1848_22c624ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1986430
+      },
+      "writtenOn": "2024-04-30T13:38:44Z",
+      "side": 1,
+      "message": "To access setResourceHolderRetain API changes done in MediaCas and Tuner JAVA files.",
+      "revId": "3397dd3e596c696dfd5c7101d72b74aa65d75c71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
