@@ -70,6 +70,30 @@
       },
       "revId": "94e596ec9c09779ad8911baf76834bb8c8445878",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6295768b_bbed3663",
+        "filename": "keystore/java/android/security/keystore/KeyProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-04-30T19:53:40Z",
+      "side": 1,
+      "message": "KeyChain runs as the system uid: https://cs.android.com/android/platform/superproject/main/+/main:packages/apps/KeyChain/AndroidManifest.xml;l\u003d4\n\n`UID_SELF` really does just get translated directly into `NAMESPACE_APPLICATION`, though.  The uid is not explicitly set to system but rather is implicit from the caller into Keystore.\n\nSo, just documenting that `UID_SELF` corresponds to `NAMESPACE_APPLICATION` seems appropriate for now.\n\nWe should convert all users of `UID_SELF` to use `NAMESPACE_APPLICATION` directly (or nothing, since it is the default namespace) and document which uid they are expecting the keys to be stored under.  I think that\u0027s beyond the scope of this topic though.  This topic is just intended to finish the removal of the obsolete class `android.security.KeyStore`.",
+      "parentUuid": "79a77b92_32e0f715",
+      "range": {
+        "startLine": 1010,
+        "startChar": 22,
+        "endLine": 1010,
+        "endChar": 41
+      },
+      "revId": "94e596ec9c09779ad8911baf76834bb8c8445878",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
