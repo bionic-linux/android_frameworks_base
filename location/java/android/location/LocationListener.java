@@ -60,7 +60,10 @@ public interface LocationListener {
     default void onLocationChanged(@NonNull List<Location> locations) {
         final int size = locations.size();
         for (int i = 0; i < size; i++) {
-            onLocationChanged(locations.get(i));
+            Location location = locations.get(i);
+            if (location != null) {
+                onLocationChanged(location);
+            }
         }
     }
 
