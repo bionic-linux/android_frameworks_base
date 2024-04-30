@@ -46,6 +46,30 @@
       },
       "revId": "94e596ec9c09779ad8911baf76834bb8c8445878",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79a77b92_32e0f715",
+        "filename": "keystore/java/android/security/keystore/KeyProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2024-04-30T13:28:48Z",
+      "side": 1,
+      "message": "\u003e  I think you might mean that UID_SELF is only used from the system uid (is it?), \n\nRight. I always consider UID_SELF a misnomer and it really should be UID_KEYCHAIN. But I\u0027m not intimately familiar with other places where UID_SELF gets used/exposed (I see KeyGenParameterSpec.getUid() returns this and in this case \"caller itself\" could be the right definition) so this could be wrong.",
+      "parentUuid": "2d3aeba4_dd8dac52",
+      "range": {
+        "startLine": 1010,
+        "startChar": 22,
+        "endLine": 1010,
+        "endChar": 41
+      },
+      "revId": "94e596ec9c09779ad8911baf76834bb8c8445878",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
