@@ -16,6 +16,24 @@
       "message": "frameworks/base/core/java/com/android/internal/util/FileRotator.java:344: error: cannot find symbol\n        for (String name : baseFiles.list()) {\n                                    ^\n  symbol:   method list()\n  location: variable baseFiles of type String[]\n1 error",
       "revId": "79a9064a4571d001ff9080d1025861b9e2b88081",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "597c534d_16098754",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-05-01T14:36:33Z",
+      "side": 1,
+      "message": "Sorry,I have fix the error and build pass in local,please help review this CL again,Thanks.",
+      "parentUuid": "91eea675_e22497e8",
+      "revId": "79a9064a4571d001ff9080d1025861b9e2b88081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
