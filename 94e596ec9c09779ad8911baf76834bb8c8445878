@@ -142,6 +142,30 @@
       },
       "revId": "94e596ec9c09779ad8911baf76834bb8c8445878",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "064867c3_a7acfa09",
+        "filename": "keystore/java/android/security/keystore/KeyProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-05-01T16:49:33Z",
+      "side": 1,
+      "message": "\u003e Note that before this CL, UID_SELF was undocumented.\n\nCorrection, it did have a short non-javadoc comment:\n\n```\n// Used for UID field to indicate the calling UID.\n```",
+      "parentUuid": "fab3db51_b8bc284c",
+      "range": {
+        "startLine": 1010,
+        "startChar": 22,
+        "endLine": 1010,
+        "endChar": 41
+      },
+      "revId": "94e596ec9c09779ad8911baf76834bb8c8445878",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
