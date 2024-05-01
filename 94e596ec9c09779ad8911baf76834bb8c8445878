@@ -94,6 +94,30 @@
       },
       "revId": "94e596ec9c09779ad8911baf76834bb8c8445878",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0110267_42438e21",
+        "filename": "keystore/java/android/security/keystore/KeyProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2024-05-01T11:45:14Z",
+      "side": 1,
+      "message": "Can we add this extra context to the javadoc for UID_SELF here?",
+      "parentUuid": "6295768b_bbed3663",
+      "range": {
+        "startLine": 1010,
+        "startChar": 22,
+        "endLine": 1010,
+        "endChar": 41
+      },
+      "revId": "94e596ec9c09779ad8911baf76834bb8c8445878",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
