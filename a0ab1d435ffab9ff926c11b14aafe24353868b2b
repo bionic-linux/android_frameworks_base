@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed43acbd_c8f1fe97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-05-01T18:41:47Z",
+      "side": 1,
+      "message": "Looks like `LockSettingsService#setLockCredential()` needs to be fixed to not keep using the `LockscreenCredential` it was passed after it returns.",
+      "revId": "a0ab1d435ffab9ff926c11b14aafe24353868b2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
