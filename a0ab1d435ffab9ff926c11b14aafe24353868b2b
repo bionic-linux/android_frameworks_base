@@ -16,6 +16,24 @@
       "message": "Looks like `LockSettingsService#setLockCredential()` needs to be fixed to not keep using the `LockscreenCredential` it was passed after it returns.",
       "revId": "a0ab1d435ffab9ff926c11b14aafe24353868b2b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11b54945_6c23fda0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-05-01T21:52:24Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right, thanks! I\u0027ve changed `setLockCredential()` to save a duplicate of the credential rather than the original and the tests seem to be passing now. I\u0027ll un-revert this change, but tag it in a topic with the change to `LockSettingsService` so they can land at the same time.",
+      "parentUuid": "ed43acbd_c8f1fe97",
+      "revId": "a0ab1d435ffab9ff926c11b14aafe24353868b2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
