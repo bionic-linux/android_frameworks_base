@@ -118,6 +118,30 @@
       },
       "revId": "94e596ec9c09779ad8911baf76834bb8c8445878",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fab3db51_b8bc284c",
+        "filename": "keystore/java/android/security/keystore/KeyProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-05-01T16:38:31Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m having a hard time understanding what you\u0027d like the javadoc to say.  It already says that UID_SELF corresponds to NAMESPACE_APPLICATION, and it links to the documentation for NAMESPACE_APPLICATION which explains how NAMESPACE_APPLICATION works.  It also says that new code should work with Keystore namespaces directly.  Note that before this CL, UID_SELF was undocumented.  I think maybe you are asking for some detail about KeyChain specifically?  As I mentioned UID_SELF isn\u0027t really specific to KeyChain though, as it\u0027s simply an alias for NAMESPACE_APPLICATION (as my proposed javadoc says).  E.g., querying the legacy UID of any key in NAMESPACE_APPLICATION will return UID_SELF.\n\nIt\u0027s indeed confusing to have the concept of these legacy UIDs alongside the newer mechanism (namespaces), but removing the concept of legacy UIDs is not the point of this topic.  I was going to do that originally, but it turned into way too many changes, so I ended up just going with a renaming for now so that we can close out b/326508120.",
+      "parentUuid": "c0110267_42438e21",
+      "range": {
+        "startLine": 1010,
+        "startChar": 22,
+        "endLine": 1010,
+        "endChar": 41
+      },
+      "revId": "94e596ec9c09779ad8911baf76834bb8c8445878",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
