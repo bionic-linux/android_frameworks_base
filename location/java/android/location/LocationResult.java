@@ -224,7 +224,7 @@ public final class LocationResult implements Parcelable {
             Location newLocation = function.apply(location);
             if (mapped != mLocations) {
                 mapped.add(newLocation);
-            } else if (newLocation != location) {
+            } else if (newLocations != null && newLocation != location) {
                 mapped = new ArrayList<>(mLocations.size());
                 for (int j = 0; j < i; ++j) {
                     mapped.add(mLocations.get(j));
