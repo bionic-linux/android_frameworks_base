@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d87c4c7_4adb5f4a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1097570
+      },
+      "writtenOn": "2024-05-02T19:26:37Z",
+      "side": 1,
+      "message": "This is old but still valid I think. I don\u0027t know what the \"Presubmit-Verified\" robot wants, but the 2 links it provided in its comment are behind a Google sign-on wall.",
+      "revId": "9dc5091931e3234f6fa85e4cdf390cf05482c0ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
