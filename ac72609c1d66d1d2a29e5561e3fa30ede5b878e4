@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "322333e2_b25072ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-05-03T10:11:58Z",
+      "side": 1,
+      "message": "Tests look good in terms of API coverage, added some non API comments while I was going through them - thanks!",
+      "parentUuid": "7182df4e_cd33c4c6",
+      "revId": "ac72609c1d66d1d2a29e5561e3fa30ede5b878e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "57eb2d82_9e2aa484",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "This is after regenerating the file -- it seems that metalava considers `@Override` methods public even if I annotate it with `@hide`.",
       "parentUuid": "57eb2d82_9e2aa484",
+      "revId": "ac72609c1d66d1d2a29e5561e3fa30ede5b878e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97cb72ac_c5e08df3",
+        "filename": "core/api/current.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 33645,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-05-03T10:11:58Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "210ecd99_2239afc3",
       "revId": "ac72609c1d66d1d2a29e5561e3fa30ede5b878e4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
