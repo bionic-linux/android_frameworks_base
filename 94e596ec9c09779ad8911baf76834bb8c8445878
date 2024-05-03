@@ -166,6 +166,30 @@
       },
       "revId": "94e596ec9c09779ad8911baf76834bb8c8445878",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d9a7eb4_80602b5f",
+        "filename": "keystore/java/android/security/keystore/KeyProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-05-03T15:47:05Z",
+      "side": 1,
+      "message": "Submitted now to unblock the other CLs.  Let me know if you have a more specific suggestion for this javadoc though.  I think it\u0027s already fine in context though.  The real issue is having the concept of \"legacy UIDs\" at all, which a separate cleanup will need to address eventually.",
+      "parentUuid": "064867c3_a7acfa09",
+      "range": {
+        "startLine": 1010,
+        "startChar": 22,
+        "endLine": 1010,
+        "endChar": 41
+      },
+      "revId": "94e596ec9c09779ad8911baf76834bb8c8445878",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
