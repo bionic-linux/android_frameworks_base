@@ -1,0 +1,236 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5cc5eee_efe6429a",
+        "filename": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-06T20:03:34Z",
+      "side": 1,
+      "message": "In car audio code we don\u0027t use stream as it incurs extra memory and latency penalties, not sure about core. So this is only a nit for me.",
+      "range": {
+        "startLine": 202,
+        "startChar": 15,
+        "endLine": 203,
+        "endChar": 45
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "7e19c8d4_3696a558",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+              "range": {
+                "startLine": 19,
+                "startChar": 0,
+                "endLine": 21,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+              "range": {
+                "startLine": 38,
+                "startChar": 0,
+                "endLine": 39,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+              "range": {
+                "startLine": 202,
+                "startChar": 0,
+                "endLine": 204,
+                "endChar": 0
+              },
+              "replacement": "        List\u003cAudioProductStrategy\u003e apsListWithoutInternal \u003d new ArrayList\u003c\u003e();\n        for (AudioProductStrategy aps : apsList) {\n            if (!aps.isInternalStrategy()) {\n                apsListWithoutInternal.add(aps);\n            }\n        }\n        return apsListWithoutInternal;\n"
+            },
+            {
+              "path": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+              "range": {
+                "startLine": 459,
+                "startChar": 0,
+                "endLine": 461,
+                "endChar": 0
+              },
+              "replacement": "        for (AudioAttributesGroup aag : mAudioAttributesGroups) {\n            if (aag.isInternalStrategy()) {\n                return true;\n            }\n        }\n        return false;\n"
+            },
+            {
+              "path": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+              "range": {
+                "startLine": 482,
+                "startChar": 0,
+                "endLine": 484,
+                "endChar": 0
+              },
+              "replacement": "            for (AudioAttributes aa : mAudioAttributes) {\n                if (isInternalAttributesForStrategy(aa)) {\n                    return true;\n                }\n            }\n            return false;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1caebc71455d6e0c84945971ade200f9558bcee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14064f9f_2ab1c0a4",
+        "filename": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-06T20:03:34Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Wrong casing for \"sInternalTag\". static final variables should be ALL_UPPERCASE.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nWrong casing for \"sInternalTag\". static final variables should be ALL_UPPERCASE.",
+      "range": {
+        "startLine": 430,
+        "startChar": 12,
+        "endLine": 430,
+        "endChar": 75
+      },
+      "revId": "1caebc71455d6e0c84945971ade200f9558bcee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9ce10dc_966d3527",
+        "filename": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-06T20:03:34Z",
+      "side": 1,
+      "message": "Similar comment here for streams.",
+      "range": {
+        "startLine": 459,
+        "startChar": 15,
+        "endLine": 460,
+        "endChar": 41
+      },
+      "revId": "1caebc71455d6e0c84945971ade200f9558bcee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55689c87_1eb6159e",
+        "filename": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-06T20:03:34Z",
+      "side": 1,
+      "message": "Can you comment on what an internal strategy is? I thought OEM\u0027s first party apps/services could use tags too.",
+      "range": {
+        "startLine": 463,
+        "startChar": 42,
+        "endLine": 463,
+        "endChar": 73
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "342faabb_5f13f328",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+              "range": {
+                "startLine": 463,
+                "startChar": 0,
+                "endLine": 464,
+                "endChar": 0
+              },
+              "replacement": "    /**\n     * @hide\n     * @param aa {@link AudioAttributes} to be considered\n     * @return true if the {@link AudioAttributes} is internal to the strategy, false otherwise.\n     */\n    private static boolean isInternalAttributesForStrategy(\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1caebc71455d6e0c84945971ade200f9558bcee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28a2d31a_b3c81e09",
+        "filename": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-06T20:03:34Z",
+      "side": 1,
+      "message": "We are repeating the logic above here, can we create a static method which we can call from both places?",
+      "range": {
+        "startLine": 482,
+        "startChar": 12,
+        "endLine": 483,
+        "endChar": 45
+      },
+      "revId": "1caebc71455d6e0c84945971ade200f9558bcee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a6d9a84_06226be0",
+        "filename": "media/java/android/media/audiopolicy/AudioVolumeGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-06T20:03:34Z",
+      "side": 1,
+      "message": "Does this mean we would not be able to control the internal volume groups using the audio manager APIs?",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 46
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8f7a9be9_7acce1b7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/java/android/media/audiopolicy/AudioVolumeGroup.java",
+              "range": {
+                "startLine": 88,
+                "startChar": 0,
+                "endLine": 88,
+                "endChar": 0
+              },
+              "replacement": "        // TODO(b/119620911): add support for internal volume groups.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1caebc71455d6e0c84945971ade200f9558bcee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
