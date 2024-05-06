@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f46ba36_2f28b3b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-05-06T16:24:48Z",
+      "side": 1,
+      "message": "IIUC:\n\n```java\nnextIgnored()\n    nextTokenIndex() // Get index of next token\n    consumeBuf()     // Consume current buffer",
+      "revId": "d73082cc20795bab75712c2f1cb7e266918779d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0a999d9_c9e3e4f5",
+        "filename": "core/java/com/android/internal/util/ProcFileReader.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-05-06T16:24:48Z",
+      "side": 1,
+      "message": "Suggestion:\n\n```java\n    private void consumeBuf(int count) throws IOException {\n        // TODO: consider moving to read pointer, but for now traceview says\n        // these copies aren\u0027t a bottleneck.\n\n        // skip all consecutive delimiters.\n        while (count \u003c mTail \u0026\u0026 mBuffer[count] \u003d\u003d \u0027 \u0027) {\n            count++;\n            if (--mTail \u003d\u003d 0) {\n                // After filling the buffer, it may contain more consecutive\n                // delimiters that need to be skipped.\n                fillBuf();\n            } \n        }\n\n        System.arraycopy(mBuffer, count, mBuffer, 0, mTail - count);\n        if (mTail \u003d\u003d 0) {\n            fillBuf();\n        }\n    }\n```",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 5
+      },
+      "revId": "d73082cc20795bab75712c2f1cb7e266918779d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
