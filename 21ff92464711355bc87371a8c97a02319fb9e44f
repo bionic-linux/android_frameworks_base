@@ -69,6 +69,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "adb68e98_54edcba7",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-05-06T22:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f7462ad_930aa980",
+      "range": {
+        "startLine": 448,
+        "startChar": 41,
+        "endLine": 448,
+        "endChar": 61
+      },
+      "revId": "21ff92464711355bc87371a8c97a02319fb9e44f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3927b3e8_e75d4550",
@@ -110,6 +134,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37569fb5_be5780aa",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-05-06T22:47:31Z",
+      "side": 1,
+      "message": "I thought we need to explicitly grant permission the system server but seems the system server automatically has all the permissions.",
+      "parentUuid": "3927b3e8_e75d4550",
+      "range": {
+        "startLine": 450,
+        "startChar": 16,
+        "endLine": 450,
+        "endChar": 74
+      },
+      "revId": "21ff92464711355bc87371a8c97a02319fb9e44f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bfbd2ee6_476b3484",
@@ -147,6 +195,30 @@
           ]
         }
       ],
+      "revId": "21ff92464711355bc87371a8c97a02319fb9e44f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee54ae19_0c4347b5",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-05-06T22:47:31Z",
+      "side": 1,
+      "message": "Oh we don\u0027t need it",
+      "parentUuid": "bfbd2ee6_476b3484",
+      "range": {
+        "startLine": 459,
+        "startChar": 19,
+        "endLine": 459,
+        "endChar": 43
+      },
       "revId": "21ff92464711355bc87371a8c97a02319fb9e44f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
