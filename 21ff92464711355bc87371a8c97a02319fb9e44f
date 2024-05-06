@@ -16,6 +16,139 @@
       "message": "Verified it on hsum with: https://android-build.corp.google.com/test_investigate/?invocationId\u003dI56000010272431487\u0026testResultId\u003dTR54629284987074336",
       "revId": "21ff92464711355bc87371a8c97a02319fb9e44f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f7462ad_930aa980",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-05-06T18:40:40Z",
+      "side": 1,
+      "message": "It\u0027s technically not as efficient, but Binder.withCleanCallingIdentity() looks rather tidy.",
+      "range": {
+        "startLine": 448,
+        "startChar": 41,
+        "endLine": 448,
+        "endChar": 61
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4304de54_84f69ffe",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/VcnManagementService.java",
+              "range": {
+                "startLine": 448,
+                "startChar": 0,
+                "endLine": 450,
+                "endChar": 0
+              },
+              "replacement": "            Binder.withCleanCallingIdentity(() -\u003e {\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/VcnManagementService.java",
+              "range": {
+                "startLine": 456,
+                "startChar": 0,
+                "endLine": 459,
+                "endChar": 0
+              },
+              "replacement": "            });\n"
+            }
+          ]
+        }
+      ],
+      "revId": "21ff92464711355bc87371a8c97a02319fb9e44f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3927b3e8_e75d4550",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-05-06T18:40:40Z",
+      "side": 1,
+      "message": "I\u0027m a little confused. This is going to check that the system server has QUERY_USERS? It\u0027s done _inside_ the clean calling identity... why do we want this check?",
+      "range": {
+        "startLine": 450,
+        "startChar": 16,
+        "endLine": 450,
+        "endChar": 74
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "24bd1d35_1da053cd",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/VcnManagementService.java",
+              "range": {
+                "startLine": 450,
+                "startChar": 0,
+                "endLine": 451,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "21ff92464711355bc87371a8c97a02319fb9e44f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfbd2ee6_476b3484",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-05-06T18:40:40Z",
+      "side": 1,
+      "message": "This is always true. Is it here for readability/clarity?",
+      "range": {
+        "startLine": 459,
+        "startChar": 19,
+        "endLine": 459,
+        "endChar": 43
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "37c7120c_3510dd0b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/VcnManagementService.java",
+              "range": {
+                "startLine": 459,
+                "startChar": 0,
+                "endLine": 460,
+                "endChar": 0
+              },
+              "replacement": "        } else if (!userHandle.isSystem()) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "21ff92464711355bc87371a8c97a02319fb9e44f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
