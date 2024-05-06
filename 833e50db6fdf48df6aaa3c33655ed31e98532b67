@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccefdc22_e321846a",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2024-05-06T23:18:06Z",
+      "side": 1,
+      "message": "Do we have tests where the caller is NOT the main user?",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 69
+      },
+      "revId": "833e50db6fdf48df6aaa3c33655ed31e98532b67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
