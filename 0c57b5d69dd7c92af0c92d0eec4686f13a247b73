@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "139f48bd_8ce83814",
+        "filename": "core/java/com/android/internal/util/FileRotator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2024-05-07T02:09:20Z",
+      "side": 1,
+      "message": "Question: In pratice, what causes this to happen? Non-exist directory name?\nIf so, does it fix the problem if we just return the newly created name?",
+      "range": {
+        "startLine": 337,
+        "startChar": 7,
+        "endLine": 337,
+        "endChar": 32
+      },
+      "revId": "0c57b5d69dd7c92af0c92d0eec4686f13a247b73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
