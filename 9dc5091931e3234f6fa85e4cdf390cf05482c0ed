@@ -33,6 +33,23 @@
       "message": "This branch is read-only. All development moved to `main`.\nYou won\u0027t be able to submit this here, unfortunately 😞",
       "revId": "9dc5091931e3234f6fa85e4cdf390cf05482c0ed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1c7cb7f_69fdb400",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1954530
+      },
+      "writtenOn": "2024-05-08T18:31:14Z",
+      "side": 1,
+      "message": "Looks good! Thank you for catching and fixing this.",
+      "revId": "9dc5091931e3234f6fa85e4cdf390cf05482c0ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
