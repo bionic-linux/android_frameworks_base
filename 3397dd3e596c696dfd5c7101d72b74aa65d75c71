@@ -16,6 +16,138 @@
       "message": "To access setResourceHolderRetain API changes done in MediaCas and Tuner JAVA files.",
       "revId": "3397dd3e596c696dfd5c7101d72b74aa65d75c71",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d12309cb_778d72d4",
+        "filename": "media/java/android/media/flags/media_better_together.aconfig",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2024-05-10T06:27:07Z",
+      "side": 1,
+      "message": "Retain a blank line at the end",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 1
+      },
+      "revId": "3397dd3e596c696dfd5c7101d72b74aa65d75c71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "caf29908_24efa77e",
+        "filename": "media/java/android/media/tv/tuner/Tuner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2024-05-10T06:27:07Z",
+      "side": 1,
+      "message": "`setResourceHolderRetain` enforces the permission. Do we have this here for better error propagation?",
+      "range": {
+        "startLine": 757,
+        "startChar": 4,
+        "endLine": 757,
+        "endChar": 74
+      },
+      "revId": "3397dd3e596c696dfd5c7101d72b74aa65d75c71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1f77d3f_40b0c3bc",
+        "filename": "media/java/android/media/tv/tunerresourcemanager/TunerResourceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2024-05-10T06:27:07Z",
+      "side": 1,
+      "message": "Needs formatting.",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 16
+      },
+      "revId": "3397dd3e596c696dfd5c7101d72b74aa65d75c71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0496230b_97584dd8",
+        "filename": "media/java/android/media/tv/tunerresourcemanager/aidl/android/media/tv/tunerresourcemanager/ITunerResourceManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2024-05-10T06:27:07Z",
+      "side": 1,
+      "message": "New line here.",
+      "revId": "3397dd3e596c696dfd5c7101d72b74aa65d75c71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3348d9b3_7e7fac29",
+        "filename": "services/core/java/com/android/server/tv/tunerresourcemanager/ClientProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2024-05-10T06:27:07Z",
+      "side": 1,
+      "message": "In the javadoc, please mention the default retain behaviour as challenger win if not explicitly set.",
+      "range": {
+        "startLine": 439,
+        "startChar": 0,
+        "endLine": 442,
+        "endChar": 12
+      },
+      "revId": "3397dd3e596c696dfd5c7101d72b74aa65d75c71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a44acb0_d7fc1b1f",
+        "filename": "services/tests/servicestests/src/com/android/server/tv/tunerresourcemanager/TunerResourceManagerServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2024-05-10T06:27:07Z",
+      "side": 1,
+      "message": "It is not clear when `clientId0` took ownership of `TYPE_DVBS`.",
+      "range": {
+        "startLine": 507,
+        "startChar": 0,
+        "endLine": 509,
+        "endChar": 27
+      },
+      "revId": "3397dd3e596c696dfd5c7101d72b74aa65d75c71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
