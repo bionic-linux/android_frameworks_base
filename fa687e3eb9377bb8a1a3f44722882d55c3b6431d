@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "683b92c4_283d31d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-05-10T18:39:57Z",
+      "side": 1,
+      "message": "Is it C or C++?",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "fa687e3eb9377bb8a1a3f44722882d55c3b6431d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9363c1a5_31313800",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-05-10T18:39:57Z",
+      "side": 1,
+      "message": "This seems to say the same thing as the first sentence",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 65
+      },
+      "revId": "fa687e3eb9377bb8a1a3f44722882d55c3b6431d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5b8f5c3_ba764073",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-05-10T18:39:57Z",
+      "side": 1,
+      "message": "This bug is marked as a duplicate",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "fa687e3eb9377bb8a1a3f44722882d55c3b6431d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
