@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "62b4bd87_460b00ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-05-10T21:37:17Z",
+      "side": 1,
+      "message": "Ah you\u0027re right, C++!",
+      "parentUuid": "683b92c4_283d31d7",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "fa687e3eb9377bb8a1a3f44722882d55c3b6431d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9363c1a5_31313800",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ea7964a_30fd15e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-05-10T21:37:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9363c1a5_31313800",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 65
+      },
+      "revId": "fa687e3eb9377bb8a1a3f44722882d55c3b6431d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5b8f5c3_ba764073",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-05-10T18:39:57Z",
       "side": 1,
       "message": "This bug is marked as a duplicate",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "fa687e3eb9377bb8a1a3f44722882d55c3b6431d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3988dea1_a54fe8b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-05-10T21:37:17Z",
+      "side": 1,
+      "message": "Good catch",
+      "parentUuid": "e5b8f5c3_ba764073",
       "range": {
         "startLine": 16,
         "startChar": 5,
