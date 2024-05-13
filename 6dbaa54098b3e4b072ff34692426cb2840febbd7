@@ -1,0 +1,105 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ed4a40d_00a3ede8",
+        "filename": "services/core/jni/com_android_server_audio_AudioVolumeChangeHandler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T22:53:51Z",
+      "side": 0,
+      "message": "See my comment about using an AIDL definition instead.",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 18
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8a127e39_2f62f6af",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/jni/com_android_server_audio_AudioVolumeChangeHandler.h",
+              "range": {
+                "startLine": 19,
+                "startChar": 0,
+                "endLine": 19,
+                "endChar": 0
+              },
+              "replacement": "#include \u003cmedia/AudioSystem.h\u003e\n"
+            },
+            {
+              "path": "services/core/jni/com_android_server_audio_AudioVolumeChangeHandler.h",
+              "range": {
+                "startLine": 20,
+                "startChar": 0,
+                "endLine": 21,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/jni/com_android_server_audio_AudioVolumeChangeHandler.h",
+              "range": {
+                "startLine": 25,
+                "startChar": 0,
+                "endLine": 26,
+                "endChar": 0
+              },
+              "replacement": "#define AUDIOVOLUMEGROUP_EVENT_VOLUME_CHANGED 1000\n"
+            },
+            {
+              "path": "services/core/jni/com_android_server_audio_AudioVolumeChangeHandler.h",
+              "range": {
+                "startLine": 27,
+                "startChar": 0,
+                "endLine": 32,
+                "endChar": 0
+              },
+              "replacement": "class JNIAudioVolumeChangeHandler\n    : public AudioSystem::AudioVolumeGroupCallback {\n public:\n  JNIAudioVolumeChangeHandler(JNIEnv* env, jobject thiz, jobject weak_thiz);\n  ~JNIAudioVolumeChangeHandler();\n"
+            },
+            {
+              "path": "services/core/jni/com_android_server_audio_AudioVolumeChangeHandler.h",
+              "range": {
+                "startLine": 33,
+                "startChar": 0,
+                "endLine": 34,
+                "endChar": 0
+              },
+              "replacement": "  void onAudioVolumeGroupChanged(volume_group_t group, int flags) override;\n"
+            },
+            {
+              "path": "services/core/jni/com_android_server_audio_AudioVolumeChangeHandler.h",
+              "range": {
+                "startLine": 35,
+                "startChar": 0,
+                "endLine": 38,
+                "endChar": 0
+              },
+              "replacement": " private:\n  jclass mClass; /**\u003c Reference to AudioVolumeGroupChangeHandler class. */\n  jobject mObject; /**\u003c Weak ref to AudioVolumeGroupChangeHandler object to call on. */\n"
+            },
+            {
+              "path": "services/core/jni/com_android_server_audio_AudioVolumeChangeHandler.h",
+              "range": {
+                "startLine": 40,
+                "startChar": 0,
+                "endLine": 41,
+                "endChar": 0
+              },
+              "replacement": "}  // namespace android\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6dbaa54098b3e4b072ff34692426cb2840febbd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

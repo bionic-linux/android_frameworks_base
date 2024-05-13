@@ -1,0 +1,508 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d61e874_b08ec403",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8499,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T22:53:51Z",
+      "side": 1,
+      "message": "Callback to receive updates on volume group changes,  register using {@link AudioManager#registerVolumeGroupCallback(Executor, AudioVolumeCallback)}.",
+      "range": {
+        "startLine": 8496,
+        "startChar": 0,
+        "endLine": 8499,
+        "endChar": 22
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "005e3bef_d5e63b79",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8507,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T22:53:51Z",
+      "side": 1,
+      "message": "I think I asked this elsewhere but I don\u0027t recall the answer, how will the volume group be different for different zones?",
+      "range": {
+        "startLine": 8507,
+        "startChar": 50,
+        "endLine": 8507,
+        "endChar": 55
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75686fb5_0182dd76",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8532,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T22:53:51Z",
+      "side": 1,
+      "message": "Though, I\u0027m not sure if we can add the permission similar to add the API above: @RequiresPermission...\n\nEric do you know if we can add the permission required annotation, it seems like the API signature is changed.",
+      "range": {
+        "startLine": 8532,
+        "startChar": 16,
+        "endLine": 8532,
+        "endChar": 45
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "113df2b3_5dc8653e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/java/android/media/AudioManager.java",
+              "range": {
+                "startLine": 8532,
+                "startChar": 0,
+                "endLine": 8532,
+                "endChar": 0
+              },
+              "replacement": "    @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77ed5b41_cc832607",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8537,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T22:53:51Z",
+      "side": 1,
+      "message": "Nit Manages",
+      "range": {
+        "startLine": 8537,
+        "startChar": 7,
+        "endLine": 8537,
+        "endChar": 14
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee73e527_12d65e48",
+        "filename": "media/java/android/media/IAudioService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T22:53:51Z",
+      "side": 1,
+      "message": "Can use @EnforcePermission, this will create a method which can be used in audio service as:\n```\nsuper.registerAudioVolumeCallback_enforcePermission();\n```\n\nSimilar comment for the method below.",
+      "range": {
+        "startLine": 417,
+        "startChar": 9,
+        "endLine": 417,
+        "endChar": 36
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf1ce753_6dab8375",
+        "filename": "media/java/android/media/audiopolicy/IAudioVolumeChangeDispatcher.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T22:53:51Z",
+      "side": 1,
+      "message": "2024.",
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9a10a9a_53babf0e",
+        "filename": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T22:53:51Z",
+      "side": 1,
+      "message": "2024",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a890ab3_1999dfad",
+        "filename": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T22:53:51Z",
+      "side": 1,
+      "message": "Slog.v",
+      "range": {
+        "startLine": 76,
+        "startChar": 24,
+        "endLine": 76,
+        "endChar": 27
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5cb3b587_62cab954",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+              "range": {
+                "startLine": 26,
+                "startChar": 0,
+                "endLine": 27,
+                "endChar": 0
+              },
+              "replacement": "import android.util.Slog;\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+              "range": {
+                "startLine": 76,
+                "startChar": 0,
+                "endLine": 77,
+                "endChar": 0
+              },
+              "replacement": "                        Slog.v(TAG, \"AUDIOVOLUMEGROUP_EVENT_VOLUME_CHANGED\");\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b94c08d_8c7cb115",
+        "filename": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T22:53:51Z",
+      "side": 1,
+      "message": "final not needed, same below.",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 14
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "17f33f77_72b6392c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+              "range": {
+                "startLine": 88,
+                "startChar": 0,
+                "endLine": 90,
+                "endChar": 0
+              },
+              "replacement": "        RemoteCallbackList\u003cIAudioVolumeChangeDispatcher\u003e listeners;\n        int nbDispatchers;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "304b349b_8b539324",
+        "filename": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T22:53:51Z",
+      "side": 1,
+      "message": "Should we at least log the error?",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 101,
+        "endChar": 13
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f5525235_571a1ff4",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+              "range": {
+                "startLine": 101,
+                "startChar": 0,
+                "endLine": 101,
+                "endChar": 0
+              },
+              "replacement": "                Log.e(TAG, \"Error sending volume group change to client\", e);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e155b3c_b0b5209c",
+        "filename": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T22:53:51Z",
+      "side": 1,
+      "message": "Nit Volume",
+      "range": {
+        "startLine": 121,
+        "startChar": 40,
+        "endLine": 121,
+        "endChar": 46
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "375dfd95_eba629b8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+              "range": {
+                "startLine": 121,
+                "startChar": 0,
+                "endLine": 122,
+                "endChar": 0
+              },
+              "replacement": "        Preconditions.checkNotNull(cb, \"Volume group callback must not be null\");\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+              "range": {
+                "startLine": 131,
+                "startChar": 0,
+                "endLine": 132,
+                "endChar": 0
+              },
+              "replacement": "        Preconditions.checkNotNull(cb, \"Volume group callback must not be null\");\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d63ad1fa_e3dc2c9c",
+        "filename": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T22:53:51Z",
+      "side": 1,
+      "message": "Wonder if we can use an AIDL callback similar to `INativeSpatializerCallback`\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/av/media/libaudioclient/aidl/android/media/INativeSpatializerCallback.aidl;l\u003d23?q\u003dINativeSpatializerCallback\u0026sq\u003d\u0026ss\u003dandroid%2Fplatform%2Fsuperproject\n\nThis way we can use the AIDL handling mechanism.",
+      "range": {
+        "startLine": 142,
+        "startChar": 24,
+        "endLine": 142,
+        "endChar": 43
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f3148bba_0aef5337",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+              "range": {
+                "startLine": 20,
+                "startChar": 0,
+                "endLine": 21,
+                "endChar": 0
+              },
+              "replacement": "import android.media.audiopolicy.IAudioVolumeCallback;\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+              "range": {
+                "startLine": 45,
+                "startChar": 0,
+                "endLine": 46,
+                "endChar": 0
+              },
+              "replacement": "    private final RemoteCallbackList\u003cIAudioVolumeCallback\u003e mListeners \u003d\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+              "range": {
+                "startLine": 88,
+                "startChar": 0,
+                "endLine": 89,
+                "endChar": 0
+              },
+              "replacement": "        final RemoteCallbackList\u003cIAudioVolumeCallback\u003e listeners;\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+              "range": {
+                "startLine": 118,
+                "startChar": 0,
+                "endLine": 119,
+                "endChar": 0
+              },
+              "replacement": "    * @param cb the {@link IAudioVolumeCallback} to register\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+              "range": {
+                "startLine": 120,
+                "startChar": 0,
+                "endLine": 121,
+                "endChar": 0
+              },
+              "replacement": "    public void registerListener(@NonNull IAudioVolumeCallback cb) {\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+              "range": {
+                "startLine": 128,
+                "startChar": 0,
+                "endLine": 129,
+                "endChar": 0
+              },
+              "replacement": "    * @param cb the {@link IAudioVolumeCallback} to unregister\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+              "range": {
+                "startLine": 130,
+                "startChar": 0,
+                "endLine": 131,
+                "endChar": 0
+              },
+              "replacement": "    public void unregisterListener(@NonNull IAudioVolumeCallback cb) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93cd4037_5fc36b55",
+        "filename": "services/core/jni/com_android_server_audio_AudioVolumeChangeHandler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T22:53:51Z",
+      "side": 1,
+      "message": "2024",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcb29975_19e105c5",
+        "filename": "services/core/jni/com_android_server_audio_AudioVolumeChangeHandler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T22:53:51Z",
+      "side": 1,
+      "message": "Can not change once the file is merged for the first time.",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
