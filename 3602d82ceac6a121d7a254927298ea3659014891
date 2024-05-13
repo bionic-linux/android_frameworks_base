@@ -24,6 +24,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "020ce036_1ff6ae9f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2024-05-13T13:58:54Z",
+      "side": 1,
+      "message": "Also adding Evan who knows even more about the battery icon than I do.",
+      "revId": "3602d82ceac6a121d7a254927298ea3659014891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d6ca10f_f3a7a3d6",
