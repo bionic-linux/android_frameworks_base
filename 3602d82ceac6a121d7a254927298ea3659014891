@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "3c8d06a4_61d04573",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1156808
+      },
+      "writtenOn": "2024-05-13T14:24:08Z",
+      "side": 1,
+      "message": "I don\u0027t have a link to any issue opened in the issue tracker, or at least I don\u0027t think there\u0027s any. The reason why I did this is because we at LineageOS work also with devkits (Amlogic based devices, similar to ADT-3) and these don\u0027t have a battery.",
+      "parentUuid": "9ce3b4ff_de9ac5b8",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 52
+      },
+      "revId": "3602d82ceac6a121d7a254927298ea3659014891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "020ce036_1ff6ae9f",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -37,6 +61,23 @@
       "writtenOn": "2024-05-13T13:58:54Z",
       "side": 1,
       "message": "Also adding Evan who knows even more about the battery icon than I do.",
+      "revId": "3602d82ceac6a121d7a254927298ea3659014891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b570ff7_06fb3cc5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1156808
+      },
+      "writtenOn": "2024-05-13T14:24:08Z",
+      "side": 1,
+      "message": "Thanks for the review, I will rework as per your comments.",
       "revId": "3602d82ceac6a121d7a254927298ea3659014891",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -54,6 +95,30 @@
       "writtenOn": "2024-05-13T13:58:21Z",
       "side": 1,
       "message": "Currently, we show a battery icon with a ? if the battery state is unknown: https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/packages/SystemUI/src/com/android/systemui/battery/BatteryMeterView.java;l\u003d381-395;drc\u003df3591c3a6c5a9be4eb38fa4d6feeb79b77207e98. Completely hiding the battery icon would be a change in behavior, which is why I\u0027d like to see an issue tracker link explaining why this would be a good change.",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 43
+      },
+      "revId": "3602d82ceac6a121d7a254927298ea3659014891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46c23e7b_7ff9ed44",
+        "filename": "packages/SystemUI/src/com/android/systemui/battery/BatteryMeterViewController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1156808
+      },
+      "writtenOn": "2024-05-13T14:24:08Z",
+      "side": 1,
+      "message": "I know that Android presents the battery icon with ? when the status is unknown, but for true battery-less devices it doesn\u0027t make sense.",
+      "parentUuid": "7d6ca10f_f3a7a3d6",
       "range": {
         "startLine": 159,
         "startChar": 0,
@@ -100,6 +165,30 @@
       "writtenOn": "2024-05-13T13:58:21Z",
       "side": 1,
       "message": "All changes also need associated unit tests. Can you add tests for both the changes in this class and in `BatteryMeterViewController`?",
+      "range": {
+        "startLine": 265,
+        "startChar": 17,
+        "endLine": 265,
+        "endChar": 18
+      },
+      "revId": "3602d82ceac6a121d7a254927298ea3659014891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1be22550_0a8c46bc",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BatteryControllerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1156808
+      },
+      "writtenOn": "2024-05-13T14:24:08Z",
+      "side": 1,
+      "message": "I\u0027ll look into it.",
+      "parentUuid": "d506fe5e_2aa7a421",
       "range": {
         "startLine": 265,
         "startChar": 17,
