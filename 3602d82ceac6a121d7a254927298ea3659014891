@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ce3b4ff_de9ac5b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2024-05-13T13:58:21Z",
+      "side": 1,
+      "message": "Thanks for the contribution! I have an overall question: Is this change fixing a particular issue? If so, can you provide a link to it? That will help us better understand if this is the right fix.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 52
+      },
+      "revId": "3602d82ceac6a121d7a254927298ea3659014891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d6ca10f_f3a7a3d6",
+        "filename": "packages/SystemUI/src/com/android/systemui/battery/BatteryMeterViewController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2024-05-13T13:58:21Z",
+      "side": 1,
+      "message": "Currently, we show a battery icon with a ? if the battery state is unknown: https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/packages/SystemUI/src/com/android/systemui/battery/BatteryMeterView.java;l\u003d381-395;drc\u003df3591c3a6c5a9be4eb38fa4d6feeb79b77207e98. Completely hiding the battery icon would be a change in behavior, which is why I\u0027d like to see an issue tracker link explaining why this would be a good change.",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 43
+      },
+      "revId": "3602d82ceac6a121d7a254927298ea3659014891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d87b1679_0e525b22",
+        "filename": "packages/SystemUI/src/com/android/systemui/battery/BatteryMeterViewController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2024-05-13T13:58:21Z",
+      "side": 1,
+      "message": "The `isPresent` value could change after we construct the controller - the `BatteryStateChangeCallback#onBatteryUnknownStateChanged` method would be invoked if the value changes. Do we also need to update the view visibility in that callback method?",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 9
+      },
+      "revId": "3602d82ceac6a121d7a254927298ea3659014891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d506fe5e_2aa7a421",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BatteryControllerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2024-05-13T13:58:21Z",
+      "side": 1,
+      "message": "All changes also need associated unit tests. Can you add tests for both the changes in this class and in `BatteryMeterViewController`?",
+      "range": {
+        "startLine": 265,
+        "startChar": 17,
+        "endLine": 265,
+        "endChar": 18
+      },
+      "revId": "3602d82ceac6a121d7a254927298ea3659014891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "989692e2_fd2a4921",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BatteryControllerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2024-05-13T13:58:21Z",
+      "side": 1,
+      "message": "It looks like `mPresent` is always equal to `!mStateUnknown`. Could we re-use the existing `mStateUnknown` value instead of adding a new one?",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 40
+      },
+      "revId": "3602d82ceac6a121d7a254927298ea3659014891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
