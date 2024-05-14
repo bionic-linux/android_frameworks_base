@@ -229,7 +229,7 @@ public class Matrix {
     private static class NoImagePreloadHolder {
         public static final NativeAllocationRegistry sRegistry =
                 NativeAllocationRegistry.createMalloced(
-                Matrix.class.getClassLoader(), nGetNativeFinalizer());
+                Matrix.class.getClassLoader(), ExtraNatives.nGetNativeFinalizer());
     }
 
     private final long native_instance;
@@ -238,7 +238,7 @@ public class Matrix {
      * Create an identity matrix
      */
     public Matrix() {
-        native_instance = nCreate(0);
+        native_instance = ExtraNatives.nCreate(0);
         NoImagePreloadHolder.sRegistry.registerNativeAllocation(this, native_instance);
     }
 
@@ -248,7 +248,7 @@ public class Matrix {
      * @param src The matrix to copy into this matrix
      */
     public Matrix(Matrix src) {
-        native_instance = nCreate(src != null ? src.native_instance : 0);
+        native_instance = ExtraNatives.nCreate(src != null ? src.native_instance : 0);
         NoImagePreloadHolder.sRegistry.registerNativeAllocation(this, native_instance);
     }
 
@@ -846,12 +846,6 @@ public class Matrix {
         return native_instance;
     }
 
-    // ------------------ Regular JNI ------------------------
-
-    private static native long nCreate(long nSrc_or_zero);
-    private static native long nGetNativeFinalizer();
-
-
     // ------------------ Fast JNI ------------------------
 
     @FastNative
@@ -943,4 +937,17 @@ public class Matrix {
     private static native float nMapRadius(long nObject, float radius);
     @CriticalNative
     private static native boolean nEquals(long nA, long nB);
+
+    /**
+     * Due to b/337329128, native methods that are called by the static initializers cannot be
+     * in the same class when running on a host side JVM (such as on Ravenwood and Android Studio).
+     *
+     * There are two methods that are called by the static initializers (either directly or
+     * indirectly) in this class, namely nCreate() and nGetNativeFinalizer(). On Ravenwood
+     * these methods can't be on the Matrix class itself, so we use a nested class to host them.
+     */
+    private static class ExtraNatives {
+        static native long nCreate(long nSrc_or_zero);
+        static native long nGetNativeFinalizer();
+    }
 }

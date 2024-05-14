@@ -37,4 +37,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 public @interface RavenwoodClassLoadHook {
     String value();
+
+    /**
+     * Class load hook that loads <code>libandroid_runtime</code>.
+     */
+    public static String LIBANDROID_LOADING_HOOK
+            = "com.android.platform.test.ravenwood.runtimehelper.ClassLoadHook.onClassLoaded";
 }
