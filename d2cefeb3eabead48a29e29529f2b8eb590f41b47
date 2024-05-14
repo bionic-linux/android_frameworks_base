@@ -692,6 +692,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be424d97_07c61f3c",
+        "filename": "services/core/jni/com_android_server_audio_AudioVolumeChangeHandler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T14:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93cd4037_5fc36b55",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bcb29975_19e105c5",
@@ -705,6 +729,30 @@
       "writtenOn": "2024-05-13T22:53:51Z",
       "side": 1,
       "message": "Can not change once the file is merged for the first time.",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "168bffa2_e51787d8",
+        "filename": "services/core/jni/com_android_server_audio_AudioVolumeChangeHandler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T14:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcb29975_19e105c5",
       "range": {
         "startLine": 2,
         "startChar": 17,
