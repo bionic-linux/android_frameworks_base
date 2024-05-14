@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f0bf138_be655d79",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8499,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T10:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d61e874_b08ec403",
+      "range": {
+        "startLine": 8496,
+        "startChar": 0,
+        "endLine": 8499,
+        "endChar": 22
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "005e3bef_d5e63b79",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-05-13T22:53:51Z",
       "side": 1,
       "message": "I think I asked this elsewhere but I don\u0027t recall the answer, how will the volume group be different for different zones?",
+      "range": {
+        "startLine": 8507,
+        "startChar": 50,
+        "endLine": 8507,
+        "endChar": 55
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "386f14ea_bb88a70d",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8507,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T10:36:55Z",
+      "side": 1,
+      "message": "the id will be different, as for CarVolumeGroup (without useCoreVolume), it is another instance of the class for each zone, with useCordVolume, it is also a different group.",
+      "parentUuid": "005e3bef_d5e63b79",
       "range": {
         "startLine": 8507,
         "startChar": 50,
@@ -134,6 +182,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a18c517c_6ee7c896",
+        "filename": "media/java/android/media/IAudioService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T10:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee73e527_12d65e48",
+      "range": {
+        "startLine": 417,
+        "startChar": 9,
+        "endLine": 417,
+        "endChar": 36
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bf1ce753_6dab8375",
@@ -151,6 +223,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9827e80_56aeae36",
+        "filename": "media/java/android/media/audiopolicy/IAudioVolumeChangeDispatcher.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T10:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf1ce753_6dab8375",
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c9a10a9a_53babf0e",
@@ -164,6 +254,30 @@
       "writtenOn": "2024-05-13T22:53:51Z",
       "side": 1,
       "message": "2024",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e578ee0a_0a9c0e67",
+        "filename": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T10:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9a10a9a_53babf0e",
       "range": {
         "startLine": 2,
         "startChar": 17,
@@ -225,6 +339,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "49a5ad43_a8e25058",
+        "filename": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T10:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a890ab3_1999dfad",
+      "range": {
+        "startLine": 76,
+        "startChar": 24,
+        "endLine": 76,
+        "endChar": 27
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5b94c08d_8c7cb115",
@@ -262,6 +400,30 @@
           ]
         }
       ],
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1242b04b_96eb2bdf",
+        "filename": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T10:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b94c08d_8c7cb115",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 14
+      },
       "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -354,6 +516,30 @@
           ]
         }
       ],
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79542d58_201d42bf",
+        "filename": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T10:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e155b3c_b0b5209c",
+      "range": {
+        "startLine": 121,
+        "startChar": 40,
+        "endLine": 121,
+        "endChar": 46
+      },
       "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -455,6 +641,30 @@
           ]
         }
       ],
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6aa07214_4c1de8fd",
+        "filename": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T10:36:55Z",
+      "side": 1,
+      "message": "really interesting and good proposal. @Eric: is it ok to replace the AudioSystem AudioVolumeGroupCallback interface with and INativeAudioVolumeGroupCallback?",
+      "parentUuid": "d63ad1fa_e3dc2c9c",
+      "range": {
+        "startLine": 142,
+        "startChar": 24,
+        "endLine": 142,
+        "endChar": 43
+      },
       "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
