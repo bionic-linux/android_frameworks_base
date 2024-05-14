@@ -36,6 +36,7 @@ import static com.android.internal.util.FrameworkStatsLog.PROVIDER_ACQUISITION_E
 import static com.android.server.am.ActivityManagerDebugConfig.DEBUG_MU;
 import static com.android.server.am.ActivityManagerService.TAG_MU;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.UserIdInt;
 import android.app.ActivityManager;
@@ -119,6 +120,8 @@ public class ContentProviderHelper {
     private boolean mSystemProvidersInstalled;
 
     private final Map<String, Boolean> mCloneProfileAuthorityRedirectionCache = new HashMap<>();
+
+    private List<SettingsProviderCallback> mSettingsProviderCallbacks = new ArrayList<>();
 
     ContentProviderHelper(ActivityManagerService service, boolean createProviderMap) {
         mService = service;
@@ -1328,6 +1331,13 @@ public class ContentProviderHelper {
         }
     }
 
+    final void registerSettingsProviderInstalledCallback(
+            @NonNull SettingsProviderCallback callback) {
+        synchronized (mSettingsProviderCallbacks) {
+            mSettingsProviderCallbacks.add(callback);
+        }
+    }
+
     public final void installSystemProviders() {
         List<ProviderInfo> providers;
         synchronized (mService) {
@@ -1362,6 +1372,17 @@ public class ContentProviderHelper {
 
         // Now that the settings provider is published we can consider sending in a rescue party.
         RescueParty.onSettingsProviderPublished(mService.mContext);
+
+        synchronized (mSettingsProviderCallbacks) {
+            for (SettingsProviderCallback callback : mSettingsProviderCallbacks) {
+                try {
+                    callback.onSettingsProviderPublished();
+                } catch (Exception e) {
+                    Slog.e(TAG, "Error notifying callback", e);
+                }
+            }
+            mSettingsProviderCallbacks.clear();
+        }
     }
 
     /**

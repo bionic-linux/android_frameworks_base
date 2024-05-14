@@ -16,6 +16,7 @@
 
 package com.android.server.am;
 
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SuppressLint;
@@ -26,6 +27,7 @@ import android.content.Context.BindServiceFlags;
 import android.content.Context.BindServiceFlagsBits;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.crashrecovery.flags.Flags;
 import android.os.IBinder;
 import android.os.RemoteException;
 
@@ -178,4 +180,15 @@ public interface ActivityManagerLocal {
      *        {@link Context#getProcessToken()}.
      */
     void killSdkSandboxClientAppProcess(@NonNull IBinder clientAppProcessToken);
+
+    /**
+     * Registers a callback to be notified when the SettingsProvider is published.
+     *
+     * <p>Once the SettingsProvider is published, the provided callback's
+     * {@link #onSettingsProviderPublished()} method will be invoked.</p>
+     *
+     * @param callback The callback to register.
+     */
+    @FlaggedApi(Flags.FLAG_ENABLE_CRASHRECOVERY)
+    void registerSettingsProviderInstalledCallback(@NonNull SettingsProviderCallback callback);
 }
