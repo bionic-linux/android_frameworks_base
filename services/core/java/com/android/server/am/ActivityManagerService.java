@@ -17983,6 +17983,12 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
 
         @Override
+        public void registerSettingsProviderInstalledCallback(
+                @NonNull SettingsProviderCallback callback) {
+            mCpHelper.registerSettingsProviderInstalledCallback(callback);
+        }
+
+        @Override
         public void onUserRemoved(@UserIdInt int userId) {
             // Clean up any ActivityTaskManager state (by telling it the user is stopped)
             mAtmInternal.onUserStopped(userId);

@@ -178,4 +178,11 @@ public interface ActivityManagerLocal {
      *        {@link Context#getProcessToken()}.
      */
     void killSdkSandboxClientAppProcess(@NonNull IBinder clientAppProcessToken);
+
+    /**
+     * Register a callback for settings provider availability.
+     *
+     * @param callback The callback object to register.
+     */
+    void registerSettingsProviderInstalledCallback(@NonNull SettingsProviderCallback callback);
 }
