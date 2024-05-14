@@ -312,6 +312,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0147300_5e409e5a",
+        "filename": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-14T17:41:33Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c72024de_6d6844a0",
+      "range": {
+        "startLine": 482,
+        "startChar": 12,
+        "endLine": 483,
+        "endChar": 45
+      },
+      "revId": "1caebc71455d6e0c84945971ade200f9558bcee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a6d9a84_06226be0",
