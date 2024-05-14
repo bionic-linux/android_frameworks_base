@@ -82,6 +82,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31e58883_f57e93a9",
+        "filename": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T11:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5cc5eee_efe6429a",
+      "range": {
+        "startLine": 202,
+        "startChar": 15,
+        "endLine": 203,
+        "endChar": 45
+      },
+      "revId": "1caebc71455d6e0c84945971ade200f9558bcee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "14064f9f_2ab1c0a4",
@@ -105,6 +129,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca28be19_7e11f881",
+        "filename": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T11:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14064f9f_2ab1c0a4",
+      "range": {
+        "startLine": 430,
+        "startChar": 12,
+        "endLine": 430,
+        "endChar": 75
+      },
+      "revId": "1caebc71455d6e0c84945971ade200f9558bcee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c9ce10dc_966d3527",
@@ -118,6 +166,30 @@
       "writtenOn": "2024-05-06T20:03:34Z",
       "side": 1,
       "message": "Similar comment here for streams.",
+      "range": {
+        "startLine": 459,
+        "startChar": 15,
+        "endLine": 460,
+        "endChar": 41
+      },
+      "revId": "1caebc71455d6e0c84945971ade200f9558bcee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5eea4726_de380011",
+        "filename": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T11:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9ce10dc_966d3527",
       "range": {
         "startLine": 459,
         "startChar": 15,
@@ -169,6 +241,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22300101_d310fd49",
+        "filename": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T11:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55689c87_1eb6159e",
+      "range": {
+        "startLine": 463,
+        "startChar": 42,
+        "endLine": 463,
+        "endChar": 73
+      },
+      "revId": "1caebc71455d6e0c84945971ade200f9558bcee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28a2d31a_b3c81e09",
@@ -182,6 +278,30 @@
       "writtenOn": "2024-05-06T20:03:34Z",
       "side": 1,
       "message": "We are repeating the logic above here, can we create a static method which we can call from both places?",
+      "range": {
+        "startLine": 482,
+        "startChar": 12,
+        "endLine": 483,
+        "endChar": 45
+      },
+      "revId": "1caebc71455d6e0c84945971ade200f9558bcee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c72024de_6d6844a0",
+        "filename": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T11:03:10Z",
+      "side": 1,
+      "message": "the methods are not looping on same types... would need templates",
+      "parentUuid": "28a2d31a_b3c81e09",
       "range": {
         "startLine": 482,
         "startChar": 12,
@@ -229,6 +349,30 @@
           ]
         }
       ],
+      "revId": "1caebc71455d6e0c84945971ade200f9558bcee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86066670_1a97eac1",
+        "filename": "media/java/android/media/audiopolicy/AudioVolumeGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T11:03:10Z",
+      "side": 1,
+      "message": "exactly, no volume control is expected for internal strategies. they are all full scale (rerouting \u0026 patch)",
+      "parentUuid": "4a6d9a84_06226be0",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 46
+      },
       "revId": "1caebc71455d6e0c84945971ade200f9558bcee8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
