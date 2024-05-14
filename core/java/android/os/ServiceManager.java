@@ -375,7 +375,8 @@ public final class ServiceManager {
     private static IBinder rawGetService(String name) throws RemoteException {
         final long start = sStatLogger.getTime();
 
-        final IBinder binder = getIServiceManager().getService(name);
+        // TODO(b/338541373): Support RPC Binder with the fd in RemoteService.
+        final IBinder binder = getIServiceManager().getService(name).getBinder();
 
         final int time = (int) sStatLogger.logDurationStat(Stats.GET_SERVICE, start);
 
