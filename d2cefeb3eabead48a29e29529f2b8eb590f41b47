@@ -138,6 +138,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "71f76477_979543e5",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8532,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T15:26:02Z",
+      "side": 1,
+      "message": "Confirmation that API signature is changed, but no claim for not flagged API when compiling at least...",
+      "parentUuid": "75686fb5_0182dd76",
+      "range": {
+        "startLine": 8532,
+        "startChar": 16,
+        "endLine": 8532,
+        "endChar": 45
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "77ed5b41_cc832607",
         "filename": "media/java/android/media/AudioManager.java",
         "patchSetId": 2
@@ -465,6 +489,30 @@
           ]
         }
       ],
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcd0f164_d7f018c3",
+        "filename": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T15:26:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "304b349b_8b539324",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 101,
+        "endChar": 13
+      },
       "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },

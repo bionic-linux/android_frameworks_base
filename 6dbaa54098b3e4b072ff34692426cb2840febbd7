@@ -100,6 +100,30 @@
       ],
       "revId": "6dbaa54098b3e4b072ff34692426cb2840febbd7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c735d88_c1004b56",
+        "filename": "services/core/jni/com_android_server_audio_AudioVolumeChangeHandler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-14T15:26:02Z",
+      "side": 0,
+      "message": "yep, just wanted to confirm it is ok to add a native callback aidl. Seems really easier to manage!",
+      "parentUuid": "5ed4a40d_00a3ede8",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 18
+      },
+      "revId": "6dbaa54098b3e4b072ff34692426cb2840febbd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
