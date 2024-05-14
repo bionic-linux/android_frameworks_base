@@ -58,9 +58,12 @@ class ServiceManagerProxy implements IServiceManager {
     }
 
     @UnsupportedAppUsage
-    public IBinder getService(String name) throws RemoteException {
+    public Service getService(String name) throws RemoteException {
         // Same as checkService (old versions of servicemanager had both methods).
-        return mServiceManager.checkService(name);
+        IBinder binder = mServiceManager.checkService(name);
+        Service service = new Service();
+        service.setBinder(binder);
+        return service;
     }
 
     public IBinder checkService(String name) throws RemoteException {
