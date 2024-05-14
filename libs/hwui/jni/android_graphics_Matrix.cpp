@@ -21,12 +21,12 @@
 
 namespace android {
 
-static_assert(sizeof(SkMatrix) == 40, "Unexpected sizeof(SkMatrix), "
-        "update size in Matrix.java#NATIVE_ALLOCATION_SIZE and here");
+static_assert(sizeof(SkMatrix) == 40,
+              "Unexpected sizeof(SkMatrix), "
+              "update size in Matrix.java#NATIVE_ALLOCATION_SIZE and here");
 
 class SkMatrixGlue {
 public:
-
     // ---------------- Regular JNI -----------------------------
 
     static void finalizer(jlong objHandle) {
@@ -50,27 +50,23 @@ public:
 
     // ---------------- @FastNative -----------------------------
 
-    static void mapPoints(JNIEnv* env, jobject clazz, jlong matrixHandle,
-            jfloatArray dst, jint dstIndex, jfloatArray src, jint srcIndex,
-            jint ptCount, jboolean isPts) {
+    static void mapPoints(JNIEnv* env, jobject clazz, jlong matrixHandle, jfloatArray dst,
+                          jint dstIndex, jfloatArray src, jint srcIndex, jint ptCount,
+                          jboolean isPts) {
         SkMatrix* matrix = reinterpret_cast<SkMatrix*>(matrixHandle);
         SkASSERT(ptCount >= 0);
-        AutoJavaFloatArray autoSrc(env, src, srcIndex + (ptCount << 1),
-                kRO_JNIAccess);
-        AutoJavaFloatArray autoDst(env, dst, dstIndex + (ptCount << 1),
-                kRW_JNIAccess);
+        AutoJavaFloatArray autoSrc(env, src, srcIndex + (ptCount << 1), kRO_JNIAccess);
+        AutoJavaFloatArray autoDst(env, dst, dstIndex + (ptCount << 1), kRW_JNIAccess);
         float* srcArray = autoSrc.ptr() + srcIndex;
         float* dstArray = autoDst.ptr() + dstIndex;
         if (isPts)
-            matrix->mapPoints((SkPoint*) dstArray, (const SkPoint*) srcArray,
-                    ptCount);
+            matrix->mapPoints((SkPoint*)dstArray, (const SkPoint*)srcArray, ptCount);
         else
-            matrix->mapVectors((SkVector*) dstArray, (const SkVector*) srcArray,
-                    ptCount);
+            matrix->mapVectors((SkVector*)dstArray, (const SkVector*)srcArray, ptCount);
     }
 
-    static jboolean mapRect__RectFRectF(JNIEnv* env, jobject clazz,
-            jlong matrixHandle, jobjectArray dst, jobject src) {
+    static jboolean mapRect__RectFRectF(JNIEnv* env, jobject clazz, jlong matrixHandle,
+                                        jobjectArray dst, jobject src) {
         SkMatrix* matrix = reinterpret_cast<SkMatrix*>(matrixHandle);
         SkRect dst_, src_;
         GraphicsJNI::jrectf_to_rect(env, src, &src_);
@@ -79,8 +75,8 @@ public:
         return rectStaysRect ? JNI_TRUE : JNI_FALSE;
     }
 
-    static jboolean setRectToRect(JNIEnv* env, jobject clazz,
-            jlong matrixHandle, jobject src, jobject dst, jint stfHandle) {
+    static jboolean setRectToRect(JNIEnv* env, jobject clazz, jlong matrixHandle, jobject src,
+                                  jobject dst, jint stfHandle) {
         SkMatrix* matrix = reinterpret_cast<SkMatrix*>(matrixHandle);
         SkMatrix::ScaleToFit stf = static_cast<SkMatrix::ScaleToFit>(stfHandle);
         SkRect src_;
@@ -90,29 +86,24 @@ public:
         return matrix->setRectToRect(src_, dst_, stf) ? JNI_TRUE : JNI_FALSE;
     }
 
-    static jboolean setPolyToPoly(JNIEnv* env, jobject clazz,
-            jlong matrixHandle, jfloatArray jsrc, jint srcIndex,
-            jfloatArray jdst, jint dstIndex, jint ptCount) {
+    static jboolean setPolyToPoly(JNIEnv* env, jobject clazz, jlong matrixHandle, jfloatArray jsrc,
+                                  jint srcIndex, jfloatArray jdst, jint dstIndex, jint ptCount) {
         SkMatrix* matrix = reinterpret_cast<SkMatrix*>(matrixHandle);
         SkASSERT(srcIndex >= 0);
         SkASSERT(dstIndex >= 0);
-        SkASSERT((unsigned )ptCount <= 4);
+        SkASSERT((unsigned)ptCount <= 4);
 
-        AutoJavaFloatArray autoSrc(env, jsrc, srcIndex + (ptCount << 1),
-                kRO_JNIAccess);
-        AutoJavaFloatArray autoDst(env, jdst, dstIndex + (ptCount << 1),
-                kRW_JNIAccess);
+        AutoJavaFloatArray autoSrc(env, jsrc, srcIndex + (ptCount << 1), kRO_JNIAccess);
+        AutoJavaFloatArray autoDst(env, jdst, dstIndex + (ptCount << 1), kRW_JNIAccess);
         float* src = autoSrc.ptr() + srcIndex;
         float* dst = autoDst.ptr() + dstIndex;
         bool result;
 
-        result = matrix->setPolyToPoly((const SkPoint*) src,
-                (const SkPoint*) dst, ptCount);
+        result = matrix->setPolyToPoly((const SkPoint*)src, (const SkPoint*)dst, ptCount);
         return result ? JNI_TRUE : JNI_FALSE;
     }
 
-    static void getValues(JNIEnv* env, jobject clazz, jlong matrixHandle,
-            jfloatArray values) {
+    static void getValues(JNIEnv* env, jobject clazz, jlong matrixHandle, jfloatArray values) {
         SkMatrix* matrix = reinterpret_cast<SkMatrix*>(matrixHandle);
         AutoJavaFloatArray autoValues(env, values, 9, kRW_JNIAccess);
         float* dst = autoValues.ptr();
@@ -121,8 +112,7 @@ public:
         }
     }
 
-    static void setValues(JNIEnv* env, jobject clazz, jlong matrixHandle,
-            jfloatArray values) {
+    static void setValues(JNIEnv* env, jobject clazz, jlong matrixHandle, jfloatArray values) {
         SkMatrix* matrix = reinterpret_cast<SkMatrix*>(matrixHandle);
         AutoJavaFloatArray autoValues(env, values, 9, kRO_JNIAccess);
         const float* src = autoValues.ptr();
@@ -165,8 +155,8 @@ public:
         obj->setTranslate(dx, dy);
     }
 
-    static void setScale__FFFF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat sx, jfloat sy, jfloat px,
-            jfloat py) {
+    static void setScale__FFFF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat sx, jfloat sy,
+                               jfloat px, jfloat py) {
         SkMatrix* obj = reinterpret_cast<SkMatrix*>(objHandle);
         obj->setScale(sx, sy, px, py);
     }
@@ -177,7 +167,7 @@ public:
     }
 
     static void setRotate__FFF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat degrees, jfloat px,
-            jfloat py) {
+                               jfloat py) {
         SkMatrix* obj = reinterpret_cast<SkMatrix*>(objHandle);
         obj->setRotate(degrees, px, py);
     }
@@ -188,19 +178,19 @@ public:
     }
 
     static void setSinCos__FFFF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat sinValue,
-            jfloat cosValue, jfloat px, jfloat py) {
+                                jfloat cosValue, jfloat px, jfloat py) {
         SkMatrix* obj = reinterpret_cast<SkMatrix*>(objHandle);
         obj->setSinCos(sinValue, cosValue, px, py);
     }
 
     static void setSinCos__FF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat sinValue,
-            jfloat cosValue) {
+                              jfloat cosValue) {
         SkMatrix* obj = reinterpret_cast<SkMatrix*>(objHandle);
         obj->setSinCos(sinValue, cosValue);
     }
 
-    static void setSkew__FFFF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat kx, jfloat ky, jfloat px,
-            jfloat py) {
+    static void setSkew__FFFF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat kx, jfloat ky,
+                              jfloat px, jfloat py) {
         SkMatrix* obj = reinterpret_cast<SkMatrix*>(objHandle);
         obj->setSkew(kx, ky, px, py);
     }
@@ -222,8 +212,8 @@ public:
         obj->preTranslate(dx, dy);
     }
 
-    static void preScale__FFFF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat sx, jfloat sy, jfloat px,
-            jfloat py) {
+    static void preScale__FFFF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat sx, jfloat sy,
+                               jfloat px, jfloat py) {
         SkMatrix* obj = reinterpret_cast<SkMatrix*>(objHandle);
         obj->preScale(sx, sy, px, py);
     }
@@ -234,7 +224,7 @@ public:
     }
 
     static void preRotate__FFF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat degrees, jfloat px,
-            jfloat py) {
+                               jfloat py) {
         SkMatrix* obj = reinterpret_cast<SkMatrix*>(objHandle);
         obj->preRotate(degrees, px, py);
     }
@@ -244,8 +234,8 @@ public:
         obj->preRotate(degrees);
     }
 
-    static void preSkew__FFFF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat kx, jfloat ky, jfloat px,
-            jfloat py) {
+    static void preSkew__FFFF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat kx, jfloat ky,
+                              jfloat px, jfloat py) {
         SkMatrix* obj = reinterpret_cast<SkMatrix*>(objHandle);
         obj->preSkew(kx, ky, px, py);
     }
@@ -267,7 +257,7 @@ public:
     }
 
     static void postScale__FFFF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat sx, jfloat sy,
-            jfloat px, jfloat py) {
+                                jfloat px, jfloat py) {
         SkMatrix* obj = reinterpret_cast<SkMatrix*>(objHandle);
         obj->postScale(sx, sy, px, py);
     }
@@ -277,8 +267,8 @@ public:
         obj->postScale(sx, sy);
     }
 
-    static void postRotate__FFF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat degrees, jfloat px,
-            jfloat py) {
+    static void postRotate__FFF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat degrees,
+                                jfloat px, jfloat py) {
         SkMatrix* obj = reinterpret_cast<SkMatrix*>(objHandle);
         obj->postRotate(degrees, px, py);
     }
@@ -288,8 +278,8 @@ public:
         obj->postRotate(degrees);
     }
 
-    static void postSkew__FFFF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat kx, jfloat ky, jfloat px,
-            jfloat py) {
+    static void postSkew__FFFF(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jfloat kx, jfloat ky,
+                               jfloat px, jfloat py) {
         SkMatrix* obj = reinterpret_cast<SkMatrix*>(objHandle);
         obj->postSkew(kx, ky, px, py);
     }
@@ -326,61 +316,62 @@ public:
 };
 
 static const JNINativeMethod methods[] = {
-    {"nGetNativeFinalizer", "()J", (void*) SkMatrixGlue::getNativeFinalizer},
-    {"nCreate","(J)J", (void*) SkMatrixGlue::create},
+        // ------- @FastNative below here ---------------
+        {"nMapPoints", "(J[FI[FIIZ)V", (void*)SkMatrixGlue::mapPoints},
+        {"nMapRect", "(JLandroid/graphics/RectF;Landroid/graphics/RectF;)Z",
+         (void*)SkMatrixGlue::mapRect__RectFRectF},
+        {"nSetRectToRect", "(JLandroid/graphics/RectF;Landroid/graphics/RectF;I)Z",
+         (void*)SkMatrixGlue::setRectToRect},
+        {"nSetPolyToPoly", "(J[FI[FII)Z", (void*)SkMatrixGlue::setPolyToPoly},
+        {"nGetValues", "(J[F)V", (void*)SkMatrixGlue::getValues},
+        {"nSetValues", "(J[F)V", (void*)SkMatrixGlue::setValues},
 
-    // ------- @FastNative below here ---------------
-    {"nMapPoints","(J[FI[FIIZ)V", (void*) SkMatrixGlue::mapPoints},
-    {"nMapRect","(JLandroid/graphics/RectF;Landroid/graphics/RectF;)Z",
-            (void*) SkMatrixGlue::mapRect__RectFRectF},
-    {"nSetRectToRect","(JLandroid/graphics/RectF;Landroid/graphics/RectF;I)Z",
-            (void*) SkMatrixGlue::setRectToRect},
-    {"nSetPolyToPoly","(J[FI[FII)Z", (void*) SkMatrixGlue::setPolyToPoly},
-    {"nGetValues","(J[F)V", (void*) SkMatrixGlue::getValues},
-    {"nSetValues","(J[F)V", (void*) SkMatrixGlue::setValues},
-
-    // ------- @CriticalNative below here ---------------
-    {"nIsIdentity","(J)Z", (void*) SkMatrixGlue::isIdentity},
-    {"nIsAffine","(J)Z", (void*) SkMatrixGlue::isAffine},
-    {"nRectStaysRect","(J)Z", (void*) SkMatrixGlue::rectStaysRect},
-    {"nReset","(J)V", (void*) SkMatrixGlue::reset},
-    {"nSet","(JJ)V", (void*) SkMatrixGlue::set},
-    {"nSetTranslate","(JFF)V", (void*) SkMatrixGlue::setTranslate},
-    {"nSetScale","(JFFFF)V", (void*) SkMatrixGlue::setScale__FFFF},
-    {"nSetScale","(JFF)V", (void*) SkMatrixGlue::setScale__FF},
-    {"nSetRotate","(JFFF)V", (void*) SkMatrixGlue::setRotate__FFF},
-    {"nSetRotate","(JF)V", (void*) SkMatrixGlue::setRotate__F},
-    {"nSetSinCos","(JFFFF)V", (void*) SkMatrixGlue::setSinCos__FFFF},
-    {"nSetSinCos","(JFF)V", (void*) SkMatrixGlue::setSinCos__FF},
-    {"nSetSkew","(JFFFF)V", (void*) SkMatrixGlue::setSkew__FFFF},
-    {"nSetSkew","(JFF)V", (void*) SkMatrixGlue::setSkew__FF},
-    {"nSetConcat","(JJJ)V", (void*) SkMatrixGlue::setConcat},
-    {"nPreTranslate","(JFF)V", (void*) SkMatrixGlue::preTranslate},
-    {"nPreScale","(JFFFF)V", (void*) SkMatrixGlue::preScale__FFFF},
-    {"nPreScale","(JFF)V", (void*) SkMatrixGlue::preScale__FF},
-    {"nPreRotate","(JFFF)V", (void*) SkMatrixGlue::preRotate__FFF},
-    {"nPreRotate","(JF)V", (void*) SkMatrixGlue::preRotate__F},
-    {"nPreSkew","(JFFFF)V", (void*) SkMatrixGlue::preSkew__FFFF},
-    {"nPreSkew","(JFF)V", (void*) SkMatrixGlue::preSkew__FF},
-    {"nPreConcat","(JJ)V", (void*) SkMatrixGlue::preConcat},
-    {"nPostTranslate","(JFF)V", (void*) SkMatrixGlue::postTranslate},
-    {"nPostScale","(JFFFF)V", (void*) SkMatrixGlue::postScale__FFFF},
-    {"nPostScale","(JFF)V", (void*) SkMatrixGlue::postScale__FF},
-    {"nPostRotate","(JFFF)V", (void*) SkMatrixGlue::postRotate__FFF},
-    {"nPostRotate","(JF)V", (void*) SkMatrixGlue::postRotate__F},
-    {"nPostSkew","(JFFFF)V", (void*) SkMatrixGlue::postSkew__FFFF},
-    {"nPostSkew","(JFF)V", (void*) SkMatrixGlue::postSkew__FF},
-    {"nPostConcat","(JJ)V", (void*) SkMatrixGlue::postConcat},
-    {"nInvert","(JJ)Z", (void*) SkMatrixGlue::invert},
-    {"nMapRadius","(JF)F", (void*) SkMatrixGlue::mapRadius},
-    {"nEquals", "(JJ)Z", (void*) SkMatrixGlue::equals}
-};
+        // ------- @CriticalNative below here ---------------
+        {"nIsIdentity", "(J)Z", (void*)SkMatrixGlue::isIdentity},
+        {"nIsAffine", "(J)Z", (void*)SkMatrixGlue::isAffine},
+        {"nRectStaysRect", "(J)Z", (void*)SkMatrixGlue::rectStaysRect},
+        {"nReset", "(J)V", (void*)SkMatrixGlue::reset},
+        {"nSet", "(JJ)V", (void*)SkMatrixGlue::set},
+        {"nSetTranslate", "(JFF)V", (void*)SkMatrixGlue::setTranslate},
+        {"nSetScale", "(JFFFF)V", (void*)SkMatrixGlue::setScale__FFFF},
+        {"nSetScale", "(JFF)V", (void*)SkMatrixGlue::setScale__FF},
+        {"nSetRotate", "(JFFF)V", (void*)SkMatrixGlue::setRotate__FFF},
+        {"nSetRotate", "(JF)V", (void*)SkMatrixGlue::setRotate__F},
+        {"nSetSinCos", "(JFFFF)V", (void*)SkMatrixGlue::setSinCos__FFFF},
+        {"nSetSinCos", "(JFF)V", (void*)SkMatrixGlue::setSinCos__FF},
+        {"nSetSkew", "(JFFFF)V", (void*)SkMatrixGlue::setSkew__FFFF},
+        {"nSetSkew", "(JFF)V", (void*)SkMatrixGlue::setSkew__FF},
+        {"nSetConcat", "(JJJ)V", (void*)SkMatrixGlue::setConcat},
+        {"nPreTranslate", "(JFF)V", (void*)SkMatrixGlue::preTranslate},
+        {"nPreScale", "(JFFFF)V", (void*)SkMatrixGlue::preScale__FFFF},
+        {"nPreScale", "(JFF)V", (void*)SkMatrixGlue::preScale__FF},
+        {"nPreRotate", "(JFFF)V", (void*)SkMatrixGlue::preRotate__FFF},
+        {"nPreRotate", "(JF)V", (void*)SkMatrixGlue::preRotate__F},
+        {"nPreSkew", "(JFFFF)V", (void*)SkMatrixGlue::preSkew__FFFF},
+        {"nPreSkew", "(JFF)V", (void*)SkMatrixGlue::preSkew__FF},
+        {"nPreConcat", "(JJ)V", (void*)SkMatrixGlue::preConcat},
+        {"nPostTranslate", "(JFF)V", (void*)SkMatrixGlue::postTranslate},
+        {"nPostScale", "(JFFFF)V", (void*)SkMatrixGlue::postScale__FFFF},
+        {"nPostScale", "(JFF)V", (void*)SkMatrixGlue::postScale__FF},
+        {"nPostRotate", "(JFFF)V", (void*)SkMatrixGlue::postRotate__FFF},
+        {"nPostRotate", "(JF)V", (void*)SkMatrixGlue::postRotate__F},
+        {"nPostSkew", "(JFFFF)V", (void*)SkMatrixGlue::postSkew__FFFF},
+        {"nPostSkew", "(JFF)V", (void*)SkMatrixGlue::postSkew__FF},
+        {"nPostConcat", "(JJ)V", (void*)SkMatrixGlue::postConcat},
+        {"nInvert", "(JJ)Z", (void*)SkMatrixGlue::invert},
+        {"nMapRadius", "(JF)F", (void*)SkMatrixGlue::mapRadius},
+        {"nEquals", "(JJ)Z", (void*)SkMatrixGlue::equals}};
 
 static jclass sClazz;
 static jfieldID sNativeInstanceField;
 static jmethodID sCtor;
 
 int register_android_graphics_Matrix(JNIEnv* env) {
+    // Methods only used on Ravenwood (for now). See the javadoc on Matrix$ExtraNativesx
+    // for why we need it.
+    RegisterMethodsOrDie(env, "android/graphics/Matrix$ExtraNatives", extra_methods,
+                         NELEM(extra_methods));
+
     int result = RegisterMethodsOrDie(env, "android/graphics/Matrix", methods, NELEM(methods));
 
     jclass clazz = FindClassOrDie(env, "android/graphics/Matrix");
@@ -398,4 +389,4 @@ SkMatrix* android_graphics_Matrix_getSkMatrix(JNIEnv* env, jobject matrixObj) {
 jobject android_graphics_Matrix_newInstance(JNIEnv* env) {
     return env->NewObject(sClazz, sCtor);
 }
-}
+}  // namespace android

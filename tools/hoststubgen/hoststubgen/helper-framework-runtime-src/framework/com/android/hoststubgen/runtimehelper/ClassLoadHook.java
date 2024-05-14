@@ -158,17 +158,31 @@ public class ClassLoadHook {
     };
 
     /**
-     * @return if a given method is a native method or not.
+     * Classes with native methods that are backed by libhwui.
+     *
+     * See frameworks/base/libs/hwui/apex/LayoutlibLoader.cpp
+     */
+    private static final Class<?>[] sLibhwuiClasses = {
+            android.graphics.Interpolator.class,
+            android.graphics.Matrix.class,
+            android.graphics.Path.class,
+            android.graphics.Color.class,
+            android.graphics.ColorSpace.class,
+    };
+
+    /**
+     * @return if a given class and its nested classes, if any, have any native method or not.
      */
     private static boolean hasNativeMethod(Class<?> clazz) {
-        for (var method : clazz.getDeclaredMethods()) {
-            if (Modifier.isNative(method.getModifiers())) {
-                return true;
+        for (var nestedClass : clazz.getNestMembers()) {
+            for (var method : nestedClass.getDeclaredMethods()) {
+                if (Modifier.isNative(method.getModifiers())) {
+                    return true;
+                }
             }
         }
         return false;
     }
-
     /**
      * Create a list of classes as comma-separated that require JNI methods to be set up.
      *
