@@ -705,7 +705,7 @@ public final class BatteryService extends SystemService {
             // Update the battery LED
             mLed.updateLightsLocked();
 
-            // This needs to be done after sendIntent() so that we get the lastest battery stats.
+            // This needs to be done after sendIntent() so that we get the latest battery stats.
             if (logOutlier && dischargeDuration != 0) {
                 logOutlierLocked(dischargeDuration);
             }

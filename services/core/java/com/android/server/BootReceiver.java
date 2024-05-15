@@ -356,7 +356,7 @@ public class BootReceiver extends BroadcastReceiver {
             if (proto) {
                 if (recordFileTimestamp(tombstone, timestamps)) {
                     // We need to attach the count indicating the number of dropped dropbox entries
-                    // due to rate limiting. Do this by enclosing the proto tombsstone in a
+                    // due to rate limiting. Do this by enclosing the proto tombstone in a
                     // container proto that has the dropped entry count and the proto tombstone as
                     // bytes (to avoid the complexity of reading and writing nested protos).
                     tmpFileLock.lock();
