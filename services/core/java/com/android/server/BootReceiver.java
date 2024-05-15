@@ -615,7 +615,7 @@ public class BootReceiver extends BroadcastReceiver {
                     Slog.e(TAG, "Wrong format of shutdown metrics - " + metricsStr);
                     continue;
                 }
-                // Ignore keys that are not indended for tron
+                // Ignore keys that are not intended for tron
                 if (keyValue[0].startsWith(SHUTDOWN_TRON_METRICS_PREFIX)) {
                     logTronShutdownMetric(keyValue[0], keyValue[1]);
                     if (keyValue[0].equals(METRIC_SYSTEM_SERVER)) {
