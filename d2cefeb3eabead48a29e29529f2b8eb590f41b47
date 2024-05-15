@@ -183,6 +183,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51af112a_1e4156b7",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8537,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-15T10:11:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ed5b41_cc832607",
+      "range": {
+        "startLine": 8537,
+        "startChar": 7,
+        "endLine": 8537,
+        "endChar": 14
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee73e527_12d65e48",
@@ -707,6 +731,30 @@
       "side": 1,
       "message": "really interesting and good proposal. @Eric: is it ok to replace the AudioSystem AudioVolumeGroupCallback interface with and INativeAudioVolumeGroupCallback?",
       "parentUuid": "d63ad1fa_e3dc2c9c",
+      "range": {
+        "startLine": 142,
+        "startChar": 24,
+        "endLine": 142,
+        "endChar": 43
+      },
+      "revId": "d2cefeb3eabead48a29e29529f2b8eb590f41b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5bbc98d_9a38418f",
+        "filename": "services/core/java/com/android/server/audio/AudioVolumeChangeHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-15T10:11:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aa07214_4c1de8fd",
       "range": {
         "startLine": 142,
         "startChar": 24,
