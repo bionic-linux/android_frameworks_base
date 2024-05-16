@@ -22,6 +22,30 @@
       },
       "revId": "5fbbd6ce8469f0541ed87231f7505fee5320968f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf00708a_a513868c",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2263,
+      "author": {
+        "id": 1693933
+      },
+      "writtenOn": "2024-05-16T05:54:13Z",
+      "side": 1,
+      "message": "Oh yes, updated to require signature.",
+      "parentUuid": "9b140f26_67f7aefe",
+      "range": {
+        "startLine": 2263,
+        "startChar": 41,
+        "endLine": 2263,
+        "endChar": 49
+      },
+      "revId": "5fbbd6ce8469f0541ed87231f7505fee5320968f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
