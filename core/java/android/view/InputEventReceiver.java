@@ -42,6 +42,8 @@ public abstract class InputEventReceiver {
 
     private long mReceiverPtr;
 
+    private final Object mLocked = new Object();
+
     // We keep references to the input channel and message queue objects here so that
     // they are not GC'd while the native peer of the receiver is using them.
     private InputChannel mInputChannel;
@@ -107,9 +109,11 @@ public abstract class InputEventReceiver {
             mCloseGuard.close();
         }
 
-        if (mReceiverPtr != 0) {
-            nativeDispose(mReceiverPtr);
-            mReceiverPtr = 0;
+        synchronized (mLocked) {
+            if (mReceiverPtr != 0) {
+                nativeDispose(mReceiverPtr);
+                mReceiverPtr = 0;
+            }
         }
 
         if (mInputChannel != null) {
@@ -202,17 +206,19 @@ public abstract class InputEventReceiver {
         if (event == null) {
             throw new IllegalArgumentException("event must not be null");
         }
-        if (mReceiverPtr == 0) {
-            Log.w(TAG, "Attempted to finish an input event but the input event "
-                    + "receiver has already been disposed.");
-        } else {
-            int index = mSeqMap.indexOfKey(event.getSequenceNumber());
-            if (index < 0) {
-                Log.w(TAG, "Attempted to finish an input event that is not in progress.");
+        synchronized (mLocked) {
+            if (mReceiverPtr == 0) {
+                Log.w(TAG, "Attempted to finish an input event but the input event "
+                        + "receiver has already been disposed.");
             } else {
-                int seq = mSeqMap.valueAt(index);
-                mSeqMap.removeAt(index);
-                nativeFinishInputEvent(mReceiverPtr, seq, handled);
+                int index = mSeqMap.indexOfKey(event.getSequenceNumber());
+                if (index < 0) {
+                    Log.w(TAG, "Attempted to finish an input event that is not in progress.");
+                } else {
+                    int seq = mSeqMap.valueAt(index);
+                    mSeqMap.removeAt(index);
+                    nativeFinishInputEvent(mReceiverPtr, seq, handled);
+                }
             }
         }
         event.recycleIfNeededAfterDispatch();
@@ -223,7 +229,14 @@ public abstract class InputEventReceiver {
      */
     public final void reportTimeline(int inputEventId, long gpuCompletedTime, long presentTime) {
         Trace.traceBegin(Trace.TRACE_TAG_INPUT, "reportTimeline");
-        nativeReportTimeline(mReceiverPtr, inputEventId, gpuCompletedTime, presentTime);
+        synchronized (mLocked) {
+            if (mReceiverPtr == 0) {
+                Log.w(TAG, "Attempted to report timeline but the input event "
+                        + "receiver has already been disposed.");
+            } else {
+                nativeReportTimeline(mReceiverPtr, inputEventId, gpuCompletedTime, presentTime);
+            }
+        }
         Trace.traceEnd(Trace.TRACE_TAG_INPUT);
     }
 
@@ -240,11 +253,13 @@ public abstract class InputEventReceiver {
      * @return Whether a batch was consumed
      */
     public final boolean consumeBatchedInputEvents(long frameTimeNanos) {
-        if (mReceiverPtr == 0) {
-            Log.w(TAG, "Attempted to consume batched input events but the input event "
-                    + "receiver has already been disposed.");
-        } else {
-            return nativeConsumeBatchedInputEvents(mReceiverPtr, frameTimeNanos);
+        synchronized (mLocked) {
+            if (mReceiverPtr == 0) {
+                Log.w(TAG, "Attempted to consume batched input events but the input event "
+                        + "receiver has already been disposed.");
+            } else {
+                return nativeConsumeBatchedInputEvents(mReceiverPtr, frameTimeNanos);
+            }
         }
         return false;
     }
