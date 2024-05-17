@@ -51,6 +51,24 @@
       "parentUuid": "0ed96996_d1418c91",
       "revId": "f21474e51f0bb88262b6da574000f2547963ee32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6af21c7f_3ac7785b",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 9624,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-05-17T22:27:15Z",
+      "side": 1,
+      "message": "99.9% of builds will be 4KB this release 99.9999% of the time, so we wanted to limit the amount of unnecessary information in tombstones. If you\u0027re okay with always adding it here, we can always add it.",
+      "parentUuid": "ba577d36_6a4c09de",
+      "revId": "f21474e51f0bb88262b6da574000f2547963ee32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
