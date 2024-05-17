@@ -16,6 +16,23 @@
       "message": "Who owns AMS?",
       "revId": "f21474e51f0bb88262b6da574000f2547963ee32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ed96996_d1418c91",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 9624,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-05-17T22:16:49Z",
+      "side": 1,
+      "message": "why not `sb.append(\"PageSize: \").append( Os.sysconf(OsConstants._SC_PAGESIZE)).append(\"\\n\")`? If there\u0027s a reason, comment please?",
+      "revId": "f21474e51f0bb88262b6da574000f2547963ee32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
