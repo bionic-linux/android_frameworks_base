@@ -369,6 +369,8 @@ import android.provider.DeviceConfig;
 import android.provider.Settings;
 import android.server.ServerProtoEnums;
 import android.sysprop.InitProperties;
+import android.system.Os;
+import android.system.OsConstants;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.style.SuggestionSpan;
@@ -9618,6 +9620,17 @@ public class ActivityManagerService extends IActivityManager.Stub
             sb.append("ErrorId: ").append(errorId.toString()).append("\n");
         }
         sb.append("Build: ").append(Build.FINGERPRINT).append("\n");
+
+        // If device is in 16KB mode or it was booted into 16KB mode previously, add the following.
+        boolean isUsing16KB = Os.sysconf(OsConstants._SC_PAGESIZE) == (16 * 1024);
+        if (isUsing16KB) {
+            sb.append("PageSize: 16384\n");
+        }
+        boolean wasBootedWith16KB = SystemProperties.getBoolean("ro.misctrl.16kb_before", false);
+        if (wasBootedWith16KB) {
+            sb.append("16KbBefore: true\n");
+        }
+
         if (Debug.isDebuggerConnected()) {
             sb.append("Debugger: Connected\n");
         }
