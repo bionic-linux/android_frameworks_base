@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6fdf805_b2a56806",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-05-17T22:55:34Z",
+      "side": 1,
+      "message": "(lgtm, but should still wait for BootReceiver owner)",
+      "revId": "f492f9d04e1406e03fdf3829d37671b1d4ee7658",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
