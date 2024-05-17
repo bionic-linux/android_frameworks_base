@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42d370d7_a4fd9007",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1170070
+      },
+      "writtenOn": "2024-05-17T22:37:04Z",
+      "side": 1,
+      "message": "Looks good to me if Jing is comfortable with it!",
+      "revId": "1e8d27ce26b7eb05bbf5f35e7f6147be1663f63d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
