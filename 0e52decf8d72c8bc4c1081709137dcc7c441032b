@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf472c14_405633e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2024-05-17T21:39:40Z",
+      "side": 1,
+      "message": "This class is explicitly and intentionally not thread safe. Any users of it must make sure they access it only on the `Looper` thread as you cannot properly synchronize the native side of it like this.",
+      "revId": "0e52decf8d72c8bc4c1081709137dcc7c441032b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
