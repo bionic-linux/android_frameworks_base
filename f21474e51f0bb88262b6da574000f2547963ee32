@@ -69,6 +69,24 @@
       "parentUuid": "ba577d36_6a4c09de",
       "revId": "f21474e51f0bb88262b6da574000f2547963ee32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0848c4d2_e5722ab8",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 9624,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-05-17T22:32:29Z",
+      "side": 1,
+      "message": "Okay, that doesn\u0027t really explain the hardcoding though -- I\u0027d suggest something like this:\n\n```\nvar pageSize \u003d Os.sysconf(OsConstants._SC_PAGESIZE);\nif (pageSize !\u003d 4096) {\n    sb.append(\"PageSize: \").append(pageSize).append(\"\\n\");\n}\n```",
+      "parentUuid": "6af21c7f_3ac7785b",
+      "revId": "f21474e51f0bb88262b6da574000f2547963ee32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
