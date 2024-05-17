@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0693ca3_7a5472f7",
+        "filename": "services/core/java/com/android/server/BootReceiver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-05-17T21:28:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4785482_7e2275d9",
+      "range": {
+        "startLine": 249,
+        "startChar": 8,
+        "endLine": 251,
+        "endChar": 9
+      },
+      "revId": "463c2e44aa5ca78c0ed3439fc6eb5ea8f5269956",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19c7b581_e7668536",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b86b8f75_c93832c9",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9631,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-05-17T21:28:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19c7b581_e7668536",
+      "range": {
+        "startLine": 9631,
+        "startChar": 23,
+        "endLine": 9631,
+        "endChar": 24
+      },
+      "revId": "463c2e44aa5ca78c0ed3439fc6eb5ea8f5269956",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "12eadb92_3a5a36e7",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-05-17T18:47:05Z",
       "side": 1,
       "message": "hey - did you check to see if this can show as true, do we have permissions to see it?",
+      "range": {
+        "startLine": 9629,
+        "startChar": 0,
+        "endLine": 9633,
+        "endChar": 0
+      },
+      "revId": "463c2e44aa5ca78c0ed3439fc6eb5ea8f5269956",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64639230_c65e146a",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9633,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-05-17T21:28:31Z",
+      "side": 1,
+      "message": "No, need to add https://android-review.git.corp.google.com/c/platform/system/sepolicy/+/3092989",
+      "parentUuid": "12eadb92_3a5a36e7",
       "range": {
         "startLine": 9629,
         "startChar": 0,
