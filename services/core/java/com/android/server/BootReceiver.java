@@ -34,6 +34,7 @@ import android.os.TombstoneWithHeadersProto;
 import android.provider.Downloads;
 import android.system.ErrnoException;
 import android.system.Os;
+import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.AtomicFile;
 import android.util.EventLog;
@@ -230,16 +231,23 @@ public class BootReceiver extends BroadcastReceiver {
     }
 
     private static String getCurrentBootHeaders() throws IOException {
-        return new StringBuilder(512)
+        StringBuilder builder =  new StringBuilder(512)
             .append("Build: ").append(Build.FINGERPRINT).append("\n")
             .append("Hardware: ").append(Build.BOARD).append("\n")
             .append("Revision: ")
             .append(SystemProperties.get("ro.revision", "")).append("\n")
             .append("Bootloader: ").append(Build.BOOTLOADER).append("\n")
             .append("Radio: ").append(Build.getRadioVersion()).append("\n")
-            .append("Kernel: ")
-            .append(FileUtils.readTextFile(new File("/proc/version"), 1024, "...\n"))
-            .append("\n").toString();
+            .append("Kernel: ").append(FileUtils.readTextFile(new File("/proc/version"),
+                        1024, "...\n"));
+
+        boolean isUsing16KB = Os.sysconf(OsConstants._SC_PAGESIZE) == (16 * 1024);
+        if (isUsing16KB) {
+            builder.append("PageSize: 16384\n");
+        }
+
+        builder.append("\n");
+        return builder.toString();
     }
 
 
