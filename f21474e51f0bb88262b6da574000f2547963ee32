@@ -33,6 +33,24 @@
       "message": "why not `sb.append(\"PageSize: \").append( Os.sysconf(OsConstants._SC_PAGESIZE)).append(\"\\n\")`? If there\u0027s a reason, comment please?",
       "revId": "f21474e51f0bb88262b6da574000f2547963ee32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba577d36_6a4c09de",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 9624,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-05-17T22:21:23Z",
+      "side": 1,
+      "message": "This should stay the same for 4KB page size. 16KB mode will be release under developer options toggle and we want to know if crash was something specific to 16KB mode.",
+      "parentUuid": "0ed96996_d1418c91",
+      "revId": "f21474e51f0bb88262b6da574000f2547963ee32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
