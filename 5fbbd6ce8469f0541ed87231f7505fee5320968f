@@ -70,6 +70,30 @@
       },
       "revId": "5fbbd6ce8469f0541ed87231f7505fee5320968f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e2f29bc_0a2e6973",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2263,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2024-05-20T16:41:44Z",
+      "side": 1,
+      "message": "Okay...  though generally I strongly discourage making the shell special.  The shell is just a user, signed with the platform certificate, so it can be given whatever privileged permissions make sense for it.  I don\u0027t want us moving more into a world where simply being the shell makes you special, and there are all kinds of capabilities the shell gets because it is special, and not if you want to do any of that stuff elsewhere you need to get your code running as shell and it becomes basically a big escalation.\n\nIs this stuff here really semantically directly tied to the shell?  Usually we have privileged APIs that have permissions protecting them based on their semantic capability, which we give to shell if it makes sense.",
+      "parentUuid": "839410f8_d7c35128",
+      "range": {
+        "startLine": 2263,
+        "startChar": 41,
+        "endLine": 2263,
+        "endChar": 49
+      },
+      "revId": "5fbbd6ce8469f0541ed87231f7505fee5320968f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
