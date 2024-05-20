@@ -94,6 +94,30 @@
       },
       "revId": "5fbbd6ce8469f0541ed87231f7505fee5320968f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e6a80a8_6dcc828e",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2263,
+      "author": {
+        "id": 1693933
+      },
+      "writtenOn": "2024-05-20T17:34:28Z",
+      "side": 1,
+      "message": "Offline chat with Dianne and the outcome is that we shouldn\u0027t tie a permission or APIs access to shell. But if we do want different protection semantics for different sets of APIs or shell commands, they ideally should be protected by different (new) permissions.\n\nFor our use cases, we do want to add some shell commands which are for testing only. So here updated to add a new signature-level \"THREAD_NETWORK_TESTING\" permission.",
+      "parentUuid": "1e2f29bc_0a2e6973",
+      "range": {
+        "startLine": 2263,
+        "startChar": 41,
+        "endLine": 2263,
+        "endChar": 49
+      },
+      "revId": "5fbbd6ce8469f0541ed87231f7505fee5320968f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
