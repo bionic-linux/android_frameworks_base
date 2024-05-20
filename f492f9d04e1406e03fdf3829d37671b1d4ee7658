@@ -16,6 +16,23 @@
       "message": "(lgtm, but should still wait for BootReceiver owner)",
       "revId": "f492f9d04e1406e03fdf3829d37671b1d4ee7658",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8f211e6_322b7864",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3444514
+      },
+      "writtenOn": "2024-05-20T10:49:34Z",
+      "side": 1,
+      "message": "Thanks for your help",
+      "revId": "f492f9d04e1406e03fdf3829d37671b1d4ee7658",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
