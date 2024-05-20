@@ -16,6 +16,24 @@
       "message": "This class is explicitly and intentionally not thread safe. Any users of it must make sure they access it only on the `Looper` thread as you cannot properly synchronize the native side of it like this.",
       "revId": "0e52decf8d72c8bc4c1081709137dcc7c441032b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce0b3ff3_e2c0b770",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1939396
+      },
+      "writtenOn": "2024-05-20T01:29:14Z",
+      "side": 1,
+      "message": "Thank you, you are right. After uploading this change, I found that the corresponding issue has been fixed as follow:\nhttps://partner-android.googlesource.com/platform/frameworks/base/+/228bc6c034d3e289d55caef9af2a187483b1162f%5E%21/#F0",
+      "parentUuid": "cf472c14_405633e5",
+      "revId": "0e52decf8d72c8bc4c1081709137dcc7c441032b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
