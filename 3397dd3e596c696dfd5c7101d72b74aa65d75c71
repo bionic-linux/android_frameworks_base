@@ -286,6 +286,30 @@
       },
       "revId": "3397dd3e596c696dfd5c7101d72b74aa65d75c71",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f14cbb96_60a2a837",
+        "filename": "services/tests/servicestests/src/com/android/server/tv/tunerresourcemanager/TunerResourceManagerServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1986430
+      },
+      "writtenOn": "2024-05-21T14:16:02Z",
+      "side": 1,
+      "message": "ClientId0 took ownership of fe group containing TYPE_DVBS frontend type",
+      "parentUuid": "6a7cb0c5_0ecafff2",
+      "range": {
+        "startLine": 507,
+        "startChar": 0,
+        "endLine": 509,
+        "endChar": 27
+      },
+      "revId": "3397dd3e596c696dfd5c7101d72b74aa65d75c71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
