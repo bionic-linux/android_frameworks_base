@@ -2978,6 +2978,14 @@ package android.app.smartspace.uitemplatedata {
 
 }
 
+package android.app.supervision {
+
+  @FlaggedApi("android.app.supervision.flags.api") public class SupervisionManager {
+    method @Nullable public android.os.UserHandle getParentUser();
+  }
+
+}
+
 package android.app.time {
 
   public final class Capabilities {

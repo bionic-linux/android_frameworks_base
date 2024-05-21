@@ -111,6 +111,13 @@ public class KeyguardManager {
             "android.app.action.CONFIRM_FRP_CREDENTIAL";
 
     /**
+     * Intent used to prompt user for parent credentials.
+     * @hide
+     */
+    public static final String ACTION_CONFIRM_PARENT_CREDENTIAL =
+            "android.app.action.CONFIRM_PARENT_CREDENTIAL";
+
+    /**
      * Intent used to prompt user to to validate the credentials of a remote device.
      * @hide
      */

@@ -16,12 +16,20 @@
 
 package android.app.supervision;
 
+import static android.app.KeyguardManager.ACTION_CONFIRM_PARENT_CREDENTIAL;
+import static android.app.KeyguardManager.EXTRA_DESCRIPTION;
+import static android.app.KeyguardManager.EXTRA_TITLE;
+
 import android.annotation.FlaggedApi;
+import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.app.supervision.flags.Flags;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
+import android.content.Intent;
 import android.os.RemoteException;
+import android.os.UserHandle;
 
 /**
  * Service for handling parental supervision.
@@ -54,6 +62,32 @@ public class SupervisionManager {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+    }
+
+    /**
+     * Returns a parent for a user if set.
+     *
+     * <p>If parent is not set for this user, returns {@code null}.
+     * @hide
+     */
+    @SystemApi
+    @Nullable
+    public UserHandle getParentUser() {
+        try {
+            int parentUser = mService.getParentUser();
+            return parentUser != UserHandle.USER_NULL ? new UserHandle(parentUser) : null;
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /** Create an intent to confirm parent credentials for the current user. */
+    @Nullable
+    public Intent createConfirmParentCredentialsIntent() {
+        return new Intent(ACTION_CONFIRM_PARENT_CREDENTIAL)
+            .putExtra(EXTRA_TITLE, "Confirm you are a parent")
+            .putExtra(EXTRA_DESCRIPTION, "Do you approve?")
+            .setPackage("com.android.settings");
     }
 
 

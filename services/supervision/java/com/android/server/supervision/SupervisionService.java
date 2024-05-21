@@ -20,19 +20,23 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.supervision.ISupervisionManager;
 import android.content.Context;
-
+import android.os.Binder;
+import android.os.UserHandle;
 
 import com.android.internal.util.DumpUtils;
 import com.android.server.SystemService;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 /** Service for handling system supervision. */
 public class SupervisionService extends ISupervisionManager.Stub {
     private static final String LOG_TAG = "SupervisionService";
 
     private final Context mContext;
+    private final Map<Integer, Integer> mParentsForUsers = new HashMap<>(4);
 
     public SupervisionService(Context context) {
         mContext = context.createAttributionContext("SupervisionService");
@@ -44,11 +48,26 @@ public class SupervisionService extends ISupervisionManager.Stub {
     }
 
     @Override
+    public void setParentForUser(int childUserId, int parentUserId) {
+        mParentsForUsers.put(childUserId, parentUserId);
+    }
+
+    @Override
+    public int getParentUser() {
+        int callingUser = UserHandle.getUserId(Binder.getCallingUid());
+        return mParentsForUsers.getOrDefault(callingUser, UserHandle.USER_NULL);
+    }
+
+    @Override
     protected void dump(@NonNull FileDescriptor fd,
             @NonNull PrintWriter fout, @Nullable String[] args) {
         if (!DumpUtils.checkDumpPermission(mContext, LOG_TAG, fout)) return;
 
-        fout.println("Supervision enabled: " + isSupervisionEnabled());
+        fout.println("Supervision enabled: " + !mParentsForUsers.isEmpty());
+        fout.println("Parents set:");
+        for (Map.Entry<Integer, Integer> entry : mParentsForUsers.entrySet()) {
+            fout.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
 
     public static class Lifecycle extends SystemService {

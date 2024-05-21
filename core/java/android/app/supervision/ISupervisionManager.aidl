@@ -16,10 +16,14 @@
 
 package android.app.supervision;
 
+import android.content.Intent;
+
 /**
  * Internal IPC interface to the supervision service.
  * {@hide}
  */
 interface ISupervisionManager {
     boolean isSupervisionEnabled();
+    void setParentForUser(int childUserId, int parentUserId);
+    int getParentUser();
 }
