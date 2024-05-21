@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5839949b_1e01ddf5",
+        "filename": "nfc/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-05-21T20:27:09Z",
+      "side": 1,
+      "message": "The code around this block has chnaged in internal branch. See aosp/3093126 which I\u0027m going to merge. Please rebase after the CL has been merged.",
+      "range": {
+        "startLine": 1850,
+        "startChar": 0,
+        "endLine": 1854,
+        "endChar": 13
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "189f9434_79c528c5",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcAdapter.java",
+              "range": {
+                "startLine": 1852,
+                "startChar": 0,
+                "endLine": 1853,
+                "endChar": 0
+              },
+              "replacement": "            if (pollTechnology \u003d\u003d FLAG_READER_DISABLE) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "521a0af06a05d9221b529ce663b174dbc7eadc5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
