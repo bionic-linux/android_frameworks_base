@@ -1847,7 +1847,11 @@ public final class NfcAdapter {
                 }
             }
             mNfcActivityManager.enableReaderMode(activity, null, pollTechnology, null);
-            return;
+            /* Allow System to be in RF Idle State when both listenTechnology,
+             * & pollTechnology are disabled */
+            if (pollTechnology != FLAG_READER_DISABLE) {
+                return;
+            }
         }
         if (pollTechnology == FLAG_READER_DISABLE) {
             synchronized (sLock) {
