@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e5962db_28db97f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2024-05-21T22:58:28Z",
+      "side": 1,
+      "message": "This is a good refactoring change.\n\nBut with your previous fixes, can we also assert that device manifest / device compatibility matrix is also collected?",
+      "revId": "479bda3929dff158a508cc03796c113eeb567471",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
