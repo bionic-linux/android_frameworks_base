@@ -4747,6 +4747,7 @@ package android.hardware.hdmi {
     method @NonNull @RequiresPermission(android.Manifest.permission.HDMI_CEC) public String getPowerStateChangeOnActiveSourceLost();
     method @NonNull @RequiresPermission(android.Manifest.permission.HDMI_CEC) public int getRoutingControl();
     method @RequiresPermission(android.Manifest.permission.HDMI_CEC) public int getSadPresenceInQuery(@NonNull String);
+    method @RequiresPermission(android.Manifest.permission.HDMI_CEC) public int getSetMenuLanguage();
     method @RequiresPermission(android.Manifest.permission.HDMI_CEC) public int getSoundbarMode();
     method @Nullable public android.hardware.hdmi.HdmiSwitchClient getSwitchClient();
     method @NonNull @RequiresPermission(android.Manifest.permission.HDMI_CEC) public int getSystemAudioControl();
@@ -4769,6 +4770,7 @@ package android.hardware.hdmi {
     method @RequiresPermission(android.Manifest.permission.HDMI_CEC) public void setRoutingControl(@NonNull int);
     method @RequiresPermission(android.Manifest.permission.HDMI_CEC) public void setSadPresenceInQuery(@NonNull String, int);
     method @RequiresPermission(android.Manifest.permission.HDMI_CEC) public void setSadsPresenceInQuery(@NonNull java.util.List<java.lang.String>, int);
+    method @RequiresPermission(android.Manifest.permission.HDMI_CEC) public void setSetMenuLanguage(int);
     method @RequiresPermission(android.Manifest.permission.HDMI_CEC) public void setSoundbarMode(int);
     method @RequiresPermission(android.Manifest.permission.HDMI_CEC) public void setStandbyMode(boolean);
     method @RequiresPermission(android.Manifest.permission.HDMI_CEC) public void setSystemAudioControl(@NonNull int);

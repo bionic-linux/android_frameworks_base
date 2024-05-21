@@ -1600,6 +1600,43 @@ public final class HdmiControlManager {
     }
 
     /**
+     * Controls whether set/get menu language commands via HDMI CEC are enabled.
+     *
+     * @see HdmiControlManager#CEC_SETTING_NAME_SET_MENU_LANGUAGE
+     */
+    @RequiresPermission(android.Manifest.permission.HDMI_CEC)
+    public void setSetMenuLanguage(@SetMenuLanguage int hdmiCecMenuLanguageEnabled) {
+        if (mService == null) {
+            Log.e(TAG, "setSetMenuLanguage: HdmiControlService is not available");
+            throw new RuntimeException("HdmiControlService is not available");
+        }
+        try {
+            mService.setCecSettingIntValue(CEC_SETTING_NAME_SET_MENU_LANGUAGE, hdmiCecMenuLanguageEnabled);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Returns whether set/get menu language changes via HDMI CEC are enabled.
+     *
+     * @see HdmiControlManager#CEC_SETTING_NAME_SET_MENU_LANGUAGE
+     */
+    @RequiresPermission(android.Manifest.permission.HDMI_CEC)
+    @SetMenuLanguage
+    public int getSetMenuLanguage() {
+        if (mService == null) {
+            Log.e(TAG, "getSetMenuLanguage: HdmiControlService is not available");
+            throw new RuntimeException("HdmiControlService is not available");
+        }
+        try {
+            return mService.getCecSettingIntValue(CEC_SETTING_NAME_SET_MENU_LANGUAGE);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Gets whether the system is in system audio mode.
      *
      * @hide

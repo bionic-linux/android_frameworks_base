@@ -95,6 +95,14 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
         mService.sendCecCommand(
                 HdmiCecMessageBuilder.buildDeviceVendorIdCommand(
                         getDeviceInfo().getLogicalAddress(), mService.getVendorId()));
+        if (mService.getHdmiCecConfig().getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_SET_MENU_LANGUAGE)
+                    == HdmiControlManager.SET_MENU_LANGUAGE_ENABLED) {
+            mService.sendCecCommand(HdmiCecMessageBuilder.buildGiveMenuLanguageCommand(
+                getDeviceInfo().getLogicalAddress(), Constants.ADDR_TV));
+        } else {
+            Slog.w(TAG, "Set menu language is disabled, abort the <Set Menu Language>.");
+        }
         // Actively send out an OSD name to the TV to update the TV panel in case the TV
         // does not query the OSD name on time. This is not a required behavior by the spec.
         // It is used for some TVs that need the OSD name update but don't query it themselves.
