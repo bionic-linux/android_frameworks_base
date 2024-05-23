@@ -1578,6 +1578,11 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
      */
     @UnsupportedAppUsage
     protected void onChildVisibilityChanged(View child, int oldVisibility, int newVisibility) {
+        // If the child visibility changes, we should recalculate the Transparent Region.
+        if ((mPrivateFlags & PFLAG_REQUEST_TRANSPARENT_REGIONS) != 0) {
+            mParent.requestTransparentRegion(this);
+        }
+
         if (mTransition != null) {
             if (newVisibility == VISIBLE) {
                 mTransition.showChild(this, child, oldVisibility);
