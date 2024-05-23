@@ -1,0 +1,51 @@
+package {
+    // See: http://go/android-license-faq
+    // A large-scale-change added 'default_applicable_licenses' to import
+    // all of the 'license_kinds' from "frameworks_base_license"
+    // to get the below license kinds:
+    //   SPDX-license-identifier-Apache-2.0
+    default_applicable_licenses: ["frameworks_base_license"],
+}
+
+android_test {
+    name: "FrameworkCoreRootTests",
+
+    srcs: [
+        "src/android/os/ServiceManagerNativeTest.java",
+    ],
+    static_libs: [
+        "collector-device-lib-platform",
+        "frameworks-base-testutils",
+        "androidx.core_core",
+        "androidx.core_core-ktx",
+        "androidx.test.espresso.core",
+        "androidx.test.ext.junit",
+        "androidx.test.runner",
+        "androidx.test.rules",
+        "flag-junit",
+        "junit-params",
+        "mockito-target-minus-junit4",
+        "androidx.test.uiautomator_uiautomator",
+        "platform-test-annotations",
+        "testng",
+        "flag-junit",
+        "android-support-test",
+    ],
+
+    libs: [
+        "android.test.runner",
+        "org.apache.http.legacy",
+        "android.test.base",
+        "android.test.mock",
+        "framework",
+        "ext",
+        "framework-res",
+        "android.view.flags-aconfig-java",
+    ],
+
+    sdk_version: "core_platform",
+    certificate: "platform",
+    test_suites: ["device-tests"],
+    // auto_gen_config: true,
+    // require_root: true,
+}
