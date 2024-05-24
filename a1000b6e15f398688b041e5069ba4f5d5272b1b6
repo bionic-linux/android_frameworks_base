@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "026eae03_6ac7e185",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1936176
+      },
+      "writtenOn": "2024-05-24T01:22:48Z",
+      "side": 1,
+      "message": "Sorry, I realized that my solution didn\u0027t quite cover some of the more complex view hierarchies, so I decided to go with my solution. Maybe we need a better solution.\n\nE.G.\nViewGroup1\n   --ViewGroup2\n   ----SurfaceView\n   --ViewGroup3\n   ----CoverView\n\nWhen SurfaceView calls requestTransparentRegion, as long as ViewGroup1 and ViewGroup2 have flag PFLAG_REQUEST_TRANSPARENT_REGIONS. ViewGroup3 doesn\u0027t have the flag PFLAG_REQUEST_TRANSPARENT_REGIONS, so my change won\u0027t take effect.",
+      "revId": "a1000b6e15f398688b041e5069ba4f5d5272b1b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
