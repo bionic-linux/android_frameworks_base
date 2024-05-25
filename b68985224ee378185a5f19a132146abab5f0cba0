@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52a9b33d_d16da2df",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/controllers/IdleController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1960915
+      },
+      "writtenOn": "2024-05-25T01:27:25Z",
+      "side": 1,
+      "message": "nit: Suggest annotating ```mTrackedTasks``` with ```@GuardedBy(\"mLock\")```",
+      "fixSuggestions": [
+        {
+          "fixId": "0ea8f563_71a69593",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "apex/jobscheduler/service/java/com/android/server/job/controllers/IdleController.java",
+              "range": {
+                "startLine": 51,
+                "startChar": 0,
+                "endLine": 51,
+                "endChar": 0
+              },
+              "replacement": "    @GuardedBy(\"mLock\")\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b68985224ee378185a5f19a132146abab5f0cba0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
