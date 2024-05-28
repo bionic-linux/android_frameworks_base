@@ -50,6 +50,41 @@
       "message": "Adding Alec as well to double check.",
       "revId": "a1000b6e15f398688b041e5069ba4f5d5272b1b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a873132b_b1c9434f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2024-05-28T15:42:29Z",
+      "side": 1,
+      "message": "I believe there is an equivalent check in `View#onAttachedtoWindow`, so adding this check here doesn\u0027t seem like it hurts.",
+      "revId": "a1000b6e15f398688b041e5069ba4f5d5272b1b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b4b5390_c18feb97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2024-05-28T15:42:29Z",
+      "side": 1,
+      "message": "I\u0027m not sure how this doesn\u0027t work. When ViewGroup3 becomes visible, it should still trigger this path.",
+      "parentUuid": "026eae03_6ac7e185",
+      "revId": "a1000b6e15f398688b041e5069ba4f5d5272b1b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
