@@ -85,6 +85,24 @@
       "parentUuid": "026eae03_6ac7e185",
       "revId": "a1000b6e15f398688b041e5069ba4f5d5272b1b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c319588b_13cd4be8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1936176
+      },
+      "writtenOn": "2024-05-29T01:13:25Z",
+      "side": 1,
+      "message": "// ViewGroup.java\n    protected void onChildVisibilityChanged(View child, int oldVisibility, int newVisibility) {\n        // Patch-Begin \n        if ((mPrivateFlags \u0026 PFLAG_REQUEST_TRANSPARENT_REGIONS) !\u003d 0) {\n            mParent.requestTransparentRegion(this);\n        }\n        // Patch-End\n        // ...\n    }\n   \nBecause only a ViewGroup with a flag PFLAG_REQUEST_TRANSPARENT_REGIONS calls requestTransparentRegion().\n\nBut when a SurfaceView calls requestTransparentRegion(), only the parents and ancestors of the SurfaceView carry this flag(PFLAG_REQUEST_TRANSPARENT_REGIONS), so ViewGroup does not have it.\n\n    // ViewGroup.java\n    @Override\n    public void requestTransparentRegion(View child) {\n        if (child !\u003d null) {\n            child.mPrivateFlags |\u003d View.PFLAG_REQUEST_TRANSPARENT_REGIONS;\n            if (mParent !\u003d null) {\n                // The call propagates upwards, so only its parents and ancestors carry this flag.\n                mParent.requestTransparentRegion(this);\n            }\n        }\n    }",
+      "parentUuid": "7b4b5390_c18feb97",
+      "revId": "a1000b6e15f398688b041e5069ba4f5d5272b1b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
