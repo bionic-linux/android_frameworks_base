@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6194867d_953bf285",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/controllers/IdleController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1960915
+      },
+      "writtenOn": "2024-05-29T03:07:16Z",
+      "side": 1,
+      "message": "nit: ```if (!mTrackedTask.isEmpty())```",
+      "fixSuggestions": [
+        {
+          "fixId": "ee1bb0f8_02b9a88f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "apex/jobscheduler/service/java/com/android/server/job/controllers/IdleController.java",
+              "range": {
+                "startLine": 122,
+                "startChar": 0,
+                "endLine": 123,
+                "endChar": 0
+              },
+              "replacement": "            if (!mTrackedTasks.isEmpty()) {\n                mStateChangedListener.onControllerStateChanged(mTrackedTasks);\n            }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4fcbf8317744d0d50b6c7dcb28e67a680e9ecb47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
