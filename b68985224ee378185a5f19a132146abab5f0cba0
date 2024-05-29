@@ -34,6 +34,24 @@
       ],
       "revId": "b68985224ee378185a5f19a132146abab5f0cba0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb70e883_361cc28f",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/controllers/IdleController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1960915
+      },
+      "writtenOn": "2024-05-29T02:59:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52a9b33d_d16da2df",
+      "revId": "b68985224ee378185a5f19a132146abab5f0cba0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
