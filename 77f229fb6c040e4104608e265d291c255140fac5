@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8993ca9c_d9126dee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1936176
+      },
+      "writtenOn": "2024-05-29T01:30:33Z",
+      "side": 1,
+      "message": "I updated the patch.  Now it recalculates Transparent Region if the root view has a flag PFLAG_REQUEST_TRANSPARENT_REGIONS. And it\u0027s a bit faster to just call VRI.request directly!",
+      "revId": "77f229fb6c040e4104608e265d291c255140fac5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
