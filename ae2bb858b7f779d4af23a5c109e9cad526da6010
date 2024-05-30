@@ -70,6 +70,30 @@
       },
       "revId": "ae2bb858b7f779d4af23a5c109e9cad526da6010",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "726e43b1_929b22cc",
+        "filename": "core/java/com/android/internal/widget/LockPatternView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1944372
+      },
+      "writtenOn": "2024-05-30T19:30:14Z",
+      "side": 1,
+      "message": "I searched and it seems like Wear is the only user of keepDotActivated. I think it would make sense to fold this behavior directly in since we\u0027re the only user.",
+      "parentUuid": "fe8d5ace_9e380dd0",
+      "range": {
+        "startLine": 455,
+        "startChar": 16,
+        "endLine": 455,
+        "endChar": 38
+      },
+      "revId": "ae2bb858b7f779d4af23a5c109e9cad526da6010",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
