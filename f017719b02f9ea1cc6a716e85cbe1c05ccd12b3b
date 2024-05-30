@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b497e50a_0ecfbe0b",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-05-30T20:38:17Z",
+      "side": 1,
+      "message": "You have this backwards - `useFileDescriptor` should lead to the block that is currently in the `else` case.",
+      "revId": "f017719b02f9ea1cc6a716e85cbe1c05ccd12b3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
