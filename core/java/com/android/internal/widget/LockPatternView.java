@@ -144,6 +144,7 @@ public class LockPatternView extends View {
     @UnsupportedAppUsage
     private boolean mPatternInProgress = false;
     private boolean mFadePattern = true;
+    private boolean mKeepActiveDotResize = false;
 
     @UnsupportedAppUsage
     private float mSquareWidth;
@@ -426,6 +427,13 @@ public class LockPatternView extends View {
     }
 
     /**
+     * Set whether the pattern dots should keep their activated size after activation.
+     */
+    public void setKeepActiveDotResize(boolean keepActiveDotResize) {
+        mKeepActiveDotResize = keepActiveDotResize;
+    }
+
+    /**
      * Set the call back for pattern detection.
      * @param onPatternListener The call back.
      */
@@ -634,10 +642,19 @@ public class LockPatternView extends View {
      * Reset all pattern state.
      */
     private void resetPattern() {
+        if (mKeepActiveDotResize) {
+            resetPatternCellSize();
+        }
         mPattern.clear();
         clearPatternDrawLookup();
         mPatternDisplayMode = DisplayMode.Correct;
         invalidate();
+    }
+
+    private void resetPatternCellSize() {
+        for(Cell cell : mPattern) {
+            mCellStates[cell.row][cell.column].radius = mDotSize / 2f;
+        }
     }
 
     /**
@@ -800,7 +817,11 @@ public class LockPatternView extends View {
                 .with(createLineEndAnimation(cellState, mInProgressX, mInProgressY,
                         getCenterXForColumn(cell.column), getCenterYForRow(cell.row)));
         if (mDotSize != mDotSizeActivated) {
-            animatorSetBuilder.with(createDotRadiusAnimation(cellState));
+            if (mKeepActiveDotResize) {
+            	cellState.radius = mDotSizeActivated / 2f;
+            } else {
+            	animatorSetBuilder.with(createDotRadiusAnimation(cellState));
+    	    }
         }
         if (mDotColor != mDotActivatedColor) {
             animatorSetBuilder.with(createDotActivationColorAnimation(cellState));
@@ -1078,7 +1099,9 @@ public class LockPatternView extends View {
                 if (state.activationAnimator != null) {
                     state.activationAnimator.cancel();
                     state.activationAnimator = null;
-                    state.radius = mDotSize / 2f;
+                    if (!mKeepActiveDotResize) {
+                    	state.radius = mDotSize / 2f;
+                    }
                     state.activationAnimationProgress = 0f;
                     state.lineEndX = Float.MIN_VALUE;
                     state.lineEndY = Float.MIN_VALUE;
