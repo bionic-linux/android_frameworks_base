@@ -22,6 +22,30 @@
       },
       "revId": "ae2bb858b7f779d4af23a5c109e9cad526da6010",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "192e0569_cf12d115",
+        "filename": "core/java/com/android/internal/widget/LockPatternView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1944372
+      },
+      "writtenOn": "2024-05-30T19:06:17Z",
+      "side": 1,
+      "message": "The plan is to call it from `vendor/google_clockwork`. Here\u0027s a link to the topic: http://pa/q/topic:%22pattern-keep-small-dot-size%22",
+      "parentUuid": "dfb07070_3690f39a",
+      "range": {
+        "startLine": 455,
+        "startChar": 16,
+        "endLine": 455,
+        "endChar": 38
+      },
+      "revId": "ae2bb858b7f779d4af23a5c109e9cad526da6010",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
