@@ -46,6 +46,30 @@
       },
       "revId": "ae2bb858b7f779d4af23a5c109e9cad526da6010",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe8d5ace_9e380dd0",
+        "filename": "core/java/com/android/internal/widget/LockPatternView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-05-30T19:22:48Z",
+      "side": 1,
+      "message": "The keepDotActivated setting, which is related to this and is similarly only used on Wear (as far as I know), is configured via a resource XML file.  See: https://android.googlesource.com/platform/frameworks/base.git/+/c5355450867a556bfc9db8af414d657783ca5196/core/java/com/android/internal/widget/LockPatternView.java#352 and https://android.googlesource.com/platform/frameworks/base.git/+/c5355450867a556bfc9db8af414d657783ca5196/core/res/res/values/attrs.xml#9108\n\nPerhaps you should add a new setting alongside that one?  It\u0027s a bit odd adding it as a method, because the method is unused in AOSP; the only caller is in the closed source Wear code.  With the resource XML, at least it\u0027s clear that it isn\u0027t unused code that can be deleted, but rather is something that can be overridden by device specific configuration.\n\nAlso, maybe it would make more sense to fold this new behavior into the existing keepDotActivated?  Would anyone want keepDotActivated (which as I mentioned, seems to be Wear specific) without also keepActiveDotResize?",
+      "parentUuid": "192e0569_cf12d115",
+      "range": {
+        "startLine": 455,
+        "startChar": 16,
+        "endLine": 455,
+        "endChar": 38
+      },
+      "revId": "ae2bb858b7f779d4af23a5c109e9cad526da6010",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
