@@ -94,6 +94,30 @@
       },
       "revId": "ae2bb858b7f779d4af23a5c109e9cad526da6010",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e832e9e_331fa49c",
+        "filename": "core/java/com/android/internal/widget/LockPatternView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1964929
+      },
+      "writtenOn": "2024-05-31T13:26:16Z",
+      "side": 1,
+      "message": "I see, thank you both for the information. I\u0027ll go ahead and modify the behavior of keepDotActivated instead (wasn\u0027t aware that it was only used by wear 😊)",
+      "parentUuid": "726e43b1_929b22cc",
+      "range": {
+        "startLine": 455,
+        "startChar": 16,
+        "endLine": 455,
+        "endChar": 38
+      },
+      "revId": "ae2bb858b7f779d4af23a5c109e9cad526da6010",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
