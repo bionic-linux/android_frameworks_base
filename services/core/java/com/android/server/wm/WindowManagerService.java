@@ -1026,7 +1026,7 @@ public class WindowManagerService extends IWindowManager.Stub
         void windowsChanged();
 
         /** Notify on focus changed */
-        void focusChanged();
+        void focusChanged(WindowState newFocus);
     }
 
     final HighRefreshRateDenylist mHighRefreshRateDenylist;
@@ -5147,7 +5147,7 @@ public class WindowManagerService extends IWindowManager.Stub
         }
     }
 
-    private void notifyFocusChanged() {
+    private void notifyFocusChanged(WindowState newFocus) {
         WindowChangeListener[] windowChangeListeners;
         synchronized (mGlobalLock) {
             if(mWindowChangeListeners.isEmpty()) {
@@ -5158,7 +5158,7 @@ public class WindowManagerService extends IWindowManager.Stub
         }
         int N = windowChangeListeners.length;
         for(int i = 0; i < N; i++) {
-            windowChangeListeners[i].focusChanged();
+            windowChangeListeners[i].focusChanged(newFocus);
         }
     }
 
@@ -5430,7 +5430,7 @@ public class WindowManagerService extends IWindowManager.Stub
         if (newFocusedWindow != null && newFocusedWindow.mInputChannelToken == newToken) {
             mAnrController.onFocusChanged(newFocusedWindow);
             newFocusedWindow.reportFocusChangedSerialized(true);
-            notifyFocusChanged();
+            notifyFocusChanged(newFocusedWindow);
         }
 
         WindowState lastFocusedWindow = lastTarget != null ? lastTarget.getWindowState() : null;
