@@ -16,6 +16,24 @@
       "message": "avoid removing newline at the end of the file",
       "revId": "8bf790ef1f568c130dc06bcbed736908ee446f11",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca1992ed_902c0b5d",
+        "filename": "core/res/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1935870
+      },
+      "writtenOn": "2024-06-04T18:51:29Z",
+      "side": 1,
+      "message": "Thanks Adam, per discussion with you offline, this newline at EOF is fine to stay. So at this moment let\u0027s leave it as-is.",
+      "parentUuid": "137b8513_22ab2731",
+      "revId": "8bf790ef1f568c130dc06bcbed736908ee446f11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
