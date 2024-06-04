@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "137b8513_22ab2731",
+        "filename": "core/res/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1014545
+      },
+      "writtenOn": "2024-06-04T18:40:03Z",
+      "side": 1,
+      "message": "avoid removing newline at the end of the file",
+      "revId": "8bf790ef1f568c130dc06bcbed736908ee446f11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
