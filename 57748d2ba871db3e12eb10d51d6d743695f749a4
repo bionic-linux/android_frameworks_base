@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9ac6898_49ef36d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1576109
+      },
+      "writtenOn": "2024-06-06T07:38:16Z",
+      "side": 1,
+      "message": "From Yuyang\u0027s [comment#2](https://b.corp.google.com/issues/308095054#comment2), do we need any security review?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "57748d2ba871db3e12eb10d51d6d743695f749a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
