@@ -22,6 +22,30 @@
       },
       "revId": "57748d2ba871db3e12eb10d51d6d743695f749a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb36fb19_76546e15",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1904823
+      },
+      "writtenOn": "2024-06-06T14:50:33Z",
+      "side": 1,
+      "message": "From [comment#3](https://b.corp.google.com/issues/308095054#comment3), it looks like 10s is the timeout used by FastPair to discard an ongoing pairing which hasn\u0027t completed. I think we should be fine here",
+      "parentUuid": "e9ac6898_49ef36d6",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "57748d2ba871db3e12eb10d51d6d743695f749a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
