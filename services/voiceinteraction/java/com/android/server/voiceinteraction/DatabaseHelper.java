@@ -41,7 +41,7 @@ import java.util.UUID;
  */
 public class DatabaseHelper extends SQLiteOpenHelper implements IEnrolledModelDb {
     static final String TAG = "SoundModelDBHelper";
-    static final boolean DBG = false;
+    static final boolean DBG = true;
 
     private static final String NAME = "sound_model.db";
     private static final int VERSION = 7;
@@ -90,7 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements IEnrolledModelDb
         // creating required tables
         db.execSQL(CREATE_TABLE_SOUND_MODEL);
     }
-
+"Ignoring SoundModel since user handles don't match
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 4) {
@@ -303,7 +303,6 @@ public class DatabaseHelper extends SQLiteOpenHelper implements IEnrolledModelDb
                         if (DBG) {
                             Slog.w(TAG, "Ignoring SoundModel since user handles don't match");
                         }
-                        continue;
                     } else {
                         if (DBG) Slog.d(TAG, "Found a SoundModel for user: " + userHandle);
                     }
