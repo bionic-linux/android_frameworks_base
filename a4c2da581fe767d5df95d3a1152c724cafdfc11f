@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "913c4b22_1513a896",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1494236
+      },
+      "writtenOn": "2024-06-07T18:44:59Z",
+      "side": 1,
+      "message": "Sound models should only be selected if they match the user id. If there is an issue with CTS it should be fixed on the test side.",
+      "revId": "a4c2da581fe767d5df95d3a1152c724cafdfc11f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
