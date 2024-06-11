@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12e0ef8e_7b53c57d",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-06-11T22:28:44Z",
+      "side": 1,
+      "message": "Um, no... There are reasons as the original code says: \"always override the existing info since we are now more informational.\". Sometimes we get signals like the app is killed, so we log a reason, and soon after that, we get another information about why it\u0027s killed, so it\u0027ll be correct if we overwrite the information with the latest one, we don\u0027t want to create duplicated entries for a single kill.",
+      "range": {
+        "startLine": 423,
+        "startChar": 27,
+        "endLine": 423,
+        "endChar": 65
+      },
+      "revId": "f0873bf069f20482f0a3e64d0735b3eb744cbc9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b29bfd2c_5b4b2f98",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-06-11T22:28:44Z",
+      "side": 1,
+      "message": "nit: prefer ArrayList over LinkedList here.",
+      "revId": "f0873bf069f20482f0a3e64d0735b3eb744cbc9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed8498f3_30f18d55",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-06-11T22:28:44Z",
+      "side": 1,
+      "message": "nit: don\u0027t use iterators in the Android framework, as it takes up memory.",
+      "revId": "f0873bf069f20482f0a3e64d0735b3eb744cbc9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ed65983_f11c6449",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-06-11T22:28:44Z",
+      "side": 1,
+      "message": "This would be wrong. For each iteration, the `(results.size() - maxNum)` will be re-evaluated.",
+      "range": {
+        "startLine": 576,
+        "startChar": 40,
+        "endLine": 576,
+        "endChar": 65
+      },
+      "revId": "f0873bf069f20482f0a3e64d0735b3eb744cbc9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a6a3aa8_4e343b8e",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-06-11T22:28:44Z",
+      "side": 1,
+      "message": "Overall, using LinkedList is discouraged. see b/221046110",
+      "revId": "f0873bf069f20482f0a3e64d0735b3eb744cbc9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "026a9faa_865f040f",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-06-11T22:28:44Z",
+      "side": 1,
+      "message": "let\u0027s avoid allocating memory here. Using `mTmpInfoList` will be acceptable.",
+      "revId": "f0873bf069f20482f0a3e64d0735b3eb744cbc9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34a6ef85_78008120",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-06-11T22:28:44Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 1321,
+        "startChar": 27,
+        "endLine": 1321,
+        "endChar": 35
+      },
+      "revId": "f0873bf069f20482f0a3e64d0735b3eb744cbc9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "626bf9df_b995d0c9",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-06-11T22:28:44Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1352,
+        "startChar": 36,
+        "endLine": 1352,
+        "endChar": 61
+      },
+      "revId": "f0873bf069f20482f0a3e64d0735b3eb744cbc9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "814a0afa_423328b8",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1432,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-06-11T22:28:44Z",
+      "side": 1,
+      "message": "ditto: don\u0027t use iterators in the Android framework code.",
+      "range": {
+        "startLine": 1432,
+        "startChar": 19,
+        "endLine": 1432,
+        "endChar": 45
+      },
+      "revId": "f0873bf069f20482f0a3e64d0735b3eb744cbc9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
