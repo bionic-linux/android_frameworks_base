@@ -43,6 +43,7 @@ android_test {
         "apct-perftests-resources-manager-apps",
         "apct-perftests-utils",
         "collector-device-lib",
+        "conscrypt-tests-lib2",
         "compatibility-device-util-axt",
         "junit",
         "junit-params",
@@ -67,6 +68,7 @@ android_test {
         javacflags: [
             "-Xep:ReturnValueIgnored:WARN",
             "-Xep:UnnecessaryStringBuilder:OFF",
+            "-J--add-exports=java.base/sun.security.X509=ALL-UNNAMED",
         ],
     },
 }
