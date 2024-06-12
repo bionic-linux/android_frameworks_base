@@ -82,6 +82,8 @@ import java.util.Vector;
 public final class MediaCodecInfo {
     private static final String TAG = "MediaCodecInfo";
 
+    private static final boolean FLAG = true;
+
     private static final int FLAG_IS_ENCODER = (1 << 0);
     private static final int FLAG_IS_VENDOR = (1 << 1);
     private static final int FLAG_IS_SOFTWARE_ONLY = (1 << 2);
@@ -1382,6 +1384,9 @@ public final class MediaCodecInfo {
      */
     public static final class AudioCapabilities {
         private static final String TAG = "AudioCapabilities";
+
+        private long mNativeContext; // accessed by native methods
+
         private CodecCapabilities mParent;
         private Range<Integer> mBitrateRange;
 
@@ -1433,15 +1438,21 @@ public final class MediaCodecInfo {
          */
         @IntRange(from = 1, to = 255)
         public int getMaxInputChannelCount() {
-            int overall_max = 0;
-            for (int i = mInputChannelRanges.length - 1; i >= 0; i--) {
-                int lmax = mInputChannelRanges[i].getUpper();
-                if (lmax > overall_max) {
-                    overall_max = lmax;
+            if (FLAG) {
+                return native_getMaxInputChannelCount();
+            } else {
+                int overall_max = 0;
+                for (int i = mInputChannelRanges.length - 1; i >= 0; i--) {
+                    int lmax = mInputChannelRanges[i].getUpper();
+                    if (lmax > overall_max) {
+                        overall_max = lmax;
+                    }
                 }
+                return overall_max;
             }
-            return overall_max;
         }
+
+        static native int native_getMaxInputChannelCount();
 
         /**
          * Returns the minimum number of input channels supported.
@@ -1452,15 +1463,21 @@ public final class MediaCodecInfo {
          */
         @IntRange(from = 1, to = 255)
         public int getMinInputChannelCount() {
-            int overall_min = MAX_INPUT_CHANNEL_COUNT;
-            for (int i = mInputChannelRanges.length - 1; i >= 0; i--) {
-                int lmin = mInputChannelRanges[i].getLower();
-                if (lmin < overall_min) {
-                    overall_min = lmin;
+            if (FLAG) {
+                return native_getMinInputChannelCount();
+            } else {
+                int overall_min = MAX_INPUT_CHANNEL_COUNT;
+                for (int i = mInputChannelRanges.length - 1; i >= 0; i--) {
+                    int lmin = mInputChannelRanges[i].getLower();
+                    if (lmin < overall_min) {
+                        overall_min = lmin;
+                    }
                 }
+                return overall_min;
             }
-            return overall_min;
         }
+
+        static native int native_getMinInputChannelCount();
 
         /*
          * Returns an array of ranges representing the number of input channels supported.
@@ -1474,6 +1491,19 @@ public final class MediaCodecInfo {
         @NonNull
         public Range<Integer>[] getInputChannelCountRanges() {
             return Arrays.copyOf(mInputChannelRanges, mInputChannelRanges.length);
+        }
+
+        /**
+         * Constructor used by JNI.
+         *
+         * The Java AudioCapabilities object keeps these subobjects to avoid recontruction.
+         */
+        /* package private */ AudioCapabilities(Range<Integer> bitrateRange, int[] sampleRates,
+                Range<Integer>[] sampleRateRanges, Range<Integer>[] inputChannelRanges) {
+            mBitrateRange = bitrateRange;
+            mSampleRates = sampleRates;
+            mSampleRateRanges = sampleRateRanges;
+            mInputChannelRanges = inputChannelRanges;
         }
 
         /* no public constructor */
@@ -1529,8 +1559,14 @@ public final class MediaCodecInfo {
          * Query whether the sample rate is supported by the codec.
          */
         public boolean isSampleRateSupported(int sampleRate) {
-            return supports(sampleRate, null);
+            if (FLAG) {
+                return native_isSampleRateSupported(sampleRate);
+            } else {
+                return supports(sampleRate, null);
+            }
         }
+
+        static native boolean native_isSampleRateSupported(int sampleRate);
 
         /** modifies rates */
         private void limitSampleRates(int[] rates) {
@@ -1810,6 +1846,13 @@ public final class MediaCodecInfo {
             // KEY_CHANNEL_MASK: codecs don't get this
             // KEY_IS_ADTS:      required feature for all AAC decoders
             return true;
+        }
+
+        private static native void native_init();
+
+        static {
+            System.loadLibrary("media_jni");
+            native_init();
         }
     }
 
@@ -4536,5 +4579,15 @@ public final class MediaCodecInfo {
         return new MediaCodecInfo(
                 mName, mCanonicalName, mFlags,
                 caps.toArray(new CodecCapabilities[caps.size()]));
+    }
+
+    /* package private */ class GenericHelper {
+        /* package private */ static Range<Integer> getIntegerRange(Integer lower, Integer upper) {
+            return Range.create(lower, upper);
+        }
+
+        /* package private */ static Range<Double> getDoubleRange(Double lower, Double upper) {
+            return Range.create(lower, upper);
+        }
     }
 }
