@@ -118,6 +118,30 @@
       },
       "revId": "ae2bb858b7f779d4af23a5c109e9cad526da6010",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40656c0c_d1b3c6d7",
+        "filename": "core/java/com/android/internal/widget/LockPatternView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1964929
+      },
+      "writtenOn": "2024-06-12T13:11:22Z",
+      "side": 1,
+      "message": "I have now uploaded patchset 4, where I folded the new behavior into keepDotActivated. I haven\u0027t tested this change on any other device such as handheld, but it shouldn\u0027t affect anything that doesn\u0027t have keepDotActivated\u003dtrue. However I don\u0027t see any reason for it not working as intended on handheld if keepDotActivated is set to true there too in the future.",
+      "parentUuid": "9e832e9e_331fa49c",
+      "range": {
+        "startLine": 455,
+        "startChar": 16,
+        "endLine": 455,
+        "endChar": 38
+      },
+      "revId": "ae2bb858b7f779d4af23a5c109e9cad526da6010",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
