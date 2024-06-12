@@ -1106,7 +1106,7 @@ public final class MediaCodecInfo {
                 Map<String, Object> levelCriticalFormatMap = new HashMap<>(map);
                 final Set<String> criticalKeys =
                     isVideo() ? VideoCapabilities.VIDEO_LEVEL_CRITICAL_FORMAT_KEYS :
-                    isAudio() ? AudioCapabilities.AUDIO_LEVEL_CRITICAL_FORMAT_KEYS :
+                    isAudio() ? AudioCapsLegacyImpl.AUDIO_LEVEL_CRITICAL_FORMAT_KEYS :
                     null;
 
                 // critical keys will always contain KEY_MIME, but should also contain others to be
@@ -1405,11 +1405,29 @@ public final class MediaCodecInfo {
         }
     }
 
-    /**
-     * A class that supports querying the audio capabilities of a codec.
-     */
-    public static final class AudioCapabilities {
-        private static final String TAG = "AudioCapabilities";
+    interface AudioCapsIntf {
+        public Range<Integer> getBitrateRange();
+
+        public int[] getSupportedSampleRates();
+
+        public Range<Integer>[] getSupportedSampleRateRanges();
+
+        public int getMaxInputChannelCount();
+
+        public int getMinInputChannelCount();
+
+        public Range<Integer>[] getInputChannelCountRanges();
+
+        public boolean isSampleRateSupported(int sampleRate);
+
+        /** @hide */
+        public void getDefaultFormat(MediaFormat format);
+
+        /** @hide */
+        public boolean supportsFormat(MediaFormat format);
+    }
+
+    /* package private */ static final class AudioCapsLegacyImpl implements AudioCapsIntf {
         private CodecCapabilities mParent;
         private Range<Integer> mBitrateRange;
 
@@ -1419,47 +1437,18 @@ public final class MediaCodecInfo {
 
         private static final int MAX_INPUT_CHANNEL_COUNT = 30;
 
-        /**
-         * Returns the range of supported bitrates in bits/second.
-         */
         public Range<Integer> getBitrateRange() {
             return mBitrateRange;
         }
 
-        /**
-         * Returns the array of supported sample rates if the codec
-         * supports only discrete values.  Otherwise, it returns
-         * {@code null}.  The array is sorted in ascending order.
-         */
         public int[] getSupportedSampleRates() {
             return mSampleRates != null ? Arrays.copyOf(mSampleRates, mSampleRates.length) : null;
         }
 
-        /**
-         * Returns the array of supported sample rate ranges.  The
-         * array is sorted in ascending order, and the ranges are
-         * distinct.
-         */
         public Range<Integer>[] getSupportedSampleRateRanges() {
             return Arrays.copyOf(mSampleRateRanges, mSampleRateRanges.length);
         }
 
-        /**
-         * Returns the maximum number of input channels supported.
-         *
-         * Through {@link android.os.Build.VERSION_CODES#R}, this method indicated support
-         * for any number of input channels between 1 and this maximum value.
-         *
-         * As of {@link android.os.Build.VERSION_CODES#S},
-         * the implied lower limit of 1 channel is no longer valid.
-         * As of {@link android.os.Build.VERSION_CODES#S}, {@link #getMaxInputChannelCount} is
-         * superseded by {@link #getInputChannelCountRanges},
-         * which returns an array of ranges of channels.
-         * The {@link #getMaxInputChannelCount} method will return the highest value
-         * in the ranges returned by {@link #getInputChannelCountRanges}
-         *
-         */
-        @IntRange(from = 1, to = 255)
         public int getMaxInputChannelCount() {
             int overall_max = 0;
             for (int i = mInputChannelRanges.length - 1; i >= 0; i--) {
@@ -1471,14 +1460,6 @@ public final class MediaCodecInfo {
             return overall_max;
         }
 
-        /**
-         * Returns the minimum number of input channels supported.
-         * This is often 1, but does vary for certain mime types.
-         *
-         * This returns the lowest channel count in the ranges returned by
-         * {@link #getInputChannelCountRanges}.
-         */
-        @IntRange(from = 1, to = 255)
         public int getMinInputChannelCount() {
             int overall_min = MAX_INPUT_CHANNEL_COUNT;
             for (int i = mInputChannelRanges.length - 1; i >= 0; i--) {
@@ -1490,27 +1471,17 @@ public final class MediaCodecInfo {
             return overall_min;
         }
 
-        /*
-         * Returns an array of ranges representing the number of input channels supported.
-         * The codec supports any number of input channels within this range.
-         *
-         * This supersedes the {@link #getMaxInputChannelCount} method.
-         *
-         * For many codecs, this will be a single range [1..N], for some N.
-         */
-        @SuppressLint("ArrayReturn")
-        @NonNull
         public Range<Integer>[] getInputChannelCountRanges() {
             return Arrays.copyOf(mInputChannelRanges, mInputChannelRanges.length);
         }
 
         /* no public constructor */
-        private AudioCapabilities() { }
+        private AudioCapsLegacyImpl() { }
 
         /** @hide */
-        public static AudioCapabilities create(
+        public static AudioCapsLegacyImpl create(
                 MediaFormat info, CodecCapabilities parent) {
-            AudioCapabilities caps = new AudioCapabilities();
+            AudioCapsLegacyImpl caps = new AudioCapsLegacyImpl();
             caps.init(info, parent);
             return caps;
         }
@@ -1553,9 +1524,6 @@ public final class MediaCodecInfo {
             return true;
         }
 
-        /**
-         * Query whether the sample rate is supported by the codec.
-         */
         public boolean isSampleRateSupported(int sampleRate) {
             return supports(sampleRate, null);
         }
@@ -1838,6 +1806,192 @@ public final class MediaCodecInfo {
             // KEY_CHANNEL_MASK: codecs don't get this
             // KEY_IS_ADTS:      required feature for all AAC decoders
             return true;
+        }
+    }
+
+    /* package private */ static final class AudioCapsNativeImpl implements AudioCapsIntf {
+        private long mNativeContext; // accessed by native methods
+
+        private Range<Integer> mBitrateRange;
+        private int[] mSampleRates;
+        private Range<Integer>[] mSampleRateRanges;
+        private Range<Integer>[] mInputChannelRanges;
+
+        /**
+         * Constructor used by JNI.
+         *
+         * The Java AudioCapabilities object keeps these subobjects to avoid recontruction.
+         */
+        /* package private */ AudioCapsNativeImpl(Range<Integer> bitrateRange, int[] sampleRates,
+                Range<Integer>[] sampleRateRanges, Range<Integer>[] inputChannelRanges) {
+            mBitrateRange = bitrateRange;
+            mSampleRates = sampleRates;
+            mSampleRateRanges = sampleRateRanges;
+            mInputChannelRanges = inputChannelRanges;
+        }
+
+        /* no public constructor */
+        private AudioCapsNativeImpl() { }
+
+        public Range<Integer> getBitrateRange() {
+            return mBitrateRange;
+        }
+
+        public int[] getSupportedSampleRates() {
+            return mSampleRates != null ? Arrays.copyOf(mSampleRates, mSampleRates.length) : null;
+        }
+
+        public Range<Integer>[] getSupportedSampleRateRanges() {
+            return Arrays.copyOf(mSampleRateRanges, mSampleRateRanges.length);
+        }
+
+        public Range<Integer>[] getInputChannelCountRanges() {
+            return Arrays.copyOf(mInputChannelRanges, mInputChannelRanges.length);
+        }
+
+        public int getMaxInputChannelCount() {
+            return native_getMaxInputChannelCount();
+        }
+
+        public int getMinInputChannelCount() {
+            return native_getMinInputChannelCount();
+        }
+
+        public boolean isSampleRateSupported(int sampleRate) {
+            return native_isSampleRateSupported(sampleRate);
+        }
+
+        // This API is for internal Java implementation only. Should not be called.
+        public void getDefaultFormat(MediaFormat format) {
+            Log.e(TAG, "Java Implementation calling native implemenatation");
+        }
+
+        // This API is for internal Java implementation only. Should not be called.
+        public boolean supportsFormat(MediaFormat format) {
+            Log.e(TAG, "Java Implementation calling native implemenatation");
+            return false;
+        }
+
+        private native int native_getMaxInputChannelCount();
+        private native int native_getMinInputChannelCount();
+        private native boolean native_isSampleRateSupported(int sampleRate);
+        private static native void native_init();
+
+        static {
+            System.loadLibrary("media_jni");
+            native_init();
+        }
+    }
+
+    /**
+     * A class that supports querying the audio capabilities of a codec.
+     */
+    public static final class AudioCapabilities {
+        private static final String TAG = "AudioCapabilities";
+
+        private AudioCapsIntf mImpl;
+
+        /** @hide */
+        public static AudioCapabilities create(
+                MediaFormat info, CodecCapabilities parent) {
+            AudioCapsLegacyImpl impl = AudioCapsLegacyImpl.create(info, parent);
+            AudioCapabilities caps = new AudioCapabilities(impl);
+            return caps;
+        }
+
+        /* package private */ AudioCapabilities(AudioCapsIntf impl) {
+            mImpl = impl;
+        }
+
+        /* no public constructor */
+        private AudioCapabilities() { }
+
+        /**
+         * Returns the range of supported bitrates in bits/second.
+         */
+        public Range<Integer> getBitrateRange() {
+            return mImpl.getBitrateRange();
+        }
+
+        /**
+         * Returns the array of supported sample rates if the codec
+         * supports only discrete values.  Otherwise, it returns
+         * {@code null}.  The array is sorted in ascending order.
+         */
+        public int[] getSupportedSampleRates() {
+            return mImpl.getSupportedSampleRates();
+        }
+
+        /**
+         * Returns the array of supported sample rate ranges.  The
+         * array is sorted in ascending order, and the ranges are
+         * distinct.
+         */
+        public Range<Integer>[] getSupportedSampleRateRanges() {
+            return mImpl.getSupportedSampleRateRanges();
+        }
+
+        /*
+         * Returns an array of ranges representing the number of input channels supported.
+         * The codec supports any number of input channels within this range.
+         *
+         * This supersedes the {@link #getMaxInputChannelCount} method.
+         *
+         * For many codecs, this will be a single range [1..N], for some N.
+         */
+        @SuppressLint("ArrayReturn")
+        @NonNull
+        public Range<Integer>[] getInputChannelCountRanges() {
+            return mImpl.getInputChannelCountRanges();
+        }
+
+        /**
+         * Returns the maximum number of input channels supported.
+         *
+         * Through {@link android.os.Build.VERSION_CODES#R}, this method indicated support
+         * for any number of input channels between 1 and this maximum value.
+         *
+         * As of {@link android.os.Build.VERSION_CODES#S},
+         * the implied lower limit of 1 channel is no longer valid.
+         * As of {@link android.os.Build.VERSION_CODES#S}, {@link #getMaxInputChannelCount} is
+         * superseded by {@link #getInputChannelCountRanges},
+         * which returns an array of ranges of channels.
+         * The {@link #getMaxInputChannelCount} method will return the highest value
+         * in the ranges returned by {@link #getInputChannelCountRanges}
+         *
+         */
+        @IntRange(from = 1, to = 255)
+        public int getMaxInputChannelCount() {
+            return mImpl.getMaxInputChannelCount();
+        }
+
+        /**
+         * Returns the minimum number of input channels supported.
+         * This is often 1, but does vary for certain mime types.
+         *
+         * This returns the lowest channel count in the ranges returned by
+         * {@link #getInputChannelCountRanges}.
+         */
+        @IntRange(from = 1, to = 255)
+        public int getMinInputChannelCount() {
+            return mImpl.getMinInputChannelCount();
+        }
+
+        /**
+         * Query whether the sample rate is supported by the codec.
+         */
+        public boolean isSampleRateSupported(int sampleRate) {
+            return mImpl.isSampleRateSupported(sampleRate);
+        }
+
+        /** @hide */
+        public void getDefaultFormat(MediaFormat format) {
+            mImpl.getDefaultFormat(format);
+        }
+
+        /** @hide */
+        public boolean supportsFormat(MediaFormat format) {
+            return mImpl.supportsFormat(format);
         }
     }
 
@@ -4825,5 +4979,15 @@ public final class MediaCodecInfo {
         return new MediaCodecInfo(
                 mName, mCanonicalName, mFlags,
                 caps.toArray(new CodecCapabilities[caps.size()]));
+    }
+
+    /* package private */ class GenericHelper {
+        /* package private */ static Range<Integer> getIntegerRange(Integer lower, Integer upper) {
+            return Range.create(lower, upper);
+        }
+
+        /* package private */ static Range<Double> getDoubleRange(Double lower, Double upper) {
+            return Range.create(lower, upper);
+        }
     }
 }
