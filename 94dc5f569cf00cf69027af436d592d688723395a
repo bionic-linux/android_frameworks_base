@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "723a206f_be337f81",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-06-15T00:23:49Z",
+      "side": 1,
+      "message": "you mean `i--`?",
+      "range": {
+        "startLine": 1462,
+        "startChar": 56,
+        "endLine": 1462,
+        "endChar": 59
+      },
+      "revId": "94dc5f569cf00cf69027af436d592d688723395a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
