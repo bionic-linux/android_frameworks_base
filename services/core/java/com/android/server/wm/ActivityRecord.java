@@ -6928,7 +6928,8 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
         // The transition may not be executed if the starting process hasn't attached. But if the
         // starting window is drawn, the transition can start earlier. Exclude finishing and bubble
         // because it may be a trampoline.
-        if (!wasTaskVisible && mStartingData != null && !finishing && !mLaunchedFromBubble
+        if ((!wasTaskVisible || !attachedToProcess()) && mStartingData != null &&
+                !finishing && !mLaunchedFromBubble
                 && mVisibleRequested && !mDisplayContent.mAppTransition.isReady()
                 && !mDisplayContent.mAppTransition.isRunning()
                 && mDisplayContent.isNextTransitionForward()) {
