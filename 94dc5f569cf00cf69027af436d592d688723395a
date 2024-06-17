@@ -22,6 +22,30 @@
       },
       "revId": "94dc5f569cf00cf69027af436d592d688723395a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77a4a984_c1777682",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2024-06-17T14:40:58Z",
+      "side": 1,
+      "message": "Done, and added tests.",
+      "parentUuid": "723a206f_be337f81",
+      "range": {
+        "startLine": 1462,
+        "startChar": 56,
+        "endLine": 1462,
+        "endChar": 59
+      },
+      "revId": "94dc5f569cf00cf69027af436d592d688723395a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
