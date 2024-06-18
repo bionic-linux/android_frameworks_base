@@ -1,0 +1,88 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01749fd1_e34cbcd5",
+        "filename": "core/java/com/android/internal/widget/LockPatternView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1944372
+      },
+      "writtenOn": "2024-06-18T16:23:55Z",
+      "side": 1,
+      "message": "Could we move away from using the number 3 here? Could we pull the # of rows/columns from a constant or variable?",
+      "range": {
+        "startLine": 682,
+        "startChar": 0,
+        "endLine": 683,
+        "endChar": 41
+      },
+      "revId": "b20a447a38e460f10262a9ec7a6e1e8c4c1836c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8958c02_d4f55907",
+        "filename": "core/java/com/android/internal/widget/LockPatternView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1944372
+      },
+      "writtenOn": "2024-06-18T16:23:55Z",
+      "side": 1,
+      "message": "Could you group these into a single if-else block and leave a comment explaining these behaviors? I think \"keep dot activated\" isn\u0027t descriptive enough to understand what\u0027s happening here",
+      "range": {
+        "startLine": 1216,
+        "startChar": 0,
+        "endLine": 1221,
+        "endChar": 13
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "3faba68e_1263158b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/com/android/internal/widget/LockPatternView.java",
+              "range": {
+                "startLine": 1216,
+                "startChar": 0,
+                "endLine": 1219,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "core/java/com/android/internal/widget/LockPatternView.java",
+              "range": {
+                "startLine": 1220,
+                "startChar": 0,
+                "endLine": 1220,
+                "endChar": 0
+              },
+              "replacement": "                // When mKeepDotActivated is true, we keep the pattern drawn on the screen\n                // when the pattern is detected.\n"
+            },
+            {
+              "path": "core/java/com/android/internal/widget/LockPatternView.java",
+              "range": {
+                "startLine": 1221,
+                "startChar": 0,
+                "endLine": 1221,
+                "endChar": 0
+              },
+              "replacement": "            } else {\n                // When mKeepDotActivated is false, we cancel the line animations and\n                // clear the pattern when the pattern is detected.\n                cancelLineAnimations();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b20a447a38e460f10262a9ec7a6e1e8c4c1836c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
