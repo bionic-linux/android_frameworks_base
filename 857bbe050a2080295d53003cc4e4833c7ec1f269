@@ -99,6 +99,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c37c122_36e61f4e",
+        "filename": "core/java/android/net/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2024-06-19T15:31:09Z",
+      "side": 1,
+      "message": "Done in:\n* https://android-review.git.corp.google.com/c/platform/libcore/+/3138914\n* https://android-review.git.corp.google.com/c/platform/frameworks/base/+/3139198",
+      "parentUuid": "5c5b784a_73fc78a8",
+      "range": {
+        "startLine": 6,
+        "startChar": 26,
+        "endLine": 6,
+        "endChar": 102
+      },
+      "revId": "857bbe050a2080295d53003cc4e4833c7ec1f269",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56432dbd_7472ac1b",
