@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a82d220_c1b60ad8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2024-06-19T01:50:52Z",
+      "side": 1,
+      "message": "@omakoto@google.com @jji@google.com\nCould you help me trig presubmit-verified again?",
+      "revId": "64645f92a6af555999b5a2aaa7a00fc323bf4e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
