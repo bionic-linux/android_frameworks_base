@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b560414a_890b7e5f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1688644
+      },
+      "writtenOn": "2024-06-19T20:33:42Z",
+      "side": 1,
+      "message": "According to the page: https://developer.android.com/guide/topics/resources/internationalization Android 15 supports CLDR version 45.",
+      "revId": "d79f4f8e7208827fffa122fe4bc09ead4631ae61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
