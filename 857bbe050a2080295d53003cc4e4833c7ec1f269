@@ -134,6 +134,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "56a2f655_ec8f7a1f",
+        "filename": "core/jni/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2024-06-19T14:00:24Z",
+      "side": 1,
+      "message": "Done in https://android-review.git.corp.google.com/c/platform/frameworks/base/+/3139475.",
+      "parentUuid": "d78af4f9_68df76e0",
+      "revId": "857bbe050a2080295d53003cc4e4833c7ec1f269",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8ea27a69_d307a64a",
