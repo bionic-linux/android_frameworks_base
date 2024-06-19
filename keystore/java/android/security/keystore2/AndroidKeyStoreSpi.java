@@ -1012,13 +1012,19 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
                     // when wrapping key has KM_TAG_RSA_OAEP_MGF_DIGEST tag
                     if (authorization.keyParameter.tag
                             == KeymasterDefs.KM_TAG_RSA_OAEP_MGF_DIGEST) {
-                        // Default MGF1 digest is SHA-1
-                        // and KeyMint only supports default MGF1 digest crypto operations
-                        // for importWrappedKey.
-                        args.add(KeyStore2ParameterUtils.makeEnum(
-                                KeymasterDefs.KM_TAG_RSA_OAEP_MGF_DIGEST,
-                                KeyProperties.Digest.toKeymaster(DEFAULT_MGF1_DIGEST)
-                        ));
+                        if (spec.isMgf1DigestsSpecified()) {
+                            for (String mgf1Digest : spec.getMgf1Digests()) {
+                                args.add(KeyStore2ParameterUtils.makeEnum(
+                                        KeymasterDefs.KM_TAG_RSA_OAEP_MGF_DIGEST,
+                                        KeyProperties.Digest.toKeymaster(mgf1Digest)
+                                ));
+                            }
+                        } else {
+                            args.add(KeyStore2ParameterUtils.makeEnum(
+                                    KeymasterDefs.KM_TAG_RSA_OAEP_MGF_DIGEST,
+                                    KeyProperties.Digest.toKeymaster(KeyProperties.DIGEST_SHA1)
+                            ));
+                        }
                         break;
                     }
                 }
