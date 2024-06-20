@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9a5e371_eb0dd403",
+        "filename": "core/java/android/view/SurfaceControl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1962150
+      },
+      "writtenOn": "2024-06-20T10:28:50Z",
+      "side": 1,
+      "message": "The comment does not say how this flag is going to be applied (through which API)",
+      "range": {
+        "startLine": 751,
+        "startChar": 28,
+        "endLine": 751,
+        "endChar": 65
+      },
+      "revId": "4a041da9e9da4d90dfe6b232e394c4b7b6e24c13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
