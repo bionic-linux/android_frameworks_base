@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "862d3e15_047af874",
+        "filename": "services/core/java/com/android/server/biometrics/sensors/BiometricServiceRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1960060
+      },
+      "writtenOn": "2024-06-20T18:59:18Z",
+      "side": 1,
+      "message": "Is there a reason why the value of provider would be null? Going through the code, it seems like the logic does not allow that. Could you file a bug and a bugreport so that I can get a better understanding of what is happening?",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 34
+      },
+      "revId": "94982a66defffc9fac0e594594c8380dd52ccd4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
