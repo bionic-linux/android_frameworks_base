@@ -743,6 +743,13 @@ public final class SurfaceControl implements Parcelable {
      */
     public static final int DISPLAY_RECEIVES_INPUT = 0x01;
 
+    /**
+     * DisplayDevice flag: After setting the virtual display refresh rate, the virtual display
+     * is refreshed at the physical display refresh rate which .
+     * @hide
+     */
+    public static final int VIRTUAL_DISPLAY_PHYSICAL_REFRESH_RATE = 0x02;
+
     // Display power modes.
     /**
      * Display power mode off: used while blanking the screen.
