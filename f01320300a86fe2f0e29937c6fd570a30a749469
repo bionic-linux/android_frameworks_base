@@ -43,6 +43,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "337711cd_49c9ca0b",
+        "filename": "core/java/com/android/internal/widget/LockPatternView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-06-20T18:04:50Z",
+      "side": 1,
+      "message": "Should this be a comment in the code?",
+      "parentUuid": "5ad42576_0579ee34",
+      "revId": "f01320300a86fe2f0e29937c6fd570a30a749469",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "88b71d79_24c1784c",
         "filename": "core/java/com/android/internal/widget/LockPatternView.java",
         "patchSetId": 4
@@ -54,6 +72,30 @@
       "writtenOn": "2024-06-12T13:11:22Z",
       "side": 1,
       "message": "Without this, if pattern is filled in quickly, the dot size animation might not be finished before the next dot is reached, resulting in the dots being stuck in a size between mDotSize and mDotSizeActivated. Instead of canceling the activationAnimator we let it run to end.",
+      "range": {
+        "startLine": 897,
+        "startChar": 53,
+        "endLine": 897,
+        "endChar": 70
+      },
+      "revId": "f01320300a86fe2f0e29937c6fd570a30a749469",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c46fdb81_66f79c41",
+        "filename": "core/java/com/android/internal/widget/LockPatternView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-06-20T18:04:50Z",
+      "side": 1,
+      "message": "Should this be a comment in the code?",
+      "parentUuid": "88b71d79_24c1784c",
       "range": {
         "startLine": 897,
         "startChar": 53,
