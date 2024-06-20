@@ -33,6 +33,24 @@
       "message": "Thank you!\n\nHow was this tested?\n\nFrom all I remember, the logic in the language picker excludes the locales with numeric regions.\nSo adding Esperanto (with region 001) in the allow-list would not be enough.\n(my memory might also be flawed, or things might have changed)\n\nUnfortunately I am currently on vacation, so I can\u0027t flash a device to test it myself.",
       "revId": "d79f4f8e7208827fffa122fe4bc09ead4631ae61",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44d1559e_9e4d83f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1688644
+      },
+      "writtenOn": "2024-06-20T23:10:56Z",
+      "side": 1,
+      "message": "Interlingua is on the list with value ia-001 and it works. I am currently using Esperanto by setting it with third-party tool (https://github.com/MuntashirAkon/SetEdit).",
+      "parentUuid": "74081e2b_f65a39fd",
+      "revId": "d79f4f8e7208827fffa122fe4bc09ead4631ae61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
