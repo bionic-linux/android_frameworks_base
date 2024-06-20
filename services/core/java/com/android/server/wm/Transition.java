@@ -690,7 +690,7 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
         mParticipants.add(wc);
         recordDisplay(wc.getDisplayContent());
         if (info.mShowWallpaper) {
-            // Collect the wallpaper token (for isWallpaper(wc)) so it is part of the sync set.
+            // Collect the wallpaper window (for isWallpaper(wc)) so it is part of the sync set.
             wc.mDisplayContent.mWallpaperController.collectTopWallpapers(this);
         }
     }
@@ -2206,7 +2206,8 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
     }
 
     private static boolean isWallpaper(WindowContainer wc) {
-        return wc.asWallpaperToken() != null;
+        return wc.asWallpaperToken() != null || (wc.asWindowState() != null
+                && wc.asWindowState().mToken.asWallpaperToken() != null);
     }
 
     private static boolean isInputMethod(WindowContainer wc) {
