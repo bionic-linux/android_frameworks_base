@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d868bdb_7c775588",
+        "filename": "services/core/java/com/android/server/wm/Transition.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-06-21T01:30:36Z",
+      "side": 0,
+      "message": "It should add \".mToken\" to mTopShowWhenLockedWallpaper and mTopHideWhenLockedWallpaper in the method instead.",
+      "range": {
+        "startLine": 694,
+        "startChar": 52,
+        "endLine": 694,
+        "endChar": 72
+      },
+      "revId": "bbaf5cbe395bcf9e2d517daf3cfaa822efd28fd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
