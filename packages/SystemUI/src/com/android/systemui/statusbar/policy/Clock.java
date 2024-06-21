@@ -269,7 +269,7 @@ public class Clock extends TextView implements
                     }
                 });
             }
-            handler.post(() -> updateClock());
+            handler.postDelayed(() -> updateClock(), 200);
         }
     };
 
