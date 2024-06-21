@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26a96d10_4dae9dd3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-06-21T01:00:04Z",
+      "side": 1,
+      "message": "@suprabh@google.com @bookatz@google.com Could one of you +1 this change?",
+      "revId": "9a4dfe93df44dc9e4796223292d6b4cfb482b714",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
