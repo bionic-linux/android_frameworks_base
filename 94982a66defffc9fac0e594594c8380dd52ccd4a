@@ -22,6 +22,30 @@
       },
       "revId": "94982a66defffc9fac0e594594c8380dd52ccd4a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89d653f7_6110ff73",
+        "filename": "services/core/java/com/android/server/biometrics/sensors/BiometricServiceRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 3488845
+      },
+      "writtenOn": "2024-06-21T03:11:00Z",
+      "side": 1,
+      "message": "yes,I\u0027ve created a link to the question\nhttps://partnerissuetracker.corp.google.com/u/1/issues/348514328\nAnd when I merged in this patch, the stability test passed.If there are any problems, can you give some suggestions? Thanks!",
+      "parentUuid": "862d3e15_047af874",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 34
+      },
+      "revId": "94982a66defffc9fac0e594594c8380dd52ccd4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
