@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa0c8293_f40b6284",
+        "filename": "services/core/java/com/android/server/am/BroadcastQueueModernImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2299,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2024-06-21T01:08:52Z",
+      "side": 0,
+      "message": "(Not for this CL) Can we just delete this field now?",
+      "range": {
+        "startLine": 2299,
+        "startChar": 12,
+        "endLine": 2299,
+        "endChar": 22
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "2b9f9995_3612c647",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/am/BroadcastQueueModernImpl.java",
+              "range": {
+                "startLine": 2298,
+                "startChar": 0,
+                "endLine": 2303,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "15d6fac715b929bfb750eef39fe38e7027494a15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
