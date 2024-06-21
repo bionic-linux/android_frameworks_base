@@ -40,6 +40,30 @@
       ],
       "revId": "15d6fac715b929bfb750eef39fe38e7027494a15",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2ce444e_510815f2",
+        "filename": "services/core/java/com/android/server/am/BroadcastQueueModernImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2299,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-06-21T01:23:01Z",
+      "side": 0,
+      "message": "Yes, but we need to do some refactoring to get rid of artifacts from the legacy queue.",
+      "parentUuid": "aa0c8293_f40b6284",
+      "range": {
+        "startLine": 2299,
+        "startChar": 12,
+        "endLine": 2299,
+        "endChar": 22
+      },
+      "revId": "15d6fac715b929bfb750eef39fe38e7027494a15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
