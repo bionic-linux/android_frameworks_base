@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "718915e2_6325630d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3031218
+      },
+      "writtenOn": "2024-06-21T10:41:17Z",
+      "side": 1,
+      "message": "Hello Alisher,\nPlease review the latest patchset. \nWe see lint -1 but we do not have access to check lint error can you please help us to provide the details of lint error",
+      "revId": "56c3cb4e6302d87036af6c8a63a0db1ee0082da6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3cc30523_aec18b36",
