@@ -59,6 +59,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "caacec7f_15b9f942",
+        "filename": "core/java/com/android/internal/widget/LockPatternView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1964929
+      },
+      "writtenOn": "2024-06-24T12:02:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "337711cd_49c9ca0b",
+      "revId": "f01320300a86fe2f0e29937c6fd570a30a749469",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88b71d79_24c1784c",
@@ -96,6 +114,30 @@
       "side": 1,
       "message": "Should this be a comment in the code?",
       "parentUuid": "88b71d79_24c1784c",
+      "range": {
+        "startLine": 897,
+        "startChar": 53,
+        "endLine": 897,
+        "endChar": 70
+      },
+      "revId": "f01320300a86fe2f0e29937c6fd570a30a749469",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2653e1c_dc1e034e",
+        "filename": "core/java/com/android/internal/widget/LockPatternView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1964929
+      },
+      "writtenOn": "2024-06-24T12:02:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c46fdb81_66f79c41",
       "range": {
         "startLine": 897,
         "startChar": 53,
