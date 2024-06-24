@@ -69,6 +69,11 @@ static VideoCapabilities::PerformancePoint& getPerformancePoints(JNIEnv *env, jo
     return *p;
 }
 
+static std::shared_ptr<VideoCapabilities> getVideoCapabilities(JNIEnv *env, jobject thiz) {
+    VideoCapabilities* const p = (VideoCapabilities*)env->GetLongField(thiz, fields.context);
+    return std::shared_ptr<VideoCapabilities>(p);
+}
+
 // The Java AudioCapabilities object keep bitrateRange, sampleRates, sampleRateRanges
 // and inputChannelRanges in it to prevent reconstruction when called the getters functions.
 jobject getJavaAudioCapabilitiesFromNative(
@@ -131,6 +136,7 @@ jobjectArray getJavaPerformancePointArrayFromNative(JNIEnv *env,
     jclass performancePointClazz = env->FindClass("android/media/MediaCodecInfo$VideoCapabilities$PerformancePoint");
     CHECK(performancePointClazz != NULL);
     jmethodID performancePointConstructID = env->GetMethodID(performancePointClazz, "<init>", "(I;I;I;J;I;I)V");
+
     jobjectArray jPerformancePoints = env->NewObjectArray(performancePoints.size(), performancePointClazz, NULL);
     for (int i = 0; i < performancePoints.size(); i++) {
         VideoCapabilities::PerformancePoint performancePoint = performancePoints.at(i);
@@ -138,11 +144,74 @@ jobjectArray getJavaPerformancePointArrayFromNative(JNIEnv *env,
                 performancePoint.getWidth(), performancePoint.getHeight(), performancePoint.getMaxFrameRate(),
                 performancePoint.getMaxMacroBlockRate(), performancePoint.getBlockSize().getWidth(),
                 performancePoint.getBlockSize().getHeight());
+
+        env->SetLongField(jPerformancePoint, fields.context, (jlong)(&performancePoint));
+
         env->SetObjectArrayElement(jPerformancePoints, i, jPerformancePoint);
+
         env->DeleteLocalRef(jPerformancePoint);
         jPerformancePoint = NULL;
     }
+
     return jPerformancePoints;
+}
+
+jobject getJavaVideoCapabilitiesFromNative(JNIEnv *env, std::shared_ptr<VideoCapabilities> videoCaps) {
+    if (videoCaps == nullptr) {
+        return NULL;
+    }
+
+    // get Java bitrateRange
+    const Range<int>& bitrateRange = videoCaps->getBitrateRange();
+    jobject jBitrateRange = getJavaIntRangeFromNative(env, bitrateRange);
+
+    // get Java widthRange
+    const Range<int>& widthRange = videoCaps->getSupportedWidths();
+    jobject jWidthRange = getJavaIntRangeFromNative(env, widthRange);
+
+    // get Java heightRange
+    const Range<int>& heightRange = videoCaps->getSupportedHeights();
+    jobject jHeightRange = getJavaIntRangeFromNative(env, heightRange);
+
+    // get Java frameRateRange
+    const Range<int>& frameRateRange = videoCaps->getSupportedFrameRates();
+    jobject jFrameRateRange = getJavaIntRangeFromNative(env, frameRateRange);
+
+    // get Java performancePoints
+    const std::vector<VideoCapabilities::PerformancePoint>& performancePoints = videoCaps->getSupportedPerformancePoints();
+    jobjectArray jPerformancePoints = getJavaPerformancePointArrayFromNative(env, performancePoints);
+
+    // get Java VideoCapabilities
+    jclass videoCapsClazz =
+        env->FindClass("android/media/MediaCodecInfo$VideoCapabilities");
+    CHECK(videoCapsClazz != NULL);
+    jmethodID videoCapsConstructID = env->GetMethodID(videoCapsClazz, "<init>",
+            "(Landroid/util/Range;"
+            "Landroid/util/Range;"
+            "Landroid/util/Range;"
+            "Landroid/util/Range;"
+            "[android/media/MediaCodecInfo$VideoCapabilities$PerformancePoint)V");
+    jobject jVideoCaps = env->NewObject(videoCapsClazz, videoCapsConstructID, jBitrateRange, jWidthRange,
+            jHeightRange, jFrameRateRange, jPerformancePoints);
+
+    env->DeleteLocalRef(jBitrateRange);
+    jBitrateRange = NULL;
+
+    env->DeleteLocalRef(jWidthRange);
+    jWidthRange = NULL;
+
+    env->DeleteLocalRef(jHeightRange);
+    jHeightRange = NULL;
+
+    env->DeleteLocalRef(jFrameRateRange);
+    jFrameRateRange = NULL;
+
+    env->DeleteLocalRef(jPerformancePoints);
+    jPerformancePoints = NULL;
+
+    env->SetLongField(jVideoCaps, fields.context, (jlong)videoCaps.get());
+
+    return jVideoCaps;
 }
 
 // ----------------------------------------------------------------------------
