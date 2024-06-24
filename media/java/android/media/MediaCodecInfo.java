@@ -1908,6 +1908,9 @@ public final class MediaCodecInfo {
      */
     public static final class VideoCapabilities {
         private static final String TAG = "VideoCapabilities";
+
+        private long mNativeContext; // accessed by native methods
+
         private CodecCapabilities mParent;
         private Range<Integer> mBitrateRange;
 
@@ -2012,88 +2015,100 @@ public final class MediaCodecInfo {
          * @param height the height of the video
          */
         public Range<Integer> getSupportedWidthsFor(int height) {
-            try {
-                Range<Integer> range = mWidthRange;
-                if (!mHeightRange.contains(height)
-                        || (height % mHeightAlignment) != 0) {
+            if (GetFlag(() -> android.media.codec.Flags.nativeCapabilites())) {
+                return native_getSupportedWidthsFor(height);
+            } else {
+                try {
+                    Range<Integer> range = mWidthRange;
+                    if (!mHeightRange.contains(height)
+                            || (height % mHeightAlignment) != 0) {
+                        throw new IllegalArgumentException("unsupported height");
+                    }
+                    final int heightInBlocks = Utils.divUp(height, mBlockHeight);
+
+                    // constrain by block count and by block aspect ratio
+                    final int minWidthInBlocks = Math.max(
+                            Utils.divUp(mBlockCountRange.getLower(), heightInBlocks),
+                            (int) Math.ceil(mBlockAspectRatioRange.getLower().doubleValue()
+                                    * heightInBlocks));
+                    final int maxWidthInBlocks = Math.min(
+                            mBlockCountRange.getUpper() / heightInBlocks,
+                            (int) (mBlockAspectRatioRange.getUpper().doubleValue()
+                                    * heightInBlocks));
+                    range = range.intersect(
+                            (minWidthInBlocks - 1) * mBlockWidth + mWidthAlignment,
+                            maxWidthInBlocks * mBlockWidth);
+
+                    // constrain by smaller dimension limit
+                    if (height > mSmallerDimensionUpperLimit) {
+                        range = range.intersect(1, mSmallerDimensionUpperLimit);
+                    }
+
+                    // constrain by aspect ratio
+                    range = range.intersect(
+                            (int) Math.ceil(mAspectRatioRange.getLower().doubleValue()
+                                    * height),
+                            (int) (mAspectRatioRange.getUpper().doubleValue() * height));
+                    return range;
+                } catch (IllegalArgumentException e) {
+                    // height is not supported because there are no suitable widths
+                    Log.v(TAG, "could not get supported widths for " + height);
                     throw new IllegalArgumentException("unsupported height");
                 }
-                final int heightInBlocks = Utils.divUp(height, mBlockHeight);
-
-                // constrain by block count and by block aspect ratio
-                final int minWidthInBlocks = Math.max(
-                        Utils.divUp(mBlockCountRange.getLower(), heightInBlocks),
-                        (int)Math.ceil(mBlockAspectRatioRange.getLower().doubleValue()
-                                * heightInBlocks));
-                final int maxWidthInBlocks = Math.min(
-                        mBlockCountRange.getUpper() / heightInBlocks,
-                        (int)(mBlockAspectRatioRange.getUpper().doubleValue()
-                                * heightInBlocks));
-                range = range.intersect(
-                        (minWidthInBlocks - 1) * mBlockWidth + mWidthAlignment,
-                        maxWidthInBlocks * mBlockWidth);
-
-                // constrain by smaller dimension limit
-                if (height > mSmallerDimensionUpperLimit) {
-                    range = range.intersect(1, mSmallerDimensionUpperLimit);
-                }
-
-                // constrain by aspect ratio
-                range = range.intersect(
-                        (int)Math.ceil(mAspectRatioRange.getLower().doubleValue()
-                                * height),
-                        (int)(mAspectRatioRange.getUpper().doubleValue() * height));
-                return range;
-            } catch (IllegalArgumentException e) {
-                // height is not supported because there are no suitable widths
-                Log.v(TAG, "could not get supported widths for " + height);
-                throw new IllegalArgumentException("unsupported height");
             }
         }
+
+        /* package private */static native Range<Integer> native_getSupportedWidthsFor(int height);
 
         /**
          * Returns the range of supported video heights for a video width
          * @param width the width of the video
          */
         public Range<Integer> getSupportedHeightsFor(int width) {
-            try {
-                Range<Integer> range = mHeightRange;
-                if (!mWidthRange.contains(width)
-                        || (width % mWidthAlignment) != 0) {
+            if (GetFlag(() -> android.media.codec.Flags.nativeCapabilites())) {
+                return native_getSupportedHeightsFor(width);
+            } else {
+                try {
+                    Range<Integer> range = mHeightRange;
+                    if (!mWidthRange.contains(width)
+                            || (width % mWidthAlignment) != 0) {
+                        throw new IllegalArgumentException("unsupported width");
+                    }
+                    final int widthInBlocks = Utils.divUp(width, mBlockWidth);
+
+                    // constrain by block count and by block aspect ratio
+                    final int minHeightInBlocks = Math.max(
+                            Utils.divUp(mBlockCountRange.getLower(), widthInBlocks),
+                            (int) Math.ceil(widthInBlocks
+                                    / mBlockAspectRatioRange.getUpper().doubleValue()));
+                    final int maxHeightInBlocks = Math.min(
+                            mBlockCountRange.getUpper() / widthInBlocks,
+                            (int) (widthInBlocks
+                                    / mBlockAspectRatioRange.getLower().doubleValue()));
+                    range = range.intersect(
+                            (minHeightInBlocks - 1) * mBlockHeight + mHeightAlignment,
+                            maxHeightInBlocks * mBlockHeight);
+
+                    // constrain by smaller dimension limit
+                    if (width > mSmallerDimensionUpperLimit) {
+                        range = range.intersect(1, mSmallerDimensionUpperLimit);
+                    }
+
+                    // constrain by aspect ratio
+                    range = range.intersect(
+                            (int) Math.ceil(width
+                                    / mAspectRatioRange.getUpper().doubleValue()),
+                            (int) (width / mAspectRatioRange.getLower().doubleValue()));
+                    return range;
+                } catch (IllegalArgumentException e) {
+                    // width is not supported because there are no suitable heights
+                    Log.v(TAG, "could not get supported heights for " + width);
                     throw new IllegalArgumentException("unsupported width");
                 }
-                final int widthInBlocks = Utils.divUp(width, mBlockWidth);
-
-                // constrain by block count and by block aspect ratio
-                final int minHeightInBlocks = Math.max(
-                        Utils.divUp(mBlockCountRange.getLower(), widthInBlocks),
-                        (int)Math.ceil(widthInBlocks /
-                                mBlockAspectRatioRange.getUpper().doubleValue()));
-                final int maxHeightInBlocks = Math.min(
-                        mBlockCountRange.getUpper() / widthInBlocks,
-                        (int)(widthInBlocks /
-                                mBlockAspectRatioRange.getLower().doubleValue()));
-                range = range.intersect(
-                        (minHeightInBlocks - 1) * mBlockHeight + mHeightAlignment,
-                        maxHeightInBlocks * mBlockHeight);
-
-                // constrain by smaller dimension limit
-                if (width > mSmallerDimensionUpperLimit) {
-                    range = range.intersect(1, mSmallerDimensionUpperLimit);
-                }
-
-                // constrain by aspect ratio
-                range = range.intersect(
-                        (int)Math.ceil(width /
-                                mAspectRatioRange.getUpper().doubleValue()),
-                        (int)(width / mAspectRatioRange.getLower().doubleValue()));
-                return range;
-            } catch (IllegalArgumentException e) {
-                // width is not supported because there are no suitable heights
-                Log.v(TAG, "could not get supported heights for " + width);
-                throw new IllegalArgumentException("unsupported width");
             }
         }
+
+        /* package priavte */ static native Range<Integer> native_getSupportedHeightsFor(int width);
 
         /**
          * Returns the range of supported video frame rates for a video size.
@@ -2107,19 +2122,26 @@ public final class MediaCodecInfo {
          * @param height the height of the video
          */
         public Range<Double> getSupportedFrameRatesFor(int width, int height) {
-            Range<Integer> range = mHeightRange;
-            if (!supports(width, height, null)) {
-                throw new IllegalArgumentException("unsupported size");
-            }
-            final int blockCount =
-                Utils.divUp(width, mBlockWidth) * Utils.divUp(height, mBlockHeight);
+            if (GetFlag(() -> android.media.codec.Flags.nativeCapabilites())) {
+                return native_getSupportedFrameRatesFor(width, height);
+            } else {
+                Range<Integer> range = mHeightRange;
+                if (!supports(width, height, null)) {
+                    throw new IllegalArgumentException("unsupported size");
+                }
+                final int blockCount =
+                        Utils.divUp(width, mBlockWidth) * Utils.divUp(height, mBlockHeight);
 
-            return Range.create(
-                    Math.max(mBlocksPerSecondRange.getLower() / (double) blockCount,
-                            (double) mFrameRateRange.getLower()),
-                    Math.min(mBlocksPerSecondRange.getUpper() / (double) blockCount,
-                            (double) mFrameRateRange.getUpper()));
+                return Range.create(
+                        Math.max(mBlocksPerSecondRange.getLower() / (double) blockCount,
+                                (double) mFrameRateRange.getLower()),
+                        Math.min(mBlocksPerSecondRange.getUpper() / (double) blockCount,
+                                (double) mFrameRateRange.getUpper()));
+            }
         }
+
+        /* package private */static native Range<Double> native_getSupportedFrameRatesFor(
+                int width, int height);
 
         private int getBlockCount(int width, int height) {
             return Utils.divUp(width, mBlockWidth) * Utils.divUp(height, mBlockHeight);
@@ -2195,17 +2217,23 @@ public final class MediaCodecInfo {
          */
         @Nullable
         public Range<Double> getAchievableFrameRatesFor(int width, int height) {
-            if (!supports(width, height, null)) {
-                throw new IllegalArgumentException("unsupported size");
-            }
+            if (GetFlag(() -> android.media.codec.Flags.nativeCapabilites())) {
+                return native_getAchievableFrameRatesFor(width, height);
+            } else {
+                if (!supports(width, height, null)) {
+                    throw new IllegalArgumentException("unsupported size");
+                }
 
-            if (mMeasuredFrameRates == null || mMeasuredFrameRates.size() <= 0) {
-                Log.w(TAG, "Codec did not publish any measurement data.");
-                return null;
-            }
+                if (mMeasuredFrameRates == null || mMeasuredFrameRates.size() <= 0) {
+                    Log.w(TAG, "Codec did not publish any measurement data.");
+                    return null;
+                }
 
-            return estimateFrameRatesFor(width, height);
+                return estimateFrameRatesFor(width, height);
+            }
         }
+
+        static native Range<Double> native_getAchievableFrameRatesFor(int width, int height);
 
         /**
          * Video performance points are a set of standard performance points defined by number of
@@ -2634,16 +2662,29 @@ public final class MediaCodecInfo {
          */
         public boolean areSizeAndRateSupported(
                 int width, int height, double frameRate) {
-            return supports(width, height, frameRate);
+            if (GetFlag(() -> android.media.codec.Flags.nativeCapabilites())) {
+                return native_areSizeAndRateSupported(width, height, frameRate);
+            } else {
+                return supports(width, height, frameRate);
+            }
         }
+
+        static native boolean native_areSizeAndRateSupported(
+                int width, int height, double frameRate);
 
         /**
          * Returns whether a given video size ({@code width} and
          * {@code height}) is supported.
          */
         public boolean isSizeSupported(int width, int height) {
-            return supports(width, height, null);
+            if (GetFlag(() -> android.media.codec.Flags.nativeCapabilites())) {
+                return native_isSizeSupported(width, height);
+            } else {
+                return supports(width, height, null);
+            }
         }
+
+        static native boolean native_isSizeSupported(int width, int height);
 
         private boolean supports(Integer width, Integer height, Number rate) {
             boolean ok = true;
@@ -2710,6 +2751,19 @@ public final class MediaCodecInfo {
 
         /* no public constructor */
         private VideoCapabilities() { }
+
+        /** package private */ VideoCapabilities(Range<Integer> bitrateRange,
+                Range<Integer> widthRange, Range<Integer> heightRange,
+                Range<Integer> frameRateRange, List<PerformancePoint> performancePoints,
+                int widthAlignment, int heightAlignment) {
+            mBitrateRange = bitrateRange;
+            mWidthRange = widthRange;
+            mHeightRange = heightRange;
+            mFrameRateRange = frameRateRange;
+            mPerformancePoints = performancePoints;
+            mWidthAlignment = widthAlignment;
+            mHeightAlignment = heightAlignment;
+        }
 
         /** @hide */
         @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
@@ -3918,6 +3972,13 @@ public final class MediaCodecInfo {
             }
             mBitrateRange = Range.create(1, maxBps);
             mParent.mError |= errors;
+        }
+
+        private static native void native_init();
+
+        static {
+            System.loadLibrary("media_jni");
+            native_init();
         }
     }
 
