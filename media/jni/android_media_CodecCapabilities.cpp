@@ -46,6 +46,15 @@ static jobject getJavaIntRangeFromNative(JNIEnv *env, const Range<int>& range) {
     return jRange;
 }
 
+static jobject getJavaDoubleRangeFromNative(JNIEnv *env, const Range<double>& range) {
+    jclass rangeClazz = env->FindClass("android/util/Range");
+    CHECK(rangeClazz != NULL);
+    jmethodID rangeConstructID = env->GetMethodID(rangeClazz, "<init>", "(D;D)V");
+    jobject jRange = env->NewObject(rangeClazz, rangeConstructID,
+            range.lower(), range.upper());
+    return jRange;
+}
+
 static jobjectArray getJavaIntRangeArrayFromNative(JNIEnv *env, const std::vector<Range<int>>& ranges) {
     jclass rangeClazz = env->FindClass("android/util/Range");
     CHECK(rangeClazz != NULL);
@@ -69,6 +78,11 @@ static VideoCapabilities::PerformancePoint& getPerformancePoints(JNIEnv *env, jo
     VideoCapabilities::PerformancePoint* const p
             = (VideoCapabilities::PerformancePoint*)env->GetLongField(thiz, fields.context);
     return *p;
+}
+
+static std::shared_ptr<VideoCapabilities> getVideoCapabilities(JNIEnv *env, jobject thiz) {
+    VideoCapabilities* const p = (VideoCapabilities*)env->GetLongField(thiz, fields.context);
+    return std::shared_ptr<VideoCapabilities>(p);
 }
 
 // The Java AudioCapabilities object keep bitrateRange, sampleRates, sampleRateRanges
@@ -191,6 +205,67 @@ static jobject convertPerfromancePointVectorToList(JNIEnv *env,
     return list;
 }
 
+jobject getJavaVideoCapabilitiesFromNative(JNIEnv *env,
+        std::shared_ptr<VideoCapabilities> videoCaps) {
+    if (videoCaps == nullptr) {
+        return NULL;
+    }
+
+    // get Java bitrateRange
+    const Range<int>& bitrateRange = videoCaps->getBitrateRange();
+    jobject jBitrateRange = getJavaIntRangeFromNative(env, bitrateRange);
+
+    // get Java widthRange
+    const Range<int>& widthRange = videoCaps->getSupportedWidths();
+    jobject jWidthRange = getJavaIntRangeFromNative(env, widthRange);
+
+    // get Java heightRange
+    const Range<int>& heightRange = videoCaps->getSupportedHeights();
+    jobject jHeightRange = getJavaIntRangeFromNative(env, heightRange);
+
+    // get Java frameRateRange
+    const Range<int>& frameRateRange = videoCaps->getSupportedFrameRates();
+    jobject jFrameRateRange = getJavaIntRangeFromNative(env, frameRateRange);
+
+    // get Java performancePoints
+    const std::vector<VideoCapabilities::PerformancePoint>& performancePoints
+            = videoCaps->getSupportedPerformancePoints();
+    jobjectArray jPerformancePoints = getJavaPerformancePointArrayFromNative(
+            env, performancePoints);
+
+    // get Java VideoCapabilities
+    jclass videoCapsClazz =
+        env->FindClass("android/media/MediaCodecInfo$VideoCapabilities");
+    CHECK(videoCapsClazz != NULL);
+    jmethodID videoCapsConstructID = env->GetMethodID(videoCapsClazz, "<init>",
+            "(Landroid/util/Range;"
+            "Landroid/util/Range;"
+            "Landroid/util/Range;"
+            "Landroid/util/Range;"
+            "[android/media/MediaCodecInfo$VideoCapabilities$PerformancePoint)V");
+    jobject jVideoCaps = env->NewObject(videoCapsClazz, videoCapsConstructID, jBitrateRange,
+            jWidthRange, jHeightRange, jFrameRateRange, jPerformancePoints);
+
+    env->DeleteLocalRef(jBitrateRange);
+    jBitrateRange = NULL;
+
+    env->DeleteLocalRef(jWidthRange);
+    jWidthRange = NULL;
+
+    env->DeleteLocalRef(jHeightRange);
+    jHeightRange = NULL;
+
+    env->DeleteLocalRef(jFrameRateRange);
+    jFrameRateRange = NULL;
+
+    env->DeleteLocalRef(jPerformancePoints);
+    jPerformancePoints = NULL;
+
+    env->SetLongField(jVideoCaps, fields.context, (jlong)videoCaps.get());
+
+    return jVideoCaps;
+}
+
 // ----------------------------------------------------------------------------
 
 static jint android_media_AudioCapabilities_getMaxInputChannelCount(JNIEnv *env, jobject thiz) {
@@ -291,6 +366,46 @@ static jstring android_media_VideoCapabilities_PerformancePoint_toString(JNIEnv 
     return env->NewStringUTF(str.c_str());
 }
 
+// VideoCapabilities
+
+static jboolean android_media_VideoCapabilities_areSizeAndRateSupported(JNIEnv *env, jobject thiz,
+        int width, int height, double frameRate) {
+    std::shared_ptr<VideoCapabilities> videoCaps = getVideoCapabilities(env, thiz);
+    if (videoCaps == NULL) {
+        jniThrowException(env, "java/lang/IllegalStateException", NULL);
+        return 0;
+    }
+
+    bool res = videoCaps->areSizeAndRateSupported(width, height, frameRate);
+    return res;
+}
+
+static jboolean android_media_VideoCapabilities_isSizeSupported(JNIEnv *env, jobject thiz,
+        int width, int height) {
+    std::shared_ptr<VideoCapabilities> videoCaps = getVideoCapabilities(env, thiz);
+    if (videoCaps == NULL) {
+        jniThrowException(env, "java/lang/IllegalStateException", NULL);
+        return 0;
+    }
+
+    bool res = videoCaps->isSizeSupported(width, height);
+    return res;
+}
+
+static jobject android_media_VideoCapabilities_getAchievableFrameRatesFor(JNIEnv *env, jobject thiz,
+        int width, int height) {
+    std::shared_ptr<VideoCapabilities> videoCaps = getVideoCapabilities(env, thiz);
+    if (videoCaps == NULL) {
+        jniThrowException(env, "java/lang/IllegalStateException", NULL);
+        return NULL;
+    }
+
+    std::optional<Range<double>> frameRates = videoCaps->getAchievableFrameRatesFor(width, height);
+    jobject jFrameRates = getJavaDoubleRangeFromNative(frameRates);
+
+    return jFrameRates;
+}
+
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gAudioCapsMethods[] = {
@@ -305,6 +420,11 @@ static const JNINativeMethod gPerformancePointMethods[] = {
     {"native_toString", "()Ljava/lang/String", (void *)android_media_VideoCapabilities_PerformancePoint_toString}
 };
 
+static const JNINativeMethod gVideoCapsMethods[] = {
+    {"native_areSizeAndRateSupported", "(I;I;D)Z", (void *)android_media_VideoCapabilities_areSizeAndRateSupported},
+    {"native_isSizeSupported", "(I;I)Z", (void *)android_media_VideoCapabilities_isSizeSupported},
+};
+
 int register_android_media_CodecCapabilities(JNIEnv *env) {
     int result = AndroidRuntime::registerNativeMethods(env, "android/media/MediaCodecInfo$AudioCapabilities",
             gAudioCapsMethods, NELEM(gAudioCapsMethods));
@@ -315,6 +435,12 @@ int register_android_media_CodecCapabilities(JNIEnv *env) {
     result = AndroidRuntime::registerNativeMethods(env,
             "android/media/MediaCodecInfo$VideoCapabilities$PerformancePoint",
             gPerformancePointMethods, NELEM(gPerformancePointMethods));
+    if (result != JNI_OK) {
+        return result;
+    }
+
+    result = AndroidRuntime::registerNativeMethods(env, "android/media/MediaCodecInfo$VideoCapabilities",
+            gVideoCapsMethods, NELEM(gVideoCapsMethods));
     if (result != JNI_OK) {
         return result;
     }

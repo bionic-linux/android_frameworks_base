@@ -2187,17 +2187,23 @@ public final class MediaCodecInfo {
          */
         @Nullable
         public Range<Double> getAchievableFrameRatesFor(int width, int height) {
-            if (!supports(width, height, null)) {
-                throw new IllegalArgumentException("unsupported size");
-            }
+            if (FLAG) {
+                return native_getAchievableFrameRatesFor(width, height);
+            } else {
+                if (!supports(width, height, null)) {
+                    throw new IllegalArgumentException("unsupported size");
+                }
 
-            if (mMeasuredFrameRates == null || mMeasuredFrameRates.size() <= 0) {
-                Log.w(TAG, "Codec did not publish any measurement data.");
-                return null;
-            }
+                if (mMeasuredFrameRates == null || mMeasuredFrameRates.size() <= 0) {
+                    Log.w(TAG, "Codec did not publish any measurement data.");
+                    return null;
+                }
 
-            return estimateFrameRatesFor(width, height);
+                return estimateFrameRatesFor(width, height);
+            }
         }
+
+        static native Range<Double> native_getAchievableFrameRatesFor(int width, int height);
 
         /**
          * Video performance points are a set of standard performance points defined by number of
@@ -2617,16 +2623,29 @@ public final class MediaCodecInfo {
          */
         public boolean areSizeAndRateSupported(
                 int width, int height, double frameRate) {
-            return supports(width, height, frameRate);
+            if (FLAG) {
+                return native_areSizeAndRateSupported(width, height, frameRate);
+            } else {
+                return supports(width, height, frameRate);
+            }
         }
+
+        static native boolean native_areSizeAndRateSupported(
+                int width, int height, double frameRate);
 
         /**
          * Returns whether a given video size ({@code width} and
          * {@code height}) is supported.
          */
         public boolean isSizeSupported(int width, int height) {
-            return supports(width, height, null);
+            if (FLAG) {
+                return native_isSizeSupported(width, height);
+            } else {
+                return supports(width, height, null);
+            }
         }
+
+        static native boolean native_isSizeSupported(int width, int height);
 
         private boolean supports(Integer width, Integer height, Number rate) {
             boolean ok = true;
@@ -2693,6 +2712,12 @@ public final class MediaCodecInfo {
 
         /* no public constructor */
         private VideoCapabilities() { }
+
+        /** package private */ VideoCapabilities(Range<Integer> bitrateRange,
+                Range<Integer> widthRange, Range<Integer> heightRange,
+                Range<Integer> frameRateRange, List<PerformancePoint> performancePoints) {
+
+        }
 
         /** @hide */
         @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
