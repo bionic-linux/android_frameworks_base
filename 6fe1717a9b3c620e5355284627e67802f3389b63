@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d5e6ff8_1694623f",
+        "filename": "core/java/android/service/dreams/DreamService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1015328
+      },
+      "writtenOn": "2024-06-25T12:58:49Z",
+      "side": 1,
+      "message": "Lets not set this value if it isnt valid, instead.",
+      "range": {
+        "startLine": 1305,
+        "startChar": 45,
+        "endLine": 1305,
+        "endChar": 80
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "9388bd04_eddeabc0",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/service/dreams/DreamService.java",
+              "range": {
+                "startLine": 1304,
+                "startChar": 0,
+                "endLine": 1305,
+                "endChar": 0
+              },
+              "replacement": "        final float defaultDreamScreenBrightness \u003d getResources().getFloat(\n"
+            },
+            {
+              "path": "core/java/android/service/dreams/DreamService.java",
+              "range": {
+                "startLine": 1306,
+                "startChar": 0,
+                "endLine": 1306,
+                "endChar": 0
+              },
+              "replacement": "        if (defaultDreamScreenBrightness \u003e\u003d 0) {\n            lp.screenBrightness \u003d defaultDreamScreenBrightness;\n        }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6fe1717a9b3c620e5355284627e67802f3389b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
