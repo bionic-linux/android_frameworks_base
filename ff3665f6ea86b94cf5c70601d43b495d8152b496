@@ -16,6 +16,24 @@
       "message": "Hello Hsu, please review the latest patch.",
       "revId": "ff3665f6ea86b94cf5c70601d43b495d8152b496",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbf6d91c_392ecc23",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-06-25T04:16:50Z",
+      "side": 1,
+      "message": "Our internal branch has merged the similar logic and it seems to cause some side effects, suppose this will be included in next public release if the problems are solved.",
+      "parentUuid": "fe974db0_49933353",
+      "revId": "ff3665f6ea86b94cf5c70601d43b495d8152b496",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
