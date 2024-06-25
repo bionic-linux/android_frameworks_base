@@ -2214,6 +2214,8 @@ public final class MediaCodecInfo {
          * rate.
          */
         public static final class PerformancePoint {
+            private long mNativeContext; // accessed by native methods
+
             private Size mBlockSize; // codec block size in macroblocks
             private int mWidth; // width in macroblocks
             private int mHeight; // height in macroblocks
@@ -2232,6 +2234,24 @@ public final class MediaCodecInfo {
             @TestApi
             public int getMaxMacroBlocks() {
                 return saturateLongToInt(mWidth * (long)mHeight);
+            }
+
+            /**
+             * Width in macroblocks.
+             *
+             * @hide
+             */
+            /** package private */ int getWidth() {
+                return mWidth;
+            }
+
+            /**
+             * Height in macroblocks.
+             *
+             * @hide
+             */
+            /** package private */ int getHeight() {
+                return mHeight;
             }
 
             /**
@@ -2254,20 +2274,44 @@ public final class MediaCodecInfo {
                 return mMaxMacroBlockRate;
             }
 
+            /**
+             * Codec block width in macroblocks.
+             *
+             * @hide
+             */
+            /** package private */ int getBlockWidth() {
+                return mBlockSize.getWidth();
+            }
+
+            /**
+             * Codec block height in macroblocks.
+             *
+             * @hide
+             */
+            /** package private */ int getBlockHeight() {
+                return mBlockSize.getHeight();
+            }
+
             /** Convert to a debug string */
             public String toString() {
-                int blockWidth = 16 * mBlockSize.getWidth();
-                int blockHeight = 16 * mBlockSize.getHeight();
-                int origRate = (int)Utils.divUp(mMaxMacroBlockRate, getMaxMacroBlocks());
-                String info = (mWidth * 16) + "x" + (mHeight * 16) + "@" + origRate;
-                if (origRate < mMaxFrameRate) {
-                    info += ", max " + mMaxFrameRate + "fps";
+                if (GetFlag(() -> android.media.codec.Flags.nativeCapabilites())) {
+                    return native_toString();
+                } else {
+                    int blockWidth = 16 * mBlockSize.getWidth();
+                    int blockHeight = 16 * mBlockSize.getHeight();
+                    int origRate = (int) Utils.divUp(mMaxMacroBlockRate, getMaxMacroBlocks());
+                    String info = (mWidth * 16) + "x" + (mHeight * 16) + "@" + origRate;
+                    if (origRate < mMaxFrameRate) {
+                        info += ", max " + mMaxFrameRate + "fps";
+                    }
+                    if (blockWidth > 16 || blockHeight > 16) {
+                        info += ", " + blockWidth + "x" + blockHeight + " blocks";
+                    }
+                    return "PerformancePoint(" + info + ")";
                 }
-                if (blockWidth > 16 || blockHeight > 16) {
-                    info += ", " + blockWidth + "x" + blockHeight + " blocks";
-                }
-                return "PerformancePoint(" + info + ")";
             }
+
+            static native String native_toString();
 
             @Override
             public int hashCode() {
@@ -2341,6 +2385,15 @@ public final class MediaCodecInfo {
                 this(width, height, frameRate, frameRate /* maxFrameRate */, new Size(16, 16));
             }
 
+            /* package private */ PerformancePoint(int width, int height, int maxFrameRate,
+                    long maxMacroBlockRate, int blockSizeWidth, int blockSizeHeight) {
+                mWidth = width;
+                mHeight = height;
+                mMaxFrameRate = maxFrameRate;
+                mMaxMacroBlockRate = maxMacroBlockRate;
+                mBlockSize = new Size(blockSizeWidth, blockSizeHeight);
+            }
+
             /** Saturates a long value to int */
             private int saturateLongToInt(long value) {
                 if (value < Integer.MIN_VALUE) {
@@ -2394,15 +2447,21 @@ public final class MediaCodecInfo {
              * @return {@code true} if the performance point covers the other.
              */
             public boolean covers(@NonNull PerformancePoint other) {
-                // convert performance points to common block size
-                Size commonSize = getCommonBlockSize(other);
-                PerformancePoint aligned = new PerformancePoint(this, commonSize);
-                PerformancePoint otherAligned = new PerformancePoint(other, commonSize);
+                if (GetFlag(() -> android.media.codec.Flags.nativeCapabilites())) {
+                    return native_covers(other);
+                } else {
+                    // convert performance points to common block size
+                    Size commonSize = getCommonBlockSize(other);
+                    PerformancePoint aligned = new PerformancePoint(this, commonSize);
+                    PerformancePoint otherAligned = new PerformancePoint(other, commonSize);
 
-                return (aligned.getMaxMacroBlocks() >= otherAligned.getMaxMacroBlocks()
-                        && aligned.mMaxFrameRate >= otherAligned.mMaxFrameRate
-                        && aligned.mMaxMacroBlockRate >= otherAligned.mMaxMacroBlockRate);
+                    return (aligned.getMaxMacroBlocks() >= otherAligned.getMaxMacroBlocks()
+                            && aligned.mMaxFrameRate >= otherAligned.mMaxFrameRate
+                            && aligned.mMaxMacroBlockRate >= otherAligned.mMaxMacroBlockRate);
+                }
             }
+
+            static native boolean native_covers(PerformancePoint other);
 
             private @NonNull Size getCommonBlockSize(@NonNull PerformancePoint other) {
                 return new Size(
@@ -2415,16 +2474,22 @@ public final class MediaCodecInfo {
                 if (o instanceof PerformancePoint) {
                     // convert performance points to common block size
                     PerformancePoint other = (PerformancePoint)o;
-                    Size commonSize = getCommonBlockSize(other);
-                    PerformancePoint aligned = new PerformancePoint(this, commonSize);
-                    PerformancePoint otherAligned = new PerformancePoint(other, commonSize);
+                    if (GetFlag(() -> android.media.codec.Flags.nativeCapabilites())) {
+                        return native_equals(other);
+                    } else {
+                        Size commonSize = getCommonBlockSize(other);
+                        PerformancePoint aligned = new PerformancePoint(this, commonSize);
+                        PerformancePoint otherAligned = new PerformancePoint(other, commonSize);
 
-                    return (aligned.getMaxMacroBlocks() == otherAligned.getMaxMacroBlocks()
-                            && aligned.mMaxFrameRate == otherAligned.mMaxFrameRate
-                            && aligned.mMaxMacroBlockRate == otherAligned.mMaxMacroBlockRate);
+                        return (aligned.getMaxMacroBlocks() == otherAligned.getMaxMacroBlocks()
+                                && aligned.mMaxFrameRate == otherAligned.mMaxFrameRate
+                                && aligned.mMaxMacroBlockRate == otherAligned.mMaxMacroBlockRate);
+                    }
                 }
                 return false;
             }
+
+            static native boolean native_equals(PerformancePoint other);
 
             /** 480p 24fps */
             @NonNull
@@ -2528,6 +2593,13 @@ public final class MediaCodecInfo {
             /** 2160p 240fps */
             @NonNull
             public static final PerformancePoint UHD_240 = new PerformancePoint(3840, 2160, 240);
+
+            private static native void native_init();
+
+            static {
+                System.loadLibrary("media_jni");
+                native_init();
+            }
         }
 
         /**
@@ -4586,6 +4658,11 @@ public final class MediaCodecInfo {
 
         /* package private */ static Range<Double> getDoubleRange(Double lower, Double upper) {
             return Range.create(lower, upper);
+        }
+
+        /* package private */ static List<VideoCapabilities.PerformancePoint>
+                convertPerformancePointArrayToList(VideoCapabilities.PerformancePoint[] array) {
+            return Arrays.asList(array);
         }
     }
 }
