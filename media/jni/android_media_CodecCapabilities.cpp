@@ -21,6 +21,7 @@
 #include "jni.h"
 
 #include <media/AudioCapabilities.h>
+#include <media/VideoCapabilities.h>
 #include <media/stagefright/foundation/ADebug.h>
 #include <nativehelper/JNIHelp.h>
 
@@ -30,6 +31,7 @@ using namespace android;
 
 struct fields_t {
     jfieldID audioCapsContext;
+    jfieldID performancePointContext;
 };
 static fields_t fields;
 
@@ -39,6 +41,12 @@ static AudioCapabilities* getAudioCapabilities(JNIEnv *env, jobject thiz) {
     AudioCapabilities* const p = (AudioCapabilities*)env->GetLongField(
             thiz, fields.audioCapsContext);
     return p;
+}
+
+static VideoCapabilities::PerformancePoint& getPerformancePoints(JNIEnv *env, jobject thiz) {
+    VideoCapabilities::PerformancePoint* const p = (VideoCapabilities::PerformancePoint*)
+            env->GetLongField(thiz, fields.performancePointContext);
+    return *p;
 }
 
 // Utils
@@ -138,6 +146,82 @@ static jobject getJavaAudioCapabilitiesFromNative(
     return jAudioCaps;
 }
 
+// convert native PerformancePoints to Java objects
+static jobject convertPerformancePointVectorToList(JNIEnv *env,
+        const std::vector<VideoCapabilities::PerformancePoint>& performancePoints) {
+    jclass performancePointClazz = env->FindClass(
+            "android/media/MediaCodecInfo$VideoCapabilities$PerformancePoint");
+    CHECK(performancePointClazz != NULL);
+    jmethodID performancePointConstructID = env->GetMethodID(performancePointClazz, "<init>",
+            "(IIIJII)V");
+
+    jobjectArray jPerformancePoints = env->NewObjectArray(performancePoints.size(),
+            performancePointClazz, NULL);
+    for (int i = 0; i < performancePoints.size(); i++) {
+        VideoCapabilities::PerformancePoint performancePoint = performancePoints.at(i);
+        jobject jPerformancePoint = env->NewObject(performancePointClazz,
+                performancePointConstructID, performancePoint.getWidth(),
+                performancePoint.getHeight(), performancePoint.getMaxFrameRate(),
+                performancePoint.getMaxMacroBlockRate(), performancePoint.getBlockSize().getWidth(),
+                performancePoint.getBlockSize().getHeight());
+
+        env->SetLongField(jPerformancePoint, fields.performancePointContext,
+                (jlong)(&performancePoint));
+
+        env->SetObjectArrayElement(jPerformancePoints, i, jPerformancePoint);
+
+        env->DeleteLocalRef(jPerformancePoint);
+        jPerformancePoint = NULL;
+    }
+
+    jclass helperClazz = env->FindClass("android/media/MediaCodecInfo$GenericHelper");
+    CHECK(helperClazz != NULL);
+    jmethodID asListID = env->GetStaticMethodID(helperClazz, "convertPerformancePointArrayToList",
+            "([Landroid/media/MediaCodecInfo$VideoCapabilities$PerformancePoint;)Ljava/util/List;");
+    CHECK(asListID != NULL);
+    jobject jList = env->CallStaticObjectMethod(helperClazz, asListID, jPerformancePoints);
+
+    return jList;
+}
+
+// construct native PerformancePoint instance from Java objects
+static VideoCapabilities::PerformancePoint GetNativePerformancePointFromJava(JNIEnv *env,
+        jobject pp) {
+    jclass clazz = env->FindClass(
+            "android/media/MediaCodecInfo$VideoCapabilities$PerformancePoint");
+    CHECK(clazz != NULL);
+    CHECK(env->IsInstanceOf(pp, clazz));
+
+    jmethodID getWidthID = env->GetMethodID(clazz, "getWidth", "()I");
+    CHECK(getWidthID != NULL);
+    jint width = env->CallIntMethod(pp, getWidthID);
+
+    jmethodID getHeightID = env->GetMethodID(clazz, "getHeight", "()I");
+    CHECK(getHeightID != NULL);
+    jint height = env->CallIntMethod(pp, getHeightID);
+
+    jmethodID getMaxFrameRateID = env->GetMethodID(clazz, "getMaxFrameRate", "()I");
+    CHECK(getMaxFrameRateID != NULL);
+    jint maxFrameRate = env->CallIntMethod(pp, getMaxFrameRateID);
+
+    jmethodID getMaxMacroBlockRateID = env->GetMethodID(clazz, "getMaxMacroBlockRate", "()J");
+    CHECK(getMaxMacroBlockRateID != NULL);
+    jlong maxMacroBlockRate = env->CallLongMethod(pp, getMaxMacroBlockRateID);
+
+    jmethodID getBlockWidthID = env->GetMethodID(clazz, "getBlockWidth", "()I");
+    CHECK(getBlockWidthID != NULL);
+    jint blockWidth = env->CallIntMethod(pp, getBlockWidthID);
+
+    jmethodID getBlockHeightID = env->GetMethodID(clazz, "getBlockHeight", "()I");
+    CHECK(getBlockHeightID != NULL);
+    jint blockHeight = env->CallIntMethod(pp, getBlockHeightID);
+
+    VideoCapabilities::PerformancePoint res = VideoCapabilities::PerformancePoint(
+            VideoSize(blockWidth, blockHeight), width, height, maxFrameRate, maxMacroBlockRate);
+
+    return res;
+}
+
 // ----------------------------------------------------------------------------
 
 // AudioCapabilities
@@ -191,6 +275,50 @@ static jboolean android_media_AudioCapabilities_isSampleRateSupported(JNIEnv *en
     return res;
 }
 
+// PerformancePoint
+
+static void android_media_VideoCapabilities_PerformancePoint_native_init(JNIEnv *env) {
+    jclass clazz = env->FindClass(
+            "android/media/MediaCodecInfo$VideoCapabilities$PerformancePoint");
+    if (clazz == NULL) {
+        return;
+    }
+
+    fields.performancePointContext = env->GetFieldID(clazz, "mNativeContext", "J");
+    if (fields.performancePointContext == NULL) {
+        return;
+    }
+
+    env->DeleteLocalRef(clazz);
+}
+
+static jboolean android_media_VideoCapabilities_PerformancePoint_covers(JNIEnv *env, jobject thiz,
+        jobject other) {
+    VideoCapabilities::PerformancePoint& pp0 = getPerformancePoints(env, thiz);
+    VideoCapabilities::PerformancePoint pp1 = GetNativePerformancePointFromJava(env, other);
+
+    bool res = pp0.covers(pp1);
+
+    return res;
+}
+
+static jboolean android_media_VideoCapabilities_PerformancePoint_equals(JNIEnv *env, jobject thiz,
+        jobject other) {
+    VideoCapabilities::PerformancePoint& pp0 = getPerformancePoints(env, thiz);
+    VideoCapabilities::PerformancePoint pp1 = GetNativePerformancePointFromJava(env, other);
+
+    bool res = pp0.equals(pp1);
+
+    return res;
+}
+
+static jstring android_media_VideoCapabilities_PerformancePoint_toString(JNIEnv *env,
+        jobject thiz) {
+    VideoCapabilities::PerformancePoint& pp = getPerformancePoints(env, thiz);
+    std::string str = pp.toString();
+    return env->NewStringUTF(str.c_str());
+}
+
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gAudioCapsMethods[] = {
@@ -200,10 +328,24 @@ static const JNINativeMethod gAudioCapsMethods[] = {
     {"native_isSampleRateSupported", "(I)Z", (void *)android_media_AudioCapabilities_isSampleRateSupported}
 };
 
+static const JNINativeMethod gPerformancePointMethods[] = {
+    {"native_init", "()V", (void *)android_media_VideoCapabilities_PerformancePoint_native_init},
+    {"native_covers", "(Landroid/media/MediaCodecInfo$VideoCapabilities$PerformancePoint;)Z", (void *)android_media_VideoCapabilities_PerformancePoint_covers},
+    {"native_equals", "(Landroid/media/MediaCodecInfo$VideoCapabilities$PerformancePoint;)Z", (void *)android_media_VideoCapabilities_PerformancePoint_equals},
+    {"native_toString", "()Ljava/lang/String;", (void *)android_media_VideoCapabilities_PerformancePoint_toString}
+};
+
 int register_android_media_CodecCapabilities(JNIEnv *env) {
     int result = AndroidRuntime::registerNativeMethods(env,
             "android/media/MediaCodecInfo$AudioCapabilities",
             gAudioCapsMethods, NELEM(gAudioCapsMethods));
+    if (result != JNI_OK) {
+        return result;
+    }
+
+    result = AndroidRuntime::registerNativeMethods(env,
+            "android/media/MediaCodecInfo$VideoCapabilities$PerformancePoint",
+            gPerformancePointMethods, NELEM(gPerformancePointMethods));
     if (result != JNI_OK) {
         return result;
     }
