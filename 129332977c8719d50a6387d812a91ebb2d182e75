@@ -51,6 +51,109 @@
       "parentUuid": "65702f14_41c15545",
       "revId": "129332977c8719d50a6387d812a91ebb2d182e75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd3cc8bf_9a62ab7b",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2024-06-25T11:35:26Z",
+      "side": 1,
+      "message": "not used?",
+      "range": {
+        "startLine": 119,
+        "startChar": 26,
+        "endLine": 119,
+        "endChar": 46
+      },
+      "revId": "129332977c8719d50a6387d812a91ebb2d182e75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbfc171c_7c73872a",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 2991,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2024-06-25T11:35:26Z",
+      "side": 1,
+      "message": "IIUC, you can call this even when the device is locked (though trying to create/open files in the area would fail, at that point). Can you add this to the docs here?",
+      "revId": "129332977c8719d50a6387d812a91ebb2d182e75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33604e65_f87341d0",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 3018,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2024-06-25T11:35:26Z",
+      "side": 1,
+      "message": "if an app calls this methods from two threads at the same time with the same storageAreaName, we could end up with two different obfuscator names, I think?",
+      "range": {
+        "startLine": 3018,
+        "startChar": 16,
+        "endLine": 3018,
+        "endChar": 53
+      },
+      "revId": "129332977c8719d50a6387d812a91ebb2d182e75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a51fee18_5d20ba09",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 3036,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2024-06-25T11:35:26Z",
+      "side": 1,
+      "message": "this is where you could create a new Binder() and pass it in this api.",
+      "revId": "129332977c8719d50a6387d812a91ebb2d182e75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5eee0fc6_fada450f",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 4550,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2024-06-25T11:35:26Z",
+      "side": 1,
+      "message": "I do wonder; would it be simpler to create a simple hash map of String to refcount, and compose the key to be \"uid + packagename + storage area name\"?",
+      "range": {
+        "startLine": 4550,
+        "startChar": 18,
+        "endLine": 4550,
+        "endChar": 29
+      },
+      "revId": "129332977c8719d50a6387d812a91ebb2d182e75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
