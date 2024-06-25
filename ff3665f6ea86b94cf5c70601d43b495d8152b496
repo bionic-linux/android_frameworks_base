@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe974db0_49933353",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1792527
+      },
+      "writtenOn": "2024-06-25T03:56:36Z",
+      "side": 1,
+      "message": "Hello Hsu, please review the latest patch.",
+      "revId": "ff3665f6ea86b94cf5c70601d43b495d8152b496",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
