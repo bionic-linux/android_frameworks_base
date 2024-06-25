@@ -51,6 +51,23 @@
       "parentUuid": "74081e2b_f65a39fd",
       "revId": "d79f4f8e7208827fffa122fe4bc09ead4631ae61",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe3c6261_1cddd959",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1065394
+      },
+      "writtenOn": "2024-06-25T12:20:07Z",
+      "side": 1,
+      "message": "I had to check why Esperanto is not there already, if Interlingua is.\nThe file is generated from CLDR data by a tool, so if Interlingua made it (with region `001`), then Esperanto should also be there.\n\nAnd the reason seems to be insufficient data coverage.\n\nSo the solution is not to modify this file directly, but to increase the CLDR coverage level for Esperanto.\nThen the next ICU / CLDR update in Android will also add Esperanto to this file.\n\nSo, in other words: a PR like this, just adding a locale \"by hand\" is not the way to go.\n\n---\n\nThis is where you can check the coverage levels:\n\nhttps://github.com/unicode-org/cldr-staging/blob/main/docs/charts/45/tsv/locale-coverage.tsv\n\n(making sure to change \"45\" to the proper CLDR version that matches the Android ICU)",
+      "revId": "d79f4f8e7208827fffa122fe4bc09ead4631ae61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
