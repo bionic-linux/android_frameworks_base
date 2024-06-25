@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "244c5f4a_02caa5b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-06-25T16:57:44Z",
+      "side": 1,
+      "message": "The lint error is API test coverage. Can you add some cts tests for the new callback you added?",
+      "parentUuid": "718915e2_6325630d",
+      "revId": "56c3cb4e6302d87036af6c8a63a0db1ee0082da6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3cc30523_aec18b36",
