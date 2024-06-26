@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "43b94126_b1821f87",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3031218
+      },
+      "writtenOn": "2024-06-26T10:19:34Z",
+      "side": 1,
+      "message": "As discussed in last Meeting Alisher will help to add CTS test case",
+      "parentUuid": "244c5f4a_02caa5b8",
+      "revId": "56c3cb4e6302d87036af6c8a63a0db1ee0082da6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3cc30523_aec18b36",
