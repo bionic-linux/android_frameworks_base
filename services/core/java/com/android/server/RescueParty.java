@@ -728,18 +728,23 @@ public class RescueParty {
         @Override
         public int onHealthCheckFailed(@Nullable VersionedPackage failedPackage,
                 @FailureReasons int failureReason, int mitigationCount) {
+            int impact = PackageHealthObserverImpact.USER_IMPACT_LEVEL_0;
             if (!isDisabled() && (failureReason == PackageWatchdog.FAILURE_REASON_APP_CRASH
                     || failureReason == PackageWatchdog.FAILURE_REASON_APP_NOT_RESPONDING)) {
                 if (Flags.recoverabilityDetection()) {
-                    return mapRescueLevelToUserImpact(getRescueLevel(mitigationCount,
+                    impact = mapRescueLevelToUserImpact(getRescueLevel(mitigationCount,
                             mayPerformReboot(failedPackage), failedPackage));
                 } else {
-                    return mapRescueLevelToUserImpact(getRescueLevel(mitigationCount,
+                    impact = mapRescueLevelToUserImpact(getRescueLevel(mitigationCount,
                         mayPerformReboot(failedPackage)));
                 }
-            } else {
-                return PackageHealthObserverImpact.USER_IMPACT_LEVEL_0;
             }
+
+            Slog.i(TAG, "Checking available remediations for health check failure."
+                    + " failedPackage: " + failedPackage.getPackageName()
+                    + " failureReason: " + failureReason
+                    + " available impact: " + impact);
+            return impact;
         }
 
         @Override
@@ -748,6 +753,10 @@ public class RescueParty {
             if (isDisabled()) {
                 return false;
             }
+            Slog.i(TAG, "Executing remediation."
+                    + " failedPackage: " + failedPackage.getPackageName()
+                    + " failureReason: " + failureReason
+                    + " mitigationCount: " + mitigationCount);
             if (failureReason == PackageWatchdog.FAILURE_REASON_APP_CRASH
                     || failureReason == PackageWatchdog.FAILURE_REASON_APP_NOT_RESPONDING) {
                 final int level = Flags.recoverabilityDetection() ? getRescueLevel(mitigationCount,
