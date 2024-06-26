@@ -116,6 +116,47 @@ public final class NfcOemExtension {
     public @interface StatusCode {}
 
     /**
+     * Mode Type for {@link #setControllerAlwaysOn(boolean, int)}.
+     * works same as {@link NfcAdapter#setControllerAlwaysOn(boolean)}.
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public static final int INIT_MODE_DEFAULT = NfcAdapter.CONTROLLER_ALWAYS_ON_MODE_DEFAULT;
+
+    /**
+     * Mode Type for {@link #setControllerAlwaysOn(boolean, int)}.
+     * Opens transport to communicate with controller
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public static final int INIT_MODE_TRANSPARENT = 1;
+
+    /**
+     * Mode Type for {@link #setControllerAlwaysOn(boolean, int)}.
+     * Opens transport to communicate with controller
+     * and initializes and enables the EE subsystem
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public static final int INIT_MODE_EE = 2;
+
+    /**
+     * Possible controller modes for {@link #setControllerAlwaysOn(boolean, int)}.
+     *
+     * @hide
+     */
+    @IntDef(prefix = { "INIT_MODE_" }, value = {
+        INIT_MODE_DEFAULT,
+        INIT_MODE_TRANSPARENT,
+        INIT_MODE_EE,
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ControllerMode{}
+
+    /**
      * Interface for Oem extensions for NFC.
      */
     public interface Callback {
@@ -380,6 +421,56 @@ public final class NfcOemExtension {
     public List<String> getActiveNfceeList() {
         return NfcAdapter.callServiceReturn(() ->
             NfcAdapter.sService.fetchActiveNfceeList(), new ArrayList<String>());
+    }
+
+    /**
+     * Sets NFC controller always on feature.
+     * <p>This API is for the NFCC internal state management. It allows to discriminate
+     * the controller function from the NFC function by keeping the NFC controller on without
+     * any NFC RF enabled if necessary.
+     * <p>This call is asynchronous.
+     * Register a listener {@link NfcAdapter.ControllerAlwaysOnListener}
+     * by {@link NfcAdapter#registerControllerAlwaysOnListener} to find out when the operation is
+     * complete.
+     * <p>If this returns true, then either NFCC always on state has been set based on the value,
+     * or a {@link NfcAdapter.ControllerAlwaysOnListener#onControllerAlwaysOnChanged(boolean)}
+     * will be invoked
+     * to indicate the state change.
+     * If this returns false, then there is some problem that prevents an attempt to turn NFCC
+     * always on.
+     * @param value if true the NFCC will be kept on (with no RF enabled if NFC adapter is
+     * disabled), if false the NFCC will follow completely the Nfc adapter state.
+     * @params mode ref {@link ControllerMode}
+     * @throws UnsupportedOperationException if FEATURE_NFC,
+     * FEATURE_NFC_HOST_CARD_EMULATION, FEATURE_NFC_HOST_CARD_EMULATION_NFCF,
+     * FEATURE_NFC_OFF_HOST_CARD_EMULATION_UICC and FEATURE_NFC_OFF_HOST_CARD_EMULATION_ESE
+     * are unavailable
+     * @return void
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    @RequiresPermission(android.Manifest.permission.NFC_SET_CONTROLLER_ALWAYS_ON)
+    public boolean setControllerAlwaysOn(boolean value, @ControllerMode int mode) {
+        if (!NfcAdapter.sHasNfcFeature && !NfcAdapter.sHasCeFeature) {
+            throw new UnsupportedOperationException();
+        }
+        try {
+            return NfcAdapter.sService.setControllerAlwaysOn(value, mode);
+        } catch (RemoteException e) {
+            mAdapter.attemptDeadServiceRecovery(e);
+            // Try one more time
+            if (NfcAdapter.sService == null) {
+                Log.e(TAG, "Failed to recover NFC Service.");
+                return false;
+            }
+            try {
+                return NfcAdapter.sService.setControllerAlwaysOn(value, mode);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to recover NFC Service.");
+            }
+            return false;
+        }
     }
 
     private final class NfcOemExtensionCallback extends INfcOemExtensionCallback.Stub {
