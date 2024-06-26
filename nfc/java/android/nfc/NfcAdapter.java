@@ -559,6 +559,18 @@ public final class NfcAdapter {
     @Retention(RetentionPolicy.SOURCE)
     public @interface TagIntentAppPreferenceResult {}
 
+    /**
+     * Mode Type for {@link NfcOemExtension#setControllerAlwaysOn(int)}.
+     * @hide
+     */
+    public static final int CONTROLLER_ALWAYS_ON_MODE_DEFAULT = 1;
+
+    /**
+     * Mode Type for {@link NfcOemExtension#setControllerAlwaysOn(int)}.
+     * @hide
+     */
+    public static final int CONTROLLER_ALWAYS_ON_DISABLE = 0;
+
     // Guarded by sLock
     static boolean sIsInitialized = false;
     static boolean sHasNfcFeature;
@@ -2334,7 +2346,13 @@ public final class NfcAdapter {
         if (!sHasNfcFeature && !sHasCeFeature) {
             throw new UnsupportedOperationException();
         }
-        return callServiceReturn(() ->  sService.setControllerAlwaysOn(value), false);
+        int mode;
+        if (value) {
+            mode = CONTROLLER_ALWAYS_ON_MODE_DEFAULT;
+        } else {
+            mode = CONTROLLER_ALWAYS_ON_DISABLE;
+        }
+        return callServiceReturn(() ->  sService.setControllerAlwaysOn(mode), false);
 
     }
 
