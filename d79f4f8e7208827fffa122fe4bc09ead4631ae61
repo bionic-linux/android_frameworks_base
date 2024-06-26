@@ -68,6 +68,24 @@
       "message": "I had to check why Esperanto is not there already, if Interlingua is.\nThe file is generated from CLDR data by a tool, so if Interlingua made it (with region `001`), then Esperanto should also be there.\n\nAnd the reason seems to be insufficient data coverage.\n\nSo the solution is not to modify this file directly, but to increase the CLDR coverage level for Esperanto.\nThen the next ICU / CLDR update in Android will also add Esperanto to this file.\n\nSo, in other words: a PR like this, just adding a locale \"by hand\" is not the way to go.\n\n---\n\nThis is where you can check the coverage levels:\n\nhttps://github.com/unicode-org/cldr-staging/blob/main/docs/charts/45/tsv/locale-coverage.tsv\n\n(making sure to change \"45\" to the proper CLDR version that matches the Android ICU)",
       "revId": "d79f4f8e7208827fffa122fe4bc09ead4631ae61",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf7ee41f_8687ae2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1688644
+      },
+      "writtenOn": "2024-06-26T21:37:50Z",
+      "side": 1,
+      "message": "Could you please run that tool and update the list to match CLDR 45?\n\nEsperanto and Interlingue (Occidental) have required basic coverage, Silesian also. Tibetan doesn\u0027t reach basic (although it\u0027s included in ICU).",
+      "parentUuid": "fe3c6261_1cddd959",
+      "revId": "d79f4f8e7208827fffa122fe4bc09ead4631ae61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
