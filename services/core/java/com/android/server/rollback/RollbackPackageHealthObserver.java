@@ -154,12 +154,20 @@ public final class RollbackPackageHealthObserver implements PackageHealthObserve
             }
         }
 
+        Slog.i(TAG, "Checking available remediations for health check failure."
+                + " failedPackage: " + failedPackage.getPackageName()
+                + " failureReason: " + failureReason
+                + " available impact: " + impact);
         return impact;
     }
 
     @Override
     public boolean execute(@Nullable VersionedPackage failedPackage,
             @FailureReasons int rollbackReason, int mitigationCount) {
+        Slog.i(TAG, "Executing remediation."
+                + " failedPackage: " + failedPackage.getPackageName()
+                + " rollbackReason: " + rollbackReason
+                + " mitigationCount: " + mitigationCount);
         if (Flags.recoverabilityDetection()) {
             List<RollbackInfo> availableRollbacks = getAvailableRollbacks();
             if (rollbackReason == PackageWatchdog.FAILURE_REASON_NATIVE_CRASH) {
@@ -503,6 +511,9 @@ public final class RollbackPackageHealthObserver implements PackageHealthObserve
             @FailureReasons int rollbackReason) {
         assertInWorkerThread();
 
+        Slog.i(TAG, "Rolling back package. RollbackId: " + rollback.getRollbackId()
+                + " failedPackage: " + failedPackage.getPackageName()
+                + " rollbackReason: " + rollbackReason);
         final RollbackManager rollbackManager = mContext.getSystemService(RollbackManager.class);
         int reasonToLog = WatchdogRollbackLogger.mapFailureReasonToMetric(rollbackReason);
         final String failedPackageToLog;
