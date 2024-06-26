@@ -559,6 +559,13 @@ public final class NfcAdapter {
     @Retention(RetentionPolicy.SOURCE)
     public @interface TagIntentAppPreferenceResult {}
 
+    /**
+     * Mode Type for {@link NfcOemExtension#setControllerAlwaysOn(boolean, int)}.
+     * works same as {@link #setControllerAlwaysOn(boolean)}.
+     * @hide
+     */
+    public static final int CONTROLLER_ALWAYS_ON_MODE_DEFAULT = 0;
+
     // Guarded by sLock
     static boolean sIsInitialized = false;
     static boolean sHasNfcFeature;
@@ -2379,6 +2386,22 @@ public final class NfcAdapter {
         }
         return callServiceReturn(() ->  sService.setControllerAlwaysOn(value), false);
 
+        try {
+            return sService.setControllerAlwaysOn(value, CONTROLLER_ALWAYS_ON_MODE_DEFAULT);
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            // Try one more time
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover NFC Service.");
+                return false;
+            }
+            try {
+                return sService.setControllerAlwaysOn(value, CONTROLLER_ALWAYS_ON_MODE_DEFAULT);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to recover NFC Service.");
+            }
+            return false;
+        }
     }
 
     /**
