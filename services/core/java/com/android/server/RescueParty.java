@@ -803,22 +803,37 @@ public class RescueParty {
         @Override
         public int onHealthCheckFailed(@Nullable VersionedPackage failedPackage,
                 @FailureReasons int failureReason, int mitigationCount) {
+            int impact = PackageHealthObserverImpact.USER_IMPACT_LEVEL_0;
             if (!isDisabled() && (failureReason == PackageWatchdog.FAILURE_REASON_APP_CRASH
                     || failureReason == PackageWatchdog.FAILURE_REASON_APP_NOT_RESPONDING)) {
                 if (Flags.recoverabilityDetection()) {
+<<<<<<< PATCH SET (3ab897 Add some logging)
+                    impact = mapRescueLevelToUserImpact(getRescueLevel(mitigationCount,
+                            mayPerformReboot(failedPackage), failedPackage));
+=======
                     if (!Flags.deprecateFlagsAndSettingsResets()) {
                         return mapRescueLevelToUserImpact(getRescueLevel(mitigationCount,
                                 mayPerformReboot(failedPackage), failedPackage));
                     } else {
                         return mapRescueLevelToUserImpact(getRescueLevel(mitigationCount));
                     }
+>>>>>>> BASE      (25a679 Merge "Deprecating flags and settings resets in RescueParty")
                 } else {
+<<<<<<< PATCH SET (3ab897 Add some logging)
+                    impact = mapRescueLevelToUserImpact(getRescueLevel(mitigationCount,
+                        mayPerformReboot(failedPackage)));
+=======
                     return mapRescueLevelToUserImpact(getRescueLevel(mitigationCount,
                             mayPerformReboot(failedPackage)));
+>>>>>>> BASE      (25a679 Merge "Deprecating flags and settings resets in RescueParty")
                 }
-            } else {
-                return PackageHealthObserverImpact.USER_IMPACT_LEVEL_0;
             }
+
+            Slog.i(TAG, "Checking available remediations for health check failure."
+                    + " failedPackage: " + failedPackage.getPackageName()
+                    + " failureReason: " + failureReason
+                    + " available impact: " + impact);
+            return impact;
         }
 
         @Override
@@ -827,6 +842,10 @@ public class RescueParty {
             if (isDisabled()) {
                 return false;
             }
+            Slog.i(TAG, "Executing remediation."
+                    + " failedPackage: " + failedPackage.getPackageName()
+                    + " failureReason: " + failureReason
+                    + " mitigationCount: " + mitigationCount);
             if (failureReason == PackageWatchdog.FAILURE_REASON_APP_CRASH
                     || failureReason == PackageWatchdog.FAILURE_REASON_APP_NOT_RESPONDING) {
                 final int level;
