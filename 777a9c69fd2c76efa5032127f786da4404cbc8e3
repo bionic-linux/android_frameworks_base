@@ -22,6 +22,30 @@
       },
       "revId": "777a9c69fd2c76efa5032127f786da4404cbc8e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ba9b3c3_4632467f",
+        "filename": "services/core/java/com/android/server/CertBlocklister.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2024-07-02T03:43:34Z",
+      "side": 1,
+      "message": "This is mainly for OEMs that don\u0027t rely on GMSCore. We already have some explicit comments in the internal configuration about not using this list.",
+      "parentUuid": "54ff3210_92ad74d5",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 74
+      },
+      "revId": "777a9c69fd2c76efa5032127f786da4404cbc8e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
