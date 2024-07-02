@@ -8,7 +8,7 @@ is available, it is better to use the following instructions to lock CPU and GPU
 ```
 m perf-setup
 PERF_SETUP_PATH=/data/local/tmp/perf-setup.sh
-adb push $OUT/$PERF_SETUP_PATH $PERF_SETUP_PATH
+adb push $ANDROID_PRODUCT_OUT/obj/NATIVE_TESTS/perf-setup_intermediates/perf-setup.sh $PERF_SETUP_PATH
 adb shell chmod +x $PERF_SETUP_PATH
 adb shell $PERF_SETUP_PATH
 ```
