@@ -46,6 +46,30 @@
       },
       "revId": "777a9c69fd2c76efa5032127f786da4404cbc8e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af194261_8f2a3ed4",
+        "filename": "services/core/java/com/android/server/CertBlocklister.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-07-02T08:09:12Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0ba9b3c3_4632467f",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 74
+      },
+      "revId": "777a9c69fd2c76efa5032127f786da4404cbc8e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
