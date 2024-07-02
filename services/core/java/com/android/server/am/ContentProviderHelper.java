@@ -61,6 +61,7 @@ import android.content.pm.PathPermission;
 import android.content.pm.ProviderInfo;
 import android.content.pm.UserInfo;
 import android.content.pm.UserProperties;
+import android.crashrecovery.flags.Flags;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Binder;
@@ -1363,8 +1364,11 @@ public class ContentProviderHelper {
         SettingsToPropertiesMapper.start(mService.mContext.getContentResolver());
         mService.mOomAdjuster.initSettings();
 
-        // Now that the settings provider is published we can consider sending in a rescue party.
-        RescueParty.onSettingsProviderPublished(mService.mContext);
+
+        if (!Flags.deprecateFlagsAndSettingsResets()) {
+            // Now that the settings provider is published we can consider sending in a rescue party
+            RescueParty.onSettingsProviderPublished(mService.mContext);
+        }
     }
 
     /**
