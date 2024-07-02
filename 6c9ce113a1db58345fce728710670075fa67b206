@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6f87594_72be0c0f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1944372
+      },
+      "writtenOn": "2024-07-02T20:59:11Z",
+      "side": 1,
+      "message": "Approved, feel free to merge this and the Wear-specific patches.",
+      "revId": "6c9ce113a1db58345fce728710670075fa67b206",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
