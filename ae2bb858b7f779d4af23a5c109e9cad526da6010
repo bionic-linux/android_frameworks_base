@@ -142,6 +142,30 @@
       },
       "revId": "ae2bb858b7f779d4af23a5c109e9cad526da6010",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "899e3cf5_7da70861",
+        "filename": "core/java/com/android/internal/widget/LockPatternView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1944372
+      },
+      "writtenOn": "2024-07-02T20:59:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40656c0c_d1b3c6d7",
+      "range": {
+        "startLine": 455,
+        "startChar": 16,
+        "endLine": 455,
+        "endChar": 38
+      },
+      "revId": "ae2bb858b7f779d4af23a5c109e9cad526da6010",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
