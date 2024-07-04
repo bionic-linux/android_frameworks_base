@@ -16,6 +16,24 @@
       "message": "Why is this change needed? Can it be abandoned after Parth\u0027s?",
       "revId": "813a6c235e7e7495f55b9010d22f33f74a11bb1e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce903b1b_0f3ac703",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1958315
+      },
+      "writtenOn": "2024-07-04T15:12:05Z",
+      "side": 1,
+      "message": "This change is still needed, as `ServiceManagerProxy` implements `IServiceManager`, and the `getService()` and `checkService()` APIs in `IServiceManager` have been modified, but we should still be able to keep this change relatively small.",
+      "parentUuid": "d96aa886_40d9fb19",
+      "revId": "813a6c235e7e7495f55b9010d22f33f74a11bb1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
