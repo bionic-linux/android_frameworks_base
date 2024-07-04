@@ -33,6 +33,24 @@
       "message": "Is there a bug for this change?  If so, can you please provide the test APK and repro instructions on the bug, and link to it from the commit message as well -- thank you",
       "revId": "ad8f839ec9d19be668237463042ace6685f16ec8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5d129f8_772129d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1792527
+      },
+      "writtenOn": "2024-07-04T05:07:55Z",
+      "side": 1,
+      "message": "I dont know how to upload my test apk here, but the simplest way to reproduce this bug is build an apk with `\u003citem name\u003d\"android:windowIsTranslucent\"\u003etrue\u003c/item\u003e` in its theme, so there could be more than one visible tasks within a stage.\n\n1. Create a split pair A and B.\n2. Create another new pair C and transluent T.\n3. Enter recents.\n4. Split pairs might be broken. The results vary according to the order of taskIds. (Launcher also crashes on Android V emulator).",
+      "parentUuid": "1f55275a_102b10de",
+      "revId": "ad8f839ec9d19be668237463042ace6685f16ec8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
