@@ -461,7 +461,7 @@ class ShortcutUser {
         }
         File[] list = path.listFiles();
         for (File f : list) {
-            if (!f.getName().endsWith(".reservecopy") && !f.getName().endsWith(".backup")) {
+            if (!f.getName().endsWith(".reservecopy") && !f.getName().endsWith(".fallback")) {
                 callback.accept(f);
             }
         }
