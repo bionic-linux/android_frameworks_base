@@ -3618,6 +3618,11 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
         @Override
         public boolean freeze(@NonNull WindowContainer wc, @NonNull Rect bounds) {
             if (!wc.isVisibleRequested()) return false;
+            if (mController.isPlaying()
+                && wc.asDisplayContent() != null
+                && !wc.asDisplayContent().isRotationChanging()){
+                return false;
+            }
 
             // Check if any parents have already been "frozen". If so, `wc` is already part of that
             // snapshot, so just skip it.
