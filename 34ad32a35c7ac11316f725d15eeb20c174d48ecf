@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d822fa6_a4155d52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-07-08T18:11:49Z",
+      "side": 1,
+      "message": "I think this needs to be `android.app.remove_system_service_registry`, but ignore this comment if you don\u0027t get a presubmit error.",
+      "revId": "34ad32a35c7ac11316f725d15eeb20c174d48ecf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9b6532a_59033330",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1720,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-07-08T18:11:49Z",
+      "side": 1,
+      "message": "Would we still generate a WTF after the new caching is in place? I would be very tempted to simply write \u0027return ServiceManager.getService(name)\u0027 here, as has been done in `getSystemServiceWithNoContext()`.",
+      "revId": "34ad32a35c7ac11316f725d15eeb20c174d48ecf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35fa2ac7_45bc4feb",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1801,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-07-08T18:11:49Z",
+      "side": 1,
+      "message": "If the system service registry is not being used, we can treat this entire method as a nop, right?  It\u0027s not clear to me how much of `SystemServiceRegistry` we plan to keep.",
+      "revId": "34ad32a35c7ac11316f725d15eeb20c174d48ecf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
