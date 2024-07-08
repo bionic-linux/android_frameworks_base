@@ -51,6 +51,24 @@
       "parentUuid": "1f55275a_102b10de",
       "revId": "ad8f839ec9d19be668237463042ace6685f16ec8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3200a841_3eb439ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1592288
+      },
+      "writtenOn": "2024-07-08T23:10:03Z",
+      "side": 1,
+      "message": "Thanks for the repro steps!\nYou would need to create a bug (which is also necessary for tracking purposes) and then you can upload the test apk and repro steps you have above on the bug.",
+      "parentUuid": "e5d129f8_772129d8",
+      "revId": "ad8f839ec9d19be668237463042ace6685f16ec8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
