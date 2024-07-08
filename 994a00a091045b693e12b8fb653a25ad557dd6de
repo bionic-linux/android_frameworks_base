@@ -16,6 +16,24 @@
       "message": "@Shen Lin, can you pls share the link of AOSP patch? Thanks.",
       "revId": "994a00a091045b693e12b8fb653a25ad557dd6de",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c84d728_e36723e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2024-07-08T10:12:10Z",
+      "side": 1,
+      "message": "This method has been refactored in android U, you can view the lastest code [here](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/packages/SystemUI/src/com/android/systemui/screenshot/CropView.java;l\u003d359;bpv\u003d1;bpt\u003d0).\n\nFor the specific CL, see [here](https://cs.android.com/android/_/android/platform/frameworks/base/+/eb3ab0b594cbddc97ef67253e228188d8de273c1).",
+      "parentUuid": "2383b52a_461e4c26",
+      "revId": "994a00a091045b693e12b8fb653a25ad557dd6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
