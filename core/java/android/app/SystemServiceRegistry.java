@@ -296,6 +296,10 @@ public final class SystemServiceRegistry {
     // Not instantiable.
     private SystemServiceRegistry() { }
 
+    private static boolean turnSystemServiceRegistryOff() {
+        return Flags.removeSystemServiceRegistry();
+    }
+
     static {
         //CHECKSTYLE:OFF IndentationCheck
         registerService(Context.ACCESSIBILITY_SERVICE, AccessibilityManager.class,
@@ -1711,12 +1715,18 @@ public final class SystemServiceRegistry {
      * @hide
      */
     public static Object getSystemService(@NonNull ContextImpl ctx, String name) {
-        final ServiceFetcher<?> fetcher = getSystemServiceFetcher(name);
-        if (fetcher == null) {
-            return null;
+        final Object ret;
+        if (turnSystemServiceRegistryOff()) {
+            ret = ServiceManager.getService(name);
+        } else {
+            final ServiceFetcher<?> fetcher = getSystemServiceFetcher(name);
+            if (fetcher == null) {
+                return null;
+            }
+
+            ret = fetcher.getService(ctx);
         }
 
-        final Object ret = fetcher.getService(ctx);
         if (sEnableServiceNotFoundWtf && ret == null) {
             // Some services do return null in certain situations, so don't do WTF for them.
             switch (name) {
@@ -1748,6 +1758,10 @@ public final class SystemServiceRegistry {
     @FlaggedApi(android.webkit.Flags.FLAG_UPDATE_SERVICE_IPC_WRAPPER)
     @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public static @Nullable Object getSystemServiceWithNoContext(@NonNull String name) {
+        if (turnSystemServiceRegistryOff()) {
+            return ServiceManager.getService(name);
+        }
+
         final ServiceFetcher<?> fetcher = getSystemServiceFetcher(name);
         if (fetcher == null) {
             return null;
@@ -1784,7 +1798,9 @@ public final class SystemServiceRegistry {
     private static <T> void registerService(@NonNull String serviceName,
             @NonNull Class<T> serviceClass, @NonNull ServiceFetcher<T> serviceFetcher) {
         SYSTEM_SERVICE_NAMES.put(serviceClass, serviceName);
-        SYSTEM_SERVICE_FETCHERS.put(serviceName, serviceFetcher);
+        if (turnSystemServiceRegistryOff()) {
+            SYSTEM_SERVICE_FETCHERS.put(serviceName, serviceFetcher);
+        }
         SYSTEM_SERVICE_CLASS_NAMES.put(serviceName, serviceClass.getSimpleName());
     }
 
