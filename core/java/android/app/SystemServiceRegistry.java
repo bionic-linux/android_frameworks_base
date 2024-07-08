@@ -296,6 +296,10 @@ public final class SystemServiceRegistry {
     // Not instantiable.
     private SystemServiceRegistry() { }
 
+    private static boolean turnSystemServiceRegistryCacheOff() {
+        return android.server.Flags.removeSystemServiceRegistryCache();
+    }
+
     static {
         //CHECKSTYLE:OFF IndentationCheck
         registerService(Context.ACCESSIBILITY_SERVICE, AccessibilityManager.class,
@@ -1711,12 +1715,18 @@ public final class SystemServiceRegistry {
      * @hide
      */
     public static Object getSystemService(@NonNull ContextImpl ctx, String name) {
-        final ServiceFetcher<?> fetcher = getSystemServiceFetcher(name);
-        if (fetcher == null) {
-            return null;
+        final Object ret;
+        if (turnSystemServiceRegistryCacheOff()) {
+            ret = ServiceManager.getService(name);
+        } else {
+            final ServiceFetcher<?> fetcher = getSystemServiceFetcher(name);
+            if (fetcher == null) {
+                return null;
+            }
+
+            ret = fetcher.getService(ctx);
         }
 
-        final Object ret = fetcher.getService(ctx);
         if (sEnableServiceNotFoundWtf && ret == null) {
             // Some services do return null in certain situations, so don't do WTF for them.
             switch (name) {
@@ -1748,6 +1758,10 @@ public final class SystemServiceRegistry {
     @FlaggedApi(android.webkit.Flags.FLAG_UPDATE_SERVICE_IPC_WRAPPER)
     @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public static @Nullable Object getSystemServiceWithNoContext(@NonNull String name) {
+        if (turnSystemServiceRegistryCacheOff()) {
+            return ServiceManager.getService(name);
+        }
+
         final ServiceFetcher<?> fetcher = getSystemServiceFetcher(name);
         if (fetcher == null) {
             return null;
