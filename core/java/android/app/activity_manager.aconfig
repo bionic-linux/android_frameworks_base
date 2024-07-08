@@ -42,3 +42,11 @@ flag {
     description: "Add APIs for clients to provide broadcast event trigger timestamps"
     bug: "325136414"
 }
+
+flag {
+    name: "remove_system_service_registry"
+    namespace: "system_performance"
+    description: "This flag turns off SystemServiceRegistry's caching mechanism."
+    bug: "333854840"
+    is_fixed_read_only: true
+}
