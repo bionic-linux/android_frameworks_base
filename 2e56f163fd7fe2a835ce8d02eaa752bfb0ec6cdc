@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e6145d6_3cc076b6",
+        "filename": "services/core/java/com/android/server/wm/Transition.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3620,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2024-07-08T16:46:12Z",
+      "side": 1,
+      "message": "This freezer is not just for freezing the screen, it applies to individual containers as well (eg. tasks/activities).\n\nI think the issue you are seeing requires a different solution: what you\u0027re proposing here will basically skip screenshot for, eg, rotation if there\u0027s an ongoing animation which would be a problem.\n\nIn this case, it seems like the problem is we are triggering a display-level config-change without actually changing the display.\n\nMaybe we need some sort of filtering on what we consider a change? In this case it looks like it is being triggered by 0x80000000 which is `CONFIG_ASSETS_PATHS` which maybe isn\u0027t a \"real\" change?\n\nWhat do you think @riddlehsu@google.com ?",
+      "range": {
+        "startLine": 3620,
+        "startChar": 40,
+        "endLine": 3620,
+        "endChar": 67
+      },
+      "revId": "2e56f163fd7fe2a835ce8d02eaa752bfb0ec6cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
