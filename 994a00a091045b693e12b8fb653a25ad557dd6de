@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2383b52a_461e4c26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003768
+      },
+      "writtenOn": "2024-07-08T09:18:20Z",
+      "side": 1,
+      "message": "@Shen Lin, can you pls share the link of AOSP patch? Thanks.",
+      "revId": "994a00a091045b693e12b8fb653a25ad557dd6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
