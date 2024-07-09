@@ -69,6 +69,24 @@
       "parentUuid": "e5d129f8_772129d8",
       "revId": "ad8f839ec9d19be668237463042ace6685f16ec8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "314b5bc4_89301aa8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1792527
+      },
+      "writtenOn": "2024-07-09T09:22:10Z",
+      "side": 1,
+      "message": "I create a bug(351868781) and upload the test apk and screen record there.",
+      "parentUuid": "3200a841_3eb439ed",
+      "revId": "ad8f839ec9d19be668237463042ace6685f16ec8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
