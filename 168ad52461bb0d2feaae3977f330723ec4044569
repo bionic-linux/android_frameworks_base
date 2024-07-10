@@ -33,6 +33,23 @@
       "message": "Hi Jean-Michel Trivi, can you help review this change, thank you!",
       "revId": "168ad52461bb0d2feaae3977f330723ec4044569",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18466eee_be3751a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1932906
+      },
+      "writtenOn": "2024-07-10T02:32:50Z",
+      "side": 1,
+      "message": "Hi,Eric Laurent，Jean-Michel Trivi. Can you help me check Presubmit Verified？Thank you!",
+      "revId": "168ad52461bb0d2feaae3977f330723ec4044569",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
