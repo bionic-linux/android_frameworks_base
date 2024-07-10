@@ -87,6 +87,24 @@
       "parentUuid": "3200a841_3eb439ed",
       "revId": "ad8f839ec9d19be668237463042ace6685f16ec8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d921df5_0c036e27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1592288
+      },
+      "writtenOn": "2024-07-10T17:50:19Z",
+      "side": 1,
+      "message": "Thanks for the bug and the apk. I downloaded the apk and tried the repro steps you listed and that from the screen recording but was not able to reproduce any crash.  \nIf you are still seeing it, could you please capture a bug report as soon the crash happens and add it to the bug so we can investigate? Thanks.\n\nYou can generate a bug report via `adb bugreport`. More info [here](https://developer.android.com/studio/debug/bug-report)",
+      "parentUuid": "314b5bc4_89301aa8",
+      "revId": "ad8f839ec9d19be668237463042ace6685f16ec8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
