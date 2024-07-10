@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88f146ef_d75f56d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2024-07-10T13:18:55Z",
+      "side": 1,
+      "message": "Deferring to Rubin - I don\u0027t see a reason why KeyChain couldn\u0027t be bound to.",
+      "revId": "54b1f3de35624507bd16591c8ac818c4297d65c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
