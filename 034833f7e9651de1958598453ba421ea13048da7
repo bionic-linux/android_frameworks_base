@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0993c540_b926c9b3",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 7016,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2024-07-10T17:01:05Z",
+      "side": 1,
+      "message": "Two things here:  \n1/ Because this is an API change, we can\u0027t accept this change right now. So I suggest we still take the implementation as you\u0027ve done it, BUT without the annotation @RequiresPermission on AudioManager. I will do that later internally as a bug fix (which it is as any @SystemApi should be annotated with a required system permission.  \n2/ Please use in the implementation MODIFY_AUDIO_SETTINGS_PRIVILEGED instead of MODIFY_AUDIO_ROUTING. I want to restrict MODIFY_AUDIO_ROUTING to that feature exactly, and use MODIFY_AUDIO_SETTINGS_PRIVILEGED for system settings only.",
+      "range": {
+        "startLine": 7016,
+        "startChar": 11,
+        "endLine": 7016,
+        "endChar": 79
+      },
+      "revId": "034833f7e9651de1958598453ba421ea13048da7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
