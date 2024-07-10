@@ -68,6 +68,41 @@
       "parentUuid": "35fa2ac7_45bc4feb",
       "revId": "34ad32a35c7ac11316f725d15eeb20c174d48ecf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12259a37_20704eb6",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1801,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-07-10T16:02:48Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1c666cab_2029dc95",
+      "revId": "34ad32a35c7ac11316f725d15eeb20c174d48ecf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf02c7d5_6a159836",
+        "filename": "core/java/android/app/activity_manager.aconfig",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-07-10T16:02:48Z",
+      "side": 1,
+      "message": "I have a feeling that the presubmit crashes are because the flag is read/write and the flag cannot be read early enough.  Try making the flag read-only and see if presubmit passes.",
+      "revId": "34ad32a35c7ac11316f725d15eeb20c174d48ecf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
