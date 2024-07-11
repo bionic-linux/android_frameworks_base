@@ -22,6 +22,30 @@
       },
       "revId": "034833f7e9651de1958598453ba421ea13048da7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "472777d0_8e016685",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 7016,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-07-11T15:55:26Z",
+      "side": 1,
+      "message": "Done, The switch to MODIFY_AUDIO_SETTINGS_PRIVILEGED is splitted in another CL / update of CarService / CTS required",
+      "parentUuid": "0993c540_b926c9b3",
+      "range": {
+        "startLine": 7016,
+        "startChar": 11,
+        "endLine": 7016,
+        "endChar": 79
+      },
+      "revId": "034833f7e9651de1958598453ba421ea13048da7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
