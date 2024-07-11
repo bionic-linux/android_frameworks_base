@@ -27,12 +27,13 @@ import androidx.annotation.Nullable;
 /**
  * Trampoline activity. Calls PackageInstallerActivity and deletes staged install file onResult.
  */
-public class DeleteStagedFileOnResult extends Activity {
+public class DeleteStagedFileOnResult extends Activity implements PackageUtil.DelStageActivityFinishCallback {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState == null) {
+            InstallSuccess.DelStageActivityFinishRegister(this);
             Intent installIntent = new Intent(getIntent());
             installIntent.setClass(this, PackageInstallerActivity.class);
 
@@ -60,5 +61,10 @@ public class DeleteStagedFileOnResult extends Activity {
             } catch (SecurityException ignored) {
             }
         }
+    }
+
+    @Override
+    public void onDelStageActivityFinish() {
+        finish();
     }
 }

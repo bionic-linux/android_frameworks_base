@@ -362,4 +362,8 @@ public class PackageUtil {
         }
         return null;
     }
+
+    public interface DelStageActivityFinishCallback {
+        public void onDelStageActivityFinish();
+    }
 }

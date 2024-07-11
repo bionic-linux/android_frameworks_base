@@ -50,6 +50,8 @@ public class InstallSuccess extends Activity {
 
     private AlertDialog mDialog;
 
+    private static PackageUtil.DelStageActivityFinishCallback mCallback;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,6 +124,7 @@ public class InstallSuccess extends Activity {
         if (enabled) {
             launchButton.setOnClickListener(view -> {
                 try {
+                    mCallback.onDelStageActivityFinish();
                     startActivity(mLaunchIntent.addFlags(
                         Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 } catch (ActivityNotFoundException | SecurityException e) {
@@ -132,5 +135,9 @@ public class InstallSuccess extends Activity {
         } else {
             launchButton.setEnabled(false);
         }
+    }
+
+    public static void DelStageActivityFinishRegister(PackageUtil.DelStageActivityFinishCallback callback) {
+        mCallback = callback;
     }
 }
