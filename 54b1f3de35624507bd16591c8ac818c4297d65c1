@@ -16,6 +16,24 @@
       "message": "Deferring to Rubin - I don\u0027t see a reason why KeyChain couldn\u0027t be bound to.",
       "revId": "54b1f3de35624507bd16591c8ac818c4297d65c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdfaf47f_4ee5dde0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1960164
+      },
+      "writtenOn": "2024-07-11T02:03:23Z",
+      "side": 1,
+      "message": "We are currently adding logs internally to retest and analyze the reasons for the failure to bind KeyChain. I submitted this patch because i think its robustness is somewhat lacking; If the binding service fails, the current thread will continue to block, which is likely to cause issues such as reboot.",
+      "parentUuid": "88f146ef_d75f56d8",
+      "revId": "54b1f3de35624507bd16591c8ac818c4297d65c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
