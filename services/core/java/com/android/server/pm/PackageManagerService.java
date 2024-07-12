@@ -1206,7 +1206,6 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
             return newSnapshot.use();
         }
 
-        synchronized (mSnapshotLock) {
             // Re-capture pending version in case a new invalidation occurred since last check
             var rebuildSnapshot = sSnapshot.get();
             var rebuildVersion = sSnapshotPendingVersion.get();
@@ -1234,7 +1233,6 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
                 sSnapshot.set(newSnapshot);
                 return newSnapshot.use();
             }
-        }
     }
 
     @GuardedBy("mLock")
