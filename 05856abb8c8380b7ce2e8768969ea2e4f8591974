@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6c46260_47a199ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-07-12T14:17:25Z",
+      "side": 1,
+      "message": "Thanks Håkan! Just a couple of minor things",
+      "revId": "05856abb8c8380b7ce2e8768969ea2e4f8591974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b64f0c3_cdb854e4",
+        "filename": "data/keyboards/Vendor_054c_Product_05c4.idc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-07-12T14:17:25Z",
+      "side": 1,
+      "message": "Nit (here and in all the files): typically we put the bug number immediately after TODO when we have an associated bug.\n\n```suggestion\n# TODO(b/351326684): Ideally \"Scroll X Out Scale\" and \"Scroll Y Out Scale\"\n# should be adjusted as well. Currently not supported in IDC files.\n```",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 71
+      },
+      "revId": "05856abb8c8380b7ce2e8768969ea2e4f8591974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6466ff21_b441a71e",
+        "filename": "data/keyboards/Vendor_054c_Product_09cc.idc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-07-12T14:17:25Z",
+      "side": 1,
+      "message": "```suggestion\n# TODO(b/351326684): Ideally \"Scroll X Out Scale\" and \"Scroll Y Out Scale\"\n# should be adjusted as well. Currently not supported in IDC files.\n```",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 71
+      },
+      "revId": "05856abb8c8380b7ce2e8768969ea2e4f8591974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6872112f_9c11dce5",
+        "filename": "data/keyboards/Vendor_054c_Product_0ce6.idc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-07-12T14:17:25Z",
+      "side": 1,
+      "message": "Nit: we don\u0027t include `(C)` in the copyright notices anymore\n\n```suggestion\n# Copyright 2024 The Android Open Source Project\n```",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "05856abb8c8380b7ce2e8768969ea2e4f8591974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd5c6ba2_18070c03",
+        "filename": "data/keyboards/Vendor_054c_Product_0ce6.idc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-07-12T14:17:25Z",
+      "side": 1,
+      "message": "```suggestion\n# TODO(b/351326684): Ideally \"Scroll X Out Scale\" and \"Scroll Y Out Scale\"\n# should be adjusted as well. Currently not supported in IDC files.\n```",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 71
+      },
+      "revId": "05856abb8c8380b7ce2e8768969ea2e4f8591974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b399555_89e9f19c",
+        "filename": "data/keyboards/Vendor_054c_Product_0df2.idc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-07-12T14:17:25Z",
+      "side": 1,
+      "message": "Nit: we don\u0027t include `(C)` in the copyright notices anymore\n\n```suggestion\n# Copyright 2024 The Android Open Source Project\n```",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "05856abb8c8380b7ce2e8768969ea2e4f8591974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4017fcc_c1b42828",
+        "filename": "data/keyboards/Vendor_054c_Product_0df2.idc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-07-12T14:17:25Z",
+      "side": 1,
+      "message": "```suggestion\n# TODO(b/351326684): Ideally \"Scroll X Out Scale\" and \"Scroll Y Out Scale\"\n# should be adjusted as well. Currently not supported in IDC files.\n```",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 71
+      },
+      "revId": "05856abb8c8380b7ce2e8768969ea2e4f8591974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
