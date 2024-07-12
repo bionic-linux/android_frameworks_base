@@ -16,6 +16,24 @@
       "message": "Actually, it\u0027s referring to a single item, so it should be criterion rather than the plural",
       "revId": "dd3f0829159044f07a7ecd607bcc24b6ebd5c2ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39031e74_fe1faec5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1960899
+      },
+      "writtenOn": "2024-07-12T19:06:19Z",
+      "side": 1,
+      "message": "So it should be \"until this criterion is met\"?",
+      "parentUuid": "48def0d7_241269b6",
+      "revId": "dd3f0829159044f07a7ecd607bcc24b6ebd5c2ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
