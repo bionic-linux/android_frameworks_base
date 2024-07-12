@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d0a2a9e_94967b1e",
+        "filename": "data/keyboards/Vendor_054c_Product_05c4.idc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-07-12T18:48:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b64f0c3_cdb854e4",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 71
+      },
+      "revId": "05856abb8c8380b7ce2e8768969ea2e4f8591974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6466ff21_b441a71e",
@@ -54,6 +78,30 @@
       "writtenOn": "2024-07-12T14:17:25Z",
       "side": 1,
       "message": "```suggestion\n# TODO(b/351326684): Ideally \"Scroll X Out Scale\" and \"Scroll Y Out Scale\"\n# should be adjusted as well. Currently not supported in IDC files.\n```",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 71
+      },
+      "revId": "05856abb8c8380b7ce2e8768969ea2e4f8591974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a3d1134_0bf6f288",
+        "filename": "data/keyboards/Vendor_054c_Product_09cc.idc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-07-12T18:48:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6466ff21_b441a71e",
       "range": {
         "startLine": 69,
         "startChar": 0,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cfa764c_d30a37c7",
+        "filename": "data/keyboards/Vendor_054c_Product_0ce6.idc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-07-12T18:48:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6872112f_9c11dce5",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "05856abb8c8380b7ce2e8768969ea2e4f8591974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd5c6ba2_18070c03",
@@ -100,6 +172,30 @@
       "writtenOn": "2024-07-12T14:17:25Z",
       "side": 1,
       "message": "```suggestion\n# TODO(b/351326684): Ideally \"Scroll X Out Scale\" and \"Scroll Y Out Scale\"\n# should be adjusted as well. Currently not supported in IDC files.\n```",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 71
+      },
+      "revId": "05856abb8c8380b7ce2e8768969ea2e4f8591974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f96c761a_615933b7",
+        "filename": "data/keyboards/Vendor_054c_Product_0ce6.idc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-07-12T18:48:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd5c6ba2_18070c03",
       "range": {
         "startLine": 34,
         "startChar": 0,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03e6b6cd_aab51ac4",
+        "filename": "data/keyboards/Vendor_054c_Product_0df2.idc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-07-12T18:48:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b399555_89e9f19c",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "05856abb8c8380b7ce2e8768969ea2e4f8591974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e4017fcc_c1b42828",
@@ -146,6 +266,30 @@
       "writtenOn": "2024-07-12T14:17:25Z",
       "side": 1,
       "message": "```suggestion\n# TODO(b/351326684): Ideally \"Scroll X Out Scale\" and \"Scroll Y Out Scale\"\n# should be adjusted as well. Currently not supported in IDC files.\n```",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 71
+      },
+      "revId": "05856abb8c8380b7ce2e8768969ea2e4f8591974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd90c735_98416f8c",
+        "filename": "data/keyboards/Vendor_054c_Product_0df2.idc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-07-12T18:48:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4017fcc_c1b42828",
       "range": {
         "startLine": 34,
         "startChar": 0,
