@@ -73,6 +73,7 @@ public final class LmkdStatsReporter {
                     pgFault, pgMajFault, rssInBytes, cacheInBytes, swapInBytes, processStartTimeNS,
                     minOomScore, freeMemKb, freeSwapKb, mapKillReason(killReason), thrashing,
                     maxThrashing, totalForegroundServices, procsWithForegroundServices);
+            Slog.e(TAG, "LMKD Stats Reporter uid=" + uid + ", rss=" + (rssInBytes >> 10));
         } catch (IOException e) {
             Slog.e(TAG, "Invalid buffer data. Failed to log LMK_KILL_OCCURRED");
             return;
