@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46062335_4e57143b",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-07-16T23:26:37Z",
+      "side": 1,
+      "message": "Can you update frameworks/base/services/tests/mockingservicestests/src/com/android/server/am/ApplicationExitInfoTest.java or CTS test case to verify the change?",
+      "revId": "f7dff76e9a5766c606b8c906038602560837c1b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
