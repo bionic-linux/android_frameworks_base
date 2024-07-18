@@ -39,6 +39,8 @@ public class ZoneInfoDbTimeZoneProviderEventPreProcessorTest {
 
     private static final long ARBITRARY_TIME_MILLIS = 11223344;
 
+    private final List<String> mNonExistingTimeZones = Arrays.asList(
+                "SystemV/HST10", "Atlantic/Atlantis", "EUROPE/LONDON", "Etc/GMT-5:30");
     private final ZoneInfoDbTimeZoneProviderEventPreProcessor mPreProcessor =
             new ZoneInfoDbTimeZoneProviderEventPreProcessor();
 
@@ -53,11 +55,8 @@ public class ZoneInfoDbTimeZoneProviderEventPreProcessorTest {
 
     @Test
     public void eventWithNonExistingZones_areMappedToUncertainEvent() {
-        List<String> nonExistingTimeZones = Arrays.asList(
-                "SystemV/HST10", "Atlantic/Atlantis", "EUROPE/LONDON", "Etc/GMT-5:30");
-
-        for (String timeZone : nonExistingTimeZones) {
-            TimeZoneProviderEvent event = timeZoneProviderEvent(timeZone);
+        for (String timeZone : mNonExistingTimeZones) {
+            TimeZoneProviderEvent event = timeZoneProviderEvent(timeZone, true);
 
             TimeZoneProviderStatus expectedProviderStatus =
                     new TimeZoneProviderStatus.Builder(event.getTimeZoneProviderStatus())
@@ -73,12 +72,37 @@ public class ZoneInfoDbTimeZoneProviderEventPreProcessorTest {
         }
     }
 
-    private static TimeZoneProviderEvent timeZoneProviderEvent(String... timeZoneIds) {
-        TimeZoneProviderStatus providerStatus = new TimeZoneProviderStatus.Builder()
-                .setLocationDetectionDependencyStatus(DEPENDENCY_STATUS_OK)
-                .setConnectivityDependencyStatus(DEPENDENCY_STATUS_OK)
-                .setTimeZoneResolutionOperationStatus(OPERATION_STATUS_OK)
-                .build();
+    @Test
+    public void eventWithNullProviderStatus_areMappedToUncertainEvent() {
+        for (String timeZone : mNonExistingTimeZones) {
+            TimeZoneProviderEvent eventWithNullStatus = timeZoneProviderEvent(timeZone, false);
+
+            TimeZoneProviderStatus expectedNullProviderStatus =
+                    new TimeZoneProviderStatus.Builder()
+                            .setTimeZoneResolutionOperationStatus(OPERATION_STATUS_FAILED)
+                            .build();
+
+            TimeZoneProviderEvent expectedNullStatusResultEvent =
+                    TimeZoneProviderEvent.createUncertainEvent(
+                            eventWithNullStatus.getCreationElapsedMillis(),
+                            expectedNullProviderStatus);
+            assertWithMessage(timeZone + " with null time zone provider status")
+                    .that(mPreProcessor.preProcess(eventWithNullStatus))
+                    .isEqualTo(expectedNullStatusResultEvent);
+        }
+    }
+
+    private static TimeZoneProviderEvent timeZoneProviderEvent(String... timeZoneIds,
+            boolean needStatus) {
+        TimeZoneProviderStatus providerStatus = null;
+        if (needStatus) {
+            providerStatus = new TimeZoneProviderStatus.Builder()
+                    .setLocationDetectionDependencyStatus(DEPENDENCY_STATUS_OK)
+                    .setConnectivityDependencyStatus(DEPENDENCY_STATUS_OK)
+                    .setTimeZoneResolutionOperationStatus(OPERATION_STATUS_OK)
+                    .build();
+        }
+
         TimeZoneProviderSuggestion suggestion = new TimeZoneProviderSuggestion.Builder()
                 .setTimeZoneIds(Arrays.asList(timeZoneIds))
                 .setElapsedRealtimeMillis(ARBITRARY_TIME_MILLIS)
