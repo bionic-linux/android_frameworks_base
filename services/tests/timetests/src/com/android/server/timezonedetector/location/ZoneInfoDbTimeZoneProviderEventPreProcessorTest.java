@@ -57,28 +57,42 @@ public class ZoneInfoDbTimeZoneProviderEventPreProcessorTest {
                 "SystemV/HST10", "Atlantic/Atlantis", "EUROPE/LONDON", "Etc/GMT-5:30");
 
         for (String timeZone : nonExistingTimeZones) {
-            TimeZoneProviderEvent event = timeZoneProviderEvent(timeZone);
+            TimeZoneProviderEvent event = timeZoneProviderEvent(timeZone, true);
+            TimeZoneProviderEvent eventWithNullStatus = timeZoneProviderEvent(timeZone, false);
 
             TimeZoneProviderStatus expectedProviderStatus =
                     new TimeZoneProviderStatus.Builder(event.getTimeZoneProviderStatus())
+                            .setTimeZoneResolutionOperationStatus(OPERATION_STATUS_FAILED)
+                            .build();
+            TimeZoneProviderStatus expectedNullProviderStatus =
+                    new TimeZoneProviderStatus.Builder()
                             .setTimeZoneResolutionOperationStatus(OPERATION_STATUS_FAILED)
                             .build();
 
             TimeZoneProviderEvent expectedResultEvent =
                     TimeZoneProviderEvent.createUncertainEvent(
                             event.getCreationElapsedMillis(), expectedProviderStatus);
+
             assertWithMessage(timeZone + " is not a valid time zone")
+                    .that(mPreProcessor.preProcess(event))
+                    .isEqualTo(expectedResultEvent);
+            assertWithMessage(timeZone + " with null time zone provider status")
                     .that(mPreProcessor.preProcess(event))
                     .isEqualTo(expectedResultEvent);
         }
     }
 
-    private static TimeZoneProviderEvent timeZoneProviderEvent(String... timeZoneIds) {
-        TimeZoneProviderStatus providerStatus = new TimeZoneProviderStatus.Builder()
-                .setLocationDetectionDependencyStatus(DEPENDENCY_STATUS_OK)
-                .setConnectivityDependencyStatus(DEPENDENCY_STATUS_OK)
-                .setTimeZoneResolutionOperationStatus(OPERATION_STATUS_OK)
-                .build();
+    private static TimeZoneProviderEvent timeZoneProviderEvent(String... timeZoneIds,
+            boolean needStatus) {
+        TimeZoneProviderStatus providerStatus = null;
+        if (needStatus) {
+            providerStatus = new TimeZoneProviderStatus.Builder()
+                    .setLocationDetectionDependencyStatus(DEPENDENCY_STATUS_OK)
+                    .setConnectivityDependencyStatus(DEPENDENCY_STATUS_OK)
+                    .setTimeZoneResolutionOperationStatus(OPERATION_STATUS_OK)
+                    .build();
+        }
+
         TimeZoneProviderSuggestion suggestion = new TimeZoneProviderSuggestion.Builder()
                 .setTimeZoneIds(Arrays.asList(timeZoneIds))
                 .setElapsedRealtimeMillis(ARBITRARY_TIME_MILLIS)
