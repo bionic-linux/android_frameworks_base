@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0e8ad2a_e07e7411",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2024-07-18T00:18:22Z",
+      "side": 1,
+      "message": "Direct cherry-pick. Needed to maintain parity with mainline code.",
+      "revId": "38779c1743cec876e023a3c67d777c85397902ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
