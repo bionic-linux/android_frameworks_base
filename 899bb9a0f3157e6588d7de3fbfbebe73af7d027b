@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c2a9aaf_e7ea8450",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-07-19T13:44:36Z",
+      "side": 1,
+      "message": "➜  base git:(change-3184819) aninja -t path out/target/product/generic/obj/ETC/frameworks-base-api-current.txt_intermediates/frameworks-base-api-current.txt out/soong/.intermediates/packages/modules/CrashRecovery/framework/framework-crashrecovery.stubs.source/android_common/everything/framework-crashrecovery.stubs.source_api.txt\n\n\u003eout/target/product/generic/obj/ETC/frameworks-base-api-current.txt_intermediates/frameworks-base-api-current.txt\n\n\u003eout/soong/.intermediates/frameworks/base/api/frameworks-base-api-current.txt/gen/current.txt\n\n\u003eout/soong/.intermediates/packages/modules/CrashRecovery/framework/framework-crashrecovery.stubs.source/android_common/everything/framework-crashrecovery.stubs.source_api.txt",
+      "revId": "899bb9a0f3157e6588d7de3fbfbebe73af7d027b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
