@@ -31,7 +31,6 @@ import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
 import android.perftests.utils.BenchmarkState;
 import android.perftests.utils.PerfStatusReporter;
-import android.permission.PermissionManager;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -108,8 +107,6 @@ public class PackageManagerPerfTest {
     public void setup() {
         PackageManager.disableApplicationInfoCache();
         PackageManager.disablePackageInfoCache();
-        PermissionManager.disablePermissionCache();
-        PermissionManager.disablePackageNamePermissionCache();
     }
 
     @Test
