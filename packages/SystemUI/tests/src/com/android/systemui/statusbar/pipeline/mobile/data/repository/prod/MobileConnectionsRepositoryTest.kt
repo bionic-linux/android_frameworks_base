@@ -196,6 +196,7 @@ class MobileConnectionsRepositoryTest : SysuiTestCase() {
                 scope = testScope.backgroundScope,
                 flags = flags,
                 carrierConfigRepository = carrierConfigRepository,
+                subscriptionManager = subscriptionManager,
             )
         carrierMergedFactory =
             CarrierMergedConnectionRepository.Factory(

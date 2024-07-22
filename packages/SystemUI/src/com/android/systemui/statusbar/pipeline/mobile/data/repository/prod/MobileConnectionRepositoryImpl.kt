@@ -109,6 +109,7 @@ class MobileConnectionRepositoryImpl(
     override val tableLogBuffer: TableLogBuffer,
     flags: FeatureFlagsClassic,
     scope: CoroutineScope,
+    private val subscriptionManager: SubscriptionManager,
 ) : MobileConnectionRepository {
     init {
         if (telephonyManager.subscriptionId != subId) {
@@ -368,7 +369,10 @@ class MobileConnectionRepositoryImpl(
      * See b/322432056 for context.
      */
     @SuppressLint("RegisterReceiverViaContext")
-    override val networkName: StateFlow<NetworkNameModel> =
+    override val networkName: StateFlow<NetworkNameModel> = run {
+        val initial = subscriptionManager.getActiveSubscriptionInfo(subId)?.let {
+             NetworkNameModel.Default(it.carrierName.toString())
+        } ?: defaultNetworkName
         conflatedCallbackFlow {
                 val receiver =
                     object : BroadcastReceiver() {
@@ -396,7 +400,9 @@ class MobileConnectionRepositoryImpl(
                 awaitClose { context.unregisterReceiver(receiver) }
             }
             .flowOn(bgDispatcher)
-            .stateIn(scope, SharingStarted.Eagerly, defaultNetworkName)
+            .stateIn(scope, SharingStarted.Eagerly, initial)
+    }
+
 
     override val dataEnabled = run {
         val initial = telephonyManager.isDataConnectionAllowed
@@ -463,6 +469,7 @@ class MobileConnectionRepositoryImpl(
         private val flags: FeatureFlagsClassic,
         @Background private val bgDispatcher: CoroutineDispatcher,
         @Application private val scope: CoroutineScope,
+        private val subscriptionManager: SubscriptionManager,
     ) {
         fun build(
             subId: Int,
@@ -487,6 +494,7 @@ class MobileConnectionRepositoryImpl(
                 mobileLogger,
                 flags,
                 scope,
+                SubscriptionManager,
             )
         }
     }
