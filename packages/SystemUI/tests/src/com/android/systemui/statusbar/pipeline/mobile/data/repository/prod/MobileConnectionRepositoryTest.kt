@@ -32,6 +32,7 @@ import android.telephony.NetworkRegistrationInfo.REGISTRATION_STATE_HOME
 import android.telephony.ServiceState
 import android.telephony.ServiceState.STATE_IN_SERVICE
 import android.telephony.ServiceState.STATE_OUT_OF_SERVICE
+import android.telephony.SubscriptionManager
 import android.telephony.SubscriptionManager.EXTRA_SUBSCRIPTION_INDEX
 import android.telephony.SubscriptionManager.PROFILE_CLASS_UNSET
 import android.telephony.TelephonyCallback
@@ -124,6 +125,7 @@ class MobileConnectionRepositoryTest : SysuiTestCase() {
     @Mock private lateinit var logger: MobileInputLogger
     @Mock private lateinit var tableLogger: TableLogBuffer
     @Mock private lateinit var context: Context
+    @Mock private lateinit var subscriptionManager: SubscriptionManager
 
     private val mobileMappings = FakeMobileMappingsProxy()
     private val systemUiCarrierConfig =
@@ -168,6 +170,7 @@ class MobileConnectionRepositoryTest : SysuiTestCase() {
                 tableLogger,
                 flags,
                 testScope.backgroundScope,
+                subscriptionManager,
             )
     }
 
@@ -642,6 +645,7 @@ class MobileConnectionRepositoryTest : SysuiTestCase() {
                     tableLogger,
                     flags,
                     testScope.backgroundScope,
+                    subscriptionManager,
                 )
 
             var latest: Boolean? = null
@@ -691,6 +695,7 @@ class MobileConnectionRepositoryTest : SysuiTestCase() {
                     tableLogger,
                     flags,
                     testScope.backgroundScope,
+                    subscriptionManager,
                 )
 
             var latest: Boolean? = null

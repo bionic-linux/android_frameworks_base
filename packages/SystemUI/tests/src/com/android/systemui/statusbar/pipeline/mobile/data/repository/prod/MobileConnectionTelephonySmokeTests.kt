@@ -18,6 +18,7 @@ package com.android.systemui.statusbar.pipeline.mobile.data.repository.prod
 
 import android.net.ConnectivityManager
 import android.telephony.ServiceState
+import android.telephony.SubscriptionManager
 import android.telephony.TelephonyCallback
 import android.telephony.TelephonyCallback.CarrierNetworkListener
 import android.telephony.TelephonyCallback.DataActivityListener
@@ -107,6 +108,7 @@ class MobileConnectionTelephonySmokeTests : SysuiTestCase() {
     @Mock private lateinit var logger: MobileInputLogger
     @Mock private lateinit var tableLogger: TableLogBuffer
     @Mock private lateinit var subscriptionModel: StateFlow<SubscriptionModel?>
+    @Mock private lateinit var subscriptionManager: SubscriptionManager
 
     private val mobileMappings = FakeMobileMappingsProxy()
     private val systemUiCarrierConfig =
@@ -146,6 +148,7 @@ class MobileConnectionTelephonySmokeTests : SysuiTestCase() {
                 tableLogger,
                 flags,
                 testScope.backgroundScope,
+                subscriptionManager,
             )
     }
 

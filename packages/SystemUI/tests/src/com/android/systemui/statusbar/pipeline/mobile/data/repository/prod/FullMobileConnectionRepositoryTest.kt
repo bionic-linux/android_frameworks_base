@@ -20,6 +20,7 @@ import android.net.ConnectivityManager
 import android.os.PersistableBundle
 import android.telephony.ServiceState
 import android.telephony.SignalStrength
+import android.telephony.SubscriptionManager
 import android.telephony.SubscriptionManager.PROFILE_CLASS_UNSET
 import android.telephony.TelephonyCallback
 import android.telephony.TelephonyManager
@@ -90,6 +91,7 @@ class FullMobileConnectionRepositoryTest : SysuiTestCase() {
     private val mobileFactory = mock<MobileConnectionRepositoryImpl.Factory>()
     private val carrierMergedFactory = mock<CarrierMergedConnectionRepository.Factory>()
     private val connectivityManager = mock<ConnectivityManager>()
+    private var subscriptionManager= mock<SubscriptionManager>()
 
     private val subscriptionModel =
         MutableStateFlow(
@@ -702,6 +704,7 @@ class FullMobileConnectionRepositoryTest : SysuiTestCase() {
                 tableLogBuffer,
                 flags,
                 testScope.backgroundScope,
+                subscriptionManager,
             )
         whenever(
                 mobileFactory.build(
