@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69fd2a82_46035bf6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2024-07-22T11:47:27Z",
+      "side": 1,
+      "message": "Add TimeZoneProviderStatus\u0027 nullness check.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 39
+      },
+      "revId": "d469589a3573cc17394dc1fff19990551a1033eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcc203b5_d2fa7207",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2024-07-22T11:47:27Z",
+      "side": 1,
+      "message": "if it came from [1]\n\n[1] https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/android/service/timezone/TimeZoneProviderService.java;l\u003d205;drc\u003de13dc3f47bb058cda591ff7c4db38100f3a8276f",
+      "range": {
+        "startLine": 9,
+        "startChar": 64,
+        "endLine": 9,
+        "endChar": 65
+      },
+      "revId": "d469589a3573cc17394dc1fff19990551a1033eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2364d98_201a01b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2024-07-22T11:47:27Z",
+      "side": 1,
+      "message": "Restart in the attached bug have different root cause.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 82
+      },
+      "revId": "d469589a3573cc17394dc1fff19990551a1033eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15a23da0_c61b4885",
+        "filename": "services/core/java/com/android/server/timezonedetector/location/ZoneInfoDbTimeZoneProviderEventPreProcessor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2024-07-22T11:47:27Z",
+      "side": 1,
+      "message": "```\nTimeZoneProviderStatus providerStatus \u003d event.getTimeZoneProviderStatus();\nTimeZoneProviderStatus.Builder providerStatusBuilder;\nif (providerStatus !\u003d null) {\n    ...\n} else {\n    ...\n}\n```\n\nSo we call getter only once and compiler ensures that `providerStatusBuilder` is always initialized.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 13
+      },
+      "revId": "d469589a3573cc17394dc1fff19990551a1033eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f341a649_fe1f4d2a",
+        "filename": "services/tests/timetests/src/com/android/server/timezonedetector/location/ZoneInfoDbTimeZoneProviderEventPreProcessorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2024-07-22T11:47:27Z",
+      "side": 1,
+      "message": "Just `expectedProviderStatus` is fine.",
+      "range": {
+        "startLine": 80,
+        "startChar": 35,
+        "endLine": 80,
+        "endChar": 61
+      },
+      "revId": "d469589a3573cc17394dc1fff19990551a1033eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0ca43fd_6ab2e341",
+        "filename": "services/tests/timetests/src/com/android/server/timezonedetector/location/ZoneInfoDbTimeZoneProviderEventPreProcessorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2024-07-22T11:47:27Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 85,
+        "startChar": 34,
+        "endLine": 85,
+        "endChar": 63
+      },
+      "revId": "d469589a3573cc17394dc1fff19990551a1033eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c91756f_99f82a93",
+        "filename": "services/tests/timetests/src/com/android/server/timezonedetector/location/ZoneInfoDbTimeZoneProviderEventPreProcessorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2024-07-22T11:47:27Z",
+      "side": 1,
+      "message": "Having an argument after varargs is confusing.\n\nPlease refactor this into `timeZoneProviderEven(String timeZoneId, TimeZoneProviderStatus status)` and extract status created on line 98 into `static final` field.",
+      "range": {
+        "startLine": 95,
+        "startChar": 41,
+        "endLine": 96,
+        "endChar": 31
+      },
+      "revId": "d469589a3573cc17394dc1fff19990551a1033eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
