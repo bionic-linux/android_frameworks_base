@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "45ceebe3_561a44de",
+        "filename": "apct-tests/perftests/core/src/android/conscrypt/conscrypt/CipherEncryptPerfTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2024-07-23T10:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c2884c7_28acedfc",
+      "revId": "6806219af9456a152f12dcc9a67a0957491fe8a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "353b2b1e_384afd0b",
         "filename": "apct-tests/perftests/core/src/android/conscrypt/conscrypt/CipherEncryptPerfTest.java",
         "patchSetId": 5
@@ -66,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "17240c7b_750a8972",
+        "filename": "apct-tests/perftests/core/src/android/conscrypt/conscrypt/EngineFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2024-07-23T10:44:25Z",
+      "side": 1,
+      "message": "Technically half taken from 2017 benchmarks so don\u0027t know what it should be?",
+      "parentUuid": "4145bd74_d0b7f2fe",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 17
+      },
+      "revId": "6806219af9456a152f12dcc9a67a0957491fe8a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "76a027a5_fc3fc6af",
         "filename": "apct-tests/perftests/core/src/android/conscrypt/conscrypt/EngineFactory.java",
         "patchSetId": 5
@@ -77,6 +119,24 @@
       "writtenOn": "2024-07-16T15:51:14Z",
       "side": 1,
       "message": "There\u0027s a lot of duplication between these two enum values.  How about promote all the method *and* fields to the \"class\" level (like `initEngine()`) and add a constructor which takes two SSLContexts, then the first part of the definition becomes as simple as:\n```\nCONSCRYPT_UNPOOLED(newConscryptClientContext(), newConscryptServerContext()),\nPLATFORM(TestUtils.newClientSslContext(Security.getProvider(\"AndroidOpenSSL\")),\n         TestUtils.newClientSslContext(Security.getProvider(\"AndroidOpenSSL\")))\n;\n```\nand the code and field duplication goes away.",
+      "revId": "6806219af9456a152f12dcc9a67a0957491fe8a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76928294_af9470d0",
+        "filename": "apct-tests/perftests/core/src/android/conscrypt/conscrypt/EngineFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2024-07-23T10:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76a027a5_fc3fc6af",
       "revId": "6806219af9456a152f12dcc9a67a0957491fe8a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -94,6 +154,30 @@
       "writtenOn": "2024-07-16T15:51:14Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 146
+      },
+      "revId": "6806219af9456a152f12dcc9a67a0957491fe8a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85603503_5ff87341",
+        "filename": "apct-tests/perftests/core/src/android/conscrypt/conscrypt/ServerSocketPerfTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2024-07-23T10:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22704c69_4c866eab",
       "range": {
         "startLine": 104,
         "startChar": 0,
@@ -127,6 +211,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "81285cd7_44dd1f30",
+        "filename": "apct-tests/perftests/core/src/android/conscrypt/conscrypt/ServerSocketPerfTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2024-07-23T10:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be3b18ac_f9210e48",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 147
+      },
+      "revId": "6806219af9456a152f12dcc9a67a0957491fe8a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03b52d63_2f6d0a5c",
@@ -140,6 +248,30 @@
       "writtenOn": "2024-07-16T15:51:14Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 148
+      },
+      "revId": "6806219af9456a152f12dcc9a67a0957491fe8a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78c29aea_9089fdaf",
+        "filename": "apct-tests/perftests/core/src/android/conscrypt/conscrypt/ServerSocketPerfTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2024-07-23T10:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03b52d63_2f6d0a5c",
       "range": {
         "startLine": 106,
         "startChar": 0,
