@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d27a497e_2efba3bc",
+        "filename": "services/tests/timetests/src/com/android/server/timezonedetector/location/ZoneInfoDbTimeZoneProviderEventPreProcessorTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2024-07-23T09:44:40Z",
+      "side": 1,
+      "message": "`/* providerStatus\u003d */ null`",
+      "range": {
+        "startLine": 86,
+        "startChar": 88,
+        "endLine": 86,
+        "endChar": 92
+      },
+      "revId": "35f93fefebde92e6daef0a77f1cf843cee0534fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
