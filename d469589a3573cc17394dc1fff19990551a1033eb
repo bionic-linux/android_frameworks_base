@@ -328,6 +328,30 @@
       },
       "revId": "d469589a3573cc17394dc1fff19990551a1033eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3e11d9c_89647af8",
+        "filename": "services/tests/timetests/src/com/android/server/timezonedetector/location/ZoneInfoDbTimeZoneProviderEventPreProcessorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2024-07-23T08:28:20Z",
+      "side": 1,
+      "message": "The method suggested above has clearer signature. Here we can easily avoid using `boolean` as a parameter: that will make code more readable and that will be in line with the rest of related tests, like [1].\n\n[1] https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/tests/timetests/src/android/service/timezone/TimeZoneProviderEventTest.java;l\u003d51;drc\u003d2c966c62d05ede89fb44898dcb2986d9023ce1ba",
+      "parentUuid": "96a876d8_6fcdf406",
+      "range": {
+        "startLine": 95,
+        "startChar": 41,
+        "endLine": 96,
+        "endChar": 31
+      },
+      "revId": "d469589a3573cc17394dc1fff19990551a1033eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
