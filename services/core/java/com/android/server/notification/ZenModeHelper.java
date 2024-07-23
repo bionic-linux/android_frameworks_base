@@ -1706,7 +1706,7 @@ public class ZenModeHelper {
      */
     @VisibleForTesting
     protected ZenPolicy getDefaultZenPolicy() {
-        return mDefaultConfig.toZenPolicy();
+        return Flags.modesUi() ? mDefaultConfig.getZenPolicy() : mConfig.getZenPolicy();
     }
 
     @GuardedBy("mConfigLock")
