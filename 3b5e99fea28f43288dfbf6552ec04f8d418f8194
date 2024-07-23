@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73d017bb_2f74bf0e",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/A2dpProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 2013495
+      },
+      "writtenOn": "2024-07-23T15:55:50Z",
+      "side": 1,
+      "message": "IIUC, after change, the label will be dynamically changed when the toggle is on/off? This may confuse users, especially when the toggle is off.",
+      "range": {
+        "startLine": 302,
+        "startChar": 12,
+        "endLine": 302,
+        "endChar": 84
+      },
+      "revId": "3b5e99fea28f43288dfbf6552ec04f8d418f8194",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
