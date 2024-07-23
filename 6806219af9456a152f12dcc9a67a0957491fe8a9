@@ -106,6 +106,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e68ee9d0_953a2fa0",
+        "filename": "apct-tests/perftests/core/src/android/conscrypt/conscrypt/EngineFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-07-23T11:25:51Z",
+      "side": 1,
+      "message": "Fair enough, leave it as the earlier one",
+      "parentUuid": "17240c7b_750a8972",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 17
+      },
+      "revId": "6806219af9456a152f12dcc9a67a0957491fe8a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "76a027a5_fc3fc6af",
@@ -137,6 +161,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "76a027a5_fc3fc6af",
+      "revId": "6806219af9456a152f12dcc9a67a0957491fe8a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "400d71e6_d412dc92",
+        "filename": "apct-tests/perftests/core/src/android/conscrypt/conscrypt/EngineFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-07-23T11:25:51Z",
+      "side": 1,
+      "message": "Nice, thanks... Would have been fine to keep it as an enum though (with simpler entries), or was PLATFORM not used?",
+      "parentUuid": "76928294_af9470d0",
       "revId": "6806219af9456a152f12dcc9a67a0957491fe8a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
