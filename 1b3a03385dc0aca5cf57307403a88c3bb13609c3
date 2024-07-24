@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "abb57389_511c0870",
+        "filename": "services/tests/timetests/src/com/android/server/timezonedetector/location/ZoneInfoDbTimeZoneProviderEventPreProcessorTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1700909
+      },
+      "writtenOn": "2024-07-24T05:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7c96600_009a04f6",
+      "range": {
+        "startLine": 57,
+        "startChar": 41,
+        "endLine": 57,
+        "endChar": 74
+      },
+      "revId": "1b3a03385dc0aca5cf57307403a88c3bb13609c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0db16bad_8205bf01",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-07-23T11:37:44Z",
       "side": 1,
       "message": "`timeZoneId`",
+      "range": {
+        "startLine": 104,
+        "startChar": 70,
+        "endLine": 104,
+        "endChar": 81
+      },
+      "revId": "1b3a03385dc0aca5cf57307403a88c3bb13609c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fee2c1ad_f4738291",
+        "filename": "services/tests/timetests/src/com/android/server/timezonedetector/location/ZoneInfoDbTimeZoneProviderEventPreProcessorTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1700909
+      },
+      "writtenOn": "2024-07-24T05:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0db16bad_8205bf01",
       "range": {
         "startLine": 104,
         "startChar": 70,
