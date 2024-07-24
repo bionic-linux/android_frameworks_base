@@ -125,6 +125,7 @@ public class FloatingRotationButton implements RotationButton {
                 taskbarMarginLeft, taskbarMarginBottom, floatingRotationButtonPositionLeft);
 
         final int diameter = res.getDimensionPixelSize(mButtonDiameterResource);
+        mKeyButtonView.setUpdatedValues(diameter, taskbarMarginBottom);
         mContainerSize = diameter + Math.max(defaultMargin, Math.max(taskbarMarginLeft,
                 taskbarMarginBottom));
     }

@@ -37,6 +37,8 @@ public class FloatingRotationButtonView extends ImageView {
     private static final float BACKGROUND_ALPHA = 0.92f;
 
     private KeyButtonRipple mRipple;
+    private int mDiameter;
+    private int mDrawableMargin;
     private final Paint mOvalBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     private final Configuration mLastConfiguration;
@@ -53,6 +55,7 @@ public class FloatingRotationButtonView extends ImageView {
 
         setWillNotDraw(false);
         forceHasOverlappingRendering(false);
+        setScaleType(ScaleType.FIT_XY);
     }
 
     public void setRipple(@DimenRes int rippleMaxWidthResource) {
@@ -93,10 +96,31 @@ public class FloatingRotationButtonView extends ImageView {
         mRipple.setDarkIntensity(darkIntensity);
     }
 
+    /**
+     * Sets the updated values for the view's diameter and default margin.
+     *
+     * @param diameter       the new diameter value for the view
+     * @param drawableMargin the new margin value for the drawable
+     */
+    public void setUpdatedValues(int diameter, int drawableMargin) {
+        mDiameter = diameter;
+        mDrawableMargin = drawableMargin;
+        requestLayout();
+        invalidate();
+    }
+
     @Override
     public void draw(Canvas canvas) {
         int d = Math.min(getWidth(), getHeight());
         canvas.drawOval(0, 0, d, d, mOvalBgPaint);
         super.draw(canvas);
+        getDrawable().setBounds(mDrawableMargin, mDrawableMargin,
+                d - mDrawableMargin, d - mDrawableMargin);
+        getDrawable().draw(canvas);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(mDiameter, mDiameter);
     }
 }
