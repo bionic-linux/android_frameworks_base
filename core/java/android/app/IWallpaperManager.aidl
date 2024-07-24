@@ -24,6 +24,7 @@ import android.os.ParcelFileDescriptor;
 import android.app.IWallpaperManagerCallback;
 import android.app.ILocalWallpaperColorConsumer;
 import android.app.WallpaperInfo;
+import android.speech.CowSayer;
 import android.content.ComponentName;
 import android.app.WallpaperColors;
 
