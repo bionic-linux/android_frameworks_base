@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "339a3453_3606d89b",
+        "filename": "services/tests/timetests/src/com/android/server/timezonedetector/location/ZoneInfoDbTimeZoneProviderEventPreProcessorTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2024-07-24T08:09:15Z",
+      "side": 1,
+      "message": "```\nframeworks/base/services/tests/timetests/src/com/android/server/timezonedetector/location/ZoneInfoDbTimeZoneProviderEventPreProcessorTest.java:57: error: illegal character: \u0027\\uff0c\u0027\n            TimeZoneProviderEvent event \u003d timeZoneProviderEvent(timeZone，\n                                                                        ^\nframeworks/base/services/tests/timetests/src/com/android/server/timezonedetector/location/ZoneInfoDbTimeZoneProviderEventPreProcessorTest.java:58: error: not a statement\n                    ARBITRARY_TIME_ZONE_PROVIDER_STATUS);\n                    ^\nframeworks/base/services/tests/timetests/src/com/android/server/timezonedetector/location/ZoneInfoDbTimeZoneProviderEventPreProcessorTest.java:58: error: \u0027;\u0027 expected\n                    ARBITRARY_TIME_ZONE_PROVIDER_STATUS);\n                                                       ^\n3 errors\n```\n\nPlease fix and try your patches locally to speed up the review process.",
+      "parentUuid": "abb57389_511c0870",
+      "range": {
+        "startLine": 57,
+        "startChar": 41,
+        "endLine": 57,
+        "endChar": 74
+      },
+      "revId": "1b3a03385dc0aca5cf57307403a88c3bb13609c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0db16bad_8205bf01",
         "filename": "services/tests/timetests/src/com/android/server/timezonedetector/location/ZoneInfoDbTimeZoneProviderEventPreProcessorTest.java",
         "patchSetId": 19
