@@ -22,6 +22,30 @@
       },
       "revId": "d6328649b6050e19f512269e250f02452eb11b5f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2065260f_7bf7f6de",
+        "filename": "services/tests/mockingservicestests/src/com/android/server/am/ApplicationExitInfoTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1956645
+      },
+      "writtenOn": "2024-07-24T18:32:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4fe0183_6d32f33e",
+      "range": {
+        "startLine": 445,
+        "startChar": 0,
+        "endLine": 445,
+        "endChar": 11
+      },
+      "revId": "d6328649b6050e19f512269e250f02452eb11b5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
