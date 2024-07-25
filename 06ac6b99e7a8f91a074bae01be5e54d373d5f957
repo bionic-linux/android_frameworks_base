@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55a6e693_6e8222cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1891398
+      },
+      "writtenOn": "2024-07-25T17:24:37Z",
+      "side": 1,
+      "message": "Hi Sherry,\n\nCan you please review this CP?",
+      "revId": "06ac6b99e7a8f91a074bae01be5e54d373d5f957",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
