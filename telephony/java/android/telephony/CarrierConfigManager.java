@@ -4210,6 +4210,10 @@ public class CarrierConfigManager {
             "opportunistic_network_max_backoff_time_long";
 
     /** @hide */
+    public static final String KEY_OPPORTUNISTIC_NETWORK_SCAN_DEFAULT_PERIODIC_INT =
+            "opportunistic_network_scan_default_periodic_int";
+
+    /** @hide */
     public static class OpportunisticNetwork {
         /**
          * Prefix of all {@code OpportunisticNetwork.KEY_*} constants.
