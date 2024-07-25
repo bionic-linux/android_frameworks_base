@@ -34,6 +34,24 @@
       ],
       "revId": "02fbd79682a14d347e8a42e86ce6d646ea2e5cfe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db564840_a8e7a6e0",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1801,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-07-25T17:34:28Z",
+      "side": 1,
+      "message": "Or maybe the conditional should be `!turnSystemServiceRegistryOff()`",
+      "parentUuid": "003a8b87_f5b164e5",
+      "revId": "02fbd79682a14d347e8a42e86ce6d646ea2e5cfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
