@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "003a8b87_f5b164e5",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1801,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-07-25T17:33:42Z",
+      "side": 1,
+      "message": "Should there not be an else clause here for line 1787 of the legacy code?",
+      "fixSuggestions": [
+        {
+          "fixId": "506000fe_27eabc8e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/app/SystemServiceRegistry.java",
+              "range": {
+                "startLine": 1803,
+                "startChar": 0,
+                "endLine": 1803,
+                "endChar": 0
+              },
+              "replacement": "        } else {\n            SYSTEM_SERVICE_FETCHERS.put(serviceName, serviceFetcher);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "02fbd79682a14d347e8a42e86ce6d646ea2e5cfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
