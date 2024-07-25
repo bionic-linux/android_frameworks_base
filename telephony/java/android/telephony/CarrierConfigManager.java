@@ -4210,6 +4210,10 @@ public class CarrierConfigManager {
             "opportunistic_network_max_backoff_time_long";
 
     /** @hide */
+    public static final String KEY_OPPORTUNISTIC_NETWORK_SCAN_DEFAULT_PERIODIC_INT =
+            "opportunistic_network_scan_default_periodic_int";
+
+    /** @hide */
     public static class OpportunisticNetwork {
         /**
          * Prefix of all {@code OpportunisticNetwork.KEY_*} constants.
@@ -10811,6 +10815,8 @@ public class CarrierConfigManager {
         sDefaults.putLong(KEY_OPPORTUNISTIC_NETWORK_BACKOFF_TIME_LONG, 10000);
         /* Default value is 60 seconds. */
         sDefaults.putLong(KEY_OPPORTUNISTIC_NETWORK_MAX_BACKOFF_TIME_LONG, 60000);
+        /* Default value is 120 seconds. */
+        sDefaults.putInt(KEY_OPPORTUNISTIC_NETWORK_SCAN_DEFAULT_PERIODIC_INT, 120);
         sDefaults.putBoolean(KEY_ENABLE_4G_OPPORTUNISTIC_NETWORK_SCAN_BOOL, true);
         sDefaults.putLong(KEY_TIME_TO_SWITCH_BACK_TO_PRIMARY_IF_OPPORTUNISTIC_OOS_LONG, 60000L);
         sDefaults.putLong(KEY_OPPORTUNISTIC_TIME_TO_SCAN_AFTER_CAPABILITY_SWITCH_TO_PRIMARY_LONG,
