@@ -30,6 +30,7 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.IServiceCallback;
 import android.os.RemoteException;
+import android.os.Service;
 import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
 import android.os.Trace;
@@ -232,7 +233,7 @@ class HealthServiceWrapperAidl extends HealthServiceWrapper {
 
     private class ServiceCallback extends IServiceCallback.Stub {
         @Override
-        public void onRegistration(String name, @NonNull final IBinder newBinder)
+        public void onRegistration(String name, final Service service)
                 throws RemoteException {
             if (!SERVICE_NAME.equals(name)) return;
             // This runnable only runs on mHandlerThread and ordering is ensured, hence
@@ -241,6 +242,7 @@ class HealthServiceWrapperAidl extends HealthServiceWrapper {
                     .getThreadHandler()
                     .post(
                             () -> {
+                                IBinder newBinder = service.getBinder();
                                 IHealth newService =
                                         IHealth.Stub.asInterface(Binder.allowBlocking(newBinder));
                                 IHealth oldService = mLastService.getAndSet(newService);

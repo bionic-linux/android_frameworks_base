@@ -27,6 +27,7 @@ import android.hardware.radio.RadioTuner;
 import android.os.IBinder;
 import android.os.IServiceCallback;
 import android.os.RemoteException;
+import android.os.Service;
 import android.os.ServiceManager;
 import android.util.ArrayMap;
 import android.util.IndentingPrintWriter;
@@ -64,7 +65,7 @@ public final class BroadcastRadioServiceImpl {
 
     private final IServiceCallback.Stub mServiceListener = new IServiceCallback.Stub() {
         @Override
-        public void onRegistration(String name, final IBinder newBinder) {
+        public void onRegistration(String name, final Service service) {
             Slogf.i(TAG, "onRegistration for %s", name);
             Integer moduleId;
             synchronized (mLock) {
@@ -76,6 +77,7 @@ public final class BroadcastRadioServiceImpl {
                     moduleId = mNextModuleId;
                 }
 
+                IBinder newBinder = service.getBinder();
                 RadioModule radioModule =
                         RadioModule.tryLoadingModule(moduleId, name, newBinder);
                 if (radioModule == null) {
