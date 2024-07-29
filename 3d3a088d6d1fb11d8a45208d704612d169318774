@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d64ec03_a17ac606",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1688644
+      },
+      "writtenOn": "2024-07-29T11:11:27Z",
+      "side": 1,
+      "message": "Why such trivial change does take so much time?!\n\nPlease either run that script to match that list to CLDR 45 or simply accept my single correction.",
+      "revId": "3d3a088d6d1fb11d8a45208d704612d169318774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
