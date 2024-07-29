@@ -52,6 +52,24 @@
       "parentUuid": "921f822c_3175dbd1",
       "revId": "3d3a088d6d1fb11d8a45208d704612d169318774",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "913dede8_0e6574f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1065394
+      },
+      "writtenOn": "2024-07-29T22:38:27Z",
+      "side": 1,
+      "message": "I don\u0027t know how the branching works on Android.\nI submitted it, but might not be in main (I was not allowed to submit to main anymore at that time)\nSo it is \"somewhere in some branch\" and it will make it to main.\nSorry, I don\u0027t know much more. I can try to find out.",
+      "parentUuid": "ce90b0ec_3217a4d7",
+      "revId": "3d3a088d6d1fb11d8a45208d704612d169318774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
