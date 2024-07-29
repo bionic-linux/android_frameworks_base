@@ -57,6 +57,9 @@ EXTRA_ARGS=""
 # HostStubGen result in it.
 HOSTSTUBGEN_RC=0
 
+which java
+java --version
+
 # Note, because the build rule will only install hoststubgen.jar, but not the wrapper script,
 # we need to execute it manually with the java command.
 hoststubgen() {
