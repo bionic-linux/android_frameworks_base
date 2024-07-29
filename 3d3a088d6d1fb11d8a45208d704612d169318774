@@ -34,6 +34,24 @@
       "parentUuid": "9d64ec03_a17ac606",
       "revId": "3d3a088d6d1fb11d8a45208d704612d169318774",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce90b0ec_3217a4d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1688644
+      },
+      "writtenOn": "2024-07-29T18:35:07Z",
+      "side": 1,
+      "message": "When I look at the file https://android.googlesource.com/platform/frameworks/base/+/refs/heads/main/core/res/res/values/locale_config.xml Esperanto with basic coverage is still not present. That list does not correspond to locale coverage in CLDR v45.",
+      "parentUuid": "921f822c_3175dbd1",
+      "revId": "3d3a088d6d1fb11d8a45208d704612d169318774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
