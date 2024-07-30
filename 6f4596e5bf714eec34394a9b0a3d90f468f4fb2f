@@ -16,6 +16,239 @@
       "message": "You might want to update system-current.txt (m framework-nfc.stubs.source.system-update-current-api) after rebase",
       "revId": "6f4596e5bf714eec34394a9b0a3d90f468f4fb2f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d7c738d_97aa60b8",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-07-30T19:39:36Z",
+      "side": 1,
+      "message": "Please change the existing API to also use the new API to reduce code duplication.\n\n```\nsetControllerAlwaysOn(boolean value) {\n   if (value) {\n      setControllerAlwaysOn(ENABLE_DEFAULT);\n   } else {\n      setControllerAlwaysOn(DISABLE);\n   }\n      \n}\n```",
+      "range": {
+        "startLine": 54,
+        "startChar": 29,
+        "endLine": 54,
+        "endChar": 50
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "06cfdbd5_6b9deb4c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 52,
+                "startChar": 0,
+                "endLine": 93,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 217,
+                "startChar": 0,
+                "endLine": 218,
+                "endChar": 0
+              },
+              "replacement": "     * Sets NFC controller always on feature to default mode.\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 231,
+                "startChar": 0,
+                "endLine": 234,
+                "endChar": 0
+              },
+              "replacement": "     * @param value if true the NFCC will be kept on (with no RF enabled if NFC adapter is disabled)\n     * and opens transport to communicate with controller, if false the NFCC will follow completely\n     * the Nfc adapter state.\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 244,
+                "startChar": 0,
+                "endLine": 245,
+                "endChar": 0
+              },
+              "replacement": "    public boolean setControllerAlwaysOn(boolean value) {\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 249,
+                "startChar": 0,
+                "endLine": 250,
+                "endChar": 0
+              },
+              "replacement": "            return NfcAdapter.sService.setControllerAlwaysOn(value,\n                    NfcAdapter.CONTROLLER_ALWAYS_ON_MODE_DEFAULT);\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 258,
+                "startChar": 0,
+                "endLine": 259,
+                "endChar": 0
+              },
+              "replacement": "                return NfcAdapter.sService.setControllerAlwaysOn(value,\n                        NfcAdapter.CONTROLLER_ALWAYS_ON_MODE_DEFAULT);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6f4596e5bf714eec34394a9b0a3d90f468f4fb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f02808e_2a8debef",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-07-30T19:39:36Z",
+      "side": 1,
+      "message": "nit: unnecessary new line.",
+      "range": {
+        "startLine": 227,
+        "startChar": 22,
+        "endLine": 229,
+        "endChar": 0
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "bd81fe00_8982bde0",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 227,
+                "startChar": 0,
+                "endLine": 229,
+                "endChar": 0
+              },
+              "replacement": "     * will be invoked to indicate the state change.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6f4596e5bf714eec34394a9b0a3d90f468f4fb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a76dd09c_5847f696",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-07-30T19:39:36Z",
+      "side": 1,
+      "message": "this combination of `false` and `mode` looks odd, can we just merge the enable/disable also to the `mode` param and then remove this boolean altogether?\n\n\n    /**\n     * Possible controller modes for {@link #setControllerAlwaysOn(boolean, int)}.\n     *\n     * @hide\n     */\n    @IntDef(prefix \u003d { \"\" }, value \u003d {\n        ENABLE_DEFAULT,\n        ENABLE_TRANSPARENT,\n        ENABLE_EE,\n        DISABLE\n    })\n    @Retention(RetentionPolicy.SOURCE)\n    public @interface ControllerMode{}",
+      "range": {
+        "startLine": 244,
+        "startChar": 41,
+        "endLine": 244,
+        "endChar": 80
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "3ad6b2b7_57321f2e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 54,
+                "startChar": 0,
+                "endLine": 55,
+                "endChar": 0
+              },
+              "replacement": "     * Mode Type for {@link #setControllerAlwaysOn(int)}.\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 63,
+                "startChar": 0,
+                "endLine": 64,
+                "endChar": 0
+              },
+              "replacement": "     * Mode Type for {@link #setControllerAlwaysOn(int)}.\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 72,
+                "startChar": 0,
+                "endLine": 73,
+                "endChar": 0
+              },
+              "replacement": "     * Mode Type for {@link #setControllerAlwaysOn(int)}.\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 82,
+                "startChar": 0,
+                "endLine": 83,
+                "endChar": 0
+              },
+              "replacement": "     * Possible controller modes for {@link #setControllerAlwaysOn(int)}.\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 244,
+                "startChar": 0,
+                "endLine": 245,
+                "endChar": 0
+              },
+              "replacement": "    public boolean setControllerAlwaysOn(@ControllerMode int mode) {\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 249,
+                "startChar": 0,
+                "endLine": 250,
+                "endChar": 0
+              },
+              "replacement": "            return NfcAdapter.sService.setControllerAlwaysOn(mode);\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 258,
+                "startChar": 0,
+                "endLine": 259,
+                "endChar": 0
+              },
+              "replacement": "                return NfcAdapter.sService.setControllerAlwaysOn(mode);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6f4596e5bf714eec34394a9b0a3d90f468f4fb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
