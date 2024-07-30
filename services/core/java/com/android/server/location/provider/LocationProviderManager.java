@@ -667,10 +667,11 @@ public class LocationProviderManager extends
             boolean adasGnssBypass = mBaseRequest.isAdasGnssBypass();
             if (adasGnssBypass) {
                 // if we are not currently allowed use adas gnss bypass, disable it
+                final int userId = getIdentity().getUserId();
                 if (!GPS_PROVIDER.equals(mName)) {
                     Log.e(TAG, "adas gnss bypass request received in non-gps provider");
                     adasGnssBypass = false;
-                } else if (!mUserHelper.isCurrentUserId(getIdentity().getUserId())) {
+                } else if (userId != UserHandle.USER_SYSTEM && !mUserHelper.isCurrentUserId(userId)) {
                     adasGnssBypass = false;
                 } else if (!mLocationSettings.getUserSettings(
                         getIdentity().getUserId()).isAdasGnssLocationEnabled()) {
@@ -1791,10 +1792,11 @@ public class LocationProviderManager extends
         boolean adasGnssBypass = baseRequest.isAdasGnssBypass();
         if (adasGnssBypass) {
             // if we are not currently allowed use adas gnss bypass, disable it
+            final int userId = identity.getUserId();
             if (!GPS_PROVIDER.equals(mName)) {
                 Log.e(TAG, "adas gnss bypass request received in non-gps provider");
                 adasGnssBypass = false;
-            } else if (!mUserHelper.isCurrentUserId(identity.getUserId())) {
+            } else if (userId != UserHandle.USER_SYSTEM && !mUserHelper.isCurrentUserId(userId)) {
                 adasGnssBypass = false;
             } else if (!mLocationSettings.getUserSettings(
                     identity.getUserId()).isAdasGnssLocationEnabled()) {
