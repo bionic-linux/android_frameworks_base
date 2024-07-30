@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c71dd9da_d9638f19",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2024-07-30T18:59:16Z",
+      "side": 1,
+      "message": "You might want to update system-current.txt (m framework-nfc.stubs.source.system-update-current-api) after rebase",
+      "revId": "6f4596e5bf714eec34394a9b0a3d90f468f4fb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
