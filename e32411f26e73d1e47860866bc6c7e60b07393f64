@@ -86,6 +86,24 @@
       "parentUuid": "6a110ee7_989e1ab8",
       "revId": "e32411f26e73d1e47860866bc6c7e60b07393f64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4db7501_39c97cc2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-07-31T17:46:21Z",
+      "side": 1,
+      "message": "Yes.  SQLite has been pretty stable for a few months now.",
+      "parentUuid": "abf7583c_195739a6",
+      "revId": "e32411f26e73d1e47860866bc6c7e60b07393f64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
