@@ -16,6 +16,23 @@
       "message": "Soonil,\n\nIt looked like you would be the best reviewer for this change based on suggested owners and file commit history. Can you please review and give us feedback when you have time? If you feel you are not the right reviewer for this please suggest someone else that can help review.\n\nThanks in advance for the help.\n\nJosh",
       "revId": "d2a7dc7e70fa9db9a2b6e95c4f92c9c9d21a99cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73ee9e3c_5b540d74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3558007
+      },
+      "writtenOn": "2024-07-31T04:20:10Z",
+      "side": 1,
+      "message": "This was intentional due to privacy implications. User0 permissions are not surfaced to the foreground user, hence enabling location access would end up resulting in (a) apps having location without user consent (b) users having no awareness of this data being collected (c) users having no control to revoke this access. Supporting this correctly would require privacy settings and permissions changes on Android that are not trivial.",
+      "revId": "d2a7dc7e70fa9db9a2b6e95c4f92c9c9d21a99cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
