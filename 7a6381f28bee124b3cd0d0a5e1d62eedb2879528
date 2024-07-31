@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82f9d68d_587d9d6d",
+        "filename": "services/core/java/com/android/server/BatteryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 3545041
+      },
+      "writtenOn": "2024-07-31T14:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7bd2a0d_38c8bd28",
+      "range": {
+        "startLine": 562,
+        "startChar": 0,
+        "endLine": 562,
+        "endChar": 109
+      },
+      "revId": "7a6381f28bee124b3cd0d0a5e1d62eedb2879528",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "494c86cd_3506b0dd",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8500b4d3_8aca0a3f",
+        "filename": "services/core/java/com/android/server/BatteryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 3545041
+      },
+      "writtenOn": "2024-07-31T14:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "494c86cd_3506b0dd",
+      "range": {
+        "startLine": 782,
+        "startChar": 0,
+        "endLine": 782,
+        "endChar": 110
+      },
+      "revId": "7a6381f28bee124b3cd0d0a5e1d62eedb2879528",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f107c64_62ab900c",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-07-31T04:17:18Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 823,
+        "startChar": 0,
+        "endLine": 823,
+        "endChar": 107
+      },
+      "revId": "7a6381f28bee124b3cd0d0a5e1d62eedb2879528",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fe5d5df_5290e5f0",
+        "filename": "services/core/java/com/android/server/BatteryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 3545041
+      },
+      "writtenOn": "2024-07-31T14:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f107c64_62ab900c",
       "range": {
         "startLine": 823,
         "startChar": 0,
