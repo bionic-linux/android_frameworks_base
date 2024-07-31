@@ -33,6 +33,24 @@
       "message": "This was intentional due to privacy implications. User0 permissions are not surfaced to the foreground user, hence enabling location access would end up resulting in (a) apps having location without user consent (b) users having no awareness of this data being collected (c) users having no control to revoke this access. Supporting this correctly would require privacy settings and permissions changes on Android that are not trivial.",
       "revId": "d2a7dc7e70fa9db9a2b6e95c4f92c9c9d21a99cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc297ed6_d749eb6b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002669
+      },
+      "writtenOn": "2024-07-31T14:08:02Z",
+      "side": 1,
+      "message": "Edward,\n\nThank you for taking the time to review and reply. It sounds like using any Location APIs from user 0 is now off limits as both \u0027Location Access\u0027 settings (\u0027Use Location\u0027 and \u0027Features that help you drive\u0027) are not available for user 0.\n\nTo change the architecture of how this works on my end it sounds like I would need to create a proxy service that runs as the driver user to be able to get Location data and send that location data back to my main service running as user 0 to enable this. In cases where the driver is not logged in yet (user is locked) this data would just not be available.\n\nDoes that seem like a reasonable approach for this?\n\nJosh",
+      "parentUuid": "73ee9e3c_5b540d74",
+      "revId": "d2a7dc7e70fa9db9a2b6e95c4f92c9c9d21a99cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
