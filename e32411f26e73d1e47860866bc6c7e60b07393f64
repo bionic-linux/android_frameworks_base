@@ -68,6 +68,24 @@
       "message": "I am okay with this change.",
       "revId": "e32411f26e73d1e47860866bc6c7e60b07393f64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abf7583c_195739a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396566
+      },
+      "writtenOn": "2024-07-31T17:39:46Z",
+      "side": 1,
+      "message": "\u003e I\u0027d be okay to make this change as-is, with no flag or ifdef\u0027s, when SQLite is in a stable state, but unfortunately it\u0027s not stable currently.\n\nHas SQLite gotten to this more stable state?",
+      "parentUuid": "6a110ee7_989e1ab8",
+      "revId": "e32411f26e73d1e47860866bc6c7e60b07393f64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
