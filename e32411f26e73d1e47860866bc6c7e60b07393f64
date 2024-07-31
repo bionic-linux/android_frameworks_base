@@ -51,6 +51,23 @@
       "message": "+Lee -- didn\u0027t realize he was not added.\n\n@Yurii, I know this _should_ be a no-op in theory, but the problem is we\u0027ve been having regressions in sqlite lately, and I don\u0027t think we want to add any extra churn to it. Because otherwise, when we get a bug around SQLite next time, this would be yet another culprit we\u0027d have to suspect.\n\nI\u0027d be okay to make this change as-is, with no flag or ifdef\u0027s, when SQLite is in a stable state, but unfortunately it\u0027s not stable currently.",
       "revId": "e32411f26e73d1e47860866bc6c7e60b07393f64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a110ee7_989e1ab8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-07-31T17:30:24Z",
+      "side": 1,
+      "message": "I am okay with this change.",
+      "revId": "e32411f26e73d1e47860866bc6c7e60b07393f64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
