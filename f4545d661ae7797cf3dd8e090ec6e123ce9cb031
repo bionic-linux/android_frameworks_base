@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d71a3eef_5f712a1f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-07-31T17:21:40Z",
+      "side": 1,
+      "message": "This is pending the commit of the Freezer class.",
+      "revId": "f4545d661ae7797cf3dd8e090ec6e123ce9cb031",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
