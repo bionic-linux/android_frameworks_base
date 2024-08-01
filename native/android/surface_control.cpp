@@ -417,18 +417,20 @@ void ASurfaceTransaction_setBuffer(ASurfaceTransaction* aSurfaceTransaction,
 }
 
 void ASurfaceTransaction_setGeometry(ASurfaceTransaction* aSurfaceTransaction,
-                                     ASurfaceControl* aSurfaceControl, const ARect& source,
-                                     const ARect& destination, int32_t transform) {
+                                     ASurfaceControl* aSurfaceControl, const ARect* source,
+                                     const ARect* destination, int32_t transform) {
     CHECK_NOT_NULL(aSurfaceTransaction);
     CHECK_NOT_NULL(aSurfaceControl);
-    CHECK_VALID_RECT(source);
-    CHECK_VALID_RECT(destination);
+    CHECK_NOT_NULL(source);
+    CHECK_NOT_NULL(destination);
+    CHECK_VALID_RECT(*source);
+    CHECK_VALID_RECT(*destination);
 
     sp<SurfaceControl> surfaceControl = ASurfaceControl_to_SurfaceControl(aSurfaceControl);
     Transaction* transaction = ASurfaceTransaction_to_Transaction(aSurfaceTransaction);
 
-    Rect sourceRect = static_cast<const Rect&>(source);
-    Rect destRect = static_cast<const Rect&>(destination);
+    Rect sourceRect = static_cast<const Rect&>(*source);
+    Rect destRect = static_cast<const Rect&>(*destination);
     // Adjust the source so its top and left are not negative
     sourceRect.left = std::max(sourceRect.left, 0);
     sourceRect.top = std::max(sourceRect.top, 0);
@@ -445,15 +447,16 @@ void ASurfaceTransaction_setGeometry(ASurfaceTransaction* aSurfaceTransaction,
 }
 
 void ASurfaceTransaction_setCrop(ASurfaceTransaction* aSurfaceTransaction,
-                                 ASurfaceControl* aSurfaceControl, const ARect& crop) {
+                                 ASurfaceControl* aSurfaceControl, const ARect* crop) {
     CHECK_NOT_NULL(aSurfaceTransaction);
     CHECK_NOT_NULL(aSurfaceControl);
-    CHECK_VALID_RECT(crop);
+    CHECK_NOT_NULL(crop);
+    CHECK_VALID_RECT(*crop);
 
     sp<SurfaceControl> surfaceControl = ASurfaceControl_to_SurfaceControl(aSurfaceControl);
     Transaction* transaction = ASurfaceTransaction_to_Transaction(aSurfaceTransaction);
 
-    transaction->setCrop(surfaceControl, static_cast<const Rect&>(crop));
+    transaction->setCrop(surfaceControl, static_cast<const Rect&>(*crop));
 }
 
 void ASurfaceTransaction_setPosition(ASurfaceTransaction* aSurfaceTransaction,
