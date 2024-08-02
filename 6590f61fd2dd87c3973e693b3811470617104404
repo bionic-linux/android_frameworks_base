@@ -52,6 +52,24 @@
       "parentUuid": "4e6b85a6_7b5095e6",
       "revId": "6590f61fd2dd87c3973e693b3811470617104404",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "090cb289_1d903ace",
+        "filename": "native/android/surface_control.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1496421
+      },
+      "writtenOn": "2024-08-02T20:41:49Z",
+      "side": 1,
+      "message": "Good point, I completely missed the `A` and thought that it was repeating the same type name.",
+      "parentUuid": "7982875b_d8097340",
+      "revId": "6590f61fd2dd87c3973e693b3811470617104404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
