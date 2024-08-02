@@ -34,6 +34,24 @@
       "parentUuid": "a849db34_f9cc52a5",
       "revId": "6590f61fd2dd87c3973e693b3811470617104404",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7982875b_d8097340",
+        "filename": "native/android/surface_control.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2024-08-02T20:11:46Z",
+      "side": 1,
+      "message": "it\u0027s probably just to be explicit about the conversion from ARect to ui::Rect",
+      "parentUuid": "4e6b85a6_7b5095e6",
+      "revId": "6590f61fd2dd87c3973e693b3811470617104404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
