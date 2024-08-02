@@ -16,6 +16,24 @@
       "message": "Any idea what these `static_cast()`s are for, and are they still necessary? Perhaps this can be written as `Rect sourceRect \u003d *source;`?",
       "revId": "6590f61fd2dd87c3973e693b3811470617104404",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e6b85a6_7b5095e6",
+        "filename": "native/android/surface_control.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1043845
+      },
+      "writtenOn": "2024-08-02T19:06:09Z",
+      "side": 1,
+      "message": "Since I\u0027ve got no idea what I\u0027m doing here (I don\u0027t work on this code), I\u0027m not going to mess with the shape of the code beyond what I have to. Non-trivial edits to code that hasn\u0027t been touched in years is just asking for trouble.",
+      "parentUuid": "a849db34_f9cc52a5",
+      "revId": "6590f61fd2dd87c3973e693b3811470617104404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
