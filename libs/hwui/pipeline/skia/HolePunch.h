@@ -22,7 +22,8 @@ namespace android {
 namespace uirenderer {
 namespace skiapipeline {
 
-const static std::string HOLE_PUNCH_ANNOTATION;
+const static std::string HOLE_PUNCH_ANNOTATION = "surface_hole_punch";
+;
 
 }  // namespace skiapipeline
 }  // namespace uirenderer
