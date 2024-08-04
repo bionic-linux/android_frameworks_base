@@ -747,9 +747,7 @@ bool AshmemPixelAllocator::allocPixelRef(SkBitmap* bitmap) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-int register_android_graphics_Graphics(JNIEnv* env)
-{
-    jmethodID m;
+int register_android_graphics_Graphics(JNIEnv* env) {
     jclass c;
 
     gRect_class = MakeGlobalRefOrDie(env, FindClassOrDie(env, "android/graphics/Rect"));

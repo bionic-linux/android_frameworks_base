@@ -265,7 +265,6 @@ static install_status_t copyFileIfChanged(JNIEnv* env, void* arg, ZipFileRO* zip
     jboolean extractNativeLibs = *(jboolean*)args[1];
     jboolean debuggable = *(jboolean*)args[2];
     jboolean app_compat_16kb = *(jboolean*)args[3];
-    install_status_t ret = INSTALL_SUCCEEDED;
 
     ScopedUtfChars nativeLibPath(env, *javaNativeLibPath);
 
