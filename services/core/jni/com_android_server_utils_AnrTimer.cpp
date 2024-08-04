@@ -571,7 +571,6 @@ class AnrTimerService::Timer {
     // Log an event, guarded by the debug flag.
     void event(char const* tag, bool verbose) {
         if (verbose) {
-            char name[PATH_MAX];
             ALOGI_IF(DEBUG_TIMER, "event %s %s name=%s",
                      tag, toString().c_str(), getName().c_str());
         } else {
@@ -657,7 +656,6 @@ class AnrTimerService::Ticker {
     void remove(nsecs_t scheduled, timer_id_t id) {
         Entry key(scheduled, id, 0);
         AutoMutex _l(lock_);
-        timer_id_t front = headTimerId();
         auto found = running_.find(key);
         if (found != running_.end()) running_.erase(found);
         if (running_.empty()) drained_++;
@@ -666,7 +664,6 @@ class AnrTimerService::Ticker {
     // Remove every timer associated with the service.
     void remove(AnrTimerService const* service) {
         AutoMutex _l(lock_);
-        timer_id_t front = headTimerId();
         for (auto i = running_.begin(); i != running_.end(); ) {
             if (i->service == service) {
                 i = running_.erase(i);

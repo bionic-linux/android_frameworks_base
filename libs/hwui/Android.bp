@@ -115,7 +115,7 @@ cc_defaults {
         "libharfbuzz_ng",
         "libminikin",
         "server_configurable_flags",
-        "libaconfig_storage_read_api_cc"
+        "libaconfig_storage_read_api_cc",
     ],
 
     static_libs: [
@@ -539,7 +539,6 @@ cc_defaults {
         "effects/StretchEffect.cpp",
         "effects/GainmapRenderer.cpp",
         "pipeline/skia/BackdropFilterDrawable.cpp",
-        "pipeline/skia/HolePunch.cpp",
         "pipeline/skia/SkiaCpuPipeline.cpp",
         "pipeline/skia/SkiaDisplayList.cpp",
         "pipeline/skia/SkiaPipeline.cpp",
