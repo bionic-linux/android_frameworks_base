@@ -132,6 +132,12 @@ import java.util.stream.Collectors;
  *         large audio frame support, specifies max size of output buffer in bytes.</td></tr>
  * <tr><td>{@link #KEY_BUFFER_BATCH_THRESHOLD_OUTPUT_SIZE}</td><td>Integer</td><td>optional,
  *         used with large audio frame support, specifies threshold output size in bytes.</td></tr>
+ * <tr><td>{@link #KEY_AUDIO_PRESENTATION_PRESENTATION_ID}</td>
+ *     <td>Integer</td><td><b>decoder-only</b>, optional, if content is AC-4 audio,
+ *         specifies the preferred presentation ID of the stream.</td></tr>
+ * <tr><td>{@link #KEY_AUDIO_PRESENTATION_PROGRAM_ID}</td>
+ *     <td>Integer</td><td><b>decoder-only</b>, optional, if content is AC-4 audio,
+ *         specifies the preferred program ID of the stream.</td></tr>
  * </table>
  *
  * Subtitle formats have the following keys:
@@ -1833,6 +1839,23 @@ public final class MediaFormat {
             return builder.toString();
         }
     }
+
+    /**
+     * A key describing the presentation ID of {@link AudioPresentation}.
+     * The associated value is an integer. Presentation ID is typically sequential, but
+     * does not have to be. If this key is not set, the default presentation will be used
+     * for audio playback.
+     */
+    public static final String KEY_AUDIO_PRESENTATION_PRESENTATION_ID =
+            "audio-presentation-presentation-id";
+
+    /**
+     * A key describing the program ID of {@link AudioPresentation}.
+     * The associated value is an integer. Program ID can be used to further uniquely
+     * identify the presentation to a decoder. If this key is not set, the default
+     * presentation will be used for audio playback.
+     */
+    public static final String KEY_AUDIO_PRESENTATION_PROGRAM_ID = "audio-presentation-program-id";
 
     /* package private */ MediaFormat(@NonNull Map<String, Object> map) {
         mMap = map;
