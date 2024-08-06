@@ -16,6 +16,29 @@
       "message": "There are corresponding definition in native layer: https://cs.android.com/android/platform/superproject/main/+/main:frameworks/av/media/ndk/NdkMediaFormat.cpp;drc\u003d6a7340064f2a27062fae7c96ad2391fcf84405c1;l\u003d374\nThis contribution adds corresponding definition in JAVA layer.\n\nThese two keys can be used for audio presentation selection before codec starts. The example usage is:\n\nMediaFormat trackFormat \u003d mediaExtractor.getTrackFormat(AUDIO_TRACK_AC4_INDEX);\nString mime \u003d trackFormat.getString(MediaFormat.KEY_MIME);\nmediaExtractor.selectTrack(AUDIO_TRACK_AC4_INDEX);\ntry {\n    MediaCodecList list \u003d new MediaCodecList(MediaCodecList.ALL_CODECS);\n    String name \u003d list.findDecoderForFormat(trackFormat);\n    decoder \u003d MediaCodec.createByCodecName(name);\n} catch (IOException e) {\n    throw new RuntimeException(e);\n}\n\nmAudioPresentations \u003d mediaExtractor.getAudioPresentations(AUDIO_TRACK_AC4_INDEX);\n\nmSelectedAudioPresentation \u003d mAudioPresentations.get(PREFERRED_PRESENTATION_INDEX);\nif (Build.VERSION.SDK_INT \u003e\u003d Build.VERSION_CODES.Q) {\n    trackFormat.setInteger(KEY_AUDIO_PRESENTATION_PRESENTATION_ID, mSelectedAudioPresentation.getPresentationId());\n    trackFormat.setInteger(KEY_AUDIO_PRESENTATION_PROGRAM_ID, mSelectedAudioPresentation.getProgramId());\n}\ndecoder.configure(trackFormat, null, null, 0);",
       "revId": "7b8b6982bb8d2dfb9c4a91af079d7d1a0c720cea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25cd1c5a_19c70bef",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-08-06T08:48:20Z",
+      "side": 1,
+      "message": "further to what? I think it\u0027s implied that this is further to `KEY_AUDIO_PRESENTATION_PRESENTATION_ID` but imo we should make that connection explicit in the docs.\n\nRelated: What\u0027s expected if `KEY_AUDIO_PRESENTATION_PRESENTATION_ID` is not set, but `KEY_AUDIO_PRESENTATION_PROGRAM_ID` is?",
+      "range": {
+        "startLine": 1854,
+        "startChar": 69,
+        "endLine": 1854,
+        "endChar": 76
+      },
+      "revId": "7b8b6982bb8d2dfb9c4a91af079d7d1a0c720cea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
