@@ -39,6 +39,30 @@
       },
       "revId": "7b8b6982bb8d2dfb9c4a91af079d7d1a0c720cea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af2768ac_8d4bbbba",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1604644
+      },
+      "writtenOn": "2024-08-07T02:11:31Z",
+      "side": 1,
+      "message": "For your first question, I just copied it from https://developer.android.com/reference/android/media/AudioPresentation?hl\u003den#getProgramId(). And I\u0027d like to provide some technical details for you.\nIn AC-4 decoder, there is a configuration to decide whether KEY_AUDIO_PRESENTATION_PRESENTATION_ID should be used when when KEY_AUDIO_PRESENTATION_PROGRAM_ID is matched with given program ID of the stream.\nIf the configuration is false, program ID will be ignored. If the configuration is true, presentation ID is only used when matched with given program ID of the stream. One typical use case for the latter is advertisement insertion.\n\nFor your second question, in theory, it should not be a case. But, if application actually does it as you said, (1) If the configuration in my first answer is false, the default presentation (usually the first presentation in the presentation list) will be selected for playback. (2) If that configuration is true, the default presentation will be selected only when the KEY_AUDIO_PRESENTATION_PROGRAM_ID setting is matched with given program ID of the stream.",
+      "parentUuid": "25cd1c5a_19c70bef",
+      "range": {
+        "startLine": 1854,
+        "startChar": 69,
+        "endLine": 1854,
+        "endChar": 76
+      },
+      "revId": "7b8b6982bb8d2dfb9c4a91af079d7d1a0c720cea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
