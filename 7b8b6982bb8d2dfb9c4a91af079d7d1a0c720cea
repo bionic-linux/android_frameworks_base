@@ -135,6 +135,30 @@
       },
       "revId": "7b8b6982bb8d2dfb9c4a91af079d7d1a0c720cea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a84ca9f_4f7d0bb7",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1604644
+      },
+      "writtenOn": "2024-08-08T09:40:55Z",
+      "side": 1,
+      "message": "(1) If decoder-level config is FALSE (means ignoring program ID)\nBoth set: non-default presentation may be used for audio playback\n[Yanning]Yes, it is correct.\nEither one, or neither, set: default presentation will be used for audio playback\n[Yanning] If presentation ID is set, corresponding presentation is used; any other case, default presentation may be used.\n\n(2) If decoder-level config is TRUE (means configured program ID must match program ID in stream)\nBoth set: non-default presentation may be used for audio playback\n[Yanning]Yes, it is correct.\nEither one, or neither, set: default presentation will be used for audio playback\n[Yanning]Yes, it is correct.",
+      "parentUuid": "d4c1a01c_f4c3ca46",
+      "range": {
+        "startLine": 1854,
+        "startChar": 69,
+        "endLine": 1854,
+        "endChar": 76
+      },
+      "revId": "7b8b6982bb8d2dfb9c4a91af079d7d1a0c720cea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
