@@ -111,6 +111,30 @@
       },
       "revId": "7b8b6982bb8d2dfb9c4a91af079d7d1a0c720cea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4c1a01c_f4c3ca46",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-08-08T06:31:36Z",
+      "side": 1,
+      "message": "I\u0027m re-opening just to confirm my understanding of the second point:\n\n* Both set: non-default presentation may be used for audio playback\n* Either one, or neither, set: default presentation will be used for audio playback\n\ni.e. for either of these keys to have any effect, both must be set (in addition to the decoder-level config you mention above). Is that correct?",
+      "parentUuid": "f51aa5c3_33813b4e",
+      "range": {
+        "startLine": 1854,
+        "startChar": 69,
+        "endLine": 1854,
+        "endChar": 76
+      },
+      "revId": "7b8b6982bb8d2dfb9c4a91af079d7d1a0c720cea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
