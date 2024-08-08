@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7828567e_a1d0249a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1604644
+      },
+      "writtenOn": "2024-08-08T02:11:23Z",
+      "side": 1,
+      "message": "I removed the topic since this one can be submitted independently.",
+      "revId": "dec4367125262a81036dc23fe4fa1da65c98852b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
