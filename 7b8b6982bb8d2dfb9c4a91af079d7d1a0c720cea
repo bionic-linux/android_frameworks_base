@@ -159,6 +159,30 @@
       },
       "revId": "7b8b6982bb8d2dfb9c4a91af079d7d1a0c720cea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc444aae_05b088fd",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-08-08T10:46:50Z",
+      "side": 1,
+      "message": "\u003e\u003e Either one, or neither, set: default presentation will be used for audio playback\n\u003e\n\u003e[Yanning] If presentation ID is set, corresponding presentation is used; any other case, default presentation may be used.\n\nThis seems to conflict the current wording of the docs on `KEY_AUDIO_PRESENTATION_PROGRAM_ID`, because it says that \"If this key is not set, the default presentation will be used for audio playback.\", which isn\u0027t the case in the situation you describe here (because presentation ID can be set, program ID unset, and non-default presentation will be used).",
+      "parentUuid": "8a84ca9f_4f7d0bb7",
+      "range": {
+        "startLine": 1854,
+        "startChar": 69,
+        "endLine": 1854,
+        "endChar": 76
+      },
+      "revId": "7b8b6982bb8d2dfb9c4a91af079d7d1a0c720cea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
