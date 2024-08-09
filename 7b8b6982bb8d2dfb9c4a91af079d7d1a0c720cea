@@ -183,6 +183,30 @@
       },
       "revId": "7b8b6982bb8d2dfb9c4a91af079d7d1a0c720cea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2430e6d7_69447b7d",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1604644
+      },
+      "writtenOn": "2024-08-09T01:32:06Z",
+      "side": 1,
+      "message": "OK, I think you are right. It actually makes user confused. In real use case, app always gets presentation ID and program ID from MediaExtractor and set them together to MediaCodec. Otherwise, app sets neither of them. That\u0027s why I added this description.\n\nSince it does make you confused, I decide to remove this description.",
+      "parentUuid": "bc444aae_05b088fd",
+      "range": {
+        "startLine": 1854,
+        "startChar": 69,
+        "endLine": 1854,
+        "endChar": 76
+      },
+      "revId": "7b8b6982bb8d2dfb9c4a91af079d7d1a0c720cea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
