@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "42d77981_2c8c6dfb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1817772
+      },
+      "writtenOn": "2024-08-12T06:58:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42692e6f_8aa1fdaf",
+      "revId": "1471530b15625cc1b3dc9dac438e4499ff7ba9f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f1c46a03_1eb8db5f",
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "Update: remove `\u0026\u0026 mToken.isVisible()` that may be always false.",
       "parentUuid": "f1c46a03_1eb8db5f",
+      "range": {
+        "startLine": 2307,
+        "startChar": 8,
+        "endLine": 2308,
+        "endChar": 38
+      },
+      "revId": "1471530b15625cc1b3dc9dac438e4499ff7ba9f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc47d4d0_4d1ab2fc",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2308,
+      "author": {
+        "id": 1817772
+      },
+      "writtenOn": "2024-08-12T06:58:35Z",
+      "side": 1,
+      "message": "thanks for reply, it work well and much more precise. I\u0027ll update the change later\n\n\nand there is another way to distinguish this case, but i\u0027m not much sure, hope you could give me some advice.\n\nboolean needToSendNewConfiguration \u003d (dc.getLastOrientationSource() \u003d\u003d this) \u0026\u0026 displayContent.updateOrientation();",
+      "parentUuid": "e77ef25f_3a25ace1",
       "range": {
         "startLine": 2307,
         "startChar": 8,
