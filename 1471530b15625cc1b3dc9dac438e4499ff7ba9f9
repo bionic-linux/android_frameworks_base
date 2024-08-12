@@ -33,6 +33,29 @@
       "message": "this change is ready",
       "revId": "1471530b15625cc1b3dc9dac438e4499ff7ba9f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1c46a03_1eb8db5f",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2308,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-08-12T02:47:12Z",
+      "side": 1,
+      "message": "Can this be\n```\nfinal boolean mayAffectOrientation \u003d mHasSurface\n        \u0026\u0026 mAttrs.screenOrientation !\u003d SCREEN_ORIENTATION_UNSPECIFIED\n        \u0026\u0026 isVisibleByPolicy() \u0026\u0026 mToken.isVisible();\n...\nfinal boolean needToSendNewConfiguration \u003d mayAffectOrientation \u0026\u0026 dc.updateOrientation();\n```\nin case the window didn\u0027t report drawn.",
+      "range": {
+        "startLine": 2307,
+        "startChar": 8,
+        "endLine": 2308,
+        "endChar": 38
+      },
+      "revId": "1471530b15625cc1b3dc9dac438e4499ff7ba9f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
