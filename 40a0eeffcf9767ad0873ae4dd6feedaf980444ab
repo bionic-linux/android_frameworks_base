@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e51070f_18b634b7",
+        "filename": "services/core/java/com/android/server/BootReceiver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1337780
+      },
+      "writtenOn": "2024-08-12T08:30:06Z",
+      "side": 1,
+      "message": "Why is it needed? Could we fix FileUtiles.readTextFile if there is a bug with this method?",
+      "fixSuggestions": [
+        {
+          "fixId": "a8f56dfa_81f4f4bc",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/BootReceiver.java",
+              "range": {
+                "startLine": 475,
+                "startChar": 0,
+                "endLine": 475,
+                "endChar": 0
+              },
+              "replacement": "        // TODO(b/191181111): Remove this after FileUtils.readTextFile is fixed.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "40a0eeffcf9767ad0873ae4dd6feedaf980444ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
