@@ -122,6 +122,30 @@
       },
       "revId": "1471530b15625cc1b3dc9dac438e4499ff7ba9f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1cdb4b7_9016b81a",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2308,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-08-12T07:10:29Z",
+      "side": 1,
+      "message": "`dc.getLastOrientationSource() \u003d\u003d this` looks good.",
+      "parentUuid": "cc47d4d0_4d1ab2fc",
+      "range": {
+        "startLine": 2307,
+        "startChar": 8,
+        "endLine": 2308,
+        "endChar": 38
+      },
+      "revId": "1471530b15625cc1b3dc9dac438e4499ff7ba9f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
