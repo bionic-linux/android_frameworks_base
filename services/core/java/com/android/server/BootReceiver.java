@@ -59,8 +59,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.attribute.PosixFilePermissions;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.locks.ReentrantLock;
@@ -470,6 +472,16 @@ public class BootReceiver extends BroadcastReceiver {
         }
 
         String fileContents = FileUtils.readTextFile(file, maxSize, TAG_TRUNCATED);
+        if (fileContents.getBytes(StandardCharsets.UTF_8).length != fileContents.length()
+                && maxSize < 0) {
+            byte[] data = fileContents.getBytes(StandardCharsets.UTF_8);
+            fileContents =
+                    TAG_TRUNCATED
+                            + new String(
+                                    Arrays.copyOfRange(data, data.length + maxSize, data.length),
+                                    StandardCharsets.UTF_8);
+            Slog.i(TAG, tag + "2nd truncate due to byte.array large than maxsize");
+        }
         String text = headers + fileContents + footers;
         // Create an additional report for system server native crashes, with a special tag.
         if (tag.equals(TAG_TOMBSTONE) && fileContents.contains(">>> system_server <<<")) {
