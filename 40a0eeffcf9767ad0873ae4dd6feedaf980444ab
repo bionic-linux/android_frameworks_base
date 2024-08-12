@@ -34,6 +34,24 @@
       ],
       "revId": "40a0eeffcf9767ad0873ae4dd6feedaf980444ab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01ae6bb1_84edace1",
+        "filename": "services/core/java/com/android/server/BootReceiver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 2053401
+      },
+      "writtenOn": "2024-08-12T08:52:54Z",
+      "side": 1,
+      "message": "I would guess the problem could be if the data have garbled chars causing some problem when casting to string. This issue only happen when data have garbled chars.",
+      "parentUuid": "6e51070f_18b634b7",
+      "revId": "40a0eeffcf9767ad0873ae4dd6feedaf980444ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
