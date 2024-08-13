@@ -51,6 +51,24 @@
       ],
       "revId": "2e00f916b8b95a04a94d5b6809e858b1cb803471",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cebeac29_00fb0c0a",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2366,
+      "author": {
+        "id": 1817772
+      },
+      "writtenOn": "2024-08-13T02:22:20Z",
+      "side": 1,
+      "message": "sure, already done",
+      "parentUuid": "440bb20f_8eb741ad",
+      "revId": "2e00f916b8b95a04a94d5b6809e858b1cb803471",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
