@@ -33,6 +33,23 @@
       "message": "These edits in question refer to resolving the caption languages right now, although the UI language bug is nearly resolved.",
       "revId": "8d017ac1af9658fed2368171dcf1b1f0511b6051",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67b22ebd_8a987829",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2024-08-13T19:39:10Z",
+      "side": 1,
+      "message": "Good afternoon, everyone! Here is the current status of the bug for August 13, 2024.\n\n1. For the Android TV and Google TV system language settings as of Android 14, the countries are now in alphabetical order, with the top countries on the top. (Status: PASS, no action required)\n2. The captions language settings for both Pixel and Android TV/Google TV devices (as well as the upcoming Google TV Streamer) still have missing languages, therefore, this change has been rebased. (Status: FAIL, action required)\n\nAs a reminder, this change does NOT affect the new locale picker (language and then country). It will only affect the old locale picker (pre-Nougat).\n\nGood luck!",
+      "revId": "8d017ac1af9658fed2368171dcf1b1f0511b6051",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
