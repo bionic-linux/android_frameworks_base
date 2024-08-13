@@ -2185,6 +2185,7 @@ public final class NfcAdapter {
         if (!sHasNfcFeature) {
             throw new UnsupportedOperationException();
         }
+<<<<<<< HEAD   (e996ae Merge "AuthService registerFaceSensor for hidl should only f)
         try {
             return sService.enableReaderOption(enable);
         } catch (RemoteException e) {
@@ -2201,6 +2202,14 @@ public final class NfcAdapter {
             }
             return false;
         }
+||||||| BASE
+        return callServiceReturn(() ->  sService.enableReaderOption(enable), false);
+
+=======
+        return callServiceReturn(() ->
+                sService.enableReaderOption(enable, mContext.getPackageName()), false);
+
+>>>>>>> CHANGE (1f51a6 [framework] Pass in package name when change reader option.)
     }
 
     /**
