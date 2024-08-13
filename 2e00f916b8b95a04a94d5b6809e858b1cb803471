@@ -16,6 +16,41 @@
       "message": "@riddlehsu@google.com done, please review again, thanks",
       "revId": "2e00f916b8b95a04a94d5b6809e858b1cb803471",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "440bb20f_8eb741ad",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2366,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-08-13T02:00:24Z",
+      "side": 1,
+      "message": "nit: this can be put in above line",
+      "fixSuggestions": [
+        {
+          "fixId": "0c31aeed_170c93f1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/wm/WindowState.java",
+              "range": {
+                "startLine": 2365,
+                "startChar": 0,
+                "endLine": 2367,
+                "endChar": 0
+              },
+              "replacement": "            needToSendNewConfiguration |\u003d dc.getDisplayPolicy().updateDecorInsetsInfo();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2e00f916b8b95a04a94d5b6809e858b1cb803471",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
