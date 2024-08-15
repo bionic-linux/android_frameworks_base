@@ -354,9 +354,6 @@ public final class ProfcollectForwardingService extends SystemService {
 
     private static void createAndUploadReport(ProfcollectForwardingService pfs) {
         BackgroundThread.get().getThreadHandler().post(() -> {
-            if (pfs.mIProfcollect == null) {
-                return;
-            }
             String reportName;
             try {
                 reportName = pfs.mIProfcollect.report(pfs.mUsageSetting) + ".zip";
@@ -404,9 +401,6 @@ public final class ProfcollectForwardingService extends SystemService {
                 final int traceDuration = 5000;
                 final String traceTag = "camera";
                 BackgroundThread.get().getThreadHandler().post(() -> {
-                    if (mIProfcollect == null) {
-                        return;
-                    }
                     try {
                         mIProfcollect.trace_process(traceTag, "android.hardware.camera.provider",
                                 traceDuration);
