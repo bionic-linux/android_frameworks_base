@@ -16,6 +16,7 @@
 
 package android.nfc;
 
+import android.Manifest;
 import android.annotation.CallbackExecutor;
 import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
@@ -387,6 +388,43 @@ public final class NfcOemExtension {
     public List<String> getActiveNfceeList() {
         return NfcAdapter.callServiceReturn(() ->
             NfcAdapter.sService.fetchActiveNfceeList(), new ArrayList<String>());
+    }
+
+    /**
+     * Set whether enable auto routing change or not
+     *
+     * @param state status of auto routing change, true if enable, otherwise false
+     */
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
+    public void setAutoChangeStatus(boolean state) {
+        NfcAdapter.callService(() ->
+                NfcAdapter.sCardEmulationService.setAutoChangeStatus(state));
+    }
+
+    /**
+     * Check if auto routing change is enabled
+     *
+     * @return true if enabled, otherwise false
+     */
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
+    public boolean isAutoChangeEnabled() {
+        return NfcAdapter.callServiceReturn(() ->
+                NfcAdapter.sCardEmulationService.isAutoChangeEnabled(), false);
+    }
+
+    /**
+     * Get current routing status
+     * @return a list of strings indicating the default route, default ISO-DEP route and default
+     * off-host route.
+     */
+    @NonNull
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
+    public List<String> getRoutingStatus() {
+        return NfcAdapter.callServiceReturn(() ->
+                NfcAdapter.sCardEmulationService.getRoutingStatus(), new ArrayList<String>());
     }
 
     private final class NfcOemExtensionCallback extends INfcOemExtensionCallback.Stub {
