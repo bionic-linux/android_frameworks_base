@@ -389,6 +389,40 @@ public final class NfcOemExtension {
             NfcAdapter.sService.fetchActiveNfceeList(), new ArrayList<String>());
     }
 
+    /**
+     * Set whether enable auto routing change or not
+     *
+     * @param state status of auto routing change, true if enable, otherwise false
+     */
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public void setAutoChangeStatus(boolean state) {
+        NfcAdapter.callService(() ->
+                NfcAdapter.sCardEmulationService.setAutoChangeStatus(state));
+    }
+
+    /**
+     * Check if auto routing change is enabled
+     *
+     * @return true if enabled, otherwise false
+     */
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public boolean isAutoChangeEnabled() {
+        return NfcAdapter.callServiceReturn(() ->
+                NfcAdapter.sCardEmulationService.isAutoChangeEnabled(), false);
+    }
+
+    /**
+     * Get current routing status
+     * @return a list of strings indicating the default route, default ISO-DEP route and default
+     * off-host route.
+     */
+    @NonNull
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public List<String> getRoutingStatus() {
+        return NfcAdapter.callServiceReturn(() ->
+                NfcAdapter.sCardEmulationService.getRoutingStatus(), new ArrayList<String>());
+    }
+
     private final class NfcOemExtensionCallback extends INfcOemExtensionCallback.Stub {
 
         @Override
