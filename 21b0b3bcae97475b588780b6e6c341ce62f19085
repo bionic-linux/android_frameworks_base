@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7f5b3bf_d203f2c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-08-19T04:23:52Z",
+      "side": 1,
+      "message": "I removed any test_mapping with restrictive owners from this cl.",
+      "revId": "21b0b3bcae97475b588780b6e6c341ce62f19085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
