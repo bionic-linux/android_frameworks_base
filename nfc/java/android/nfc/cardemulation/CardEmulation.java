@@ -905,23 +905,27 @@ public final class CardEmulation {
     public @interface ProtocolAndTechnologyRoute {}
 
      /**
-      * Setting NFC controller routing table, which includes Protocol Route and Technology Route,
-      * while this Activity is in the foreground.
+      * Setting NFC controller routing table, which includes Protocol Route, Technology Route,
+      * and Empty AID Route, while this Activity is in the foreground.
       *
       * The parameter set to {@link #PROTOCOL_AND_TECHNOLOGY_ROUTE_UNSET}
-      * can be used to keep current values for that entry. Either
-      * Protocol Route or Technology Route should be override when calling this API, otherwise
+      * can be used to keep current values for that entry. If overriding
+      * temporarily, either Protocol Route or Technology Route should be overridden
+      * when calling this API, otherwise throw {@link IllegalArgumentException}. If overriding
+      * persistently, at least one route should be overridden when calling this API, otherwise
       * throw {@link IllegalArgumentException}.
       * <p>
       * Example usage in an Activity that requires to set proto route to "ESE" and keep tech route:
       * <pre>
       * protected void onResume() {
-      *     mNfcAdapter.overrideRoutingTable(
-      *         this, {@link #PROTOCOL_AND_TECHNOLOGY_ROUTE_ESE}, null);
+      *     mNfcAdapter.overrideRoutingTable(this, {@link #PROTOCOL_AND_TECHNOLOGY_ROUTE_ESE},
+      *         {@link #PROTOCOL_AND_TECHNOLOGY_ROUTE_UNSET}, false,
+      *         {@link #PROTOCOL_AND_TECHNOLOGY_ROUTE_UNSET});
       * }</pre>
       * </p>
-      * Also activities must call {@link #recoverRoutingTable(Activity)}
-      * when it goes to the background. Only the package of the
+      * If overriding routing temporarily, activities must call
+      * {@link #recoverRoutingTable(Activity)} when it goes to the background.
+      * Only the package of the
       * currently preferred service (the service set as preferred by the current foreground
       * application via {@link CardEmulation#setPreferredService(Activity, ComponentName)} or the
       * current Default Wallet Role Holder {@link RoleManager#ROLE_WALLET}),
@@ -931,46 +935,55 @@ public final class CardEmulation {
       *                 in {@link ProtocolAndTechnologyRoute}.
       * @param technology Tech-A, Tech-B and Tech-F route destination, where the possible inputs
       *                   are defined in {@link ProtocolAndTechnologyRoute}
+      * @param persist indicates if the routing table should be overridden persistently.
+      * @param emptyAid Zero-length AID route destination, where the possible inputs are
+      *                 defined in {@link ProtocolAndTechnologyRoute}
       * @throws SecurityException if the caller is not the preferred NFC service
-      * @throws IllegalArgumentException if the activity is not resumed or the caller is not in the
-      * foreground.
+      * @throws IllegalArgumentException if the activity is not resumed, or the caller is not in the
+      * foreground, or activity is null when persist is set to false.
       * <p>
       * This is a high risk API and only included to support mainline effort
       * @hide
       */
     @SystemApi
+    @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
     @FlaggedApi(Flags.FLAG_NFC_OVERRIDE_RECOVER_ROUTING_TABLE)
     public void overrideRoutingTable(
-            @NonNull Activity activity, @ProtocolAndTechnologyRoute int protocol,
-            @ProtocolAndTechnologyRoute int technology) {
-        if (!activity.isResumed()) {
+            @Nullable Activity activity, @ProtocolAndTechnologyRoute int protocol,
+            @ProtocolAndTechnologyRoute int technology, boolean persist,
+            @ProtocolAndTechnologyRoute int emptyAid) {
+        if (!persist && activity == null) {
+            throw new IllegalArgumentException("Activity cannot be null if temporarily override"
+                    + "routing table.");
+        }
+        if (activity != null && !activity.isResumed()) {
             throw new IllegalArgumentException("Activity must be resumed.");
         }
-        String protocolRoute = switch (protocol) {
-            case PROTOCOL_AND_TECHNOLOGY_ROUTE_DH -> "DH";
-            case PROTOCOL_AND_TECHNOLOGY_ROUTE_ESE -> "ESE";
-            case PROTOCOL_AND_TECHNOLOGY_ROUTE_UICC -> "UICC";
-            case PROTOCOL_AND_TECHNOLOGY_ROUTE_UNSET -> null;
-            default -> throw new IllegalStateException("Unexpected value: " + protocol);
-        };
-        String technologyRoute = switch (technology) {
-            case PROTOCOL_AND_TECHNOLOGY_ROUTE_DH -> "DH";
-            case PROTOCOL_AND_TECHNOLOGY_ROUTE_ESE -> "ESE";
-            case PROTOCOL_AND_TECHNOLOGY_ROUTE_UICC -> "UICC";
-            case PROTOCOL_AND_TECHNOLOGY_ROUTE_UNSET -> null;
-            default -> throw new IllegalStateException("Unexpected value: " + protocol);
-        };
-        callService(() ->
-                sService.overrideRoutingTable(
-                    mContext.getUser().getIdentifier(),
-                    protocolRoute,
-                    technologyRoute,
-                    mContext.getPackageName()));
+        String protocolRoute = routeIntToString(protocol);
+        String technologyRoute = routeIntToString(technology);
+        String emptyAidRoute = routeIntToString(emptyAid);
+
+        if (persist) {
+            callService(() ->
+                    sService.overwriteRoutingTable(
+                            mContext.getUser().getIdentifier(),
+                            emptyAidRoute,
+                            protocolRoute,
+                            technologyRoute
+                    ));
+        } else {
+            callService(() ->
+                    sService.overrideRoutingTable(
+                            mContext.getUser().getIdentifier(),
+                            protocolRoute,
+                            technologyRoute,
+                            mContext.getPackageName()));
+        }
     }
 
     /**
      * Restore the NFC controller routing table,
-     * which was changed by {@link #overrideRoutingTable(Activity, int, int)}
+     * which was changed by {@link #overrideRoutingTable(Activity, int, int, boolean, int)}
      *
      * @param activity The Activity that requested NFC controller routing table to be changed.
      * @throws IllegalArgumentException if the caller is not in the foreground.
@@ -979,6 +992,7 @@ public final class CardEmulation {
      */
     @SystemApi
     @FlaggedApi(Flags.FLAG_NFC_OVERRIDE_RECOVER_ROUTING_TABLE)
+    @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
     public void recoverRoutingTable(@NonNull Activity activity) {
         if (!activity.isResumed()) {
             throw new IllegalArgumentException("Activity must be resumed.");
@@ -1071,5 +1085,15 @@ public final class CardEmulation {
             }
         }
         return defaultReturn;
+    }
+
+    private String routeIntToString(@ProtocolAndTechnologyRoute int route) {
+        return switch (route) {
+            case PROTOCOL_AND_TECHNOLOGY_ROUTE_DH -> "DH";
+            case PROTOCOL_AND_TECHNOLOGY_ROUTE_ESE -> "ESE";
+            case PROTOCOL_AND_TECHNOLOGY_ROUTE_UICC -> "UICC";
+            case PROTOCOL_AND_TECHNOLOGY_ROUTE_UNSET -> null;
+            default -> throw new IllegalStateException("Unexpected value: " + route);
+        };
     }
 }
