@@ -19,9 +19,11 @@ package android.nfc;
 import android.annotation.CallbackExecutor;
 import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.content.Context;
+import android.nfc.cardemulation.CardEmulation;
 import android.os.Binder;
 import android.os.RemoteException;
 import android.util.Log;
@@ -166,6 +168,64 @@ public final class NfcOemExtension {
     public List<String> getActiveNfceeList() {
         return NfcAdapter.callServiceReturn(() ->
             NfcAdapter.sService.fetchActiveNfceeList(), new ArrayList<String>());
+    }
+
+    /**
+     * Set whether enable auto routing change or not
+     *
+     * @param state status of auto routing change, true if enable, otherwise false
+     */
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public void setAutoChangeStatus(boolean state) {
+        NfcAdapter.callService(() ->
+                NfcAdapter.sCardEmulationService.setAutoChangeStatus(state));
+    }
+
+    /**
+     * Check if auto routing change is enabled
+     *
+     * @return true if enabled, otherwise false
+     */
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public boolean isAutoChangeEnabled() {
+        return NfcAdapter.callServiceReturn(() ->
+                NfcAdapter.sCardEmulationService.isAutoChangeEnabled(), false);
+    }
+
+    /**
+     * Get current routing status
+     * @return a list of strings indicating the default route, default ISO-DEP route and default
+     * off-host route.
+     */
+    @NonNull
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public List<String> getRoutingStatus() {
+        return NfcAdapter.callServiceReturn(() ->
+                NfcAdapter.sCardEmulationService.getRoutingStatus(), new ArrayList<String>());
+    }
+
+    /**
+     * Overwrite NFC controller routing table, which includes Protocol Route and Technology Route.
+     *
+     * The parameter set to null can be used to keep current values for that entry. Either
+     * Protocol Route or Technology Route should be override when calling this API, otherwise
+     * throw {@link IllegalArgumentException}.
+     * @param emptyAid empty application ID.
+     * @param protocol ISO-DEP route destination, which can be "DH" or "UICC" or "ESE".
+     * @param tech Tech-A, Tech-B route destination, which can be "DH" or "UICC" or "ESE".
+     * @throws IllegalArgumentException if both protocol and tech route are null.
+     */
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public void overwriteRoutingTable(
+            @NonNull String emptyAid,
+            @Nullable @CardEmulation.ProtocolAndTechnologyRoute String protocol,
+            @Nullable @CardEmulation.ProtocolAndTechnologyRoute String tech) {
+        if (protocol == null && tech == null) {
+            throw new IllegalArgumentException("Both protocol and tech route are null");
+        }
+        NfcAdapter.callService(() ->
+                NfcAdapter.sCardEmulationService.overwriteRoutingTable(
+                        mContext.getUser().getIdentifier(), emptyAid, protocol, tech));
     }
 
     private final class NfcOemExtensionCallback extends INfcOemExtensionCallback.Stub {
