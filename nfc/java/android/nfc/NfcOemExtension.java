@@ -16,6 +16,11 @@
 
 package android.nfc;
 
+import static android.nfc.cardemulation.CardEmulation.PROTOCOL_AND_TECHNOLOGY_ROUTE_DH;
+import static android.nfc.cardemulation.CardEmulation.PROTOCOL_AND_TECHNOLOGY_ROUTE_ESE;
+import static android.nfc.cardemulation.CardEmulation.PROTOCOL_AND_TECHNOLOGY_ROUTE_UICC;
+
+import android.Manifest;
 import android.annotation.CallbackExecutor;
 import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
@@ -24,6 +29,7 @@ import android.annotation.RequiresPermission;
 import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.content.Context;
+import android.nfc.cardemulation.CardEmulation;
 import android.os.Binder;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
@@ -389,6 +395,51 @@ public final class NfcOemExtension {
             NfcAdapter.sService.fetchActiveNfceeList(), new ArrayList<String>());
     }
 
+    /**
+     * Set whether to enable auto routing change or not (enabled by default).
+     * If disabled, routing targets are limited to a single off-host destination.
+     *
+     * @param state status of auto routing change, true if enable, otherwise false
+     */
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
+    public void setAutoChangeStatus(boolean state) {
+        NfcAdapter.callService(() ->
+                NfcAdapter.sCardEmulationService.setAutoChangeStatus(state));
+    }
+
+    /**
+     * Check if auto routing change is enabled or not.
+     *
+     * @return true if enabled, otherwise false
+     */
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
+    public boolean isAutoChangeEnabled() {
+        return NfcAdapter.callServiceReturn(() ->
+                NfcAdapter.sCardEmulationService.isAutoChangeEnabled(), false);
+    }
+
+    /**
+     * Get current routing status
+     * @return a list of {@link RoutingStatus} indicating the default route, default ISO-DEP
+     * route and default off-host route.
+     */
+    @NonNull
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
+    public RoutingStatus getRoutingStatus() {
+        List<String> status = NfcAdapter.callServiceReturn(() ->
+                NfcAdapter.sCardEmulationService.getRoutingStatus(), new ArrayList<>());
+        if (status.size() < 3) {
+            throw new IllegalArgumentException("The size of the routing status should be "
+                    + "no less than 3");
+        }
+        return new RoutingStatus(routeStringToInt(status.get(0)),
+                routeStringToInt(status.get(1)),
+                routeStringToInt(status.get(2)));
+    }
+
     private final class NfcOemExtensionCallback extends INfcOemExtensionCallback.Stub {
 
         @Override
@@ -582,6 +633,15 @@ public final class NfcOemExtension {
                 return result;
             }
         }
+    }
+
+    private @CardEmulation.ProtocolAndTechnologyRoute int routeStringToInt(String route) {
+        return switch (route) {
+            case "DH" -> PROTOCOL_AND_TECHNOLOGY_ROUTE_DH;
+            case "eSE" -> PROTOCOL_AND_TECHNOLOGY_ROUTE_ESE;
+            case "SIM" -> PROTOCOL_AND_TECHNOLOGY_ROUTE_UICC;
+            default -> throw new IllegalStateException("Unexpected value: " + route);
+        };
     }
 
     private class ReceiverWrapper implements Consumer<Boolean> {
