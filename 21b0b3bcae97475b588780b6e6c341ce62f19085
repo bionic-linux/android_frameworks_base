@@ -16,6 +16,23 @@
       "message": "I removed any test_mapping with restrictive owners from this cl.",
       "revId": "21b0b3bcae97475b588780b6e6c341ce62f19085",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a3b9bb0_6898d6cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-08-19T18:27:13Z",
+      "side": 1,
+      "message": "I think david and hadrien are busy, can you approve this? (I think anyone can)",
+      "revId": "21b0b3bcae97475b588780b6e6c341ce62f19085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
