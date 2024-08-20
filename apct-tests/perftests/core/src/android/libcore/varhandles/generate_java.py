@@ -42,7 +42,7 @@ def to_camel_case(word):
     return ''.join(c for c in word.title() if not c == '_')
 
 
-LOOP ="BenchmarkState state = mPerfStatusReporter.getBenchmarkState();\n        while (state.keepRunning())"
+LOOP ="final BenchmarkState state = mBenchmarkRule.getState();\n        while (state.keepRunning())"
 
 class Benchmark:
     def __init__(self, code, static, vartype, flavour, klass, method, memloc,
@@ -158,10 +158,10 @@ BANNER = """/*
 VH_IMPORTS = """
 package android.libcore.varhandles;
 
-import android.perftests.utils.BenchmarkState;
-import android.perftests.utils.PerfStatusReporter;
-import android.test.suitebuilder.annotation.LargeTest;
+import androidx.benchmark.BenchmarkState;
+import androidx.benchmark.junit4.BenchmarkRule;
 
+import androidx.test.filters.LargeTest;
 import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.After;
@@ -179,7 +179,7 @@ VH_START = BANNER + VH_IMPORTS + """
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class {name} {{
-    @Rule public PerfStatusReporter mPerfStatusReporter = new PerfStatusReporter();
+    @Rule public BenchmarkRule mBenchmarkRule = new BenchmarkRule();
     static final {vartype} FIELD_VALUE = {value1};
     {static_kwd}{vartype} {static_prefix}Field = FIELD_VALUE;
     VarHandle mVh;
