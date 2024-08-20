@@ -558,6 +558,7 @@ public class MediaControlPanel {
 
         if (mToken != null) {
             mController = new MediaController(mContext, mToken);
+            mController.registerCallback(mCb);
         } else {
             mController = null;
         }
@@ -1936,5 +1937,21 @@ public class MediaControlPanel {
                 interactedSubcardRank,
                 interactedSubcardCardinality);
     }
+
+    /**
+     * sync the media panel title and artist in time
+     */
+    private final MediaController.Callback mCb = new MediaController.Callback() {
+        @Override
+        public void onMetadataChanged(MediaMetadata metadata) {
+            if (metadata != null) {
+                String title = metadata.getString(MediaMetadata.METADATA_KEY_TITLE);
+                String artist = metadata.getString(MediaMetadata.METADATA_KEY_ARTIST);
+                mMediaViewHolder.getTitleText().setText(title);
+                mMediaViewHolder.getArtistText().setText(artist);
+                mMediaViewController.refreshState();        // measure view and refresh the state
+            }
+        }
+    };
 }
 
