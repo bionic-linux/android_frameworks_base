@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a838527_cb1fd720",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-08-21T20:34:44Z",
+      "side": 1,
+      "message": "Hi, I need an owner for frameworks/base/TEST_MAPPING for this.",
+      "revId": "d842b49fb23c82168581736b01bbb9d3e1b4300e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
