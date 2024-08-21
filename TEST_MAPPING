@@ -1,18 +1,7 @@
 {
   "presubmit-large": [
     {
-      "name": "FrameworksServicesTests",
-      "options": [
-        {
-          "include-annotation": "android.platform.test.annotations.Presubmit"
-        },
-        {
-          "exclude-annotation": "androidx.test.filters.FlakyTest"
-        },
-        {
-          "exclude-annotation": "org.junit.Ignore"
-        }
-      ]
+      "name": "FrameworksServicesTests_presubmit"
     }
   ],
   "presubmit-pm": [
@@ -205,18 +194,7 @@
      ]
    },
    {
-     "name": "FrameworksServicesTests",
-     "options": [
-       {
-         "include-annotation": "android.platform.test.annotations.Presubmit"
-       },
-       {
-         "exclude-annotation": "androidx.test.filters.FlakyTest"
-       },
-       {
-         "exclude-annotation": "org.junit.Ignore"
-       }
-     ]
+     "name": "FrameworksServicesTests_presubmit"
    },
    {
      "name": "PackageManagerServiceServerTests",
