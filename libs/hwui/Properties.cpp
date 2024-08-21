@@ -55,6 +55,9 @@ std::optional<bool> use_vulkan() {
 std::optional<std::int32_t> render_ahead() {
     return base::GetIntProperty("ro.hwui.render_ahead", 0);
 }
+
+std::optional<std::int32_t> max_gpu_font_atlas_bytes() {
+    return base::GetIntProperty("ro.hwui.max_gpu_font_atlas_bytes", -1);
 #endif
 
 bool Properties::debugLayersUpdates = false;
