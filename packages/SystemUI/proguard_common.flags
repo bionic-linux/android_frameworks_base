@@ -25,7 +25,7 @@
 -keepclassmembers class com.android.wm.shell.protolog.ShellProtoLogGroup {
     *;
 }
-
+ 
 # Prevent optimization or access modification of any referenced code that may
 # conflict with code in the bootclasspath.
 # TODO(b/222468116): Resolve such collisions in the build system.

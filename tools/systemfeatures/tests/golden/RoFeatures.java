@@ -1,0 +1,57 @@
+package com.android.systemfeatures;
+
+import android.annotation.Nullable;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import com.android.aconfig.annotations.AssumeFalseForR8;
+import com.android.aconfig.annotations.AssumeTrueForR8;
+import java.lang.Boolean;
+import java.lang.String;
+
+/**
+ * This file is auto-generated. DO NOT MODIFY.
+ * Args: com.android.systemfeatures.RoFeatures --readonly=true --feature=WATCH:1 --feature=WIFI:0 --feature=VULKAN:-1 --feature=AUTO: --feature-apis=WATCH,PC
+ *
+ * @hide
+ */
+public final class RoFeatures {
+  @AssumeTrueForR8
+  public static boolean hasFeatureWatch(Context context) {
+    return true;
+  }
+
+  public static boolean hasFeaturePc(Context context) {
+    return hasFeatureFallback(context, PackageManager.FEATURE_PC);
+  }
+
+  @AssumeTrueForR8
+  public static boolean hasFeatureWifi(Context context) {
+    return true;
+  }
+
+  @AssumeFalseForR8
+  public static boolean hasFeatureVulkan(Context context) {
+    return false;
+  }
+
+  @AssumeFalseForR8
+  public static boolean hasFeatureAuto(Context context) {
+    return false;
+  }
+
+  private static boolean hasFeatureFallback(Context context, String featureName) {
+    return context.getPackageManager().hasSystemFeature(featureName, 0);
+  }
+
+  @Nullable
+  public static Boolean maybeHasFeature(String featureName, int version) {
+    switch (featureName) {
+      case PackageManager.FEATURE_WATCH: return 1 >= version;
+      case PackageManager.FEATURE_WIFI: return 0 >= version;
+      case PackageManager.FEATURE_VULKAN: return -1 >= version;
+      case PackageManager.FEATURE_AUTO: return false;
+      default: break;
+    }
+    return null;
+  }
+}

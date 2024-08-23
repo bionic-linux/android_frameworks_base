@@ -135,6 +135,8 @@ object SystemFeaturesGenerator {
         val classBuilder =
             TypeSpec.classBuilder(outputClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                .addJavadoc("This file is auto-generated. DO NOT MODIFY.\n")
+                .addJavadoc("Args: ${args.joinToString(" ")}\n\n")
                 .addJavadoc("@hide")
 
         addFeatureMethodsToClass(classBuilder, features.values)
