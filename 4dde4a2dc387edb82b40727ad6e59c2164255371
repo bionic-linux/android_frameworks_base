@@ -22,6 +22,30 @@
       },
       "revId": "4dde4a2dc387edb82b40727ad6e59c2164255371",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cebab53_b49401e2",
+        "filename": "core/java/android/view/MotionEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2024-08-23T15:53:32Z",
+      "side": 1,
+      "message": "I got those lines from the AXIS_GESTURE_ docs, so I\u0027ll update it there too.",
+      "parentUuid": "e0db4b72_43e40718",
+      "range": {
+        "startLine": 1092,
+        "startChar": 0,
+        "endLine": 1093,
+        "endChar": 85
+      },
+      "revId": "4dde4a2dc387edb82b40727ad6e59c2164255371",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
