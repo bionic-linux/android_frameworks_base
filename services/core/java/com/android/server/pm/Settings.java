@@ -5435,7 +5435,7 @@ public final class Settings implements Watchable, Snappable, ResilientAtomicFile
                     }
                     if (!paths.getOverlayPaths().isEmpty()) {
                         pw.print(prefix);
-                        pw.println("    ");
+                        pw.print("    ");
                         pw.print(libOverlayPaths.getKey());
                         pw.println(" overlay paths:");
                         for (String path : paths.getOverlayPaths()) {
@@ -5446,7 +5446,7 @@ public final class Settings implements Watchable, Snappable, ResilientAtomicFile
                     }
                     if (!paths.getResourceDirs().isEmpty()) {
                         pw.print(prefix);
-                        pw.println("      ");
+                        pw.print("      ");
                         pw.print(libOverlayPaths.getKey());
                         pw.println(" legacy overlay paths:");
                         for (String path : paths.getResourceDirs()) {
