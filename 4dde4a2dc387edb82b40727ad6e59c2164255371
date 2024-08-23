@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0db4b72_43e40718",
+        "filename": "core/java/android/view/MotionEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-08-23T10:31:13Z",
+      "side": 1,
+      "message": "I think a different term like \"sample\" would be clearer here. Given that we call the whole class a Motion _Event_, and in the Batching section we refer to \"all samples in a batched event\", it seems like \"event\" normally refers to the whole batch.\n\n```suggestion\n     * These values are relative to the state from the last sample, not accumulated, so developers\n     * should make sure to process this axis value for all batched historical sample.\n```\n\n(Similarly for `AXIS_RELATIVE_Y` below)",
+      "range": {
+        "startLine": 1092,
+        "startChar": 0,
+        "endLine": 1093,
+        "endChar": 85
+      },
+      "revId": "4dde4a2dc387edb82b40727ad6e59c2164255371",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
