@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ea07578_62c2a32e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-08-23T17:21:46Z",
+      "side": 1,
+      "message": "Can you include (in the commit message) a \"before vs after\" of the dumpsys section that is changed by this CL?",
+      "revId": "de8ac38745cd2c71c6e7f6370b24998b22f07a5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
