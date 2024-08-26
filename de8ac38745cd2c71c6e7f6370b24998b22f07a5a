@@ -16,6 +16,24 @@
       "message": "Can you include (in the commit message) a \"before vs after\" of the dumpsys section that is changed by this CL?",
       "revId": "de8ac38745cd2c71c6e7f6370b24998b22f07a5a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99d3e696_f74e6bc0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3474079
+      },
+      "writtenOn": "2024-08-26T00:53:35Z",
+      "side": 1,
+      "message": "----- before:\n  Package [com.xxxxx](90914ea)\n    appId\u003d100xx\n    User 0: ceDataInode\u003dxxxx deDataInode\u003dxxxx installed\u003dtrue hidden\u003dfalse suspended\u003dfalse distractionFlags\u003d0 stopped\u003df\nalse notLaunched\u003dfalse enabled\u003d0 instant\u003dfalse virtual\u003dfalse quarantined\u003dfalse\n      overlay paths:\n        /product/overlay/xxxxx.apk\n      legacy overlay paths:\n        /product/overlay/xxxxx.apk\n      \ncom.xxxxx overlay paths:\n          /product/overlay/xxxxx.apk\n     \t\ncom.xxxxx legacy overlay paths:\n        /product/overlay/xxxxx.apk\n\t\n\n----- after:\n  Package [com.xxxxx] (90914ea):\n    appId\u003d100xx\n    User 0: ceDataInode\u003dxxxx deDataInode\u003dxxxx installed\u003dtrue hidden\u003dfalse suspended\u003dfalse distractionFlags\u003d0 stopped\u003df\nalse notLaunched\u003dfalse enabled\u003d0 instant\u003dfalse virtual\u003dfalse quarantined\u003dfalse\n      overlay paths:\n        /product/overlay/xxxxx.apk\n      legacy overlay paths:\n        /product/overlay/xxxxx.apk \n      com.xxxxx overlay paths:\n        /product/overlay/xxxxx.apk \n      com.xxxxx legacy overlay paths:\n        /product/overlay/xxxxx.apk",
+      "parentUuid": "2ea07578_62c2a32e",
+      "revId": "de8ac38745cd2c71c6e7f6370b24998b22f07a5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
