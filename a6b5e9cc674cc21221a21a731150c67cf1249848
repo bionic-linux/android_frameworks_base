@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebcda729_40a999b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2024-08-26T17:35:43Z",
+      "side": 1,
+      "message": "Can you provide some more context (eg. repro steps and/or winscope)?\n\nThis CL seems reasonable but would like to understand a little better how we get into a situation where it is needed.",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "a6b5e9cc674cc21221a21a731150c67cf1249848",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
