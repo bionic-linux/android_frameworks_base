@@ -223,6 +223,13 @@ public final class NfcOemExtension {
         void onHceEventReceived(@HostCardEmulationAction int action);
 
         /**
+         * API to notify when reader option has been changed using
+         * {@link NfcAdapter#enableReaderOption(boolean)} by some app.
+         * @param enabled Flag indicating ReaderMode enabled/disabled
+         */
+        void onReaderOptionChanged(boolean enabled);
+
+        /**
         * Notifies NFC is activated in listen mode.
         * NFC Forum NCI-2.3 ch.5.2.6 specification
         *
@@ -488,8 +495,26 @@ public final class NfcOemExtension {
                     handleVoidCallback(action, cb::onHceEventReceived, ex));
         }
 
+        @Override
+        public void onReaderOptionChanged(boolean enabled) throws RemoteException {
+            handleVoidCallback(enabled, mCallback::onReaderOptionChanged);
+        }
+
         private <T> void handleVoidCallback(
                 T input, Consumer<T> callbackMethod, Executor executor) {
+            synchronized (mLock) {
+                final long identity = Binder.clearCallingIdentity();
+                try {
+                    executor.execute(() -> callbackMethod.accept(input));
+                } catch (RuntimeException ex) {
+                    throw ex;
+                } finally {
+                    Binder.restoreCallingIdentity(identity);
+                }
+            }
+        }
+
+        private <T> void handleVoidCallback(T input, Consumer<T> callbackMethod) {
             synchronized (mLock) {
                 final long identity = Binder.clearCallingIdentity();
                 try {
