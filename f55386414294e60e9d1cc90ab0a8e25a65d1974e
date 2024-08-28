@@ -1,0 +1,128 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af8668c7_afcaf9c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-08-28T22:25:28Z",
+      "side": 1,
+      "message": "w",
+      "revId": "f55386414294e60e9d1cc90ab0a8e25a65d1974e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd3b8803_7bf8b434",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-08-28T22:25:28Z",
+      "side": 1,
+      "message": "Can the method name be made to match the docs more closely?  Or the docs to the method?\n\n`onCardEmulationActivated` doesn\u0027t equate to `Notifies NFC is activated in listen mode.` to me (an uninformed consumer of the API).",
+      "range": {
+        "startLine": 230,
+        "startChar": 13,
+        "endLine": 230,
+        "endChar": 37
+      },
+      "revId": "f55386414294e60e9d1cc90ab0a8e25a65d1974e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c7876da_00d35736",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-08-28T22:25:28Z",
+      "side": 1,
+      "message": "`onRfFieldStateChanged(boolean isFieldActive)`?",
+      "range": {
+        "startLine": 237,
+        "startChar": 13,
+        "endLine": 237,
+        "endChar": 31
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "aded78bd_57144513",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 237,
+                "startChar": 0,
+                "endLine": 238,
+                "endChar": 0
+              },
+              "replacement": "        void onRfFieldStateChange(boolean isActivated);\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 301,
+                "startChar": 0,
+                "endLine": 302,
+                "endChar": 0
+              },
+              "replacement": "                callback.onRfFieldStateChange(mRfFieldActivated);\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 396,
+                "startChar": 0,
+                "endLine": 397,
+                "endChar": 0
+              },
+              "replacement": "        public void onRfFieldStateChange(boolean isActivated) throws RemoteException {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f55386414294e60e9d1cc90ab0a8e25a65d1974e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "268b64f9_9d58f44d",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-08-28T22:25:28Z",
+      "side": 1,
+      "message": "Does the receiver of this message expect to see:\n`onRfDiscoveryStarted(true)` and then `onRfDiscoveryStarted(false)` when the discovery is complete?\n\nWould a more clear name be `onRfDiscoveryStateChanged(boolean isDiscoveryActive)`?",
+      "range": {
+        "startLine": 244,
+        "startChar": 13,
+        "endLine": 244,
+        "endChar": 33
+      },
+      "revId": "f55386414294e60e9d1cc90ab0a8e25a65d1974e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
