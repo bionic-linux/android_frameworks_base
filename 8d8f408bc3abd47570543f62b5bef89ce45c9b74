@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f5a339c_80c39c12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1604644
+      },
+      "writtenOn": "2024-08-28T07:49:53Z",
+      "side": 1,
+      "message": "Hi, I have no permission to check the test report. Could you help to provide some info about the failure? Thanks.",
+      "revId": "8d8f408bc3abd47570543f62b5bef89ce45c9b74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
