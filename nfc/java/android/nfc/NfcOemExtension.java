@@ -223,6 +223,13 @@ public final class NfcOemExtension {
         void onHceEventReceived(@HostCardEmulationAction int action);
 
         /**
+<<<<<<< PATCH SET (5a58c2 OEM action when readerOptionChanged feature request)
+         * API to notify when reader option has been changed using
+         * {@link NfcAdapter#enableReaderOption(boolean)} by some app.
+         * @param enabled Flag indicating ReaderMode enabled/disabled
+         */
+        void onReaderOptionChanged(boolean enabled);
+=======
         * Notifies NFC is activated in listen mode.
         * NFC Forum NCI-2.3 ch.5.2.6 specification
         *
@@ -247,6 +254,7 @@ public final class NfcOemExtension {
         * @param isDiscoveryStarted true, if RF discovery started, else RF state is Idle.
         */
         void onRfDiscoveryStarted(boolean isDiscoveryStarted);
+>>>>>>> BASE      (9bf811 Merge "[Fix_format] log:overlay paths indent error" into mai)
     }
 
 
@@ -502,8 +510,17 @@ public final class NfcOemExtension {
             }
         }
 
+<<<<<<< PATCH SET (5a58c2 OEM action when readerOptionChanged feature request)
+        @Override
+        public void onReaderOptionChanged(boolean enabled) throws RemoteException {
+            handleVoidCallback(enabled, mCallback::onReaderOptionChanged);
+        }
+
+        private <T> void handleVoidCallback(T input, Consumer<T> callbackMethod) {
+=======
         private <T1, T2> void handleVoid2ArgCallback(
                 T1 input1, T2 input2, BiConsumer<T1, T2> callbackMethod, Executor executor) {
+>>>>>>> BASE      (9bf811 Merge "[Fix_format] log:overlay paths indent error" into mai)
             synchronized (mLock) {
                 final long identity = Binder.clearCallingIdentity();
                 try {

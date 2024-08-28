@@ -37,7 +37,11 @@ interface INfcOemExtensionCallback {
    void onTagDispatch(in ResultReceiver isSkipped);
    void onRoutingChanged();
    void onHceEventReceived(int action);
+<<<<<<< PATCH SET (5a58c2 OEM action when readerOptionChanged feature request)
+   void onReaderOptionChanged(boolean enabled);
+=======
    void onCardEmulationActivated(boolean isActivated);
    void onRfFieldActivated(boolean isActivated);
    void onRfDiscoveryStarted(boolean isDiscoveryStarted);
+>>>>>>> BASE      (9bf811 Merge "[Fix_format] log:overlay paths indent error" into mai)
 }
