@@ -33,6 +33,24 @@
       "message": "Hello, Thanks for the contribution. Could you elaborate on why you need this, preferably create a bug with the details and link it here?",
       "revId": "9f30b257400deef06fefb8c4e62b902d2222ac89",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02542dc1_f4676d9b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2034140
+      },
+      "writtenOn": "2024-08-28T20:43:56Z",
+      "side": 1,
+      "message": "@brup@google.com We need this change so that we can have thermal throttling transitions recorded on tracing when they happen.",
+      "parentUuid": "8ad5755e_48f22248",
+      "revId": "9f30b257400deef06fefb8c4e62b902d2222ac89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
