@@ -215,6 +215,16 @@ public final class NfcOemExtension {
          * @param action Flag indicating actions to activate, start and stop cpu boost.
          */
         void onHceEventReceived(@HostCardEmulationAction int action);
+
+        /**
+         * API which notify the reader option change
+         * to the classes implements it.
+         * case : NfcIcon needs to be dynamically change
+         * the icon on reader mode status change.
+         * pid : pid is for logging where it called
+         *       pid will be removed in later and logging will be leave on AOSP.
+         * */
+        void onReaderOptionChanged(boolean enabled);
     }
 
 
@@ -396,6 +406,10 @@ public final class NfcOemExtension {
         @Override
         public void onHceEventReceived(int action) throws RemoteException {
             handleVoidCallback(action, mCallback::onHceEventReceived);
+        }
+
+        public void onReaderOptionChanged(boolean enabled) throws RemoteException {
+            handleVoidCallback(enabled, mCallback::onReaderOptionChanged);
         }
 
         private <T> void handleVoidCallback(T input, Consumer<T> callbackMethod) {
