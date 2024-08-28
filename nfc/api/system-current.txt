@@ -81,6 +81,7 @@ package android.nfc {
     method public void onEnableStarted();
     method public void onHceEventReceived(int);
     method public void onNdefRead(@NonNull java.util.function.Consumer<java.lang.Boolean>);
+    method public void onReaderOptionChanged(boolean, int);
     method public void onRoutingChanged();
     method public void onStateUpdated(int);
     method public void onTagConnected(boolean, @NonNull android.nfc.Tag);

@@ -40,6 +40,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -215,6 +216,16 @@ public final class NfcOemExtension {
          * @param action Flag indicating actions to activate, start and stop cpu boost.
          */
         void onHceEventReceived(@HostCardEmulationAction int action);
+
+        /**
+         * API which notify the reader option change
+         * to the classes implements it.
+         * case : NfcIcon needs to be dynamically change
+         * the icon on reader mode status change.
+         * pid : pid is for logging where it called
+         *       pid will be removed in later and logging will be leave on AOSP.
+         * */
+        void onReaderOptionChanged(boolean enabled, int pid);
     }
 
 
@@ -398,6 +409,9 @@ public final class NfcOemExtension {
             handleVoidCallback(action, mCallback::onHceEventReceived);
         }
 
+        public void onReaderOptionChanged(boolean enabled, int pid) throws RemoteException {
+            handleVoidCallback(enabled, pid, mCallback::onReaderOptionChanged);
+        }
         private <T> void handleVoidCallback(T input, Consumer<T> callbackMethod) {
             synchronized (mLock) {
                 if (mCallback == null || mExecutor == null) {
@@ -406,6 +420,20 @@ public final class NfcOemExtension {
                 final long identity = Binder.clearCallingIdentity();
                 try {
                     mExecutor.execute(() -> callbackMethod.accept(input));
+                } finally {
+                    Binder.restoreCallingIdentity(identity);
+                }
+            }
+        }
+
+        private <S, T> void handleVoidCallback(S input, T input1, BiConsumer<S, T> callbackMethod) {
+            synchronized (mLock) {
+                if (mCallback == null || mExecutor == null) {
+                    return;
+                }
+                final long identity = Binder.clearCallingIdentity();
+                try {
+                    mExecutor.execute(() -> callbackMethod.accept(input, input1));
                 } finally {
                     Binder.restoreCallingIdentity(identity);
                 }

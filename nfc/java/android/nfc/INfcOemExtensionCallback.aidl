@@ -37,4 +37,5 @@ interface INfcOemExtensionCallback {
    void onTagDispatch(in ResultReceiver isSkipped);
    void onRoutingChanged();
    void onHceEventReceived(int action);
+   void onReaderOptionChanged(boolean enabled, int pid);
 }
