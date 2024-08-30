@@ -1609,7 +1609,8 @@ public class ThermalManagerService extends SystemService {
                         if (Flags.allowThermalHeadroomThresholds()) {
                             for (int severity = ThrottlingSeverity.LIGHT;
                                     severity <= ThrottlingSeverity.SHUTDOWN; severity++) {
-                                if (threshold.hotThrottlingThresholds.length > severity) {
+                                if (severity != ThrottlingSeverity.SEVERE
+                                        && threshold.hotThrottlingThresholds.length > severity) {
                                     updateHeadroomThreshold(severity,
                                             threshold.hotThrottlingThresholds[severity],
                                             severeThreshold);
