@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa966141_d9dad66a",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2024-08-30T22:37:16Z",
+      "side": 1,
+      "message": "The method docs updated",
+      "parentUuid": "dd3b8803_7bf8b434",
+      "range": {
+        "startLine": 230,
+        "startChar": 13,
+        "endLine": 230,
+        "endChar": 37
+      },
+      "revId": "f55386414294e60e9d1cc90ab0a8e25a65d1974e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c7876da_00d35736",
@@ -102,6 +126,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cfa1501_5190cf15",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2024-08-30T22:37:16Z",
+      "side": 1,
+      "message": "The method docs updated",
+      "parentUuid": "0c7876da_00d35736",
+      "range": {
+        "startLine": 237,
+        "startChar": 13,
+        "endLine": 237,
+        "endChar": 31
+      },
+      "revId": "f55386414294e60e9d1cc90ab0a8e25a65d1974e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "268b64f9_9d58f44d",
@@ -115,6 +163,30 @@
       "writtenOn": "2024-08-28T22:25:28Z",
       "side": 1,
       "message": "Does the receiver of this message expect to see:\n`onRfDiscoveryStarted(true)` and then `onRfDiscoveryStarted(false)` when the discovery is complete?\n\nWould a more clear name be `onRfDiscoveryStateChanged(boolean isDiscoveryActive)`?",
+      "range": {
+        "startLine": 244,
+        "startChar": 13,
+        "endLine": 244,
+        "endChar": 33
+      },
+      "revId": "f55386414294e60e9d1cc90ab0a8e25a65d1974e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "091603eb_6a3e8188",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2024-08-30T22:37:16Z",
+      "side": 1,
+      "message": "The method docs updated",
+      "parentUuid": "268b64f9_9d58f44d",
       "range": {
         "startLine": 244,
         "startChar": 13,
