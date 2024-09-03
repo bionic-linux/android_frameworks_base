@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16d7a2db_a9eb5a35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3474079
+      },
+      "writtenOn": "2024-09-03T08:13:39Z",
+      "side": 1,
+      "message": "@schfan@google.com  pls help rebuild presubmit-verified, I have no permission. thanks",
+      "revId": "c2a78460816b951bd99f6800fd9c114c31a588e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
