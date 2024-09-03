@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d280565_1be92317",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2024-09-03T20:46:31Z",
+      "side": 1,
+      "message": "been?",
+      "fixSuggestions": [
+        {
+          "fixId": "832d9d30_b642b3b2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 456,
+                "startChar": 0,
+                "endLine": 457,
+                "endChar": 0
+              },
+              "replacement": "     * @return true if feature is supported by the device and operation has been initiated,\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f44a4376fd53b85ebb3f0eb5a7a3458871e452d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
