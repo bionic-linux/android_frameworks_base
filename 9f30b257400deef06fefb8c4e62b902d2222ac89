@@ -85,6 +85,23 @@
       "message": "@xwxw@google.com can you help with reviewing this patch?",
       "revId": "9f30b257400deef06fefb8c4e62b902d2222ac89",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb299711_1c709b02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2034140
+      },
+      "writtenOn": "2024-09-03T20:14:30Z",
+      "side": 1,
+      "message": "@brup@google.com Can we submit this patch?",
+      "revId": "9f30b257400deef06fefb8c4e62b902d2222ac89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
