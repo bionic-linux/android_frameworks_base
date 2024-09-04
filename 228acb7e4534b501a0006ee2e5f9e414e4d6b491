@@ -33,6 +33,23 @@
       "message": "Thanks!",
       "revId": "228acb7e4534b501a0006ee2e5f9e414e4d6b491",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cd0c23f_32396bb3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2024-09-04T15:47:06Z",
+      "side": 1,
+      "message": "Hi @roosa@google.com, I think this CL needs your approval as Code-Owner for file `AconfigFlags.bp`, thanks!",
+      "revId": "228acb7e4534b501a0006ee2e5f9e414e4d6b491",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
