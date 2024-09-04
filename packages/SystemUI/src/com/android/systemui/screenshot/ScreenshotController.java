@@ -463,7 +463,9 @@ public class ScreenshotController {
         setWindowFocusable(true);
         mScreenshotView.requestFocus();
 
-        enqueueScrollCaptureRequest(screenshot.getUserHandle());
+        if (screenshot.getType() != WindowManager.TAKE_SCREENSHOT_PROVIDED_IMAGE) {
+            enqueueScrollCaptureRequest(screenshot.getUserHandle());
+        }
 
         attachWindow();
 
