@@ -88,6 +88,24 @@
       "parentUuid": "eae182c8_b1021116",
       "revId": "0791020afc4fe3a31575dee7d6f187d00a52214d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ede4afa6_78f8c346",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2037182
+      },
+      "writtenOn": "2024-09-04T08:52:59Z",
+      "side": 1,
+      "message": "@chinesco@google.com thanks for the update.",
+      "parentUuid": "b548d4a4_90073654",
+      "revId": "0791020afc4fe3a31575dee7d6f187d00a52214d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
