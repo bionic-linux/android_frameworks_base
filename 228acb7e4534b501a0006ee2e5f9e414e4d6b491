@@ -50,6 +50,23 @@
       "message": "Hi @roosa@google.com, I think this CL needs your approval as Code-Owner for file `AconfigFlags.bp`, thanks!",
       "revId": "228acb7e4534b501a0006ee2e5f9e414e4d6b491",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6deef8f2_97348c5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2024-09-05T16:12:25Z",
+      "side": 1,
+      "message": "Gentle ping: @roosa@google.com, need owner review to merge this",
+      "revId": "228acb7e4534b501a0006ee2e5f9e414e4d6b491",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
