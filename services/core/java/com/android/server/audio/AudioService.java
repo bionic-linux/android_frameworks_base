@@ -287,7 +287,7 @@ public class AudioService extends IAudioService.Stub
     private final MusicFxHelper mMusicFxHelper;
 
     /** Debug audio mode */
-    protected static final boolean DEBUG_MODE = false;
+    protected static final boolean DEBUG_MODE = true;
 
     /** Debug audio policy feature */
     protected static final boolean DEBUG_AP = false;
@@ -296,7 +296,7 @@ public class AudioService extends IAudioService.Stub
     protected static final boolean DEBUG_VOL = false;
 
     /** debug calls to devices APIs */
-    protected static final boolean DEBUG_DEVICES = false;
+    protected static final boolean DEBUG_DEVICES = true;
 
     /** Debug communication route */
     protected static final boolean DEBUG_COMM_RTE = false;
