@@ -16,6 +16,23 @@
       "message": "Hi Jing, Can you please review ?",
       "revId": "975bb2f3c667ee4762d10254321516b6c232bf4d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "938fcd9e_5f4e6b17",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1970380
+      },
+      "writtenOn": "2024-09-05T03:28:08Z",
+      "side": 1,
+      "message": "Gentle ping to review",
+      "revId": "975bb2f3c667ee4762d10254321516b6c232bf4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
