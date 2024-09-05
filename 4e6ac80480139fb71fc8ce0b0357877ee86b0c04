@@ -47,6 +47,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "14686e3b_c55fe2b4",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-05T16:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72cf90fd_0d8e9d70",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 68
+      },
+      "revId": "4e6ac80480139fb71fc8ce0b0357877ee86b0c04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ce8fc38_1a5a2746",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-05T16:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1a42955_f4ac1fe7",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 68
+      },
+      "revId": "4e6ac80480139fb71fc8ce0b0357877ee86b0c04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8cdb948_f7faeca9",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-09-05T16:40:24Z",
       "side": 1,
       "message": "Is this just ENABLE_ALWAYS_ON?",
+      "range": {
+        "startLine": 80,
+        "startChar": 28,
+        "endLine": 80,
+        "endChar": 42
+      },
+      "revId": "4e6ac80480139fb71fc8ce0b0357877ee86b0c04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e80251a3_da93a7e6",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-05T16:59:15Z",
+      "side": 1,
+      "message": "See comment below.",
+      "parentUuid": "a8cdb948_f7faeca9",
       "range": {
         "startLine": 80,
         "startChar": 28,
@@ -123,6 +195,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e6887481_b58593e8",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-05T16:59:15Z",
+      "side": 1,
+      "message": "These 3 states are different modes of the NFC controller being always on (when user turns of NFC) for non-user facing NFC operations. Some OEMs need to keep the NFC controller + secure element up  (`ENABLE_EE`), Some OEMs only want to keep the NFC controller up (`ENABLE_TRANSPARENT`). The `ENABLE_DEFAULT` \u0026 `DISABLE` is enum value that is used to retain behavior of existing NfcAdapter#setControllerAlwaysOn(boolean) API.",
+      "parentUuid": "6927aba8_dc9caf5e",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 42
+      },
+      "revId": "4e6ac80480139fb71fc8ce0b0357877ee86b0c04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4afa1957_2b3719f9",
         "filename": "nfc/java/android/nfc/NfcOemExtension.java",
         "patchSetId": 10
@@ -178,6 +274,30 @@
           ]
         }
       ],
+      "revId": "4e6ac80480139fb71fc8ce0b0357877ee86b0c04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "959cbe59_a78b490b",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-05T16:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4afa1957_2b3719f9",
+      "range": {
+        "startLine": 463,
+        "startChar": 11,
+        "endLine": 463,
+        "endChar": 66
+      },
       "revId": "4e6ac80480139fb71fc8ce0b0357877ee86b0c04",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
