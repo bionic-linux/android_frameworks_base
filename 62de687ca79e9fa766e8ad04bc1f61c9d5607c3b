@@ -22,6 +22,30 @@
       },
       "revId": "62de687ca79e9fa766e8ad04bc1f61c9d5607c3b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b0304cb_9e8a4abd",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-09-06T16:55:23Z",
+      "side": 1,
+      "message": "Oh, right. Yeah, I just checked by tracing the call hierarchy of `View#onTouchEvent`, and indeed we decide in `View#dispatchPointerEvent` whether to send a `MotionEvent` to `onTouchEvent` or `onGenericMotionEvent` based on the return value of `isTouchEvent`.\n\nLooking at the source of `MotionEvent::isTouchEvent`, it seems like it\u0027s more complex than splitting it by device — `HOVER_MOVE`s and `SCROLL`s aren\u0027t touch events, even though other mouse events are. That\u0027s a bit odd — anyone know what the rationale is there? I\u0027ve changed the description (here and in the method JavaDoc below) to reflect this, but maybe there\u0027s a more useful way of putting it than just saying \"oh, except hover and scroll\".",
+      "parentUuid": "9433e5c3_4ebe3306",
+      "range": {
+        "startLine": 331,
+        "startChar": 15,
+        "endLine": 331,
+        "endChar": 74
+      },
+      "revId": "62de687ca79e9fa766e8ad04bc1f61c9d5607c3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
