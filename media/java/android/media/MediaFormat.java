@@ -99,6 +99,7 @@ import java.util.stream.Collectors;
  *
  * Audio formats have the following keys:
  * <table>
+ * TODO DO NOT SUBMIT: Any change here?
  * <tr><th>Name</th><th>Value Type</th><th>Description</th></tr>
  * <tr><td>{@link #KEY_CHANNEL_COUNT}</td><td>Integer</td><td></td></tr>
  * <tr><td>{@link #KEY_SAMPLE_RATE}</td><td>Integer</td><td></td></tr>
@@ -258,6 +259,10 @@ public final class MediaFormat {
      * MIME type for the IEC61937 audio stream encapsulation. This type isn't defined by IANA.
      */
     public static final String MIMETYPE_AUDIO_IEC61937 = "audio/x-iec61937";
+    /**
+     *
+     */
+    public static final String MIMETYPE_AUDIO_IAMF = "audio/iamf";
 
     /**
      * MIME type for HEIF still image data encoded in HEVC.

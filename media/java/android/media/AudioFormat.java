@@ -293,6 +293,7 @@ public final class AudioFormat implements Parcelable {
     /** Audio data format: AAC HE V2 compressed */
     public static final int ENCODING_AAC_HE_V2 = 12;
 
+
     /** Audio data format: compressed audio wrapped in PCM for HDMI
      * or S/PDIF passthrough.
      * For devices whose SDK version is less than {@link android.os.Build.VERSION_CODES#S}, the
@@ -375,6 +376,8 @@ public final class AudioFormat implements Parcelable {
     public static final int ENCODING_DTS_UHD_P2 = 30;
     /** Audio data format: Direct Stream Digital */
     public static final int ENCODING_DSD = 31;
+    /** */
+    public static final int ENCODING_IAMF = 32;
 
     /** @hide */
     public static String toLogFriendlyEncoding(int enc) {
