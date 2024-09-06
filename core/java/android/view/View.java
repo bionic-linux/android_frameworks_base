@@ -328,7 +328,8 @@ import java.util.function.Predicate;
  *     </tr>
  *     <tr>
  *         <td><code>{@link #onTouchEvent(MotionEvent)}</code></td>
- *         <td>Called when a touch screen motion event occurs.
+ *         <td>Called when a pointer motion event occurs (except for hover and
+ *         scroll events).
  *         </td>
  *     </tr>
  *
@@ -16410,7 +16411,11 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     }
 
     /**
-     * Implement this method to handle touch screen motion events.
+     * Implement this method to handle pointer events.
+     * <p>
+     * Despite its name, this method is called for events from all pointer
+     * devices, such as touchscreens, styluses, touchpads, and mice. However, it
+     * is not called for hover-related motion events or scroll wheel actions.
      * <p>
      * If this method is used to detect click actions, it is recommended that
      * the actions be performed by implementing and calling
