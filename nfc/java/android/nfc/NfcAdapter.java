@@ -47,6 +47,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
@@ -78,6 +79,8 @@ import java.util.concurrent.Executor;
  */
 public final class NfcAdapter {
     static final String TAG = "NFC";
+
+    static final long NFC_WATCHDOG_TIMEOUT = 2000;
 
     private final NfcControllerAlwaysOnListener mControllerAlwaysOnListener;
     private final NfcWlcStateListener mNfcWlcStateListener;
@@ -576,6 +579,8 @@ public final class NfcAdapter {
     static INfcTag sTagService;
     static INfcCardEmulation sCardEmulationService;
     static INfcFCardEmulation sNfcFCardEmulationService;
+    static HandlerThread sWatchdogThread;
+    static Handler sWatchdogHandler;
 
     /**
      * The NfcAdapter object for each application context.
@@ -790,6 +795,11 @@ public final class NfcAdapter {
             }
             retrieveServiceRegisterer();
             sService = getServiceInterface();
+            if (android.nfc.Flags.nfcWatchdog()) {
+                sWatchdogThread = new HandlerThread("NfcWatchdog");
+                sWatchdogThread.start();
+                sWatchdogHandler = Handler.createAsync(sWatchdogThread.getLooper());
+            }
             if (sService == null) {
                 Log.e(TAG, "could not retrieve NFC service");
                 throw new UnsupportedOperationException();
@@ -2538,40 +2548,87 @@ public final class NfcAdapter {
     interface ServiceCall {
         void call() throws RemoteException;
     }
+
+    /** @hide */
+    static class WatchdogRunnable implements Runnable {
+        static final String WATCHDOG_TAG = "NfcAdapterWatchdog";
+        @Override
+        public void run() {
+            Log.i(WATCHDOG_TAG, "Call to NFC Service timed out, killing NFC process");
+            try {
+                sService.killProcess();
+            } catch (RemoteException re) {
+                attemptDeadServiceRecovery(re);
+            }
+        }
+    }
+
     /** @hide */
     static void callService(ServiceCall call) {
+        WatchdogRunnable watchdog = sWatchdogHandler == null ? null : new WatchdogRunnable();
         try {
             if (sService == null) {
                 attemptDeadServiceRecovery(new RemoteException("NFC Service is null"));
             }
+            if (sWatchdogHandler != null) {
+                sWatchdogHandler.postDelayed(watchdog, NFC_WATCHDOG_TIMEOUT);
+            }
             call.call();
         } catch (RemoteException e) {
+            if (sWatchdogHandler != null) {
+                sWatchdogHandler.removeCallbacks(watchdog);
+            }
             attemptDeadServiceRecovery(e);
             try {
+                if (sWatchdogHandler != null) {
+                    sWatchdogHandler.postDelayed(watchdog, NFC_WATCHDOG_TIMEOUT);
+                }
                 call.call();
             } catch (RemoteException ee) {
                 ee.rethrowAsRuntimeException();
             }
         }
+        if (sWatchdogHandler != null) {
+            sWatchdogHandler.removeCallbacks(watchdog);
+        }
     }
+
     /** @hide */
     interface ServiceCallReturn<T> {
         T call() throws RemoteException;
     }
+
     /** @hide */
     static <T> T callServiceReturn(ServiceCallReturn<T> call, T defaultReturn) {
+        WatchdogRunnable watchdog = sWatchdogHandler == null ? null : new WatchdogRunnable();
         try {
             if (sService == null) {
                 attemptDeadServiceRecovery(new RemoteException("NFC Service is null"));
             }
+            if (sWatchdogHandler != null) {
+                sWatchdogHandler.postDelayed(watchdog, NFC_WATCHDOG_TIMEOUT);
+            }
             return call.call();
         } catch (RemoteException e) {
+            if (sWatchdogHandler != null) {
+                sWatchdogHandler.removeCallbacks(watchdog);
+            }
             attemptDeadServiceRecovery(e);
             // Try one more time
             try {
+                if (sWatchdogHandler != null) {
+                    sWatchdogHandler.postDelayed(watchdog, NFC_WATCHDOG_TIMEOUT);
+                }
                 return call.call();
             } catch (RemoteException ee) {
+                if (sWatchdogHandler != null) {
+                    sWatchdogHandler.removeCallbacks(watchdog);
+                }
                 ee.rethrowAsRuntimeException();
+            }
+        } finally {
+            if (sWatchdogHandler != null) {
+                sWatchdogHandler.removeCallbacks(watchdog);
             }
         }
         return defaultReturn;

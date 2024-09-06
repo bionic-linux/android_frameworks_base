@@ -114,4 +114,5 @@ interface INfcAdapter
     void setScreenState();
     void checkFirmware();
     List<String> fetchActiveNfceeList();
+    oneway void killProcess();
 }
