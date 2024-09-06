@@ -67,6 +67,23 @@
       "message": "Gentle ping: @roosa@google.com, need owner review to merge this",
       "revId": "228acb7e4534b501a0006ee2e5f9e414e4d6b491",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e36dd74_9511bc98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2024-09-06T21:00:57Z",
+      "side": 1,
+      "message": "Since Adrian is OOO, adding @joeo@google.com and @lamontjones@google.com to unblocking this upstream CL, thanks!",
+      "revId": "228acb7e4534b501a0006ee2e5f9e414e4d6b491",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
