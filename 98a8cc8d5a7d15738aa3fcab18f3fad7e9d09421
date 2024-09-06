@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "30fe98ef_7e8a1267",
+        "filename": "nfc/java/android/nfc/INfcAdapter.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2024-09-06T18:49:43Z",
+      "side": 1,
+      "message": "Oh. I didn\u0027t realize this is open to everyone. That seems a little unsafe?",
+      "revId": "98a8cc8d5a7d15738aa3fcab18f3fad7e9d09421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f1f0c0bf_56b1b69c",
         "filename": "nfc/java/android/nfc/NfcAdapter.java",
         "patchSetId": 1
