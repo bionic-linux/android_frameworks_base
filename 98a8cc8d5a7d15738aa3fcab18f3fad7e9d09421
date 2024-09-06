@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "490925aa_0a09ea40",
+        "filename": "nfc/java/android/nfc/INfcAdapter.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2024-09-06T18:48:56Z",
+      "side": 1,
+      "message": "`die()` or perhaps `exit()`?",
+      "revId": "98a8cc8d5a7d15738aa3fcab18f3fad7e9d09421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1f0c0bf_56b1b69c",
+        "filename": "nfc/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2567,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2024-09-06T18:48:56Z",
+      "side": 1,
+      "message": "Hey, cleaning this up a while back enabled a new feature! Yay tech debt elimination!",
+      "revId": "98a8cc8d5a7d15738aa3fcab18f3fad7e9d09421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0667149c_421382f8",
+        "filename": "nfc/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2588,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2024-09-06T18:48:56Z",
+      "side": 1,
+      "message": "Need to `removeCallbacks()` here too. It seems a little nicer to have a call on `WatchdogRunnable` for this.",
+      "revId": "98a8cc8d5a7d15738aa3fcab18f3fad7e9d09421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
