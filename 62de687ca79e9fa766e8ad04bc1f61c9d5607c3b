@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9433e5c3_4ebe3306",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2024-09-06T15:04:39Z",
+      "side": 1,
+      "message": "I think it\u0027s actually for most pointer events, right? That should include mice, styluses, etc.\n\nFrom what I remember, \"touch event\" is defined here: https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:frameworks/native/libs/input/Input.cpp;l\u003d946;drc\u003d71c6f73ada569787a7064af4ea2a4c01adb75a85",
+      "range": {
+        "startLine": 331,
+        "startChar": 15,
+        "endLine": 331,
+        "endChar": 74
+      },
+      "revId": "62de687ca79e9fa766e8ad04bc1f61c9d5607c3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
