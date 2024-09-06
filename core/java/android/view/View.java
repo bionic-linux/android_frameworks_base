@@ -328,7 +328,7 @@ import java.util.function.Predicate;
  *     </tr>
  *     <tr>
  *         <td><code>{@link #onTouchEvent(MotionEvent)}</code></td>
- *         <td>Called when a touch screen motion event occurs.
+ *         <td>Called when a touch screen or touchpad motion event occurs.
  *         </td>
  *     </tr>
  *
@@ -16410,7 +16410,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     }
 
     /**
-     * Implement this method to handle touch screen motion events.
+     * Implement this method to handle touch screen and touchpad motion events.
      * <p>
      * If this method is used to detect click actions, it is recommended that
      * the actions be performed by implementing and calling
