@@ -46,6 +46,30 @@
       },
       "revId": "62de687ca79e9fa766e8ad04bc1f61c9d5607c3b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43ce7be9_ce55d3a7",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2024-09-06T17:28:17Z",
+      "side": 1,
+      "message": "I think this is saying \"touch\" from a UI/UX perspective. Touching using a touchscreen is essentially the same as touching with a stylus and clicking (with button held) for mouse and touchpad. Hovering doesn\u0027t have the same UX implications as touch, so it\u0027s dispatched in a separate path.\n\nInstead of adding the exceptions in the docs, maybe we can ask some of the technical writers to improve this to convey more of the philosophy behind the API design?",
+      "parentUuid": "6b0304cb_9e8a4abd",
+      "range": {
+        "startLine": 331,
+        "startChar": 15,
+        "endLine": 331,
+        "endChar": 74
+      },
+      "revId": "62de687ca79e9fa766e8ad04bc1f61c9d5607c3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
