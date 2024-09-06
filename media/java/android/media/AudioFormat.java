@@ -375,6 +375,8 @@ public final class AudioFormat implements Parcelable {
     public static final int ENCODING_DTS_UHD_P2 = 30;
     /** Audio data format: Direct Stream Digital */
     public static final int ENCODING_DSD = 31;
+    /** */
+    public static final int ENCODING_IAMF = 32;
 
     /** @hide */
     public static String toLogFriendlyEncoding(int enc) {
