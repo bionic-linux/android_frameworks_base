@@ -70,6 +70,23 @@
       "parentUuid": "ce90b0ec_3217a4d7",
       "revId": "3d3a088d6d1fb11d8a45208d704612d169318774",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c217fd10_ed3f1573",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1688644
+      },
+      "writtenOn": "2024-09-08T13:34:02Z",
+      "side": 1,
+      "message": "I AM SORRY FOR BEING ANGRY, BUT IS SOMEBODY COMPETENT HERE?!\n\nI asked for only 1 line in code. I have completed CLDR to the required level. On 2024-07-30 I received promise, that it will be added with other languages. Now Android 15 has been released and nothing has been done.",
+      "revId": "3d3a088d6d1fb11d8a45208d704612d169318774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
