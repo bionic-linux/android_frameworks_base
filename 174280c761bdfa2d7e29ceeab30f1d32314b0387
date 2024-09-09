@@ -1,0 +1,28 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4fc2cde_ead615dd",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-09-09T10:57:30Z",
+      "side": 1,
+      "message": "Ah, I see, that makes more sense to me. I\u0027ve changed the description here and my doc comment below; PTAL. (Getting some technical writer input might be a good idea, but I\u0027d like to at least get some improved wording out in the meantime.)",
+      "parentUuid": "43ce7be9_ce55d3a7",
+      "range": {
+        "startLine": 331,
+        "startChar": 15,
+        "endLine": 331,
+        "endChar": 74
+      },
+      "revId": "174280c761bdfa2d7e29ceeab30f1d32314b0387",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
