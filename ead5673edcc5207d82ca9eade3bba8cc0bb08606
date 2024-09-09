@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "316d0291_345af32c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-09T18:00:24Z",
+      "side": 1,
+      "message": "Addressed the comments. PTAL, Thanks!",
+      "revId": "ead5673edcc5207d82ca9eade3bba8cc0bb08606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae28686a_def89c1f",
@@ -14,6 +31,30 @@
       "writtenOn": "2024-09-09T10:17:23Z",
       "side": 1,
       "message": "Where\u0027s the false case?",
+      "range": {
+        "startLine": 2341,
+        "startChar": 6,
+        "endLine": 2341,
+        "endChar": 59
+      },
+      "revId": "ead5673edcc5207d82ca9eade3bba8cc0bb08606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc15fb85_c7ecb5bd",
+        "filename": "nfc/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2341,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-09T18:00:24Z",
+      "side": 1,
+      "message": "Done. Added a mechanism to preserve backwards compatibility with existing API.",
+      "parentUuid": "ae28686a_def89c1f",
       "range": {
         "startLine": 2341,
         "startChar": 6,
@@ -61,6 +102,30 @@
           ]
         }
       ],
+      "revId": "ead5673edcc5207d82ca9eade3bba8cc0bb08606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb6cb752_c5ef7c70",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-09T18:00:24Z",
+      "side": 1,
+      "message": "Removed now.",
+      "parentUuid": "4716ab92_642c3995",
+      "range": {
+        "startLine": 446,
+        "startChar": 6,
+        "endLine": 450,
+        "endChar": 17
+      },
       "revId": "ead5673edcc5207d82ca9eade3bba8cc0bb08606",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }

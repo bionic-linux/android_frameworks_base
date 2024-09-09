@@ -142,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d1840fd_6402018d",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-09T18:00:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e80251a3_da93a7e6",
+      "range": {
+        "startLine": 80,
+        "startChar": 28,
+        "endLine": 80,
+        "endChar": 42
+      },
+      "revId": "4e6ac80480139fb71fc8ce0b0357877ee86b0c04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6927aba8_dc9caf5e",
@@ -231,6 +255,30 @@
       "side": 1,
       "message": "ENABLE_DEFAULT also enables EE and keeps the SWP line. is it the same as ENABLE_EE?",
       "parentUuid": "e6887481_b58593e8",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 42
+      },
+      "revId": "4e6ac80480139fb71fc8ce0b0357877ee86b0c04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06ddb154_b8d3162c",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-09T18:00:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "955e988d_7d4950cc",
       "range": {
         "startLine": 89,
         "startChar": 0,
