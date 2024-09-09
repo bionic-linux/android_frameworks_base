@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b4aad81_d8e71781",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1347262
+      },
+      "writtenOn": "2024-09-09T11:16:59Z",
+      "side": 1,
+      "message": "This is handled in NotificationAttentionHelper#loadUserSettings - as there are some extra steps needed. \n\nThe LED setting has been fixed: https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/notification/NotificationAttentionHelper.java;drc\u003da47fef1a82a4f08bf8936484e0040125b82763a2;l\u003d316",
+      "revId": "e4572387993815c811329c631b2b4f629253f9b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
