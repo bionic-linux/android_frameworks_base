@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ae28686a_def89c1f",
+        "filename": "nfc/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2341,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-09-09T10:17:23Z",
+      "side": 1,
+      "message": "Where\u0027s the false case?",
+      "range": {
+        "startLine": 2341,
+        "startChar": 6,
+        "endLine": 2341,
+        "endChar": 59
+      },
+      "revId": "ead5673edcc5207d82ca9eade3bba8cc0bb08606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4716ab92_642c3995",
         "filename": "nfc/java/android/nfc/NfcOemExtension.java",
         "patchSetId": 12
