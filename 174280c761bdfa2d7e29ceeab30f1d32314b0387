@@ -23,6 +23,30 @@
       },
       "revId": "174280c761bdfa2d7e29ceeab30f1d32314b0387",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e17e7e6_a82be149",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2024-09-09T15:33:25Z",
+      "side": 1,
+      "message": "The updated version LGTM! Thanks",
+      "parentUuid": "c4fc2cde_ead615dd",
+      "range": {
+        "startLine": 331,
+        "startChar": 15,
+        "endLine": 331,
+        "endChar": 74
+      },
+      "revId": "174280c761bdfa2d7e29ceeab30f1d32314b0387",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
