@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "70dffe7d_36db69bc",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2336,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-09-09T17:38:43Z",
+      "side": 1,
+      "message": "That\u0027s a good question. I used -1 following the native implementation of installd, where the invalid value is also -1 (since aosp/316445). Technically the inode should be an unsigned int, and the invalid value should be just 0. I will make a follow up change when I get a chance, but for now having this CL seems fine.",
+      "parentUuid": "556f4ee4_d2cb71ce",
+      "revId": "b9e41793e3fcd7ccb4a0635ac371672e7a1e304b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dbd1282d_a8707603",
