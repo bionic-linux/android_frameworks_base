@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbd1282d_a8707603",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2337,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-09-09T15:37:37Z",
+      "side": 1,
+      "message": "\" or the app has been uninstalled with keep-data\"",
+      "range": {
+        "startLine": 2337,
+        "startChar": 68,
+        "endLine": 2337,
+        "endChar": 69
+      },
+      "revId": "b9e41793e3fcd7ccb4a0635ac371672e7a1e304b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
