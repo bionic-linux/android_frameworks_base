@@ -291,6 +291,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "853ccf1a_5ddf1705",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 3031218
+      },
+      "writtenOn": "2024-09-10T05:55:59Z",
+      "side": 1,
+      "message": "ENABLE_DEFAULT and ENABLE_EE is not same.\nENABLE_DEFAULT is Similar to NFC ON will enable full functionality. \n\nENABLE_EE will enable only partial functionality. because if you see the system/nfc where for NFA_Partial_Init ENABLE_EE  with  we do nfa_sys_init(); nfa_dm_init(); nfa_ee_init(), here we avoid   nfa_rw_init(); -\u003e reader/writer subsystem nfa_ce_init()-\u003e card emulation subsystem also  nfa_wlc_init()\nthese functionalities is not required in ENABLE_EE  mode.\n\nSo we should add the states back please review this comment we will update all patches accordingly",
+      "parentUuid": "06ddb154_b8d3162c",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 42
+      },
+      "revId": "4e6ac80480139fb71fc8ce0b0357877ee86b0c04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4afa1957_2b3719f9",
         "filename": "nfc/java/android/nfc/NfcOemExtension.java",
         "patchSetId": 10
