@@ -16,6 +16,29 @@
       "message": "Hi, Alec. I found a better solution and have updated the code, please review it!",
       "revId": "c4884a81b2961d54d59bc3f5255b6d894b65f98e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be9cd88a_a4b596c0",
+        "filename": "core/java/android/view/ViewGroup.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1587,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2024-09-10T15:37:05Z",
+      "side": 1,
+      "message": "don\u0027t bypass the ViewParent interface and also should only do this if the child is becoming VISIBLE.\n\nSo instead do this:\n\n```\nif (newVisibility \u003d\u003d VISIBLE \u0026\u0026 mParent !\u003d null\n      \u0026\u0026 (mPrivateFlags \u0026 View.PFLAG_REQUEST_TRANSPARENT_REGIONS) !\u003d 0) {\n   mParent.requestTransparentRegion(this);\n}\n```",
+      "range": {
+        "startLine": 1582,
+        "startChar": 0,
+        "endLine": 1587,
+        "endChar": 9
+      },
+      "revId": "c4884a81b2961d54d59bc3f5255b6d894b65f98e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
