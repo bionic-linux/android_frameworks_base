@@ -315,6 +315,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8ca9173f_0d6242e2",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2024-09-11T10:36:47Z",
+      "side": 1,
+      "message": "ENABLE_DEFAULT tries to send setNfceePowerAndLinkCtrl. after configuring this setting to nfc controller, RF related functionalities are not used like ce or rw or wlc.",
+      "parentUuid": "853ccf1a_5ddf1705",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 42
+      },
+      "revId": "4e6ac80480139fb71fc8ce0b0357877ee86b0c04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4afa1957_2b3719f9",
         "filename": "nfc/java/android/nfc/NfcOemExtension.java",
         "patchSetId": 10
