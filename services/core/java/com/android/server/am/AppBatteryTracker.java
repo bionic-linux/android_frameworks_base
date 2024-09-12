@@ -832,6 +832,7 @@ final class AppBatteryTracker extends BaseAppStateTracker<AppBatteryPolicy>
             latch.await();
         } catch (InterruptedException e) {
         }
+        SparseArray<ImmutableBatteryUsage> uidConsumers;
         synchronized (mLock) {
             final SparseArray<ImmutableBatteryUsage> uidConsumers = mUidBatteryUsageInWindow;
             pw.print("  " + prefix);
@@ -840,37 +841,41 @@ final class AppBatteryTracker extends BaseAppStateTracker<AppBatteryPolicy>
             pw.println();
             pw.print("  " + prefix);
             pw.print("Battery usage over last ");
-            final String newPrefix = "    " + prefix;
-            final AppBatteryPolicy bgPolicy = mInjector.getPolicy();
-            final long now = SystemClock.elapsedRealtime();
-            final long since = Math.max(0, now - bgPolicy.mBgCurrentDrainWindowMs);
-            pw.println(TimeUtils.formatDuration(now - since));
-            if (uidConsumers.size() == 0) {
-                pw.print(newPrefix);
-                pw.println("(none)");
-            } else {
-                for (int i = 0, size = uidConsumers.size(); i < size; i++) {
-                    final int uid = uidConsumers.keyAt(i);
-                    final BatteryUsage bgUsage = uidConsumers.valueAt(i)
-                            .calcPercentage(uid, bgPolicy);
-                    final BatteryUsage exemptedUsage = mAppRestrictionController
-                            .getUidBatteryExemptedUsageSince(uid, since, now,
-                                    bgPolicy.mBgCurrentDrainExemptedTypes)
-                            .calcPercentage(uid, bgPolicy);
-                    final BatteryUsage reportedUsage = new BatteryUsage(bgUsage)
-                            .subtract(exemptedUsage)
-                            .calcPercentage(uid, bgPolicy);
-                    pw.format("%s%s: [%s] %s (%s) | %s (%s) | %s (%s) | %s\n",
-                            newPrefix, UserHandle.formatUid(uid),
-                            PowerExemptionManager.reasonCodeToString(bgPolicy.shouldExemptUid(uid)),
-                            bgUsage.toString(),
-                            bgUsage.percentageToString(),
-                            exemptedUsage.toString(),
-                            exemptedUsage.percentageToString(),
-                            reportedUsage.toString(),
-                            reportedUsage.percentageToString(),
-                            mUidBatteryUsage.get(uid, BATTERY_USAGE_NONE).toString());
+        }
+        final String newPrefix = "    " + prefix;
+        final AppBatteryPolicy bgPolicy = mInjector.getPolicy();
+        final long now = SystemClock.elapsedRealtime();
+        final long since = Math.max(0, now - bgPolicy.mBgCurrentDrainWindowMs);
+        pw.println(TimeUtils.formatDuration(now - since));
+        if (uidConsumers.size() == 0) {
+            pw.print(newPrefix);
+            pw.println("(none)");
+        } else {
+            for (int i = 0, size = uidConsumers.size(); i < size; i++) {
+                final int uid = uidConsumers.keyAt(i);
+                final BatteryUsage bgUsage = uidConsumers.valueAt(i)
+                        .calcPercentage(uid, bgPolicy);
+                final BatteryUsage exemptedUsage = mAppRestrictionController
+                        .getUidBatteryExemptedUsageSince(uid, since, now,
+                                bgPolicy.mBgCurrentDrainExemptedTypes)
+                        .calcPercentage(uid, bgPolicy);
+                final BatteryUsage reportedUsage = new BatteryUsage(bgUsage)
+                        .subtract(exemptedUsage)
+                        .calcPercentage(uid, bgPolicy);
+                BatteryUsage mBatteryUsage;
+                synchronized (mLock) {
+                    mBatteryUsage = mUidBatteryUsage.get(uid, BATTERY_USAGE_NONE);
                 }
+                pw.format("%s%s: [%s] %s (%s) | %s (%s) | %s (%s) | %s\n",
+                        newPrefix, UserHandle.formatUid(uid),
+                        PowerExemptionManager.reasonCodeToString(bgPolicy.shouldExemptUid(uid)),
+                        bgUsage.toString(),
+                        bgUsage.percentageToString(),
+                        exemptedUsage.toString(),
+                        exemptedUsage.percentageToString(),
+                        reportedUsage.toString(),
+                        reportedUsage.percentageToString(),
+                        mBatteryUsage.toString());
             }
         }
         super.dump(pw, prefix);
