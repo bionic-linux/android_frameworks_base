@@ -18,12 +18,7 @@
       "name": "CtsCompilationTestCases"
     },
     {
-      "name": "CtsAppEnumerationTestCases",
-      "options": [
-        {
-          "exclude-annotation": "androidx.test.filters.LargeTest"
-        }
-      ]
+      "name": "CtsAppEnumerationTestCases_android_server_pm"
     },
     {
       "name": "CtsMatchFlagTestCases"
@@ -33,12 +28,7 @@
     },
     {
       "file_patterns": ["(/|^)PackageManagerService\\.java","(/|^)UserManagerService\\.java"],
-      "name": "CtsAppCloningDeviceTestCases",
-      "options": [
-        {
-          "exclude-annotation": "androidx.test.filters.FlakyTest"
-        }
-      ]
+      "name": "CtsAppCloningDeviceTestCases"
     },
     {
       "name": "CtsShortcutHostTestCases",
@@ -67,29 +57,14 @@
       ]
     },
     {
-      "name": "PackageManagerServiceHostTests",
-      "options": [
-        {
-          "include-annotation": "android.platform.test.annotations.Presubmit"
-        }
-      ]
+      "name": "PackageManagerServiceHostTests_android_server_pm_Presubmit"
     },
     {
-      "name": "PackageManagerServiceHostTests",
-      "file_patterns": ["AppsFilter\\.java"],
-      "options": [
-        {
-          "include-filter": "com.android.server.pm.test.OverlayActorVisibilityTest"
-        }
-      ]
+      "name": "PackageManagerServiceHostTests_test_overlayactorvisibilitytest",
+      "file_patterns": ["AppsFilter\\.java"]
     },
     {
-      "name": "CtsSharedUserMigrationTestCases",
-      "options": [
-        {
-          "include-filter": "android.uidmigration.cts"
-        }
-      ]
+      "name": "CtsSharedUserMigrationTestCases_uidmigration_cts"
     },
     {
       "name": "CtsInstantAppsHostTestCases",
@@ -149,12 +124,7 @@
         "services/core/java/com/android/server/pm/parsing/.*",
         "services/core/java/com/android/server/pm/pkg/parsing/.*"
       ],
-      "name": "SdkSandboxManagerServiceUnitTests",
-      "options": [
-        {
-          "exclude-annotation": "androidx.test.filters.FlakyTest"
-        }
-      ]
+      "name": "SdkSandboxManagerServiceUnitTests"
     }
   ],
   "imports": [

@@ -1,12 +1,7 @@
 {
   "postsubmit": [
     {
-      "name": "FrameworksMockingServicesTests",
-      "options": [
-        {
-          "include-filter": "com.android.server.RescuePartyTest"
-        }
-      ]
+      "name": "FrameworksMockingServicesTests_android_server_crashrecovery"
     }
   ]
 }

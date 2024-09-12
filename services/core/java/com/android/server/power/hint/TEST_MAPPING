@@ -1,25 +1,12 @@
 {
   "presubmit": [
     {
-      "name": "FrameworksServicesTests",
-      "options": [
-        {
-          "include-filter": "com.android.server.power.hint"
-        },
-        {
-          "exclude-annotation": "androidx.test.filters.FlakyTest"
-        }
-      ]
+      "name": "FrameworksServicesTests_android_server_power_hint"
     }
   ],
   "postsubmit": [
     {
-      "name": "CtsStatsdAtomHostTestCases",
-      "options": [
-        {"exclude-annotation": "androidx.test.filters.FlakyTest"},
-        {"exclude-annotation": "org.junit.Ignore"},
-        {"include-filter": "android.cts.statsdatom.performancehintmanager"}
-      ],
+      "name": "CtsStatsdAtomHostTestCases_statsdatom_performancehintmanager",
       "file_patterns": [
         "(/|^)HintManagerService.java"
       ]
