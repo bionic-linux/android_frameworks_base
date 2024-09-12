@@ -16,6 +16,23 @@
       "message": "Need to fix the copyright header checks. Will either inject directly, or possibly rename the golden srcs to use a `.java.gen` suffix.",
       "revId": "7cf046d294d5043dd8b9a86be6a3a4f11fa2b646",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9f58e62_c98fdea2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1757736
+      },
+      "writtenOn": "2024-09-12T19:02:46Z",
+      "side": 1,
+      "message": "LGTM, not sure how/if the copyright header lint checks should be resolved though.",
+      "revId": "7cf046d294d5043dd8b9a86be6a3a4f11fa2b646",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
