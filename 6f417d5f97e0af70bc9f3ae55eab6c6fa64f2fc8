@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "325cc7d3_9ac70742",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-09-12T14:10:02Z",
+      "side": 1,
+      "message": "I\u0027m not awfully familiar with `PhoneWindowManager`, so since both Evan and Yunfan are OWNERS of it as well, I\u0027ll leave this to them.",
+      "revId": "6f417d5f97e0af70bc9f3ae55eab6c6fa64f2fc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
