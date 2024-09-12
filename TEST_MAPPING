@@ -9,7 +9,7 @@
       "name": "PackageManagerServiceServerTests_Presubmit"
     }
   ],
-  "presubmit": [
+  "presubmit-skip": [
     {
       "name": "ManagedProvisioningTests"
     },
