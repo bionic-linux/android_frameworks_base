@@ -16,6 +16,23 @@
       "message": "Please help review,thx!",
       "revId": "ed14dc8584509434c3d7032971efb14e12996ece",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9414b9b7_c944f3f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-09-12T16:28:10Z",
+      "side": 1,
+      "message": "Thanks for reporting the issue and providing a patch to fix it.\n\nIt\u0027s likely that this will be overlooked in the future. Additionally, I don\u0027t think it\u0027s necessary to guard the profile owner details with the `ActivityManagerService` lock. Could you instead update `ActivityManagerService.setProfileOwnerUid()` and `ActivityManagerService.isProfileOwner()` to use `mProfileOwnerUids` as the lock ()? While you are making changes to that, if you could also update `ActivityManagerService.setCompanionAppUids()` and `ActivityManagerService.isAssociatedCompanionApp()` to use `mCompanionAppUidsMap` as the lock, that\u0027d be great.",
+      "revId": "ed14dc8584509434c3d7032971efb14e12996ece",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
