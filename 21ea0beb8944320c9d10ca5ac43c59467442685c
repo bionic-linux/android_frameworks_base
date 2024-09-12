@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4f8e9d8_d6e5a3ab",
+        "filename": "nfc/java/android/nfc/INfcAdapter.aidl",
+        "patchSetId": 14
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-12T21:26:25Z",
+      "side": 1,
+      "message": "this was made a void in the previous revision. We are sending an exception instead in the NfcService implementation.",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 11
+      },
+      "revId": "21ea0beb8944320c9d10ca5ac43c59467442685c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
