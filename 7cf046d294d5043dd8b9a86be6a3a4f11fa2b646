@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ccfa500_c414a550",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-09-12T18:57:52Z",
+      "side": 1,
+      "message": "Need to fix the copyright header checks. Will either inject directly, or possibly rename the golden srcs to use a `.java.gen` suffix.",
+      "revId": "7cf046d294d5043dd8b9a86be6a3a4f11fa2b646",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
