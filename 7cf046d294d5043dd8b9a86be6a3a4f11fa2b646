@@ -33,6 +33,24 @@
       "message": "LGTM, not sure how/if the copyright header lint checks should be resolved though.",
       "revId": "7cf046d294d5043dd8b9a86be6a3a4f11fa2b646",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff1e98e1_fc88b25f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-09-12T22:07:57Z",
+      "side": 1,
+      "message": "Updated to use an intermediate genrule that does the suffix rename, this nicely avoids the test-specific lint checks for copyright but retains the same behavior. PTAL, thanks!",
+      "parentUuid": "8ccfa500_c414a550",
+      "revId": "7cf046d294d5043dd8b9a86be6a3a4f11fa2b646",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
