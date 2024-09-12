@@ -19604,32 +19604,34 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         @Override
         public void setProfileOwnerUid(ArraySet<Integer> profileOwnerUids) {
-            synchronized (ActivityManagerService.this) {
+            synchronized (mProfileOwnerUids) {
                 mProfileOwnerUids = profileOwnerUids;
             }
         }
 
         @Override
         public boolean isProfileOwner(int uid) {
-            synchronized (ActivityManagerService.this) {
+            synchronized (mProfileOwnerUids) {
                 return mProfileOwnerUids != null && mProfileOwnerUids.indexOf(uid) >= 0;
             }
         }
 
         @Override
         public void setCompanionAppUids(int userId, Set<Integer> companionAppUids) {
-            synchronized (ActivityManagerService.this) {
+            synchronized (mCompanionAppUidsMap) {
                 mCompanionAppUidsMap.put(userId, companionAppUids);
             }
         }
 
         @Override
         public boolean isAssociatedCompanionApp(int userId, int uid) {
-            final Set<Integer> allUids = mCompanionAppUidsMap.get(userId);
-            if (allUids == null) {
-                return false;
+            synchronized (mCompanionAppUidsMap) {
+                final Set<Integer> allUids = mCompanionAppUidsMap.get(userId);
+                if (allUids == null) {
+                    return false;
+                }
+                return allUids.contains(uid);
             }
-            return allUids.contains(uid);
         }
 
         @Override
