@@ -337,6 +337,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b959e46_1564af35",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 3031218
+      },
+      "writtenOn": "2024-09-13T08:30:17Z",
+      "side": 1,
+      "message": "ENABLE_DEFAULT mode will not support full functionality of NFC. It opens transport and enables EE. RF features are not supported. It is similar to legacy setControllerAlwaysOn API.\n\n\nENABLE_DEFAULT and ENABLE_EE are also different and explained each scenario\u0027s below.\n1. setControllerAlwaysOn(true)-\u003e opens transport, Nfcee discover command and mode set enable sent for EE. (Legacy API)\n\n2. setControllerAlwaysOn(ENABLE_DEFAULT) -\u003e opens transport, Nfcee discover command and mode set enable sent for EE (setNfceePowerAndLinkCtrl).\n\n3. setControllerAlwaysOn(ENABLE_EE) -\u003e opens transport and Nfcee discover command sent.\n\n4. setControllerAlwaysOn(ENABLE_TRANSPARENT) -\u003e opens only transport.",
+      "parentUuid": "8ca9173f_0d6242e2",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 42
+      },
+      "revId": "4e6ac80480139fb71fc8ce0b0357877ee86b0c04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4afa1957_2b3719f9",
