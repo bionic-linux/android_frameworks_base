@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bcdde84_260d5bd2",
+        "filename": "services/core/java/com/android/server/am/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2024-09-13T17:52:40Z",
+      "side": 1,
+      "message": "Remove jsharkey",
+      "revId": "6536806d45a927941d88f9e3f30cd618710d9084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
