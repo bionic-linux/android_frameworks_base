@@ -1378,7 +1378,8 @@ public final class LoadedApk {
 
             mResources = ResourcesManager.getInstance().getResources(null, mResDir,
                     splitPaths, mLegacyOverlayDirs, mOverlayPaths,
-                    mApplicationInfo.sharedLibraryFiles, null, null, getCompatibilityInfo(),
+                    mApplicationInfo.sharedLibraryFiles, null,
+                    ResourcesManager.getInstance().getConfiguration(), getCompatibilityInfo(),
                     getClassLoader(), null);
         }
         return mResources;
