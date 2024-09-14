@@ -365,7 +365,9 @@ public class OomAdjusterModernImpl extends OomAdjuster {
                 }
                 // Save the next before calling callback, since that may change the node.mNext.
                 final ProcessRecordNode next = node.mNext;
-                callback.accept(mTmpOomAdjusterArgs);
+                if (mTmpOomAdjusterArgs.mApp != null) {
+                    callback.accept(mTmpOomAdjusterArgs);
+                }
                 // There are couple of cases:
                 // a) The current node is moved to another slot
                 //    - for this case, we'd need to keep using the "next" node.
