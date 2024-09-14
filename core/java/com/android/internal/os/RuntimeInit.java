@@ -64,6 +64,7 @@ public class RuntimeInit {
     private static IBinder mApplicationObject;
 
     private static volatile boolean mCrashing = false;
+    private static volatile long sFirstCrashThread = 0;
     private static final String SYSPROP_CRASH_COUNT = "sys.system_server.crash_java";
     private static int mCrashCount;
 
@@ -152,12 +153,14 @@ public class RuntimeInit {
 
         @Override
         public void uncaughtException(Thread t, Throwable e) {
+            final long tid = t.getId();
             try {
                 ensureLogging(t, e);
 
                 // Don't re-enter -- avoid infinite loops if crash-reporting crashes.
                 if (mCrashing) return;
                 mCrashing = true;
+                sFirstCrashThread = t.getId();
 
                 // Try to end profiling. If a profiler is running at this point, and we kill the
                 // process (below), the in-memory buffer will be lost. So try to stop, which will
@@ -180,6 +183,7 @@ public class RuntimeInit {
                     }
                 }
             } finally {
+                if (tid != sFirstCrashThread) return;
                 // Try everything to make sure this process goes away.
                 Process.killProcess(Process.myPid());
                 System.exit(10);
