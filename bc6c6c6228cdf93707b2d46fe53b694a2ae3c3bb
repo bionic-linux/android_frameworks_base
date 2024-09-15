@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "799ea629_9c1253a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1963880
+      },
+      "writtenOn": "2024-09-15T03:03:28Z",
+      "side": 1,
+      "message": "Hi AOSP team, can you help me to review? thank you!",
+      "revId": "bc6c6c6228cdf93707b2d46fe53b694a2ae3c3bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
