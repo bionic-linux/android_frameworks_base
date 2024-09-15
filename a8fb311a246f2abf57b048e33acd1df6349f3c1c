@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f98589d_3ebe5455",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-09-15T03:32:00Z",
+      "side": 1,
+      "message": "Hi Bill, this is another large refactoring CL of TEST_MAPPING files.\nThey have like 20 owners and the refactoring and verification was automated with sanity checks by hand (and eyes).\n\nIf you want me to break this in smaller chunks let me know.  I can do groups of 10 or 20 files per CL.\nThere will be one other large CL (for cts), but not quite this big.\nAgain, joe won\u0027t be back for another week.",
+      "revId": "a8fb311a246f2abf57b048e33acd1df6349f3c1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
