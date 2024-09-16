@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "243cdf69_b9d8f60a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-09-16T20:50:44Z",
+      "side": 1,
+      "message": "It\u0027s not clear why the ActivityManagerFgsBgStartTest is failing. This shouldn\u0027t impact that. Retriggering the presubmit.",
+      "revId": "072bc7d6a808c91f38eb41adb392cf46e57476ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
