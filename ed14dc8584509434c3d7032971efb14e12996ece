@@ -51,6 +51,24 @@
       "parentUuid": "9414b9b7_c944f3f3",
       "revId": "ed14dc8584509434c3d7032971efb14e12996ece",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b81b4174_8b37b6eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-09-16T04:43:37Z",
+      "side": 1,
+      "message": "That\u0027s correct. We shouldn\u0027t be using non-final objects as locks. I uploaded a patch to reflect my earlier feedback.",
+      "parentUuid": "179cc3b7_83fd09e4",
+      "revId": "ed14dc8584509434c3d7032971efb14e12996ece",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
