@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb939cfd_90d6272e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-09-16T15:32:26Z",
+      "side": 1,
+      "message": "Adding LaMont for OWNERS of `AConfigFlags.bp`",
+      "revId": "1c06b8c91dc83eec8f1a9b82702a2b3046949954",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
