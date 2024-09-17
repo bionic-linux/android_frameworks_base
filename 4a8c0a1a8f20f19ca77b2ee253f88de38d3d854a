@@ -1,0 +1,167 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da0e71bf_97011044",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-17T21:00:40Z",
+      "side": 1,
+      "message": "reword: Set whether to enable auto routing change or not (Enabled by default). If disabled, routing targets are limited to a single offhost destination.",
+      "range": {
+        "startLine": 394,
+        "startChar": 5,
+        "endLine": 394,
+        "endChar": 52
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "b624f9e5_420d7575",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 394,
+                "startChar": 0,
+                "endLine": 395,
+                "endChar": 0
+              },
+              "replacement": "     * Set whether to enable auto routing change or not (Enabled by default).\n     * If disabled, routing targets are limited to a single offhost destination.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4a8c0a1a8f20f19ca77b2ee253f88de38d3d854a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d616cb19_2f6515b2",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-17T21:00:40Z",
+      "side": 1,
+      "message": "enabled or not.",
+      "range": {
+        "startLine": 406,
+        "startChar": 39,
+        "endLine": 406,
+        "endChar": 46
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5154b242_601e9358",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 406,
+                "startChar": 0,
+                "endLine": 407,
+                "endChar": 0
+              },
+              "replacement": "     * Check if auto routing change is enabled or not\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4a8c0a1a8f20f19ca77b2ee253f88de38d3d854a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98fa1b6a_587da02c",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-17T21:00:40Z",
+      "side": 1,
+      "message": "Hmm. We may need to define a structure for this.\n\n\n``` \npublic class RoutingStatus {\n   @ProtocolAndTechnologyRoute int getDefaultRout();\n   @ProtocolAndTechnologyRoute int getDefaultIsoDepRoute();\n   @ProtocolAndTechnologyRoute int getDefaultOffHostRoute();\n}\n```",
+      "range": {
+        "startLine": 425,
+        "startChar": 11,
+        "endLine": 425,
+        "endChar": 23
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "b19465c5_e4677148",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 24,
+                "startChar": 0,
+                "endLine": 24,
+                "endChar": 0
+              },
+              "replacement": "import android.annotation.Nullable;\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 32,
+                "startChar": 0,
+                "endLine": 33,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 418,
+                "startChar": 0,
+                "endLine": 421,
+                "endChar": 0
+              },
+              "replacement": "     * Get current routing status.\n     *\n     * @return a {@link RoutingStatus} object indicating the default route, default ISO-DEP route\n     *     and default off-host route.\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 422,
+                "startChar": 0,
+                "endLine": 423,
+                "endChar": 0
+              },
+              "replacement": "    @Nullable\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 425,
+                "startChar": 0,
+                "endLine": 428,
+                "endChar": 0
+              },
+              "replacement": "    public RoutingStatus getRoutingStatus() {\n        return NfcAdapter.callServiceReturn(\n            () -\u003e NfcAdapter.sCardEmulationService.getRoutingStatus(), null);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4a8c0a1a8f20f19ca77b2ee253f88de38d3d854a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
