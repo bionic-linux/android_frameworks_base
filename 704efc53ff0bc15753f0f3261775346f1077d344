@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6526074_549d8051",
+        "filename": "nfc/api/system-current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-17T18:32:14Z",
+      "side": 1,
+      "message": "this has not been updated with the `RequiresPermission` tag.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 56
+      },
+      "revId": "704efc53ff0bc15753f0f3261775346f1077d344",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
