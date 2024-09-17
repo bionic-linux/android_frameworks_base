@@ -110,6 +110,8 @@ final class WiredAccessoryManager implements WiredAccessoryCallbacks {
             if (mInputManager.getSwitchState(-1, InputDevice.SOURCE_ANY, SW_HEADPHONE_INSERT)
                     == 1) {
                 switchValues |= SW_HEADPHONE_INSERT_BIT;
+                mAudioManager.setWiredDeviceConnectionState(
+                        AudioManager.DEVICE_OUT_WIRED_HEADPHONE, 1, "", "");
             }
             if (mInputManager.getSwitchState(-1, InputDevice.SOURCE_ANY, SW_MICROPHONE_INSERT)
                     == 1) {
