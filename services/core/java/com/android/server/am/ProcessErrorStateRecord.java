@@ -18,7 +18,6 @@ package com.android.server.am;
 
 import static android.os.Process.SYSTEM_UID;
 
-import static com.android.server.Watchdog.NATIVE_STACKS_OF_INTEREST;
 import static com.android.server.am.ActivityManagerDebugConfig.DEBUG_ANR;
 import static com.android.server.am.ActivityManagerService.MY_PID;
 import static com.android.server.am.ProcessRecord.TAG;
@@ -57,6 +56,7 @@ import com.android.internal.os.anr.AnrLatencyTracker;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.modules.expresslog.Counter;
 import com.android.server.ResourcePressureUtil;
+import com.android.server.Watchdog;
 import com.android.server.criticalevents.CriticalEventLog;
 import com.android.server.stats.pull.ProcfsMemoryUtil.MemorySnapshot;
 import com.android.server.wm.WindowProcessController;
@@ -495,33 +495,21 @@ class ProcessErrorStateRecord {
         Future<ArrayList<Integer>> nativePidsFuture =
                 auxiliaryTaskExecutor.submit(
                     () -> {
+                        ArrayList<Integer> interestingNativePids = Watchdog.getInterestingNativePids();
+                        ArrayList<Integer> nativePids = null;
                         latencyTracker.nativePidCollectionStarted();
                         // don't dump native PIDs for background ANRs unless
                         // it is the process of interest
-                        String[] nativeProcs = null;
                         boolean isSystemApp = mApp.info.isSystemApp() || mApp.info.isSystemExt();
                         // Do not collect system daemons dumps as this is not likely to be useful
                         // for non-system apps.
                         if (!isSystemApp || isSilentAnr || onlyDumpSelf) {
-                            for (int i = 0; i < NATIVE_STACKS_OF_INTEREST.length; i++) {
-                                if (NATIVE_STACKS_OF_INTEREST[i].equals(mApp.processName)) {
-                                    nativeProcs = new String[] { mApp.processName };
-                                    break;
-                                }
+                            if (interestingNativePids.contains(pid)) {
+                                nativePids = new ArrayList<>();
+                                nativePids.add(pid);
                             }
                         } else {
-                            nativeProcs = NATIVE_STACKS_OF_INTEREST;
-                        }
-
-                        int[] pids = nativeProcs == null
-                                ? null : Process.getPidsForCommands(nativeProcs);
-                        ArrayList<Integer> nativePids = null;
-
-                        if (pids != null) {
-                            nativePids = new ArrayList<>(pids.length);
-                            for (int i : pids) {
-                                nativePids.add(i);
-                            }
+                            nativePids = interestingNativePids;
                         }
                         latencyTracker.nativePidCollectionEnded();
                         return nativePids;

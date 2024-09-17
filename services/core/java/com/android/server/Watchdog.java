@@ -809,7 +809,7 @@ public class Watchdog implements Dumpable {
         }
     }
 
-    static ArrayList<Integer> getInterestingNativePids() {
+    public static ArrayList<Integer> getInterestingNativePids() {
         HashSet<Integer> pids = new HashSet<>();
         addInterestingAidlPids(pids);
         addInterestingHidlPids(pids);
