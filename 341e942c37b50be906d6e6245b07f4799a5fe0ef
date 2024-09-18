@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3718e1a1_d04d471a",
+        "filename": "api/StubLibraries.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1878380
+      },
+      "writtenOn": "2024-09-18T22:09:17Z",
+      "side": 1,
+      "message": "nit: static_libs is [configurable](https://source.corp.google.com/h/googleplex-android/platform/build/soong/+/8b8796fedfefd8bea2484673f9eb5b8053f3c566:java/java.go;l\u003d2023;bpv\u003d1;bpt\u003d0;drc\u003dddda6ea7d3a9ecaad57df85359b43d10bc32648c) now. Can we use a go/soong-selects here?",
+      "range": {
+        "startLine": 471,
+        "startChar": 4,
+        "endLine": 483,
+        "endChar": 6
+      },
+      "revId": "341e942c37b50be906d6e6245b07f4799a5fe0ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
