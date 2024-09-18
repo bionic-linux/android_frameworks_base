@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "256515b7_724cd17d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1097570
+      },
+      "writtenOn": "2024-09-18T21:22:34Z",
+      "side": 1,
+      "message": "A minor fixup for HIDL CEC HALs that returned INVALID_PHYSICAL_ADDRESS with SUCCESS instead of FAILURE_INVALID_STATE.",
+      "revId": "7355d9527bab3209c0c11c6fecbd9b77e14b2c1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
