@@ -22,6 +22,30 @@
       },
       "revId": "341e942c37b50be906d6e6245b07f4799a5fe0ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae56da3d_989dfa91",
+        "filename": "api/StubLibraries.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2024-09-18T22:21:06Z",
+      "side": 1,
+      "message": "Thanks for the recommendation. I\u0027ve filed b/368127911 to replace [all existing usages](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/api/StubLibraries.bp?q\u003d%22build_from_text_stub:%22) of the product variable `build_from_text_stub`.",
+      "parentUuid": "3718e1a1_d04d471a",
+      "range": {
+        "startLine": 471,
+        "startChar": 4,
+        "endLine": 483,
+        "endChar": 6
+      },
+      "revId": "341e942c37b50be906d6e6245b07f4799a5fe0ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
