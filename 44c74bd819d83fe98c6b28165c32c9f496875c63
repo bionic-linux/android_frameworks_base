@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb65d303_1f2da88a",
+        "filename": "services/core/java/com/android/server/am/OomAdjusterModernImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1245797
+      },
+      "writtenOn": "2024-09-18T01:46:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad9027fe_a9a9fe1f",
+      "revId": "44c74bd819d83fe98c6b28165c32c9f496875c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27a68fd9_56915072",
@@ -49,6 +67,30 @@
       "writtenOn": "2024-09-14T02:26:10Z",
       "side": 1,
       "message": "if mTmpOomAdjusterArgs.mApp is ever null, OomAdjuster is in a really bad state and even if you skip the callback here to avoid the NPE, you could end up in an infinite loop.  \n\nI highly recommend using the pathes where `Flags.simplifyProcessTraversal()` is true, which should solve this issue.",
+      "range": {
+        "startLine": 368,
+        "startChar": 40,
+        "endLine": 368,
+        "endChar": 44
+      },
+      "revId": "44c74bd819d83fe98c6b28165c32c9f496875c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89bf4e26_63ce08cf",
+        "filename": "services/core/java/com/android/server/am/OomAdjusterModernImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1245797
+      },
+      "writtenOn": "2024-09-18T01:46:11Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "27a68fd9_56915072",
       "range": {
         "startLine": 368,
         "startChar": 40,
