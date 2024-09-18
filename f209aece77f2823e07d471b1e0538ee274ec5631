@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8cd4385_f3f32b12",
+        "filename": "nfc/java/android/nfc/RoutingStatus.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-18T16:57:10Z",
+      "side": 1,
+      "message": "Mark this @SystemApi and add the @Flagged by oem extension flag. Then run the API freeze commands to update the `system-current.txt` file.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 28
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "cded369e_1d8ad7ea",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/RoutingStatus.java",
+              "range": {
+                "startLine": 19,
+                "startChar": 0,
+                "endLine": 19,
+                "endChar": 0
+              },
+              "replacement": "import android.annotation.SystemApi;\nimport android.annotation.FlaggedApi;\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/RoutingStatus.java",
+              "range": {
+                "startLine": 23,
+                "startChar": 0,
+                "endLine": 23,
+                "endChar": 0
+              },
+              "replacement": "@SystemApi\n@FlaggedApi\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f209aece77f2823e07d471b1e0538ee274ec5631",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
