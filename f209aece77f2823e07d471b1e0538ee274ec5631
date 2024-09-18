@@ -50,6 +50,77 @@
       ],
       "revId": "f209aece77f2823e07d471b1e0538ee274ec5631",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbd30f60_bdfd3e2e",
+        "filename": "nfc/java/android/nfc/RoutingStatus.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-18T16:57:46Z",
+      "side": 1,
+      "message": "This is an API, so need to add `@CardEmulation.ProtocolAndTechnologyRoute` annotation here and in the getters.",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d0858a42_ac01aa57",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/RoutingStatus.java",
+              "range": {
+                "startLine": 28,
+                "startChar": 0,
+                "endLine": 29,
+                "endChar": 0
+              },
+              "replacement": "    public RoutingStatus(@CardEmulation.ProtocolAndTechnologyRoute int mDefaultRoute,\n            @CardEmulation.ProtocolAndTechnologyRoute int mDefaultIsoDepRoute,\n            @CardEmulation.ProtocolAndTechnologyRoute int mDefaultOffHostRoute) {\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/RoutingStatus.java",
+              "range": {
+                "startLine": 39,
+                "startChar": 0,
+                "endLine": 39,
+                "endChar": 0
+              },
+              "replacement": "    @CardEmulation.ProtocolAndTechnologyRoute\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/RoutingStatus.java",
+              "range": {
+                "startLine": 48,
+                "startChar": 0,
+                "endLine": 48,
+                "endChar": 0
+              },
+              "replacement": "    @CardEmulation.ProtocolAndTechnologyRoute\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/RoutingStatus.java",
+              "range": {
+                "startLine": 57,
+                "startChar": 0,
+                "endLine": 57,
+                "endChar": 0
+              },
+              "replacement": "    @CardEmulation.ProtocolAndTechnologyRoute\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f209aece77f2823e07d471b1e0538ee274ec5631",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
