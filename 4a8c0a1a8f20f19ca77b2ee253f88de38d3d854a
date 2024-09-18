@@ -42,6 +42,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9b649b7_60913916",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-09-18T16:52:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da0e71bf_97011044",
+      "range": {
+        "startLine": 394,
+        "startChar": 5,
+        "endLine": 394,
+        "endChar": 52
+      },
+      "revId": "4a8c0a1a8f20f19ca77b2ee253f88de38d3d854a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d616cb19_2f6515b2",
@@ -79,6 +103,30 @@
           ]
         }
       ],
+      "revId": "4a8c0a1a8f20f19ca77b2ee253f88de38d3d854a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5e36029_6b628e78",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-09-18T16:52:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d616cb19_2f6515b2",
+      "range": {
+        "startLine": 406,
+        "startChar": 39,
+        "endLine": 406,
+        "endChar": 46
+      },
       "revId": "4a8c0a1a8f20f19ca77b2ee253f88de38d3d854a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -160,6 +208,30 @@
           ]
         }
       ],
+      "revId": "4a8c0a1a8f20f19ca77b2ee253f88de38d3d854a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ce98fcd_5199f7d8",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-09-18T16:52:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98fa1b6a_587da02c",
+      "range": {
+        "startLine": 425,
+        "startChar": 11,
+        "endLine": 425,
+        "endChar": 23
+      },
       "revId": "4a8c0a1a8f20f19ca77b2ee253f88de38d3d854a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
