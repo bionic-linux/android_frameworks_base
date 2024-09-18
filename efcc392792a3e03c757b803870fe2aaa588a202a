@@ -46,6 +46,30 @@
       },
       "revId": "efcc392792a3e03c757b803870fe2aaa588a202a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a43fe3f_d2de3030",
+        "filename": "nfc/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 2352,
+      "author": {
+        "id": 3031218
+      },
+      "writtenOn": "2024-09-18T14:22:16Z",
+      "side": 1,
+      "message": "We feel it is better to forward the exception to the caller instead of consuming in this API @rpius@google.com can you also please confirm your view on this should be go with the previous patch way of handling as suggested by jack",
+      "parentUuid": "c74aa714_40da1ee3",
+      "range": {
+        "startLine": 2350,
+        "startChar": 8,
+        "endLine": 2352,
+        "endChar": 20
+      },
+      "revId": "efcc392792a3e03c757b803870fe2aaa588a202a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
