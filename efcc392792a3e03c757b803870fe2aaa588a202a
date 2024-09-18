@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c74aa714_40da1ee3",
+        "filename": "nfc/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 2352,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2024-09-18T11:13:30Z",
+      "side": 1,
+      "message": "this part should follow previous patch as below?\ntry {\n    int mode \u003d value ? CONTROLLER_ALWAYS_ON_MODE_DEFAULT : CONTROLLER_ALWAYS_ON_DISABLE;\n    callService(() -\u003e  sService.setControllerAlwaysOn(mode));\n} catch (UnsupportedOperationException e) {\n    return false;\n}\nreturn true;",
+      "range": {
+        "startLine": 2350,
+        "startChar": 8,
+        "endLine": 2352,
+        "endChar": 20
+      },
+      "revId": "efcc392792a3e03c757b803870fe2aaa588a202a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
