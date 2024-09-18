@@ -16,6 +16,139 @@
       "message": "Over to Tyler for API +2.",
       "revId": "e765f420dc275fe77db06bc82ca412faef1f9fa5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e10111a0_84be6bed",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-09-18T22:11:01Z",
+      "side": 1,
+      "message": "For consistency with `isAutoChangeEnabled` recommend the name `setAutoChangeEnabled`",
+      "range": {
+        "startLine": 406,
+        "startChar": 16,
+        "endLine": 406,
+        "endChar": 35
+      },
+      "revId": "e765f420dc275fe77db06bc82ca412faef1f9fa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fe63d1e_40350574",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-09-18T22:11:01Z",
+      "side": 1,
+      "message": "nit: It\u0027s not a list.",
+      "range": {
+        "startLine": 425,
+        "startChar": 15,
+        "endLine": 425,
+        "endChar": 25
+      },
+      "revId": "e765f420dc275fe77db06bc82ca412faef1f9fa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f64a276d_612e7b9a",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-09-18T22:11:01Z",
+      "side": 1,
+      "message": "An `IllegalArgumentException` would normally be used to report an issue on the part of the caller.  In this case, the problem is with service side right?  Also, is this an expected failure?  Or rare?",
+      "range": {
+        "startLine": 435,
+        "startChar": 22,
+        "endLine": 435,
+        "endChar": 46
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f36155e8_97df960e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 435,
+                "startChar": 0,
+                "endLine": 436,
+                "endChar": 0
+              },
+              "replacement": "            throw new IllegalStateException(\"The size of the routing status should be \"\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e765f420dc275fe77db06bc82ca412faef1f9fa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0da3c315_a31600ac",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-09-18T22:11:01Z",
+      "side": 1,
+      "message": "nit: the emptyAid route should come before this parameter to group the various \"ProtocolAndTechnologyRoute\"s together.\n\nAdding the `persist` parameter is really overloading what this method does.  It can not do something temporary AND something persistent.  I\u0027d recommend splitting out the persistent version of this into a different API so that the two use-cases are cleanly separated and the required parameters can better match these two.",
+      "range": {
+        "startLine": 938,
+        "startChar": 15,
+        "endLine": 938,
+        "endChar": 88
+      },
+      "revId": "e765f420dc275fe77db06bc82ca412faef1f9fa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62b3f1e9_91e8db89",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-09-18T22:11:01Z",
+      "side": 1,
+      "message": "Why is this nullable now?  The `recoverRoutingTable` method requires an Activity, so how would can the override be removed? \n\nAlso, how would one remove the persistent override vs the non-persistent one?",
+      "range": {
+        "startLine": 952,
+        "startChar": 12,
+        "endLine": 952,
+        "endChar": 36
+      },
+      "revId": "e765f420dc275fe77db06bc82ca412faef1f9fa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
