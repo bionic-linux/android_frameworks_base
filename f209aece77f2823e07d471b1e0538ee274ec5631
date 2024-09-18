@@ -52,6 +52,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea0185af_7a9e4f58",
+        "filename": "nfc/java/android/nfc/RoutingStatus.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-09-18T17:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8cd4385_f3f32b12",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 28
+      },
+      "revId": "f209aece77f2823e07d471b1e0538ee274ec5631",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cbd30f60_bdfd3e2e",
@@ -119,6 +143,30 @@
           ]
         }
       ],
+      "revId": "f209aece77f2823e07d471b1e0538ee274ec5631",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab970188_cf50c600",
+        "filename": "nfc/java/android/nfc/RoutingStatus.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-09-18T17:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbd30f60_bdfd3e2e",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 28
+      },
       "revId": "f209aece77f2823e07d471b1e0538ee274ec5631",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
