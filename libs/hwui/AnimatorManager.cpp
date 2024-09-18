@@ -44,7 +44,10 @@ void AnimatorManager::addAnimator(const sp<BaseRenderNodeAnimator>& animator) {
     if (stagingTarget == &mParent) {
         return;
     }
-    mNewAnimators.emplace_back(animator.get());
+    auto animatorPtr = animator.get();
+    if (animatorPtr) {
+        mNewAnimators.emplace_back(animatorPtr);
+    }
     // If the animator is already attached to other RenderNode, remove it from that RenderNode's
     // new animator list. This ensures one animator only ends up in one newAnimatorList during one
     // frame, even when it's added multiple times to multiple targets.
