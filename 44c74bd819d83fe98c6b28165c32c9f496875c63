@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "537df821_0acb98d9",
+        "filename": "services/core/java/com/android/server/am/OomAdjusterModernImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-09-18T05:34:24Z",
+      "side": 1,
+      "message": "I think you are right,I will modify as you suggestion",
+      "parentUuid": "ad9027fe_a9a9fe1f",
+      "revId": "44c74bd819d83fe98c6b28165c32c9f496875c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27a68fd9_56915072",
@@ -90,6 +108,30 @@
       "writtenOn": "2024-09-18T01:46:11Z",
       "side": 1,
       "message": "Acknowledged",
+      "parentUuid": "27a68fd9_56915072",
+      "range": {
+        "startLine": 368,
+        "startChar": 40,
+        "endLine": 368,
+        "endChar": 44
+      },
+      "revId": "44c74bd819d83fe98c6b28165c32c9f496875c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9a61fe7_0f5a2a4a",
+        "filename": "services/core/java/com/android/server/am/OomAdjusterModernImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-09-18T05:34:24Z",
+      "side": 1,
+      "message": "Yes,we have enabled the flag of simplify_process_traversal to the true in newest v version.This can fix this problem,but we should fix the problem when the flag of simplify_process_traversal is false suition.\nThanks.",
       "parentUuid": "27a68fd9_56915072",
       "range": {
         "startLine": 368,
