@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b8b84a6_59d9b7be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-09-19T16:03:12Z",
+      "side": 1,
+      "message": "Missing: Flag, Bug, Test stanzas.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "fe2c07c488e6063b60bd0da271925cff66e13ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f0a38b2_07957e6a",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4213,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-09-19T16:03:12Z",
+      "side": 1,
+      "message": "Why is this hidden?  The other keys are not.\n\nGemini suggests the following key name to as a more descriptive way to describe the time between network scans: `KEY_OPPORTUNISTIC_NETWORK_SCAN_INTERVAL_SEC_INT`?",
+      "range": {
+        "startLine": 4213,
+        "startChar": 31,
+        "endLine": 4213,
+        "endChar": 82
+      },
+      "revId": "fe2c07c488e6063b60bd0da271925cff66e13ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
