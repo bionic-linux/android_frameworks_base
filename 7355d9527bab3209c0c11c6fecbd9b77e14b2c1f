@@ -33,6 +33,24 @@
       "message": "From b/368084138#comment4: if result !\u003d SUCCESS, shouldn\u0027t mPhysicalAddress be set to INVALID_PHYSICAL_ADDRESS instead of keeping an old value? (The old JNI wrapper used to do that)",
       "revId": "7355d9527bab3209c0c11c6fecbd9b77e14b2c1f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6971a4d_a6c57a3d",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1097570
+      },
+      "writtenOn": "2024-09-19T17:09:59Z",
+      "side": 1,
+      "message": "Done in follow-up CL Ie017bedfba053ed2ca263d4d13eec222be311119",
+      "parentUuid": "507e0b62_706fc0d6",
+      "revId": "7355d9527bab3209c0c11c6fecbd9b77e14b2c1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
