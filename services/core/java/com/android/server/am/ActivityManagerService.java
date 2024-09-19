@@ -749,14 +749,12 @@ public class ActivityManagerService extends IActivityManager.Stub
     /**
      * Map userId to its companion app uids.
      */
-    @GuardedBy("mCompanionAppUidsMap")
     private final Map<Integer, Set<Integer>> mCompanionAppUidsMap = new ArrayMap<>();
 
     /**
      * The profile owner UIDs.
      */
-    @GuardedBy("mProfileOwnerUids")
-    private final ArraySet<Integer> mProfileOwnerUids = new ArraySet<>();
+    private ArraySet<Integer> mProfileOwnerUids = null;
 
     final UserController mUserController;
     @VisibleForTesting
@@ -19606,35 +19604,32 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         @Override
         public void setProfileOwnerUid(ArraySet<Integer> profileOwnerUids) {
-            synchronized (mProfileOwnerUids) {
-                mProfileOwnerUids.clear();
-                mProfileOwnerUids.addAll(profileOwnerUids);
+            synchronized (ActivityManagerService.this) {
+                mProfileOwnerUids = profileOwnerUids;
             }
         }
 
         @Override
         public boolean isProfileOwner(int uid) {
-            synchronized (mProfileOwnerUids) {
-                return mProfileOwnerUids.indexOf(uid) >= 0;
+            synchronized (ActivityManagerService.this) {
+                return mProfileOwnerUids != null && mProfileOwnerUids.indexOf(uid) >= 0;
             }
         }
 
         @Override
         public void setCompanionAppUids(int userId, Set<Integer> companionAppUids) {
-            synchronized (mCompanionAppUidsMap) {
+            synchronized (ActivityManagerService.this) {
                 mCompanionAppUidsMap.put(userId, companionAppUids);
             }
         }
 
         @Override
         public boolean isAssociatedCompanionApp(int userId, int uid) {
-            synchronized (mCompanionAppUidsMap) {
-                final Set<Integer> allUids = mCompanionAppUidsMap.get(userId);
-                if (allUids == null) {
-                    return false;
-                }
-                return allUids.contains(uid);
+            final Set<Integer> allUids = mCompanionAppUidsMap.get(userId);
+            if (allUids == null) {
+                return false;
             }
+            return allUids.contains(uid);
         }
 
         @Override
