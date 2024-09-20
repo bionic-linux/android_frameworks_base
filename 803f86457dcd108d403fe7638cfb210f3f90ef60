@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc6ecaf2_3d79ce2f",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-09-20T18:44:39Z",
+      "side": 1,
+      "message": "Nit, for a photocopy like this, can you provide a reference file/line for the source of truth?",
+      "fixSuggestions": [
+        {
+          "fixId": "780cc6e3_7de40511",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/vcn/Vcn.java",
+              "range": {
+                "startLine": 89,
+                "startChar": 0,
+                "endLine": 89,
+                "endChar": 0
+              },
+              "replacement": "    // Copied from Settings.Global.MOBILE_DATA\n"
+            }
+          ]
+        }
+      ],
+      "revId": "803f86457dcd108d403fe7638cfb210f3f90ef60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
