@@ -16,6 +16,23 @@
       "message": "This is an improvement to the patch proposed in b/354848887, thank you!",
       "revId": "caba2c45821faae403ea9b8bd50aa50307e5880d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38348d3f_65e8c62d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1891398
+      },
+      "writtenOn": "2024-09-20T23:22:22Z",
+      "side": 1,
+      "message": "Hi Sherry,\nPlease review this patch",
+      "revId": "caba2c45821faae403ea9b8bd50aa50307e5880d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
