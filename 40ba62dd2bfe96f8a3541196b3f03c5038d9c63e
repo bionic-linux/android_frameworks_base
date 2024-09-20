@@ -46,6 +46,30 @@
       },
       "revId": "40ba62dd2bfe96f8a3541196b3f03c5038d9c63e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0ba49ba_86ea5d07",
+        "filename": "services/core/java/com/android/server/WiredAccessoryManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3524514
+      },
+      "writtenOn": "2024-09-20T13:02:33Z",
+      "side": 1,
+      "message": "Hi @elaurent@google.com , I believed I have managed to capture the recommended changes in the updated code. I\u0027ve ensured the feature still works (built, flashed and made sure bootanimation plays throught headphones when plugged in).",
+      "parentUuid": "7719bac4_6553047b",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 28
+      },
+      "revId": "40ba62dd2bfe96f8a3541196b3f03c5038d9c63e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
