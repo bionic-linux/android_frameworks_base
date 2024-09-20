@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b28ef37_fa21caaf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2024-09-20T10:37:50Z",
+      "side": 1,
+      "message": "Until ag/29356467 last week this path was 100% aconfig infrastructure. Starting to mix non-generated java files in the same place. Not sure if you already had this discussion with @winsonc@google.com?\n\nIf you\u0027re open to moving it and keeping the flags directory for aconfig, are any of the following an option:\n\n- frameworks/base/core/java/android/window/\n- frameworks/base/core/java/android/window/utils/\n- frameworks/base/core/java/android/window/desktop/",
+      "revId": "d03ff3b36d32ba3b9a3737d518d4d658a4bce836",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
