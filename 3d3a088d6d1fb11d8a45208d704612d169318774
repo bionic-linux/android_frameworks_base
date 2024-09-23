@@ -105,6 +105,24 @@
       "parentUuid": "c217fd10_ed3f1573",
       "revId": "3d3a088d6d1fb11d8a45208d704612d169318774",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f685139_1edd3546",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1688644
+      },
+      "writtenOn": "2024-09-23T20:32:57Z",
+      "side": 1,
+      "message": "I don\u0027t have Pixel device to test.\n\nFile https://android.googlesource.com/platform/frameworks/base/+/refs/heads/main/core/res/res/values/locale_config.xml doesn\u0027t contain Esperanto and other languages with basic coverage.",
+      "parentUuid": "e9f78cac_d774b456",
+      "revId": "3d3a088d6d1fb11d8a45208d704612d169318774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
