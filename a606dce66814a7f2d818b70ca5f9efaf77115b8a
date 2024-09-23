@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d35778e_9f976d77",
+        "filename": "services/core/java/com/android/server/am/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1060888
+      },
+      "writtenOn": "2024-09-23T18:57:16Z",
+      "side": 1,
+      "message": "Please update this to permit performance owners to own: ApplicationStartInfo*",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 50
+      },
+      "revId": "a606dce66814a7f2d818b70ca5f9efaf77115b8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1424bcef_03c6b11a",
+        "filename": "services/core/java/com/android/server/am/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1060888
+      },
+      "writtenOn": "2024-09-23T18:57:16Z",
+      "side": 1,
+      "message": "Please update this to per-file entries that are relevant to window manager or remove it all-together.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 8
+      },
+      "revId": "a606dce66814a7f2d818b70ca5f9efaf77115b8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f409557f_c9be16f1",
+        "filename": "services/core/java/com/android/server/am/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1060888
+      },
+      "writtenOn": "2024-09-23T18:57:16Z",
+      "side": 1,
+      "message": "Please update this to per-file entries that are relevant to package manager or remove it all-together, if there are none",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 15
+      },
+      "revId": "a606dce66814a7f2d818b70ca5f9efaf77115b8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8ebe6ca_8f03bc9b",
+        "filename": "services/core/java/com/android/server/am/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1060888
+      },
+      "writtenOn": "2024-09-23T18:57:16Z",
+      "side": 1,
+      "message": "Please remove this last resort annotation and move Yamasani\u0027s name to the top of this #Default list.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 45
+      },
+      "revId": "a606dce66814a7f2d818b70ca5f9efaf77115b8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
