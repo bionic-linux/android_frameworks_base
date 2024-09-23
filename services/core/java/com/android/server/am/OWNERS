@@ -19,6 +19,8 @@ per-file IntentBindRecord.java = file:/ACTIVITY_MANAGER_OWNERS
 per-file AppFGSTracker.java = file:/ACTIVITY_MANAGER_OWNERS
 per-file FgsTempAllowList.java = file:/ACTIVITY_MANAGER_OWNERS
 per-file HostingRecord.java = file:/ACTIVITY_MANAGER_OWNERS
+per-file App*Info* = file:/ACTIVITY_MANAGER_OWNERS
+per-file app*info.proto = file:/ACTIVITY_MANAGER_OWNERS
 
 # Windows & Activities
 ogunwale@google.com
