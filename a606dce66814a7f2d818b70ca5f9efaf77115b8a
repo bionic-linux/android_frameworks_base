@@ -259,6 +259,30 @@
       },
       "revId": "a606dce66814a7f2d818b70ca5f9efaf77115b8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4438026e_ff5ddda7",
+        "filename": "services/core/java/com/android/server/am/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1949865
+      },
+      "writtenOn": "2024-09-23T20:06:17Z",
+      "side": 1,
+      "message": "yes - I\u0027ll let Amtih/Bill comment to confirm this is what is intended.",
+      "parentUuid": "9150747a_505f435e",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 45
+      },
+      "revId": "a606dce66814a7f2d818b70ca5f9efaf77115b8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
