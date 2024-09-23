@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a46b5b0_b63e4d3a",
+        "filename": "services/core/java/com/android/server/WiredAccessoryManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2024-09-23T13:16:20Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 102
+      },
+      "revId": "30d42cf9d0c758dacb4de82cbe46d7382813b1ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "306a734a_1433ece7",
+        "filename": "services/core/java/com/android/server/WiredAccessoryManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2024-09-23T13:16:20Z",
+      "side": 1,
+      "message": ", true /*isSynchronous*/);\n\nAnd fix the line length please.",
+      "range": {
+        "startLine": 122,
+        "startChar": 96,
+        "endLine": 122,
+        "endChar": 100
+      },
+      "revId": "30d42cf9d0c758dacb4de82cbe46d7382813b1ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d0e9ac3_8a96d778",
+        "filename": "services/core/java/com/android/server/WiredAccessoryManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2024-09-23T13:16:20Z",
+      "side": 1,
+      "message": "please move this to line 246 and no need to release at line 244",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 17
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "38650178_450d9eb8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/WiredAccessoryManager.java",
+              "range": {
+                "startLine": 241,
+                "startChar": 0,
+                "endLine": 242,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/WiredAccessoryManager.java",
+              "range": {
+                "startLine": 244,
+                "startChar": 0,
+                "endLine": 245,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/WiredAccessoryManager.java",
+              "range": {
+                "startLine": 274,
+                "startChar": 0,
+                "endLine": 274,
+                "endChar": 0
+              },
+              "replacement": "            mWakeLock.acquire();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "30d42cf9d0c758dacb4de82cbe46d7382813b1ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "574609b3_193ff018",
+        "filename": "services/core/java/com/android/server/WiredAccessoryManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2024-09-23T13:16:20Z",
+      "side": 1,
+      "message": ", false /*isSynchronous*/",
+      "range": {
+        "startLine": 450,
+        "startChar": 94,
+        "endLine": 450,
+        "endChar": 95
+      },
+      "revId": "30d42cf9d0c758dacb4de82cbe46d7382813b1ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edbaced7_12bb48fb",
+        "filename": "services/core/java/com/android/server/WiredAccessoryManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2024-09-23T13:16:20Z",
+      "side": 1,
+      "message": ", false /*isSynchronous*/",
+      "range": {
+        "startLine": 561,
+        "startChar": 86,
+        "endLine": 561,
+        "endChar": 91
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4a675817_7a8dac29",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/WiredAccessoryManager.java",
+              "range": {
+                "startLine": 561,
+                "startChar": 0,
+                "endLine": 562,
+                "endChar": 0
+              },
+              "replacement": "                updateLocked(name, mHeadsetState \u0026 ~(mask \u0026 ~state) | (mask \u0026 state),\n                        false /*isSynchronous*/);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "30d42cf9d0c758dacb4de82cbe46d7382813b1ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
