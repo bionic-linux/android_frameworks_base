@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe0ebef8_d164682d",
+        "filename": "services/tests/servicestests/src/com/android/server/pdb/PersistentDataBlockServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2024-09-23T17:14:00Z",
+      "side": 1,
+      "message": "```\nframeworks/base/services/tests/servicestests/src/com/android/server/pdb/PersistentDataBlockServiceTest.java:593: error: cannot find symbol\n        assertThat(mOemUnlockPropertyValue).isEqualTo(\"1\");\n                   ^\n  symbol:   variable mOemUnlockPropertyValue\n  location: class PersistentDataBlockServiceTest\nframeworks/base/services/tests/servicestests/src/com/android/server/pdb/PersistentDataBlockServiceTest.java:630: error: cannot find symbol\n        assertThat(mOemUnlockPropertyValue).isEqualTo(\"1\");\n                   ^\n  symbol:   variable mOemUnlockPropertyValue\n  location: class PersistentDataBlockServiceTest\nframeworks/base/services/tests/servicestests/src/com/android/server/pdb/PersistentDataBlockServiceTest.java:671: error: cannot find symbol\n        assertThat(mOemUnlockPropertyValue).isEqualTo(\"1\");\n                   ^\n  symbol:   variable mOemUnlockPropertyValue\n  location: class PersistentDataBlockServiceTest\n```",
+      "range": {
+        "startLine": 593,
+        "startChar": 19,
+        "endLine": 593,
+        "endChar": 42
+      },
+      "revId": "0bbf128cd72cd9684bd29b7033b1d23351542970",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
