@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "95758457_66bb3fb1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-09-23T19:48:27Z",
+      "side": 1,
+      "message": "probably best to wait until AOSP main catches up with Android 15, since the reason you delayed in feburary aiui was that there were internal conflicts...",
+      "revId": "0bbf128cd72cd9684bd29b7033b1d23351542970",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe0ebef8_d164682d",
