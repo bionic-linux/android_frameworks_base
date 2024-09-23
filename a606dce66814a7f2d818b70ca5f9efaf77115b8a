@@ -427,6 +427,30 @@
       },
       "revId": "a606dce66814a7f2d818b70ca5f9efaf77115b8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4628156a_c359b446",
+        "filename": "services/core/java/com/android/server/am/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2024-09-23T22:03:29Z",
+      "side": 1,
+      "message": "I hope so too. Thanks Carmen. Sounds like the per-app owners should take precedence, so this is fine. I\u0027ll bring it up later if not.",
+      "parentUuid": "401f45be_a765e4aa",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 45
+      },
+      "revId": "a606dce66814a7f2d818b70ca5f9efaf77115b8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
