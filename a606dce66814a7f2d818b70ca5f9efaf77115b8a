@@ -98,6 +98,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c4ae56d1_3516aae2",
+        "filename": "services/core/java/com/android/server/am/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1060888
+      },
+      "writtenOn": "2024-09-23T20:19:04Z",
+      "side": 1,
+      "message": "Yes, even though recent incremental contributions to ApplicationExitInfo.java have been from outside the list of /ACTIVITY_MANAGER_OWNERS, the bulk of this file is still blamed on someone more closely associated with those owners than with: /PERFORMANCE_OWNERS. Feel free to call that out as a separate line item so that we can formally update it at a future point in time if a team steps up to indicate that they wish to own the file.",
+      "parentUuid": "d2c9845a_d9f65704",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 50
+      },
+      "revId": "a606dce66814a7f2d818b70ca5f9efaf77115b8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1424bcef_03c6b11a",
         "filename": "services/core/java/com/android/server/am/OWNERS",
         "patchSetId": 1
@@ -298,6 +322,30 @@
       "writtenOn": "2024-09-23T20:12:13Z",
       "side": 1,
       "message": "Cool, if so I think that\u0027s a significant enough change to merit a comment in the changeset desc as well. Otherwise it seems like an accident!",
+      "parentUuid": "4438026e_ff5ddda7",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 45
+      },
+      "revId": "a606dce66814a7f2d818b70ca5f9efaf77115b8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c35b8ef6_78156179",
+        "filename": "services/core/java/com/android/server/am/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1060888
+      },
+      "writtenOn": "2024-09-23T20:19:04Z",
+      "side": 1,
+      "message": "\u003e Doesn\u0027t this change mean that Amith will now be suggested as a primary owner for any of the files in this directory? Is that actually what we want?\n\nNo, the per-file owners will be suggested as owners for all the file globs specified. We do need a default owner on the Activity Manager team to cover file globs not listed here and that person (or persons) need to not be listed as a last resort suggestion so the Gerrit ownership finder works as intended. Today, that should be Amith but we will likely expand this list to include others soon.",
       "parentUuid": "4438026e_ff5ddda7",
       "range": {
         "startLine": 73,
