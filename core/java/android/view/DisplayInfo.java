@@ -229,6 +229,9 @@ public final class DisplayInfo implements Parcelable {
     /** The formats disabled by user **/
     public int[] userDisabledHdrTypes = {};
 
+    /** When true, all HDR capabilities are disabled **/
+    public boolean isForceSdr;
+
     /**
      * Indicates whether the display can be switched into a mode with minimal post
      * processing.
@@ -439,6 +442,7 @@ public final class DisplayInfo implements Parcelable {
                 && colorMode == other.colorMode
                 && Arrays.equals(supportedColorModes, other.supportedColorModes)
                 && Objects.equals(hdrCapabilities, other.hdrCapabilities)
+                && isForceSdr == other.isForceSdr
                 && Arrays.equals(userDisabledHdrTypes, other.userDisabledHdrTypes)
                 && minimalPostProcessingSupported == other.minimalPostProcessingSupported
                 && logicalDensityDpi == other.logicalDensityDpi
@@ -501,6 +505,7 @@ public final class DisplayInfo implements Parcelable {
         supportedColorModes = Arrays.copyOf(
                 other.supportedColorModes, other.supportedColorModes.length);
         hdrCapabilities = other.hdrCapabilities;
+        isForceSdr = other.isForceSdr;
         userDisabledHdrTypes = other.userDisabledHdrTypes;
         minimalPostProcessingSupported = other.minimalPostProcessingSupported;
         logicalDensityDpi = other.logicalDensityDpi;
@@ -566,6 +571,7 @@ public final class DisplayInfo implements Parcelable {
             supportedColorModes[i] = source.readInt();
         }
         hdrCapabilities = source.readParcelable(null, android.view.Display.HdrCapabilities.class);
+        isForceSdr = source.readBoolean();
         minimalPostProcessingSupported = source.readBoolean();
         logicalDensityDpi = source.readInt();
         physicalXDpi = source.readFloat();
@@ -635,6 +641,7 @@ public final class DisplayInfo implements Parcelable {
             dest.writeInt(supportedColorModes[i]);
         }
         dest.writeParcelable(hdrCapabilities, flags);
+        dest.writeBoolean(isForceSdr);
         dest.writeBoolean(minimalPostProcessingSupported);
         dest.writeInt(logicalDensityDpi);
         dest.writeFloat(physicalXDpi);
@@ -873,6 +880,8 @@ public final class DisplayInfo implements Parcelable {
         sb.append(Arrays.toString(appsSupportedModes));
         sb.append(", hdrCapabilities ");
         sb.append(hdrCapabilities);
+        sb.append(", isForceSdr ");
+        sb.append(isForceSdr);
         sb.append(", userDisabledHdrTypes ");
         sb.append(Arrays.toString(userDisabledHdrTypes));
         sb.append(", minimalPostProcessingSupported ");
