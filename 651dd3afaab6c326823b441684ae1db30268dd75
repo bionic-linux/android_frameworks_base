@@ -16,6 +16,24 @@
       "message": "```\nframeworks/base/services/core/java/com/android/server/pdb/PersistentDataBlockService.java:276: error: cannot find symbol\n                setOemUnlockEnabledProperty(doGetOemUnlockEnabled());\n                ^\n```",
       "revId": "651dd3afaab6c326823b441684ae1db30268dd75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5686bd09_b46a195f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1319385
+      },
+      "writtenOn": "2024-09-23T14:41:40Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "ac455444_ce70aa6c",
+      "revId": "651dd3afaab6c326823b441684ae1db30268dd75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
