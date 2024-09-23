@@ -87,6 +87,24 @@
       "message": "I AM SORRY FOR BEING ANGRY, BUT IS SOMEBODY COMPETENT HERE?!\n\nI asked for only 1 line in code. I have completed CLDR to the required level. On 2024-07-30 I received promise, that it will be added with other languages. Now Android 15 has been released and nothing has been done.",
       "revId": "3d3a088d6d1fb11d8a45208d704612d169318774",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9f78cac_d774b456",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-09-23T10:06:39Z",
+      "side": 1,
+      "message": "Can you try Android 15 QPR1 build? It\u0027s should be in the public Beta.\nhttps://developer.android.com/about/versions/15/get-qpr1\n\nMihai did submit the CL into main, but after Android 15 build cut. But it should be in the Android 15 QPR1.",
+      "parentUuid": "c217fd10_ed3f1573",
+      "revId": "3d3a088d6d1fb11d8a45208d704612d169318774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
