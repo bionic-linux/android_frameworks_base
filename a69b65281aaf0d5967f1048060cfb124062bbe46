@@ -46,6 +46,30 @@
       },
       "revId": "a69b65281aaf0d5967f1048060cfb124062bbe46",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85a314f1_c1696b03",
+        "filename": "services/core/java/com/android/server/am/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1170070
+      },
+      "writtenOn": "2024-09-23T20:12:13Z",
+      "side": 0,
+      "message": "Ok, got it. Seems like this could have unexpected consequences for windowmanager \u0026 packagemanager but seems like Bill expected that, and when these teams notice any problems they can come through and update this file too!",
+      "parentUuid": "28e44601_b407210d",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 15
+      },
+      "revId": "a69b65281aaf0d5967f1048060cfb124062bbe46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
