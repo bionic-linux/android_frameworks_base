@@ -211,6 +211,30 @@
       },
       "revId": "a606dce66814a7f2d818b70ca5f9efaf77115b8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9150747a_505f435e",
+        "filename": "services/core/java/com/android/server/am/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1170070
+      },
+      "writtenOn": "2024-09-23T19:47:28Z",
+      "side": 1,
+      "message": "Doesn\u0027t this change mean that Amith will now be suggested as a primary owner for any of the files in this directory? Is that actually what we want? \n\n(I assumed that most of this file is intended to distribute the primary owner load).\n\n(Also same comment as above regarding updating the changeset description to expand what we\u0027re trying to do here accordingly, past the PERFORMANCE_OWNERS focused updates, if we do want to make this change)",
+      "parentUuid": "82e5b3c4_76e631c5",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 45
+      },
+      "revId": "a606dce66814a7f2d818b70ca5f9efaf77115b8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
