@@ -1901,8 +1901,12 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
      * @see #ensureActivitiesVisible()
      */
     void ensureActivitiesVisible(ActivityRecord starting, boolean notifyClients) {
+        boolean isVisible = false;
+        if (starting != null && starting.isVisible()) {
+            isVisible = true;
+        }
         if (mTaskSupervisor.inActivityVisibilityUpdate()
-                || mTaskSupervisor.isRootVisibilityUpdateDeferred()) {
+                || (mTaskSupervisor.isRootVisibilityUpdateDeferred() && !isVisible)) {
             // Don't do recursive work.
             return;
         }
