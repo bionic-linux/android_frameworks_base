@@ -2912,6 +2912,11 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
                 mStartingData.mTransitionId = mTransitionController.getCollectingTransitionId();
             }
         }
+        // remove startingwindow after adding startingwindow if has first window drawn
+        if (firstWindowDrawn) {
+            removeStartingWindow();
+            Slog.d(TAG, "removeStartingWindow if first window has drawn.");
+        }
     }
 
     /** Makes starting window always fill the associated task. */
