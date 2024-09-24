@@ -16,6 +16,24 @@
       "message": "Cherry picking from internal gerrit to AOSP",
       "revId": "4b949db01c41ec72f0c7df68b90ef2623ee4f495",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a98d1940_f46b9d21",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3246460
+      },
+      "writtenOn": "2024-09-24T16:32:19Z",
+      "side": 1,
+      "message": "*clean cherry pick",
+      "parentUuid": "d80d9f11_90c1d0a0",
+      "revId": "4b949db01c41ec72f0c7df68b90ef2623ee4f495",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
