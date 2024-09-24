@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74e1c63d_ee681512",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3524514
+      },
+      "writtenOn": "2024-09-24T09:47:05Z",
+      "side": 1,
+      "message": "Out of curiosity, is there a way to run the line length checks locally before uploading?",
+      "revId": "48cff73aef0a4e731daa9e4ad27b1c85dc09fefa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
