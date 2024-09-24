@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df320584_222ea4e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2024-09-24T04:40:59Z",
+      "side": 1,
+      "message": "+1 as OWNER, adding approvers of blue doc for +2.",
+      "revId": "4313c9bbadf3d341456cd2e4ef4dfe55ee23e9ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
