@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fab3bc65_c187f481",
+        "filename": "libs/WindowManager/Jetpack/src/androidx/window/extensions/embedding/TaskContainer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-09-25T10:18:55Z",
+      "side": 0,
+      "message": "@charlesccchen@google.com\n\nThis should traverse from top to bottom.\nI am curious when will an appeared activity be reparented to a TaskFragment below its current container?\n\nOr is it possible the list be out of order?",
+      "range": {
+        "startLine": 332,
+        "startChar": 12,
+        "endLine": 332,
+        "endChar": 57
+      },
+      "revId": "b4596695e652df924c8aa3eef75d3964e262ecb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
