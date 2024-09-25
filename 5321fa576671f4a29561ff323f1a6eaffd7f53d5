@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d15e5ac_a0273b79",
+        "filename": "services/core/java/com/android/server/WiredAccessoryManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 3524514
+      },
+      "writtenOn": "2024-09-25T23:43:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af61d460_f028d623",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 105
+      },
+      "revId": "5321fa576671f4a29561ff323f1a6eaffd7f53d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d4724aaa_b53642b2",
