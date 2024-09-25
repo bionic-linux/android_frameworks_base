@@ -28,6 +28,12 @@ flag {
 }
 
 flag {
+<<<<<<< PATCH SET (f38a6d Propagate individual aconfig sysprop on flag stage)
+    name: "notify_individual_aconfig_sysprop_changed"
+    namespace: "core_experiments_team_internal"
+    description: "When enabled, propagate individual aconfig sys props on flag stage."
+    bug: "331963764"
+=======
     name: "load_apex_aconfig_protobufs"
     namespace: "core_experiments_team_internal"
     description: "When enabled, loads aconfig default values in apex flag protobufs into DeviceConfig on boot."
@@ -47,6 +53,7 @@ flag {
     namespace: "core_experiments_team_internal"
     description: "When enabled, ignore any flag in the SettingsProvider XML for RO flags."
     bug: "345007098"
+>>>>>>> BASE      (cde6d1 Merge "AudioDeviceInventory: fix unsynced preferred device r)
     is_fixed_read_only: true
     metadata {
         purpose: PURPOSE_BUGFIX
