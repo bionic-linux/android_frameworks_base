@@ -46,6 +46,23 @@
       },
       "revId": "b4596695e652df924c8aa3eef75d3964e262ecb3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4f2be2a_5119f7d8",
+        "filename": "libs/WindowManager/Jetpack/src/androidx/window/extensions/embedding/TaskContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2024-09-25T11:36:27Z",
+      "side": 0,
+      "message": "nit: Please append what Chris replied in the comment. This issue is very tricky.",
+      "revId": "b4596695e652df924c8aa3eef75d3964e262ecb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
