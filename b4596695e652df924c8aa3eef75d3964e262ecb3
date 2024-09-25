@@ -81,6 +81,24 @@
       "parentUuid": "f4f2be2a_5119f7d8",
       "revId": "b4596695e652df924c8aa3eef75d3964e262ecb3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46bca991_5f7827ae",
+        "filename": "libs/WindowManager/Jetpack/src/androidx/window/extensions/embedding/TaskContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-09-25T12:21:43Z",
+      "side": 0,
+      "message": "Sorry for the confusion, the ask is to put the comment inline, right above `final TaskFragmentContainer taskFragmentContainer\n                \u003d getContainer(container -\u003e container.hasPendingAppearedActivity(activityToken));`",
+      "parentUuid": "d7676b39_d5dccb03",
+      "revId": "b4596695e652df924c8aa3eef75d3964e262ecb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
