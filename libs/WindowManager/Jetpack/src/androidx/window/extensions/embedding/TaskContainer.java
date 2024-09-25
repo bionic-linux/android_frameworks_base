@@ -323,8 +323,12 @@ class TaskContainer {
 
     @Nullable
     TaskFragmentContainer getContainerWithActivity(@NonNull IBinder activityToken) {
-        return getContainer(container -> container.hasAppearedActivity(activityToken)
-                || container.hasPendingAppearedActivity(activityToken));
+        final TaskFragmentContainer taskFragmentContainer
+                = getContainer(container -> container.hasPendingAppearedActivity(activityToken));
+        if(taskFragmentContainer != null) {
+            return taskFragmentContainer;
+        }
+        return getContainer(container -> container.hasAppearedActivity(activityToken));
     }
 
     @Nullable
