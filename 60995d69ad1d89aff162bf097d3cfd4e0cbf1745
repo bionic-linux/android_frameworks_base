@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de43713d_617b495b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3524514
+      },
+      "writtenOn": "2024-09-25T10:09:28Z",
+      "side": 1,
+      "message": "Hi, just wondering, what remains to get this change merged? Thhanks",
+      "revId": "60995d69ad1d89aff162bf097d3cfd4e0cbf1745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
