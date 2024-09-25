@@ -63,6 +63,24 @@
       "message": "nit: Please append what Chris replied in the comment. This issue is very tricky.",
       "revId": "b4596695e652df924c8aa3eef75d3964e262ecb3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7676b39_d5dccb03",
+        "filename": "libs/WindowManager/Jetpack/src/androidx/window/extensions/embedding/TaskContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1639197
+      },
+      "writtenOn": "2024-09-25T12:10:48Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f4f2be2a_5119f7d8",
+      "revId": "b4596695e652df924c8aa3eef75d3964e262ecb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
