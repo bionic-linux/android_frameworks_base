@@ -2936,7 +2936,8 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
     /** Associates and attaches an added starting window to the current task. */
     void associateStartingWindowWithTaskIfNeeded() {
         if (mStartingWindow == null || mStartingData == null
-                || mStartingData.mAssociatedTask != null) {
+                || mStartingData.mAssociatedTask != null
+                || hasFixedRotationTransform()) {
             return;
         }
         associateStartingDataWithTask();
