@@ -22,6 +22,30 @@
       },
       "revId": "2fb81d86e086047b0652cc31e2ceac3a05fcb101",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19ad5bf7_23546c5e",
+        "filename": "libs/WindowManager/Jetpack/src/androidx/window/extensions/embedding/TaskContainer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1639197
+      },
+      "writtenOn": "2024-09-25T11:19:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e26a5d46_cc2b2832",
+      "range": {
+        "startLine": 328,
+        "startChar": 10,
+        "endLine": 328,
+        "endChar": 11
+      },
+      "revId": "2fb81d86e086047b0652cc31e2ceac3a05fcb101",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
