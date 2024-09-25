@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6301484_2a0f3a1f",
+        "filename": "services/core/java/com/android/server/appop/AppOpsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1395785
+      },
+      "writtenOn": "2024-09-25T20:22:53Z",
+      "side": 1,
+      "message": "We should use a code block for all `if` statements\n```suggestion\n            if (action \u003d\u003d null) {\n                return;\n            }\n```",
+      "range": {
+        "startLine": 1035,
+        "startChar": 32,
+        "endLine": 1035,
+        "endChar": 38
+      },
+      "revId": "e2b57f015f4181eae05c2a7541ef0f359543cccd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
