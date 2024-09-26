@@ -532,6 +532,11 @@ class SyntheticPasswordManager {
                 Settings.Global.DEVICE_PROVISIONED, 0) != 0;
     }
 
+    private boolean isWeaverDisabledOnUnsecuredUsers() {
+        return mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_disableWeaverOnUnsecuredUsers);
+    }
+
     @VisibleForTesting
     protected android.hardware.weaver.V1_0.IWeaver getWeaverHidlService() throws RemoteException {
         try {
@@ -1011,7 +1016,13 @@ class SyntheticPasswordManager {
 
         Slogf.i(TAG, "Creating LSKF-based protector %016x for user %d", protectorId, userId);
 
-        final IWeaver weaver = getWeaverService();
+        final IWeaver weaver;
+        if (credential.isNone() && isWeaverDisabledOnUnsecuredUsers()) {
+            weaver = null;
+            Slog.w(TAG, "Not using Weaver for unsecured user (disabled by config setting)");
+        } else {
+            weaver = getWeaverService();
+        }
         if (weaver != null) {
             // Weaver is available, so make the protector use it to verify the LSKF.  Do this even
             // if the LSKF is empty, as that gives us support for securely deleting the protector.
