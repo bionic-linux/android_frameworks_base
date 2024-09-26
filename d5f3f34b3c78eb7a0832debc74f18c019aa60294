@@ -45,6 +45,54 @@
       },
       "revId": "d5f3f34b3c78eb7a0832debc74f18c019aa60294",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1a602d3_59b7f5b1",
+        "filename": "services/core/java/com/android/server/wm/Task.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1894608
+      },
+      "writtenOn": "2024-09-26T12:22:46Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "7871a3c8_c7eeb9b3",
+      "range": {
+        "startLine": 1472,
+        "startChar": 32,
+        "endLine": 1472,
+        "endChar": 55
+      },
+      "revId": "d5f3f34b3c78eb7a0832debc74f18c019aa60294",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36f3b3a9_e0e12287",
+        "filename": "services/core/java/com/android/server/wm/Task.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1894608
+      },
+      "writtenOn": "2024-09-26T12:22:46Z",
+      "side": 1,
+      "message": "Yes, there is such a consideration.\nTask\n  \u003e Activity top\n  \u003e TaskFragment childTaskFrag\nI verified it locally and found that this situation is actually no problem.\n\nfinal ActivityRecord top \u003d childTaskFrag.getTopMostActivity();\nThis method is not feasible because childTaskFrag.getTopMostActivity() gets NULL in most cases.",
+      "parentUuid": "ebf62118_6238e340",
+      "range": {
+        "startLine": 1472,
+        "startChar": 75,
+        "endLine": 1472,
+        "endChar": 91
+      },
+      "revId": "d5f3f34b3c78eb7a0832debc74f18c019aa60294",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
