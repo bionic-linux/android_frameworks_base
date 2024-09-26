@@ -16,6 +16,24 @@
       "message": "Looks like `TaskFragmentContainerTest.testHasActivity` is failing with this change.\n\nWould you mind updating that as well?\n\nChange \n\n```\nline 538 assertTrue(container2.hasActivity(mActivity.getActivityToken()));\n```\n\nto\n\n```\n        assertTrue(container1.hasActivity(mActivity.getActivityToken()));\n        assertFalse(container2.hasActivity(mActivity.getActivityToken()));\n```",
       "revId": "a3b2d65c7befa44f337654c6ab0bb8a7bcd02984",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26b87fdc_585dd0ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1639197
+      },
+      "writtenOn": "2024-09-26T06:24:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30dadd96_09f11726",
+      "revId": "a3b2d65c7befa44f337654c6ab0bb8a7bcd02984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
