@@ -1,0 +1,97 @@
+/*
+ * Copyright (C) 2024 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package android.net.vcn;
+
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+
+import android.annotation.Nullable;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkSpecifier;
+import android.net.TelephonyNetworkSpecifier;
+import android.net.TransportInfo;
+import android.net.wifi.WifiInfo;
+
+import java.util.List;
+
+/**
+ * Utility classes for VCN callers get information from VCN network
+ *
+ * @hide
+ */
+public class VcnUtils {
+    @Nullable
+    public static WifiInfo getWifiInfoFromVcnCaps(
+            ConnectivityManager connectivityMgr, NetworkCapabilities networkCapabilities) {
+        final NetworkCapabilities underlyingCaps =
+                getVcnUnderlyingCaps(connectivityMgr, networkCapabilities);
+
+        if (underlyingCaps == null || !underlyingCaps.hasTransport(TRANSPORT_WIFI)) {
+            return null;
+        }
+
+        final TransportInfo underlyingTransportInfo = underlyingCaps.getTransportInfo();
+        if (!(underlyingTransportInfo instanceof WifiInfo)) {
+            return null;
+        }
+
+        return (WifiInfo) underlyingTransportInfo;
+    }
+
+    @Nullable
+    public static int getSubIdFromVcnCaps(
+            ConnectivityManager connectivityMgr, NetworkCapabilities networkCapabilities) {
+        final NetworkCapabilities underlyingCaps =
+                getVcnUnderlyingCaps(connectivityMgr, networkCapabilities);
+        if (underlyingCaps == null || !underlyingCaps.hasTransport(TRANSPORT_CELLULAR)) {
+            return INVALID_SUBSCRIPTION_ID;
+        }
+
+        final NetworkSpecifier underlyingNetworkSpecifier = underlyingCaps.getNetworkSpecifier();
+
+        if (!(underlyingNetworkSpecifier instanceof TelephonyNetworkSpecifier)) {
+            return INVALID_SUBSCRIPTION_ID;
+        }
+
+        VcnTransportInfo vcnTransportInfo =
+                (VcnTransportInfo) networkCapabilities.getTransportInfo();
+        return ((TelephonyNetworkSpecifier) underlyingNetworkSpecifier).getSubscriptionId();
+    }
+
+    @Nullable
+    public static NetworkCapabilities getVcnUnderlyingCaps(
+            ConnectivityManager connectivityMgr, NetworkCapabilities networkCapabilities) {
+        if (networkCapabilities.getTransportInfo() == null
+                || !(networkCapabilities.getTransportInfo() instanceof VcnTransportInfo)) {
+            return null;
+        }
+
+        final List<Network> underlyingNws = networkCapabilities.getUnderlyingNetworks();
+        if (underlyingNws == null || underlyingNws.size() != 1) {
+            return null;
+        }
+
+        final Network underlyingNw = underlyingNws.get(0);
+        if (underlyingNw == null) {
+            return null;
+        }
+
+        return connectivityMgr.getNetworkCapabilities(underlyingNw);
+    }
+}
