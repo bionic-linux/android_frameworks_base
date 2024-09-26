@@ -52,6 +52,24 @@
       "parentUuid": "a53648cc_3a8e7559",
       "revId": "517947c85bf9506468b89b4ee402c57e911266fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbd9e19e_7107fc0e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-09-26T09:22:08Z",
+      "side": 1,
+      "message": "I asked to update the test in https://android-review.git.corp.google.com/c/platform/frameworks/base/+/3281715/comments/30dadd96_09f11726\nbecause the presubmit failed without this. It is also a revert of ag/26819569",
+      "parentUuid": "6fcadbb9_e2b1a6ef",
+      "revId": "517947c85bf9506468b89b4ee402c57e911266fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
