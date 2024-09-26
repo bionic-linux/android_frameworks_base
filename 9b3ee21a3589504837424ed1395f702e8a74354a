@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "174f94cb_8ed2e442",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2940,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-09-26T02:03:04Z",
+      "side": 1,
+      "message": "It may have side effect to skip directly.\n- Starting window may be removed too early because it only waits for the current activity.\n- The starting window size may not cover task because the configuration is still from the current activity.",
+      "revId": "9b3ee21a3589504837424ed1395f702e8a74354a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
