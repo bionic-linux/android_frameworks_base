@@ -132,6 +132,10 @@ public final class CachedAppOptimizer {
     @VisibleForTesting static final String KEY_FREEZER_BINDER_THRESHOLD =
             "freeze_binder_threshold";
 
+    @VisibleForTesting static final String
+            KEY_NO_KILL_CACHED_PROCESSES_POST_BOOT_COMPLETED_DURATION_MILLIS =
+                "no_kill_cached_processes_post_boot_completed_duration_millis";
+
     static final int UNFREEZE_REASON_NONE =
             FrameworkStatsLog.APP_FREEZE_CHANGED__UNFREEZE_REASON_V2__UFR_NONE;
     static final int UNFREEZE_REASON_ACTIVITY =
@@ -272,6 +276,9 @@ public final class CachedAppOptimizer {
 
     @VisibleForTesting static final Uri CACHED_APP_FREEZER_ENABLED_URI = Settings.Global.getUriFor(
                 Settings.Global.CACHED_APPS_FREEZER_ENABLED);
+
+    private static final long
+            DEFAULT_NO_KILL_CACHED_PROCESSES_POST_BOOT_COMPLETED_DURATION_MILLIS = 600_000;
 
     @VisibleForTesting
     interface PropertyChangedCallbackForTest {
@@ -678,6 +685,8 @@ public final class CachedAppOptimizer {
             updateMinOomAdjThrottle();
             updateMaxOomAdjThrottle();
         }
+        // Set cached processes kill duration from system property for low ram targets.
+        setAppKillProperties();
     }
 
     /**
@@ -863,6 +872,17 @@ public final class CachedAppOptimizer {
     void compactNative(CompactProfile compactProfile, int pid) {
         mCompactionHandler.sendMessage(mCompactionHandler.obtainMessage(
                 COMPACT_NATIVE_MSG, pid, compactProfile.ordinal()));
+    }
+
+    private void setAppKillProperties() {
+        int no_kill_cached_proc_post_boot_completed_duration_millis =
+                SystemProperties.getInt(
+                    "sys.no_kill_cached_proc_post_boot_completed_duration_millis",
+                    (int) DEFAULT_NO_KILL_CACHED_PROCESSES_POST_BOOT_COMPLETED_DURATION_MILLIS);
+        DeviceConfig.setProperty(
+                DeviceConfig.NAMESPACE_ACTIVITY_MANAGER,
+                    KEY_NO_KILL_CACHED_PROCESSES_POST_BOOT_COMPLETED_DURATION_MILLIS,
+                    String.valueOf(no_kill_cached_proc_post_boot_completed_duration_millis), true);
     }
 
     private AggregatedProcessCompactionStats getPerProcessAggregatedCompactStat(
