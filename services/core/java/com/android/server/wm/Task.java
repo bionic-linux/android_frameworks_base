@@ -1469,7 +1469,8 @@ class Task extends TaskFragment {
             // The starting window should keep covering its task when a pure TaskFragment is added
             // because its bounds may not fill the task.
             final ActivityRecord top = getTopMostActivity();
-            if (top != null) {
+            if (top != null && (top.getParent() == null || top.getParent().asTask() == null
+                    || !top.hasFixedRotationTransform())) {
                 top.associateStartingWindowWithTaskIfNeeded();
             }
         }
