@@ -1258,16 +1258,24 @@ public class PackageWatchdog {
 
     /** Dump status of every observer in mAllObservers. */
     public void dump(IndentingPrintWriter pw) {
+        if (Flags.synchronousRebootInRescueParty() && RescueParty.isRecoveryTriggeredReboot()) {
+            dumpInternal(pw);
+        } else {
+            synchronized (mLock) {
+                dumpInternal(pw);
+            }
+        }
+    }
+
+    private void dumpInternal(IndentingPrintWriter pw) {
         pw.println("Package Watchdog status");
         pw.increaseIndent();
-        synchronized (mLock) {
-            for (String observerName : mAllObservers.keySet()) {
-                pw.println("Observer name: " + observerName);
-                pw.increaseIndent();
-                ObserverInternal observerInternal = mAllObservers.get(observerName);
-                observerInternal.dump(pw);
-                pw.decreaseIndent();
-            }
+        for (String observerName : mAllObservers.keySet()) {
+            pw.println("Observer name: " + observerName);
+            pw.increaseIndent();
+            ObserverInternal observerInternal = mAllObservers.get(observerName);
+            observerInternal.dump(pw);
+            pw.decreaseIndent();
         }
     }
 
