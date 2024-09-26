@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7871a3c8_c7eeb9b3",
+        "filename": "services/core/java/com/android/server/wm/Task.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-09-26T10:23:42Z",
+      "side": 1,
+      "message": "This check can be omitted because the top is a descendant of this task.",
+      "range": {
+        "startLine": 1472,
+        "startChar": 32,
+        "endLine": 1472,
+        "endChar": 55
+      },
+      "revId": "d5f3f34b3c78eb7a0832debc74f18c019aa60294",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebf62118_6238e340",
+        "filename": "services/core/java/com/android/server/wm/Task.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-09-26T10:23:42Z",
+      "side": 1,
+      "message": "Why is the condition needed? Is it to avoid below case?\n```\nTask\n  \u003e Activity top\n  \u003e TaskFragment childTaskFrag\n```\nThen how about only get the top from TaskFragment?\n```\nfinal ActivityRecord top \u003d childTaskFrag.getTopMostActivity();\n```",
+      "range": {
+        "startLine": 1472,
+        "startChar": 75,
+        "endLine": 1472,
+        "endChar": 91
+      },
+      "revId": "d5f3f34b3c78eb7a0832debc74f18c019aa60294",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
