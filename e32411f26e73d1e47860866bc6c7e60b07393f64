@@ -104,6 +104,24 @@
       "parentUuid": "abf7583c_195739a6",
       "revId": "e32411f26e73d1e47860866bc6c7e60b07393f64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac52ed87_58af85c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396566
+      },
+      "writtenOn": "2024-09-27T22:26:11Z",
+      "side": 1,
+      "message": "Hi Lee and Makoto,\n\nIt would be great if we could progress with this change. Just to reiterate, this change was merged in the custom Robolectric libandroid_runtime branch 6 months ago (aosp/3003239), and has been rock-solid, running in millions of Robolectric test processes daily in Google3.",
+      "parentUuid": "f4db7501_39c97cc2",
+      "revId": "e32411f26e73d1e47860866bc6c7e60b07393f64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
