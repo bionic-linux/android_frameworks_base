@@ -1,0 +1,86 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2000ec85_128ba0cd",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-09-27T20:31:20Z",
+      "side": 1,
+      "message": "From these docs, `PROTOCOL_AND_TECHNOLOGY_ROUTE_UNSET` has the effect of keeping that particular option the same as it was before.  Is this how this API works:\n```\n// Assume the starting internal state is:\n// protocol \u003d PROTOCOL_AND_TECHNOLOGY_ROUTE_UICC\n// technology \u003d PROTOCOL_AND_TECHNOLOGY_ROUTE_UICC\n// emptyAid \u003d PROTOCOL_AND_TECHNOLOGY_ROUTE_UICC\n\noverrideRoutingTable(PROTOCOL_AND_TECHNOLOGY_ROUTE_DH, PROTOCOL_AND_TECHNOLOGY_ROUTE_DH, PROTOCOL_AND_TECHNOLOGY_ROUTE_DH)\n// resulting internal state:\n// protocol \u003d PROTOCOL_AND_TECHNOLOGY_ROUTE_DH\n// technology \u003d PROTOCOL_AND_TECHNOLOGY_ROUTE_DH\n// emptyAid \u003d PROTOCOL_AND_TECHNOLOGY_ROUTE_DH\n\n\noverrideRoutingTable(PROTOCOL_AND_TECHNOLOGY_ROUTE_UNSET, PROTOCOL_AND_TECHNOLOGY_ROUTE_UNSET, PROTOCOL_AND_TECHNOLOGY_ROUTE_ESE)\n// resulting internal state:\n// protocol \u003d PROTOCOL_AND_TECHNOLOGY_ROUTE_DH\n// technology \u003d PROTOCOL_AND_TECHNOLOGY_ROUTE_DH\n// emptyAid \u003d PROTOCOL_AND_TECHNOLOGY_ROUTE_ESE\n```\n\nSo I guess the question is, can the caller \"un-override\"?",
+      "range": {
+        "startLine": 528,
+        "startChar": 7,
+        "endLine": 532,
+        "endChar": 6
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "a3dd928a_c87620a8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 528,
+                "startChar": 0,
+                "endLine": 532,
+                "endChar": 0
+              },
+              "replacement": "     * The parameter set to {@link ProtocolAndTechnologyRoute#PROTOCOL_AND_TECHNOLOGY_ROUTE_UNSET}\n     * can be used to keep current values for that entry.\n     *\n     * At least one route should be overridden when calling this API, otherwise throw\n     * {@link IllegalArgumentException}.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4b27c1d3497bf0b3b62f581daa06bc057d473af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15cec47d_c29715db",
+        "filename": "nfc/java/android/nfc/RoutingStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-09-27T20:31:20Z",
+      "side": 1,
+      "message": "2024?",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "52b6be58_05f504b1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/RoutingStatus.java",
+              "range": {
+                "startLine": 2,
+                "startChar": 0,
+                "endLine": 3,
+                "endChar": 0
+              },
+              "replacement": " * Copyright (C) 2020 The Android Open Source Project\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4b27c1d3497bf0b3b62f581daa06bc057d473af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
