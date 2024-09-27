@@ -48,6 +48,17 @@ public class VcnTransportInfoTest {
             new VcnTransportInfo(WIFI_INFO, MIN_UDP_PORT_4500_NAT_TIMEOUT);
 
     @Test
+    public void testBuilder() {
+        final VcnTransportInfo transportInfo =
+                new VcnTransportInfo.Builder()
+                        .setMinUdpPort4500NatTimeoutSeconds(MIN_UDP_PORT_4500_NAT_TIMEOUT)
+                        .build();
+
+        assertEquals(
+                MIN_UDP_PORT_4500_NAT_TIMEOUT, transportInfo.getMinUdpPort4500NatTimeoutSeconds());
+    }
+
+    @Test
     public void testGetWifiInfo() {
         assertEquals(WIFI_INFO, WIFI_UNDERLYING_INFO.getWifiInfo());
 
