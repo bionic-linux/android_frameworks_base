@@ -195,4 +195,24 @@ public class VcnTransportInfo implements TransportInfo, Parcelable {
                     return new VcnTransportInfo[size];
                 }
             };
+
+    /** This class can be used to incrementally construct a {@link VcnTransportInfo}. */
+    public static final class Builder {
+        private int mMinUdpPort4500NatTimeoutSeconds = MIN_UDP_PORT_4500_NAT_TIMEOUT_UNSET;
+
+        /** Construct Builder */
+        public Builder() {}
+
+        /** Sets the maximum supported IKEv2/IPsec NATT keepalive timeout. */
+        Builder setMinUdpPort4500NatTimeoutSeconds(int timeoutSeconds) {
+            mMinUdpPort4500NatTimeoutSeconds = timeoutSeconds;
+            return Builder.this;
+        }
+
+        /** Build a VcnTransportInfo instance */
+        public VcnTransportInfo build() {
+            return new VcnTransportInfo(
+                    null /* wifiInfo */, INVALID_SUBSCRIPTION_ID, mMinUdpPort4500NatTimeoutSeconds);
+        }
+    }
 }
