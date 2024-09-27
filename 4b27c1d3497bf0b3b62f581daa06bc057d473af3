@@ -44,6 +44,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9c81456e_161da5e7",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-27T20:35:24Z",
+      "side": 1,
+      "message": "\u003e So I guess the question is, can the caller \"un-override\"?\n\nWe can add a new `ProtocolAndTechnologyRoute` enum for resetting back to system defaults - `PROTOCOL_AND_TECHNOLOGY_ROUTE_DEFAULT`.",
+      "parentUuid": "2000ec85_128ba0cd",
+      "range": {
+        "startLine": 528,
+        "startChar": 7,
+        "endLine": 532,
+        "endChar": 6
+      },
+      "revId": "4b27c1d3497bf0b3b62f581daa06bc057d473af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "15cec47d_c29715db",
         "filename": "nfc/java/android/nfc/RoutingStatus.java",
         "patchSetId": 12
