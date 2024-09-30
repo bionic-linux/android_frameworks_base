@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fe9e20c_006df51d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2024-09-30T17:39:21Z",
+      "side": 1,
+      "message": "asked questions on the bug - how does this intent get delivered with a null action?  With this CL it won\u0027t crash, but it will still be broken",
+      "revId": "756c030e55172c5bc9146d15077095c8c6ca853d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
