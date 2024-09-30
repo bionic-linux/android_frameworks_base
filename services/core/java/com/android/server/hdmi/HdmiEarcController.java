@@ -89,6 +89,8 @@ final class HdmiEarcController {
                         "Could not set eARC enabled to " + enabled + ". Error: ", sse.errorCode);
             } catch (RemoteException re) {
                 HdmiLogger.error("Could not set eARC enabled to " + enabled + ":. Exception: ", re);
+            } catch (NullPointerException npe) {
+                HdmiLogger.error("Could not set eARC enabled to " + enabled + ":. Exception: ", npe);
             }
         }
 
@@ -98,6 +100,9 @@ final class HdmiEarcController {
                 return mEarc.isEArcEnabled();
             } catch (RemoteException re) {
                 HdmiLogger.error("Could not read if eARC is enabled. Exception: ", re);
+                return false;
+            } catch (NullPointerException npe) {
+                HdmiLogger.error("Could not read if eARC is enabled. Exception: ", npe);
                 return false;
             }
         }
@@ -109,6 +114,8 @@ final class HdmiEarcController {
                 mEarc.setCallback(callback);
             } catch (RemoteException re) {
                 HdmiLogger.error("Could not set callback. Exception: ", re);
+            } catch (NullPointerException npe) {
+                HdmiLogger.error("Could not set callback. Exception: ", npe);
             }
         }
 
@@ -118,6 +125,9 @@ final class HdmiEarcController {
                 return mEarc.getState(portId);
             } catch (RemoteException re) {
                 HdmiLogger.error("Could not get eARC state. Exception: ", re);
+                return -1;
+            } catch (NullPointerException npe) {
+                HdmiLogger.error("Could not get eARC state. Exception: ", npe);
                 return -1;
             }
         }
@@ -129,6 +139,9 @@ final class HdmiEarcController {
             } catch (RemoteException re) {
                 HdmiLogger.error(
                         "Could not read last reported audio capabilities. Exception: ", re);
+                return null;
+            } catch (NullPointerException npe) {
+                HdmiLogger.error("Could not read last reported audio capabilities. Exception: ", npe);
                 return null;
             }
         }
