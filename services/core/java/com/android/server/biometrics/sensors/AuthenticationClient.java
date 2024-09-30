@@ -116,11 +116,14 @@ public abstract class AuthenticationClient<T, O extends AuthenticateOptions>
 
     @LockoutTracker.LockoutMode
     public int handleFailedAttempt(int userId) {
-        if (mLockoutTracker != null) {
+        final @LockoutTracker.LockoutMode int lockoutMode;
+        if (mShouldUseLockoutTracker) {
             mLockoutTracker.addFailedAttemptForUser(getTargetUserId());
+            lockoutMode = mLockoutTracker.getLockoutModeForUser(userId);
+        } else {
+            lockoutMode = getBiometricContext().getAuthSessionCoordinator()
+                    .getLockoutStateFor(getTargetUserId(), mSensorStrength);
         }
-        @LockoutTracker.LockoutMode final int lockoutMode =
-                getLockoutTracker().getLockoutModeForUser(userId);
         final PerformanceTracker performanceTracker =
                 PerformanceTracker.getInstanceForSensorId(getSensorId());
         if (lockoutMode == LockoutTracker.LOCKOUT_PERMANENT) {
