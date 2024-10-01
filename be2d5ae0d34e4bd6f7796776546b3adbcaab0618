@@ -16,6 +16,23 @@
       "message": "LGTM",
       "revId": "be2d5ae0d34e4bd6f7796776546b3adbcaab0618",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "114b8226_58697aae",
+        "filename": "core/jni/android_database_SQLiteConnection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-10-01T19:05:33Z",
+      "side": 1,
+      "message": "Will the file descriptor be closed when `mappedFile` goes out of scope?",
+      "revId": "be2d5ae0d34e4bd6f7796776546b3adbcaab0618",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
