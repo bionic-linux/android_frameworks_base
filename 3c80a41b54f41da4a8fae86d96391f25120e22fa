@@ -68,6 +68,24 @@
       "parentUuid": "6acc76e3_7a1dcc82",
       "revId": "3c80a41b54f41da4a8fae86d96391f25120e22fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1565ecf3_42470aeb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396566
+      },
+      "writtenOn": "2024-10-01T17:01:33Z",
+      "side": 1,
+      "message": "Friendly ping on this. From other conversations on aosp/3002409, it seems that these kinds of no-op small refactor changes should be OK given that SQLite is in a stable state at the moment?",
+      "parentUuid": "95b5f364_1d29dcc8",
+      "revId": "3c80a41b54f41da4a8fae86d96391f25120e22fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
