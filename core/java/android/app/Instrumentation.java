@@ -2499,6 +2499,7 @@ public class Instrumentation {
      *
      * @see UiAutomation
      */
+    @android.ravenwood.annotation.RavenwoodKeep
     public UiAutomation getUiAutomation() {
         return getUiAutomation(0);
     }
