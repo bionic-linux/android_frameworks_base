@@ -16,6 +16,23 @@
       "message": "Hi samgarg@,\n\nCould you help Dr.No review for it? It is cherry-picked from internal main to fix `15_r2 -Cts-on-gsi` issue b/369235011. And it is already included in `24Q3 release`. The more details are in b/369235011. Thanks.",
       "revId": "72b969e7c120b9b489ca02207ca3bcdc654d5d5d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40c3d1e2_6e0d9e69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1355266
+      },
+      "writtenOn": "2024-10-01T07:03:21Z",
+      "side": 1,
+      "message": "Wait for the presubmit skip is fixed. Currently, the presubmit is still skipped.",
+      "revId": "72b969e7c120b9b489ca02207ca3bcdc654d5d5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
