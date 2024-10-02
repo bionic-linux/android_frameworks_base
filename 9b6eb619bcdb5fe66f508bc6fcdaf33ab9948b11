@@ -16,6 +16,24 @@
       "message": "How are people going to test for scenarios where they have a permission v.s. don\u0027t have it? Or is that explicitly not supported because `there are no \"permissions\"` on Ravenwood?",
       "revId": "9b6eb619bcdb5fe66f508bc6fcdaf33ab9948b11",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c7a88d5_7172790d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1891746
+      },
+      "writtenOn": "2024-10-02T00:18:15Z",
+      "side": 1,
+      "message": "Testing permissions is not currently planned to be supported in Ravenwood.",
+      "parentUuid": "c076cfb3_95f7204c",
+      "revId": "9b6eb619bcdb5fe66f508bc6fcdaf33ab9948b11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
