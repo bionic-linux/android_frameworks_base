@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77308ef1_bdecf07a",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodInstrumentation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-10-02T22:09:24Z",
+      "side": 1,
+      "message": "(interesting to see Java 13 in Android code - you seem to be the fifth person in frameworks/base https://source.corp.google.com/search?q\u003dusage:%22yield%20%22%20lang:java%20f:frameworks%2Fbase\u0026sq\u003drepo:%22googleplex-android%2Fplatform%2Fsuperproject%2Fmain%22%20branch:%22main%22%09)",
+      "range": {
+        "startLine": 51,
+        "startChar": 20,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "f05e18016fb90b6ed219eca145b91e41612e7adf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
