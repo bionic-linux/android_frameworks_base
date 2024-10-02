@@ -42,6 +42,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "deff017c_943183f6",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-10-02T07:30:07Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "20a9a4f7_610f6a1e",
+      "range": {
+        "startLine": 593,
+        "startChar": 7,
+        "endLine": 593,
+        "endChar": 75
+      },
+      "revId": "790a79f9fa6949f6795c1d859a174bcafa8d352c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "75305a6c_9ef73969",
@@ -55,6 +79,30 @@
       "writtenOn": "2024-10-01T21:53:48Z",
       "side": 1,
       "message": "Do you mean `PROTOCOL_AND_TECHNOLOGY_ROUTE_UNSET` here?",
+      "range": {
+        "startLine": 923,
+        "startChar": 65,
+        "endLine": 923,
+        "endChar": 69
+      },
+      "revId": "790a79f9fa6949f6795c1d859a174bcafa8d352c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc89b52e_11db3e68",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-10-02T07:30:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75305a6c_9ef73969",
       "range": {
         "startLine": 923,
         "startChar": 65,
