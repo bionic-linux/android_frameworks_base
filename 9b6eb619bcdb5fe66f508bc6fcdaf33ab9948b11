@@ -69,6 +69,24 @@
       "message": "Do you want to allow `getAdoptedShellPermissions()` as well, or you explicitly want that to keep being unsupported? Asking because that\u0027s also part of the adopt-shell-permission API despite being less used. An interesting case is to prevent nested \nadopt calls which I just found at https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:packages/modules/Connectivity/staticlibs/testutils/devicetests/com/android/testutils/TestPermissionUtil.kt;l\u003d48;drc\u003da19f85124e4deff0432565183a53efef81b2ca9c .",
       "revId": "9b6eb619bcdb5fe66f508bc6fcdaf33ab9948b11",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8bf49dc_1dca76d9",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodInstrumentation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1891746
+      },
+      "writtenOn": "2024-10-02T22:00:54Z",
+      "side": 1,
+      "message": "Thanks, added some \"emulation\" for shell permissions API to support `getAdoptedShellPermissions()`",
+      "parentUuid": "3e1d234a_4908433f",
+      "revId": "9b6eb619bcdb5fe66f508bc6fcdaf33ab9948b11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
