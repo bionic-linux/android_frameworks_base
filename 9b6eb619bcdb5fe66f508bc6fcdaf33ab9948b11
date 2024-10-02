@@ -34,6 +34,41 @@
       "parentUuid": "c076cfb3_95f7204c",
       "revId": "9b6eb619bcdb5fe66f508bc6fcdaf33ab9948b11",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5153b7a5_871157a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-10-02T01:30:53Z",
+      "side": 1,
+      "message": "Acknowledged, given that you mentioned in chat this is to unblock progress because adopt/drop shell permission APIs are used widely in a lot of places.",
+      "parentUuid": "9c7a88d5_7172790d",
+      "revId": "9b6eb619bcdb5fe66f508bc6fcdaf33ab9948b11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e1d234a_4908433f",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodInstrumentation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-10-02T01:30:53Z",
+      "side": 1,
+      "message": "Do you want to allow `getAdoptedShellPermissions()` as well, or you explicitly want that to keep being unsupported? Asking because that\u0027s also part of the adopt-shell-permission API despite being less used. An interesting case is to prevent nested \nadopt calls which I just found at https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:packages/modules/Connectivity/staticlibs/testutils/devicetests/com/android/testutils/TestPermissionUtil.kt;l\u003d48;drc\u003da19f85124e4deff0432565183a53efef81b2ca9c .",
+      "revId": "9b6eb619bcdb5fe66f508bc6fcdaf33ab9948b11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
