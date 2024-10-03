@@ -586,6 +586,7 @@ final class SettingsState {
                                 flag.getPackageName(),
                                 flag.getFlagName(),
                                 flag.getServerFlagValue(),
+                                false,
                                 false);
                     }
 
@@ -595,7 +596,8 @@ final class SettingsState {
                                 flag.getPackageName(),
                                 flag.getFlagName(),
                                 flag.getLocalFlagValue(),
-                                true);
+                                true,
+                                false);
                     }
                 }
 
