@@ -24,7 +24,6 @@ import static com.android.ravenwood.common.RavenwoodCommonUtils.RAVENWOOD_VERSIO
 import static org.junit.Assert.assertThrows;
 
 import android.app.ActivityManager;
-import android.app.Instrumentation;
 import android.app.ResourcesManager;
 import android.content.res.Resources;
 import android.os.Binder;
@@ -260,8 +259,7 @@ public class RavenwoodRuntimeEnvironmentController {
         config.mTargetContext = targetContext;
 
         // Prepare other fields.
-        config.mInstrumentation = new Instrumentation();
-        config.mInstrumentation.basicInit(config.mInstContext, config.mTargetContext);
+        config.mInstrumentation = new RavenwoodInstrumentation(instContext, targetContext);
         InstrumentationRegistry.registerInstance(config.mInstrumentation, Bundle.EMPTY);
 
         RavenwoodSystemServer.init(config);
@@ -300,12 +298,12 @@ public class RavenwoodRuntimeEnvironmentController {
         config.mInstrumentation = null;
         if (config.mInstContext != null) {
             ((RavenwoodContext) config.mInstContext).cleanUp();
+            config.mInstContext = null;
         }
         if (config.mTargetContext != null) {
             ((RavenwoodContext) config.mTargetContext).cleanUp();
+            config.mTargetContext = null;
         }
-        config.mInstContext = null;
-        config.mTargetContext = null;
 
         if (config.mProvideMainThread) {
             Looper.getMainLooper().quit();
