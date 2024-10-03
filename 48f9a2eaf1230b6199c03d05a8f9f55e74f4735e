@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cfe79da_a5dc070e",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodInstrumentation.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-03T18:59:01Z",
+      "side": 1,
+      "message": "So just you know -- by default we should be avoiding creating a sublcass like this, in order to make sure ravenwood will run as close to the production code as possible. For now we have few exceptions (or maybe only one?) -- RavenwoodContext because Context is such as hairy beast. (But eventually we _want to_ remove and use the real ContextImpl, etc)\n\nOne of the advantages of Ravenwood over Robo is the ravenwood specific code is next to the original code, so it\u0027ll be easier to maintain. (As opposed to Robo\u0027s shadows.) So we should eventually move all the redirect classes to the real directory.\n\n`Instrumentation` is a lot simpler, so let\u0027s not have a subclass. Instead, let\u0027s inject the UiAutomation instance via `basicInit()`.",
+      "fixSuggestions": [
+        {
+          "fixId": "482beb97_b009fc54",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodInstrumentation.java",
+              "range": {
+                "startLine": 33,
+                "startChar": 0,
+                "endLine": 33,
+                "endChar": 0
+              },
+              "replacement": "/**\n * A subclass of {@link Instrumentation} that provides a mock {@link UiAutomation}\n * for testing.\n */\n"
+            }
+          ]
+        }
+      ],
+      "revId": "48f9a2eaf1230b6199c03d05a8f9f55e74f4735e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7df45138_64e65fd6",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodInstrumentation.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-03T18:59:01Z",
+      "side": 1,
+      "message": "Oh, I believe you can mix the default answer with the standard syntax, no?\n\nSo this one should just call `HostTestUtils.onThrowMethodCalled()`, and use the standard mockito syntax for adoptShellPermissionIdentity(), etc, which will give you type-safety and IDE recognition. (e.g. IJ\u0027s \"show usage\" will show them.)",
+      "fixSuggestions": [
+        {
+          "fixId": "90715179_d2008aca",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodInstrumentation.java",
+              "range": {
+                "startLine": 45,
+                "startChar": 0,
+                "endLine": 57,
+                "endChar": 0
+              },
+              "replacement": "                case \"adoptShellPermissionIdentity\" -\u003e adoptShellPermissionIdentity(invocation);\n                case \"dropShellPermissionIdentity\" -\u003e dropShellPermissionIdentity();\n"
+            },
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodInstrumentation.java",
+              "range": {
+                "startLine": 64,
+                "startChar": 0,
+                "endLine": 64,
+                "endChar": 0
+              },
+              "replacement": "\n        private Object adoptShellPermissionIdentity(InvocationOnMock invocation) {\n            if (invocation.getArguments().length \u003d\u003d 0 || invocation.getArgument(0) \u003d\u003d null) {\n                mAdoptedPermissions \u003d UiAutomation.ALL_PERMISSIONS;\n            } else {\n                mAdoptedPermissions \u003d (Set) Set.of(invocation.getArguments());\n            }\n            yield null;\n        }\n\n        private Object dropShellPermissionIdentity() {\n            mAdoptedPermissions \u003d Collections.emptySet();\n            yield null;\n        }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "48f9a2eaf1230b6199c03d05a8f9f55e74f4735e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fa57895_90648537",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodInstrumentation.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-03T18:59:01Z",
+      "side": 1,
+      "message": "Let\u0027s leave a TODO saying \"use the real UiAutomation class instead of a mock\"",
+      "fixSuggestions": [
+        {
+          "fixId": "edf5a803_88a15fa8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodInstrumentation.java",
+              "range": {
+                "startLine": 68,
+                "startChar": 0,
+                "endLine": 68,
+                "endChar": 0
+              },
+              "replacement": "        // TODO(b/280451111): use the real UiAutomation class instead of a mock\n"
+            }
+          ]
+        }
+      ],
+      "revId": "48f9a2eaf1230b6199c03d05a8f9f55e74f4735e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
