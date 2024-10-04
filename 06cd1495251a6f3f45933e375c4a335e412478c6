@@ -22,6 +22,30 @@
       },
       "revId": "06cd1495251a6f3f45933e375c4a335e412478c6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f61eef83_425d3848",
+        "filename": "tests/Tracing/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1436778
+      },
+      "writtenOn": "2024-10-04T11:22:43Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it be `libs: [\"androidx.test.runner\"],` instead?",
+      "parentUuid": "5620990c_3efcfb69",
+      "range": {
+        "startLine": 18,
+        "startChar": 12,
+        "endLine": 18,
+        "endChar": 31
+      },
+      "revId": "06cd1495251a6f3f45933e375c4a335e412478c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
