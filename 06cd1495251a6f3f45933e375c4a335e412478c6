@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5620990c_3efcfb69",
+        "filename": "tests/Tracing/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1772825
+      },
+      "writtenOn": "2024-10-04T11:15:05Z",
+      "side": 1,
+      "message": "can I not use this in aosp?",
+      "range": {
+        "startLine": 18,
+        "startChar": 12,
+        "endLine": 18,
+        "endChar": 31
+      },
+      "revId": "06cd1495251a6f3f45933e375c4a335e412478c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
