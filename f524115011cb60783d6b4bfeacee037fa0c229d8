@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91839f83_9f9aeff6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-04T21:48:14Z",
+      "side": 1,
+      "message": "Actually I already have some tests specific for mockito.\n\n\nhttps://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:frameworks/base/ravenwood/mockito/test/com/android/ravenwoodtest/mockito/\n\nYou can keep yours, but let\u0027s clean it up later at some point.",
+      "revId": "f524115011cb60783d6b4bfeacee037fa0c229d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
