@@ -331,6 +331,8 @@ message SystemMessage {
     NOTE_NETWORK_PARTIAL_CONNECTIVITY = 745;
     // Private DNS is broken in strict mode
     NOTE_NETWORK_PRIVATE_DNS_BROKEN = 746;
+    // Data was blocked at satellite network
+    NOTE_NETWORK_SATELLITE_DATA_BLOCKED = 747;
 
     // Notify the user that their work profile has been deleted
     // Package: android
