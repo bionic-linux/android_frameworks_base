@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f6dea90_1b83399b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2024-10-08T08:17:21Z",
+      "side": 1,
+      "message": "The string looks good to me, but just wanted to ask jiyong\u0027s opinion about that.",
+      "revId": "c6cea4efab8b3f615fb86dc4ba6cf5be738bef8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff3ed175_b675189a",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2024-10-08T08:17:21Z",
+      "side": 1,
+      "message": "nits: capitalize?",
+      "range": {
+        "startLine": 825,
+        "startChar": 56,
+        "endLine": 825,
+        "endChar": 61
+      },
+      "revId": "c6cea4efab8b3f615fb86dc4ba6cf5be738bef8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
