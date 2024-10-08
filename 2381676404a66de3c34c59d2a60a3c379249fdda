@@ -16,6 +16,24 @@
       "message": "Well, this did not work as intended, sorry about that.",
       "revId": "2381676404a66de3c34c59d2a60a3c379249fdda",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "185d3379_0d886fb6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2024-10-08T11:25:28Z",
+      "side": 1,
+      "message": "From what I can see, there are issues with large screen devices, in both portrait and landscape orientations.",
+      "parentUuid": "a43be4c2_50ebaf52",
+      "revId": "2381676404a66de3c34c59d2a60a3c379249fdda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
