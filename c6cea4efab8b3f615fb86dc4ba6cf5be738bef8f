@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "79db735c_f3d40390",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2024-10-08T08:25:00Z",
+      "side": 1,
+      "message": "Ha! I didn\u0027t know this has existed.",
+      "range": {
+        "startLine": 817,
+        "startChar": 0,
+        "endLine": 820,
+        "endChar": 102
+      },
+      "revId": "c6cea4efab8b3f615fb86dc4ba6cf5be738bef8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff3ed175_b675189a",
         "filename": "packages/SettingsLib/res/values/strings.xml",
         "patchSetId": 2
@@ -36,6 +59,29 @@
         "startChar": 56,
         "endLine": 825,
         "endChar": 61
+      },
+      "revId": "c6cea4efab8b3f615fb86dc4ba6cf5be738bef8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4eb24426_64e51d61",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2024-10-08T08:25:00Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this part. It\u0027s an impl detail.",
+      "range": {
+        "startLine": 825,
+        "startChar": 70,
+        "endLine": 825,
+        "endChar": 98
       },
       "revId": "c6cea4efab8b3f615fb86dc4ba6cf5be738bef8f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
