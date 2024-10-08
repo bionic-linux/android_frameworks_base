@@ -67,6 +67,9 @@ public class RemoteProvisioningService extends SystemService {
 
         @Override
         public void onError(Exception error) {
+            if (mCallback == null) {
+                return;
+            }
             try {
                 mCallback.onError(error.toString());
             } catch (RemoteException e) {
