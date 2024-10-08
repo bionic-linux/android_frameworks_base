@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "faea2893_305dc5bf",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2024-10-08T17:25:04Z",
+      "side": 1,
+      "message": "How is this even possible? Do you have a scenario or bug that has more info on why this is needed?\n\nThe only call to the `RegistrationReceiver` is in a binder impl [here](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java;drc\u003d996c57016449dc4581752307eed14da9926eb82d;l\u003d99). Since the callback parameter is provided via binder, I don\u0027t see how we could ever get a null callback.\n\nThis makes me wonder if there\u0027s a deeper bug involved here.",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 13
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "2d895408_fbdcfe4f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+              "range": {
+                "startLine": 70,
+                "startChar": 0,
+                "endLine": 73,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "b45243ee8b521dc0b9a1701c465337bb32bb81e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
