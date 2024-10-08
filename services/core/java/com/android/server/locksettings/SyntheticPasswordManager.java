@@ -195,8 +195,6 @@ class SyntheticPasswordManager {
         // ERROR: password / token fails verification
         // RETRY: password / token verification is throttled at the moment.
         @Nullable public VerifyCredentialResponse gkResponse;
-        // For unlockLskfBasedProtector() this is set to true if the protector uses Weaver.
-        public boolean usedWeaver;
     }
 
     /**
@@ -532,11 +530,6 @@ class SyntheticPasswordManager {
     private boolean isDeviceProvisioned() {
         return Settings.Global.getInt(mContext.getContentResolver(),
                 Settings.Global.DEVICE_PROVISIONED, 0) != 0;
-    }
-
-    private boolean isWeaverDisabledOnUnsecuredUsers() {
-        return mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_disableWeaverOnUnsecuredUsers);
     }
 
     @VisibleForTesting
@@ -1018,13 +1011,7 @@ class SyntheticPasswordManager {
 
         Slogf.i(TAG, "Creating LSKF-based protector %016x for user %d", protectorId, userId);
 
-        final IWeaver weaver;
-        if (credential.isNone() && isWeaverDisabledOnUnsecuredUsers()) {
-            weaver = null;
-            Slog.w(TAG, "Not using Weaver for unsecured user (disabled by config)");
-        } else {
-            weaver = getWeaverService();
-        }
+        final IWeaver weaver = getWeaverService();
         if (weaver != null) {
             // Weaver is available, so make the protector use it to verify the LSKF.  Do this even
             // if the LSKF is empty, as that gives us support for securely deleting the protector.
@@ -1417,7 +1404,6 @@ class SyntheticPasswordManager {
         int weaverSlot = loadWeaverSlot(protectorId, userId);
         if (weaverSlot != INVALID_WEAVER_SLOT) {
             // Protector uses Weaver to verify the LSKF
-            result.usedWeaver = true;
             final IWeaver weaver = getWeaverService();
             if (weaver == null) {
                 Slog.e(TAG, "Protector uses Weaver, but Weaver is unavailable");
