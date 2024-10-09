@@ -34,6 +34,24 @@
       "parentUuid": "7b28ef37_fa21caaf",
       "revId": "d03ff3b36d32ba3b9a3737d518d4d658a4bce836",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "317d398a_fbb4cf3f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1867318
+      },
+      "writtenOn": "2024-10-09T20:13:24Z",
+      "side": 1,
+      "message": "Discussed offline. Moved the DesktopModeFlags out of aconfig directory.",
+      "parentUuid": "59484d17_3b140415",
+      "revId": "d03ff3b36d32ba3b9a3737d518d4d658a4bce836",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
