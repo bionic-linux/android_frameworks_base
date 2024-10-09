@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d754272_f8e7a2fd",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2024-10-09T15:10:58Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "79db735c_f3d40390",
+      "range": {
+        "startLine": 817,
+        "startChar": 0,
+        "endLine": 820,
+        "endChar": 102
+      },
+      "revId": "c6cea4efab8b3f615fb86dc4ba6cf5be738bef8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff3ed175_b675189a",
@@ -77,6 +101,30 @@
       "writtenOn": "2024-10-08T08:25:00Z",
       "side": 1,
       "message": "I don\u0027t think we need this part. It\u0027s an impl detail.",
+      "range": {
+        "startLine": 825,
+        "startChar": 70,
+        "endLine": 825,
+        "endChar": 98
+      },
+      "revId": "c6cea4efab8b3f615fb86dc4ba6cf5be738bef8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf77a86b_eb62a189",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2024-10-09T15:10:58Z",
+      "side": 1,
+      "message": "I thought that this makes ferrochrome extra clear -- otherwise users may think that \u0027This linux style terminal allows access to the Android device as a whole\u0027. What do you think?",
+      "parentUuid": "4eb24426_64e51d61",
       "range": {
         "startLine": 825,
         "startChar": 70,
