@@ -1678,13 +1678,14 @@ class ActivityStarter {
             // no-user-leaving implies not entering PiP.
             transitionController.setCanPipOnFinish(false /* canPipOnFinish */);
         }
+        final boolean isBalBlock = mBalCode == BAL_BLOCK && !mDoResume;
         if (newTransition != null) {
             transitionController.requestStartTransition(newTransition,
                     mTargetTask == null ? started.getTask() : mTargetTask,
                     remoteTransition, null /* displayChange */);
         } else if (result == START_SUCCESS && mStartActivity.isState(RESUMED)) {
             // Do nothing if the activity is started and is resumed directly.
-        } else if (isStarted) {
+        } else if (isStarted && !isBalBlock) {
             // Make the collecting transition wait until this request is ready.
             transitionController.setReady(started, false);
         }
