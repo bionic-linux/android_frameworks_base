@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73593bd1_757e98df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2024-10-09T18:00:21Z",
+      "side": 1,
+      "message": "Can you expand this comment to explain why making the change? This is just saying what the change is.",
+      "range": {
+        "startLine": 7,
+        "startChar": 38,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "5018a44d19814bde573ee3d7adc752d071ec6e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72639382_b47ee51f",
+        "filename": "services/core/java/com/android/server/wm/ActivityStarter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1687,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2024-10-09T18:00:21Z",
+      "side": 1,
+      "message": "Most of the time we still need to wait for draw even when this is false (ie. launchBehind or transient-launch) so you probably need something more specific to your problem.",
+      "range": {
+        "startLine": 1687,
+        "startChar": 32,
+        "endLine": 1687,
+        "endChar": 41
+      },
+      "revId": "5018a44d19814bde573ee3d7adc752d071ec6e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
