@@ -157,6 +157,54 @@
       },
       "revId": "c6cea4efab8b3f615fb86dc4ba6cf5be738bef8f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d6c73b9_cccf8760",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2024-10-10T04:06:40Z",
+      "side": 1,
+      "message": "It says:\n\n\u003e Linux development environment\n\u003e \u003e Run Linux tools, editors, and IDEs on your Chromebook. [[Turn on]]\n\nsource: https://chromeos.dev/en/linux/setup\n\n\nLet me follow the pattern.",
+      "parentUuid": "21e5c7db_d130ceab",
+      "range": {
+        "startLine": 825,
+        "startChar": 70,
+        "endLine": 825,
+        "endChar": 98
+      },
+      "revId": "c6cea4efab8b3f615fb86dc4ba6cf5be738bef8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "691ac564_bff6d773",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2024-10-10T04:06:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff3ed175_b675189a",
+      "range": {
+        "startLine": 825,
+        "startChar": 56,
+        "endLine": 825,
+        "endChar": 61
+      },
+      "revId": "c6cea4efab8b3f615fb86dc4ba6cf5be738bef8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
