@@ -133,6 +133,30 @@
       },
       "revId": "c6cea4efab8b3f615fb86dc4ba6cf5be738bef8f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21e5c7db_d130ceab",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2024-10-10T01:40:33Z",
+      "side": 1,
+      "message": "I think we could basically copy/paste the description from CrOS.",
+      "parentUuid": "bf77a86b_eb62a189",
+      "range": {
+        "startLine": 825,
+        "startChar": 70,
+        "endLine": 825,
+        "endChar": 98
+      },
+      "revId": "c6cea4efab8b3f615fb86dc4ba6cf5be738bef8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
