@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75e26660_0e874c56",
+        "filename": "services/core/java/com/android/server/wm/ActivityStarter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1688,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2024-10-10T15:30:09Z",
+      "side": 1,
+      "message": "nit: would prefer inline the condition, it\u0027s pretty simple so should fit here just fine.",
+      "range": {
+        "startLine": 1688,
+        "startChar": 33,
+        "endLine": 1688,
+        "endChar": 43
+      },
+      "revId": "44348d5e6d43c43d02b03974a9ba69158469ed51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
