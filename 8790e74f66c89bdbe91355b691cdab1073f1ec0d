@@ -34,6 +34,41 @@
       "parentUuid": "97355e01_246c2d75",
       "revId": "8790e74f66c89bdbe91355b691cdab1073f1ec0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95870c2a_956dd02a",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 7771,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-10-11T21:50:48Z",
+      "side": 1,
+      "message": "Hm. Okay, but just one caveat: for the self-instrument case, will there be any issue, if this line removes the application from its list but it may actually still need it?",
+      "fixSuggestions": [
+        {
+          "fixId": "20e2f5eb_509af972",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/app/ActivityThread.java",
+              "range": {
+                "startLine": 7774,
+                "startChar": 0,
+                "endLine": 7783,
+                "endChar": 0
+              },
+              "replacement": "         mInstrumentation.onDestroy();\n         mInstrumentationPackageName \u003d null;\n         mInstrumentationAppDir \u003d null;\n         mInstrumentationSplitAppDirs \u003d null;\n         mInstrumentationLibDir \u003d null;\n         mInstrumentedAppDir \u003d null;\n         mInstrumentedSplitAppDirs \u003d null;\n         mInstrumentedLibDir \u003d null;\n         mInstrumentingWithoutRestart \u003d false;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "8790e74f66c89bdbe91355b691cdab1073f1ec0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
