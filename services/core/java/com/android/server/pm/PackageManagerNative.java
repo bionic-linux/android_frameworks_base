@@ -194,4 +194,10 @@ final class PackageManagerNative extends IPackageManagerNative.Stub {
     public StagedApexInfo getStagedApexInfo(String moduleName) {
         return mPm.mInstallerService.getStagingManager().getStagedApexInfo(moduleName);
     }
+
+    @Override
+    public StagedApexInfo[] getStagedApexInfos() {
+        return mPm.mInstallerService.getStagingManager().getStagedApexInfos().toArray(
+                new StagedApexInfo[0]);
+    }
 }

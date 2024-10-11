@@ -613,6 +613,18 @@ public class StagedInstallInternalTest extends BaseHostJUnit4Test {
 
     @Test
     @LargeTest
+    public void testGetStagedApexInfos() throws Exception {
+        assumeTrue("Device does not support updating APEX",
+                mHostUtils.isApexUpdateSupported());
+
+        pushTestApex(APEXD_TEST_APEX);
+        getDevice().reboot();
+
+        runPhase("testGetStagedApexInfos");
+    }
+
+    @Test
+    @LargeTest
     public void testGetAppInfo_flagTestOnlyIsSet() throws Exception {
         assumeTrue("Device does not support updating APEX",
                 mHostUtils.isApexUpdateSupported());

@@ -627,6 +627,14 @@ public class StagingManagerTest {
         verify(mApexManager, times(2)).getStagedApexInfos(any());
     }
 
+    private StagedApexInfo[] fakeStagedApexInfos(String... moduleNames) {
+        return Arrays.stream(moduleNames).map(moduleName -> {
+            StagedApexInfo info = new StagedApexInfo();
+            info.moduleName = moduleName;
+            return info;
+        }).toArray(StagedApexInfo[]::new);
+    }
+
     @Test
     public void registeredStagedApexObserverIsNotifiedOnPreRebootVerificationCompletion()
             throws Exception {
@@ -648,6 +656,8 @@ public class StagingManagerTest {
             verify(observer, times(1)).onApexStaged(argumentCaptor.capture());
             assertThat(argumentCaptor.getValue().stagedApexModuleNames).isEqualTo(
                     new String[]{"239"});
+            assertThat(argumentCaptor.getValue().stagedApexInfos).isEqualTo(
+                    fakeStagedApexInfos("239"));
         }
 
         // Create another staged session and verify observers are notified of union
@@ -664,6 +674,8 @@ public class StagingManagerTest {
             verify(observer, times(1)).onApexStaged(argumentCaptor.capture());
             assertThat(argumentCaptor.getValue().stagedApexModuleNames).isEqualTo(
                     new String[]{"239", "240"});
+            assertThat(argumentCaptor.getValue().stagedApexInfos).isEqualTo(
+                    fakeStagedApexInfos("239", "240"));
         }
 
         // Finally, verify that once unregistered, observer is not notified

@@ -809,6 +809,7 @@ public class StagingManager {
     /**
      * Returns ApexInfo about APEX contained inside the session as a {@code Map<String, ApexInfo>},
      * where the key of the map is the module name of the ApexInfo.
+     * TODO(370712193) return List<>
      *
      * Returns an empty map if there is any error.
      */
@@ -892,11 +893,39 @@ public class StagingManager {
         return null;
     }
 
+    List<StagedApexInfo> getStagedApexInfos() {
+        List<StagedApexInfo> result = new ArrayList<>();
+        synchronized (mStagedSessions) {
+            for (int i = 0; i < mStagedSessions.size(); i++) {
+                final StagedSession session = mStagedSessions.valueAt(i);
+                if (!session.isSessionReady() || session.isDestroyed()
+                        || session.hasParentSessionId() || !session.containsApexSession()) {
+                    continue;
+                }
+                getStagedApexInfos(session).values().stream().map(ai -> {
+                    StagedApexInfo info = new StagedApexInfo();
+                    info.moduleName = ai.moduleName;
+                    info.diskImagePath = ai.modulePath;
+                    info.versionCode = ai.versionCode;
+                    info.versionName = ai.versionName;
+                    info.hasClassPathJars = ai.hasClassPathJars;
+                    return info;
+                }).forEach(result::add);
+            }
+        }
+        return result;
+    }
+
     private void notifyStagedApexObservers() {
         synchronized (mStagedApexObservers) {
+            List<StagedApexInfo> stagedApexInfos = getStagedApexInfos();
+            ApexStagedEvent event = new ApexStagedEvent();
+            // TODO(370712193) remove once all observers migrate to `stagedApexInfos`
+            event.stagedApexModuleNames = stagedApexInfos.stream().map(info -> info.moduleName)
+                        .toArray(String[]::new);
+            event.stagedApexInfos =
+                    stagedApexInfos.toArray(new StagedApexInfo[stagedApexInfos.size()]);
             for (IStagedApexObserver observer : mStagedApexObservers) {
-                ApexStagedEvent event = new ApexStagedEvent();
-                event.stagedApexModuleNames = getStagedApexModuleNames().toArray(new String[0]);
                 try {
                     observer.onApexStaged(event);
                 } catch (RemoteException re) {

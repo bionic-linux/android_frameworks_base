@@ -545,6 +545,30 @@ public class StagedInstallInternalTest {
         InstallUtils.openPackageInstallerSession(sessionId).abandon();
     }
 
+    private StagedApexInfo findStagedApexInfo(StagedApexInfo[] infos, String moduleName) {
+        for (StagedApexInfo info: infos) {
+            if (info.moduleName.equals(TEST_APEX_PACKAGE_NAME)) {
+                return info;
+            }
+        }
+        return null;
+    }
+
+    @Test
+    public void testGetStagedApexInfos() throws Exception {
+        // Not found before staging
+        StagedApexInfo[] result = getPackageManagerNative().getStagedApexInfos();
+        assertThat(findStagedApexInfo(result, TEST_APEX_PACKAGE_NAME)).isNull();
+        // Stage an apex
+        int sessionId = Install.single(TEST_APEX_CLASSPATH).setStaged().commit();
+        // Query proper module name
+        result = getPackageManagerNative().getStagedApexInfos();
+        StagedApexInfo found = findStagedApexInfo(result, TEST_APEX_PACKAGE_NAME);
+        assertThat(found).isNotNull();
+        assertThat(found.hasClassPathJars).isTrue();
+        InstallUtils.openPackageInstallerSession(sessionId).abandon();
+    }
+
     @Test
     public void testGetAppInfo_flagTestOnlyIsSet() throws Exception {
         final PackageManager pm =
