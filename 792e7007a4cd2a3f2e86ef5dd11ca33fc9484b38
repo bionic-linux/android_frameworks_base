@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7629101_3ad19c8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1547934
+      },
+      "writtenOn": "2024-10-11T13:54:57Z",
+      "side": 1,
+      "message": "We will merge this change once the change https://android-review.git.corp.google.com/c/platform/cts/+/3305259 is live.",
+      "revId": "792e7007a4cd2a3f2e86ef5dd11ca33fc9484b38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
