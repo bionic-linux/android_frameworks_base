@@ -87,6 +87,24 @@
       "parentUuid": "95870c2a_956dd02a",
       "revId": "8790e74f66c89bdbe91355b691cdab1073f1ec0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1586a031_fc3a6e56",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 7771,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-10-11T23:13:52Z",
+      "side": 1,
+      "message": "I understand, I meant the self-instrumentation case. Plus it could be used in \"instrument without restart\". So think about this:\n\nAt process start, we firstly called VMDebug.addApplication(package) and then during the initialization of instrumentation, we actually called that again. If whoever receives the callback \"AddApplication()\", they might be ignoring the 2nd one because it\u0027s the same package. And later when we stop the instrumentation, the callback interface might be thinking it should remove the package from its booking system. After that its booking system will be empty, but at this moment the process is still alive, if the app wants to send debug info back, will there be any problem?",
+      "parentUuid": "3fd62e9b_17ba7871",
+      "revId": "8790e74f66c89bdbe91355b691cdab1073f1ec0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
