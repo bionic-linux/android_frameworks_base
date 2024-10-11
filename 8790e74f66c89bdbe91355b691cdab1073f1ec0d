@@ -69,6 +69,24 @@
       ],
       "revId": "8790e74f66c89bdbe91355b691cdab1073f1ec0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fd62e9b_17ba7871",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 7771,
+      "author": {
+        "id": 1083168
+      },
+      "writtenOn": "2024-10-11T21:57:45Z",
+      "side": 1,
+      "message": "This method is called when instrumentation ends. At which point the instrumentation app is removed from this process. Below you can see how `mInstrumentationPackageName1 is set to null so ` it may actually still need it` is not possible. \n\nIt is guaranteed that instrumentation is no longer needed by ActivityThread, so VMDebug should tell adbd it is gone.",
+      "parentUuid": "95870c2a_956dd02a",
+      "revId": "8790e74f66c89bdbe91355b691cdab1073f1ec0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
