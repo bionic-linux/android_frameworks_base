@@ -16,6 +16,24 @@
       "message": "We have called the `addApplicaiton()` above, but why do we need to call `addApplication()` again in the `initInstrumentation()`?",
       "revId": "8790e74f66c89bdbe91355b691cdab1073f1ec0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e0d2842_2e33db44",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 7430,
+      "author": {
+        "id": 1083168
+      },
+      "writtenOn": "2024-10-11T18:09:00Z",
+      "side": 1,
+      "message": "The addApplication above declares the app package name (e.g.: `my.app.com`). In most usecases, there is only one app in a process.\n\nBut when you run instrumented tests (initInstrumentation) you request another app (e.g.: `test.my.app.com`) to be brought into this process so we need to call it again.\n\nAn app process can host many apks. You can even start an app and tell it to run within another app process via `AndroidManifest.xml`\u0027s `android:process (that is why we also call addApplication in LoadedApk.java).",
+      "parentUuid": "97355e01_246c2d75",
+      "revId": "8790e74f66c89bdbe91355b691cdab1073f1ec0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
