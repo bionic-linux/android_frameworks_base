@@ -8112,7 +8112,7 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
     }
 
     void restoreAndPostInstall(InstallRequest request) {
-        mInstallPackageHelper.restoreAndPostInstall(request);
+        mBackgroundHandler.post(() -> mInstallPackageHelper.restoreAndPostInstall(request));
     }
 
     Pair<Integer, String> verifyReplacingVersionCode(@NonNull PackageInfoLite pkgLite,
