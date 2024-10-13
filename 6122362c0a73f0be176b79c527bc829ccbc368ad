@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f78ebd44_7aad18a4",
+        "filename": "services/core/java/com/android/server/pm/StagingManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1355266
+      },
+      "writtenOn": "2024-10-13T07:09:44Z",
+      "side": 1,
+      "message": "nit: could you add java doc for it? Thanks.",
+      "range": {
+        "startLine": 841,
+        "startChar": 4,
+        "endLine": 841,
+        "endChar": 47
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5f3189fe_a5ea3180",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/pm/StagingManager.java",
+              "range": {
+                "startLine": 841,
+                "startChar": 0,
+                "endLine": 842,
+                "endChar": 0
+              },
+              "replacement": "    private List\u003cStagedApexInfo\u003e getStagedApexInfos() {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6122362c0a73f0be176b79c527bc829ccbc368ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
