@@ -141,6 +141,30 @@
       },
       "revId": "18950479acb0c2b5d097400656862aad6267f67b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e53c8df_974ebe56",
+        "filename": "services/core/java/com/android/server/wm/Task.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5879,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2024-10-14T05:55:59Z",
+      "side": 1,
+      "message": "Thanks for the feedback! I can understand the benifit of doing so.\n\nWondering how do you think about my suggestion above (checks `tr.isAttached` here and verify the parent-child relationship in `#canMoveTaskToBack`)?",
+      "parentUuid": "5d877585_41962815",
+      "range": {
+        "startLine": 5879,
+        "startChar": 29,
+        "endLine": 5879,
+        "endChar": 39
+      },
+      "revId": "18950479acb0c2b5d097400656862aad6267f67b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
