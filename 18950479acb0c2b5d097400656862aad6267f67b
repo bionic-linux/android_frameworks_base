@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbb950f6_25a8e57e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2024-10-14T04:19:12Z",
+      "side": 1,
+      "message": "Please remove the internal branch name from AOSP.",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "18950479acb0c2b5d097400656862aad6267f67b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77b3b81b_788154dd",
+        "filename": "services/core/java/com/android/server/wm/Task.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5879,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2024-10-14T04:19:12Z",
+      "side": 1,
+      "message": "Should we check `tr.isAttached` here instead?  Adding @erosky@google.com",
+      "range": {
+        "startLine": 5879,
+        "startChar": 29,
+        "endLine": 5879,
+        "endChar": 39
+      },
+      "revId": "18950479acb0c2b5d097400656862aad6267f67b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
