@@ -806,7 +806,7 @@ public final class ProcessList {
     /**
      * All of the applications we currently have running organized by name.
      * The keys are strings of the application package name (as
-     * returned by the package manager), and the keys are ApplicationRecord
+     * returned by the package manager), and the values are ApplicationRecord
      * objects.
      */
     @CompositeRWLock({"mService", "mProcLock"})
