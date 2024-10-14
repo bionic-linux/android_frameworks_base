@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bccdd63c_d7538ce8",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-10-14T17:38:14Z",
+      "side": 1,
+      "message": "In the very beginning of Android releases, we were tracking package names-\u003eApplicationRecord, but this hasn\u0027t been the case for a very long time. We should update it to reflect the current logic.\n\nI\u0027d recommend:\n```\nAll of the processes that are running organized by name. The keys are process\nnames and the values are the associated ProcessRecord objects.\n```",
+      "range": {
+        "startLine": 807,
+        "startChar": 7,
+        "endLine": 810,
+        "endChar": 15
+      },
+      "revId": "18fbffa04a9d4f3dd291dcbdbd00b8f93b4589f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
