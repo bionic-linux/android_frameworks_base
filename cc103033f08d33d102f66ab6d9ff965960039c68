@@ -16,6 +16,23 @@
       "message": "Hey Billy and Michael, please take a look at the change of BinaryTransparencyService.java.",
       "revId": "cc103033f08d33d102f66ab6d9ff965960039c68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5cca93a0_9ac1bdcd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1294681
+      },
+      "writtenOn": "2024-10-14T18:34:36Z",
+      "side": 1,
+      "message": "LGTM for BinaryTransparencyService.",
+      "revId": "cc103033f08d33d102f66ab6d9ff965960039c68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
