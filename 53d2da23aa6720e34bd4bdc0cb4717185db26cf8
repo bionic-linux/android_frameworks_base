@@ -131,6 +131,30 @@
       },
       "revId": "53d2da23aa6720e34bd4bdc0cb4717185db26cf8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28bb0674_9a2b8733",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 3618459
+      },
+      "writtenOn": "2024-10-14T04:22:35Z",
+      "side": 1,
+      "message": "Done\n```suggestion\n                    ResourcesManager.getInstance().getConfiguration(), getCompatibilityInfo(),\n```remove",
+      "parentUuid": "b4d0b119_85ac9b68",
+      "range": {
+        "startLine": 1382,
+        "startChar": 20,
+        "endLine": 1382,
+        "endChar": 69
+      },
+      "revId": "53d2da23aa6720e34bd4bdc0cb4717185db26cf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
