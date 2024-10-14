@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc198938_3375d7aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2024-10-14T04:05:10Z",
+      "side": 1,
+      "message": "Hey Billy and Michael, please take a look at the change of BinaryTransparencyService.java.",
+      "revId": "cc103033f08d33d102f66ab6d9ff965960039c68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
