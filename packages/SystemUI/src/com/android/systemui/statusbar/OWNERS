@@ -14,3 +14,5 @@ per-file *Keyboard* = set noparent
 per-file *Keyboard* = file:../keyguard/OWNERS
 per-file *Keyguard* = set noparent
 per-file *Keyguard* = file:../keyguard/OWNERS
+per-file *Lockscreen* = set noparent
+per-file *Lockscreen* = file:../keyguard/OWNERS
