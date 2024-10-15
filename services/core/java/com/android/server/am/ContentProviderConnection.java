@@ -120,7 +120,9 @@ public final class ContentProviderConnection extends Binder implements
     public void trackProcState(int procState, int seq) {
         if (association != null) {
             synchronized (mProcStatsLock) {
-                association.trackProcState(procState, seq, SystemClock.uptimeMillis());
+                if (association != null) {
+                    association.trackProcState(procState, seq, SystemClock.uptimeMillis());
+                }
             }
         }
     }
