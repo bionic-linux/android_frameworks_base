@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca91a77b_ab5bf85c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-15T16:26:49Z",
+      "side": 1,
+      "message": "nice!",
+      "revId": "82178bf81a9cf2007033d4d68d0de6ad24f71596",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dfb2102_2e7539b9",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-15T16:26:49Z",
+      "side": 1,
+      "message": "Let\u0027s dump them here? We don\u0027t have a bugreport equivalent on Ravenwood, so we need some way to look into them when something goes wrong...",
+      "fixSuggestions": [
+        {
+          "fixId": "e4947a20_a2415a3a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+              "range": {
+                "startLine": 164,
+                "startChar": 0,
+                "endLine": 167,
+                "endChar": 0
+              },
+              "replacement": "        // Do the basic set up for the android sysprops, and dump them.\n        var props \u003d RavenwoodSystemProperties.initialize(RAVENWOOD_BUILD_PROP);\n        setSystemProperties(props);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "82178bf81a9cf2007033d4d68d0de6ad24f71596",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
