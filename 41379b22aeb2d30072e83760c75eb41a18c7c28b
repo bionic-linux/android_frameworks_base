@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "983fd058_2f4b2107",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2024-10-15T16:19:14Z",
+      "side": 1,
+      "message": "Thoughts on moving this to just `statusbar/OWNERS` so all (er, most) of the statusbar package overrides are in the same place?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "41379b22aeb2d30072e83760c75eb41a18c7c28b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "666de489_db78f738",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2024-10-15T16:19:14Z",
+      "side": 1,
+      "message": "Does the `per-file *Doze*` in `statusbar/OWNERS` not apply to `statusbar/phone` for some reason?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 44
+      },
+      "revId": "41379b22aeb2d30072e83760c75eb41a18c7c28b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
