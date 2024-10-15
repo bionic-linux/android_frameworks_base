@@ -45,6 +45,8 @@ import android.view.inputmethod.ImeTracker;
 public class InsetsAnimationThreadControlRunner implements InsetsAnimationControlRunner {
 
     private static final String TAG = "InsetsAnimThreadRunner";
+    private static final Object sLock = new Object();
+
     private final InsetsAnimationControlImpl mControl;
     private final InsetsAnimationControlCallbacks mOuterCallbacks;
     private final Handler mMainThreadHandler;
@@ -121,12 +123,14 @@ public class InsetsAnimationThreadControlRunner implements InsetsAnimationContro
                 mCallbacks, durationMs, interpolator, animationType, layoutInsetsDuringAnimation,
                 translator, statsToken);
         InsetsAnimationThread.getHandler().post(() -> {
-            if (mControl.isCancelled()) {
-                return;
+            synchronized (sLock) {
+                if (mControl.isCancelled()) {
+                    return;
+                }
+                Trace.asyncTraceBegin(Trace.TRACE_TAG_VIEW,
+                        "InsetsAsyncAnimation: " + WindowInsets.Type.toString(types), types);
+                listener.onReady(mControl, types);
             }
-            Trace.asyncTraceBegin(Trace.TRACE_TAG_VIEW,
-                    "InsetsAsyncAnimation: " + WindowInsets.Type.toString(types), types);
-            listener.onReady(mControl, types);
         });
     }
 
@@ -173,7 +177,11 @@ public class InsetsAnimationThreadControlRunner implements InsetsAnimationContro
     @Override
     @UiThread
     public void cancel() {
-        InsetsAnimationThread.getHandler().post(mControl::cancel);
+        InsetsAnimationThread.getHandler().post(() -> {
+            synchronized (sLock) {
+                mControl.cancel();
+            }
+        });
     }
 
     @Override
@@ -190,7 +198,10 @@ public class InsetsAnimationThreadControlRunner implements InsetsAnimationContro
     @Override
     public void updateLayoutInsetsDuringAnimation(
             @LayoutInsetsDuringAnimation int layoutInsetsDuringAnimation) {
-        InsetsAnimationThread.getHandler().post(
-                () -> mControl.updateLayoutInsetsDuringAnimation(layoutInsetsDuringAnimation));
+        InsetsAnimationThread.getHandler().post(() -> {
+            synchronized (sLock) {
+                mControl.updateLayoutInsetsDuringAnimation(layoutInsetsDuringAnimation);
+            }
+        });
     }
 }
