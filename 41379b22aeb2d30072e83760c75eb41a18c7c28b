@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ec2d7d4_2507fc35",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2024-10-15T16:21:02Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "983fd058_2f4b2107",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "41379b22aeb2d30072e83760c75eb41a18c7c28b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "666de489_db78f738",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-10-15T16:19:14Z",
       "side": 1,
       "message": "Does the `per-file *Doze*` in `statusbar/OWNERS` not apply to `statusbar/phone` for some reason?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 44
+      },
+      "revId": "41379b22aeb2d30072e83760c75eb41a18c7c28b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2694912e_a2c27b61",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2024-10-15T16:21:02Z",
+      "side": 1,
+      "message": "That\u0027s what I get for attempting to do this really fast. I overlooked it.",
+      "parentUuid": "666de489_db78f738",
       "range": {
         "startLine": 10,
         "startChar": 0,
