@@ -105,6 +105,24 @@
       "parentUuid": "3fd62e9b_17ba7871",
       "revId": "8790e74f66c89bdbe91355b691cdab1073f1ec0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50da4e14_980a8d0f",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 7771,
+      "author": {
+        "id": 1083168
+      },
+      "writtenOn": "2024-10-15T00:02:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1586a031_fc3a6e56",
+      "revId": "8790e74f66c89bdbe91355b691cdab1073f1ec0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
