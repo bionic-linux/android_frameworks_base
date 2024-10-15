@@ -18,12 +18,83 @@ package android.platform.test.ravenwood;
 
 import static com.android.ravenwood.common.RavenwoodCommonUtils.RAVENWOOD_SYSPROP;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 public class RavenwoodSystemProperties {
+    private static final Map<String, String> sDefaultValues = new HashMap<>();
+
+    private static final String[] PARTITIONS = {
+            "bootimage",
+            "odm",
+            "product",
+            "system",
+            "system_ext",
+            "vendor",
+            "vendor_dlkm",
+    };
+
+    /**
+     * More info about property file loading: system/core/init/property_service.cpp
+     * In the following logic, the only partition we would need to consider is "system",
+     * since we only read from system-build.prop
+     */
+    static void initialize(String propFile) {
+        // Load all properties from build.prop
+        var props = new Properties();
+        try (var propStream = new FileInputStream(propFile)) {
+            props.load(propStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        props.forEach((key, value) -> sDefaultValues.put((String) key, (String) value));
+
+        // If ro.product.${name} is not set, derive from ro.product.${partition}.${name}
+        // If ro.product.cpu.abilist* is not set, derive from ro.${partition}.product.cpu.abilist*
+        for (var entry : Set.copyOf(sDefaultValues.entrySet())) {
+            final String key;
+            if (entry.getKey().startsWith("ro.product.system.")) {
+                var name = entry.getKey().substring(18);
+                key = "ro.product." + name;
+
+            } else if (entry.getKey().startsWith("ro.system.product.cpu.abilist")) {
+                var name = entry.getKey().substring(22);
+                key = "ro.product.cpu." + name;
+            } else {
+                continue;
+            }
+            if (!sDefaultValues.containsKey(key)) {
+                sDefaultValues.put(key, entry.getValue());
+            }
+        }
+
+        // Copy ro.product.* and ro.build.* to all partitions
+        for (var entry : Set.copyOf(sDefaultValues.entrySet())) {
+            var key = entry.getKey();
+            if (key.startsWith("ro.product.") || key.startsWith("ro.build.")) {
+                var name = key.substring(3);
+                for (String partition : PARTITIONS) {
+                    var newKey = "ro." + partition + "." + name;
+                    if (!sDefaultValues.containsKey(newKey)) {
+                        sDefaultValues.put(newKey, entry.getValue());
+                    }
+                }
+            }
+        }
+
+        // Some other custom values
+        sDefaultValues.put("ro.board.first_api_level", "1");
+        sDefaultValues.put("ro.product.first_api_level", "1");
+        sDefaultValues.put("ro.soc.manufacturer", "Android");
+        sDefaultValues.put("ro.soc.model", "Ravenwood");
+        sDefaultValues.put(RAVENWOOD_SYSPROP, "1");
+    }
+
     private volatile boolean mIsImmutable;
 
     private final Map<String, String> mValues = new HashMap<>();
@@ -35,47 +106,15 @@ public class RavenwoodSystemProperties {
     private final Set<String> mKeyWritable = new HashSet<>();
 
     public RavenwoodSystemProperties() {
-        // TODO: load these values from build.prop generated files
-        setValueForPartitions("product.brand", "Android");
-        setValueForPartitions("product.device", "Ravenwood");
-        setValueForPartitions("product.manufacturer", "Android");
-        setValueForPartitions("product.model", "Ravenwood");
-        setValueForPartitions("product.name", "Ravenwood");
-
-        setValueForPartitions("product.cpu.abilist", "x86_64");
-        setValueForPartitions("product.cpu.abilist32", "");
-        setValueForPartitions("product.cpu.abilist64", "x86_64");
-
-        setValueForPartitions("build.date", "Thu Jan 01 00:00:00 GMT 2024");
-        setValueForPartitions("build.date.utc", "1704092400");
-        setValueForPartitions("build.id", "MAIN");
-        setValueForPartitions("build.tags", "dev-keys");
-        setValueForPartitions("build.type", "userdebug");
-        setValueForPartitions("build.version.all_codenames", "REL");
-        setValueForPartitions("build.version.codename", "REL");
-        setValueForPartitions("build.version.incremental", "userdebug.ravenwood.20240101");
-        setValueForPartitions("build.version.known_codenames", "REL");
-        setValueForPartitions("build.version.release", "14");
-        setValueForPartitions("build.version.release_or_codename", "VanillaIceCream");
-        setValueForPartitions("build.version.sdk", "34");
-
-        setValue("ro.board.first_api_level", "1");
-        setValue("ro.product.first_api_level", "1");
-
-        setValue("ro.soc.manufacturer", "Android");
-        setValue("ro.soc.model", "Ravenwood");
-
-        setValue("ro.debuggable", "1");
-
-        setValue(RAVENWOOD_SYSPROP, "1");
+        mValues.putAll(sDefaultValues);
     }
 
     /** Copy constructor */
     public RavenwoodSystemProperties(RavenwoodSystemProperties source, boolean immutable) {
-        this.mKeyReadable.addAll(source.mKeyReadable);
-        this.mKeyWritable.addAll(source.mKeyWritable);
-        this.mValues.putAll(source.mValues);
-        this.mIsImmutable = immutable;
+        mKeyReadable.addAll(source.mKeyReadable);
+        mKeyWritable.addAll(source.mKeyWritable);
+        mValues.putAll(source.mValues);
+        mIsImmutable = immutable;
     }
 
     public Map<String, String> getValues() {
@@ -123,33 +162,9 @@ public class RavenwoodSystemProperties {
         return mKeyWritable.contains(key);
     }
 
-    private static final String[] PARTITIONS = {
-            "bootimage",
-            "odm",
-            "product",
-            "system",
-            "system_ext",
-            "vendor",
-            "vendor_dlkm",
-    };
-
     private void ensureNotImmutable() {
         if (mIsImmutable) {
             throw new RuntimeException("Unable to update immutable instance");
-        }
-    }
-
-    /**
-     * Set the given property for all possible partitions where it could be defined. For
-     * example, the value of {@code ro.build.type} is typically also mirrored under
-     * {@code ro.system.build.type}, etc.
-     */
-    private void setValueForPartitions(String key, String value) {
-        ensureNotImmutable();
-
-        setValue("ro." + key, value);
-        for (String partition : PARTITIONS) {
-            setValue("ro." + partition + "." + key, value);
         }
     }
 
@@ -195,11 +210,4 @@ public class RavenwoodSystemProperties {
             return key;
         }
     }
-
-    /**
-     * Return an immutable, default instance.
-     */
-    // Create a default instance, and make an immutable copy of it.
-    public static final RavenwoodSystemProperties DEFAULT_VALUES =
-            new RavenwoodSystemProperties(new RavenwoodSystemProperties(), true);
 }
