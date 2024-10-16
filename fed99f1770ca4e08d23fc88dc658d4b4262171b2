@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b68d3c0_3d9a77a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1945881
+      },
+      "writtenOn": "2024-10-16T03:15:09Z",
+      "side": 1,
+      "message": "The [trace snapshot](https://drive.google.com/drive/folders/1L4GWpZZRz5YliaRxJiixNMgYtdwkaVKD?usp\u003dsharing) has been uploaded.",
+      "parentUuid": "4bf7af48_204fd736",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "fed99f1770ca4e08d23fc88dc658d4b4262171b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "2c8eac26_e671fc50",
