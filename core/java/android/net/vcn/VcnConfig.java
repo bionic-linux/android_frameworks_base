@@ -196,8 +196,19 @@ public final class VcnConfig implements Parcelable {
      *
      * @hide
      */
-    public boolean isTestModeProfile() {
+    // TODO: Expose it as SystemApi
+    public boolean isTestMode() {
         return mIsTestModeProfile;
+    }
+
+    /**
+     * Returns whether or not this VcnConfig is restricted to test networks.
+     *
+     * @hide
+     */
+    // TODO: Clean up this method when API is settled down
+    public boolean isTestModeProfile() {
+        return isTestMode();
     }
 
     /**
@@ -362,10 +373,27 @@ public final class VcnConfig implements Parcelable {
          * @return this {@link Builder} instance, for chaining
          * @hide
          */
+        // TODO: Expose it as SystemApi
+        @NonNull
+        public Builder setIsTestMode(boolean isTestMode) {
+            mIsTestModeProfile = isTestMode;
+            return this;
+        }
+
+        /**
+         * Restricts this VcnConfig to matching with test networks (only).
+         *
+         * <p>This method is for testing only, and must not be used by apps. Calling {@link
+         * VcnManager#setVcnConfig(ParcelUuid, VcnConfig)} with a VcnConfig where test-network usage
+         * is enabled will require the MANAGE_TEST_NETWORKS permission.
+         *
+         * @return this {@link Builder} instance, for chaining
+         * @hide
+         */
+        // TODO: Clean up this method when API is settled down
         @NonNull
         public Builder setIsTestModeProfile() {
-            mIsTestModeProfile = true;
-            return this;
+            return setIsTestMode(true);
         }
 
         /**
