@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "390e276d_b907a175",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1979915
+      },
+      "writtenOn": "2024-10-16T19:11:23Z",
+      "side": 1,
+      "message": "Let\u0027s move ahead with the revert of the originally breaking change first",
+      "revId": "941d6729bd5cdd66895263925b404709ea3f1d82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
