@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96a845ea_9c235e17",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2024-10-16T18:40:01Z",
+      "side": 1,
+      "message": "nit: I wouldn\u0027t say this; it just serves a different purpose.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 66
+      },
+      "revId": "5b69b67647cc5c73725d0814059a79be23967358",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8d164be_723a66a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2024-10-16T18:40:01Z",
+      "side": 1,
+      "message": "nit: Maybe say: \"NET_CAPABILITY_VALIDATED is set once the network has been validated which means it depends on DNS, HTTP, and HTTPS probes succeeding. The HTTPS probe relies on the time being correct, or within a given window, as it performs certificate validation. So we must try to fetch the current time independent of the validation state of this network.\"\n\nOr something along those lines.",
+      "range": {
+        "startLine": 9,
+        "startChar": 68,
+        "endLine": 9,
+        "endChar": 251
+      },
+      "revId": "5b69b67647cc5c73725d0814059a79be23967358",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
