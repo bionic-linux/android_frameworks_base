@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "98dd26d3_d91a7d80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-10-16T01:57:54Z",
+      "side": 1,
+      "message": "Could you provide the comparison of before/after?\ne.g. the [trace](https://perfetto.dev/docs/quickstart/android-tracing) of original code https://imgur.com/o1YxQVE\nIt seems that there is no obvious interval.",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "fed99f1770ca4e08d23fc88dc658d4b4262171b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "2c8eac26_e671fc50",
