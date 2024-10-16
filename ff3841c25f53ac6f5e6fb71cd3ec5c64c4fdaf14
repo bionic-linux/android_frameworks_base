@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f5aa35c_1f700090",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2024-10-16T23:22:35Z",
+      "side": 1,
+      "message": "Voting for bypass-presubmit. The only failing test is fixed (b/373845156), but its fix is landed at internal gerrit. Let me bypass because rest of tests are all passed and we don\u0027t know when the fix would be landed to the aosp.",
+      "revId": "ff3841c25f53ac6f5e6fb71cd3ec5c64c4fdaf14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
