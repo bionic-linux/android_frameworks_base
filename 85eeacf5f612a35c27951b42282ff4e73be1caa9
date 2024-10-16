@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bce993c_0b1b95ec",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1083168
+      },
+      "writtenOn": "2024-10-16T17:52:49Z",
+      "side": 1,
+      "message": "Discussed offline. Looks like the risk of breaking apps is too great. Reverting.",
+      "parentUuid": "4c6c5fe6_4383d9a1",
+      "revId": "85eeacf5f612a35c27951b42282ff4e73be1caa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e97810dd_e0d6ad6e",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "We want to let `adbd` know every time an app is added to the process so the debugger client are aware of it. By centralizing it, Framework developers won\u0027t forget to do both.",
       "parentUuid": "e97810dd_e0d6ad6e",
+      "revId": "85eeacf5f612a35c27951b42282ff4e73be1caa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97cd1e1b_9d4da8c1",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 8810,
+      "author": {
+        "id": 1083168
+      },
+      "writtenOn": "2024-10-16T17:52:49Z",
+      "side": 1,
+      "message": "Discussed offline, removing `@UnsupportedAppUsage` as per go/nonsdk/ref/policy#dont-annotate-new-code.",
+      "parentUuid": "b648b4da_39c7cdac",
       "revId": "85eeacf5f612a35c27951b42282ff4e73be1caa9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
