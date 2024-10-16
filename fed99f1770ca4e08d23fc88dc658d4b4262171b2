@@ -128,6 +128,24 @@
       "message": "How about simply trigger vsync here, which could even run earlier.\n```\n  // Pre-schedule vsync to run relayoutWindow by frame callback earlier.\n  mChoreographer.postFrameCallback(frameTimeNanos -\u003e {});\n```\nThat also avoids creating additional logic dependency.",
       "revId": "fed99f1770ca4e08d23fc88dc658d4b4262171b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7111af8_6026fda9",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/startingsurface/SplashscreenWindowCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1945881
+      },
+      "writtenOn": "2024-10-16T14:05:41Z",
+      "side": 1,
+      "message": "That sounds awesome!\n\nCould we do something in the animation callback, such as releasing the icon view host when addWindow fails?\n```java\n// Pre-schedule vsync to run relayoutWindow by frame callback earlier.\nmChoreographer.postFrameCallback(frameTimeNanos -\u003e {\n    if (record \u003d\u003d null) {\n        final SplashScreenView contentView \u003d viewSupplier.get();\n        // release the icon view host\n        if (contentView.getSurfaceHost() !\u003d null) {\n            SplashScreenView.releaseIconHost(contentView.getSurfaceHost());\n        }\n        return;\n    }\n});\n```\n\nOtherwise, when addWindow fails, we may waste a `Choreographer#doFrame`",
+      "parentUuid": "d7e5f4c9_00930313",
+      "revId": "fed99f1770ca4e08d23fc88dc658d4b4262171b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
