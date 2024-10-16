@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e64dc55a_718bb84e",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2024-10-16T17:31:40Z",
+      "side": 1,
+      "message": "Why this change? Please review https://g3doc.corp.google.com/wireless/android/art/compat/g3doc/ref/policy.md?cl\u003dhead",
+      "revId": "85eeacf5f612a35c27951b42282ff4e73be1caa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e97810dd_e0d6ad6e",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 8810,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2024-10-16T17:31:40Z",
+      "side": 1,
+      "message": "It\u0027s kind of odd to introduce a new method that\u0027s marked Unsupported. It\u0027s only used for maintaining binary compatibility.",
+      "revId": "85eeacf5f612a35c27951b42282ff4e73be1caa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
