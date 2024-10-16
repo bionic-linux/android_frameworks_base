@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ce6972f_2baf6a1a",
+        "filename": "core/java/android/view/InsetsAnimationThreadControlRunner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2024-10-16T08:52:53Z",
+      "side": 1,
+      "message": "`setInsetsAndAlpha` can still be called from ValueAnimator [here](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/android/view/InsetsController.java;l\u003d431;drc\u003da000bf9338fb69d7cd841c843f57f5b2ae7df68c) where might not be protected by `sLock`. So I am wondering if this fixes all the cases.",
+      "revId": "7af5ce0c41b4b8f45aec3a196b97297694ef95b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
