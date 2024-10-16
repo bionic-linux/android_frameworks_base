@@ -18,6 +18,7 @@ package android.nfc {
     method @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public boolean removeNfcUnlockHandler(android.nfc.NfcAdapter.NfcUnlockHandler);
     method @FlaggedApi("android.nfc.nfc_vendor_cmd") @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public int sendVendorNciMessage(int, @IntRange(from=0, to=15) int, @IntRange(from=0) int, @NonNull byte[]);
     method @RequiresPermission(android.Manifest.permission.NFC_SET_CONTROLLER_ALWAYS_ON) public boolean setControllerAlwaysOn(boolean);
+    method @FlaggedApi("android.nfc.nfc_set_ese_in_switching") public boolean setEseInSwitching(boolean, int, int);
     method @FlaggedApi("android.nfc.enable_nfc_mainline") @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public void setReaderModePollingEnabled(boolean);
     method @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public int setTagIntentAppPreferenceForUser(int, @NonNull String, boolean);
     method @FlaggedApi("android.nfc.enable_nfc_charging") @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public boolean setWlcEnabled(boolean);

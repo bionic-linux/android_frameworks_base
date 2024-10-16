@@ -2886,4 +2886,26 @@ public final class NfcAdapter {
         }
         return mNfcOemExtension;
     }
+
+    /**
+     * Sets NFC eSE switching state.
+     * <p>This API is for the wallet application.
+     *
+     * @param inSwitching true mute card emulation to allow ese parameter switching for specific
+     * duration or number of NTFs  while false unmute card emulation mode..
+     * @param timeout timer in milliseconds
+     * @param nbOp number of NTFs
+     * @return True if successful
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_NFC_SET_ESE_IN_SWITCHING)
+    public boolean setEseInSwitching(boolean inSwitching, int timeout, int nbOp) {
+        if (!sHasCeFeature) {
+            throw new UnsupportedOperationException();
+        }
+
+        return callServiceReturn(() ->  sService.setEseInSwitching(inSwitching, timeout, nbOp),
+                false);
+    }
 }

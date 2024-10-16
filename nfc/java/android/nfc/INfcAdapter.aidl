@@ -117,4 +117,6 @@ interface INfcAdapter
     void triggerInitialization();
     boolean getSettingStatus();
     boolean isTagPresent();
+
+    boolean setEseInSwitching(boolean inSwitching, int timeout, int nbOp);
 }
