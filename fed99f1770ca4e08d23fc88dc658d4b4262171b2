@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bf7af48_204fd736",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-10-16T02:21:39Z",
+      "side": 1,
+      "message": "It\u0027s fine to use google drive or photo/imgur for screenshot.\n\nThe vsync is already requested when calling addView -\u003e ViewRootImpl#setView -\u003e ViewRootImpl#requestLayout.\nAs above screenshot link, there is an arrow(`^`) under `addRootView` before the first binder transaction, that\u0027s the vsync request.\nSo usually it is early enough that it requests before the binder call `addToDisplayAsUser`.",
+      "parentUuid": "d12140ab_abbe4079",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "fed99f1770ca4e08d23fc88dc658d4b4262171b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "2c8eac26_e671fc50",
