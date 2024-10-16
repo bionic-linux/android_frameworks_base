@@ -693,10 +693,8 @@ public abstract class NtpTrustedTime implements TrustedTime {
                 if (LOGD) Log.d(TAG, "getNetwork: failed to get network capabilities");
                 return false;
             }
-            final boolean isConnectedToInternet = networkCapabilities.hasCapability(
-                    NetworkCapabilities.NET_CAPABILITY_INTERNET)
-                    && networkCapabilities.hasCapability(
-                    NetworkCapabilities.NET_CAPABILITY_VALIDATED);
+            final boolean isConnectedToInternet =
+                    networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
             // This connectivity check is to avoid performing a DNS lookup for the time server on a
             // unconnected network. There are races to obtain time in Android when connectivity
             // changes, which means that forceRefresh() can be called by various components before
