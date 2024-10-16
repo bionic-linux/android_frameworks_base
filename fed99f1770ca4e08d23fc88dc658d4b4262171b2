@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "d12140ab_abbe4079",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1945881
+      },
+      "writtenOn": "2024-10-16T02:12:01Z",
+      "side": 1,
+      "message": "Where should the trace be uploaded?\n\nBecause `addWindow` is time-consuming, and vsync is requested at the end of `addWindow`.",
+      "parentUuid": "98dd26d3_d91a7d80",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "fed99f1770ca4e08d23fc88dc658d4b4262171b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "2c8eac26_e671fc50",
