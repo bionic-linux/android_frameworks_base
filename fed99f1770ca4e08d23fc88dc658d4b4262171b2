@@ -206,6 +206,24 @@
       "parentUuid": "f7111af8_6026fda9",
       "revId": "fed99f1770ca4e08d23fc88dc658d4b4262171b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93c2bf24_c7fa8490",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/startingsurface/SplashscreenWindowCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1945881
+      },
+      "writtenOn": "2024-10-17T10:03:41Z",
+      "side": 1,
+      "message": "\u003e It is not common that addWindow fails.\nAnd the failure is usually from the return value of addToDisplayAsUser.\nBut in ViewRootImpl#setView, requestLayout was still called before addToDisplayAsUser, so the result is the same that there will still be an empty doFrame even if without this change.\n\nYes, it is uncommon for addWindow to fail.\n\nI didn\u0027t consider that requestLayout happens before addToDisplayAsUser, so in theory, when addWindow fails, an empty doFrame will be executed (regardless of whether this change is enabled).\n\nThe reason why I wanted to release the icon view in the animation callback before was because we applied for Vsync in advance, and when addWindow fails, a doFrame will be wasted, so I wanted to do something in doFrame, but now it seems that this idea is redundant, because as long as addWindow fails, a doFrame will be wasted. So is there a way to cancel this doFrame when addWindow fails?",
+      "parentUuid": "3aa269e4_8aaf7fbc",
+      "revId": "fed99f1770ca4e08d23fc88dc658d4b4262171b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
