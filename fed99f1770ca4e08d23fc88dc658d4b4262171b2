@@ -224,6 +224,24 @@
       "parentUuid": "3aa269e4_8aaf7fbc",
       "revId": "fed99f1770ca4e08d23fc88dc658d4b4262171b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f58c022a_4a5f7acc",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/startingsurface/SplashscreenWindowCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1945881
+      },
+      "writtenOn": "2024-10-17T10:09:22Z",
+      "side": 1,
+      "message": "\u003e Sounds no difference then? Ideally the doFrame callback should happen immediately after addWindow.\n\u003e addWindow \u003dfail\u003d\u003e release surface host ... doFrame\u003d\u003e doNothing.\n\u003e addWindow \u003dfail\u003d\u003e doNothing ... doFrame\u003d\u003e release surface host.\n\u003e The duration of \"...\" still depends on the device (frame rate). But this leaves a small possibility of receiving another new splash screen request from the service.\n\nThere seems to be no difference so far.\n\n```\n  // Pre-schedule vsync to run relayoutWindow by frame callback earlier.\n  mChoreographer.postFrameCallback(frameTimeNanos -\u003e {});\n```\nThe above code is reasonable, we can use it.\n\nDo you have any suggestions for number 2 in the comment?",
+      "parentUuid": "93c2bf24_c7fa8490",
+      "revId": "fed99f1770ca4e08d23fc88dc658d4b4262171b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
