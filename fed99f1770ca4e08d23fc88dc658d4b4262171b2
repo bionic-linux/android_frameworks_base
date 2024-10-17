@@ -137,6 +137,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eaf6d46b_4ba9b145",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3252618
+      },
+      "writtenOn": "2024-10-17T10:12:41Z",
+      "side": 1,
+      "message": "Removing myself as reviewer since I don\u0027t have as much visibility on this part of the codebase.",
+      "revId": "fed99f1770ca4e08d23fc88dc658d4b4262171b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d7e5f4c9_00930313",
