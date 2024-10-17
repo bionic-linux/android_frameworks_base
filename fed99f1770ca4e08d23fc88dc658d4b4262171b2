@@ -98,6 +98,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "39071b12_a360afb3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-10-17T03:08:06Z",
+      "side": 1,
+      "message": "Thanks for the sharing. Looks like it is easier to happen if the refresh rate is not high (vsync interval is longer).",
+      "parentUuid": "6b68d3c0_3d9a77a2",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "fed99f1770ca4e08d23fc88dc658d4b4262171b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "2c8eac26_e671fc50",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -144,6 +168,24 @@
       "side": 1,
       "message": "That sounds awesome!\n\nCould we do something in the animation callback, such as releasing the icon view host when addWindow fails?\n```java\n// Pre-schedule vsync to run relayoutWindow by frame callback earlier.\nmChoreographer.postFrameCallback(frameTimeNanos -\u003e {\n    if (record \u003d\u003d null) {\n        final SplashScreenView contentView \u003d viewSupplier.get();\n        // release the icon view host\n        if (contentView.getSurfaceHost() !\u003d null) {\n            SplashScreenView.releaseIconHost(contentView.getSurfaceHost());\n        }\n        return;\n    }\n});\n```\n\nOtherwise, when addWindow fails, we may waste a `Choreographer#doFrame`",
       "parentUuid": "d7e5f4c9_00930313",
+      "revId": "fed99f1770ca4e08d23fc88dc658d4b4262171b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbf0dcd2_fa04e2db",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/startingsurface/SplashscreenWindowCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-10-17T03:08:06Z",
+      "side": 1,
+      "message": "It is not common that addWindow fails.\nAnd the failure is usually from the return value of addToDisplayAsUser.\nBut in ViewRootImpl#setView, requestLayout was still called before addToDisplayAsUser, so the result is the same that there will still be an empty doFrame even if without this change.",
+      "parentUuid": "f7111af8_6026fda9",
       "revId": "fed99f1770ca4e08d23fc88dc658d4b4262171b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
