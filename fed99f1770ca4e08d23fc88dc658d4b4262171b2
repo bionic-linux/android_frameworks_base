@@ -188,6 +188,24 @@
       "parentUuid": "f7111af8_6026fda9",
       "revId": "fed99f1770ca4e08d23fc88dc658d4b4262171b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3aa269e4_8aaf7fbc",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/startingsurface/SplashscreenWindowCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1366584
+      },
+      "writtenOn": "2024-10-17T03:35:32Z",
+      "side": 1,
+      "message": "Sounds no difference then? Ideally the doFrame callback should happen immediately after addWindow.\n\naddWindow \u003dfail\u003d\u003e release surface host ... doFrame\u003d\u003e doNothing.\n\naddWindow \u003dfail\u003d\u003e doNothing ... doFrame\u003d\u003e release surface host.\n\nThe duration of \"...\" still depends on the device (frame rate). But this leaves a small possibility of receiving another new splash screen request from the service.",
+      "parentUuid": "f7111af8_6026fda9",
+      "revId": "fed99f1770ca4e08d23fc88dc658d4b4262171b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
