@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc0ccb9c_32067811",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2024-10-18T21:36:23Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is better.  Couldn\u0027t such an umbrella feature bug have multiple flags?  I\u0027d keep the flag under the more specific bug (and it\u0027d be less confusing during Gantry ramp up, for example)",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 7,
+        "endChar": 63
+      },
+      "revId": "8b975f33cde52204c0d2f692256de24f5c6f8fce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
