@@ -58,6 +58,7 @@ import static android.window.TransitionInfo.FLAG_IS_WALLPAPER;
 import static android.window.TransitionInfo.FLAG_MOVED_TO_TOP;
 import static android.window.TransitionInfo.FLAG_NO_ANIMATION;
 import static android.window.TransitionInfo.FLAG_SHOW_WALLPAPER;
+import static android.window.TransitionInfo.FLAG_STARTING_WINDOW_TRANSFER_RECIPIENT;
 import static android.window.TransitionInfo.FLAG_TASK_LAUNCHING_BEHIND;
 import static android.window.TransitionInfo.FLAG_TRANSLUCENT;
 import static android.window.TransitionInfo.FLAG_WILL_IME_SHOWN;
@@ -2801,6 +2802,10 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
                 occludedAtEndContainers.add(target.getParent());
             }
 
+            if (out.getType() == TRANSIT_CLOSE && change.hasFlags(FLAG_IS_BEHIND_STARTING_WINDOW)
+                    && change.getTaskInfo() == null) {
+                change.setFlags(change.getFlags() & ~FLAG_STARTING_WINDOW_TRANSFER_RECIPIENT);
+            }
             final Task task = target.asTask();
             final TaskFragment taskFragment = target.asTaskFragment();
             final boolean isEmbeddedTaskFragment = taskFragment != null
