@@ -227,7 +227,6 @@ import android.security.FileIntegrityManager;
 import android.security.IFileIntegrityService;
 import android.security.attestationverification.AttestationVerificationManager;
 import android.security.attestationverification.IAttestationVerificationManagerService;
-import android.security.keystore.KeyStoreManager;
 import android.service.oemlock.IOemLockService;
 import android.service.oemlock.OemLockManager;
 import android.service.persistentdata.IPersistentDataBlockService;
@@ -1668,17 +1667,6 @@ public final class SystemServiceRegistry {
                         return SharedConnectivityManager.create(ctx);
                     }
                 });
-
-        registerService(Context.KEYSTORE_SERVICE, KeyStoreManager.class,
-                new StaticServiceFetcher<KeyStoreManager>() {
-                    @Override
-                    public KeyStoreManager createService()
-                            throws ServiceNotFoundException {
-                        if (!android.security.Flags.keystoreGrantApi()) {
-                            throw new ServiceNotFoundException("KeyStoreManager is not supported");
-                        }
-                        return KeyStoreManager.getInstance();
-                    }});
 
         registerService(Context.CONTACT_KEYS_SERVICE, E2eeContactKeysManager.class,
                 new CachedServiceFetcher<E2eeContactKeysManager>() {
