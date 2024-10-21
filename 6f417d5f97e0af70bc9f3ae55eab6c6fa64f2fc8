@@ -50,6 +50,23 @@
       "message": "Kindly reminder, pls have a look",
       "revId": "6f417d5f97e0af70bc9f3ae55eab6c6fa64f2fc8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de19668b_2cab1e53",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2024-10-21T17:16:12Z",
+      "side": 1,
+      "message": "Is there any context for this? A bug and/or a feature-request/etc?",
+      "revId": "6f417d5f97e0af70bc9f3ae55eab6c6fa64f2fc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
