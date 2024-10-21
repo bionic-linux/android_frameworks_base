@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d569de5_56edc148",
+        "filename": "omapi/aidl/vts/functional/AccessControlApp/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-21T19:36:07Z",
+      "side": 1,
+      "message": "Maybe this should be `trendy_team_fwk_nfc`",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 53
+      },
+      "revId": "3fb3f461da7a48e4d48ed4560d098084399f26d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33938e35_9179ba3e",
+        "filename": "omapi/aidl/vts/functional/omapi/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-21T19:36:07Z",
+      "side": 1,
+      "message": "Maybe this should be `trendy_team_fwk_nfc`",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 53
+      },
+      "revId": "3fb3f461da7a48e4d48ed4560d098084399f26d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
