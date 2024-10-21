@@ -16,6 +16,24 @@
       "message": "Actually why is this going to android15-tests-dev? Isn\u0027t that branch only for test changes?",
       "revId": "8de9051f063185839a494de99dc5c1fddbc8198e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74d62757_9cb348b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-10-21T17:46:52Z",
+      "side": 1,
+      "message": "It\u0027s needed in GSI for a partner to pass some tests (see linked bug).  From what I can find, starting in Android 15 there is no longer a separate -gsi branch, and -tests-dev is used instead.",
+      "parentUuid": "35ea3b20_5f6d9d3e",
+      "revId": "8de9051f063185839a494de99dc5c1fddbc8198e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
