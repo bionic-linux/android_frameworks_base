@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4560e67_ce2b6ca4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1366584
+      },
+      "writtenOn": "2024-10-22T10:52:42Z",
+      "side": 1,
+      "message": "not sure whether this necessary, seems like auto-create by cherry-pick?\n\nTrigger presubmit first.",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 52
+      },
+      "revId": "9eb18d39beceb0bf54bf63402889f605cc57f3d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
