@@ -64,6 +64,9 @@ android_test {
     exclude_srcs: [
         "test/**/ravenizer/*.java",
     ],
+    ravenizer: {
+        enabled: true,
+    },
     static_libs: [
         "junit",
         "truth",

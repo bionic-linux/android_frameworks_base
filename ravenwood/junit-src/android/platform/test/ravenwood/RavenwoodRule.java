@@ -236,21 +236,17 @@ public final class RavenwoodRule implements TestRule {
 
     @Override
     public Statement apply(Statement base, Description description) {
-        if (!RavenwoodConfig.isOnRavenwood()) {
+        if (!IS_ON_RAVENWOOD) {
             return base;
         }
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                RavenwoodAwareTestRunnerHook.onRavenwoodRuleEnter(
-                        RavenwoodAwareTestRunner.getCurrentRunner(), description,
-                        RavenwoodRule.this);
+                RavenwoodAwareTestRunner.onRavenwoodRuleEnter(description, RavenwoodRule.this);
                 try {
                     base.evaluate();
                 } finally {
-                    RavenwoodAwareTestRunnerHook.onRavenwoodRuleExit(
-                            RavenwoodAwareTestRunner.getCurrentRunner(), description,
-                            RavenwoodRule.this);
+                    RavenwoodAwareTestRunner.onRavenwoodRuleExit(description, RavenwoodRule.this);
                 }
             }
         };
