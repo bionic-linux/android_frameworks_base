@@ -17400,8 +17400,10 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
 
             psr.setReportedForegroundServiceTypes(fgServiceTypes);
-            mProcessList.enqueueProcessChangeItemLocked(proc.getPid(), proc.info.uid,
-                    ProcessChangeItem.CHANGE_FOREGROUND_SERVICES, fgServiceTypes);
+            ProcessChangeItem item = mProcessList.enqueueProcessChangeItemLocked(
+                    proc.getPid(), proc.info.uid);
+            item.changes |= ProcessChangeItem.CHANGE_FOREGROUND_SERVICES;
+            item.foregroundServiceTypes = fgServiceTypes;
         }
         if (oomAdj) {
             updateOomAdjLocked(proc, OOM_ADJ_REASON_UI_VISIBILITY);
