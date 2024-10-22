@@ -28,15 +28,10 @@ import org.junit.Rule;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 
 /**
- * Used to store various states associated with the current test runner that's inly needed
- * in junit-impl.
- *
- * We don't want to put it in junit-src to avoid having to recompile all the downstream
- * dependencies after changing this class.
+ * Used to store various states associated with the current test runner.
  *
  * All members must be called from the runner's main thread.
  */
@@ -97,7 +92,7 @@ public final class RavenwoodRunnerState {
         mMethodDescription = null;
     }
 
-    public void enterRavenwoodRule(RavenwoodRule rule) throws IOException {
+    public void enterRavenwoodRule(RavenwoodRule rule) {
         if (!mHasRavenwoodRule) {
             fail("If you have a RavenwoodRule in your test, make sure the field type is"
                     + " RavenwoodRule so Ravenwood can detect it.");
