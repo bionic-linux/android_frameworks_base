@@ -2891,16 +2891,17 @@ public class ActivityManagerService extends IActivityManager.Stub
                 addServiceToMap(mAppBindArgs, Context.VIBRATOR_SERVICE);
                 addServiceToMap(mAppBindArgs, Context.ACCOUNT_SERVICE);
                 addServiceToMap(mAppBindArgs, Context.POWER_SERVICE);
-                addServiceToMap(mAppBindArgs, Context.USER_SERVICE);
                 addServiceToMap(mAppBindArgs, "mount");
                 addServiceToMap(mAppBindArgs, Context.PLATFORM_COMPAT_SERVICE);
             }
             // See b/79378449
             // Getting the window service and package service binder from servicemanager
             // is blocked for Apps. However they are necessary for apps.
+            // Removing User Service from cache breaks build for auto.
             // TODO: remove exception
             addServiceToMap(mAppBindArgs, "package");
             addServiceToMap(mAppBindArgs, Context.WINDOW_SERVICE);
+            addServiceToMap(mAppBindArgs, Context.USER_SERVICE);
         }
         return mAppBindArgs;
     }
