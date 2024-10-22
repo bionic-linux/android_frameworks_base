@@ -1,0 +1,166 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b168590a_bc97ae0e",
+        "filename": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-22T23:38:04Z",
+      "side": 1,
+      "message": "Hmm okay I think now we got too much duplicate code.\n\n- Let\u0027s move the annotations out of this class, so we don\u0027t need to copy them?",
+      "fixSuggestions": [
+        {
+          "fixId": "cd90971c_8da10d23",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 18,
+                "startChar": 0,
+                "endLine": 21,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 42,
+                "startChar": 0,
+                "endLine": 46,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 57,
+                "startChar": 0,
+                "endLine": 74,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 87,
+                "startChar": 0,
+                "endLine": 92,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 102,
+                "startChar": 0,
+                "endLine": 103,
+                "endChar": 0
+              },
+              "replacement": "        final InnerRunner innerRunnerAnnotation \u003d\n                mTestClass.getAnnotation(RavenwoodTestRunner.InnerRunner.class);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d0a2fd370a7d748cf085bb49982b923d485f4e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2194b79_c8c1b59e",
+        "filename": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-22T23:38:04Z",
+      "side": 1,
+      "message": "Because this version doesn\u0027t do any hooks or anything, I don\u0027t believe you actually need any of the TestRule\u0027s in this class.",
+      "fixSuggestions": [
+        {
+          "fixId": "f037b73d_7cfaad03",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 75,
+                "startChar": 0,
+                "endLine": 92,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "d0a2fd370a7d748cf085bb49982b923d485f4e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62d165d7_6b244c40",
+        "filename": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-22T23:38:04Z",
+      "side": 1,
+      "message": "These strings are only used by Ravenizer, so I don\u0027t believe they need to exist in the other version of this class.\n\nBut, the point of having these strings next to the corresponding fields (sImplicitClassOuterRule, etc) is when we rename the fields, we can easily update the strings too. Now, if we remove the fields from this file, and remove the strings from the other file, that\u0027d already defeat the point.\n\nSo at this point we don\u0027t really need to keep the strings here. I\u0027m okay if we just move them to ravenizer itself. (So when we rename the rules, we\u0027d update Ravenizer too, which isn\u0027t too bad.)",
+      "fixSuggestions": [
+        {
+          "fixId": "c742a15e_fba8a376",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 87,
+                "startChar": 0,
+                "endLine": 92,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "d0a2fd370a7d748cf085bb49982b923d485f4e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "881364c6_fd53143a",
+        "filename": "ravenwood/tests/bivalenttest/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-22T23:38:04Z",
+      "side": 1,
+      "message": "Okay let\u0027s create one more device-side test, and enable ravenizer only on that one.\n\nBasically I wanted to have RavenwoodBivalentTest to ensure the same test behave in the same way when it\u0027s executed on the device side and on Ravenwood.\n\nNow if we always apply ravenizer to the device side too, it\u0027s possible that\u0027d actually change the device side test behavior, so even if the same class behave in the same way on `RavenwoodBivalentTest_device` (w/ ravenizer) and `RavenwoodBivalentTest`, it\u0027s still possible that\u0027s not how `RavenwoodBivalentTest_device` (w/o ravenizer) would behave.\n\nSo I think now we need 3 variants -- the ravenwood version, the device version w/ ravenizer an w/o ravenizer, and all of them should behave in the same way. i.e. ravenizer really shouldn\u0027t change any device side test behavior.",
+      "revId": "d0a2fd370a7d748cf085bb49982b923d485f4e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
