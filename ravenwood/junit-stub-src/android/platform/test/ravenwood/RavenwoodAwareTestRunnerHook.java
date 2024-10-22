@@ -15,77 +15,11 @@
  */
 package android.platform.test.ravenwood;
 
-import android.platform.test.ravenwood.RavenwoodAwareTestRunner.Order;
-import android.platform.test.ravenwood.RavenwoodAwareTestRunner.Scope;
-
 import org.junit.runner.Description;
-import org.junit.runners.model.TestClass;
 
-/**
- * Provide hook points created by {@link RavenwoodAwareTestRunner}. This is a version
- * that's used on a device side test.
- *
- * All methods are no-op in real device tests.
- *
- * TODO: Use some kind of factory to provide different implementation for the device test
- * and the ravenwood test.
- */
+/** Stub class. The actual implementation is in junit-impl-src. */
 public class RavenwoodAwareTestRunnerHook {
     private RavenwoodAwareTestRunnerHook() {
-    }
-
-    /**
-     * Called before any code starts. Internally it will only initialize the environment once.
-     */
-    public static void performGlobalInitialization() {
-    }
-
-    /**
-     * Called when a runner starts, before the inner runner gets a chance to run.
-     */
-    public static void onRunnerInitializing(RavenwoodAwareTestRunner runner, TestClass testClass) {
-    }
-
-    /**
-     * Called when the environment should be initialized.
-     */
-    public static void onEnvironmentSetup(RavenwoodAwareTestRunner runner) {
-    }
-
-    /**
-     * Called when the environment should be reset.
-     */
-    public static void onEnvironmentReset(RavenwoodAwareTestRunner runner) {
-    }
-
-    /**
-     * Called when a whole test class is skipped.
-     */
-    public static void onClassSkipped(Description description) {
-    }
-
-    /**
-     * Called before the inner runner starts.
-     */
-    public static void onBeforeInnerRunnerStart(
-            RavenwoodAwareTestRunner runner, Description description) {
-    }
-
-    /**
-     * Called after the inner runner finished.
-     */
-    public static void onAfterInnerRunnerFinished(
-            RavenwoodAwareTestRunner runner, Description description) {
-    }
-
-    /**
-     * Called before a test / class.
-     *
-     * Return false if it should be skipped.
-     */
-    public static boolean onBefore(RavenwoodAwareTestRunner runner, Description description,
-            Scope scope, Order order) throws Throwable {
-        return true;
     }
 
     public static void onRavenwoodRuleEnter(RavenwoodAwareTestRunner runner,
@@ -94,20 +28,5 @@ public class RavenwoodAwareTestRunnerHook {
 
     public static void onRavenwoodRuleExit(RavenwoodAwareTestRunner runner,
             Description description, RavenwoodRule rule) throws Throwable {
-    }
-
-
-    /**
-     * Called after a test / class.
-     *
-     * Return false if the exception should be ignored.
-     */
-    public static boolean onAfter(RavenwoodAwareTestRunner runner, Description description,
-            Scope scope, Order order, Throwable th) {
-        return true;
-    }
-
-    public static boolean shouldRunClassOnRavenwood(Class<?> clazz) {
-        return true;
     }
 }

@@ -44,24 +44,6 @@ public class RavenwoodAwareTestRunnerHook {
     }
 
     /**
-     * Called before any code starts. Internally it will only initialize the environment once.
-     */
-    public static void performGlobalInitialization() {
-        RavenwoodRuntimeEnvironmentController.globalInitOnce();
-    }
-
-    /**
-     * Called when a runner starts, before the inner runner gets a chance to run.
-     */
-    public static void onRunnerInitializing(RavenwoodAwareTestRunner runner, TestClass testClass) {
-        Log.i(TAG, "onRunnerInitializing: testClass=" + testClass.getJavaClass()
-                + " runner=" + runner);
-
-        // This is needed to make AndroidJUnit4ClassRunner happy.
-        InstrumentationRegistry.registerInstance(null, Bundle.EMPTY);
-    }
-
-    /**
      * Called when the environment should be initialized.
      */
     public static void onEnvironmentSetup(RavenwoodAwareTestRunner runner) {
@@ -182,13 +164,6 @@ public class RavenwoodAwareTestRunnerHook {
             }
         }
         return true;
-    }
-
-    /**
-     * Called by {@link RavenwoodAwareTestRunner} to see if it should run a test class or not.
-     */
-    public static boolean shouldRunClassOnRavenwood(Class<?> clazz) {
-        return RavenwoodEnablementChecker.shouldRunClassOnRavenwood(clazz, true);
     }
 
     /**

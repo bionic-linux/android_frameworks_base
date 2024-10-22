@@ -17,16 +17,19 @@ package android.platform.test.ravenwood;
 
 import static com.android.ravenwood.common.RavenwoodCommonUtils.RAVENWOOD_VERBOSE_LOGGING;
 import static com.android.ravenwood.common.RavenwoodCommonUtils.ensureIsPublicVoidMethod;
-import static com.android.ravenwood.common.RavenwoodCommonUtils.isOnRavenwood;
+
+import static org.junit.Assume.assumeTrue;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.os.Bundle;
 import android.util.Log;
 
-import org.junit.Assume;
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import org.junit.AssumptionViolatedException;
 import org.junit.internal.builders.AllDefaultPossibilitiesBuilder;
 import org.junit.rules.TestRule;
@@ -67,21 +70,15 @@ import java.util.function.BiConsumer;
  *
  * It will delegate to another runner specified with {@link InnerRunner}
  * (default = {@link BlockJUnit4ClassRunner}) with the following features.
- * - Add a {@link RavenwoodAwareTestRunnerHook#onRunnerInitializing} hook, which is called before
- *   the inner runner gets a chance to run. This can be used to initialize stuff used by the
- *   inner runner.
- * - Add hook points, which are handed by RavenwoodAwareTestRunnerHook, with help from
- *   the four test rules such as {@link #sImplicitClassOuterRule}, which are also injected by
- *   the ravenizer tool.
+ * - Add a called before the inner runner gets a chance to run. This can be used to initialize
+ *   stuff used by the inner runner.
+ * - Add hook points with help from the four test rules such as {@link #sImplicitClassOuterRule},
+ *   which are also injected by the ravenizer tool.
  *
  * We use this runner to:
  * - Initialize the bare minimum environmnet just to be enough to make the actual test runners
  *   happy.
  * - Handle {@link android.platform.test.annotations.DisabledOnRavenwood}.
- *
- * This class is built such that it can also be used on a real device, but in that case
- * it will basically just delegate to the inner wrapper, and won't do anything special.
- * (no hooks, etc.)
  */
 public final class RavenwoodAwareTestRunner extends Runner implements Filterable, Orderable {
     public static final String TAG = "Ravenwood";
@@ -115,41 +112,18 @@ public final class RavenwoodAwareTestRunner extends Runner implements Filterable
         Inner,
     }
 
+    private record HookRule(Scope scope, Order order) implements TestRule {
+        @Override
+        public Statement apply(Statement base, Description description) {
+            return getCurrentRunner().wrapWithHooks(base, description, scope, order);
+        }
+    }
+
     // The following four rule instances will be injected to tests by the Ravenizer tool.
-    private static class RavenwoodClassOuterRule implements TestRule {
-        @Override
-        public Statement apply(Statement base, Description description) {
-            return getCurrentRunner().wrapWithHooks(base, description, Scope.Class, Order.Outer);
-        }
-    }
-
-    private static class RavenwoodClassInnerRule implements TestRule {
-        @Override
-        public Statement apply(Statement base, Description description) {
-            return getCurrentRunner().wrapWithHooks(base, description, Scope.Class, Order.Inner);
-        }
-    }
-
-    private static class RavenwoodInstanceOuterRule implements TestRule {
-        @Override
-        public Statement apply(Statement base, Description description) {
-            return getCurrentRunner().wrapWithHooks(
-                    base, description, Scope.Instance, Order.Outer);
-        }
-    }
-
-    private static class RavenwoodInstanceInnerRule implements TestRule {
-        @Override
-        public Statement apply(Statement base, Description description) {
-            return getCurrentRunner().wrapWithHooks(
-                    base, description, Scope.Instance, Order.Inner);
-        }
-    }
-
-    public static final TestRule sImplicitClassOuterRule = new RavenwoodClassOuterRule();
-    public static final TestRule sImplicitClassInnerRule = new RavenwoodClassInnerRule();
-    public static final TestRule sImplicitInstOuterRule = new RavenwoodInstanceOuterRule();
-    public static final TestRule sImplicitInstInnerRule = new RavenwoodInstanceInnerRule();
+    public static final TestRule sImplicitClassOuterRule = new HookRule(Scope.Class, Order.Outer);
+    public static final TestRule sImplicitClassInnerRule = new HookRule(Scope.Class, Order.Inner);
+    public static final TestRule sImplicitInstOuterRule = new HookRule(Scope.Instance, Order.Outer);
+    public static final TestRule sImplicitInstInnerRule = new HookRule(Scope.Instance, Order.Inner);
 
     public static final String IMPLICIT_CLASS_OUTER_RULE_NAME = "sImplicitClassOuterRule";
     public static final String IMPLICIT_CLASS_INNER_RULE_NAME = "sImplicitClassInnerRule";
@@ -196,7 +170,7 @@ public final class RavenwoodAwareTestRunner extends Runner implements Filterable
     }
 
     private RavenwoodAwareTestRunner(Class<?> testClass, boolean delayEnvSetup) {
-        performGlobalInitialization();
+        RavenwoodRuntimeEnvironmentController.globalInitOnce();
         mTestJavaClass = testClass;
         mDelayEnvironmentSetup = delayEnvSetup;
 
@@ -206,8 +180,7 @@ public final class RavenwoodAwareTestRunner extends Runner implements Filterable
          *
          * We need to do it before instantiating TestClass for b/367694651.
          */
-        if (isOnRavenwood() && !RavenwoodAwareTestRunnerHook.shouldRunClassOnRavenwood(
-                testClass)) {
+        if (!RavenwoodEnablementChecker.shouldRunClassOnRavenwood(testClass, true)) {
             mRealRunner = new ClassSkippingTestRunner(testClass);
             return;
         }
@@ -216,7 +189,11 @@ public final class RavenwoodAwareTestRunner extends Runner implements Filterable
 
         Log.v(TAG, "RavenwoodAwareTestRunner starting for " + testClass.getCanonicalName());
 
-        onRunnerInitializing();
+        // This is needed to make AndroidJUnit4ClassRunner happy.
+        InstrumentationRegistry.registerInstance(null, Bundle.EMPTY);
+
+        // Hook point to allow more customization.
+        runAnnotatedMethodsOnRavenwood(RavenwoodTestRunnerInitializing.class, null);
 
         // Find the real runner.
         final Class<? extends Runner> realRunnerClass;
@@ -262,33 +239,8 @@ public final class RavenwoodAwareTestRunner extends Runner implements Filterable
         }
     }
 
-    private void performGlobalInitialization() {
-        if (!isOnRavenwood()) {
-            return;
-        }
-        RavenwoodAwareTestRunnerHook.performGlobalInitialization();
-    }
-
-    /**
-     * Run the bare minimum setup to initialize the wrapped runner.
-     */
-    // This method is called by the ctor, so never make it virtual.
-    private void onRunnerInitializing() {
-        if (!isOnRavenwood()) {
-            return;
-        }
-
-        RavenwoodAwareTestRunnerHook.onRunnerInitializing(this, mTestClass);
-
-        // Hook point to allow more customization.
-        runAnnotatedMethodsOnRavenwood(RavenwoodTestRunnerInitializing.class, null);
-    }
-
     private void runAnnotatedMethodsOnRavenwood(Class<? extends Annotation> annotationClass,
             Object instance) {
-        if (!isOnRavenwood()) {
-            return;
-        }
         Log.v(TAG, "runAnnotatedMethodsOnRavenwood() " + annotationClass.getName());
 
         for (var method : getTestClass().getAnnotatedMethods(annotationClass)) {
@@ -375,9 +327,6 @@ public final class RavenwoodAwareTestRunner extends Runner implements Filterable
 
     private Statement wrapWithHooks(Statement base, Description description, Scope scope,
             Order order) {
-        if (!isOnRavenwood()) {
-            return base;
-        }
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
@@ -398,22 +347,12 @@ public final class RavenwoodAwareTestRunner extends Runner implements Filterable
 
     private void runWithHooks(Description description, Scope scope, Order order, Statement s)
             throws Throwable {
-        if (isOnRavenwood()) {
-            Assume.assumeTrue(
-                    RavenwoodAwareTestRunnerHook.onBefore(this, description, scope, order));
-        }
+        assumeTrue(RavenwoodAwareTestRunnerHook.onBefore(this, description, scope, order));
         try {
             s.evaluate();
-            if (isOnRavenwood()) {
-                RavenwoodAwareTestRunnerHook.onAfter(this, description, scope, order, null);
-            }
+            RavenwoodAwareTestRunnerHook.onAfter(this, description, scope, order, null);
         } catch (Throwable t) {
-            boolean shouldThrow = true;
-            if (isOnRavenwood()) {
-                shouldThrow = RavenwoodAwareTestRunnerHook.onAfter(
-                        this, description, scope, order, t);
-            }
-            if (shouldThrow) {
+            if (RavenwoodAwareTestRunnerHook.onAfter(this, description, scope, order, t)) {
                 throw t;
             }
         }

@@ -61,9 +61,12 @@ android_test {
         "test/**/*.java",
     ],
     // TODO(b/371215487): migrate bivalenttest.ravenizer tests to another architecture
-    exclude_srcs: [
-        "test/**/ravenizer/*.java",
-    ],
+    // exclude_srcs: [
+    //     "test/**/ravenizer/*.java",
+    // ],
+    ravenizer: {
+        enabled: true,
+    },
     static_libs: [
         "junit",
         "truth",
