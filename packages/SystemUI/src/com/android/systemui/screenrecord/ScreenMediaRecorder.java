@@ -81,7 +81,9 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
 
 
     private File mTempVideoFile;
+    private File mTempVideoFileDuringRecording;
     private File mTempAudioFile;
+    private File mTempAudioFileDuringRecording;
     private MediaProjection mMediaProjection;
     private Surface mInputSurface;
     private VirtualDisplay mVirtualDisplay;
@@ -126,7 +128,9 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
 
         File cacheDir = mContext.getCacheDir();
         cacheDir.mkdirs();
+        Log.e("Screenrecording video file is created at ", cacheDir.getAbsolutePath());
         mTempVideoFile = File.createTempFile("temp", ".mp4", cacheDir);
+        mTempVideoFileDuringRecording = File.createTempFile("temp", ".mp4", cacheDir);
 
         // Set up media recorder
         mMediaRecorder = new MediaRecorder();
@@ -193,6 +197,10 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
                 mAudioSource == MIC_AND_INTERNAL) {
             mTempAudioFile = File.createTempFile("temp", ".aac",
                     mContext.getCacheDir());
+            mTempAudioFileDuringRecording = File.createTempFile("temp", ".aac",
+                    mContext.getCacheDir());
+
+            Log.e("Screenrecording audio file created at ", mTempAudioFileDuringRecording.getAbsolutePath());
             mAudio = new ScreenInternalAudioRecorder(mTempAudioFile.getAbsolutePath(),
                     mMediaProjection, mAudioSource == MIC_AND_INTERNAL);
         }
@@ -352,6 +360,7 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
                         mTempVideoFile.getAbsolutePath(),
                         mTempAudioFile.getAbsolutePath());
                 mMuxer.mux();
+                mTempVideoFileDuringRecording = mTempVideoFile;
                 mTempVideoFile.delete();
                 mTempVideoFile = file;
             } catch (IOException e) {
@@ -364,10 +373,11 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         OutputStream os = resolver.openOutputStream(itemUri, "w");
         Files.copy(mTempVideoFile.toPath(), os);
         os.close();
+        mTempAudioFileDuringRecording = mTempAudioFile;
         if (mTempAudioFile != null) mTempAudioFile.delete();
         SavedRecording recording = new SavedRecording(
                 itemUri, mTempVideoFile, getRequiredThumbnailSize());
-        mTempVideoFile.delete();
+        // mTempVideoFile.delete();
         return recording;
     }
 
@@ -390,10 +400,10 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
      */
     protected void release() {
         if (mTempVideoFile != null) {
-            mTempVideoFile.delete();
+            // mTempVideoFile.delete();
         }
         if (mTempAudioFile != null) {
-            mTempAudioFile.delete();
+            // mTempAudioFile.delete();
         }
     }
 
