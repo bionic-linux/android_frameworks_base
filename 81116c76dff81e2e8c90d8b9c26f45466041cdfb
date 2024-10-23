@@ -129,6 +129,30 @@
       },
       "revId": "81116c76dff81e2e8c90d8b9c26f45466041cdfb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35c8f1f9_e5a544a7",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2899,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-10-23T18:08:08Z",
+      "side": 1,
+      "message": "Got it, thanks for clarifying!",
+      "parentUuid": "f216f0fa_2d2d3daa",
+      "range": {
+        "startLine": 2899,
+        "startChar": 74,
+        "endLine": 2899,
+        "endChar": 88
+      },
+      "revId": "81116c76dff81e2e8c90d8b9c26f45466041cdfb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
