@@ -1,0 +1,86 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc615e11_f96c1231",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2899,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-10-23T16:56:21Z",
+      "side": 1,
+      "message": "Missing space after \"service\"",
+      "range": {
+        "startLine": 2899,
+        "startChar": 49,
+        "endLine": 2899,
+        "endChar": 59
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "e1c56025_1c95cfa0",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/am/ActivityManagerService.java",
+              "range": {
+                "startLine": 2899,
+                "startChar": 0,
+                "endLine": 2900,
+                "endChar": 0
+              },
+              "replacement": "            // Removing User Service and App Ops Service from cache breaks build for auto.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "81116c76dff81e2e8c90d8b9c26f45466041cdfb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9c585b2_b0122d77",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2899,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-10-23T16:56:21Z",
+      "side": 1,
+      "message": "Just for my understanding, do you have a link to the build failure? It\u0027s surprising that this can lead to a build failure.",
+      "range": {
+        "startLine": 2899,
+        "startChar": 74,
+        "endLine": 2899,
+        "endChar": 88
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "6e2a45d2_f433e314",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/am/ActivityManagerService.java",
+              "range": {
+                "startLine": 2899,
+                "startChar": 0,
+                "endLine": 2900,
+                "endChar": 0
+              },
+              "replacement": "            // Removing User Service and App Ops Service from cache breaks build for auto.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "81116c76dff81e2e8c90d8b9c26f45466041cdfb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
