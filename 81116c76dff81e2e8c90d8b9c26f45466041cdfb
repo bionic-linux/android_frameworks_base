@@ -81,6 +81,54 @@
       ],
       "revId": "81116c76dff81e2e8c90d8b9c26f45466041cdfb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f216f0fa_2d2d3daa",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2899,
+      "author": {
+        "id": 1975865
+      },
+      "writtenOn": "2024-10-23T17:19:35Z",
+      "side": 1,
+      "message": "Sorry for the incorrect wording, it was a boot failure. I\u0027m not sure what the issue is, but not populating this meant that there was a null pointer when the service was accessed in the CarUserService.",
+      "parentUuid": "d9c585b2_b0122d77",
+      "range": {
+        "startLine": 2899,
+        "startChar": 74,
+        "endLine": 2899,
+        "endChar": 88
+      },
+      "revId": "81116c76dff81e2e8c90d8b9c26f45466041cdfb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "939f6dee_b94dd459",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2899,
+      "author": {
+        "id": 1975865
+      },
+      "writtenOn": "2024-10-23T17:19:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc615e11_f96c1231",
+      "range": {
+        "startLine": 2899,
+        "startChar": 49,
+        "endLine": 2899,
+        "endChar": 59
+      },
+      "revId": "81116c76dff81e2e8c90d8b9c26f45466041cdfb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
