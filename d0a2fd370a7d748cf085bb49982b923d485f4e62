@@ -76,6 +76,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47561b1c_2974613e",
+        "filename": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1891746
+      },
+      "writtenOn": "2024-10-24T21:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b168590a_bc97ae0e",
+      "revId": "d0a2fd370a7d748cf085bb49982b923d485f4e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d2194b79_c8c1b59e",
@@ -107,6 +125,24 @@
           ]
         }
       ],
+      "revId": "d0a2fd370a7d748cf085bb49982b923d485f4e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff9f2d40_a024f446",
+        "filename": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1891746
+      },
+      "writtenOn": "2024-10-24T21:54:23Z",
+      "side": 1,
+      "message": "These rules are always injected by Ravenizer, so these fields always have to exist.",
+      "parentUuid": "d2194b79_c8c1b59e",
       "revId": "d0a2fd370a7d748cf085bb49982b923d485f4e62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -146,6 +182,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "596026e3_4c413e12",
+        "filename": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1891746
+      },
+      "writtenOn": "2024-10-24T21:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62d165d7_6b244c40",
+      "revId": "d0a2fd370a7d748cf085bb49982b923d485f4e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "881364c6_fd53143a",
@@ -159,6 +213,24 @@
       "writtenOn": "2024-10-22T23:38:04Z",
       "side": 1,
       "message": "Okay let\u0027s create one more device-side test, and enable ravenizer only on that one.\n\nBasically I wanted to have RavenwoodBivalentTest to ensure the same test behave in the same way when it\u0027s executed on the device side and on Ravenwood.\n\nNow if we always apply ravenizer to the device side too, it\u0027s possible that\u0027d actually change the device side test behavior, so even if the same class behave in the same way on `RavenwoodBivalentTest_device` (w/ ravenizer) and `RavenwoodBivalentTest`, it\u0027s still possible that\u0027s not how `RavenwoodBivalentTest_device` (w/o ravenizer) would behave.\n\nSo I think now we need 3 variants -- the ravenwood version, the device version w/ ravenizer an w/o ravenizer, and all of them should behave in the same way. i.e. ravenizer really shouldn\u0027t change any device side test behavior.",
+      "revId": "d0a2fd370a7d748cf085bb49982b923d485f4e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aeba5bee_d01c992d",
+        "filename": "ravenwood/tests/bivalenttest/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1891746
+      },
+      "writtenOn": "2024-10-24T21:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "881364c6_fd53143a",
       "revId": "d0a2fd370a7d748cf085bb49982b923d485f4e62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
