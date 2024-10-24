@@ -1,0 +1,239 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b289aeb_f3644659",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-24T23:19:44Z",
+      "side": 1,
+      "message": "Thanks, mostly looks good, let\u0027s just remove more code duplicate?",
+      "revId": "6fc1b6835c9fae117ae3ea690a78cacdad90df68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "093e6409_e1dd2bf1",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-24T23:19:44Z",
+      "side": 1,
+      "message": "I think we can extract the whole \"critical error\" thingy to a top-level class in junit-src, and we won\u0027t need two copies.\n\nThe point was to create a public method setCriticalErrorHandler() that could be called from our tests, and still prevent external callers from calling it, and I tried to achieve it with the weird method name \"private$ravenwood\".\n\nI think we could use a weird class name to achieve it.\n\n\n```\npublic final class Ravenwood$Private {\n    private static volatile BiConsumer\u003cString, Throwable\u003e sCriticalErrorHandler;\n\n    private static BiConsumer\u003cString, Throwable\u003e sDefaultCriticalErrorHandler \u003d (message, th) -\u003e {\n        Log.e(TAG, \"Ravenwood cannot continue. Killing self process.\", th);\n        System.exit(1);\n    };\n\n    :\n    :\n\n    /**\n     * Set a listener for onCriticalError(), for testing. If a listener is set, we won\u0027t call\n     * System.exit().\n     */\n    public void setCriticalErrorHandler(\n            @Nullable BiConsumer\u003cString, Throwable\u003e handler) {\n        sCriticalErrorHandler \u003d handler;\n    }\n}\n```",
+      "fixSuggestions": [
+        {
+          "fixId": "58ab4c9d_0a37046a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 20,
+                "startChar": 0,
+                "endLine": 20,
+                "endChar": 0
+              },
+              "replacement": "import static com.android.ravenwood.junit.RavenwoodCriticalErrorHandler.onCriticalError;\n"
+            },
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 55,
+                "startChar": 0,
+                "endLine": 56,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 496,
+                "startChar": 0,
+                "endLine": 512,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 520,
+                "startChar": 0,
+                "endLine": 527,
+                "endChar": 0
+              },
+              "replacement": "        public static RavenwoodPrivate private$ravenwood() {\n            return new RavenwoodPrivate();\n"
+            },
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 529,
+                "startChar": 0,
+                "endLine": 535,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "6fc1b6835c9fae117ae3ea690a78cacdad90df68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6127d570_eb0a2d63",
+        "filename": "ravenwood/junit-src/android/platform/test/annotations/InnerRunner.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-24T23:19:44Z",
+      "side": 1,
+      "message": "Actually, this one is not supposed to be used by tests directly (unlike the other ones in this package), so lets move it to android.platform.test.annotations.internal?",
+      "fixSuggestions": [
+        {
+          "fixId": "afa3a6a3_410cc2cd",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-src/android/platform/test/annotations/InnerRunner.java",
+              "range": {
+                "startLine": 16,
+                "startChar": 0,
+                "endLine": 17,
+                "endChar": 0
+              },
+              "replacement": "package android.platform.test.runner;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6fc1b6835c9fae117ae3ea690a78cacdad90df68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19619b1a_79c3191f",
+        "filename": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-24T23:19:44Z",
+      "side": 1,
+      "message": "Hmm I\u0027m uncomfortable having to have two copies of these methods.\n\nCan we create a base class in junit-src and move the common methods to there?",
+      "fixSuggestions": [
+        {
+          "fixId": "a996de38_d9b8be21",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 20,
+                "startChar": 0,
+                "endLine": 21,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 50,
+                "startChar": 0,
+                "endLine": 52,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 69,
+                "startChar": 0,
+                "endLine": 71,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 82,
+                "startChar": 0,
+                "endLine": 83,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 86,
+                "startChar": 0,
+                "endLine": 87,
+                "endChar": 0
+              },
+              "replacement": "            throw logAndFail(\"Failed to instantiate \" + realRunnerClass, e, null);\n"
+            },
+            {
+              "path": "ravenwood/junit-stub-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 102,
+                "startChar": 0,
+                "endLine": 107,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "6fc1b6835c9fae117ae3ea690a78cacdad90df68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1346744b_36703f94",
+        "filename": "ravenwood/tests/bivalenttest/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-24T23:19:44Z",
+      "side": 1,
+      "message": "This should be in TEST_MAPPING. Presubmit is fine. (ignore the SLO warning.)",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 49
+      },
+      "revId": "6fc1b6835c9fae117ae3ea690a78cacdad90df68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
