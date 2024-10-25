@@ -28,6 +28,7 @@ import static android.system.OsConstants.O_RDONLY;
 import static android.view.Display.DEFAULT_DISPLAY;
 
 import static com.android.server.utils.TimingsTraceAndSlog.SYSTEM_SERVER_TIMING_TAG;
+import static com.android.server.vcn.VcnLocation.IS_VCN_IN_MAINLINE;
 
 import android.annotation.NonNull;
 import android.annotation.StringRes;
@@ -2143,7 +2144,7 @@ public final class SystemServer implements Dumpable {
             }
             t.traceEnd();
 
-            t.traceBegin("StartVcnManagementService");
+            t.traceBegin("StartVcnManagementService IS_VCN_IN_MAINLINE " + IS_VCN_IN_MAINLINE);
             try {
                 vcnManagement = VcnManagementService.create(context);
                 ServiceManager.addService(Context.VCN_MANAGEMENT_SERVICE, vcnManagement);
