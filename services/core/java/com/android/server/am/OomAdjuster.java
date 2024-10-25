@@ -803,10 +803,13 @@ public class OomAdjuster {
         int size = processes.size();
         if (size > 0) {
             // Reverse the process list, since the updateOomAdjInnerLSP scans from the end of it.
-            for (int l = 0, r = size - 1; l < r; l++, r--) {
+            for (int l = 0, r = size - 1; l <= r; l++, r--) {
                 final ProcessRecord t = processes.get(l);
                 final ProcessRecord u = processes.get(r);
                 t.mState.setReachable(false);
+                if (l == r) {
+                    break;
+                }
                 u.mState.setReachable(false);
                 processes.set(l, u);
                 processes.set(r, t);
