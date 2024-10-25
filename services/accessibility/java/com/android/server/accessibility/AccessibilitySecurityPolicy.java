@@ -45,7 +45,7 @@ import android.util.Slog;
 import android.util.SparseBooleanArray;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.inputmethod.InputMethodInfo;
-
+import android.util.Log;
 import com.android.internal.util.ArrayUtils;
 import com.android.server.inputmethod.InputMethodManagerInternal;
 
@@ -421,7 +421,9 @@ public class AccessibilitySecurityPolicy {
                 }
             }
         }
-
+        Log.i("JH", "inputMethodInfo: " + inputMethodInfo);
+        Log.i("JH", "inputMethodInfo2: " + (inputMethodInfo==null?null:inputMethodInfo.getPackageName()));
+        Log.i("JH", "inputMethodInfo3: " + servicePackageName);
         if (inputMethodInfo == null
                 || !inputMethodInfo.getPackageName().equals(servicePackageName)) {
             throw new SecurityException("The input method is in a different package with the "
