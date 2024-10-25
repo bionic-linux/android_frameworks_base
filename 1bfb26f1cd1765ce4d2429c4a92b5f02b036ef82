@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bd0462b_7aa60e75",
+        "filename": "services/core/java/com/android/server/wm/InputMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-10-25T02:37:21Z",
+      "side": 1,
+      "message": "@riddlehsu@google.com\n\nHi Riddle,\n\nI wonder if this should be\n```\nif (activeRecents.isFixedRotationTransforming()) {\n    mTmpRect.set(activeRecents.getFixedRotationTransformDisplayBounds());\n}\n```",
+      "range": {
+        "startLine": 600,
+        "startChar": 24,
+        "endLine": 604,
+        "endChar": 25
+      },
+      "revId": "1bfb26f1cd1765ce4d2429c4a92b5f02b036ef82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
