@@ -373,6 +373,9 @@ public final class AppRestrictionController {
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
+            if (action == null) {
+                return;
+            }
             switch (intent.getAction()) {
                 case Intent.ACTION_PACKAGE_ADDED: {
                     if (!intent.getBooleanExtra(Intent.EXTRA_REPLACING, false)) {
