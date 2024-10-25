@@ -597,6 +597,9 @@ final class InputMonitor {
                     final WindowState targetAppMainWindow = activeRecents.findMainWindow();
                     if (targetAppMainWindow != null) {
                         targetAppMainWindow.getBounds(mTmpRect);
+                        if (targetAppMainWindow.getDisplayContent().isFixedRotationLaunchingApp(activeRecents)) {
+                            mTmpRect.set(mTmpRect.left, mTmpRect.top, mTmpRect.bottom, mTmpRect.right);
+                        }
                         mRecentsAnimationInputConsumer.mWindowHandle.touchableRegion.set(mTmpRect);
                     }
                     mRecentsAnimationInputConsumer.show(mInputTransaction, layer);
