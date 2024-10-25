@@ -93,6 +93,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba881a0c_7f849b5e",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1891746
+      },
+      "writtenOn": "2024-10-25T04:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "093e6409_e1dd2bf1",
+      "revId": "6fc1b6835c9fae117ae3ea690a78cacdad90df68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6127d570_eb0a2d63",
@@ -262,6 +280,30 @@
       "writtenOn": "2024-10-24T23:19:44Z",
       "side": 1,
       "message": "This should be in TEST_MAPPING. Presubmit is fine. (ignore the SLO warning.)",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 49
+      },
+      "revId": "6fc1b6835c9fae117ae3ea690a78cacdad90df68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "423a3e63_2d2740c5",
+        "filename": "ravenwood/tests/bivalenttest/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1891746
+      },
+      "writtenOn": "2024-10-25T04:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1346744b_36703f94",
       "range": {
         "startLine": 88,
         "startChar": 11,
