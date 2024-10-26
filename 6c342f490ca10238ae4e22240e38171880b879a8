@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c3bfb57_15b1915e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2002580
+      },
+      "writtenOn": "2024-10-26T01:19:34Z",
+      "side": 1,
+      "message": "Hi Islam, that is the reason for the revert, how to interpret the \u003cui hold inneedmineERE\u003e?",
+      "revId": "6c342f490ca10238ae4e22240e38171880b879a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
