@@ -88,10 +88,11 @@ public final class ProfcollectForwardingService extends SystemService {
                 createAndUploadReport(sSelfService);
             }
             if (UsbManager.ACTION_USB_STATE.equals(intent.getAction())) {
-                boolean connected = intent.getBooleanExtra(UsbManager.USB_CONNECTED, false);
                 boolean isADB = intent.getBooleanExtra(UsbManager.USB_FUNCTION_ADB, false);
                 if (isADB) {
-                    Log.d(LOG_TAG, "Received broadcast that ADB became " + connected);
+                    boolean connected = intent.getBooleanExtra(UsbManager.USB_CONNECTED, false);
+                    Log.d(LOG_TAG, "Received broadcast that ADB became " + connected
+                            + ", was " + mAdbActive);
                     mAdbActive = connected;
                 }
             }
@@ -117,9 +118,6 @@ public final class ProfcollectForwardingService extends SystemService {
         mUploadEnabled =
             context.getResources().getBoolean(R.bool.config_profcollectReportUploaderEnabled);
 
-        // TODO: ADB might already be active when our service started.
-        mAdbActive = false;
-
         final IntentFilter filter = new IntentFilter();
         filter.addAction(INTENT_UPLOAD_PROFILES);
         filter.addAction(UsbManager.ACTION_USB_STATE);
@@ -141,6 +139,11 @@ public final class ProfcollectForwardingService extends SystemService {
 
     @Override
     public void onBootPhase(int phase) {
+        if (phase == PHASE_SYSTEM_SERVICES_READY) {
+            UsbManager usbManager = getContext().getSystemService(UsbManager.class);
+            mAdbActive = ((usbManager.getCurrentFunctions() & UsbManager.FUNCTION_ADB) == 1);
+            Log.d(LOG_TAG, "ADB is " + mAdbActive + " on system startup");
+        }
         if (phase == PHASE_BOOT_COMPLETED) {
             if (mIProfcollect == null) {
                 return;
