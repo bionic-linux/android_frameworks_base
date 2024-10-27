@@ -117,8 +117,9 @@ public final class ProfcollectForwardingService extends SystemService {
         mUploadEnabled =
             context.getResources().getBoolean(R.bool.config_profcollectReportUploaderEnabled);
 
-        // TODO: ADB might already be active when our service started.
-        mAdbActive = false;
+        UsbManager usbManager = context.getSystemService(UsbManager.class);
+        mAdbActive = ((usbManager.getCurrentFunctions() & UsbManager.FUNCTION_ADB) == 1);
+        Log.d(LOG_TAG, "ADB is " + (mAdbActive ? "active" : "inactive"));
 
         final IntentFilter filter = new IntentFilter();
         filter.addAction(INTENT_UPLOAD_PROFILES);
