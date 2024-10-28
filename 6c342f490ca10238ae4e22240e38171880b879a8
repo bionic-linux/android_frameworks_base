@@ -16,6 +16,23 @@
       "message": "Hi Islam, that is the reason for the revert, how to interpret the \u003cui hold inneedmineERE\u003e?",
       "revId": "6c342f490ca10238ae4e22240e38171880b879a8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f4000bc_15e042b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3524514
+      },
+      "writtenOn": "2024-10-28T14:47:00Z",
+      "side": 1,
+      "message": "Can I please know the reason for this revert request? The reason is currently populated as \u0027\u003cui hold inneedmineERE\u003e",
+      "revId": "6c342f490ca10238ae4e22240e38171880b879a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
