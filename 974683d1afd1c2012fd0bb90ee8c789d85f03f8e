@@ -22,6 +22,30 @@
       },
       "revId": "974683d1afd1c2012fd0bb90ee8c789d85f03f8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27f23466_7432f558",
+        "filename": "services/core/java/com/android/server/am/AppRestrictionController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1950860
+      },
+      "writtenOn": "2024-10-28T23:36:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25f795d9_60f466fd",
+      "range": {
+        "startLine": 379,
+        "startChar": 20,
+        "endLine": 379,
+        "endChar": 38
+      },
+      "revId": "974683d1afd1c2012fd0bb90ee8c789d85f03f8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
