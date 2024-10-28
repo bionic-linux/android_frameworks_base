@@ -16,6 +16,24 @@
       "message": "There is a new implementation of the algorithm, did you check if that fixes your problem?",
       "revId": "d39c03aa689eb016622d311ca38eb263bdf9397d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4eefa105_fbdea31d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1949205
+      },
+      "writtenOn": "2024-10-28T03:04:18Z",
+      "side": 1,
+      "message": "Are you referring to the method collectAndMarkReachableProcessesLSP? This new algorithm implementation cannot solve the problem in this scenario. If the new algorithm is used, it will ultimately require an additional traversal to set reachable to false, which is different from the current approach that only involves checking reachability.",
+      "parentUuid": "04921fbf_0885834f",
+      "revId": "d39c03aa689eb016622d311ca38eb263bdf9397d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
