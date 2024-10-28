@@ -253,7 +253,8 @@ public class MediaSessionRecord extends MediaSessionRecordImpl implements IBinde
     private static final int USER_PERMANENTLY_ENGAGED = 0;
 
     /**
-     * Indicates that the session is active and in {@link PlaybackState#STATE_PAUSED} state.
+     * Indicates that the session is active and has recently switched to one of the user disengaged
+     * states.
      *
      * @see #updateUserEngagedStateIfNeededLocked(boolean)
      */
@@ -276,9 +277,7 @@ public class MediaSessionRecord extends MediaSessionRecordImpl implements IBinde
      * <p>For example, if a session is transitioning from a user-engaged state {@link
      * PlaybackState#STATE_PLAYING} to a temporary user-engaged state {@link
      * PlaybackState#STATE_PAUSED}, then the session will be considered in a user-engaged state for
-     * the duration of this timeout, starting at the transition instant. However, a temporary
-     * user-engaged state is not considered user-engaged when transitioning from a non-user engaged
-     * state {@link PlaybackState#STATE_STOPPED}.
+     * the duration of this timeout, starting at the transition instant.
      */
     private static final int TEMP_USER_ENGAGED_TIMEOUT_MS = 600000;
 
@@ -1117,15 +1116,12 @@ public class MediaSessionRecord extends MediaSessionRecordImpl implements IBinde
         }
         int oldUserEngagedState = mUserEngagementState;
         int newUserEngagedState;
-        if (!isActive() || mPlaybackState == null || mDestroyed) {
+        if (!isActive() || mPlaybackState == null) {
             newUserEngagedState = USER_DISENGAGED;
-        } else if (isActive() && mPlaybackState.isActive()) {
+        } else if (mPlaybackState.isActive()) {
             newUserEngagedState = USER_PERMANENTLY_ENGAGED;
-        } else if (mPlaybackState.getState() == PlaybackState.STATE_PAUSED) {
-            newUserEngagedState =
-                    oldUserEngagedState == USER_PERMANENTLY_ENGAGED || !isTimeoutExpired
-                            ? USER_TEMPORARY_ENGAGED
-                            : USER_DISENGAGED;
+        } else if (oldUserEngagedState == USER_PERMANENTLY_ENGAGED || !isTimeoutExpired) {
+            newUserEngagedState = USER_TEMPORARY_ENGAGED;
         } else {
             newUserEngagedState = USER_DISENGAGED;
         }
