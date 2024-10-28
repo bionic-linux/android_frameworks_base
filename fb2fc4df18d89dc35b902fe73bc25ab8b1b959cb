@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d8b3e14c_9d3466b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1958109
+      },
+      "writtenOn": "2024-10-28T13:02:10Z",
+      "side": 1,
+      "message": "I listed some manual tests in the commit message.\n\nThe issue is public here: https://gitlab.com/CalyxOS/calyxos/-/issues/1648",
+      "parentUuid": "58bee273_e775e0cb",
+      "revId": "fb2fc4df18d89dc35b902fe73bc25ab8b1b959cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "82fd0c02_011d8b87",
         "filename": "packages/SystemUI/src/com/android/systemui/privacy/PrivacyConfig.kt",
         "patchSetId": 2
