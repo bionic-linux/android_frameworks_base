@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9120878_520c1d7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-10-29T17:17:50Z",
+      "side": 1,
+      "message": "This is fixed internally and will be available in AOSP when the next AOSP push happens.",
+      "revId": "dcb436f3e9e6695d89e43ec650646e9cbfa9777f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
