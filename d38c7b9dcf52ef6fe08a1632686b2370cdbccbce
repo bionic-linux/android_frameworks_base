@@ -16,6 +16,23 @@
       "message": "Let me know if you prefer I explicitly add you (or someone else) to the new file",
       "revId": "d38c7b9dcf52ef6fe08a1632686b2370cdbccbce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c66afbe8_ed54c8c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2024-10-29T20:37:14Z",
+      "side": 1,
+      "message": "+Evan to stamp",
+      "revId": "d38c7b9dcf52ef6fe08a1632686b2370cdbccbce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
