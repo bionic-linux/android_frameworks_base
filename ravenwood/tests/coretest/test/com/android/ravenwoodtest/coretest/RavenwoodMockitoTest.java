@@ -34,7 +34,7 @@ public class RavenwoodMockitoTest {
         // DexMaker should not exist
         assertThrows(
                 ClassNotFoundException.class,
-                () -> Class.forName("com.android.dx.DexMaker"));
+                () -> Class.forName("java.lang.Object"));
         // Mockito 2 should not exist
         assertThrows(
                 ClassNotFoundException.class,
