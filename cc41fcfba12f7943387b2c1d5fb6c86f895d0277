@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f91f222_1490b2a3",
+        "filename": "nfc/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2891,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-29T17:22:54Z",
+      "side": 1,
+      "message": "What does `switching state` mean? Please elaborate on this.",
+      "range": {
+        "startLine": 2891,
+        "startChar": 20,
+        "endLine": 2891,
+        "endChar": 36
+      },
+      "revId": "cc41fcfba12f7943387b2c1d5fb6c86f895d0277",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f288d04c_23bfa857",
+        "filename": "nfc/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2892,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-29T17:22:54Z",
+      "side": 1,
+      "message": "Remove this since the permission check conveys who can call this API.",
+      "range": {
+        "startLine": 2891,
+        "startChar": 0,
+        "endLine": 2892,
+        "endChar": 49
+      },
+      "revId": "cc41fcfba12f7943387b2c1d5fb6c86f895d0277",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9af1b877_9bace221",
+        "filename": "nfc/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2895,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-29T17:22:54Z",
+      "side": 1,
+      "message": "Not very clear what `inSwitching` here means.",
+      "range": {
+        "startLine": 2894,
+        "startChar": 14,
+        "endLine": 2895,
+        "endChar": 75
+      },
+      "revId": "cc41fcfba12f7943387b2c1d5fb6c86f895d0277",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdbcd79f_13dcc980",
+        "filename": "nfc/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2902,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-29T17:22:54Z",
+      "side": 1,
+      "message": "Add  `@RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)`",
+      "range": {
+        "startLine": 2902,
+        "startChar": 2,
+        "endLine": 2902,
+        "endChar": 4
+      },
+      "revId": "cc41fcfba12f7943387b2c1d5fb6c86f895d0277",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
