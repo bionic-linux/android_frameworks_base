@@ -78,6 +78,7 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
     private static final int MAX_DURATION_MS = 60 * 60 * 1000;
     private static final long MAX_FILESIZE_BYTES = 5000000000L;
     private static final String TAG = "ScreenMediaRecorder";
+    private static final int DELAY_IN_MILLISECONDS = 5;
 
 
     private File mTempVideoFile;
@@ -92,6 +93,9 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
     private ScreenRecordingAudioSource mAudioSource;
     private final MediaProjectionCaptureTarget mCaptureRegion;
     private final Handler mHandler;
+    private int mWidth;
+    private int mHeight;
+    private int mDensityDpi;
 
     private Context mContext;
     ScreenMediaRecorderListener mListener;
@@ -146,16 +150,17 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         wm.getDefaultDisplay().getRealMetrics(metrics);
         int refreshRate = (int) wm.getDefaultDisplay().getRefreshRate();
         int[] dimens = getSupportedSize(metrics.widthPixels, metrics.heightPixels, refreshRate);
-        int width = dimens[0];
-        int height = dimens[1];
+        mWidth = dimens[0];
+        mHeight = dimens[1];
         refreshRate = dimens[2];
-        int vidBitRate = width * height * refreshRate / VIDEO_FRAME_RATE
+        mDensityDpi = metrics.densityDpi;
+        int vidBitRate = mWidth * mHeight * refreshRate / VIDEO_FRAME_RATE
                 * VIDEO_FRAME_RATE_TO_RESOLUTION_RATIO;
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         mMediaRecorder.setVideoEncodingProfileLevel(
                 MediaCodecInfo.CodecProfileLevel.AVCProfileHigh,
                 MediaCodecInfo.CodecProfileLevel.AVCLevel3);
-        mMediaRecorder.setVideoSize(width, height);
+        mMediaRecorder.setVideoSize(mWidth, mHeight);
         mMediaRecorder.setVideoFrameRate(refreshRate);
         mMediaRecorder.setVideoEncodingBitRate(vidBitRate);
         mMediaRecorder.setMaxDuration(MAX_DURATION_MS);
@@ -175,9 +180,10 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         mInputSurface = mMediaRecorder.getSurface();
         mVirtualDisplay = mMediaProjection.createVirtualDisplay(
                 "Recording Display",
-                width,
-                height,
-                metrics.densityDpi,
+                mWidth,
+                // Temporary size change for INTERNAL audio source
+                mAudioSource == INTERNAL ? mHeight + 1 : mHeight,
+                mDensityDpi,
                 DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
                 mInputSurface,
                 new VirtualDisplay.Callback() {
@@ -278,7 +284,29 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         Log.d(TAG, "start recording");
         prepare();
         mMediaRecorder.start();
+        if (mAudioSource == INTERNAL) {
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        forceFirstFrame();
+                    } catch (IOException e) {
+                        Log.e(TAG, "Error forcing frame: " + e.getMessage());
+                    } catch (RemoteException e) {
+                        Log.e(TAG, "Runtime error: " + e.getMessage());
+                    } catch (RuntimeException e) {
+                        Log.e(TAG, "Unexpected error: " + e.getMessage());
+                    }
+                }
+            }, DELAY_IN_MILLISECONDS);
+        }
         recordInternalAudio();
+    }
+
+    // Resize to actual height, creating a new frame
+    private void forceFirstFrame() throws IOException, RemoteException, RuntimeException {
+      Log.d(TAG, "forcing first frame");
+      mVirtualDisplay.resize(mWidth, mHeight, mDensityDpi);
     }
 
     /**
