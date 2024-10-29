@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1801299e_4db2cb01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1043845
+      },
+      "writtenOn": "2024-10-29T20:16:13Z",
+      "side": 1,
+      "message": "@enh@google.com, right? Else we could make a `cc_library_headers` for these that exports the things needed to use it.",
+      "range": {
+        "startLine": 12,
+        "startChar": 26,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "a9d0be50161db455e340d8afdf1782c5e7222d0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
