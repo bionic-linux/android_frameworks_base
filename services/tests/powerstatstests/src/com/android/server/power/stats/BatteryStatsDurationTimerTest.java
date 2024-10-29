@@ -16,6 +16,25 @@
 
 package com.android.server.power.stats;
 
+import android.content.Context;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertSame;
+import static junit.framework.TestCase.assertNotSame;
+import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.fail;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.junit.Test;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import android.os.BatteryStats;
 import android.os.Parcel;
 
@@ -29,9 +48,19 @@ import junit.framework.TestCase;
  * In these tests, unless otherwise commented, the time increments by
  * 2x + 100, to make the subtraction unlikely to alias to another time.
  */
-public class BatteryStatsDurationTimerTest extends TestCase {
+@RunWith(AndroidJUnit4.class)
+public class BatteryStatsDurationTimerTest {
+    private Context getContext() {
+        return InstrumentationRegistry.getInstrumentation().getTargetContext();
+    }
+
+    private Context getTestContext() {
+        return InstrumentationRegistry.getInstrumentation().getContext();
+    }
+
 
     @SmallTest
+    @Test
     public void testStartStop() throws Exception {
         final MockClock clocks = new MockClock();
 
@@ -104,6 +133,7 @@ public class BatteryStatsDurationTimerTest extends TestCase {
      * Tests that reset(boolean detachIfReset) clears the correct times if detachIfReset is false.
      */
     @SmallTest
+    @Test
     public void testReset() throws Exception {
         final MockClock clocks = new MockClock();
 
@@ -140,6 +170,7 @@ public class BatteryStatsDurationTimerTest extends TestCase {
      * Tests that reset(boolean detachIfReset) clears the correct times if detachIfReset is true.
      */
     @SmallTest
+    @Test
     public void testResetAndDetach() throws Exception {
         final MockClock clocks = new MockClock();
 
@@ -167,6 +198,7 @@ public class BatteryStatsDurationTimerTest extends TestCase {
     }
 
     @SmallTest
+    @Test
     public void testParceling() throws Exception {
         final MockClock clocks = new MockClock();
 

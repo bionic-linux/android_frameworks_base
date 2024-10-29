@@ -16,6 +16,25 @@
 
 package com.android.server.power.stats;
 
+import android.content.Context;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertSame;
+import static junit.framework.TestCase.assertNotSame;
+import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.fail;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.junit.Test;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import android.os.BatteryStats;
 import android.os.Parcel;
 import android.util.StringBuilderPrinter;
@@ -32,7 +51,16 @@ import junit.framework.TestCase;
 /**
  * Provides test cases for android.os.BatteryStats.
  */
-public class BatteryStatsTimerTest extends TestCase {
+@RunWith(AndroidJUnit4.class)
+public class BatteryStatsTimerTest {
+    private Context getContext() {
+        return InstrumentationRegistry.getInstrumentation().getTargetContext();
+    }
+
+    private Context getTestContext() {
+        return InstrumentationRegistry.getInstrumentation().getContext();
+    }
+
     private static final String TAG = "BatteryStatsTest";
 
     class TestTimer extends Timer {
@@ -89,6 +117,7 @@ public class BatteryStatsTimerTest extends TestCase {
      * to the timer.
      */
     @SmallTest
+    @Test
     public void testRunning() throws Exception {
         TimeBase timeBase = new TimeBase();
         MockClock clocks = new MockClock();
@@ -110,6 +139,7 @@ public class BatteryStatsTimerTest extends TestCase {
      * Tests that the parcel can be parceled and unparceled without losing anything.
      */
     @SmallTest
+    @Test
     public void testParceling() throws Exception {
         TimeBase timeBase = new TimeBase();
         MockClock clocks = new MockClock();
@@ -140,6 +170,7 @@ public class BatteryStatsTimerTest extends TestCase {
      * Tests that the parcel can be parceled and unparceled without losing anything.
      */
     @SmallTest
+    @Test
     public void testParcelingNull() throws Exception {
         // Test writing null
         Parcel parcel = Parcel.obtain();
@@ -155,6 +186,7 @@ public class BatteryStatsTimerTest extends TestCase {
      * Tests that reset() clears the correct times.
      */
     @SmallTest
+    @Test
     public void testResetNoDetach() throws Exception {
         TimeBase timeBase = new TimeBase();
         MockClock clocks = new MockClock();
@@ -178,6 +210,7 @@ public class BatteryStatsTimerTest extends TestCase {
      * Tests that reset() clears the correct times.
      */
     @SmallTest
+    @Test
     public void testResetDetach() throws Exception {
         TimeBase timeBase = new TimeBase();
         MockClock clocks = new MockClock();
@@ -201,6 +234,7 @@ public class BatteryStatsTimerTest extends TestCase {
      * Tests reading and writing the summary to a parcel
      */
     @SmallTest
+    @Test
     public void testSummaryParceling() throws Exception {
         TimeBase timeBase = new TimeBase();
         timeBase.setRunning(true, 10, 20);
@@ -244,6 +278,7 @@ public class BatteryStatsTimerTest extends TestCase {
      * Tests getTotalTimeLocked
      */
     @SmallTest
+    @Test
     public void testGetTotalTimeLocked() throws Exception {
         TimeBase timeBase = new TimeBase();
         timeBase.setRunning(true, 10, 20);
@@ -269,6 +304,7 @@ public class BatteryStatsTimerTest extends TestCase {
      * Tests getCountLocked
      */
     @SmallTest
+    @Test
     public void testGetCountLocked() throws Exception {
         TimeBase timeBase = new TimeBase();
         timeBase.setRunning(true, 10, 20);
@@ -290,6 +326,7 @@ public class BatteryStatsTimerTest extends TestCase {
      * Tests getTimeSinceMarkLocked
      */
     @SmallTest
+    @Test
     public void testGetTimeSinceMarked() throws Exception {
         TimeBase timeBase = new TimeBase();
         timeBase.setRunning(true, 10, 20);
@@ -311,6 +348,7 @@ public class BatteryStatsTimerTest extends TestCase {
      * Tests logState
      */
     @SmallTest
+    @Test
     public void testLogState() throws Exception {
         TimeBase timeBase = new TimeBase();
         MockClock clocks = new MockClock();

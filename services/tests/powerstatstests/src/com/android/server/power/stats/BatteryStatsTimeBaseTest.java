@@ -16,6 +16,25 @@
 
 package com.android.server.power.stats;
 
+import android.content.Context;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertSame;
+import static junit.framework.TestCase.assertNotSame;
+import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.fail;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.junit.Test;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import android.os.BatteryStats;
 import android.os.Parcel;
 import android.util.Log;
@@ -33,7 +52,16 @@ import java.io.StringWriter;
 /**
  * Provides test cases for android.os.BatteryStats.
  */
-public class BatteryStatsTimeBaseTest extends TestCase {
+@RunWith(AndroidJUnit4.class)
+public class BatteryStatsTimeBaseTest {
+    private Context getContext() {
+        return InstrumentationRegistry.getInstrumentation().getTargetContext();
+    }
+
+    private Context getTestContext() {
+        return InstrumentationRegistry.getInstrumentation().getContext();
+    }
+
     private static final String TAG = "BatteryStatsTimeBaseTest";
 
     static class TestTimeBase extends BatteryStatsImpl.TimeBase {
@@ -71,6 +99,7 @@ public class BatteryStatsTimeBaseTest extends TestCase {
      * Test the observers and the setRunning call.
      */
     @SmallTest
+    @Test
     public void testRunning() throws Exception {
         TestTimeBase tb = new TestTimeBase();
 
@@ -168,6 +197,7 @@ public class BatteryStatsTimeBaseTest extends TestCase {
      * Test that reset while running updates the plugged and unplugged times
      */
     @SmallTest
+    @Test
     public void testResetWhileRunning() throws Exception {
         TestTimeBase tb = new TestTimeBase();
         tb.populate(100, 200, true, 300, 400, 500, 600, 700, 800);
@@ -183,6 +213,7 @@ public class BatteryStatsTimeBaseTest extends TestCase {
      * Test that reset while running updates the plugged and unplugged times
      */
     @SmallTest
+    @Test
     public void testResetWhileNotRunning() throws Exception {
         TestTimeBase tb = new TestTimeBase();
         tb.populate(100, 200, false, 300, 400, 500, 600, 700, 800);
@@ -196,6 +227,7 @@ public class BatteryStatsTimeBaseTest extends TestCase {
      * Test init
      */
     @SmallTest
+    @Test
     public void testInit() throws Exception {
         TestTimeBase tb = new TestTimeBase();
         tb.populate(100, 200, false, 300, 400, 500, 600, 700, 800);
@@ -209,6 +241,7 @@ public class BatteryStatsTimeBaseTest extends TestCase {
      * Test writeToParcel and readFromParcel
      */
     @SmallTest
+    @Test
     public void testParcellingWhileRunning() throws Exception {
         TestTimeBase tb1 = new TestTimeBase();
 
@@ -230,6 +263,7 @@ public class BatteryStatsTimeBaseTest extends TestCase {
      * Test writeToParcel and readFromParcel
      */
     @SmallTest
+    @Test
     public void testParcellingWhileNotRunning() throws Exception {
         TestTimeBase tb1 = new TestTimeBase();
 
@@ -250,6 +284,7 @@ public class BatteryStatsTimeBaseTest extends TestCase {
      * Test writeSummaryToParcel and readSummaryFromParcel
      */
     @SmallTest
+    @Test
     public void testSummary() throws Exception {
         TestTimeBase tb1 = new TestTimeBase();
 
@@ -275,6 +310,7 @@ public class BatteryStatsTimeBaseTest extends TestCase {
      * Test computeUptime
      */
     @SmallTest
+    @Test
     public void testComputeUptime() throws Exception {
         TestTimeBase tb = new TestTimeBase();
 
@@ -288,6 +324,7 @@ public class BatteryStatsTimeBaseTest extends TestCase {
      * Test computeUptime
      */
     @SmallTest
+    @Test
     public void testComputeRealtime() throws Exception {
         TestTimeBase tb = new TestTimeBase();
 
@@ -301,6 +338,7 @@ public class BatteryStatsTimeBaseTest extends TestCase {
      * Test dump
      */
     @SmallTest
+    @Test
     public void testDump() throws Exception {
         TestTimeBase tb = new TestTimeBase();
 
