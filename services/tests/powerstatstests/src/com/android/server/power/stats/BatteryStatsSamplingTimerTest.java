@@ -16,6 +16,25 @@
 
 package com.android.server.power.stats;
 
+import android.content.Context;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertSame;
+import static junit.framework.TestCase.assertNotSame;
+import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.fail;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.junit.Test;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import android.os.BatteryStats;
 import android.os.Parcel;
 import android.os.SystemClock;
@@ -26,9 +45,19 @@ import junit.framework.TestCase;
 
 import org.mockito.Mockito;
 
-public class BatteryStatsSamplingTimerTest extends TestCase {
+@RunWith(AndroidJUnit4.class)
+public class BatteryStatsSamplingTimerTest {
+    private Context getContext() {
+        return InstrumentationRegistry.getInstrumentation().getTargetContext();
+    }
+
+    private Context getTestContext() {
+        return InstrumentationRegistry.getInstrumentation().getContext();
+    }
+
 
     @SmallTest
+    @Test
     public void testSettingStalePreservesData() throws Exception {
         final MockClock clocks = new MockClock();
         final BatteryStatsImpl.SamplingTimer timer = new BatteryStatsImpl.SamplingTimer(clocks,
@@ -56,6 +85,7 @@ public class BatteryStatsSamplingTimerTest extends TestCase {
     }
 
     @SmallTest
+    @Test
     public void testEndSampleAndContinueWhenTimeOrCountDecreases() throws Exception {
         final MockClock clocks = new MockClock();
         final BatteryStatsImpl.TimeBase timeBase = Mockito.mock(BatteryStatsImpl.TimeBase.class);
@@ -106,6 +136,7 @@ public class BatteryStatsSamplingTimerTest extends TestCase {
     }
 
     @SmallTest
+    @Test
     public void testFirstUpdateIsAbsorbed() throws Exception {
         final MockClock clocks = new MockClock();
         final BatteryStatsImpl.TimeBase timeBase = Mockito.mock(BatteryStatsImpl.TimeBase.class);
@@ -145,6 +176,7 @@ public class BatteryStatsSamplingTimerTest extends TestCase {
     }
 
     @SmallTest
+    @Test
     public void testSampleTimerSummaryParceling() throws Exception {
         final MockClock clocks = new MockClock();
         clocks.realtime = 0;
