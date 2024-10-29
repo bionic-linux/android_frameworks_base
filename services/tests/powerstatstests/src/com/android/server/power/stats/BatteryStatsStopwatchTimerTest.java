@@ -16,6 +16,25 @@
 
 package com.android.server.power.stats;
 
+import android.content.Context;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertSame;
+import static junit.framework.TestCase.assertNotSame;
+import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.fail;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.junit.Test;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import android.os.BatteryStats;
 
 import androidx.test.filters.SmallTest;
@@ -25,11 +44,21 @@ import junit.framework.TestCase;
 /**
  * Test BatteryStatsImpl.StopwatchTimer.
  */
-public class BatteryStatsStopwatchTimerTest extends TestCase {
+@RunWith(AndroidJUnit4.class)
+public class BatteryStatsStopwatchTimerTest {
+    private Context getContext() {
+        return InstrumentationRegistry.getInstrumentation().getTargetContext();
+    }
+
+    private Context getTestContext() {
+        return InstrumentationRegistry.getInstrumentation().getContext();
+    }
+
 
     // Primarily testing previous bug that incremented count when timeBase was off and bug that gave
     // negative values of count.
     @SmallTest
+    @Test
     public void testCount() throws Exception {
         final MockClock clocks = new MockClock(); // holds realtime and uptime in ms
         final BatteryStatsImpl.TimeBase timeBase = new BatteryStatsImpl.TimeBase();
