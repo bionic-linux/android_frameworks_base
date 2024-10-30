@@ -2028,9 +2028,7 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         if (mDisplayRotation.updateOrientation(getOrientation(), false /* forceUpdate */)) {
             // If a transition is collecting, let the transition apply the rotation change on
             // display thread. See Transition#shouldApplyOnDisplayThread().
-            if (!mTransitionController.isCollecting(this)) {
-                sendNewConfiguration();
-            }
+            sendNewConfiguration();
             return;
         }
         if (mRemoteDisplayChangeController.isWaitingForRemoteDisplayChange()) {
