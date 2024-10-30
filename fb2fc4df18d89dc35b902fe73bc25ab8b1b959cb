@@ -122,6 +122,30 @@
       },
       "revId": "fb2fc4df18d89dc35b902fe73bc25ab8b1b959cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5b4232a_c8146656",
+        "filename": "packages/SystemUI/src/com/android/systemui/privacy/PrivacyConfig.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2024-10-30T13:13:47Z",
+      "side": 1,
+      "message": "It is a proguard optimization. I see in https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/packages/SystemUI/src/com/android/systemui/privacy/PrivacyConfig.kt;drc\u003dc5c9e7166fce4745b637526498adbede9d63317a;l\u003d149 that it has been flagged as weak so the compiler won\u0027t optimize it out. I wonder why this CL doesn\u0027t show that. Maybe it needs to be rebased.",
+      "parentUuid": "d4a2d897_e98353f1",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "fb2fc4df18d89dc35b902fe73bc25ab8b1b959cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
