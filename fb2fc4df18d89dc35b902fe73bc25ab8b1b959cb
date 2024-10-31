@@ -146,6 +146,30 @@
       },
       "revId": "fb2fc4df18d89dc35b902fe73bc25ab8b1b959cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a393b87b_8f8f951d",
+        "filename": "packages/SystemUI/src/com/android/systemui/privacy/PrivacyConfig.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1958109
+      },
+      "writtenOn": "2024-10-31T16:05:37Z",
+      "side": 1,
+      "message": "I see, it sounds like this should no longer be needed then since it should be resolved by the change that introduced that annotation here: \"Refactor weakly referenced callback keep rules\". Thanks. I will check again and then probably abandon this.",
+      "parentUuid": "c5b4232a_c8146656",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "fb2fc4df18d89dc35b902fe73bc25ab8b1b959cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
