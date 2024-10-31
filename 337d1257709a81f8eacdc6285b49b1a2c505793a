@@ -16,6 +16,24 @@
       "message": "No CTS tests?",
       "revId": "337d1257709a81f8eacdc6285b49b1a2c505793a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52d943cd_a84e4409",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-10-31T00:18:25Z",
+      "side": 1,
+      "message": "We have existing CTS (VcnManagerTest.java) that calls `getSystemService(VcnManager.class)` and the calling path covers this string. The main purpose for exposing it is to reference it in `@SystemService` in the VcnManager.java file.",
+      "parentUuid": "6ba3eca4_91f6ae72",
+      "revId": "337d1257709a81f8eacdc6285b49b1a2c505793a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
