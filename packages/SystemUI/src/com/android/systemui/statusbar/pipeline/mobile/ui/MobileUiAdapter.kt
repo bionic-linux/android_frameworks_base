@@ -59,7 +59,7 @@ constructor(
             mobileIconsViewModel.subscriptionIdsFlow.collectLatest {
                 logger.logUiAdapterSubIdsSentToIconController(it)
                 lastValue = it
-                iconController.setNewMobileIconSubIds(it)
+                iconController.setNewMobileIconSubIds(it.toList())
                 shadeCarrierGroupController?.updateModernMobileIcons(it)
             }
         }
