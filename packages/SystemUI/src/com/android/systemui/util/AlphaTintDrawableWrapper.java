@@ -28,7 +28,7 @@ import android.util.AttributeSet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.android.systemui.R;
+import com.android.systemui.res.R;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -107,6 +107,12 @@ public class AlphaTintDrawableWrapper extends InsetDrawable {
             float alpha = a.getFloat(R.styleable.AlphaTintDrawableWrapper_android_alpha, 1);
             setAlpha(Math.round(alpha * 255));
         }
+    }
+
+    @Override
+    public void setTintList(ColorStateList tint) {
+        super.setTintList(tint);
+        mTint = tint;
     }
 
     private void applyTint() {

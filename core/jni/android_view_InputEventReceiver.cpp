@@ -15,27 +15,27 @@
  */
 
 #define LOG_TAG "InputEventReceiver"
+#define ATRACE_TAG ATRACE_TAG_INPUT
 
 //#define LOG_NDEBUG 0
 
-#include <inttypes.h>
-
-#include <nativehelper/JNIHelp.h>
-
 #include <android-base/stringprintf.h>
 #include <android_runtime/AndroidRuntime.h>
+#include <input/InputConsumer.h>
 #include <input/InputTransport.h>
+#include <inttypes.h>
 #include <log/log.h>
+#include <nativehelper/JNIHelp.h>
+#include <nativehelper/ScopedLocalRef.h>
 #include <utils/Looper.h>
+
 #include <variant>
 #include <vector>
+
 #include "android_os_MessageQueue.h"
 #include "android_view_InputChannel.h"
 #include "android_view_KeyEvent.h"
 #include "android_view_MotionEvent.h"
-
-#include <nativehelper/ScopedLocalRef.h>
-
 #include "core_jni_helpers.h"
 
 namespace android {
@@ -46,6 +46,16 @@ static const char* toString(bool value) {
     return value ? "true" : "false";
 }
 
+/**
+ * Trace a bool variable, writing "1" if the value is "true" and "0" otherwise.
+ * TODO(b/311142655): delete this tracing. It's only useful for debugging very specific issues.
+ * @param var the name of the variable
+ * @param value the value of the variable
+ */
+static void traceBoolVariable(const char* var, bool value) {
+    ATRACE_INT(var, value ? 1 : 0);
+}
+
 static struct {
     jclass clazz;
 
@@ -54,6 +64,7 @@ static struct {
     jmethodID onPointerCaptureEvent;
     jmethodID onDragEvent;
     jmethodID onBatchedInputEventPending;
+    jmethodID onTouchModeChanged;
 } gInputEventReceiverClassInfo;
 
 // Add prefix to the beginning of each line in 'str'
@@ -81,6 +92,7 @@ public:
     status_t initialize();
     void dispose();
     status_t finishInputEvent(uint32_t seq, bool handled);
+    bool probablyHasInput();
     status_t reportTimeline(int32_t inputEventId, nsecs_t gpuCompletedTime, nsecs_t presentTime);
     status_t consumeEvents(JNIEnv* env, bool consumeBatches, nsecs_t frameTime,
             bool* outConsumedBatch);
@@ -128,6 +140,7 @@ NativeInputEventReceiver::NativeInputEventReceiver(
         mMessageQueue(messageQueue),
         mBatchedInputEventPending(false),
         mFdEvents(0) {
+    traceBoolVariable("mBatchedInputEventPending", mBatchedInputEventPending);
     if (kDebugDispatchCycle) {
         ALOGD("channel '%s' ~ Initializing input event receiver.", getInputChannelName().c_str());
     }
@@ -164,6 +177,10 @@ status_t NativeInputEventReceiver::finishInputEvent(uint32_t seq, bool handled) 
     return processOutboundEvents();
 }
 
+bool NativeInputEventReceiver::probablyHasInput() {
+    return mInputConsumer.probablyHasInput();
+}
+
 status_t NativeInputEventReceiver::reportTimeline(int32_t inputEventId, nsecs_t gpuCompletedTime,
                                                   nsecs_t presentTime) {
     if (kDebugDispatchCycle) {
@@ -183,7 +200,7 @@ status_t NativeInputEventReceiver::reportTimeline(int32_t inputEventId, nsecs_t 
 void NativeInputEventReceiver::setFdEvents(int events) {
     if (mFdEvents != events) {
         mFdEvents = events;
-        int fd = mInputConsumer.getChannel()->getFd();
+        const int fd = mInputConsumer.getChannel()->getFd();
         if (events) {
             mMessageQueue->getLooper()->addFd(fd, 0, events, this, nullptr);
         } else {
@@ -277,7 +294,7 @@ int NativeInputEventReceiver::handleEvent(int receiveFd, int events, void* data)
 
     if (events & ALOOPER_EVENT_INPUT) {
         JNIEnv* env = AndroidRuntime::getJNIEnv();
-        status_t status = consumeEvents(env, false /*consumeBatches*/, -1, nullptr);
+        status_t status = consumeEvents(env, /*consumeBatches=*/false, -1, nullptr);
         mMessageQueue->raiseAndClearException(env, "handleReceiveCallback");
         return status == OK || status == NO_MEMORY ? KEEP_CALLBACK : REMOVE_CALLBACK;
     }
@@ -305,6 +322,7 @@ status_t NativeInputEventReceiver::consumeEvents(JNIEnv* env,
 
     if (consumeBatches) {
         mBatchedInputEventPending = false;
+        traceBoolVariable("mBatchedInputEventPending", mBatchedInputEventPending);
     }
     if (outConsumedBatch) {
         *outConsumedBatch = false;
@@ -328,7 +346,7 @@ status_t NativeInputEventReceiver::consumeEvents(JNIEnv* env,
             if (!skipCallbacks && !mBatchedInputEventPending && mInputConsumer.hasPendingBatch()) {
                 // There is a pending batch.  Come back later.
                 if (!receiverObj.get()) {
-                    receiverObj.reset(jniGetReferent(env, mReceiverWeakGlobal));
+                    receiverObj.reset(GetReferent(env, mReceiverWeakGlobal));
                     if (!receiverObj.get()) {
                         ALOGW("channel '%s' ~ Receiver object was finalized "
                               "without being disposed.",
@@ -338,6 +356,7 @@ status_t NativeInputEventReceiver::consumeEvents(JNIEnv* env,
                 }
 
                 mBatchedInputEventPending = true;
+                traceBoolVariable("mBatchedInputEventPending", mBatchedInputEventPending);
                 if (kDebugDispatchCycle) {
                     ALOGD("channel '%s' ~ Dispatching batched input event pending notification.",
                           getInputChannelName().c_str());
@@ -349,6 +368,7 @@ status_t NativeInputEventReceiver::consumeEvents(JNIEnv* env,
                 if (env->ExceptionCheck()) {
                     ALOGE("Exception dispatching batched input events.");
                     mBatchedInputEventPending = false; // try again later
+                    traceBoolVariable("mBatchedInputEventPending", mBatchedInputEventPending);
                 }
             }
             return OK;
@@ -357,7 +377,7 @@ status_t NativeInputEventReceiver::consumeEvents(JNIEnv* env,
 
         if (!skipCallbacks) {
             if (!receiverObj.get()) {
-                receiverObj.reset(jniGetReferent(env, mReceiverWeakGlobal));
+                receiverObj.reset(GetReferent(env, mReceiverWeakGlobal));
                 if (!receiverObj.get()) {
                     ALOGW("channel '%s' ~ Receiver object was finalized "
                             "without being disposed.", getInputChannelName().c_str());
@@ -365,91 +385,100 @@ status_t NativeInputEventReceiver::consumeEvents(JNIEnv* env,
                 }
             }
 
-            jobject inputEventObj;
+            ScopedLocalRef<jobject> inputEventObj(env);
             switch (inputEvent->getType()) {
-            case AINPUT_EVENT_TYPE_KEY:
-                if (kDebugDispatchCycle) {
-                    ALOGD("channel '%s' ~ Received key event.", getInputChannelName().c_str());
-                }
-                inputEventObj = android_view_KeyEvent_fromNative(env,
-                        static_cast<KeyEvent*>(inputEvent));
-                break;
+                case InputEventType::KEY:
+                    if (kDebugDispatchCycle) {
+                        ALOGD("channel '%s' ~ Received key event.", getInputChannelName().c_str());
+                    }
+                    inputEventObj =
+                            android_view_KeyEvent_obtainAsCopy(env,
+                                                               static_cast<KeyEvent&>(*inputEvent));
+                    break;
 
-            case AINPUT_EVENT_TYPE_MOTION: {
-                if (kDebugDispatchCycle) {
-                    ALOGD("channel '%s' ~ Received motion event.", getInputChannelName().c_str());
+                case InputEventType::MOTION: {
+                    if (kDebugDispatchCycle) {
+                        ALOGD("channel '%s' ~ Received motion event.",
+                              getInputChannelName().c_str());
+                    }
+                    const MotionEvent& motionEvent = static_cast<const MotionEvent&>(*inputEvent);
+                    if ((motionEvent.getAction() & AMOTION_EVENT_ACTION_MOVE) && outConsumedBatch) {
+                        *outConsumedBatch = true;
+                    }
+                    inputEventObj = android_view_MotionEvent_obtainAsCopy(env, motionEvent);
+                    break;
                 }
-                MotionEvent* motionEvent = static_cast<MotionEvent*>(inputEvent);
-                if ((motionEvent->getAction() & AMOTION_EVENT_ACTION_MOVE) && outConsumedBatch) {
-                    *outConsumedBatch = true;
+                case InputEventType::FOCUS: {
+                    FocusEvent* focusEvent = static_cast<FocusEvent*>(inputEvent);
+                    if (kDebugDispatchCycle) {
+                        ALOGD("channel '%s' ~ Received focus event: hasFocus=%s.",
+                              getInputChannelName().c_str(), toString(focusEvent->getHasFocus()));
+                    }
+                    env->CallVoidMethod(receiverObj.get(),
+                                        gInputEventReceiverClassInfo.onFocusEvent,
+                                        jboolean(focusEvent->getHasFocus()));
+                    finishInputEvent(seq, /*handled=*/true);
+                    continue;
                 }
-                inputEventObj = android_view_MotionEvent_obtainAsCopy(env, motionEvent);
-                break;
-            }
-            case AINPUT_EVENT_TYPE_FOCUS: {
-                FocusEvent* focusEvent = static_cast<FocusEvent*>(inputEvent);
-                if (kDebugDispatchCycle) {
-                    ALOGD("channel '%s' ~ Received focus event: hasFocus=%s, inTouchMode=%s.",
-                          getInputChannelName().c_str(), toString(focusEvent->getHasFocus()),
-                          toString(focusEvent->getInTouchMode()));
+                case InputEventType::CAPTURE: {
+                    const CaptureEvent* captureEvent = static_cast<CaptureEvent*>(inputEvent);
+                    if (kDebugDispatchCycle) {
+                        ALOGD("channel '%s' ~ Received capture event: pointerCaptureEnabled=%s",
+                              getInputChannelName().c_str(),
+                              toString(captureEvent->getPointerCaptureEnabled()));
+                    }
+                    env->CallVoidMethod(receiverObj.get(),
+                                        gInputEventReceiverClassInfo.onPointerCaptureEvent,
+                                        jboolean(captureEvent->getPointerCaptureEnabled()));
+                    finishInputEvent(seq, /*handled=*/true);
+                    continue;
                 }
-                env->CallVoidMethod(receiverObj.get(), gInputEventReceiverClassInfo.onFocusEvent,
-                                    jboolean(focusEvent->getHasFocus()),
-                                    jboolean(focusEvent->getInTouchMode()));
-                finishInputEvent(seq, true /* handled */);
-                continue;
-            }
-            case AINPUT_EVENT_TYPE_CAPTURE: {
-                const CaptureEvent* captureEvent = static_cast<CaptureEvent*>(inputEvent);
-                if (kDebugDispatchCycle) {
-                    ALOGD("channel '%s' ~ Received capture event: pointerCaptureEnabled=%s",
-                          getInputChannelName().c_str(),
-                          toString(captureEvent->getPointerCaptureEnabled()));
+                case InputEventType::DRAG: {
+                    const DragEvent* dragEvent = static_cast<DragEvent*>(inputEvent);
+                    if (kDebugDispatchCycle) {
+                        ALOGD("channel '%s' ~ Received drag event: isExiting=%s",
+                              getInputChannelName().c_str(), toString(dragEvent->isExiting()));
+                    }
+                    env->CallVoidMethod(receiverObj.get(), gInputEventReceiverClassInfo.onDragEvent,
+                                        jboolean(dragEvent->isExiting()), dragEvent->getX(),
+                                        dragEvent->getY());
+                    finishInputEvent(seq, /*handled=*/true);
+                    continue;
                 }
-                env->CallVoidMethod(receiverObj.get(),
-                                    gInputEventReceiverClassInfo.onPointerCaptureEvent,
-                                    jboolean(captureEvent->getPointerCaptureEnabled()));
-                finishInputEvent(seq, true /* handled */);
-                continue;
-            }
-            case AINPUT_EVENT_TYPE_DRAG: {
-                const DragEvent* dragEvent = static_cast<DragEvent*>(inputEvent);
-                if (kDebugDispatchCycle) {
-                    ALOGD("channel '%s' ~ Received drag event: isExiting=%s",
-                          getInputChannelName().c_str(), toString(dragEvent->isExiting()));
+                case InputEventType::TOUCH_MODE: {
+                    const TouchModeEvent* touchModeEvent = static_cast<TouchModeEvent*>(inputEvent);
+                    if (kDebugDispatchCycle) {
+                        ALOGD("channel '%s' ~ Received touch mode event: isInTouchMode=%s",
+                              getInputChannelName().c_str(),
+                              toString(touchModeEvent->isInTouchMode()));
+                    }
+                    env->CallVoidMethod(receiverObj.get(),
+                                        gInputEventReceiverClassInfo.onTouchModeChanged,
+                                        jboolean(touchModeEvent->isInTouchMode()));
+                    finishInputEvent(seq, /*handled=*/true);
+                    continue;
                 }
-                env->CallVoidMethod(receiverObj.get(), gInputEventReceiverClassInfo.onDragEvent,
-                                    jboolean(dragEvent->isExiting()), dragEvent->getX(),
-                                    dragEvent->getY());
-                finishInputEvent(seq, true /* handled */);
-                continue;
-            }
 
             default:
                 assert(false); // InputConsumer should prevent this from ever happening
-                inputEventObj = nullptr;
             }
 
-            if (inputEventObj) {
+            if (inputEventObj.get()) {
                 if (kDebugDispatchCycle) {
                     ALOGD("channel '%s' ~ Dispatching input event.", getInputChannelName().c_str());
                 }
                 env->CallVoidMethod(receiverObj.get(),
-                        gInputEventReceiverClassInfo.dispatchInputEvent, seq, inputEventObj);
+                                    gInputEventReceiverClassInfo.dispatchInputEvent, seq,
+                                    inputEventObj.get());
                 if (env->ExceptionCheck()) {
                     ALOGE("Exception dispatching input event.");
                     skipCallbacks = true;
                 }
-                env->DeleteLocalRef(inputEventObj);
             } else {
                 ALOGW("channel '%s' ~ Failed to obtain event object.",
                         getInputChannelName().c_str());
                 skipCallbacks = true;
             }
-        }
-
-        if (skipCallbacks) {
-            mInputConsumer.sendFinishedSignal(seq, false);
         }
     }
 }
@@ -536,6 +565,12 @@ static void nativeFinishInputEvent(JNIEnv* env, jclass clazz, jlong receiverPtr,
     }
 }
 
+static bool nativeProbablyHasInput(JNIEnv* env, jclass clazz, jlong receiverPtr) {
+    sp<NativeInputEventReceiver> receiver =
+            reinterpret_cast<NativeInputEventReceiver*>(receiverPtr);
+    return receiver->probablyHasInput();
+}
+
 static void nativeReportTimeline(JNIEnv* env, jclass clazz, jlong receiverPtr, jint inputEventId,
                                  jlong gpuCompletedTime, jlong presentTime) {
     if (IdGenerator::getSource(inputEventId) != IdGenerator::Source::INPUT_READER) {
@@ -560,8 +595,8 @@ static jboolean nativeConsumeBatchedInputEvents(JNIEnv* env, jclass clazz, jlong
     sp<NativeInputEventReceiver> receiver =
             reinterpret_cast<NativeInputEventReceiver*>(receiverPtr);
     bool consumedBatch;
-    status_t status = receiver->consumeEvents(env, true /*consumeBatches*/, frameTimeNanos,
-            &consumedBatch);
+    status_t status =
+            receiver->consumeEvents(env, /*consumeBatches=*/true, frameTimeNanos, &consumedBatch);
     if (status && status != DEAD_OBJECT && !env->ExceptionCheck()) {
         std::string message =
                 android::base::StringPrintf("Failed to consume batched input event.  status=%s(%d)",
@@ -586,6 +621,7 @@ static const JNINativeMethod gMethods[] = {
          (void*)nativeInit},
         {"nativeDispose", "(J)V", (void*)nativeDispose},
         {"nativeFinishInputEvent", "(JIZ)V", (void*)nativeFinishInputEvent},
+        {"nativeProbablyHasInput", "(J)Z", (void*)nativeProbablyHasInput},
         {"nativeReportTimeline", "(JIJJ)V", (void*)nativeReportTimeline},
         {"nativeConsumeBatchedInputEvents", "(JJ)Z", (void*)nativeConsumeBatchedInputEvents},
         {"nativeDump", "(JLjava/lang/String;)Ljava/lang/String;", (void*)nativeDump},
@@ -602,12 +638,14 @@ int register_android_view_InputEventReceiver(JNIEnv* env) {
             gInputEventReceiverClassInfo.clazz,
             "dispatchInputEvent", "(ILandroid/view/InputEvent;)V");
     gInputEventReceiverClassInfo.onFocusEvent =
-            GetMethodIDOrDie(env, gInputEventReceiverClassInfo.clazz, "onFocusEvent", "(ZZ)V");
+            GetMethodIDOrDie(env, gInputEventReceiverClassInfo.clazz, "onFocusEvent", "(Z)V");
     gInputEventReceiverClassInfo.onPointerCaptureEvent =
             GetMethodIDOrDie(env, gInputEventReceiverClassInfo.clazz, "onPointerCaptureEvent",
                              "(Z)V");
     gInputEventReceiverClassInfo.onDragEvent =
             GetMethodIDOrDie(env, gInputEventReceiverClassInfo.clazz, "onDragEvent", "(ZFF)V");
+    gInputEventReceiverClassInfo.onTouchModeChanged =
+            GetMethodIDOrDie(env, gInputEventReceiverClassInfo.clazz, "onTouchModeChanged", "(Z)V");
     gInputEventReceiverClassInfo.onBatchedInputEventPending =
             GetMethodIDOrDie(env, gInputEventReceiverClassInfo.clazz, "onBatchedInputEventPending",
                              "(I)V");

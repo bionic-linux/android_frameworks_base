@@ -48,18 +48,12 @@ public interface WindowManagerPolicyConstants {
     int KEYGUARD_GOING_AWAY_FLAG_NO_WINDOW_ANIMATIONS = 1 << 1;
     int KEYGUARD_GOING_AWAY_FLAG_WITH_WALLPAPER = 1 << 2;
     int KEYGUARD_GOING_AWAY_FLAG_SUBTLE_WINDOW_ANIMATIONS = 1 << 3;
+    int KEYGUARD_GOING_AWAY_FLAG_TO_LAUNCHER_CLEAR_SNAPSHOT = 1 << 4;
 
     // Flags used for indicating whether the internal and/or external input devices
     // of some type are available.
     int PRESENCE_INTERNAL = 1 << 0;
     int PRESENCE_EXTERNAL = 1 << 1;
-
-    // Alternate bars position values
-    int ALT_BAR_UNKNOWN = -1;
-    int ALT_BAR_LEFT = 1 << 0;
-    int ALT_BAR_RIGHT = 1 << 1;
-    int ALT_BAR_BOTTOM = 1 << 2;
-    int ALT_BAR_TOP = 1 << 3;
 
     // Navigation bar position values
     int NAV_BAR_INVALID = -1;
@@ -102,6 +96,12 @@ public interface WindowManagerPolicyConstants {
      * @hide
      */
     String EXTRA_START_REASON = "android.intent.extra.EXTRA_START_REASON";
+
+    /**
+     * Set to {@code true} when intent was invoked from pressing one of the brightness keys.
+     * @hide
+     */
+    String EXTRA_FROM_BRIGHTNESS_KEY = "android.intent.extra.FROM_BRIGHTNESS_KEY";
 
     // TODO: move this to a more appropriate place.
     interface PointerEventListener {
@@ -168,6 +168,9 @@ public interface WindowManagerPolicyConstants {
             case PowerManager.WAKE_REASON_POWER_BUTTON:
             case PowerManager.WAKE_REASON_PLUGGED_IN:
             case PowerManager.WAKE_REASON_GESTURE:
+            case PowerManager.WAKE_REASON_TAP:
+            case PowerManager.WAKE_REASON_LIFT:
+            case PowerManager.WAKE_REASON_BIOMETRIC:
             case PowerManager.WAKE_REASON_CAMERA_LAUNCH:
             case PowerManager.WAKE_REASON_WAKE_KEY:
             case PowerManager.WAKE_REASON_WAKE_MOTION:
@@ -209,4 +212,40 @@ public interface WindowManagerPolicyConstants {
                 return Integer.toString(why);
         }
     }
+
+    /**
+     * How much to multiply the policy's type layer, to reserve room
+     * for multiple windows of the same type and Z-ordering adjustment
+     * with TYPE_LAYER_OFFSET.
+     */
+    int TYPE_LAYER_MULTIPLIER = 10000;
+
+    /**
+     * Offset from TYPE_LAYER_MULTIPLIER for moving a group of windows above
+     * or below others in the same layer.
+     */
+    int TYPE_LAYER_OFFSET = 1000;
+
+    /**
+     * How much to increment the layer for each window, to reserve room
+     * for effect surfaces between them.
+     */
+    int WINDOW_LAYER_MULTIPLIER = 5;
+
+    /**
+     * Animation thumbnail is as far as possible below the window above
+     * the thumbnail (or in other words as far as possible above the window
+     * below it).
+     */
+    int LAYER_OFFSET_THUMBNAIL = WINDOW_LAYER_MULTIPLIER - 1;
+
+    int WATERMARK_LAYER = TYPE_LAYER_MULTIPLIER * 100;
+    int STRICT_MODE_LAYER = TYPE_LAYER_MULTIPLIER * 101;
+    int WINDOW_FREEZE_LAYER = TYPE_LAYER_MULTIPLIER * 200;
+
+    /**
+     * Layers for screen rotation animation. We put these layers above
+     * WINDOW_FREEZE_LAYER so that screen freeze will cover all windows.
+     */
+    int SCREEN_FREEZE_LAYER_BASE = WINDOW_FREEZE_LAYER + TYPE_LAYER_MULTIPLIER;
 }

@@ -24,6 +24,7 @@ import android.graphics.ImageFormat;
 import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.extension.CaptureBundle;
 import android.hardware.camera2.extension.ICaptureProcessorImpl;
+import android.hardware.camera2.extension.IProcessResultImpl;
 import android.media.Image;
 import android.media.Image.Plane;
 import android.media.ImageReader;
@@ -35,6 +36,8 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.view.Surface;
 
+import com.android.internal.camera.flags.Flags;
+
 import java.nio.ByteBuffer;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -45,20 +48,27 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class CameraExtensionJpegProcessor implements ICaptureProcessorImpl {
     public final static String TAG = "CameraExtensionJpeg";
     private final static int JPEG_QUEUE_SIZE = 1;
+    private final static int JPEG_APP_SEGMENT_SIZE = 64 * 1024;
 
     private final Handler mHandler;
     private final HandlerThread mHandlerThread;
     private final ICaptureProcessorImpl mProcessor;
 
     private ImageReader mYuvReader = null;
+    private ImageReader mPostviewYuvReader = null;
     private android.hardware.camera2.extension.Size mResolution = null;
+    private android.hardware.camera2.extension.Size mPostviewResolution = null;
     private int mFormat = -1;
+    private int mPostviewFormat = -1;
+    private int mCaptureFormat = -1;
     private Surface mOutputSurface = null;
     private ImageWriter mOutputWriter = null;
+    private Surface mPostviewOutputSurface = null;
+    private ImageWriter mPostviewOutputWriter = null;
 
     private static final class JpegParameters {
         public HashSet<Long> mTimeStamps = new HashSet<>();
-        public int mRotation = JPEG_DEFAULT_ROTATION; // CCW multiple of 90 degrees
+        public int mRotation = JPEG_DEFAULT_ROTATION; // CW multiple of 90 degrees
         public int mQuality = JPEG_DEFAULT_QUALITY; // [0..100]
     }
 
@@ -100,7 +110,8 @@ public class CameraExtensionJpegProcessor implements ICaptureProcessorImpl {
             Integer orientation = captureBundles.get(0).captureResult.get(
                     CaptureResult.JPEG_ORIENTATION);
             if (orientation != null) {
-                ret.mRotation = orientation / 90;
+                // The jpeg encoder expects CCW rotation, convert from CW
+                ret.mRotation = (360 - (orientation % 360)) / 90;
             } else {
                 Log.w(TAG, "No jpeg rotation set, using default: " + JPEG_DEFAULT_ROTATION);
             }
@@ -182,11 +193,14 @@ public class CameraExtensionJpegProcessor implements ICaptureProcessorImpl {
             int cropLeft, int cropTop, int cropRight, int cropBottom,
             int rot90);
 
-    public void process(List<CaptureBundle> captureBundle) throws RemoteException {
+    @Override
+    public void process(List<CaptureBundle> captureBundle, IProcessResultImpl captureCallback,
+            boolean isPostviewRequested)
+            throws RemoteException {
         JpegParameters jpegParams = getJpegParameters(captureBundle);
         try {
             mJpegParameters.add(jpegParams);
-            mProcessor.process(captureBundle);
+            mProcessor.process(captureBundle, captureCallback, isPostviewRequested);
         } catch (Exception e) {
             mJpegParameters.remove(jpegParams);
             throw e;
@@ -194,23 +208,39 @@ public class CameraExtensionJpegProcessor implements ICaptureProcessorImpl {
     }
 
     public void onOutputSurface(Surface surface, int format) throws RemoteException {
-        if (format != ImageFormat.JPEG) {
+        if (!Flags.extension10Bit() && format != ImageFormat.JPEG) {
             Log.e(TAG, "Unsupported output format: " + format);
             return;
         }
+        CameraExtensionUtils.SurfaceInfo surfaceInfo = CameraExtensionUtils.querySurface(surface);
+        mCaptureFormat = surfaceInfo.mFormat;
         mOutputSurface = surface;
         initializePipeline();
     }
 
+    public void onPostviewOutputSurface(Surface surface) throws RemoteException {
+        CameraExtensionUtils.SurfaceInfo postviewSurfaceInfo =
+                CameraExtensionUtils.querySurface(surface);
+        if (!Flags.extension10Bit() && postviewSurfaceInfo.mFormat != ImageFormat.JPEG) {
+            Log.e(TAG, "Unsupported output format: " + postviewSurfaceInfo.mFormat);
+            return;
+        }
+        mPostviewFormat = postviewSurfaceInfo.mFormat;
+        mPostviewOutputSurface = surface;
+        initializePostviewPipeline();
+    }
+
     @Override
-    public void onResolutionUpdate(android.hardware.camera2.extension.Size size)
+    public void onResolutionUpdate(android.hardware.camera2.extension.Size size,
+            android.hardware.camera2.extension.Size postviewSize)
             throws RemoteException {
         mResolution = size;
+        mPostviewResolution = postviewSize;
         initializePipeline();
     }
 
     public void onImageFormatUpdate(int format) throws RemoteException {
-        if (format != ImageFormat.YUV_420_888) {
+        if (!Flags.extension10Bit() && format != ImageFormat.YUV_420_888) {
             Log.e(TAG, "Unsupported input format: " + format);
             return;
         }
@@ -221,15 +251,45 @@ public class CameraExtensionJpegProcessor implements ICaptureProcessorImpl {
     private void initializePipeline() throws RemoteException {
         if ((mFormat != -1) && (mOutputSurface != null) && (mResolution != null) &&
                 (mYuvReader == null)) {
-            // Jpeg/blobs are expected to be configured with (w*h)x1
-            mOutputWriter = ImageWriter.newInstance(mOutputSurface, 1 /*maxImages*/,
-                    ImageFormat.JPEG, mResolution.width * mResolution.height, 1);
-            mYuvReader = ImageReader.newInstance(mResolution.width, mResolution.height, mFormat,
-                    JPEG_QUEUE_SIZE);
-            mYuvReader.setOnImageAvailableListener(new YuvCallback(), mHandler);
-            mProcessor.onOutputSurface(mYuvReader.getSurface(), mFormat);
-            mProcessor.onResolutionUpdate(mResolution);
-            mProcessor.onImageFormatUpdate(mFormat);
+            if (Flags.extension10Bit() && mCaptureFormat == ImageFormat.YUV_420_888) {
+                // For the case when postview is JPEG and capture is YUV
+                mProcessor.onOutputSurface(mOutputSurface, mCaptureFormat);
+            } else {
+                // Jpeg/blobs are expected to be configured with (w*h)x1.5 + 64k Jpeg APP1 segment
+                mOutputWriter = ImageWriter.newInstance(mOutputSurface, 1 /*maxImages*/,
+                        ImageFormat.JPEG,
+                        (mResolution.width * mResolution.height * 3) / 2
+                        + JPEG_APP_SEGMENT_SIZE, 1);
+                mYuvReader = ImageReader.newInstance(mResolution.width, mResolution.height,
+                        mFormat, JPEG_QUEUE_SIZE);
+                mYuvReader.setOnImageAvailableListener(
+                        new YuvCallback(mYuvReader, mOutputWriter), mHandler);
+                mProcessor.onOutputSurface(mYuvReader.getSurface(), mFormat);
+            }
+            mProcessor.onResolutionUpdate(mResolution, mPostviewResolution);
+            mProcessor.onImageFormatUpdate(ImageFormat.YUV_420_888);
+        }
+    }
+
+    private void initializePostviewPipeline() throws RemoteException {
+        if ((mFormat != -1) && (mPostviewOutputSurface != null) && (mPostviewResolution != null)
+                && (mPostviewYuvReader == null)) {
+            if (Flags.extension10Bit() && mPostviewFormat == ImageFormat.YUV_420_888) {
+                // For the case when postview is YUV and capture is JPEG
+                mProcessor.onPostviewOutputSurface(mPostviewOutputSurface);
+            } else {
+                // Jpeg/blobs are expected to be configured with (w*h)x1
+                mPostviewOutputWriter = ImageWriter.newInstance(mPostviewOutputSurface,
+                        1/*maxImages*/, ImageFormat.JPEG,
+                        mPostviewResolution.width * mPostviewResolution.height, 1);
+                mPostviewYuvReader = ImageReader.newInstance(mPostviewResolution.width,
+                        mPostviewResolution.height, mFormat, JPEG_QUEUE_SIZE);
+                mPostviewYuvReader.setOnImageAvailableListener(
+                        new YuvCallback(mPostviewYuvReader, mPostviewOutputWriter), mHandler);
+                mProcessor.onPostviewOutputSurface(mPostviewYuvReader.getSurface());
+            }
+            mProcessor.onResolutionUpdate(mResolution, mPostviewResolution);
+            mProcessor.onImageFormatUpdate(ImageFormat.YUV_420_888);
         }
     }
 
@@ -239,13 +299,21 @@ public class CameraExtensionJpegProcessor implements ICaptureProcessorImpl {
     }
 
     private class YuvCallback implements ImageReader.OnImageAvailableListener {
+        private ImageReader mImageReader;
+        private ImageWriter mImageWriter;
+
+        public YuvCallback(ImageReader imageReader, ImageWriter imageWriter) {
+            mImageReader = imageReader;
+            mImageWriter = imageWriter;
+        }
+
         @Override
         public void onImageAvailable(ImageReader reader) {
             Image yuvImage = null;
             Image jpegImage = null;
             try {
-                yuvImage = mYuvReader.acquireNextImage();
-                jpegImage = mOutputWriter.dequeueInputImage();
+                yuvImage = mImageReader.acquireNextImage();
+                jpegImage = mImageWriter.dequeueInputImage();
             } catch (IllegalStateException e) {
                 if (yuvImage != null) {
                     yuvImage.close();
@@ -266,7 +334,9 @@ public class CameraExtensionJpegProcessor implements ICaptureProcessorImpl {
             Plane crPlane = yuvImage.getPlanes()[1];
             Plane cbPlane = yuvImage.getPlanes()[2];
 
-            Iterator<JpegParameters> jpegIter = mJpegParameters.iterator();
+            ConcurrentLinkedQueue<JpegParameters> jpegParameters =
+                    new ConcurrentLinkedQueue(mJpegParameters);
+            Iterator<JpegParameters> jpegIter = jpegParameters.iterator();
             JpegParameters jpegParams = null;
             while(jpegIter.hasNext()) {
                 JpegParameters currentParams = jpegIter.next();
@@ -277,7 +347,7 @@ public class CameraExtensionJpegProcessor implements ICaptureProcessorImpl {
                 }
             }
             if (jpegParams == null) {
-                if (mJpegParameters.isEmpty()) {
+                if (jpegParameters.isEmpty()) {
                     Log.w(TAG, "Empty jpeg settings queue! Using default jpeg orientation"
                             + " and quality!");
                     jpegParams = new JpegParameters();
@@ -287,7 +357,7 @@ public class CameraExtensionJpegProcessor implements ICaptureProcessorImpl {
                     Log.w(TAG, "No jpeg settings found with matching timestamp for current"
                             + " processed input!");
                     Log.w(TAG, "Using values from the top of the queue!");
-                    jpegParams = mJpegParameters.poll();
+                    jpegParams = jpegParameters.poll();
                 }
             }
 
@@ -299,10 +369,11 @@ public class CameraExtensionJpegProcessor implements ICaptureProcessorImpl {
                     jpegBuffer, jpegCapacity, jpegParams.mQuality,
                     0, 0, yuvImage.getWidth(), yuvImage.getHeight(),
                     jpegParams.mRotation);
+            jpegImage.setTimestamp(yuvImage.getTimestamp());
             yuvImage.close();
 
             try {
-                mOutputWriter.queueInputImage(jpegImage);
+                mImageWriter.queueInputImage(jpegImage);
             } catch (IllegalStateException e) {
                 Log.e(TAG, "Failed to queue encoded result!");
             } finally {

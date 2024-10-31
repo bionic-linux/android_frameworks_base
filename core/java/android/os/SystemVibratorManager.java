@@ -20,7 +20,6 @@ import android.annotation.CallbackExecutor;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
-import android.media.AudioAttributes;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.util.SparseArray;
@@ -40,6 +39,7 @@ public class SystemVibratorManager extends VibratorManager {
 
     private final IVibratorManagerService mService;
     private final Context mContext;
+    private final int mUid;
     private final Binder mToken = new Binder();
     private final Object mLock = new Object();
     @GuardedBy("mLock")
@@ -57,6 +57,7 @@ public class SystemVibratorManager extends VibratorManager {
     public SystemVibratorManager(Context context) {
         super(context);
         mContext = context;
+        mUid = Process.myUid();
         mService = IVibratorManagerService.Stub.asInterface(
                 ServiceManager.getService(Context.VIBRATOR_MANAGER_SERVICE));
     }
@@ -138,9 +139,25 @@ public class SystemVibratorManager extends VibratorManager {
             return;
         }
         try {
-            mService.vibrate(uid, opPkg, effect, attributes, reason, mToken);
+            mService.vibrate(uid, mContext.getDeviceId(), opPkg, effect, attributes, reason,
+                    mToken);
         } catch (RemoteException e) {
             Log.w(TAG, "Failed to vibrate.", e);
+        }
+    }
+
+    @Override
+    public void performHapticFeedback(int constant, boolean always, String reason,
+            boolean fromIme) {
+        if (mService == null) {
+            Log.w(TAG, "Failed to perform haptic feedback; no vibrator manager service.");
+            return;
+        }
+        try {
+            mService.performHapticFeedback(
+                    mUid, mContext.getDeviceId(), mPackageName, constant, always, reason, fromIme);
+        } catch (RemoteException e) {
+            Log.w(TAG, "Failed to perform haptic feedback.", e);
         }
     }
 
@@ -194,7 +211,7 @@ public class SystemVibratorManager extends VibratorManager {
         }
 
         @Override
-        protected VibratorInfo getInfo() {
+        public VibratorInfo getInfo() {
             return mVibratorInfo;
         }
 
@@ -210,14 +227,12 @@ public class SystemVibratorManager extends VibratorManager {
 
         @Override
         public boolean setAlwaysOnEffect(int uid, String opPkg, int alwaysOnId,
-                @Nullable VibrationEffect effect, @Nullable AudioAttributes attributes) {
-            VibrationAttributes attr = new VibrationAttributes.Builder(
-                    attributes, effect).build();
+                @Nullable VibrationEffect effect, @Nullable VibrationAttributes attrs) {
             CombinedVibration combined = CombinedVibration.startParallel()
                     .addVibrator(mVibratorInfo.getId(), effect)
                     .combine();
             return SystemVibratorManager.this.setAlwaysOnEffect(uid, opPkg, alwaysOnId, combined,
-                    attr);
+                    attrs);
         }
 
         @Override
@@ -227,6 +242,12 @@ public class SystemVibratorManager extends VibratorManager {
                     .addVibrator(mVibratorInfo.getId(), vibe)
                     .combine();
             SystemVibratorManager.this.vibrate(uid, opPkg, combined, reason, attributes);
+        }
+
+        @Override
+        public void performHapticFeedback(int effectId, boolean always, String reason,
+                boolean fromIme) {
+            SystemVibratorManager.this.performHapticFeedback(effectId, always, reason, fromIme);
         }
 
         @Override

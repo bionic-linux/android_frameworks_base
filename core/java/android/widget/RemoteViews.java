@@ -16,11 +16,17 @@
 
 package android.widget;
 
+import static android.appwidget.flags.Flags.FLAG_DRAW_DATA_PARCEL;
+import static android.appwidget.flags.Flags.drawDataParcel;
+import static android.appwidget.flags.Flags.remoteAdapterConversion;
+import static android.view.inputmethod.Flags.FLAG_HOME_SCREEN_HANDWRITING_DELEGATOR;
+
 import android.annotation.AttrRes;
 import android.annotation.ColorInt;
 import android.annotation.ColorRes;
 import android.annotation.DimenRes;
 import android.annotation.DrawableRes;
+import android.annotation.FlaggedApi;
 import android.annotation.IdRes;
 import android.annotation.IntDef;
 import android.annotation.LayoutRes;
@@ -34,14 +40,17 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.ActivityThread;
 import android.app.Application;
+import android.app.LoadedApk;
 import android.app.PendingIntent;
 import android.app.RemoteInput;
 import android.appwidget.AppWidgetHostView;
 import android.compat.annotation.UnsupportedAppUsage;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.ServiceConnection;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.ColorStateList;
@@ -64,10 +73,12 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CancellationSignal;
+import android.os.IBinder;
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
 import android.os.Process;
+import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.UserHandle;
 import android.system.Os;
@@ -79,12 +90,14 @@ import android.util.Log;
 import android.util.LongArray;
 import android.util.Pair;
 import android.util.SizeF;
+import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.util.TypedValue;
 import android.util.TypedValue.ComplexDimensionUnit;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.LayoutInflater.Filter;
+import android.view.MotionEvent;
 import android.view.RemotableViewMethod;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,9 +110,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.android.internal.R;
-import com.android.internal.util.ContrastColorUtil;
 import com.android.internal.util.Preconditions;
+import com.android.internal.widget.IRemoteViewsFactory;
+import com.android.internal.widget.remotecompose.core.operations.Theme;
+import com.android.internal.widget.remotecompose.player.RemoteComposeDocument;
+import com.android.internal.widget.remotecompose.player.RemoteComposePlayer;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
@@ -122,8 +139,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Stack;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -215,10 +233,8 @@ public class RemoteViews implements Parcelable, Filter {
     private static final int BITMAP_REFLECTION_ACTION_TAG = 12;
     private static final int TEXT_VIEW_SIZE_ACTION_TAG = 13;
     private static final int VIEW_PADDING_ACTION_TAG = 14;
-    private static final int SET_REMOTE_VIEW_ADAPTER_LIST_TAG = 15;
     private static final int SET_REMOTE_INPUTS_ACTION_TAG = 18;
     private static final int LAYOUT_PARAM_ACTION_TAG = 19;
-    private static final int OVERRIDE_TEXT_COLORS_TAG = 20;
     private static final int SET_RIPPLE_DRAWABLE_COLOR_TAG = 21;
     private static final int SET_INT_TAG_TAG = 22;
     private static final int REMOVE_FROM_PARENT_ACTION_TAG = 23;
@@ -231,6 +247,9 @@ public class RemoteViews implements Parcelable, Filter {
     private static final int NIGHT_MODE_REFLECTION_ACTION_TAG = 30;
     private static final int SET_REMOTE_COLLECTION_ITEMS_ADAPTER_TAG = 31;
     private static final int ATTRIBUTE_REFLECTION_ACTION_TAG = 32;
+    private static final int SET_REMOTE_ADAPTER_TAG = 33;
+    private static final int SET_ON_STYLUS_HANDWRITING_RESPONSE_TAG = 34;
+    private static final int SET_DRAW_INSTRUCTION_TAG = 35;
 
     /** @hide **/
     @IntDef(prefix = "MARGIN_", value = {
@@ -300,12 +319,33 @@ public class RemoteViews implements Parcelable, Filter {
     public static final int FLAG_USE_LIGHT_BACKGROUND_LAYOUT = 4;
 
     /**
+     * This mask determines which flags are propagated to nested RemoteViews (either added by
+     * addView, or set as portrait/landscape/sized RemoteViews).
+     */
+    static final int FLAG_MASK_TO_PROPAGATE =
+            FLAG_WIDGET_IS_COLLECTION_CHILD | FLAG_USE_LIGHT_BACKGROUND_LAYOUT;
+
+    /**
+     * A ReadWriteHelper which has the same behavior as ReadWriteHelper.DEFAULT, but which is
+     * intentionally a different instance in order to trick Bundle reader so that it doesn't allow
+     * lazy initialization.
+     */
+    private static final Parcel.ReadWriteHelper ALTERNATIVE_DEFAULT = new Parcel.ReadWriteHelper();
+
+    /**
      * Used to restrict the views which can be inflated
      *
      * @see android.view.LayoutInflater.Filter#onLoadClass(java.lang.Class)
      */
     private static final LayoutInflater.Filter INFLATER_FILTER =
             (clazz) -> clazz.isAnnotationPresent(RemoteViews.RemoteView.class);
+
+    /**
+     * The maximum waiting time for remote adapter conversion in milliseconds
+     *
+     * @hide
+     */
+    private static final int MAX_ADAPTER_CONVERSION_WAITING_TIME_MS = 20_000;
 
     /**
      * Application that hosts the remote views.
@@ -337,7 +377,15 @@ public class RemoteViews implements Parcelable, Filter {
      * Maps bitmaps to unique indicies to avoid Bitmap duplication.
      */
     @UnsupportedAppUsage
-    private BitmapCache mBitmapCache;
+    private BitmapCache mBitmapCache = new BitmapCache();
+
+    /**
+     * Maps Intent ID to RemoteCollectionItems to avoid duplicate items
+     */
+    private @NonNull RemoteCollectionCache mCollectionCache = new RemoteCollectionCache();
+
+    /** Cache of ApplicationInfos used by collection items. */
+    private ApplicationInfoCache mApplicationInfoCache = new ApplicationInfoCache();
 
     /**
      * Indicates whether or not this RemoteViews object is contained as a child of any other
@@ -394,6 +442,26 @@ public class RemoteViews implements Parcelable, Filter {
     /** Class cookies of the Parcel this instance was read from. */
     private Map<Class, Object> mClassCookies;
 
+    /**
+     * {@link LayoutInflater.Factory2} which will be passed into a {@link LayoutInflater} instance
+     * used by this class.
+     */
+    @Nullable
+    private LayoutInflater.Factory2 mLayoutInflaterFactory2;
+
+    /**
+     * Indicates whether this {@link RemoteViews} was instantiated with a {@link DrawInstructions}
+     * object. {@link DrawInstructions} serves as an alternative protocol for the host process
+     * to render.
+     */
+    private boolean mHasDrawInstructions;
+
+    @Nullable
+    private SparseArray<PendingIntent> mPendingIntentTemplate;
+
+    @Nullable
+    private SparseArray<Intent> mFillInIntent;
+
     private static final InteractionHandler DEFAULT_INTERACTION_HANDLER =
             (view, pendingIntent, response) ->
                     startPendingIntent(view, pendingIntent, response.getLaunchOptions(view));
@@ -413,6 +481,29 @@ public class RemoteViews implements Parcelable, Filter {
     }
 
     /**
+     * Sets {@link LayoutInflater.Factory2} to be passed into {@link LayoutInflater} used
+     * by this class instance. It has to be set before the views are inflated to have any effect.
+     *
+     * The factory callbacks will be called on the background thread so the implementation needs
+     * to be thread safe.
+     *
+     * @hide
+     */
+    public void setLayoutInflaterFactory(@Nullable LayoutInflater.Factory2 factory) {
+        mLayoutInflaterFactory2 = factory;
+    }
+
+    /**
+     * Returns currently set {@link LayoutInflater.Factory2}.
+     *
+     * @hide
+     */
+    @Nullable
+    public LayoutInflater.Factory2 getLayoutInflaterFactory() {
+        return mLayoutInflaterFactory2;
+    }
+
+    /**
      * Reduces all images and ensures that they are all below the given sizes.
      *
      * @param maxWidth the maximum width allowed
@@ -426,17 +517,6 @@ public class RemoteViews implements Parcelable, Filter {
             Bitmap bitmap = cache.get(i);
             cache.set(i, Icon.scaleDownIfNecessary(bitmap, maxWidth, maxHeight));
         }
-    }
-
-    /**
-     * Override all text colors in this layout and replace them by the given text color.
-     *
-     * @param textColor The color to use.
-     *
-     * @hide
-     */
-    public void overrideTextColors(int textColor) {
-        addAction(new OverrideTextColorsAction(textColor));
     }
 
     /**
@@ -456,6 +536,18 @@ public class RemoteViews implements Parcelable, Filter {
      */
     public void addFlags(@ApplyFlags int flags) {
         mApplyFlags = mApplyFlags | flags;
+
+        int flagsToPropagate = flags & FLAG_MASK_TO_PROPAGATE;
+        if (flagsToPropagate != 0) {
+            if (hasSizedRemoteViews()) {
+                for (RemoteViews remoteView : mSizedRemoteViews) {
+                    remoteView.addFlags(flagsToPropagate);
+                }
+            } else if (hasLandscapeAndPortraitLayouts()) {
+                mLandscape.addFlags(flagsToPropagate);
+                mPortrait.addFlags(flagsToPropagate);
+            }
+        }
     }
 
     /**
@@ -561,21 +653,21 @@ public class RemoteViews implements Parcelable, Filter {
      * Base class for all actions that can be performed on an
      * inflated view.
      *
-     *  SUBCLASSES MUST BE IMMUTABLE SO CLONE WORKS!!!!!
+     * SUBCLASSES MUST BE IMMUTABLE SO CLONE WORKS!!!!!
      */
-    private abstract static class Action implements Parcelable {
-        public abstract void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) throws ActionException;
+    private abstract static class Action {
+        @IdRes
+        @UnsupportedAppUsage
+        int mViewId;
+
+        public abstract void apply(View root, ViewGroup rootParent, ActionApplyParams params)
+                throws ActionException;
 
         public static final int MERGE_REPLACE = 0;
         public static final int MERGE_APPEND = 1;
         public static final int MERGE_IGNORE = 2;
 
-        public int describeContents() {
-            return 0;
-        }
-
-        public void setBitmapCache(BitmapCache bitmapCache) {
+        public void setHierarchyRootData(HierarchyRootData root) {
             // Do nothing
         }
 
@@ -587,7 +679,7 @@ public class RemoteViews implements Parcelable, Filter {
         public abstract int getActionTag();
 
         public String getUniqueKey() {
-            return (getActionTag() + "_" + viewId);
+            return (getActionTag() + "_" + mViewId);
         }
 
         /**
@@ -596,7 +688,7 @@ public class RemoteViews implements Parcelable, Filter {
          * Override this if some of the tasks can be performed async.
          */
         public Action initActionAsync(ViewTree root, ViewGroup rootParent,
-                InteractionHandler handler, ColorResources colorResources) {
+                ActionApplyParams params) {
             return this;
         }
 
@@ -604,27 +696,18 @@ public class RemoteViews implements Parcelable, Filter {
             return false;
         }
 
-        /**
-         * Overridden by subclasses which have (or inherit) an ApplicationInfo instance
-         * as member variable
-         */
-        public boolean hasSameAppInfo(ApplicationInfo parentInfo) {
-            return true;
-        }
-
+        /** See {@link RemoteViews#visitUris(Consumer)}. **/
         public void visitUris(@NonNull Consumer<Uri> visitor) {
-            // Nothing to visit by default
+            // Nothing to visit by default.
         }
 
-        @IdRes
-        @UnsupportedAppUsage
-        int viewId;
+        public abstract void writeToParcel(Parcel dest, int flags);
     }
 
     /**
      * Action class used during async inflation of RemoteViews. Subclasses are not parcelable.
      */
-    private static abstract class RuntimeAction extends Action {
+    private abstract static class RuntimeAction extends Action {
         @Override
         public final int getActionTag() {
             return 0;
@@ -639,9 +722,7 @@ public class RemoteViews implements Parcelable, Filter {
     // Constant used during async execution. It is not parcelable.
     private static final Action ACTION_NOOP = new RuntimeAction() {
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
-        }
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) { }
     };
 
     /**
@@ -689,15 +770,26 @@ public class RemoteViews implements Parcelable, Filter {
             }
         }
 
-        // Because pruning can remove the need for bitmaps, we reconstruct the bitmap cache
-        mBitmapCache = new BitmapCache();
-        setBitmapCache(mBitmapCache);
+        // Because pruning can remove the need for bitmaps, we reconstruct the caches.
+        reconstructCaches();
     }
 
     /**
-     * Note all {@link Uri} that are referenced internally, with the expectation
-     * that Uri permission grants will need to be issued to ensure the recipient
-     * of this object is able to render its contents.
+     * Return {@code true} only if this {@code RemoteViews} is a legacy list widget that uses
+     * {@code Intent} for inflating child entries.
+     *
+     * @hide
+     */
+    public boolean isLegacyListRemoteViews() {
+        return mCollectionCache.mIdToUriMapping.size() > 0;
+    }
+
+    /**
+     * Note all {@link Uri} that are referenced internally, with the expectation that Uri permission
+     * grants will need to be issued to ensure the recipient of this object is able to render its
+     * contents.
+     * See b/281044385 for more context and examples about what happens when this isn't done
+     * correctly.
      *
      * @hide
      */
@@ -707,6 +799,94 @@ public class RemoteViews implements Parcelable, Filter {
                 mActions.get(i).visitUris(visitor);
             }
         }
+        if (mSizedRemoteViews != null) {
+            for (int i = 0; i < mSizedRemoteViews.size(); i++) {
+                mSizedRemoteViews.get(i).visitUris(visitor);
+            }
+        }
+        if (mLandscape != null) {
+            mLandscape.visitUris(visitor);
+        }
+        if (mPortrait != null) {
+            mPortrait.visitUris(visitor);
+        }
+    }
+
+    /**
+     * @hide
+     * @return True if there is a change
+     */
+    public boolean replaceRemoteCollections(int viewId) {
+        boolean isActionReplaced = false;
+        if (mActions != null) {
+            for (int i = 0; i < mActions.size(); i++) {
+                Action action = mActions.get(i);
+                if (action instanceof SetRemoteCollectionItemListAdapterAction itemsAction
+                        && itemsAction.mViewId == viewId
+                        && itemsAction.mServiceIntent != null) {
+                    SetRemoteCollectionItemListAdapterAction newCollectionAction =
+                            new SetRemoteCollectionItemListAdapterAction(
+                                    itemsAction.mViewId, itemsAction.mServiceIntent);
+                    newCollectionAction.mIntentId = itemsAction.mIntentId;
+                    newCollectionAction.mIsReplacedIntoAction = true;
+                    mActions.set(i, newCollectionAction);
+                    isActionReplaced = true;
+                } else if (action instanceof SetRemoteViewsAdapterIntent intentAction
+                        && intentAction.mViewId == viewId) {
+                    mActions.set(i, new SetRemoteCollectionItemListAdapterAction(
+                            intentAction.mViewId, intentAction.mIntent));
+                    isActionReplaced = true;
+                } else if (action instanceof ViewGroupActionAdd groupAction
+                        && groupAction.mNestedViews != null) {
+                    isActionReplaced |= groupAction.mNestedViews.replaceRemoteCollections(viewId);
+                }
+            }
+        }
+        if (mSizedRemoteViews != null) {
+            for (int i = 0; i < mSizedRemoteViews.size(); i++) {
+                isActionReplaced |= mSizedRemoteViews.get(i).replaceRemoteCollections(viewId);
+            }
+        }
+        if (mLandscape != null) {
+            isActionReplaced |= mLandscape.replaceRemoteCollections(viewId);
+        }
+        if (mPortrait != null) {
+            isActionReplaced |= mPortrait.replaceRemoteCollections(viewId);
+        }
+
+        return isActionReplaced;
+    }
+
+    /**
+     * @return True if has set remote adapter using service intent
+     * @hide
+     */
+    public boolean hasLegacyLists() {
+        if (mActions != null) {
+            for (int i = 0; i < mActions.size(); i++) {
+                Action action = mActions.get(i);
+                if ((action instanceof SetRemoteCollectionItemListAdapterAction itemsAction
+                        && itemsAction.mServiceIntent != null)
+                        || (action instanceof SetRemoteViewsAdapterIntent intentAction
+                                && intentAction.mIntent != null)
+                        || (action instanceof ViewGroupActionAdd groupAction
+                                && groupAction.mNestedViews != null
+                                && groupAction.mNestedViews.hasLegacyLists())) {
+                    return true;
+                }
+            }
+        }
+        if (mSizedRemoteViews != null) {
+            for (int i = 0; i < mSizedRemoteViews.size(); i++) {
+                if (mSizedRemoteViews.get(i).hasLegacyLists()) {
+                    return true;
+                }
+            }
+        }
+        if (mLandscape != null && mLandscape.hasLegacyLists()) {
+            return true;
+        }
+        return mPortrait != null && mPortrait.hasLegacyLists();
     }
 
     private static void visitIconUri(Icon icon, @NonNull Consumer<Uri> visitor) {
@@ -740,6 +920,16 @@ public class RemoteViews implements Parcelable, Filter {
         }
 
         @Override
+        public UserHandle getUser() {
+            return mContextForResources.getUser();
+        }
+
+        @Override
+        public int getUserId() {
+            return mContextForResources.getUserId();
+        }
+
+        @Override
         public boolean isRestricted() {
             // Override isRestricted and direct to resource's implementation. The isRestricted is
             // used for determining the risky resources loading, e.g. fonts, thus direct to context
@@ -748,33 +938,32 @@ public class RemoteViews implements Parcelable, Filter {
         }
     }
 
-    private class SetEmptyView extends Action {
-        int emptyViewId;
+    private static class SetEmptyView extends Action {
+        int mEmptyViewId;
 
         SetEmptyView(@IdRes int viewId, @IdRes int emptyViewId) {
-            this.viewId = viewId;
-            this.emptyViewId = emptyViewId;
+            this.mViewId = viewId;
+            this.mEmptyViewId = emptyViewId;
         }
 
         SetEmptyView(Parcel in) {
-            this.viewId = in.readInt();
-            this.emptyViewId = in.readInt();
+            this.mViewId = in.readInt();
+            this.mEmptyViewId = in.readInt();
         }
 
         public void writeToParcel(Parcel out, int flags) {
-            out.writeInt(this.viewId);
-            out.writeInt(this.emptyViewId);
+            out.writeInt(this.mViewId);
+            out.writeInt(this.mEmptyViewId);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
-            final View view = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            final View view = root.findViewById(mViewId);
             if (!(view instanceof AdapterView<?>)) return;
 
             AdapterView<?> adapterView = (AdapterView<?>) view;
 
-            final View emptyView = root.findViewById(emptyViewId);
+            final View emptyView = root.findViewById(mEmptyViewId);
             if (emptyView == null) return;
 
             adapterView.setEmptyView(emptyView);
@@ -786,26 +975,28 @@ public class RemoteViews implements Parcelable, Filter {
         }
     }
 
-    private class SetPendingIntentTemplate extends Action {
+    private static class SetPendingIntentTemplate extends Action {
+        @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
+        PendingIntent mPendingIntentTemplate;
+
         public SetPendingIntentTemplate(@IdRes int id, PendingIntent pendingIntentTemplate) {
-            this.viewId = id;
-            this.pendingIntentTemplate = pendingIntentTemplate;
+            this.mViewId = id;
+            this.mPendingIntentTemplate = pendingIntentTemplate;
         }
 
         public SetPendingIntentTemplate(Parcel parcel) {
-            viewId = parcel.readInt();
-            pendingIntentTemplate = PendingIntent.readPendingIntentOrNullFromParcel(parcel);
+            mViewId = parcel.readInt();
+            mPendingIntentTemplate = PendingIntent.readPendingIntentOrNullFromParcel(parcel);
         }
 
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
-            PendingIntent.writePendingIntentOrNullToParcel(pendingIntentTemplate, dest);
+            dest.writeInt(mViewId);
+            PendingIntent.writePendingIntentOrNullToParcel(mPendingIntentTemplate, dest);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, final InteractionHandler handler,
-                ColorResources colorResources) {
-            final View target = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            final View target = root.findViewById(mViewId);
             if (target == null) return;
 
             // If the view isn't an AdapterView, setting a PendingIntent template doesn't make sense
@@ -815,14 +1006,14 @@ public class RemoteViews implements Parcelable, Filter {
                 OnItemClickListener listener = (parent, view, position, id) -> {
                     RemoteResponse response = findRemoteResponseTag(view);
                     if (response != null) {
-                        response.handleViewInteraction(view, handler);
+                        response.handleViewInteraction(view, params.handler);
                     }
                 };
                 av.setOnItemClickListener(listener);
-                av.setTag(pendingIntentTemplate);
+                av.setTag(mPendingIntentTemplate);
             } else {
                 Log.e(LOG_TAG, "Cannot setPendingIntentTemplate on a view which is not" +
-                        "an AdapterView (id: " + viewId + ")");
+                        "an AdapterView (id: " + mViewId + ")");
                 return;
             }
         }
@@ -853,115 +1044,125 @@ public class RemoteViews implements Parcelable, Filter {
         public int getActionTag() {
             return SET_PENDING_INTENT_TEMPLATE_TAG;
         }
-
-        @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
-        PendingIntent pendingIntentTemplate;
     }
 
-    private class SetRemoteViewsAdapterList extends Action {
-        public SetRemoteViewsAdapterList(@IdRes int id, ArrayList<RemoteViews> list,
-                int viewTypeCount) {
-            this.viewId = id;
-            this.list = list;
-            this.viewTypeCount = viewTypeCount;
+    /**
+     * Cache of {@link ApplicationInfo}s that can be used to ensure that the same
+     * {@link ApplicationInfo} instance is used throughout the RemoteViews.
+     */
+    private static class ApplicationInfoCache {
+        private final Map<Pair<String, Integer>, ApplicationInfo> mPackageUserToApplicationInfo;
+
+        ApplicationInfoCache() {
+            mPackageUserToApplicationInfo = new ArrayMap<>();
         }
 
-        public SetRemoteViewsAdapterList(Parcel parcel) {
-            viewId = parcel.readInt();
-            viewTypeCount = parcel.readInt();
-            list = parcel.createTypedArrayList(RemoteViews.CREATOR);
+        /**
+         * Adds the {@link ApplicationInfo} to the cache if it's not present. Returns either the
+         * provided {@code applicationInfo} or a previously added value with the same package name
+         * and uid.
+         */
+        @Nullable
+        ApplicationInfo getOrPut(@Nullable ApplicationInfo applicationInfo) {
+            Pair<String, Integer> key = getPackageUserKey(applicationInfo);
+            if (key == null) return null;
+            return mPackageUserToApplicationInfo.computeIfAbsent(key, ignored -> applicationInfo);
         }
 
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
-            dest.writeInt(viewTypeCount);
-            dest.writeTypedList(list, flags);
+        /** Puts the {@link ApplicationInfo} in the cache, replacing any previously stored value. */
+        void put(@Nullable ApplicationInfo applicationInfo) {
+            Pair<String, Integer> key = getPackageUserKey(applicationInfo);
+            if (key == null) return;
+            mPackageUserToApplicationInfo.put(key, applicationInfo);
         }
 
-        @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
-            final View target = root.findViewById(viewId);
-            if (target == null) return;
-
-            // Ensure that we are applying to an AppWidget root
-            if (!(rootParent instanceof AppWidgetHostView)) {
-                Log.e(LOG_TAG, "SetRemoteViewsAdapterIntent action can only be used for " +
-                        "AppWidgets (root id: " + viewId + ")");
-                return;
-            }
-            // Ensure that we are calling setRemoteAdapter on an AdapterView that supports it
-            if (!(target instanceof AbsListView) && !(target instanceof AdapterViewAnimator)) {
-                Log.e(LOG_TAG, "Cannot setRemoteViewsAdapter on a view which is not " +
-                        "an AbsListView or AdapterViewAnimator (id: " + viewId + ")");
-                return;
-            }
-
-            if (target instanceof AbsListView) {
-                AbsListView v = (AbsListView) target;
-                Adapter a = v.getAdapter();
-                if (a instanceof RemoteViewsListAdapter && viewTypeCount <= a.getViewTypeCount()) {
-                    ((RemoteViewsListAdapter) a).setViewsList(list);
-                } else {
-                    v.setAdapter(new RemoteViewsListAdapter(v.getContext(), list, viewTypeCount,
-                            colorResources));
-                }
-            } else if (target instanceof AdapterViewAnimator) {
-                AdapterViewAnimator v = (AdapterViewAnimator) target;
-                Adapter a = v.getAdapter();
-                if (a instanceof RemoteViewsListAdapter && viewTypeCount <= a.getViewTypeCount()) {
-                    ((RemoteViewsListAdapter) a).setViewsList(list);
-                } else {
-                    v.setAdapter(new RemoteViewsListAdapter(v.getContext(), list, viewTypeCount,
-                            colorResources));
-                }
-            }
+        /**
+         * Returns the currently stored {@link ApplicationInfo} from the cache matching
+         * {@code  applicationInfo}, or null if there wasn't any.
+         */
+        @Nullable ApplicationInfo get(@Nullable ApplicationInfo applicationInfo) {
+            Pair<String, Integer> key = getPackageUserKey(applicationInfo);
+            if (key == null) return null;
+            return mPackageUserToApplicationInfo.get(key);
         }
-
-        @Override
-        public int getActionTag() {
-            return SET_REMOTE_VIEW_ADAPTER_LIST_TAG;
-        }
-
-        int viewTypeCount;
-        ArrayList<RemoteViews> list;
     }
 
-    private static class SetRemoteCollectionItemListAdapterAction extends Action {
-        private final RemoteCollectionItems mItems;
+    private class SetRemoteCollectionItemListAdapterAction extends Action {
+        private @Nullable RemoteCollectionItems mItems;
+        final Intent mServiceIntent;
+        int mIntentId = -1;
+        boolean mIsReplacedIntoAction = false;
 
-        SetRemoteCollectionItemListAdapterAction(@IdRes int id, RemoteCollectionItems items) {
-            viewId = id;
+        SetRemoteCollectionItemListAdapterAction(@IdRes int id,
+                @NonNull RemoteCollectionItems items) {
+            mViewId = id;
+            items.setHierarchyRootData(getHierarchyRootData());
             mItems = items;
+            mServiceIntent = null;
+        }
+
+        SetRemoteCollectionItemListAdapterAction(@IdRes int id, Intent intent) {
+            mViewId = id;
+            mItems = null;
+            mServiceIntent = intent;
         }
 
         SetRemoteCollectionItemListAdapterAction(Parcel parcel) {
-            viewId = parcel.readInt();
-            mItems = parcel.readTypedObject(RemoteCollectionItems.CREATOR);
+            mViewId = parcel.readInt();
+            mIntentId = parcel.readInt();
+            mIsReplacedIntoAction = parcel.readBoolean();
+            mServiceIntent = parcel.readTypedObject(Intent.CREATOR);
+            mItems = mServiceIntent != null
+                    ? null
+                    : new RemoteCollectionItems(parcel, getHierarchyRootData());
+        }
+
+        @Override
+        public void setHierarchyRootData(HierarchyRootData rootData) {
+            if (mItems != null) {
+                mItems.setHierarchyRootData(rootData);
+                return;
+            }
+
+            if (mIntentId != -1) {
+                // Set the root data for items in the cache instead
+                mCollectionCache.setHierarchyDataForId(mIntentId, rootData);
+            }
         }
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
-            dest.writeTypedObject(mItems, flags);
+            dest.writeInt(mViewId);
+            dest.writeInt(mIntentId);
+            dest.writeBoolean(mIsReplacedIntoAction);
+            dest.writeTypedObject(mServiceIntent, flags);
+            if (mItems != null) {
+                mItems.writeToParcel(dest, flags, /* attached= */ true);
+            }
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) throws ActionException {
-            View target = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params)
+                throws ActionException {
+            View target = root.findViewById(mViewId);
             if (target == null) return;
+
+            RemoteCollectionItems items = mIntentId == -1
+                    ? mItems == null
+                            ? new RemoteCollectionItems.Builder().build()
+                            : mItems
+                    : mCollectionCache.getItemsForId(mIntentId);
 
             // Ensure that we are applying to an AppWidget root
             if (!(rootParent instanceof AppWidgetHostView)) {
                 Log.e(LOG_TAG, "setRemoteAdapter can only be used for "
-                        + "AppWidgets (root id: " + viewId + ")");
+                        + "AppWidgets (root id: " + mViewId + ")");
                 return;
             }
 
             if (!(target instanceof AdapterView)) {
                 Log.e(LOG_TAG, "Cannot call setRemoteAdapter on a view which is not "
-                        + "an AdapterView (id: " + viewId + ")");
+                        + "an AdapterView (id: " + mViewId + ")");
                 return;
             }
 
@@ -972,10 +1173,10 @@ public class RemoteViews implements Parcelable, Filter {
             // recycling in setAdapter, so we must call setAdapter again if the number of view types
             // increases.
             if (adapter instanceof RemoteCollectionItemsAdapter
-                    && adapter.getViewTypeCount() >= mItems.getViewTypeCount()) {
+                    && adapter.getViewTypeCount() >= items.getViewTypeCount()) {
                 try {
                     ((RemoteCollectionItemsAdapter) adapter).setData(
-                            mItems, handler, colorResources);
+                            items, params.handler, params.colorResources);
                 } catch (Throwable throwable) {
                     // setData should never failed with the validation in the items builder, but if
                     // it does, catch and rethrow.
@@ -985,8 +1186,8 @@ public class RemoteViews implements Parcelable, Filter {
             }
 
             try {
-                adapterView.setAdapter(
-                        new RemoteCollectionItemsAdapter(mItems, handler, colorResources));
+                adapterView.setAdapter(new RemoteCollectionItemsAdapter(items,
+                        params.handler, params.colorResources));
             } catch (Throwable throwable) {
                 // This could throw if the AdapterView somehow doesn't accept BaseAdapter due to
                 // a type error.
@@ -998,67 +1199,323 @@ public class RemoteViews implements Parcelable, Filter {
         public int getActionTag() {
             return SET_REMOTE_COLLECTION_ITEMS_ADAPTER_TAG;
         }
-    }
 
-    private class SetRemoteViewsAdapterIntent extends Action {
-        public SetRemoteViewsAdapterIntent(@IdRes int id, Intent intent) {
-            this.viewId = id;
-            this.intent = intent;
-        }
-
-        public SetRemoteViewsAdapterIntent(Parcel parcel) {
-            viewId = parcel.readInt();
-            intent = parcel.readTypedObject(Intent.CREATOR);
-        }
-
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
-            dest.writeTypedObject(intent, flags);
+        @Override
+        public String getUniqueKey() {
+            return (SET_REMOTE_ADAPTER_TAG + "_" + mViewId);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
-            final View target = root.findViewById(viewId);
+        public void visitUris(@NonNull Consumer<Uri> visitor) {
+            if (mIntentId != -1 || mItems == null) {
+                return;
+            }
+
+            mItems.visitUris(visitor);
+        }
+    }
+
+    /**
+     * The maximum size for RemoteViews with converted RemoteCollectionItemsAdapter.
+     * When converting RemoteViewsAdapter to RemoteCollectionItemsAdapter, we want to put size
+     * limits on each unique RemoteCollectionItems in order to not exceed the transaction size limit
+     * for each parcel (typically 1 MB). We leave a certain ratio of the maximum size as a buffer
+     * for missing calculations of certain parameters (e.g. writing a RemoteCollectionItems to the
+     * parcel will write its Id array as well, but that is missing when writing itschild RemoteViews
+     * directly to the parcel as we did in RemoteViewsService)
+     *
+     * @hide
+     */
+    private static final int MAX_SINGLE_PARCEL_SIZE = (int) (1_000_000 * 0.8);
+
+    /**
+     * @hide
+     */
+    public CompletableFuture<Void> collectAllIntents() {
+        return mCollectionCache.collectAllIntentsNoComplete(this);
+    }
+
+    private class RemoteCollectionCache {
+        private final SparseArray<String> mIdToUriMapping = new SparseArray<>();
+        private final Map<String, RemoteCollectionItems> mUriToCollectionMapping = new HashMap<>();
+
+        RemoteCollectionCache() { }
+
+        RemoteCollectionCache(RemoteCollectionCache src) {
+            for (int i = 0; i < src.mIdToUriMapping.size(); i++) {
+                String uri = src.mIdToUriMapping.valueAt(i);
+                mIdToUriMapping.put(src.mIdToUriMapping.keyAt(i), uri);
+                mUriToCollectionMapping.put(uri, src.mUriToCollectionMapping.get(uri));
+            }
+        }
+
+        RemoteCollectionCache(Parcel in) {
+            int cacheSize = in.readInt();
+            HierarchyRootData currentRootData = new HierarchyRootData(mBitmapCache,
+                    this,
+                    mApplicationInfoCache,
+                    mClassCookies);
+            for (int i = 0; i < cacheSize; i++) {
+                int intentId = in.readInt();
+                String intentUri = in.readString8();
+                RemoteCollectionItems items = new RemoteCollectionItems(in, currentRootData);
+                mIdToUriMapping.put(intentId, intentUri);
+                mUriToCollectionMapping.put(intentUri, items);
+            }
+        }
+
+        void setHierarchyDataForId(int intentId, HierarchyRootData data) {
+            String uri = mIdToUriMapping.get(intentId);
+            if (mUriToCollectionMapping.get(uri) == null) {
+                Log.e(LOG_TAG, "Error setting hierarchy data for id=" + intentId);
+                return;
+            }
+
+            RemoteCollectionItems items = mUriToCollectionMapping.get(uri);
+            items.setHierarchyRootData(data);
+        }
+
+        RemoteCollectionItems getItemsForId(int intentId) {
+            String uri = mIdToUriMapping.get(intentId);
+            return mUriToCollectionMapping.get(uri);
+        }
+
+        public @NonNull CompletableFuture<Void> collectAllIntentsNoComplete(
+                @NonNull RemoteViews inViews) {
+            SparseArray<Intent> idToIntentMapping = new SparseArray<>();
+            // Collect the number of uinque Intent (which is equal to the number of new connections
+            // to make) for size allocation and exclude certain collections from being written to
+            // the parcel to better estimate the space left for reallocation.
+            collectAllIntentsInternal(inViews, idToIntentMapping);
+
+            // Calculate the individual size here
+            int numOfIntents = idToIntentMapping.size();
+            if (numOfIntents == 0) {
+                Log.e(LOG_TAG, "Possibly notifying updates for nonexistent view Id");
+                return CompletableFuture.completedFuture(null);
+            }
+
+            Parcel sizeTestParcel = Parcel.obtain();
+            // Write self RemoteViews to the parcel, which includes the actions/bitmaps/collection
+            // cache to see how much space is left for the RemoteCollectionItems that are to be
+            // updated.
+            RemoteViews.this.writeToParcel(sizeTestParcel,
+                    /* flags= */ 0,
+                    /* intentsToIgnore= */ idToIntentMapping);
+            int remainingSize = MAX_SINGLE_PARCEL_SIZE - sizeTestParcel.dataSize();
+            sizeTestParcel.recycle();
+
+            int individualSize = remainingSize < 0
+                    ? 0
+                    : remainingSize / numOfIntents;
+
+            return connectAllUniqueIntents(individualSize, idToIntentMapping);
+        }
+
+        private void collectAllIntentsInternal(@NonNull RemoteViews inViews,
+                @NonNull SparseArray<Intent> idToIntentMapping) {
+            if (inViews.hasSizedRemoteViews()) {
+                for (RemoteViews remoteViews : inViews.mSizedRemoteViews) {
+                    collectAllIntentsInternal(remoteViews, idToIntentMapping);
+                }
+            } else if (inViews.hasLandscapeAndPortraitLayouts()) {
+                collectAllIntentsInternal(inViews.mLandscape, idToIntentMapping);
+                collectAllIntentsInternal(inViews.mPortrait, idToIntentMapping);
+            } else if (inViews.mActions != null) {
+                for (Action action : inViews.mActions) {
+                    if (action instanceof SetRemoteCollectionItemListAdapterAction rca) {
+                        // Deal with the case where the intent is replaced into the action list
+                        if (rca.mIntentId != -1 && !rca.mIsReplacedIntoAction) {
+                            continue;
+                        }
+
+                        if (rca.mIntentId != -1 && rca.mIsReplacedIntoAction) {
+                            rca.mIsReplacedIntoAction = false;
+
+                            // Avoid redundant connections for the same intent. Also making sure
+                            // that the number of connections we are making is always equal to the
+                            // nmuber of unique intents that are being used for the updates.
+                            if (idToIntentMapping.contains(rca.mIntentId)) {
+                                continue;
+                            }
+
+                            idToIntentMapping.put(rca.mIntentId, rca.mServiceIntent);
+                            rca.mItems = null;
+                            continue;
+                        }
+
+                        // Differentiate between the normal collection actions and the ones with
+                        // intents.
+                        if (rca.mServiceIntent != null) {
+                            final String uri = rca.mServiceIntent.toUri(0);
+                            int index = mIdToUriMapping.indexOfValueByValue(uri);
+                            if (index == -1) {
+                                int newIntentId = mIdToUriMapping.size();
+                                rca.mIntentId = newIntentId;
+                                mIdToUriMapping.put(newIntentId, uri);
+                            } else {
+                                rca.mIntentId = mIdToUriMapping.keyAt(index);
+                                rca.mItems = null;
+                                continue;
+                            }
+
+                            idToIntentMapping.put(rca.mIntentId, rca.mServiceIntent);
+                            rca.mItems = null;
+                        } else {
+                            for (RemoteViews views : rca.mItems.mViews) {
+                                collectAllIntentsInternal(views, idToIntentMapping);
+                            }
+                        }
+                    } else if (action instanceof ViewGroupActionAdd vgaa
+                            && vgaa.mNestedViews != null) {
+                        collectAllIntentsInternal(vgaa.mNestedViews, idToIntentMapping);
+                    }
+                }
+            }
+        }
+
+        private @NonNull CompletableFuture<Void> connectAllUniqueIntents(int individualSize,
+                @NonNull SparseArray<Intent> idToIntentMapping) {
+            List<CompletableFuture<Void>> intentFutureList = new ArrayList<>();
+            for (int i = 0; i < idToIntentMapping.size(); i++) {
+                String currentIntentUri = mIdToUriMapping.get(idToIntentMapping.keyAt(i));
+                Intent currentIntent = idToIntentMapping.valueAt(i);
+                intentFutureList.add(getItemsFutureFromIntentWithTimeout(currentIntent,
+                        individualSize)
+                        .thenAccept(items -> {
+                            items.setHierarchyRootData(getHierarchyRootData());
+                            mUriToCollectionMapping.put(currentIntentUri, items);
+                        }));
+            }
+
+            return CompletableFuture.allOf(intentFutureList.toArray(CompletableFuture[]::new));
+        }
+
+        private static CompletableFuture<RemoteCollectionItems> getItemsFutureFromIntentWithTimeout(
+                Intent intent, int individualSize) {
+            if (intent == null) {
+                Log.e(LOG_TAG, "Null intent received when generating adapter future");
+                return CompletableFuture.completedFuture(new RemoteCollectionItems
+                        .Builder().build());
+            }
+
+            final Context context = ActivityThread.currentApplication();
+
+            final CompletableFuture<RemoteCollectionItems> result = new CompletableFuture<>();
+            context.bindService(intent, Context.BindServiceFlags.of(Context.BIND_AUTO_CREATE),
+                    result.defaultExecutor(), new ServiceConnection() {
+                        @Override
+                        public void onServiceConnected(ComponentName componentName,
+                                IBinder iBinder) {
+                            RemoteCollectionItems items;
+                            try {
+                                items = IRemoteViewsFactory.Stub.asInterface(iBinder)
+                                        .getRemoteCollectionItems(individualSize);
+                            } catch (RemoteException re) {
+                                items = new RemoteCollectionItems.Builder().build();
+                                Log.e(LOG_TAG, "Error getting collection items from the"
+                                        + " factory", re);
+                            } finally {
+                                context.unbindService(this);
+                            }
+
+                            if (items == null) {
+                                items = new RemoteCollectionItems.Builder().build();
+                            }
+
+                            result.complete(items);
+                        }
+
+                        @Override
+                        public void onServiceDisconnected(ComponentName componentName) { }
+                    });
+
+            result.completeOnTimeout(
+                    new RemoteCollectionItems.Builder().build(),
+                    MAX_ADAPTER_CONVERSION_WAITING_TIME_MS, TimeUnit.MILLISECONDS);
+
+            return result;
+        }
+
+        public void writeToParcel(Parcel out, int flags,
+                @Nullable SparseArray<Intent> intentsToIgnore) {
+            out.writeInt(mIdToUriMapping.size());
+            for (int i = 0; i < mIdToUriMapping.size(); i++) {
+                int currentIntentId = mIdToUriMapping.keyAt(i);
+                if (intentsToIgnore != null && intentsToIgnore.contains(currentIntentId)) {
+                    // Skip writing collections that are to be updated in the following steps to
+                    // better estimate the RemoteViews size.
+                    continue;
+                }
+                out.writeInt(currentIntentId);
+                String intentUri = mIdToUriMapping.valueAt(i);
+                out.writeString8(intentUri);
+                mUriToCollectionMapping.get(intentUri).writeToParcel(out, flags, true);
+            }
+        }
+    }
+
+    private class SetRemoteViewsAdapterIntent extends Action {
+        Intent mIntent;
+        boolean mIsAsync = false;
+
+        public SetRemoteViewsAdapterIntent(@IdRes int id, Intent intent) {
+            this.mViewId = id;
+            this.mIntent = intent;
+        }
+
+        public SetRemoteViewsAdapterIntent(Parcel parcel) {
+            mViewId = parcel.readInt();
+            mIntent = parcel.readTypedObject(Intent.CREATOR);
+        }
+
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(mViewId);
+            dest.writeTypedObject(mIntent, flags);
+        }
+
+        @Override
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            final View target = root.findViewById(mViewId);
             if (target == null) return;
 
             // Ensure that we are applying to an AppWidget root
             if (!(rootParent instanceof AppWidgetHostView)) {
                 Log.e(LOG_TAG, "setRemoteAdapter can only be used for "
-                        + "AppWidgets (root id: " + viewId + ")");
+                        + "AppWidgets (root id: " + mViewId + ")");
                 return;
             }
 
             // Ensure that we are calling setRemoteAdapter on an AdapterView that supports it
             if (!(target instanceof AbsListView) && !(target instanceof AdapterViewAnimator)) {
                 Log.e(LOG_TAG, "Cannot setRemoteAdapter on a view which is not "
-                        + "an AbsListView or AdapterViewAnimator (id: " + viewId + ")");
+                        + "an AbsListView or AdapterViewAnimator (id: " + mViewId + ")");
                 return;
             }
 
             // Embed the AppWidget Id for use in RemoteViewsAdapter when connecting to the intent
             // RemoteViewsService
             AppWidgetHostView host = (AppWidgetHostView) rootParent;
-            intent.putExtra(EXTRA_REMOTEADAPTER_APPWIDGET_ID, host.getAppWidgetId())
+            mIntent.putExtra(EXTRA_REMOTEADAPTER_APPWIDGET_ID, host.getAppWidgetId())
                     .putExtra(EXTRA_REMOTEADAPTER_ON_LIGHT_BACKGROUND,
                             hasFlags(FLAG_USE_LIGHT_BACKGROUND_LAYOUT));
 
             if (target instanceof AbsListView) {
                 AbsListView v = (AbsListView) target;
-                v.setRemoteViewsAdapter(intent, isAsync);
-                v.setRemoteViewsInteractionHandler(handler);
+                v.setRemoteViewsAdapter(mIntent, mIsAsync);
+                v.setRemoteViewsInteractionHandler(params.handler);
             } else if (target instanceof AdapterViewAnimator) {
                 AdapterViewAnimator v = (AdapterViewAnimator) target;
-                v.setRemoteViewsAdapter(intent, isAsync);
-                v.setRemoteViewsOnClickHandler(handler);
+                v.setRemoteViewsAdapter(mIntent, mIsAsync);
+                v.setRemoteViewsOnClickHandler(params.handler);
             }
         }
 
         @Override
         public Action initActionAsync(ViewTree root, ViewGroup rootParent,
-                InteractionHandler handler, ColorResources colorResources) {
-            SetRemoteViewsAdapterIntent copy = new SetRemoteViewsAdapterIntent(viewId, intent);
-            copy.isAsync = true;
+                ActionApplyParams params) {
+            SetRemoteViewsAdapterIntent copy = new SetRemoteViewsAdapterIntent(mViewId, mIntent);
+            copy.mIsAsync = true;
             return copy;
         }
 
@@ -1066,9 +1523,6 @@ public class RemoteViews implements Parcelable, Filter {
         public int getActionTag() {
             return SET_REMOTE_VIEW_ADAPTER_INTENT_TAG;
         }
-
-        Intent intent;
-        boolean isAsync = false;
     }
 
     /**
@@ -1077,27 +1531,30 @@ public class RemoteViews implements Parcelable, Filter {
      * to launch the provided {@link PendingIntent}.
      */
     private class SetOnClickResponse extends Action {
+        final RemoteResponse mResponse;
 
         SetOnClickResponse(@IdRes int id, RemoteResponse response) {
-            this.viewId = id;
+            this.mViewId = id;
             this.mResponse = response;
         }
 
         SetOnClickResponse(Parcel parcel) {
-            viewId = parcel.readInt();
+            mViewId = parcel.readInt();
             mResponse = new RemoteResponse();
             mResponse.readFromParcel(parcel);
         }
 
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
+            dest.writeInt(mViewId);
             mResponse.writeToParcel(dest, flags);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, final InteractionHandler handler,
-                ColorResources colorResources) {
-            final View target = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            if (hasDrawInstructions() && root instanceof RemoteComposePlayer) {
+                return;
+            }
+            final View target = root.findViewById(mViewId);
             if (target == null) return;
 
             if (mResponse.mPendingIntent != null) {
@@ -1106,7 +1563,7 @@ public class RemoteViews implements Parcelable, Filter {
                 // AdapterView's children?
                 if (hasFlags(FLAG_WIDGET_IS_COLLECTION_CHILD)) {
                     Log.w(LOG_TAG, "Cannot SetOnClickResponse for collection item "
-                            + "(id: " + viewId + ")");
+                            + "(id: " + mViewId + ")");
                     ApplicationInfo appInfo = root.getContext().getApplicationInfo();
 
                     // We let this slide for HC and ICS so as to not break compatibility. It should
@@ -1137,15 +1594,60 @@ public class RemoteViews implements Parcelable, Filter {
                 target.setTagInternal(com.android.internal.R.id.fillInIntent, null);
                 return;
             }
-            target.setOnClickListener(v -> mResponse.handleViewInteraction(v, handler));
+            target.setOnClickListener(v -> mResponse.handleViewInteraction(v, params.handler));
         }
 
         @Override
         public int getActionTag() {
             return SET_ON_CLICK_RESPONSE_TAG;
         }
+    }
 
-        final RemoteResponse mResponse;
+    /** Helper action to configure handwriting delegation via {@link PendingIntent}. */
+    private class SetOnStylusHandwritingResponse extends Action {
+        final PendingIntent mPendingIntent;
+
+        SetOnStylusHandwritingResponse(@IdRes int id, @Nullable PendingIntent pendingIntent) {
+            this.mViewId = id;
+            this.mPendingIntent = pendingIntent;
+        }
+
+        SetOnStylusHandwritingResponse(@NonNull Parcel parcel) {
+            mViewId = parcel.readInt();
+            mPendingIntent = PendingIntent.readPendingIntentOrNullFromParcel(parcel);
+        }
+
+        public void writeToParcel(@NonNull Parcel dest, int flags) {
+            dest.writeInt(mViewId);
+            PendingIntent.writePendingIntentOrNullToParcel(mPendingIntent, dest);
+        }
+
+        @Override
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            final View target = root.findViewById(mViewId);
+            if (target == null) return;
+
+            if (hasFlags(FLAG_WIDGET_IS_COLLECTION_CHILD)) {
+                Log.w(LOG_TAG, "Cannot use setOnStylusHandwritingPendingIntent for collection item "
+                        + "(id: " + mViewId + ")");
+                return;
+            }
+
+            if (mPendingIntent != null) {
+                RemoteResponse response = RemoteResponse.fromPendingIntent(mPendingIntent);
+                target.setHandwritingDelegatorCallback(
+                        () -> response.handleViewInteraction(target, params.handler));
+                target.setAllowedHandwritingDelegatePackage(mPendingIntent.getCreatorPackage());
+            } else {
+                target.setHandwritingDelegatorCallback(null);
+                target.setAllowedHandwritingDelegatePackage(null);
+            }
+        }
+
+        @Override
+        public int getActionTag() {
+            return SET_ON_STYLUS_HANDWRITING_RESPONSE_TAG;
+        }
     }
 
     /**
@@ -1155,33 +1657,31 @@ public class RemoteViews implements Parcelable, Filter {
      * to launch the provided {@link PendingIntent}.
      */
     private class SetOnCheckedChangeResponse extends Action {
-
         private final RemoteResponse mResponse;
 
         SetOnCheckedChangeResponse(@IdRes int id, RemoteResponse response) {
-            this.viewId = id;
+            this.mViewId = id;
             this.mResponse = response;
         }
 
         SetOnCheckedChangeResponse(Parcel parcel) {
-            viewId = parcel.readInt();
+            mViewId = parcel.readInt();
             mResponse = new RemoteResponse();
             mResponse.readFromParcel(parcel);
         }
 
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
+            dest.writeInt(mViewId);
             mResponse.writeToParcel(dest, flags);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, final InteractionHandler handler,
-                ColorResources colorResources) {
-            final View target = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            final View target = root.findViewById(mViewId);
             if (target == null) return;
             if (!(target instanceof CompoundButton)) {
                 Log.w(LOG_TAG, "setOnCheckedChange methods cannot be used on "
-                        + "non-CompoundButton child (id: " + viewId + ")");
+                        + "non-CompoundButton child (id: " + mViewId + ")");
                 return;
             }
             CompoundButton button = (CompoundButton) target;
@@ -1191,7 +1691,7 @@ public class RemoteViews implements Parcelable, Filter {
                 // must use setOnCheckedChangeFillInIntent instead.
                 if (hasFlags(FLAG_WIDGET_IS_COLLECTION_CHILD)) {
                     Log.w(LOG_TAG, "Cannot setOnCheckedChangePendingIntent for collection item "
-                            + "(id: " + viewId + ")");
+                            + "(id: " + mViewId + ")");
                     return;
                 }
                 target.setTagInternal(R.id.pending_intent_tag, mResponse.mPendingIntent);
@@ -1209,7 +1709,7 @@ public class RemoteViews implements Parcelable, Filter {
             }
 
             OnCheckedChangeListener onCheckedChangeListener =
-                    (v, isChecked) -> mResponse.handleViewInteraction(v, handler);
+                    (v, isChecked) -> mResponse.handleViewInteraction(v, params.handler);
             button.setTagInternal(R.id.remote_checked_change_listener_tag, onCheckedChangeListener);
             button.setOnCheckedChangeListener(onCheckedChangeListener);
         }
@@ -1278,7 +1778,7 @@ public class RemoteViews implements Parcelable, Filter {
     }
 
     @Nullable
-    private MethodHandle getMethod(View view, String methodName, Class<?> paramType,
+    private static MethodHandle getMethod(View view, String methodName, Class<?> paramType,
             boolean async) {
         MethodArgs result;
         Class<? extends View> klass = view.getClass();
@@ -1357,38 +1857,41 @@ public class RemoteViews implements Parcelable, Filter {
      * to {@link ImageView#getDrawable()}.
      * <p>
      */
-    private class SetDrawableTint extends Action {
+    private static class SetDrawableTint extends Action {
+        boolean mTargetBackground;
+        @ColorInt int mColorFilter;
+        PorterDuff.Mode mFilterMode;
+
         SetDrawableTint(@IdRes int id, boolean targetBackground,
                 @ColorInt int colorFilter, @NonNull PorterDuff.Mode mode) {
-            this.viewId = id;
-            this.targetBackground = targetBackground;
-            this.colorFilter = colorFilter;
-            this.filterMode = mode;
+            this.mViewId = id;
+            this.mTargetBackground = targetBackground;
+            this.mColorFilter = colorFilter;
+            this.mFilterMode = mode;
         }
 
         SetDrawableTint(Parcel parcel) {
-            viewId = parcel.readInt();
-            targetBackground = parcel.readInt() != 0;
-            colorFilter = parcel.readInt();
-            filterMode = PorterDuff.intToMode(parcel.readInt());
+            mViewId = parcel.readInt();
+            mTargetBackground = parcel.readInt() != 0;
+            mColorFilter = parcel.readInt();
+            mFilterMode = PorterDuff.intToMode(parcel.readInt());
         }
 
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
-            dest.writeInt(targetBackground ? 1 : 0);
-            dest.writeInt(colorFilter);
-            dest.writeInt(PorterDuff.modeToInt(filterMode));
+            dest.writeInt(mViewId);
+            dest.writeInt(mTargetBackground ? 1 : 0);
+            dest.writeInt(mColorFilter);
+            dest.writeInt(PorterDuff.modeToInt(mFilterMode));
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
-            final View target = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            final View target = root.findViewById(mViewId);
             if (target == null) return;
 
             // Pick the correct drawable to modify for this view
             Drawable targetDrawable = null;
-            if (targetBackground) {
+            if (mTargetBackground) {
                 targetDrawable = target.getBackground();
             } else if (target instanceof ImageView) {
                 ImageView imageView = (ImageView) target;
@@ -1396,7 +1899,7 @@ public class RemoteViews implements Parcelable, Filter {
             }
 
             if (targetDrawable != null) {
-                targetDrawable.mutate().setColorFilter(colorFilter, filterMode);
+                targetDrawable.mutate().setColorFilter(mColorFilter, mFilterMode);
             }
         }
 
@@ -1404,10 +1907,6 @@ public class RemoteViews implements Parcelable, Filter {
         public int getActionTag() {
             return SET_DRAWABLE_TINT_TAG;
         }
-
-        boolean targetBackground;
-        @ColorInt int colorFilter;
-        PorterDuff.Mode filterMode;
     }
 
     /**
@@ -1420,28 +1919,26 @@ public class RemoteViews implements Parcelable, Filter {
      * <p>
      */
     private class SetRippleDrawableColor extends Action {
-
         ColorStateList mColorStateList;
 
         SetRippleDrawableColor(@IdRes int id, ColorStateList colorStateList) {
-            this.viewId = id;
+            this.mViewId = id;
             this.mColorStateList = colorStateList;
         }
 
         SetRippleDrawableColor(Parcel parcel) {
-            viewId = parcel.readInt();
-            mColorStateList = parcel.readParcelable(null);
+            mViewId = parcel.readInt();
+            mColorStateList = parcel.readParcelable(null, android.content.res.ColorStateList.class);
         }
 
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
+            dest.writeInt(mViewId);
             dest.writeParcelable(mColorStateList, 0);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
-            final View target = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            final View target = root.findViewById(mViewId);
             if (target == null) return;
 
             // Pick the correct drawable to modify for this view
@@ -1458,28 +1955,33 @@ public class RemoteViews implements Parcelable, Filter {
         }
     }
 
+    /**
+     * @deprecated As RemoteViews may be reapplied frequently, it is preferable to call
+     * {@link #setDisplayedChild(int, int)} to ensure that the adapter index does not change
+     * unexpectedly.
+     */
+    @Deprecated
     private final class ViewContentNavigation extends Action {
         final boolean mNext;
 
         ViewContentNavigation(@IdRes int viewId, boolean next) {
-            this.viewId = viewId;
+            this.mViewId = viewId;
             this.mNext = next;
         }
 
         ViewContentNavigation(Parcel in) {
-            this.viewId = in.readInt();
+            this.mViewId = in.readInt();
             this.mNext = in.readBoolean();
         }
 
         public void writeToParcel(Parcel out, int flags) {
-            out.writeInt(this.viewId);
+            out.writeInt(this.mViewId);
             out.writeBoolean(this.mNext);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
-            final View view = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            final View view = root.findViewById(mViewId);
             if (view == null) return;
 
             try {
@@ -1501,27 +2003,41 @@ public class RemoteViews implements Parcelable, Filter {
     }
 
     private static class BitmapCache {
-
         @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
         ArrayList<Bitmap> mBitmaps;
+        SparseIntArray mBitmapHashes;
         int mBitmapMemory = -1;
 
         public BitmapCache() {
             mBitmaps = new ArrayList<>();
+            mBitmapHashes = new SparseIntArray();
         }
 
         public BitmapCache(Parcel source) {
             mBitmaps = source.createTypedArrayList(Bitmap.CREATOR);
+            mBitmapHashes = new SparseIntArray();
+            for (int i = 0; i < mBitmaps.size(); i++) {
+                Bitmap b = mBitmaps.get(i);
+                if (b != null) {
+                    mBitmapHashes.put(b.hashCode(), i);
+                }
+            }
         }
 
         public int getBitmapId(Bitmap b) {
             if (b == null) {
                 return -1;
             } else {
-                if (mBitmaps.contains(b)) {
-                    return mBitmaps.indexOf(b);
+                int hash = b.hashCode();
+                int hashId = mBitmapHashes.get(hash, -1);
+                if (hashId != -1) {
+                    return hashId;
                 } else {
+                    if (b.isMutable()) {
+                        b = b.asShared();
+                    }
                     mBitmaps.add(b);
+                    mBitmapHashes.put(hash, mBitmaps.size() - 1);
                     mBitmapMemory = -1;
                     return (mBitmaps.size() - 1);
                 }
@@ -1532,9 +2048,8 @@ public class RemoteViews implements Parcelable, Filter {
         public Bitmap getBitmapForId(int id) {
             if (id == -1 || id >= mBitmaps.size()) {
                 return null;
-            } else {
-                return mBitmaps.get(id);
             }
+            return mBitmaps.get(id);
         }
 
         public void writeBitmapsToParcel(Parcel dest, int flags) {
@@ -1554,45 +2069,45 @@ public class RemoteViews implements Parcelable, Filter {
     }
 
     private class BitmapReflectionAction extends Action {
-        int bitmapId;
+        int mBitmapId;
         @UnsupportedAppUsage
-        Bitmap bitmap;
+        Bitmap mBitmap;
         @UnsupportedAppUsage
-        String methodName;
+        String mMethodName;
 
         BitmapReflectionAction(@IdRes int viewId, String methodName, Bitmap bitmap) {
-            this.bitmap = bitmap;
-            this.viewId = viewId;
-            this.methodName = methodName;
-            bitmapId = mBitmapCache.getBitmapId(bitmap);
+            this.mBitmap = bitmap;
+            this.mViewId = viewId;
+            this.mMethodName = methodName;
+            mBitmapId = mBitmapCache.getBitmapId(bitmap);
         }
 
         BitmapReflectionAction(Parcel in) {
-            viewId = in.readInt();
-            methodName = in.readString8();
-            bitmapId = in.readInt();
-            bitmap = mBitmapCache.getBitmapForId(bitmapId);
+            mViewId = in.readInt();
+            mMethodName = in.readString8();
+            mBitmapId = in.readInt();
+            mBitmap = mBitmapCache.getBitmapForId(mBitmapId);
         }
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
-            dest.writeString8(methodName);
-            dest.writeInt(bitmapId);
+            dest.writeInt(mViewId);
+            dest.writeString8(mMethodName);
+            dest.writeInt(mBitmapId);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) throws ActionException {
-            ReflectionAction ra = new ReflectionAction(viewId, methodName,
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params)
+                throws ActionException {
+            ReflectionAction ra = new ReflectionAction(mViewId, mMethodName,
                     BaseReflectionAction.BITMAP,
-                    bitmap);
-            ra.apply(root, rootParent, handler, colorResources);
+                    mBitmap);
+            ra.apply(root, rootParent, params);
         }
 
         @Override
-        public void setBitmapCache(BitmapCache bitmapCache) {
-            bitmapId = bitmapCache.getBitmapId(bitmap);
+        public void setHierarchyRootData(HierarchyRootData rootData) {
+            mBitmapId = rootData.mBitmapCache.getBitmapId(mBitmap);
         }
 
         @Override
@@ -1604,7 +2119,7 @@ public class RemoteViews implements Parcelable, Filter {
     /**
      * Base class for the reflection actions.
      */
-    private abstract class BaseReflectionAction extends Action {
+    private abstract static class BaseReflectionAction extends Action {
         static final int BOOLEAN = 1;
         static final int BYTE = 2;
         static final int SHORT = 3;
@@ -1626,30 +2141,30 @@ public class RemoteViews implements Parcelable, Filter {
         static final int BLEND_MODE = 17;
 
         @UnsupportedAppUsage
-        String methodName;
-        int type;
+        String mMethodName;
+        int mType;
 
         BaseReflectionAction(@IdRes int viewId, String methodName, int type) {
-            this.viewId = viewId;
-            this.methodName = methodName;
-            this.type = type;
+            this.mViewId = viewId;
+            this.mMethodName = methodName;
+            this.mType = type;
         }
 
         BaseReflectionAction(Parcel in) {
-            this.viewId = in.readInt();
-            this.methodName = in.readString8();
-            this.type = in.readInt();
+            this.mViewId = in.readInt();
+            this.mMethodName = in.readString8();
+            this.mType = in.readInt();
             //noinspection ConstantIfStatement
             if (false) {
-                Log.d(LOG_TAG, "read viewId=0x" + Integer.toHexString(this.viewId)
-                        + " methodName=" + this.methodName + " type=" + this.type);
+                Log.d(LOG_TAG, "read viewId=0x" + Integer.toHexString(this.mViewId)
+                        + " methodName=" + this.mMethodName + " type=" + this.mType);
             }
         }
 
         public void writeToParcel(Parcel out, int flags) {
-            out.writeInt(this.viewId);
-            out.writeString8(this.methodName);
-            out.writeInt(this.type);
+            out.writeInt(this.mViewId);
+            out.writeString8(this.mMethodName);
+            out.writeInt(this.mType);
         }
 
         /**
@@ -1663,18 +2178,17 @@ public class RemoteViews implements Parcelable, Filter {
         protected abstract Object getParameterValue(@Nullable View view) throws ActionException;
 
         @Override
-        public final void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
-            final View view = root.findViewById(viewId);
+        public final void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            final View view = root.findViewById(mViewId);
             if (view == null) return;
 
-            Class<?> param = getParameterType(this.type);
+            Class<?> param = getParameterType(this.mType);
             if (param == null) {
-                throw new ActionException("bad type: " + this.type);
+                throw new ActionException("bad type: " + this.mType);
             }
             Object value = getParameterValue(view);
             try {
-                getMethod(view, this.methodName, param, false /* async */).invoke(view, value);
+                getMethod(view, this.mMethodName, param, false /* async */).invoke(view, value);
             } catch (Throwable ex) {
                 throw new ActionException(ex);
             }
@@ -1682,18 +2196,33 @@ public class RemoteViews implements Parcelable, Filter {
 
         @Override
         public final Action initActionAsync(ViewTree root, ViewGroup rootParent,
-                InteractionHandler handler, ColorResources colorResources) {
-            final View view = root.findViewById(viewId);
+                ActionApplyParams params) {
+            final View view = root.findViewById(mViewId);
             if (view == null) return ACTION_NOOP;
 
-            Class<?> param = getParameterType(this.type);
+            Class<?> param = getParameterType(this.mType);
             if (param == null) {
-                throw new ActionException("bad type: " + this.type);
+                throw new ActionException("bad type: " + this.mType);
             }
 
             Object value = getParameterValue(view);
             try {
-                MethodHandle method = getMethod(view, this.methodName, param, true /* async */);
+                MethodHandle method = getMethod(view, this.mMethodName, param, true /* async */);
+                // Upload the bitmap to GPU if the parameter is of type Bitmap or Icon.
+                // Since bitmaps in framework are seldomly modified, this is supposed to accelerate
+                // the operations.
+                if (value instanceof Bitmap bitmap) {
+                    bitmap.prepareToDraw();
+                }
+
+                if (value instanceof Icon icon
+                        && (icon.getType() == Icon.TYPE_BITMAP
+                                || icon.getType() == Icon.TYPE_ADAPTIVE_BITMAP)) {
+                    Bitmap bitmap = icon.getBitmap();
+                    if (bitmap != null) {
+                        bitmap.prepareToDraw();
+                    }
+                }
 
                 if (method != null) {
                     Runnable endAction = (Runnable) method.invoke(view, value);
@@ -1704,7 +2233,7 @@ public class RemoteViews implements Parcelable, Filter {
                     if (endAction instanceof ViewStub.ViewReplaceRunnable) {
                         root.createTree();
                         // Replace child tree
-                        root.findViewTreeById(viewId).replaceView(
+                        root.findViewTreeById(mViewId).replaceView(
                                 ((ViewStub.ViewReplaceRunnable) endAction).view);
                     }
                     return new RunnableAction(endAction);
@@ -1718,7 +2247,7 @@ public class RemoteViews implements Parcelable, Filter {
 
         public final int mergeBehavior() {
             // smoothScrollBy is cumulative, everything else overwites.
-            if (methodName.equals("smoothScrollBy")) {
+            if (mMethodName.equals("smoothScrollBy")) {
                 return MERGE_APPEND;
             } else {
                 return MERGE_REPLACE;
@@ -1729,17 +2258,17 @@ public class RemoteViews implements Parcelable, Filter {
         public final String getUniqueKey() {
             // Each type of reflection action corresponds to a setter, so each should be seen as
             // unique from the standpoint of merging.
-            return super.getUniqueKey() + this.methodName + this.type;
+            return super.getUniqueKey() + this.mMethodName + this.mType;
         }
 
         @Override
         public final boolean prefersAsyncApply() {
-            return this.type == URI || this.type == ICON;
+            return this.mType == URI || this.mType == ICON;
         }
 
         @Override
-        public final void visitUris(@NonNull Consumer<Uri> visitor) {
-            switch (this.type) {
+        public void visitUris(@NonNull Consumer<Uri> visitor) {
+            switch (this.mType) {
                 case URI:
                     final Uri uri = (Uri) getParameterValue(null);
                     if (uri != null) visitor.accept(uri);
@@ -1748,75 +2277,87 @@ public class RemoteViews implements Parcelable, Filter {
                     final Icon icon = (Icon) getParameterValue(null);
                     if (icon != null) visitIconUri(icon, visitor);
                     break;
+                // TODO(b/281044385): Should we do anything about type BUNDLE?
             }
         }
     }
 
     /** Class for the reflection actions. */
-    private final class ReflectionAction extends BaseReflectionAction {
+    private static final class ReflectionAction extends BaseReflectionAction {
         @UnsupportedAppUsage
-        Object value;
+        Object mValue;
 
         ReflectionAction(@IdRes int viewId, String methodName, int type, Object value) {
             super(viewId, methodName, type);
-            this.value = value;
+            this.mValue = value;
         }
 
         ReflectionAction(Parcel in) {
             super(in);
             // For some values that may have been null, we first check a flag to see if they were
             // written to the parcel.
-            switch (this.type) {
+            switch (this.mType) {
                 case BOOLEAN:
-                    this.value = in.readBoolean();
+                    this.mValue = in.readBoolean();
                     break;
                 case BYTE:
-                    this.value = in.readByte();
+                    this.mValue = in.readByte();
                     break;
                 case SHORT:
-                    this.value = (short) in.readInt();
+                    this.mValue = (short) in.readInt();
                     break;
                 case INT:
-                    this.value = in.readInt();
+                    this.mValue = in.readInt();
                     break;
                 case LONG:
-                    this.value = in.readLong();
+                    this.mValue = in.readLong();
                     break;
                 case FLOAT:
-                    this.value = in.readFloat();
+                    this.mValue = in.readFloat();
                     break;
                 case DOUBLE:
-                    this.value = in.readDouble();
+                    this.mValue = in.readDouble();
                     break;
                 case CHAR:
-                    this.value = (char) in.readInt();
+                    this.mValue = (char) in.readInt();
                     break;
                 case STRING:
-                    this.value = in.readString8();
+                    this.mValue = in.readString8();
                     break;
                 case CHAR_SEQUENCE:
-                    this.value = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+                    this.mValue = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
                     break;
                 case URI:
-                    this.value = in.readTypedObject(Uri.CREATOR);
+                    this.mValue = in.readTypedObject(Uri.CREATOR);
                     break;
                 case BITMAP:
-                    this.value = in.readTypedObject(Bitmap.CREATOR);
+                    this.mValue = in.readTypedObject(Bitmap.CREATOR);
                     break;
                 case BUNDLE:
-                    this.value = in.readBundle();
+                    // Because we use Parcel.allowSquashing() when writing, and that affects
+                    //  how the contents of Bundles are written, we need to ensure the bundle is
+                    //  unparceled immediately, not lazily.  Setting a custom ReadWriteHelper
+                    //  just happens to have that effect on Bundle.readFromParcel().
+                    // TODO(b/212731590): build this state tracking into Bundle
+                    if (in.hasReadWriteHelper()) {
+                        this.mValue = in.readBundle();
+                    } else {
+                        in.setReadWriteHelper(ALTERNATIVE_DEFAULT);
+                        this.mValue = in.readBundle();
+                        in.setReadWriteHelper(null);
+                    }
                     break;
                 case INTENT:
-                    this.value = in.readTypedObject(Intent.CREATOR);
+                    this.mValue = in.readTypedObject(Intent.CREATOR);
                     break;
                 case COLOR_STATE_LIST:
-                    this.value = in.readTypedObject(ColorStateList.CREATOR);
+                    this.mValue = in.readTypedObject(ColorStateList.CREATOR);
                     break;
                 case ICON:
-                    this.value = in.readTypedObject(Icon.CREATOR);
+                    this.mValue = in.readTypedObject(Icon.CREATOR);
                     break;
                 case BLEND_MODE:
-                    this.value = BlendMode.fromValue(in.readInt());
+                    this.mValue = BlendMode.fromValue(in.readInt());
                     break;
                 default:
                     break;
@@ -1827,49 +2368,49 @@ public class RemoteViews implements Parcelable, Filter {
             super.writeToParcel(out, flags);
             // For some values which are null, we record an integer flag to indicate whether
             // we have written a valid value to the parcel.
-            switch (this.type) {
+            switch (this.mType) {
                 case BOOLEAN:
-                    out.writeBoolean((Boolean) this.value);
+                    out.writeBoolean((Boolean) this.mValue);
                     break;
                 case BYTE:
-                    out.writeByte((Byte) this.value);
+                    out.writeByte((Byte) this.mValue);
                     break;
                 case SHORT:
-                    out.writeInt((Short) this.value);
+                    out.writeInt((Short) this.mValue);
                     break;
                 case INT:
-                    out.writeInt((Integer) this.value);
+                    out.writeInt((Integer) this.mValue);
                     break;
                 case LONG:
-                    out.writeLong((Long) this.value);
+                    out.writeLong((Long) this.mValue);
                     break;
                 case FLOAT:
-                    out.writeFloat((Float) this.value);
+                    out.writeFloat((Float) this.mValue);
                     break;
                 case DOUBLE:
-                    out.writeDouble((Double) this.value);
+                    out.writeDouble((Double) this.mValue);
                     break;
                 case CHAR:
-                    out.writeInt((int) ((Character) this.value).charValue());
+                    out.writeInt((int) ((Character) this.mValue).charValue());
                     break;
                 case STRING:
-                    out.writeString8((String) this.value);
+                    out.writeString8((String) this.mValue);
                     break;
                 case CHAR_SEQUENCE:
-                    TextUtils.writeToParcel((CharSequence) this.value, out, flags);
+                    TextUtils.writeToParcel((CharSequence) this.mValue, out, flags);
                     break;
                 case BUNDLE:
-                    out.writeBundle((Bundle) this.value);
+                    out.writeBundle((Bundle) this.mValue);
                     break;
                 case BLEND_MODE:
-                    out.writeInt(BlendMode.toValue((BlendMode) this.value));
+                    out.writeInt(BlendMode.toValue((BlendMode) this.mValue));
                     break;
                 case URI:
                 case BITMAP:
                 case INTENT:
                 case COLOR_STATE_LIST:
                 case ICON:
-                    out.writeTypedObject((Parcelable) this.value, flags);
+                    out.writeTypedObject((Parcelable) this.mValue, flags);
                     break;
                 default:
                     break;
@@ -1879,7 +2420,7 @@ public class RemoteViews implements Parcelable, Filter {
         @Nullable
         @Override
         protected Object getParameterValue(@Nullable View view) throws ActionException {
-            return this.value;
+            return this.mValue;
         }
 
         @Override
@@ -1888,8 +2429,7 @@ public class RemoteViews implements Parcelable, Filter {
         }
     }
 
-    private final class ResourceReflectionAction extends BaseReflectionAction {
-
+    private static final class ResourceReflectionAction extends BaseReflectionAction {
         static final int DIMEN_RESOURCE = 1;
         static final int COLOR_RESOURCE = 2;
         static final int STRING_RESOURCE = 3;
@@ -1926,7 +2466,7 @@ public class RemoteViews implements Parcelable, Filter {
             try {
                 switch (this.mResourceType) {
                     case DIMEN_RESOURCE:
-                        switch (this.type) {
+                        switch (this.mType) {
                             case BaseReflectionAction.INT:
                                 return mResId == 0 ? 0 : resources.getDimensionPixelSize(mResId);
                             case BaseReflectionAction.FLOAT:
@@ -1934,10 +2474,10 @@ public class RemoteViews implements Parcelable, Filter {
                             default:
                                 throw new ActionException(
                                         "dimen resources must be used as INT or FLOAT, "
-                                                + "not " + this.type);
+                                                + "not " + this.mType);
                         }
                     case COLOR_RESOURCE:
-                        switch (this.type) {
+                        switch (this.mType) {
                             case BaseReflectionAction.INT:
                                 return mResId == 0 ? 0 : view.getContext().getColor(mResId);
                             case BaseReflectionAction.COLOR_STATE_LIST:
@@ -1946,10 +2486,10 @@ public class RemoteViews implements Parcelable, Filter {
                             default:
                                 throw new ActionException(
                                         "color resources must be used as INT or COLOR_STATE_LIST,"
-                                                + " not " + this.type);
+                                                + " not " + this.mType);
                         }
                     case STRING_RESOURCE:
-                        switch (this.type) {
+                        switch (this.mType) {
                             case BaseReflectionAction.CHAR_SEQUENCE:
                                 return mResId == 0 ? null : resources.getText(mResId);
                             case BaseReflectionAction.STRING:
@@ -1957,7 +2497,7 @@ public class RemoteViews implements Parcelable, Filter {
                             default:
                                 throw new ActionException(
                                         "string resources must be used as STRING or CHAR_SEQUENCE,"
-                                                + " not " + this.type);
+                                                + " not " + this.mType);
                         }
                     default:
                         throw new ActionException("unknown resource type: " + this.mResourceType);
@@ -1975,8 +2515,7 @@ public class RemoteViews implements Parcelable, Filter {
         }
     }
 
-    private final class AttributeReflectionAction extends BaseReflectionAction {
-
+    private static final class AttributeReflectionAction extends BaseReflectionAction {
         static final int DIMEN_RESOURCE = 1;
         static final int COLOR_RESOURCE = 2;
         static final int STRING_RESOURCE = 3;
@@ -2015,7 +2554,7 @@ public class RemoteViews implements Parcelable, Filter {
                 }
                 switch (this.mResourceType) {
                     case DIMEN_RESOURCE:
-                        switch (this.type) {
+                        switch (this.mType) {
                             case BaseReflectionAction.INT:
                                 return typedArray.getDimensionPixelSize(0, 0);
                             case BaseReflectionAction.FLOAT:
@@ -2024,10 +2563,10 @@ public class RemoteViews implements Parcelable, Filter {
                                 throw new ActionException(
                                         "dimen attribute 0x" + Integer.toHexString(this.mAttrId)
                                                 + " must be used as INT or FLOAT,"
-                                                + " not " + this.type);
+                                                + " not " + this.mType);
                         }
                     case COLOR_RESOURCE:
-                        switch (this.type) {
+                        switch (this.mType) {
                             case BaseReflectionAction.INT:
                                 return typedArray.getColor(0, 0);
                             case BaseReflectionAction.COLOR_STATE_LIST:
@@ -2036,10 +2575,10 @@ public class RemoteViews implements Parcelable, Filter {
                                 throw new ActionException(
                                         "color attribute 0x" + Integer.toHexString(this.mAttrId)
                                                 + " must be used as INT or COLOR_STATE_LIST,"
-                                                + " not " + this.type);
+                                                + " not " + this.mType);
                         }
                     case STRING_RESOURCE:
-                        switch (this.type) {
+                        switch (this.mType) {
                             case BaseReflectionAction.CHAR_SEQUENCE:
                                 return typedArray.getText(0);
                             case BaseReflectionAction.STRING:
@@ -2048,7 +2587,7 @@ public class RemoteViews implements Parcelable, Filter {
                                 throw new ActionException(
                                         "string attribute 0x" + Integer.toHexString(this.mAttrId)
                                                 + " must be used as STRING or CHAR_SEQUENCE,"
-                                                + " not " + this.type);
+                                                + " not " + this.mType);
                         }
                     default:
                         // Note: This can only be an implementation error.
@@ -2069,8 +2608,7 @@ public class RemoteViews implements Parcelable, Filter {
             return ATTRIBUTE_REFLECTION_ACTION_TAG;
         }
     }
-    private final class ComplexUnitDimensionReflectionAction extends BaseReflectionAction {
-
+    private static final class ComplexUnitDimensionReflectionAction extends BaseReflectionAction {
         private final float mValue;
         @ComplexDimensionUnit
         private final int mUnit;
@@ -2103,14 +2641,14 @@ public class RemoteViews implements Parcelable, Filter {
             DisplayMetrics dm = view.getContext().getResources().getDisplayMetrics();
             try {
                 int data = TypedValue.createComplexDimension(this.mValue, this.mUnit);
-                switch (this.type) {
+                switch (this.mType) {
                     case ReflectionAction.INT:
                         return TypedValue.complexToDimensionPixelSize(data, dm);
                     case ReflectionAction.FLOAT:
                         return TypedValue.complexToDimension(data, dm);
                     default:
                         throw new ActionException(
-                                "parameter type must be INT or FLOAT, not " + this.type);
+                                "parameter type must be INT or FLOAT, not " + this.mType);
                 }
             } catch (ActionException ex) {
                 throw ex;
@@ -2125,8 +2663,7 @@ public class RemoteViews implements Parcelable, Filter {
         }
     }
 
-    private final class NightModeReflectionAction extends BaseReflectionAction {
-
+    private static final class NightModeReflectionAction extends BaseReflectionAction {
         private final Object mLightValue;
         private final Object mDarkValue;
 
@@ -2143,7 +2680,7 @@ public class RemoteViews implements Parcelable, Filter {
 
         NightModeReflectionAction(Parcel in) {
             super(in);
-            switch (this.type) {
+            switch (this.mType) {
                 case ICON:
                     mLightValue = in.readTypedObject(Icon.CREATOR);
                     mDarkValue = in.readTypedObject(Icon.CREATOR);
@@ -2157,14 +2694,14 @@ public class RemoteViews implements Parcelable, Filter {
                     mDarkValue = in.readInt();
                     break;
                 default:
-                    throw new ActionException("Unexpected night mode action type: " + this.type);
+                    throw new ActionException("Unexpected night mode action type: " + this.mType);
             }
         }
 
         @Override
         public void writeToParcel(Parcel out, int flags) {
             super.writeToParcel(out, flags);
-            switch (this.type) {
+            switch (this.mType) {
                 case ICON:
                 case COLOR_STATE_LIST:
                     out.writeTypedObject((Parcelable) mLightValue, flags);
@@ -2190,6 +2727,14 @@ public class RemoteViews implements Parcelable, Filter {
         public int getActionTag() {
             return NIGHT_MODE_REFLECTION_ACTION_TAG;
         }
+
+        @Override
+        public void visitUris(@NonNull Consumer<Uri> visitor) {
+            if (this.mType == ICON) {
+                visitIconUri((Icon) mDarkValue, visitor);
+                visitIconUri((Icon) mLightValue, visitor);
+            }
+        }
     }
 
     /**
@@ -2203,19 +2748,9 @@ public class RemoteViews implements Parcelable, Filter {
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
             mRunnable.run();
         }
-    }
-
-    private void configureRemoteViewsAsChild(RemoteViews rv) {
-        rv.setBitmapCache(mBitmapCache);
-        rv.setNotRoot();
-    }
-
-    void setNotRoot() {
-        mIsRoot = false;
     }
 
     private static boolean hasStableId(View view) {
@@ -2287,34 +2822,31 @@ public class RemoteViews implements Parcelable, Filter {
         }
 
         ViewGroupActionAdd(@IdRes int viewId, RemoteViews nestedViews, int index, int stableId) {
-            this.viewId = viewId;
+            this.mViewId = viewId;
             mNestedViews = nestedViews;
             mIndex = index;
             mStableId = stableId;
-            if (nestedViews != null) {
-                configureRemoteViewsAsChild(nestedViews);
-            }
+            nestedViews.configureAsChild(getHierarchyRootData());
         }
 
-        ViewGroupActionAdd(Parcel parcel, BitmapCache bitmapCache, ApplicationInfo info,
-                int depth, Map<Class, Object> classCookies) {
-            viewId = parcel.readInt();
+        ViewGroupActionAdd(Parcel parcel, ApplicationInfo info, int depth) {
+            mViewId = parcel.readInt();
             mIndex = parcel.readInt();
             mStableId = parcel.readInt();
-            mNestedViews = new RemoteViews(parcel, bitmapCache, info, depth, classCookies);
+            mNestedViews = new RemoteViews(parcel, getHierarchyRootData(), info, depth);
             mNestedViews.addFlags(mApplyFlags);
         }
 
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
+            dest.writeInt(mViewId);
             dest.writeInt(mIndex);
             dest.writeInt(mStableId);
             mNestedViews.writeToParcel(dest, flags);
         }
 
         @Override
-        public boolean hasSameAppInfo(ApplicationInfo parentInfo) {
-            return mNestedViews.hasSameAppInfo(parentInfo);
+        public void setHierarchyRootData(HierarchyRootData root) {
+            mNestedViews.configureAsChild(root);
         }
 
         private int findViewIndexToRecycle(ViewGroup target, RemoteViews newContent) {
@@ -2329,10 +2861,9 @@ public class RemoteViews implements Parcelable, Filter {
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
             final Context context = root.getContext();
-            final ViewGroup target = root.findViewById(viewId);
+            final ViewGroup target = root.findViewById(mViewId);
 
             if (target == null) {
                 return;
@@ -2343,6 +2874,10 @@ public class RemoteViews implements Parcelable, Filter {
             // will return -1.
             final int nextChild = getNextRecyclableChild(target);
             RemoteViews rvToApply = mNestedViews.getRemoteViewsToApply(context);
+
+            int flagsToPropagate = mApplyFlags & FLAG_MASK_TO_PROPAGATE;
+            if (flagsToPropagate != 0) rvToApply.addFlags(flagsToPropagate);
+
             if (nextChild >= 0 && mStableId != NO_ID) {
                 // At that point, the views starting at index nextChild are the ones recyclable but
                 // not yet recycled. All views added on that round of application are placed before.
@@ -2355,8 +2890,7 @@ public class RemoteViews implements Parcelable, Filter {
                             target.removeViews(nextChild, recycledViewIndex - nextChild);
                         }
                         setNextRecyclableChild(target, nextChild + 1, target.getChildCount());
-                        rvToApply.reapply(context, child, handler, null /* size */, colorResources,
-                                false /* topLevel */);
+                        rvToApply.reapplyNestedViews(context, child, rootParent, params);
                         return;
                     }
                     // If we cannot recycle the views, we still remove all views in between to
@@ -2367,8 +2901,7 @@ public class RemoteViews implements Parcelable, Filter {
             // If we cannot recycle, insert the new view before the next recyclable child.
 
             // Inflate nested views and add as children
-            View nestedView = rvToApply.apply(context, target, handler, null /* size */,
-                    colorResources);
+            View nestedView = rvToApply.apply(context, target, rootParent, null /* size */, params);
             if (mStableId != NO_ID) {
                 setStableId(nestedView, mStableId);
             }
@@ -2381,11 +2914,11 @@ public class RemoteViews implements Parcelable, Filter {
 
         @Override
         public Action initActionAsync(ViewTree root, ViewGroup rootParent,
-                InteractionHandler handler, ColorResources colorResources) {
+                ActionApplyParams params) {
             // In the async implementation, update the view tree so that subsequent calls to
             // findViewById return the current view.
             root.createTree();
-            ViewTree target = root.findViewTreeById(viewId);
+            ViewTree target = root.findViewTreeById(mViewId);
             if ((target == null) || !(target.mRoot instanceof ViewGroup)) {
                 return ACTION_NOOP;
             }
@@ -2415,8 +2948,7 @@ public class RemoteViews implements Parcelable, Filter {
                         setNextRecyclableChild(targetVg, nextChild + 1, target.mChildren.size());
                         final AsyncApplyTask reapplyTask = rvToApply.getInternalAsyncApplyTask(
                                 context,
-                                targetVg, null /* listener */, handler, null /* size */,
-                                colorResources,
+                                targetVg, null /* listener */, params, null /* size */,
                                 recycled.mRoot);
                         final ViewTree tree = reapplyTask.doInBackground();
                         if (tree == null) {
@@ -2425,8 +2957,7 @@ public class RemoteViews implements Parcelable, Filter {
                         return new RuntimeAction() {
                             @Override
                             public void apply(View root, ViewGroup rootParent,
-                                    InteractionHandler handler, ColorResources colorResources)
-                                    throws ActionException {
+                                    ActionApplyParams params) throws ActionException {
                                 reapplyTask.onPostExecute(tree);
                                 if (recycledViewIndex > nextChild) {
                                     targetVg.removeViews(nextChild, recycledViewIndex - nextChild);
@@ -2437,23 +2968,22 @@ public class RemoteViews implements Parcelable, Filter {
                     // If the layout id is different, still remove the children as if we recycled
                     // the view, to insert at the same place.
                     target.removeChildren(nextChild, recycledViewIndex - nextChild + 1);
-                    return insertNewView(context, target, handler, colorResources,
+                    return insertNewView(context, target, params,
                             () -> targetVg.removeViews(nextChild,
                                     recycledViewIndex - nextChild + 1));
 
                 }
             }
             // If we cannot recycle, simply add the view at the same available slot.
-            return insertNewView(context, target, handler, colorResources, () -> {});
+            return insertNewView(context, target, params, () -> {});
         }
 
-        private Action insertNewView(Context context, ViewTree target, InteractionHandler handler,
-                ColorResources colorResources, Runnable finalizeAction) {
+        private Action insertNewView(Context context, ViewTree target,
+                ActionApplyParams params, Runnable finalizeAction) {
             ViewGroup targetVg = (ViewGroup) target.mRoot;
             int nextChild = getNextRecyclableChild(targetVg);
             final AsyncApplyTask task = mNestedViews.getInternalAsyncApplyTask(context, targetVg,
-                    null /* listener */, handler, null /* size */, colorResources,
-                    null /* result */);
+                    null /* listener */, params, null /* size */,  null /* result */);
             final ViewTree tree = task.doInBackground();
 
             if (tree == null) {
@@ -2473,18 +3003,12 @@ public class RemoteViews implements Parcelable, Filter {
 
             return new RuntimeAction() {
                 @Override
-                public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                        ColorResources colorResources) throws ActionException {
+                public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
                     task.onPostExecute(tree);
                     finalizeAction.run();
                     targetVg.addView(task.mResult, insertIndex);
                 }
             };
-        }
-
-        @Override
-        public void setBitmapCache(BitmapCache bitmapCache) {
-            mNestedViews.setBitmapCache(bitmapCache);
         }
 
         @Override
@@ -2501,12 +3025,17 @@ public class RemoteViews implements Parcelable, Filter {
         public int getActionTag() {
             return VIEW_GROUP_ACTION_ADD_TAG;
         }
+
+        @Override
+        public void visitUris(@NonNull Consumer<Uri> visitor) {
+            mNestedViews.visitUris(visitor);
+        }
     }
 
     /**
      * ViewGroup methods related to removing child views.
      */
-    private class ViewGroupActionRemove extends Action {
+    private static class ViewGroupActionRemove extends Action {
         /**
          * Id that indicates that all child views of the affected ViewGroup should be removed.
          *
@@ -2521,24 +3050,23 @@ public class RemoteViews implements Parcelable, Filter {
         }
 
         ViewGroupActionRemove(@IdRes int viewId, @IdRes int viewIdToKeep) {
-            this.viewId = viewId;
+            this.mViewId = viewId;
             mViewIdToKeep = viewIdToKeep;
         }
 
         ViewGroupActionRemove(Parcel parcel) {
-            viewId = parcel.readInt();
+            mViewId = parcel.readInt();
             mViewIdToKeep = parcel.readInt();
         }
 
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
+            dest.writeInt(mViewId);
             dest.writeInt(mViewIdToKeep);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
-            final ViewGroup target = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            final ViewGroup target = root.findViewById(mViewId);
 
             if (target == null) {
                 return;
@@ -2561,11 +3089,11 @@ public class RemoteViews implements Parcelable, Filter {
 
         @Override
         public Action initActionAsync(ViewTree root, ViewGroup rootParent,
-                InteractionHandler handler, ColorResources colorResources) {
+                ActionApplyParams params) {
             // In the async implementation, update the view tree so that subsequent calls to
             // findViewById return the current view.
             root.createTree();
-            ViewTree target = root.findViewTreeById(viewId);
+            ViewTree target = root.findViewTreeById(mViewId);
 
             if ((target == null) || !(target.mRoot instanceof ViewGroup)) {
                 return ACTION_NOOP;
@@ -2585,8 +3113,7 @@ public class RemoteViews implements Parcelable, Filter {
             }
             return new RuntimeAction() {
                 @Override
-                public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                        ColorResources colorResources) throws ActionException {
+                public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
                     if (mViewIdToKeep == REMOVE_ALL_VIEWS_ID) {
                         for (int i = targetVg.getChildCount() - 1; i >= 0; i--) {
                             if (!hasStableId(targetVg.getChildAt(i))) {
@@ -2630,24 +3157,22 @@ public class RemoteViews implements Parcelable, Filter {
     /**
      * Action to remove a view from its parent.
      */
-    private class RemoveFromParentAction extends Action {
-
+    private static class RemoveFromParentAction extends Action {
         RemoveFromParentAction(@IdRes int viewId) {
-            this.viewId = viewId;
+            this.mViewId = viewId;
         }
 
         RemoveFromParentAction(Parcel parcel) {
-            viewId = parcel.readInt();
+            mViewId = parcel.readInt();
         }
 
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
+            dest.writeInt(mViewId);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
-            final View target = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            final View target = root.findViewById(mViewId);
 
             if (target == null || target == root) {
                 return;
@@ -2661,11 +3186,11 @@ public class RemoteViews implements Parcelable, Filter {
 
         @Override
         public Action initActionAsync(ViewTree root, ViewGroup rootParent,
-                InteractionHandler handler, ColorResources colorResources) {
+                ActionApplyParams params) {
             // In the async implementation, update the view tree so that subsequent calls to
             // findViewById return the correct view.
             root.createTree();
-            ViewTree target = root.findViewTreeById(viewId);
+            ViewTree target = root.findViewTreeById(mViewId);
 
             if (target == null || target == root) {
                 return ACTION_NOOP;
@@ -2680,8 +3205,7 @@ public class RemoteViews implements Parcelable, Filter {
             parent.mChildren.remove(target);
             return new RuntimeAction() {
                 @Override
-                public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                        ColorResources colorResources) throws ActionException {
+                public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
                     parentVg.removeView(target.mRoot);
                 }
             };
@@ -2702,125 +3226,132 @@ public class RemoteViews implements Parcelable, Filter {
      * Helper action to set compound drawables on a TextView. Supports relative
      * (s/t/e/b) or cardinal (l/t/r/b) arrangement.
      */
-    private class TextViewDrawableAction extends Action {
+    private static class TextViewDrawableAction extends Action {
+        boolean mIsRelative = false;
+        boolean mUseIcons = false;
+        int mD1, mD2, mD3, mD4;
+        Icon mI1, mI2, mI3, mI4;
+
+        boolean mDrawablesLoaded = false;
+        Drawable mId1, mId2, mId3, mId4;
+
         public TextViewDrawableAction(@IdRes int viewId, boolean isRelative, @DrawableRes int d1,
                 @DrawableRes int d2, @DrawableRes int d3, @DrawableRes int d4) {
-            this.viewId = viewId;
-            this.isRelative = isRelative;
-            this.useIcons = false;
-            this.d1 = d1;
-            this.d2 = d2;
-            this.d3 = d3;
-            this.d4 = d4;
+            this.mViewId = viewId;
+            this.mIsRelative = isRelative;
+            this.mUseIcons = false;
+            this.mD1 = d1;
+            this.mD2 = d2;
+            this.mD3 = d3;
+            this.mD4 = d4;
         }
 
         public TextViewDrawableAction(@IdRes int viewId, boolean isRelative,
                 Icon i1, Icon i2, Icon i3, Icon i4) {
-            this.viewId = viewId;
-            this.isRelative = isRelative;
-            this.useIcons = true;
-            this.i1 = i1;
-            this.i2 = i2;
-            this.i3 = i3;
-            this.i4 = i4;
+            this.mViewId = viewId;
+            this.mIsRelative = isRelative;
+            this.mUseIcons = true;
+            this.mI1 = i1;
+            this.mI2 = i2;
+            this.mI3 = i3;
+            this.mI4 = i4;
         }
 
         public TextViewDrawableAction(Parcel parcel) {
-            viewId = parcel.readInt();
-            isRelative = (parcel.readInt() != 0);
-            useIcons = (parcel.readInt() != 0);
-            if (useIcons) {
-                i1 = parcel.readTypedObject(Icon.CREATOR);
-                i2 = parcel.readTypedObject(Icon.CREATOR);
-                i3 = parcel.readTypedObject(Icon.CREATOR);
-                i4 = parcel.readTypedObject(Icon.CREATOR);
+            mViewId = parcel.readInt();
+            mIsRelative = (parcel.readInt() != 0);
+            mUseIcons = (parcel.readInt() != 0);
+            if (mUseIcons) {
+                mI1 = parcel.readTypedObject(Icon.CREATOR);
+                mI2 = parcel.readTypedObject(Icon.CREATOR);
+                mI3 = parcel.readTypedObject(Icon.CREATOR);
+                mI4 = parcel.readTypedObject(Icon.CREATOR);
             } else {
-                d1 = parcel.readInt();
-                d2 = parcel.readInt();
-                d3 = parcel.readInt();
-                d4 = parcel.readInt();
+                mD1 = parcel.readInt();
+                mD2 = parcel.readInt();
+                mD3 = parcel.readInt();
+                mD4 = parcel.readInt();
             }
         }
 
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
-            dest.writeInt(isRelative ? 1 : 0);
-            dest.writeInt(useIcons ? 1 : 0);
-            if (useIcons) {
-                dest.writeTypedObject(i1, 0);
-                dest.writeTypedObject(i2, 0);
-                dest.writeTypedObject(i3, 0);
-                dest.writeTypedObject(i4, 0);
+            dest.writeInt(mViewId);
+            dest.writeInt(mIsRelative ? 1 : 0);
+            dest.writeInt(mUseIcons ? 1 : 0);
+            if (mUseIcons) {
+                dest.writeTypedObject(mI1, 0);
+                dest.writeTypedObject(mI2, 0);
+                dest.writeTypedObject(mI3, 0);
+                dest.writeTypedObject(mI4, 0);
             } else {
-                dest.writeInt(d1);
-                dest.writeInt(d2);
-                dest.writeInt(d3);
-                dest.writeInt(d4);
+                dest.writeInt(mD1);
+                dest.writeInt(mD2);
+                dest.writeInt(mD3);
+                dest.writeInt(mD4);
             }
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
-            final TextView target = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            final TextView target = root.findViewById(mViewId);
             if (target == null) return;
-            if (drawablesLoaded) {
-                if (isRelative) {
-                    target.setCompoundDrawablesRelativeWithIntrinsicBounds(id1, id2, id3, id4);
+            if (mDrawablesLoaded) {
+                if (mIsRelative) {
+                    target.setCompoundDrawablesRelativeWithIntrinsicBounds(mId1, mId2, mId3, mId4);
                 } else {
-                    target.setCompoundDrawablesWithIntrinsicBounds(id1, id2, id3, id4);
+                    target.setCompoundDrawablesWithIntrinsicBounds(mId1, mId2, mId3, mId4);
                 }
-            } else if (useIcons) {
+            } else if (mUseIcons) {
                 final Context ctx = target.getContext();
-                final Drawable id1 = i1 == null ? null : i1.loadDrawable(ctx);
-                final Drawable id2 = i2 == null ? null : i2.loadDrawable(ctx);
-                final Drawable id3 = i3 == null ? null : i3.loadDrawable(ctx);
-                final Drawable id4 = i4 == null ? null : i4.loadDrawable(ctx);
-                if (isRelative) {
+                final Drawable id1 = mI1 == null ? null : mI1.loadDrawable(ctx);
+                final Drawable id2 = mI2 == null ? null : mI2.loadDrawable(ctx);
+                final Drawable id3 = mI3 == null ? null : mI3.loadDrawable(ctx);
+                final Drawable id4 = mI4 == null ? null : mI4.loadDrawable(ctx);
+                if (mIsRelative) {
                     target.setCompoundDrawablesRelativeWithIntrinsicBounds(id1, id2, id3, id4);
                 } else {
                     target.setCompoundDrawablesWithIntrinsicBounds(id1, id2, id3, id4);
                 }
             } else {
-                if (isRelative) {
-                    target.setCompoundDrawablesRelativeWithIntrinsicBounds(d1, d2, d3, d4);
+                if (mIsRelative) {
+                    target.setCompoundDrawablesRelativeWithIntrinsicBounds(mD1, mD2, mD3, mD4);
                 } else {
-                    target.setCompoundDrawablesWithIntrinsicBounds(d1, d2, d3, d4);
+                    target.setCompoundDrawablesWithIntrinsicBounds(mD1, mD2, mD3, mD4);
                 }
             }
         }
 
         @Override
         public Action initActionAsync(ViewTree root, ViewGroup rootParent,
-                InteractionHandler handler, ColorResources colorResources) {
-            final TextView target = root.findViewById(viewId);
+                ActionApplyParams params) {
+            final TextView target = root.findViewById(mViewId);
             if (target == null) return ACTION_NOOP;
 
-            TextViewDrawableAction copy = useIcons ?
-                    new TextViewDrawableAction(viewId, isRelative, i1, i2, i3, i4) :
-                    new TextViewDrawableAction(viewId, isRelative, d1, d2, d3, d4);
+            TextViewDrawableAction copy = mUseIcons
+                    ? new TextViewDrawableAction(mViewId, mIsRelative, mI1, mI2, mI3, mI4)
+                    : new TextViewDrawableAction(mViewId, mIsRelative, mD1, mD2, mD3, mD4);
 
             // Load the drawables on the background thread.
-            copy.drawablesLoaded = true;
+            copy.mDrawablesLoaded = true;
             final Context ctx = target.getContext();
 
-            if (useIcons) {
-                copy.id1 = i1 == null ? null : i1.loadDrawable(ctx);
-                copy.id2 = i2 == null ? null : i2.loadDrawable(ctx);
-                copy.id3 = i3 == null ? null : i3.loadDrawable(ctx);
-                copy.id4 = i4 == null ? null : i4.loadDrawable(ctx);
+            if (mUseIcons) {
+                copy.mId1 = mI1 == null ? null : mI1.loadDrawable(ctx);
+                copy.mId2 = mI2 == null ? null : mI2.loadDrawable(ctx);
+                copy.mId3 = mI3 == null ? null : mI3.loadDrawable(ctx);
+                copy.mId4 = mI4 == null ? null : mI4.loadDrawable(ctx);
             } else {
-                copy.id1 = d1 == 0 ? null : ctx.getDrawable(d1);
-                copy.id2 = d2 == 0 ? null : ctx.getDrawable(d2);
-                copy.id3 = d3 == 0 ? null : ctx.getDrawable(d3);
-                copy.id4 = d4 == 0 ? null : ctx.getDrawable(d4);
+                copy.mId1 = mD1 == 0 ? null : ctx.getDrawable(mD1);
+                copy.mId2 = mD2 == 0 ? null : ctx.getDrawable(mD2);
+                copy.mId3 = mD3 == 0 ? null : ctx.getDrawable(mD3);
+                copy.mId4 = mD4 == 0 ? null : ctx.getDrawable(mD4);
             }
             return copy;
         }
 
         @Override
         public boolean prefersAsyncApply() {
-            return useIcons;
+            return mUseIcons;
         }
 
         @Override
@@ -2830,112 +3361,101 @@ public class RemoteViews implements Parcelable, Filter {
 
         @Override
         public void visitUris(@NonNull Consumer<Uri> visitor) {
-            if (useIcons) {
-                visitIconUri(i1, visitor);
-                visitIconUri(i2, visitor);
-                visitIconUri(i3, visitor);
-                visitIconUri(i4, visitor);
+            if (mUseIcons) {
+                visitIconUri(mI1, visitor);
+                visitIconUri(mI2, visitor);
+                visitIconUri(mI3, visitor);
+                visitIconUri(mI4, visitor);
             }
         }
-
-        boolean isRelative = false;
-        boolean useIcons = false;
-        int d1, d2, d3, d4;
-        Icon i1, i2, i3, i4;
-
-        boolean drawablesLoaded = false;
-        Drawable id1, id2, id3, id4;
     }
 
     /**
      * Helper action to set text size on a TextView in any supported units.
      */
-    private class TextViewSizeAction extends Action {
+    private static class TextViewSizeAction extends Action {
+        int mUnits;
+        float mSize;
+
         TextViewSizeAction(@IdRes int viewId, @ComplexDimensionUnit int units, float size) {
-            this.viewId = viewId;
-            this.units = units;
-            this.size = size;
+            this.mViewId = viewId;
+            this.mUnits = units;
+            this.mSize = size;
         }
 
         TextViewSizeAction(Parcel parcel) {
-            viewId = parcel.readInt();
-            units = parcel.readInt();
-            size  = parcel.readFloat();
+            mViewId = parcel.readInt();
+            mUnits = parcel.readInt();
+            mSize = parcel.readFloat();
         }
 
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
-            dest.writeInt(units);
-            dest.writeFloat(size);
+            dest.writeInt(mViewId);
+            dest.writeInt(mUnits);
+            dest.writeFloat(mSize);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
-            final TextView target = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            final TextView target = root.findViewById(mViewId);
             if (target == null) return;
-            target.setTextSize(units, size);
+            target.setTextSize(mUnits, mSize);
         }
 
         @Override
         public int getActionTag() {
             return TEXT_VIEW_SIZE_ACTION_TAG;
         }
-
-        int units;
-        float size;
     }
 
     /**
      * Helper action to set padding on a View.
      */
-    private class ViewPaddingAction extends Action {
+    private static class ViewPaddingAction extends Action {
+        @Px int mLeft, mTop, mRight, mBottom;
+
         public ViewPaddingAction(@IdRes int viewId, @Px int left, @Px int top,
                 @Px int right, @Px int bottom) {
-            this.viewId = viewId;
-            this.left = left;
-            this.top = top;
-            this.right = right;
-            this.bottom = bottom;
+            this.mViewId = viewId;
+            this.mLeft = left;
+            this.mTop = top;
+            this.mRight = right;
+            this.mBottom = bottom;
         }
 
         public ViewPaddingAction(Parcel parcel) {
-            viewId = parcel.readInt();
-            left = parcel.readInt();
-            top = parcel.readInt();
-            right = parcel.readInt();
-            bottom = parcel.readInt();
+            mViewId = parcel.readInt();
+            mLeft = parcel.readInt();
+            mTop = parcel.readInt();
+            mRight = parcel.readInt();
+            mBottom = parcel.readInt();
         }
 
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
-            dest.writeInt(left);
-            dest.writeInt(top);
-            dest.writeInt(right);
-            dest.writeInt(bottom);
+            dest.writeInt(mViewId);
+            dest.writeInt(mLeft);
+            dest.writeInt(mTop);
+            dest.writeInt(mRight);
+            dest.writeInt(mBottom);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
-            final View target = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            final View target = root.findViewById(mViewId);
             if (target == null) return;
-            target.setPadding(left, top, right, bottom);
+            target.setPadding(mLeft, mTop, mRight, mBottom);
         }
 
         @Override
         public int getActionTag() {
             return VIEW_PADDING_ACTION_TAG;
         }
-
-        @Px int left, top, right, bottom;
     }
 
     /**
      * Helper action to set layout params on a View.
      */
     private static class LayoutParamAction extends Action {
-
         static final int LAYOUT_MARGIN_LEFT = MARGIN_LEFT;
         static final int LAYOUT_MARGIN_TOP = MARGIN_TOP;
         static final int LAYOUT_MARGIN_RIGHT = MARGIN_RIGHT;
@@ -2957,7 +3477,7 @@ public class RemoteViews implements Parcelable, Filter {
          */
         LayoutParamAction(@IdRes int viewId, int property, float value,
                 @ComplexDimensionUnit int units) {
-            this.viewId = viewId;
+            this.mViewId = viewId;
             this.mProperty = property;
             this.mValueType = VALUE_TYPE_COMPLEX_UNIT;
             this.mValue = TypedValue.createComplexDimension(value, units);
@@ -2972,30 +3492,29 @@ public class RemoteViews implements Parcelable, Filter {
          *   {@link #VALUE_TYPE_RAW}.
          */
         LayoutParamAction(@IdRes int viewId, int property, int value, @ValueType int valueType) {
-            this.viewId = viewId;
+            this.mViewId = viewId;
             this.mProperty = property;
             this.mValueType = valueType;
             this.mValue = value;
         }
 
         public LayoutParamAction(Parcel parcel) {
-            viewId = parcel.readInt();
+            mViewId = parcel.readInt();
             mProperty = parcel.readInt();
             mValueType = parcel.readInt();
             mValue = parcel.readInt();
         }
 
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
+            dest.writeInt(mViewId);
             dest.writeInt(mProperty);
             dest.writeInt(mValueType);
             dest.writeInt(mValue);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
-            final View target = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            final View target = root.findViewById(mViewId);
             if (target == null) {
                 return;
             }
@@ -3121,88 +3640,39 @@ public class RemoteViews implements Parcelable, Filter {
     /**
      * Helper action to add a view tag with RemoteInputs.
      */
-    private class SetRemoteInputsAction extends Action {
+    private static class SetRemoteInputsAction extends Action {
+        final Parcelable[] mRemoteInputs;
 
         public SetRemoteInputsAction(@IdRes int viewId, RemoteInput[] remoteInputs) {
-            this.viewId = viewId;
-            this.remoteInputs = remoteInputs;
+            this.mViewId = viewId;
+            this.mRemoteInputs = remoteInputs;
         }
 
         public SetRemoteInputsAction(Parcel parcel) {
-            viewId = parcel.readInt();
-            remoteInputs = parcel.createTypedArray(RemoteInput.CREATOR);
+            mViewId = parcel.readInt();
+            mRemoteInputs = parcel.createTypedArray(RemoteInput.CREATOR);
         }
 
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
-            dest.writeTypedArray(remoteInputs, flags);
+            dest.writeInt(mViewId);
+            dest.writeTypedArray(mRemoteInputs, flags);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
-            final View target = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
+            final View target = root.findViewById(mViewId);
             if (target == null) return;
 
-            target.setTagInternal(R.id.remote_input_tag, remoteInputs);
+            target.setTagInternal(R.id.remote_input_tag, mRemoteInputs);
         }
 
         @Override
         public int getActionTag() {
             return SET_REMOTE_INPUTS_ACTION_TAG;
         }
-
-        final Parcelable[] remoteInputs;
     }
 
-    /**
-     * Helper action to override all textViewColors
-     */
-    private class OverrideTextColorsAction extends Action {
-
-        private final int textColor;
-
-        public OverrideTextColorsAction(int textColor) {
-            this.textColor = textColor;
-        }
-
-        public OverrideTextColorsAction(Parcel parcel) {
-            textColor = parcel.readInt();
-        }
-
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(textColor);
-        }
-
-        @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
-            // Let's traverse the viewtree and override all textColors!
-            Stack<View> viewsToProcess = new Stack<>();
-            viewsToProcess.add(root);
-            while (!viewsToProcess.isEmpty()) {
-                View v = viewsToProcess.pop();
-                if (v instanceof TextView) {
-                    TextView textView = (TextView) v;
-                    textView.setText(ContrastColorUtil.clearColorSpans(textView.getText()));
-                    textView.setTextColor(textColor);
-                }
-                if (v instanceof ViewGroup) {
-                    ViewGroup viewGroup = (ViewGroup) v;
-                    for (int i = 0; i < viewGroup.getChildCount(); i++) {
-                        viewsToProcess.push(viewGroup.getChildAt(i));
-                    }
-                }
-            }
-        }
-
-        @Override
-        public int getActionTag() {
-            return OVERRIDE_TEXT_COLORS_TAG;
-        }
-    }
-
-    private class SetIntTagAction extends Action {
+    private static class SetIntTagAction extends Action {
         @IdRes private final int mViewId;
         @IdRes private final int mKey;
         private final int mTag;
@@ -3226,8 +3696,7 @@ public class RemoteViews implements Parcelable, Filter {
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) {
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params) {
             final View target = root.findViewById(mViewId);
             if (target == null) return;
 
@@ -3241,35 +3710,33 @@ public class RemoteViews implements Parcelable, Filter {
     }
 
     private static class SetCompoundButtonCheckedAction extends Action {
-
         private final boolean mChecked;
 
         SetCompoundButtonCheckedAction(@IdRes int viewId, boolean checked) {
-            this.viewId = viewId;
+            this.mViewId = viewId;
             mChecked = checked;
         }
 
         SetCompoundButtonCheckedAction(Parcel in) {
-            viewId = in.readInt();
+            mViewId = in.readInt();
             mChecked = in.readBoolean();
         }
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
+            dest.writeInt(mViewId);
             dest.writeBoolean(mChecked);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources)
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params)
                 throws ActionException {
-            final View target = root.findViewById(viewId);
+            final View target = root.findViewById(mViewId);
             if (target == null) return;
 
             if (!(target instanceof CompoundButton)) {
                 Log.w(LOG_TAG, "Cannot set checked to view "
-                        + viewId + " because it is not a CompoundButton");
+                        + mViewId + " because it is not a CompoundButton");
                 return;
             }
 
@@ -3293,33 +3760,32 @@ public class RemoteViews implements Parcelable, Filter {
     }
 
     private static class SetRadioGroupCheckedAction extends Action {
-
         @IdRes private final int mCheckedId;
 
         SetRadioGroupCheckedAction(@IdRes int viewId, @IdRes int checkedId) {
-            this.viewId = viewId;
+            this.mViewId = viewId;
             mCheckedId = checkedId;
         }
 
         SetRadioGroupCheckedAction(Parcel in) {
-            viewId = in.readInt();
+            mViewId = in.readInt();
             mCheckedId = in.readInt();
         }
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
+            dest.writeInt(mViewId);
             dest.writeInt(mCheckedId);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) throws ActionException {
-            final View target = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params)
+                throws ActionException {
+            final View target = root.findViewById(mViewId);
             if (target == null) return;
 
             if (!(target instanceof RadioGroup)) {
-                Log.w(LOG_TAG, "Cannot check " + viewId + " because it's not a RadioGroup");
+                Log.w(LOG_TAG, "Cannot check " + mViewId + " because it's not a RadioGroup");
                 return;
             }
 
@@ -3358,43 +3824,42 @@ public class RemoteViews implements Parcelable, Filter {
     }
 
     private static class SetViewOutlinePreferredRadiusAction extends Action {
-
         @ValueType
         private final int mValueType;
         private final int mValue;
 
         SetViewOutlinePreferredRadiusAction(@IdRes int viewId, int value,
                 @ValueType int valueType) {
-            this.viewId = viewId;
+            this.mViewId = viewId;
             this.mValueType = valueType;
             this.mValue = value;
         }
 
         SetViewOutlinePreferredRadiusAction(
                 @IdRes int viewId, float radius, @ComplexDimensionUnit int units) {
-            this.viewId = viewId;
+            this.mViewId = viewId;
             this.mValueType = VALUE_TYPE_COMPLEX_UNIT;
             this.mValue = TypedValue.createComplexDimension(radius, units);
 
         }
 
         SetViewOutlinePreferredRadiusAction(Parcel in) {
-            viewId = in.readInt();
+            mViewId = in.readInt();
             mValueType = in.readInt();
             mValue = in.readInt();
         }
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(viewId);
+            dest.writeInt(mViewId);
             dest.writeInt(mValueType);
             dest.writeInt(mValue);
         }
 
         @Override
-        public void apply(View root, ViewGroup rootParent, InteractionHandler handler,
-                ColorResources colorResources) throws ActionException {
-            final View target = root.findViewById(viewId);
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params)
+                throws ActionException {
+            final View target = root.findViewById(mViewId);
             if (target == null) return;
 
             try {
@@ -3436,7 +3901,6 @@ public class RemoteViews implements Parcelable, Filter {
      * {@link #setViewOutlinePreferredRadius(int, float, int)}.
      */
     public static final class RemoteViewOutlineProvider extends ViewOutlineProvider {
-
         private final float mRadius;
 
         public RemoteViewOutlineProvider(float radius) {
@@ -3456,6 +3920,62 @@ public class RemoteViews implements Parcelable, Filter {
                     view.getWidth() /* right */,
                     view.getHeight() /* bottom */,
                     mRadius);
+        }
+    }
+
+    private class SetDrawInstructionAction extends Action {
+
+        @Nullable
+        private final DrawInstructions mInstructions;
+
+        SetDrawInstructionAction(@NonNull final DrawInstructions instructions) {
+            mInstructions = instructions;
+        }
+
+        SetDrawInstructionAction(@NonNull final Parcel in) {
+            if (drawDataParcel()) {
+                mInstructions = DrawInstructions.readFromParcel(in);
+            } else {
+                mInstructions = null;
+            }
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            if (drawDataParcel()) {
+                DrawInstructions.writeToParcel(mInstructions, dest, flags);
+            }
+        }
+
+        @Override
+        public void apply(View root, ViewGroup rootParent, ActionApplyParams params)
+                throws ActionException {
+            if (drawDataParcel() && mInstructions != null
+                    && root instanceof RemoteComposePlayer player) {
+                final List<byte[]> bytes = mInstructions.mInstructions;
+                if (bytes.isEmpty()) {
+                    return;
+                }
+                try (ByteArrayInputStream is = new ByteArrayInputStream(bytes.get(0))) {
+                    player.setDocument(new RemoteComposeDocument(is));
+                    player.addClickListener((viewId, metadata) -> {
+                        mActions.forEach(action -> {
+                            if (viewId == action.mViewId
+                                    && action instanceof SetOnClickResponse setOnClickResponse) {
+                                setOnClickResponse.mResponse.handleViewInteraction(
+                                        player, params.handler);
+                            }
+                        });
+                    });
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "Failed to render draw instructions", e);
+                }
+            }
+        }
+
+        @Override
+        public int getActionTag() {
+            return SET_DRAW_INSTRUCTION_TAG;
         }
     }
 
@@ -3494,8 +4014,7 @@ public class RemoteViews implements Parcelable, Filter {
     protected RemoteViews(ApplicationInfo application, @LayoutRes int layoutId) {
         mApplication = application;
         mLayoutId = layoutId;
-        mBitmapCache = new BitmapCache();
-        mClassCookies = null;
+        mApplicationInfoCache.put(application);
     }
 
     private boolean hasMultipleLayouts() {
@@ -3510,7 +4029,8 @@ public class RemoteViews implements Parcelable, Filter {
         return mSizedRemoteViews != null;
     }
 
-    private @Nullable SizeF getIdealSize() {
+    @Nullable
+    private SizeF getIdealSize() {
         return mIdealSize;
     }
 
@@ -3551,12 +4071,10 @@ public class RemoteViews implements Parcelable, Filter {
         mLandscape = landscape;
         mPortrait = portrait;
 
-        mBitmapCache = new BitmapCache();
-        configureRemoteViewsAsChild(landscape);
-        configureRemoteViewsAsChild(portrait);
-
         mClassCookies = (portrait.mClassCookies != null)
                 ? portrait.mClassCookies : landscape.mClassCookies;
+
+        configureDescendantsAsChildren();
     }
 
     /**
@@ -3582,10 +4100,12 @@ public class RemoteViews implements Parcelable, Filter {
             throw new IllegalArgumentException("Too many RemoteViews in constructor");
         }
         if (remoteViews.size() == 1) {
-            initializeFrom(remoteViews.values().iterator().next());
+            // If the map only contains a single mapping, treat this as if that RemoteViews was
+            // passed as the top-level RemoteViews.
+            RemoteViews single = remoteViews.values().iterator().next();
+            initializeFrom(single, /* hierarchyRoot= */ single);
             return;
         }
-        mBitmapCache = new BitmapCache();
         mClassCookies = initializeSizedRemoteViews(
                 remoteViews.entrySet().stream().map(
                         entry -> {
@@ -3600,6 +4120,8 @@ public class RemoteViews implements Parcelable, Filter {
         mLayoutId = smallestView.mLayoutId;
         mViewId = smallestView.mViewId;
         mLightBackgroundLayoutId = smallestView.mLightBackgroundLayoutId;
+
+        configureDescendantsAsChildren();
     }
 
     // Initialize mSizedRemoteViews and return the class cookies.
@@ -3628,7 +4150,6 @@ public class RemoteViews implements Parcelable, Filter {
             } else {
                 sizedRemoteViews.add(view);
             }
-            configureRemoteViewsAsChild(view);
             view.setIdealSize(size);
             if (classCookies == null) {
                 classCookies = view.mClassCookies;
@@ -3643,36 +4164,68 @@ public class RemoteViews implements Parcelable, Filter {
      * Creates a copy of another RemoteViews.
      */
     public RemoteViews(RemoteViews src) {
-        initializeFrom(src);
+        initializeFrom(src, /* hierarchyRoot= */ null);
     }
 
-    private void initializeFrom(RemoteViews src) {
-        mBitmapCache = src.mBitmapCache;
+    /**
+     * No-arg constructor for use with {@link #initializeFrom(RemoteViews, RemoteViews)}. A
+     * constructor taking two RemoteViews parameters would clash with the landscape/portrait
+     * constructor.
+     */
+    private RemoteViews() {}
+
+    private static RemoteViews createInitializedFrom(@NonNull RemoteViews src,
+            @Nullable RemoteViews hierarchyRoot) {
+        RemoteViews child = new RemoteViews();
+        child.initializeFrom(src, hierarchyRoot);
+        return child;
+    }
+
+    private void initializeFrom(@NonNull RemoteViews src, @Nullable RemoteViews hierarchyRoot) {
+        if (hierarchyRoot == null) {
+            mBitmapCache = src.mBitmapCache;
+            // We need to create a new instance because we don't reconstruct collection cache
+            mCollectionCache = new RemoteCollectionCache(src.mCollectionCache);
+            mApplicationInfoCache = src.mApplicationInfoCache;
+        } else {
+            mBitmapCache = hierarchyRoot.mBitmapCache;
+            mCollectionCache = hierarchyRoot.mCollectionCache;
+            mApplicationInfoCache = hierarchyRoot.mApplicationInfoCache;
+        }
+        if (hierarchyRoot == null || src.mIsRoot) {
+            // If there's no provided root, or if src was itself a root, then this RemoteViews is
+            // the root of the new hierarchy.
+            mIsRoot = true;
+            hierarchyRoot = this;
+        } else {
+            // Otherwise, we're a descendant in the hierarchy.
+            mIsRoot = false;
+        }
         mApplication = src.mApplication;
-        mIsRoot = src.mIsRoot;
         mLayoutId = src.mLayoutId;
         mLightBackgroundLayoutId = src.mLightBackgroundLayoutId;
         mApplyFlags = src.mApplyFlags;
         mClassCookies = src.mClassCookies;
         mIdealSize = src.mIdealSize;
         mProviderInstanceId = src.mProviderInstanceId;
+        mHasDrawInstructions = src.mHasDrawInstructions;
 
         if (src.hasLandscapeAndPortraitLayouts()) {
-            mLandscape = new RemoteViews(src.mLandscape);
-            mPortrait = new RemoteViews(src.mPortrait);
+            mLandscape = createInitializedFrom(src.mLandscape, hierarchyRoot);
+            mPortrait = createInitializedFrom(src.mPortrait, hierarchyRoot);
         }
 
         if (src.hasSizedRemoteViews()) {
             mSizedRemoteViews = new ArrayList<>(src.mSizedRemoteViews.size());
             for (RemoteViews srcView : src.mSizedRemoteViews) {
-                mSizedRemoteViews.add(new RemoteViews(srcView));
+                mSizedRemoteViews.add(createInitializedFrom(srcView, hierarchyRoot));
             }
         }
 
         if (src.mActions != null) {
             Parcel p = Parcel.obtain();
             p.putClassCookies(mClassCookies);
-            src.writeActionsToParcel(p);
+            src.writeActionsToParcel(p, /* flags= */ 0);
             p.setDataPosition(0);
             // Since src is already in memory, we do not care about stack overflow as it has
             // already been read once.
@@ -3680,22 +4233,38 @@ public class RemoteViews implements Parcelable, Filter {
             p.recycle();
         }
 
-        // Now that everything is initialized and duplicated, setting a new BitmapCache will
-        // re-initialize the cache.
-        setBitmapCache(new BitmapCache());
+        // Now that everything is initialized and duplicated, create new caches for this
+        // RemoteViews and recursively set up all descendants.
+        if (mIsRoot) {
+            reconstructCaches();
+        }
     }
 
     /**
      * Reads a RemoteViews object from a parcel.
      *
-     * @param parcel
+     * @param parcel the parcel object
      */
     public RemoteViews(Parcel parcel) {
-        this(parcel, null, null, 0, null);
+        this(parcel, /* rootData= */ null, /* info= */ null, /* depth= */ 0);
     }
 
-    private RemoteViews(Parcel parcel, BitmapCache bitmapCache, ApplicationInfo info, int depth,
-            Map<Class, Object> classCookies) {
+    /**
+     * Instantiates a RemoteViews object using {@link DrawInstructions}, which serves as an
+     * alternative to XML layout. {@link DrawInstructions} objects contains the instructions which
+     * can be interpreted and rendered accordingly in the host process.
+     *
+     * @param drawInstructions The {@link DrawInstructions} object
+     */
+    @FlaggedApi(FLAG_DRAW_DATA_PARCEL)
+    public RemoteViews(@NonNull final DrawInstructions drawInstructions) {
+        Objects.requireNonNull(drawInstructions);
+        mHasDrawInstructions = true;
+        addAction(new SetDrawInstructionAction(drawInstructions));
+    }
+
+    private RemoteViews(@NonNull Parcel parcel, @Nullable HierarchyRootData rootData,
+            @Nullable ApplicationInfo info, int depth) {
         if (depth > MAX_NESTED_VIEWS
                 && (UserHandle.getAppId(Binder.getCallingUid()) != Process.SYSTEM_UID)) {
             throw new IllegalArgumentException("Too many nested views.");
@@ -3704,20 +4273,18 @@ public class RemoteViews implements Parcelable, Filter {
 
         int mode = parcel.readInt();
 
-        // We only store a bitmap cache in the root of the RemoteViews.
-        if (bitmapCache == null) {
+        if (rootData == null) {
+            // We only store a bitmap cache in the root of the RemoteViews.
             mBitmapCache = new BitmapCache(parcel);
             // Store the class cookies such that they are available when we clone this RemoteView.
             mClassCookies = parcel.copyClassCookies();
+            mCollectionCache = new RemoteCollectionCache(parcel);
         } else {
-            setBitmapCache(bitmapCache);
-            mClassCookies = classCookies;
-            setNotRoot();
+            configureAsChild(rootData);
         }
 
         if (mode == MODE_NORMAL) {
-            mApplication = parcel.readInt() == 0 ? info :
-                    ApplicationInfo.CREATOR.createFromParcel(parcel);
+            mApplication = parcel.readTypedObject(ApplicationInfo.CREATOR);
             mIdealSize = parcel.readInt() == 0 ? null : SizeF.CREATOR.createFromParcel(parcel);
             mLayoutId = parcel.readInt();
             mViewId = parcel.readInt();
@@ -3732,8 +4299,7 @@ public class RemoteViews implements Parcelable, Filter {
             }
             List<RemoteViews> remoteViews = new ArrayList<>(numViews);
             for (int i = 0; i < numViews; i++) {
-                RemoteViews view = new RemoteViews(parcel, mBitmapCache, info, depth,
-                        mClassCookies);
+                RemoteViews view = new RemoteViews(parcel, getHierarchyRootData(), info, depth);
                 info = view.mApplication;
                 remoteViews.add(view);
             }
@@ -3745,9 +4311,9 @@ public class RemoteViews implements Parcelable, Filter {
             mLightBackgroundLayoutId = smallestView.mLightBackgroundLayoutId;
         } else {
             // MODE_HAS_LANDSCAPE_AND_PORTRAIT
-            mLandscape = new RemoteViews(parcel, mBitmapCache, info, depth, mClassCookies);
-            mPortrait = new RemoteViews(parcel, mBitmapCache, mLandscape.mApplication, depth,
-                    mClassCookies);
+            mLandscape = new RemoteViews(parcel, getHierarchyRootData(), info, depth);
+            mPortrait =
+                    new RemoteViews(parcel, getHierarchyRootData(), mLandscape.mApplication, depth);
             mApplication = mPortrait.mApplication;
             mLayoutId = mPortrait.mLayoutId;
             mViewId = mPortrait.mViewId;
@@ -3755,6 +4321,12 @@ public class RemoteViews implements Parcelable, Filter {
         }
         mApplyFlags = parcel.readInt();
         mProviderInstanceId = parcel.readLong();
+        mHasDrawInstructions = parcel.readBoolean();
+
+        // Ensure that all descendants have their caches set up recursively.
+        if (mIsRoot) {
+            configureDescendantsAsChildren();
+        }
     }
 
     private void readActionsFromParcel(Parcel parcel, int depth) {
@@ -3777,8 +4349,7 @@ public class RemoteViews implements Parcelable, Filter {
             case REFLECTION_ACTION_TAG:
                 return new ReflectionAction(parcel);
             case VIEW_GROUP_ACTION_ADD_TAG:
-                return new ViewGroupActionAdd(parcel, mBitmapCache, mApplication, depth,
-                        mClassCookies);
+                return new ViewGroupActionAdd(parcel, mApplication, depth);
             case VIEW_GROUP_ACTION_REMOVE_TAG:
                 return new ViewGroupActionRemove(parcel);
             case VIEW_CONTENT_NAVIGATION_TAG:
@@ -3797,14 +4368,10 @@ public class RemoteViews implements Parcelable, Filter {
                 return new ViewPaddingAction(parcel);
             case BITMAP_REFLECTION_ACTION_TAG:
                 return new BitmapReflectionAction(parcel);
-            case SET_REMOTE_VIEW_ADAPTER_LIST_TAG:
-                return new SetRemoteViewsAdapterList(parcel);
             case SET_REMOTE_INPUTS_ACTION_TAG:
                 return new SetRemoteInputsAction(parcel);
             case LAYOUT_PARAM_ACTION_TAG:
                 return new LayoutParamAction(parcel);
-            case OVERRIDE_TEXT_COLORS_TAG:
-                return new OverrideTextColorsAction(parcel);
             case SET_RIPPLE_DRAWABLE_COLOR_TAG:
                 return new SetRippleDrawableColor(parcel);
             case SET_INT_TAG_TAG:
@@ -3829,10 +4396,14 @@ public class RemoteViews implements Parcelable, Filter {
                 return new SetRemoteCollectionItemListAdapterAction(parcel);
             case ATTRIBUTE_REFLECTION_ACTION_TAG:
                 return new AttributeReflectionAction(parcel);
+            case SET_ON_STYLUS_HANDWRITING_RESPONSE_TAG:
+                return new SetOnStylusHandwritingResponse(parcel);
+            case SET_DRAW_INSTRUCTION_TAG:
+                return new SetDrawInstructionAction(parcel);
             default:
                 throw new ActionException("Tag " + tag + " not found");
         }
-    };
+    }
 
     /**
      * Returns a deep copy of the RemoteViews object. The RemoteView may not be
@@ -3868,25 +4439,54 @@ public class RemoteViews implements Parcelable, Filter {
     }
 
     /**
-     * Recursively sets BitmapCache in the hierarchy and update the bitmap ids.
+     * Sets the root of the hierarchy and then recursively traverses the tree to update the root
+     * and populate caches for all descendants.
      */
-    private void setBitmapCache(BitmapCache bitmapCache) {
-        mBitmapCache = bitmapCache;
+    private void configureAsChild(@NonNull HierarchyRootData rootData) {
+        mIsRoot = false;
+        mBitmapCache = rootData.mBitmapCache;
+        mCollectionCache = rootData.mRemoteCollectionCache;
+        mApplicationInfoCache = rootData.mApplicationInfoCache;
+        mClassCookies = rootData.mClassCookies;
+        configureDescendantsAsChildren();
+    }
+
+    /**
+     * Recursively traverses the tree to update the root and populate caches for all descendants.
+     */
+    private void configureDescendantsAsChildren() {
+        // Before propagating down the tree, replace our application from the root application info
+        // cache, to ensure the same instance is present throughout the hierarchy to allow for
+        // squashing.
+        mApplication = mApplicationInfoCache.getOrPut(mApplication);
+
+        HierarchyRootData rootData = getHierarchyRootData();
         if (hasSizedRemoteViews()) {
             for (RemoteViews remoteView : mSizedRemoteViews) {
-                remoteView.setBitmapCache(bitmapCache);
+                remoteView.configureAsChild(rootData);
             }
         } else if (hasLandscapeAndPortraitLayouts()) {
-            mLandscape.setBitmapCache(bitmapCache);
-            mPortrait.setBitmapCache(bitmapCache);
+            mLandscape.configureAsChild(rootData);
+            mPortrait.configureAsChild(rootData);
         } else {
             if (mActions != null) {
-                final int count = mActions.size();
-                for (int i = 0; i < count; ++i) {
-                    mActions.get(i).setBitmapCache(bitmapCache);
+                for (Action action : mActions) {
+                    action.setHierarchyRootData(rootData);
                 }
             }
         }
+    }
+
+    /**
+     * Recreates caches at the root level of the hierarchy, then recursively populates the caches
+     * down the hierarchy.
+     */
+    private void reconstructCaches() {
+        if (!mIsRoot) return;
+        mBitmapCache = new BitmapCache();
+        mApplicationInfoCache = new ApplicationInfoCache();
+        mApplication = mApplicationInfoCache.getOrPut(mApplication);
+        configureDescendantsAsChildren();
     }
 
     /**
@@ -4010,7 +4610,11 @@ public class RemoteViews implements Parcelable, Filter {
      * Equivalent to calling {@link AdapterViewAnimator#showNext()}
      *
      * @param viewId The id of the view on which to call {@link AdapterViewAnimator#showNext()}
+     * @deprecated As RemoteViews may be reapplied frequently, it is preferable to call
+     * {@link #setDisplayedChild(int, int)} to ensure that the adapter index does not change
+     * unexpectedly.
      */
+    @Deprecated
     public void showNext(@IdRes int viewId) {
         addAction(new ViewContentNavigation(viewId, true /* next */));
     }
@@ -4019,7 +4623,11 @@ public class RemoteViews implements Parcelable, Filter {
      * Equivalent to calling {@link AdapterViewAnimator#showPrevious()}
      *
      * @param viewId The id of the view on which to call {@link AdapterViewAnimator#showPrevious()}
+     * @deprecated As RemoteViews may be reapplied frequently, it is preferable to call
+     * {@link #setDisplayedChild(int, int)} to ensure that the adapter index does not change
+     * unexpectedly.
      */
+    @Deprecated
     public void showPrevious(@IdRes int viewId) {
         addAction(new ViewContentNavigation(viewId, false /* next */));
     }
@@ -4285,7 +4893,12 @@ public class RemoteViews implements Parcelable, Filter {
      *          by a child of viewId and executed when that child is clicked
      */
     public void setPendingIntentTemplate(@IdRes int viewId, PendingIntent pendingIntentTemplate) {
-        addAction(new SetPendingIntentTemplate(viewId, pendingIntentTemplate));
+        if (hasDrawInstructions()) {
+            getPendingIntentTemplate().set(viewId, pendingIntentTemplate);
+            tryAddRemoteResponse(viewId);
+        } else {
+            addAction(new SetPendingIntentTemplate(viewId, pendingIntentTemplate));
+        }
     }
 
     /**
@@ -4306,7 +4919,12 @@ public class RemoteViews implements Parcelable, Filter {
      *        in order to determine the on-click behavior of the view specified by viewId
      */
     public void setOnClickFillInIntent(@IdRes int viewId, Intent fillInIntent) {
-        setOnClickResponse(viewId, RemoteResponse.fromFillInIntent(fillInIntent));
+        if (hasDrawInstructions()) {
+            getFillInIntent().set(viewId, fillInIntent);
+            tryAddRemoteResponse(viewId);
+        } else {
+            setOnClickResponse(viewId, RemoteResponse.fromFillInIntent(fillInIntent));
+        }
     }
 
     /**
@@ -4342,6 +4960,33 @@ public class RemoteViews implements Parcelable, Filter {
                         viewId,
                         response.setInteractionType(
                                 RemoteResponse.INTERACTION_TYPE_CHECKED_CHANGE)));
+    }
+
+    /**
+     * Equivalent to calling {@link View#setHandwritingDelegatorCallback(Runnable)} to send the
+     * provided {@link PendingIntent}.
+     *
+     * <p>A common use case is a remote view which looks like a text editor but does not actually
+     * support text editing itself, and clicking on the remote view launches an activity containing
+     * an EditText. To support handwriting initiation in this case, this method can be called on the
+     * remote view to configure it as a handwriting delegator, meaning that stylus movement on the
+     * remote view triggers a {@link PendingIntent} and starts handwriting mode for the delegate
+     * EditText. The {@link PendingIntent} is typically the same as the one passed to {@link
+     * #setOnClickPendingIntent} which launches the activity containing the EditText. The EditText
+     * should call {@link View#setIsHandwritingDelegate} to set it as a delegate, and also use
+     * {@link View#setAllowedHandwritingDelegatorPackage} or {@link
+     * android.view.inputmethod.InputMethodManager#HANDWRITING_DELEGATE_FLAG_HOME_DELEGATOR_ALLOWED}
+     * if necessary to support delegators from the package displaying the remote view.
+     *
+     * @param viewId identifier of the view that will trigger the {@link PendingIntent} when a
+     *     stylus {@link MotionEvent} occurs within the view's bounds
+     * @param pendingIntent the {@link PendingIntent} to send, or {@code null} to clear the
+     *     handwriting delegation
+     */
+    @FlaggedApi(FLAG_HOME_SCREEN_HANDWRITING_DELEGATOR)
+    public void setOnStylusHandwritingPendingIntent(
+            @IdRes int viewId, @Nullable PendingIntent pendingIntent) {
+        addAction(new SetOnStylusHandwritingResponse(viewId, pendingIntent));
     }
 
     /**
@@ -4467,9 +5112,16 @@ public class RemoteViews implements Parcelable, Filter {
      * @param viewId The id of the {@link AdapterView}
      * @param intent The intent of the service which will be
      *            providing data to the RemoteViewsAdapter
+     * @deprecated use
+     * {@link #setRemoteAdapter(int, android.widget.RemoteViews.RemoteCollectionItems)} instead
      */
+    @Deprecated
     public void setRemoteAdapter(@IdRes int viewId, Intent intent) {
-        addAction(new SetRemoteViewsAdapterIntent(viewId, intent));
+        if (remoteAdapterConversion()) {
+            addAction(new SetRemoteCollectionItemListAdapterAction(viewId, intent));
+        } else {
+            addAction(new SetRemoteViewsAdapterIntent(viewId, intent));
+        }
     }
 
     /**
@@ -4498,7 +5150,11 @@ public class RemoteViews implements Parcelable, Filter {
     @Deprecated
     public void setRemoteAdapter(@IdRes int viewId, ArrayList<RemoteViews> list,
             int viewTypeCount) {
-        addAction(new SetRemoteViewsAdapterList(viewId, list, viewTypeCount));
+        RemoteCollectionItems.Builder b = new RemoteCollectionItems.Builder();
+        for (int i = 0; i < list.size(); i++) {
+            b.addItem(i, list.get(i));
+        }
+        setRemoteAdapter(viewId, b.setViewTypeCount(viewTypeCount).build());
     }
 
     /**
@@ -5291,6 +5947,10 @@ public class RemoteViews implements Parcelable, Filter {
         }
     }
 
+    private boolean hasDrawInstructions() {
+        return mHasDrawInstructions;
+    }
+
     private RemoteViews getRemoteViewsToApply(Context context) {
         if (hasLandscapeAndPortraitLayouts()) {
             int orientation = context.getResources().getConfiguration().orientation;
@@ -5421,42 +6081,39 @@ public class RemoteViews implements Parcelable, Filter {
     /** @hide */
     public View apply(@NonNull Context context, @NonNull ViewGroup parent,
             @Nullable InteractionHandler handler, @Nullable SizeF size) {
-        RemoteViews rvToApply = getRemoteViewsToApply(context, size);
-
-        View result = inflateView(context, rvToApply, parent);
-        rvToApply.performApply(result, parent, handler, null);
-        return result;
+        return apply(context, parent, size, new ActionApplyParams()
+                .withInteractionHandler(handler));
     }
 
     /** @hide */
     public View applyWithTheme(@NonNull Context context, @NonNull ViewGroup parent,
             @Nullable InteractionHandler handler, @StyleRes int applyThemeResId) {
-        return applyWithTheme(context, parent, handler, applyThemeResId, null);
-    }
-
-    /** @hide */
-    public View applyWithTheme(@NonNull Context context, @NonNull ViewGroup parent,
-            @Nullable InteractionHandler handler, @StyleRes int applyThemeResId,
-            @Nullable SizeF size) {
-        RemoteViews rvToApply = getRemoteViewsToApply(context, size);
-
-        View result = inflateView(context, rvToApply, parent, applyThemeResId, null);
-        rvToApply.performApply(result, parent, handler, null);
-        return result;
+        return apply(context, parent, null, new ActionApplyParams()
+                .withInteractionHandler(handler)
+                .withThemeResId(applyThemeResId));
     }
 
     /** @hide */
     public View apply(Context context, ViewGroup parent, InteractionHandler handler,
             @Nullable SizeF size, @Nullable ColorResources colorResources) {
-        RemoteViews rvToApply = getRemoteViewsToApply(context, size);
-
-        View result = inflateView(context, rvToApply, parent, 0, colorResources);
-        rvToApply.performApply(result, parent, handler, colorResources);
-        return result;
+        return apply(context, parent, size, new ActionApplyParams()
+                .withInteractionHandler(handler)
+                .withColorResources(colorResources));
     }
 
-    private View inflateView(Context context, RemoteViews rv, ViewGroup parent) {
-        return inflateView(context, rv, parent, 0, null);
+    /** @hide **/
+    public View apply(Context context, ViewGroup parent, @Nullable SizeF size,
+            ActionApplyParams params) {
+        return apply(context, parent, parent, size, params);
+    }
+
+    private View apply(Context context, ViewGroup directParent, ViewGroup rootParent,
+            @Nullable SizeF size, ActionApplyParams params) {
+        RemoteViews rvToApply = getRemoteViewsToApply(context, size);
+        View result = inflateView(context, rvToApply, directParent,
+                params.applyThemeResId, params.colorResources);
+        rvToApply.performApply(result, rootParent, params);
+        return result;
     }
 
     private View inflateView(Context context, RemoteViews rv, @Nullable ViewGroup parent,
@@ -5465,7 +6122,8 @@ public class RemoteViews implements Parcelable, Filter {
         // user. So build a context that loads resources from that user but
         // still returns the current users userId so settings like data / time formats
         // are loaded without requiring cross user persmissions.
-        final Context contextForResources = getContextForResources(context);
+        final Context contextForResources =
+                getContextForResourcesEnsuringCorrectCachedApkPaths(context);
         if (colorResources != null) {
             colorResources.apply(contextForResources);
         }
@@ -5475,13 +6133,24 @@ public class RemoteViews implements Parcelable, Filter {
         if (applyThemeResId != 0) {
             inflationContext = new ContextThemeWrapper(inflationContext, applyThemeResId);
         }
-        LayoutInflater inflater = LayoutInflater.from(context);
+        View v;
+        // If the RemoteViews contains draw instructions, just use it instead.
+        if (rv.hasDrawInstructions()) {
+            final RemoteComposePlayer player = new RemoteComposePlayer(inflationContext);
+            player.setDebug(Build.IS_USERDEBUG || Build.IS_ENG ? 1 : 0);
+            v = player;
+        } else {
+            LayoutInflater inflater = LayoutInflater.from(context);
 
-        // Clone inflater so we load resources from correct context and
-        // we don't add a filter to the static version returned by getSystemService.
-        inflater = inflater.cloneInContext(inflationContext);
-        inflater.setFilter(shouldUseStaticFilter() ? INFLATER_FILTER : this);
-        View v = inflater.inflate(rv.getLayoutId(), parent, false);
+            // Clone inflater so we load resources from correct context and
+            // we don't add a filter to the static version returned by getSystemService.
+            inflater = inflater.cloneInContext(inflationContext);
+            inflater.setFilter(shouldUseStaticFilter() ? INFLATER_FILTER : this);
+            if (mLayoutInflaterFactory2 != null) {
+                inflater.setFactory2(mLayoutInflaterFactory2);
+            }
+            v = inflater.inflate(rv.getLayoutId(), parent, false);
+        }
         if (mViewId != View.NO_ID) {
             v.setId(mViewId);
             v.setTagInternal(R.id.remote_views_override_id, mViewId);
@@ -5511,7 +6180,7 @@ public class RemoteViews implements Parcelable, Filter {
          * Callback when the RemoteView has finished inflating,
          * but no actions have been applied yet.
          */
-        default void onViewInflated(View v) {};
+        default void onViewInflated(View v) {}
 
         void onViewApplied(View v);
 
@@ -5536,7 +6205,6 @@ public class RemoteViews implements Parcelable, Filter {
         return applyAsync(context, parent, executor, listener, null /* handler */);
     }
 
-
     /** @hide */
     public CancellationSignal applyAsync(Context context, ViewGroup parent,
             Executor executor, OnViewAppliedListener listener, InteractionHandler handler) {
@@ -5555,16 +6223,19 @@ public class RemoteViews implements Parcelable, Filter {
     public CancellationSignal applyAsync(Context context, ViewGroup parent, Executor executor,
             OnViewAppliedListener listener, InteractionHandler handler, SizeF size,
             ColorResources colorResources) {
+
+        ActionApplyParams params = new ActionApplyParams()
+                .withInteractionHandler(handler)
+                .withColorResources(colorResources)
+                .withExecutor(executor);
         return new AsyncApplyTask(getRemoteViewsToApply(context, size), parent, context, listener,
-                handler, colorResources, null /* result */,
-                true /* topLevel */).startTaskOnExecutor(executor);
+                params, null /* result */, true /* topLevel */).startTaskOnExecutor(executor);
     }
 
     private AsyncApplyTask getInternalAsyncApplyTask(Context context, ViewGroup parent,
-            OnViewAppliedListener listener, InteractionHandler handler, SizeF size,
-            ColorResources colorResources, View result) {
+            OnViewAppliedListener listener, ActionApplyParams params, SizeF size, View result) {
         return new AsyncApplyTask(getRemoteViewsToApply(context, size), parent, context, listener,
-                handler, colorResources, result, false /* topLevel */);
+                params, result, false /* topLevel */);
     }
 
     private class AsyncApplyTask extends AsyncTask<Void, Void, ViewTree>
@@ -5574,8 +6245,8 @@ public class RemoteViews implements Parcelable, Filter {
         final ViewGroup mParent;
         final Context mContext;
         final OnViewAppliedListener mListener;
-        final InteractionHandler mHandler;
-        final ColorResources mColorResources;
+        final ActionApplyParams mApplyParams;
+
         /**
          * Whether the remote view is the top-level one (i.e. not within an action).
          *
@@ -5590,16 +6261,13 @@ public class RemoteViews implements Parcelable, Filter {
 
         private AsyncApplyTask(
                 RemoteViews rv, ViewGroup parent, Context context, OnViewAppliedListener listener,
-                InteractionHandler handler, ColorResources colorResources,
-                View result, boolean topLevel) {
+                ActionApplyParams applyParams, View result, boolean topLevel) {
             mRV = rv;
             mParent = parent;
             mContext = context;
             mListener = listener;
-            mColorResources = colorResources;
-            mHandler = handler;
             mTopLevel = topLevel;
-
+            mApplyParams = applyParams;
             mResult = result;
         }
 
@@ -5608,17 +6276,18 @@ public class RemoteViews implements Parcelable, Filter {
         protected ViewTree doInBackground(Void... params) {
             try {
                 if (mResult == null) {
-                    mResult = inflateView(mContext, mRV, mParent, 0, mColorResources);
+                    mResult = inflateView(mContext, mRV, mParent, 0, mApplyParams.colorResources);
                 }
 
                 mTree = new ViewTree(mResult);
+
                 if (mRV.mActions != null) {
                     int count = mRV.mActions.size();
                     mActions = new Action[count];
                     for (int i = 0; i < count && !isCancelled(); i++) {
                         // TODO: check if isCancelled in nested views.
-                        mActions[i] = mRV.mActions.get(i).initActionAsync(mTree, mParent, mHandler,
-                                mColorResources);
+                        mActions[i] = mRV.mActions.get(i)
+                                .initActionAsync(mTree, mParent, mApplyParams);
                     }
                 } else {
                     mActions = null;
@@ -5640,10 +6309,13 @@ public class RemoteViews implements Parcelable, Filter {
 
                 try {
                     if (mActions != null) {
-                        InteractionHandler handler = mHandler == null
-                                ? DEFAULT_INTERACTION_HANDLER : mHandler;
+
+                        ActionApplyParams applyParams = mApplyParams.clone();
+                        if (applyParams.handler == null) {
+                            applyParams.handler = DEFAULT_INTERACTION_HANDLER;
+                        }
                         for (Action a : mActions) {
-                            a.apply(viewTree.mRoot, mParent, handler, mColorResources);
+                            a.apply(viewTree.mRoot, mParent, applyParams);
                         }
                     }
                     // If the parent of the view is has is a root, resolve the recycling.
@@ -5691,23 +6363,48 @@ public class RemoteViews implements Parcelable, Filter {
      * the {@link #apply(Context,ViewGroup)} call.
      */
     public void reapply(Context context, View v) {
-        reapply(context, v, null /* handler */);
+        reapply(context, v, null /* size */, new ActionApplyParams());
     }
 
     /** @hide */
     public void reapply(Context context, View v, InteractionHandler handler) {
-        reapply(context, v, handler, null /* size */, null /* colorResources */);
+        reapply(context, v, null /* size */,
+                new ActionApplyParams().withInteractionHandler(handler));
     }
 
     /** @hide */
     public void reapply(Context context, View v, InteractionHandler handler, SizeF size,
             ColorResources colorResources) {
-        reapply(context, v, handler, size, colorResources, true);
+        reapply(context, v, size, new ActionApplyParams()
+                .withInteractionHandler(handler).withColorResources(colorResources));
+    }
+
+    /** @hide */
+    public void reapply(Context context, View v, @Nullable SizeF size, ActionApplyParams params) {
+        reapply(context, v, (ViewGroup) v.getParent(), size, params, true);
+    }
+
+    private void reapplyNestedViews(Context context, View v, ViewGroup rootParent,
+            ActionApplyParams params) {
+        reapply(context, v, rootParent, null, params, false);
+    }
+
+    // Note: topLevel should be true only for calls on the topLevel RemoteViews, internal calls
+    // should set it to false.
+    private void reapply(Context context, View v, ViewGroup rootParent,
+            @Nullable SizeF size, ActionApplyParams params, boolean topLevel) {
+        RemoteViews rvToApply = getRemoteViewsToReapply(context, v, size);
+        rvToApply.performApply(v, rootParent, params);
+
+        // If the parent of the view is has is a root, resolve the recycling.
+        if (topLevel && v instanceof ViewGroup) {
+            finalizeViewRecycling((ViewGroup) v);
+        }
     }
 
     /** @hide */
     public boolean canRecycleView(@Nullable View v) {
-        if (v == null) {
+        if (v == null || hasDrawInstructions()) {
             return false;
         }
         Integer previousLayoutId = (Integer) v.getTag(R.id.widget_frame);
@@ -5723,30 +6420,35 @@ public class RemoteViews implements Parcelable, Filter {
         return previousLayoutId == getLayoutId() && mViewId == overrideId;
     }
 
-    // Note: topLevel should be true only for calls on the topLevel RemoteViews, internal calls
-    // should set it to false.
-    private void reapply(Context context, View v, InteractionHandler handler, SizeF size,
-            ColorResources colorResources, boolean topLevel) {
-
+    /**
+     * Returns the RemoteViews that should be used in the reapply operation.
+     *
+     * If the current RemoteViews has multiple layout, this will select the correct one.
+     *
+     * @throws RuntimeException If the current RemoteViews should not be reapplied onto the provided
+     * View.
+     */
+    private RemoteViews getRemoteViewsToReapply(Context context, View v, @Nullable SizeF size) {
         RemoteViews rvToApply = getRemoteViewsToApply(context, size);
 
         // In the case that a view has this RemoteViews applied in one orientation or size, is
         // persisted across change, and has the RemoteViews re-applied in a different situation
         // (orientation or size), we throw an exception, since the layouts may be completely
         // unrelated.
-        if (hasMultipleLayouts()) {
+        // If the ViewID has been changed on the view, or is changed by the RemoteViews, we also
+        // may throw an exception, as the RemoteViews will probably not apply properly.
+        // However, we need to let potentially unrelated RemoteViews apply, as this lack of testing
+        // is already used in production code in some apps.
+        if (hasMultipleLayouts()
+                || rvToApply.mViewId != View.NO_ID
+                || v.getTag(R.id.remote_views_override_id) != null) {
             if (!rvToApply.canRecycleView(v)) {
                 throw new RuntimeException("Attempting to re-apply RemoteViews to a view that" +
                         " that does not share the same root layout id.");
             }
         }
 
-        rvToApply.performApply(v, (ViewGroup) v.getParent(), handler, colorResources);
-
-        // If the parent of the view is has is a root, resolve the recycling.
-        if (topLevel && v instanceof ViewGroup) {
-            finalizeViewRecycling((ViewGroup) v);
-        }
+        return rvToApply;
     }
 
     /**
@@ -5777,31 +6479,31 @@ public class RemoteViews implements Parcelable, Filter {
     public CancellationSignal reapplyAsync(Context context, View v, Executor executor,
             OnViewAppliedListener listener, InteractionHandler handler, SizeF size,
             ColorResources colorResources) {
-        RemoteViews rvToApply = getRemoteViewsToApply(context, size);
+        RemoteViews rvToApply = getRemoteViewsToReapply(context, v, size);
 
-        // In the case that a view has this RemoteViews applied in one orientation, is persisted
-        // across orientation change, and has the RemoteViews re-applied in the new orientation,
-        // we throw an exception, since the layouts may be completely unrelated.
-        if (hasMultipleLayouts()) {
-            if ((Integer) v.getTag(R.id.widget_frame) != rvToApply.getLayoutId()) {
-                throw new RuntimeException("Attempting to re-apply RemoteViews to a view that" +
-                        " that does not share the same root layout id.");
-            }
-        }
+        ActionApplyParams params = new ActionApplyParams()
+                .withColorResources(colorResources)
+                .withInteractionHandler(handler)
+                .withExecutor(executor);
 
         return new AsyncApplyTask(rvToApply, (ViewGroup) v.getParent(),
-                context, listener, handler, colorResources, v, true /* topLevel */)
+                context, listener, params, v, true /* topLevel */)
                 .startTaskOnExecutor(executor);
     }
 
-    private void performApply(View v, ViewGroup parent, InteractionHandler handler,
-            ColorResources colorResources) {
+    private void performApply(View v, ViewGroup parent, ActionApplyParams params) {
+        params = params.clone();
+        if (params.handler == null) {
+            params.handler = DEFAULT_INTERACTION_HANDLER;
+        }
+        if (v instanceof RemoteComposePlayer player) {
+            player.setTheme(v.getResources().getConfiguration().isNightModeActive()
+                    ? Theme.DARK : Theme.LIGHT);
+        }
         if (mActions != null) {
-            handler = handler == null ? DEFAULT_INTERACTION_HANDLER : handler;
             final int count = mActions.size();
             for (int i = 0; i < count; i++) {
-                Action a = mActions.get(i);
-                a.apply(v, parent, handler, colorResources);
+                mActions.get(i).apply(v, parent, params);
             }
         }
     }
@@ -5826,30 +6528,28 @@ public class RemoteViews implements Parcelable, Filter {
 
     /** @hide */
     public void updateAppInfo(@NonNull ApplicationInfo info) {
-        if (mApplication != null && mApplication.sourceDir.equals(info.sourceDir)) {
+        ApplicationInfo existing = mApplicationInfoCache.get(info);
+        if (existing != null && !existing.sourceDir.equals(info.sourceDir)) {
             // Overlay paths are generated against a particular version of an application.
             // The overlays paths of a newly upgraded application are incompatible with the
             // old version of the application.
-            mApplication = info;
+            return;
         }
-        if (hasSizedRemoteViews()) {
-            for (RemoteViews layout : mSizedRemoteViews) {
-                layout.updateAppInfo(info);
-            }
-        }
-        if (hasLandscapeAndPortraitLayouts()) {
-            mLandscape.updateAppInfo(info);
-            mPortrait.updateAppInfo(info);
-        }
+
+        // If we can update to the new AppInfo, put it in the cache and propagate the change
+        // throughout the hierarchy.
+        mApplicationInfoCache.put(info);
+        configureDescendantsAsChildren();
     }
 
-    private Context getContextForResources(Context context) {
+    private Context getContextForResourcesEnsuringCorrectCachedApkPaths(Context context) {
         if (mApplication != null) {
             if (context.getUserId() == UserHandle.getUserId(mApplication.uid)
                     && context.getPackageName().equals(mApplication.packageName)) {
                 return context;
             }
             try {
+                LoadedApk.checkAndUpdateApkPaths(mApplication);
                 return context.createApplicationContext(mApplication,
                         Context.CONTEXT_RESTRICTED);
             } catch (NameNotFoundException e) {
@@ -5858,6 +6558,72 @@ public class RemoteViews implements Parcelable, Filter {
         }
 
         return context;
+    }
+
+    @NonNull
+    private SparseArray<PendingIntent> getPendingIntentTemplate() {
+        if (mPendingIntentTemplate == null) {
+            mPendingIntentTemplate = new SparseArray<>();
+        }
+        return mPendingIntentTemplate;
+    }
+
+    @NonNull
+    private SparseArray<Intent> getFillInIntent() {
+        if (mFillInIntent == null) {
+            mFillInIntent = new SparseArray<>();
+        }
+        return mFillInIntent;
+    }
+
+    private void tryAddRemoteResponse(final int viewId) {
+        final PendingIntent pendingIntent = getPendingIntentTemplate().get(viewId);
+        final Intent intent = getFillInIntent().get(viewId);
+        if (pendingIntent != null && intent != null) {
+            addAction(new SetOnClickResponse(viewId,
+                    RemoteResponse.fromPendingIntentTemplateAndFillInIntent(
+                            pendingIntent, intent)));
+        }
+    }
+
+    /**
+     * Utility class to hold all the options when applying the remote views
+     * @hide
+     */
+    public class ActionApplyParams {
+        public InteractionHandler handler;
+        public ColorResources colorResources;
+        public Executor executor;
+        @StyleRes public int applyThemeResId;
+
+        @Override
+        public ActionApplyParams clone() {
+            return new ActionApplyParams()
+                    .withInteractionHandler(handler)
+                    .withColorResources(colorResources)
+                    .withExecutor(executor)
+                    .withThemeResId(applyThemeResId);
+        }
+
+        public ActionApplyParams withInteractionHandler(InteractionHandler handler) {
+            this.handler = handler;
+            return this;
+        }
+
+        public ActionApplyParams withColorResources(ColorResources colorResources) {
+            this.colorResources = colorResources;
+            return this;
+        }
+
+        public ActionApplyParams withThemeResId(@StyleRes int themeResId) {
+            this.applyThemeResId = themeResId;
+            return this;
+        }
+
+        public ActionApplyParams withExecutor(Executor executor) {
+            this.executor = executor;
+            return this;
+        }
     }
 
     /**
@@ -5870,14 +6636,17 @@ public class RemoteViews implements Parcelable, Filter {
     public static final class ColorResources {
         // Set of valid colors resources.
         private static final int FIRST_RESOURCE_COLOR_ID = android.R.color.system_neutral1_0;
-        private static final int LAST_RESOURCE_COLOR_ID = android.R.color.system_accent3_1000;
+        private static final int LAST_RESOURCE_COLOR_ID =
+            android.R.color.system_error_1000;
         // Size, in bytes, of an entry in the array of colors in an ARSC file.
         private static final int ARSC_ENTRY_SIZE = 16;
 
-        private ResourcesLoader mLoader;
+        private final ResourcesLoader mLoader;
+        private final SparseIntArray mColorMapping;
 
-        private ColorResources(ResourcesLoader loader) {
+        private ColorResources(ResourcesLoader loader, SparseIntArray colorMapping) {
             mLoader = loader;
+            mColorMapping = colorMapping;
         }
 
         /**
@@ -5887,6 +6656,10 @@ public class RemoteViews implements Parcelable, Filter {
          */
         public void apply(Context context) {
             context.getResources().addLoaders(mLoader);
+        }
+
+        public SparseIntArray getColorMapping() {
+            return mColorMapping;
         }
 
         private static ByteArrayOutputStream readFileContent(InputStream input) throws IOException {
@@ -5963,7 +6736,7 @@ public class RemoteViews implements Parcelable, Filter {
                             ResourcesLoader colorsLoader = new ResourcesLoader();
                             colorsLoader.addProvider(ResourcesProvider
                                     .loadFromTable(pfd, null /* assetsProvider */));
-                            return new ColorResources(colorsLoader);
+                            return new ColorResources(colorsLoader, colorMapping.clone());
                         }
                     }
                 } finally {
@@ -6004,20 +6777,24 @@ public class RemoteViews implements Parcelable, Filter {
         return 0;
     }
 
+    @Override
     public void writeToParcel(Parcel dest, int flags) {
+        writeToParcel(dest, flags, /* intentsToIgnore= */ null);
+    }
+
+    private void writeToParcel(Parcel dest, int flags,
+            @Nullable SparseArray<Intent> intentsToIgnore) {
+        boolean prevSquashingAllowed = dest.allowSquashing();
+
         if (!hasMultipleLayouts()) {
             dest.writeInt(MODE_NORMAL);
             // We only write the bitmap cache if we are the root RemoteViews, as this cache
             // is shared by all children.
             if (mIsRoot) {
                 mBitmapCache.writeBitmapsToParcel(dest, flags);
+                mCollectionCache.writeToParcel(dest, flags, intentsToIgnore);
             }
-            if (!mIsRoot && (flags & PARCELABLE_ELIDE_DUPLICATES) != 0) {
-                dest.writeInt(0);
-            } else {
-                dest.writeInt(1);
-                mApplication.writeToParcel(dest, flags);
-            }
+            dest.writeTypedObject(mApplication, flags);
             if (mIsRoot || mIdealSize == null) {
                 dest.writeInt(0);
             } else {
@@ -6027,17 +6804,16 @@ public class RemoteViews implements Parcelable, Filter {
             dest.writeInt(mLayoutId);
             dest.writeInt(mViewId);
             dest.writeInt(mLightBackgroundLayoutId);
-            writeActionsToParcel(dest);
+            writeActionsToParcel(dest, flags);
         } else if (hasSizedRemoteViews()) {
             dest.writeInt(MODE_HAS_SIZED_REMOTEVIEWS);
             if (mIsRoot) {
                 mBitmapCache.writeBitmapsToParcel(dest, flags);
+                mCollectionCache.writeToParcel(dest, flags, intentsToIgnore);
             }
-            int childFlags = flags;
             dest.writeInt(mSizedRemoteViews.size());
             for (RemoteViews view : mSizedRemoteViews) {
-                view.writeToParcel(dest, childFlags);
-                childFlags |= PARCELABLE_ELIDE_DUPLICATES;
+                view.writeToParcel(dest, flags);
             }
         } else {
             dest.writeInt(MODE_HAS_LANDSCAPE_AND_PORTRAIT);
@@ -6045,16 +6821,20 @@ public class RemoteViews implements Parcelable, Filter {
             // is shared by all children.
             if (mIsRoot) {
                 mBitmapCache.writeBitmapsToParcel(dest, flags);
+                mCollectionCache.writeToParcel(dest, flags, intentsToIgnore);
             }
             mLandscape.writeToParcel(dest, flags);
             // Both RemoteViews already share the same package and user
-            mPortrait.writeToParcel(dest, flags | PARCELABLE_ELIDE_DUPLICATES);
+            mPortrait.writeToParcel(dest, flags);
         }
         dest.writeInt(mApplyFlags);
         dest.writeLong(mProviderInstanceId);
+        dest.writeBoolean(mHasDrawInstructions);
+
+        dest.restoreAllowSquashing(prevSquashingAllowed);
     }
 
-    private void writeActionsToParcel(Parcel parcel) {
+    private void writeActionsToParcel(Parcel parcel, int flags) {
         int count;
         if (mActions != null) {
             count = mActions.size();
@@ -6065,8 +6845,7 @@ public class RemoteViews implements Parcelable, Filter {
         for (int i = 0; i < count; i++) {
             Action a = mActions.get(i);
             parcel.writeInt(a.getActionTag());
-            a.writeToParcel(parcel, a.hasSameAppInfo(mApplication)
-                    ? PARCELABLE_ELIDE_DUPLICATES : 0);
+            a.writeToParcel(parcel, flags);
         }
     }
 
@@ -6103,21 +6882,24 @@ public class RemoteViews implements Parcelable, Filter {
      * @hide
      */
     public boolean hasSameAppInfo(ApplicationInfo info) {
-        return mApplication.packageName.equals(info.packageName) && mApplication.uid == info.uid;
+        return mApplication == null || mApplication.packageName.equals(info.packageName)
+                && mApplication.uid == info.uid;
     }
 
     /**
      * Parcelable.Creator that instantiates RemoteViews objects
      */
-    public static final @android.annotation.NonNull Parcelable.Creator<RemoteViews> CREATOR = new Parcelable.Creator<RemoteViews>() {
-        public RemoteViews createFromParcel(Parcel parcel) {
-            return new RemoteViews(parcel);
-        }
+    @NonNull
+    public static final Parcelable.Creator<RemoteViews> CREATOR =
+            new Parcelable.Creator<RemoteViews>() {
+                public RemoteViews createFromParcel(Parcel parcel) {
+                    return new RemoteViews(parcel);
+                }
 
-        public RemoteViews[] newArray(int size) {
-            return new RemoteViews[size];
-        }
-    };
+                public RemoteViews[] newArray(int size) {
+                    return new RemoteViews[size];
+                }
+            };
 
     /**
      * A representation of the view hierarchy. Only views which have a valid ID are added
@@ -6351,6 +7133,14 @@ public class RemoteViews implements Parcelable, Filter {
             return response;
         }
 
+        private static RemoteResponse fromPendingIntentTemplateAndFillInIntent(
+                @NonNull final PendingIntent pendingIntent, @NonNull final Intent intent) {
+            RemoteResponse response = new RemoteResponse();
+            response.mPendingIntent = pendingIntent;
+            response.mFillIntent = intent;
+            return response;
+        }
+
         /**
          * Adds a shared element to be transferred as part of the transition between Activities
          * using cross-Activity scene animations. The position of the first element will be used as
@@ -6389,8 +7179,8 @@ public class RemoteViews implements Parcelable, Filter {
 
         private void writeToParcel(Parcel dest, int flags) {
             PendingIntent.writePendingIntentOrNullToParcel(mPendingIntent, dest);
-            if (mPendingIntent == null) {
-                // Only write the intent if pending intent is null
+            dest.writeBoolean((mFillIntent != null));
+            if (mFillIntent != null) {
                 dest.writeTypedObject(mFillIntent, flags);
             }
             dest.writeInt(mInteractionType);
@@ -6400,9 +7190,7 @@ public class RemoteViews implements Parcelable, Filter {
 
         private void readFromParcel(Parcel parcel) {
             mPendingIntent = PendingIntent.readPendingIntentOrNullFromParcel(parcel);
-            if (mPendingIntent == null) {
-                mFillIntent = parcel.readTypedObject(Intent.CREATOR);
-            }
+            mFillIntent = parcel.readBoolean() ? parcel.readTypedObject(Intent.CREATOR) : null;
             mInteractionType = parcel.readInt();
             int[] viewIds = parcel.createIntArray();
             mViewIds = viewIds == null ? null : IntArray.wrap(viewIds);
@@ -6450,13 +7238,13 @@ public class RemoteViews implements Parcelable, Filter {
             View parent = (View) view.getParent();
             // Break the for loop on the first encounter of:
             //    1) an AdapterView,
-            //    2) an AppWidgetHostView that is not a RemoteViewsFrameLayout, or
+            //    2) an AppWidgetHostView that is not a child of an adapter view, or
             //    3) a null parent.
             // 2) and 3) are unexpected and catch the case where a child is not
             // correctly parented in an AdapterView.
             while (parent != null && !(parent instanceof AdapterView<?>)
                     && !((parent instanceof AppWidgetHostView)
-                    && !(parent instanceof RemoteViewsAdapter.RemoteViewsFrameLayout))) {
+                            && !(parent instanceof AppWidgetHostView.AdapterChildHostView))) {
                 parent = (View) parent.getParent();
             }
 
@@ -6465,7 +7253,7 @@ public class RemoteViews implements Parcelable, Filter {
 
         /** @hide */
         public Pair<Intent, ActivityOptions> getLaunchOptions(View view) {
-            Intent intent = mPendingIntent != null ? new Intent() : new Intent(mFillIntent);
+            Intent intent = mFillIntent == null ? new Intent() : new Intent(mFillIntent);
             intent.setSourceBounds(getSourceBounds(view));
 
             if (view instanceof CompoundButton
@@ -6512,6 +7300,18 @@ public class RemoteViews implements Parcelable, Filter {
                 opts = ActivityOptions.makeBasic();
                 opts.setPendingIntentLaunchFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             }
+            if (view.getDisplay() != null) {
+                opts.setLaunchDisplayId(view.getDisplay().getDisplayId());
+            } else {
+                // TODO(b/218409359): Remove once bug is fixed.
+                Log.w(LOG_TAG, "getLaunchOptions: view.getDisplay() is null!",
+                        new Exception());
+            }
+            // If the user interacts with a visible element it is safe to assume they consent that
+            // something is going to start.
+            opts.setPendingIntentBackgroundActivityStartMode(
+                    ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED);
+            opts.setPendingIntentBackgroundActivityLaunchAllowedByPermission(true);
             return Pair.create(intent, opts);
         }
     }
@@ -6545,6 +7345,8 @@ public class RemoteViews implements Parcelable, Filter {
         private final boolean mHasStableIds;
         private final int mViewTypeCount;
 
+        private HierarchyRootData mHierarchyRootData;
+
         RemoteCollectionItems(
                 long[] ids, RemoteViews[] views, boolean hasStableIds, int viewTypeCount) {
             mIds = ids;
@@ -6567,16 +7369,53 @@ public class RemoteViews implements Parcelable, Filter {
                         "View type count is set to " + viewTypeCount + ", but the collection "
                                 + "contains " + layoutIdCount + " different layout ids");
             }
+
+            // Until the collection items are attached to a parent, we configure the first item
+            // to be the root of the others to share caches and save space during serialization.
+            if (views.length > 0) {
+                setHierarchyRootData(views[0].getHierarchyRootData());
+                views[0].mIsRoot = true;
+            }
         }
 
-        RemoteCollectionItems(Parcel in) {
+        RemoteCollectionItems(@NonNull Parcel in, @Nullable HierarchyRootData hierarchyRootData) {
+            mHasStableIds = in.readBoolean();
+            mViewTypeCount = in.readInt();
             int length = in.readInt();
             mIds = new long[length];
             in.readLongArray(mIds);
+
+            boolean attached = in.readBoolean();
             mViews = new RemoteViews[length];
-            in.readTypedArray(mViews, RemoteViews.CREATOR);
-            mHasStableIds = in.readBoolean();
-            mViewTypeCount = in.readInt();
+            int firstChildIndex;
+            if (attached) {
+                if (hierarchyRootData == null) {
+                    throw new IllegalStateException("Cannot unparcel a RemoteCollectionItems that "
+                            + "was parceled as attached without providing data for a root "
+                            + "RemoteViews");
+                }
+                mHierarchyRootData = hierarchyRootData;
+                firstChildIndex = 0;
+            } else {
+                mViews[0] = new RemoteViews(in);
+                mHierarchyRootData = mViews[0].getHierarchyRootData();
+                firstChildIndex = 1;
+            }
+
+            for (int i = firstChildIndex; i < length; i++) {
+                mViews[i] = new RemoteViews(
+                        in,
+                        mHierarchyRootData,
+                        /* info= */ null,
+                        /* depth= */ 0);
+            }
+        }
+
+        void setHierarchyRootData(@NonNull HierarchyRootData rootData) {
+            mHierarchyRootData = rootData;
+            for (RemoteViews view : mViews) {
+                view.configureAsChild(rootData);
+            }
         }
 
         @Override
@@ -6586,11 +7425,39 @@ public class RemoteViews implements Parcelable, Filter {
 
         @Override
         public void writeToParcel(@NonNull Parcel dest, int flags) {
-            dest.writeInt(mIds.length);
-            dest.writeLongArray(mIds);
-            dest.writeTypedArray(mViews, flags);
+            writeToParcel(dest, flags, /* attached= */ false);
+        }
+
+        private void writeToParcel(@NonNull Parcel dest, int flags, boolean attached) {
+            boolean prevAllowSquashing = dest.allowSquashing();
+
             dest.writeBoolean(mHasStableIds);
             dest.writeInt(mViewTypeCount);
+            dest.writeInt(mIds.length);
+            dest.writeLongArray(mIds);
+
+            if (attached && mHierarchyRootData == null) {
+                throw new IllegalStateException("Cannot call writeToParcelAttached for a "
+                        + "RemoteCollectionItems without first calling setHierarchyRootData()");
+            }
+
+            // Write whether we parceled as attached or not. This allows cleaner validation and
+            // proper error messaging when unparceling later.
+            dest.writeBoolean(attached);
+            boolean restoreRoot = false;
+            if (!attached && mViews.length > 0 && !mViews[0].mIsRoot) {
+                // If we're writing unattached, temporarily set the first item as the root so that
+                // the bitmap cache is written to the parcel.
+                restoreRoot = true;
+                mViews[0].mIsRoot = true;
+            }
+
+            for (RemoteViews view : mViews) {
+                view.writeToParcel(dest, flags);
+            }
+
+            if (restoreRoot) mViews[0].mIsRoot = false;
+            dest.restoreAllowSquashing(prevAllowSquashing);
         }
 
         /**
@@ -6648,7 +7515,7 @@ public class RemoteViews implements Parcelable, Filter {
             @NonNull
             @Override
             public RemoteCollectionItems createFromParcel(@NonNull Parcel source) {
-                return new RemoteCollectionItems(source);
+                return new RemoteCollectionItems(source, /* hierarchyRoot= */ null);
             }
 
             @NonNull
@@ -6733,13 +7600,116 @@ public class RemoteViews implements Parcelable, Filter {
                         Math.max(mViewTypeCount, 1));
             }
         }
+
+        /**
+         * See {@link RemoteViews#visitUris(Consumer)}.
+         */
+        private void visitUris(@NonNull Consumer<Uri> visitor) {
+            for (RemoteViews view : mViews) {
+                view.visitUris(visitor);
+            }
+        }
+    }
+
+    /**
+     * A data parcel that carries the instructions to draw the RemoteViews, as an alternative to
+     * XML layout.
+     */
+    @FlaggedApi(FLAG_DRAW_DATA_PARCEL)
+    public static final class DrawInstructions {
+
+        private static final long VERSION = 1L;
+
+        @NonNull
+        final List<byte[]> mInstructions;
+
+        private DrawInstructions() {
+            throw new UnsupportedOperationException(
+                    "DrawInstructions cannot be instantiate without instructions");
+        }
+
+        private DrawInstructions(@NonNull List<byte[]> instructions) {
+            // Create and retain an immutable copy of given instructions.
+            mInstructions = new ArrayList<>(instructions.size());
+            for (byte[] instruction : instructions) {
+                final int len = instruction.length;
+                final byte[] target = new byte[len];
+                System.arraycopy(instruction, 0, target, 0, len);
+                mInstructions.add(target);
+            }
+        }
+
+        @Nullable
+        private static DrawInstructions readFromParcel(@NonNull final Parcel in) {
+            int size = in.readInt();
+            if (size == -1) {
+                return null;
+            }
+            byte[] instruction;
+            final List<byte[]> instructions = new ArrayList<>(size);
+            for (int i = 0; i < size; i++) {
+                instruction = in.readBlob();
+                instructions.add(instruction);
+            }
+            return new DrawInstructions(instructions);
+        }
+
+        private static void writeToParcel(@Nullable final DrawInstructions drawInstructions,
+                @NonNull final Parcel dest, final int flags) {
+            if (drawInstructions == null) {
+                dest.writeInt(-1);
+                return;
+            }
+            final List<byte[]> instructions = drawInstructions.mInstructions;
+            dest.writeInt(instructions.size());
+            for (byte[] instruction : instructions) {
+                dest.writeBlob(instruction);
+            }
+        }
+
+        /**
+         * Version number of {@link DrawInstructions} currently supported.
+         */
+        @FlaggedApi(FLAG_DRAW_DATA_PARCEL)
+        public static long getSupportedVersion() {
+            return VERSION;
+        }
+
+        /**
+         * Builder class for {@link DrawInstructions} objects.
+         */
+        @FlaggedApi(FLAG_DRAW_DATA_PARCEL)
+        public static final class Builder {
+
+            private final List<byte[]> mInstructions;
+
+            /**
+             * Constructor.
+             *
+             * @param instructions Information to draw the RemoteViews.
+             */
+            @FlaggedApi(FLAG_DRAW_DATA_PARCEL)
+            public Builder(@NonNull final List<byte[]> instructions) {
+                mInstructions = new ArrayList<>(instructions);
+            }
+
+            /**
+             * Creates a {@link DrawInstructions} instance.
+             */
+            @NonNull
+            @FlaggedApi(FLAG_DRAW_DATA_PARCEL)
+            public DrawInstructions build() {
+                return new DrawInstructions(mInstructions);
+            }
+        }
     }
 
     /**
      * Get the ID of the top-level view of the XML layout, if set using
      * {@link RemoteViews#RemoteViews(String, int, int)}.
      */
-    public @IdRes int getViewId() {
+    @IdRes
+    public int getViewId() {
         return mViewId;
     }
 
@@ -6822,5 +7792,34 @@ public class RemoteViews implements Parcelable, Filter {
         viewId <<= 8;
         viewId |= childId;
         return viewId;
+    }
+
+    @Nullable
+    private static Pair<String, Integer> getPackageUserKey(@Nullable ApplicationInfo info) {
+        if (info == null || info.packageName ==  null) return null;
+        return Pair.create(info.packageName, info.uid);
+    }
+
+    private HierarchyRootData getHierarchyRootData() {
+        return new HierarchyRootData(mBitmapCache, mCollectionCache,
+                mApplicationInfoCache, mClassCookies);
+    }
+
+    private static final class HierarchyRootData {
+        final BitmapCache mBitmapCache;
+        final RemoteCollectionCache mRemoteCollectionCache;
+        final ApplicationInfoCache mApplicationInfoCache;
+        final Map<Class, Object> mClassCookies;
+
+        HierarchyRootData(
+                BitmapCache bitmapCache,
+                RemoteCollectionCache remoteCollectionCache,
+                ApplicationInfoCache applicationInfoCache,
+                Map<Class, Object> classCookies) {
+            mBitmapCache = bitmapCache;
+            mRemoteCollectionCache = remoteCollectionCache;
+            mApplicationInfoCache = applicationInfoCache;
+            mClassCookies = classCookies;
+        }
     }
 }

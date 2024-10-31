@@ -19,6 +19,7 @@ package com.android.server.policy.role;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.UserIdInt;
+import android.app.admin.DevicePolicyManagerInternal;
 import android.app.role.RoleManager;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -29,12 +30,12 @@ import android.content.pm.PackageManagerInternal;
 import android.content.pm.ResolveInfo;
 import android.content.pm.Signature;
 import android.os.Environment;
+import android.permission.flags.Flags;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.AtomicFile;
-import android.util.PackageUtils;
 import android.util.Slog;
 import android.util.Xml;
 
@@ -43,15 +44,20 @@ import com.android.internal.util.CollectionUtils;
 import com.android.server.LocalServices;
 import com.android.server.role.RoleServicePlatformHelper;
 
+import libcore.util.HexEncoding;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import java.io.ByteArrayOutputStream;
+import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
@@ -299,14 +305,23 @@ public class RoleServicePlatformHelperImpl implements RoleServicePlatformHelper 
     public String computePackageStateHash(@UserIdInt int userId) {
         PackageManagerInternal packageManagerInternal = LocalServices.getService(
                 PackageManagerInternal.class);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
+        DevicePolicyManagerInternal devicePolicyManagerInternal = LocalServices.getService(
+                DevicePolicyManagerInternal.class);
+        final MessageDigestOutputStream mdos = new MessageDigestOutputStream();
+
+        DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(mdos));
         packageManagerInternal.forEachInstalledPackage(pkg -> {
             try {
                 dataOutputStream.writeUTF(pkg.getPackageName());
                 dataOutputStream.writeLong(pkg.getLongVersionCode());
                 dataOutputStream.writeInt(packageManagerInternal.getApplicationEnabledState(
                         pkg.getPackageName(), userId));
+
+                final Set<String> requestedPermissions = pkg.getRequestedPermissions();
+                dataOutputStream.writeInt(requestedPermissions.size());
+                for (String permissionName : requestedPermissions) {
+                    dataOutputStream.writeUTF(permissionName);
+                }
 
                 final ArraySet<String> enabledComponents =
                         packageManagerInternal.getEnabledComponents(pkg.getPackageName(), userId);
@@ -323,14 +338,76 @@ public class RoleServicePlatformHelperImpl implements RoleServicePlatformHelper 
                     dataOutputStream.writeUTF(disabledComponents.valueAt(i));
                 }
 
-                for (final Signature signature : pkg.getSigningDetails().signatures) {
+                for (final Signature signature : pkg.getSigningDetails().getSignatures()) {
                     dataOutputStream.write(signature.toByteArray());
                 }
             } catch (IOException e) {
-                // Never happens for ByteArrayOutputStream and DataOutputStream.
+                // Never happens for MessageDigestOutputStream and DataOutputStream.
                 throw new AssertionError(e);
             }
         }, userId);
-        return PackageUtils.computeSha256Digest(byteArrayOutputStream.toByteArray());
+        try {
+            String deviceOwner= "";
+            if (devicePolicyManagerInternal != null) {
+                if (devicePolicyManagerInternal.getDeviceOwnerUserId() == userId) {
+                    ComponentName deviceOwnerComponent =
+                        devicePolicyManagerInternal.getDeviceOwnerComponent(false);
+                    if (deviceOwnerComponent != null) {
+                        deviceOwner = deviceOwnerComponent.getPackageName();
+                    }
+                }
+            }
+            dataOutputStream.writeUTF(deviceOwner);
+            String profileOwner = "";
+            if (devicePolicyManagerInternal != null) {
+                ComponentName profileOwnerComponent =
+                    devicePolicyManagerInternal.getProfileOwnerAsUser(userId);
+                if (profileOwnerComponent != null) {
+                    profileOwner = profileOwnerComponent.getPackageName();
+                }
+            }
+            dataOutputStream.writeUTF(profileOwner);
+            dataOutputStream.writeInt(Settings.Global.getInt(mContext.getContentResolver(),
+                    Settings.Global.DEVICE_DEMO_MODE, 0));
+            dataOutputStream.writeBoolean(Flags.walletRoleEnabled());
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            // Never happens for MessageDigestOutputStream and DataOutputStream.
+            throw new AssertionError(e);
+        }
+        return mdos.getDigestAsString();
+    }
+
+    private static class MessageDigestOutputStream extends OutputStream {
+        private final MessageDigest mMessageDigest;
+
+        MessageDigestOutputStream() {
+            try {
+                mMessageDigest = MessageDigest.getInstance("SHA256");
+            } catch (NoSuchAlgorithmException e) {
+                /* can't happen */
+                throw new RuntimeException("Failed to create MessageDigest", e);
+            }
+        }
+
+        @NonNull
+        String getDigestAsString() {
+            return HexEncoding.encodeToString(mMessageDigest.digest(), true /* uppercase */);
+        }
+
+        @Override
+        public void write(int b) throws IOException {
+            mMessageDigest.update((byte) b);
+        }
+
+        @Override
+        public void write(byte[] b) throws IOException {
+            mMessageDigest.update(b);
+        }
+
+        @Override
+        public void write(byte[] b, int off, int len) throws IOException {
+            mMessageDigest.update(b, off, len);
+        }
     }
 }

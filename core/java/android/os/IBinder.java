@@ -194,6 +194,7 @@ public interface IBinder {
      * Limit that should be placed on IPC sizes, in bytes, to keep them safely under the transaction
      * buffer limit.
      */
+    @android.ravenwood.annotation.RavenwoodKeep
     static int getSuggestedMaxIpcSizeBytes() {
         return MAX_IPC_SIZE;
     }
@@ -293,7 +294,10 @@ public interface IBinder {
      *
      * @return Returns the result from {@link Binder#onTransact}.  A successful call
      * generally returns true; false generally means the transaction code was not
-     * understood.
+     * understood.  For a oneway call to a different process false should never be
+     * returned.  If a oneway call is made to code in the same process (usually to
+     * a C++ or Rust implementation), then there are no oneway semantics, and
+     * false can still be returned.
      */
     public boolean transact(int code, @NonNull Parcel data, @Nullable Parcel reply, int flags)
         throws RemoteException;
@@ -301,16 +305,31 @@ public interface IBinder {
     /**
      * Interface for receiving a callback when the process hosting an IBinder
      * has gone away.
-     * 
+     *
      * @see #linkToDeath
      */
     public interface DeathRecipient {
         public void binderDied();
 
         /**
-         * @hide
+         * The function called when the process hosting an IBinder
+         * has gone away.
+         *
+         * This callback will be called from any binder thread like any other binder
+         * transaction. If the process receiving this notification is multithreaded
+         * then synchronization may be required because other threads may be executing
+         * at the same time.
+         *
+         * No locks are held in libbinder when {@link binderDied} is called.
+         *
+         * There is no need to call {@link unlinkToDeath} in the binderDied callback.
+         * The binder is already dead so {@link unlinkToDeath} is a no-op.
+         * It will be unlinked when the last local reference of that binder proxy is
+         * dropped.
+         *
+         * @param who The IBinder that has become invalid
          */
-        default void binderDied(IBinder who) {
+        default void binderDied(@NonNull IBinder who) {
             binderDied();
         }
     }

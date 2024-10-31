@@ -20,8 +20,8 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.StringRes;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
-import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
@@ -33,6 +33,7 @@ import com.android.internal.util.Parcelling.BuiltIn.ForStringSet;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -182,7 +183,7 @@ public class PermissionInfo extends PackageItemInfo implements Parcelable {
      *
      * @hide
      */
-    @TestApi
+    @SystemApi
     public static final int PROTECTION_FLAG_VENDOR_PRIVILEGED = 0x8000;
 
     /**
@@ -211,6 +212,8 @@ public class PermissionInfo extends PackageItemInfo implements Parcelable {
      * Additional flag for {@link #protectionLevel}, corresponding to the
      * {@code documenter} value of {@link android.R.attr#protectionLevel}.
      *
+     * @deprecated this protectionLevel is obsolete. Permissions previously granted
+     * through this protectionLevel have been migrated to use <code>role</code> instead
      * @hide
      */
     @SystemApi
@@ -247,6 +250,16 @@ public class PermissionInfo extends PackageItemInfo implements Parcelable {
 
     /**
      * Additional flag for {@link #protectionLevel}, corresponding
+     * to the <code>module</code> value of
+     * {@link android.R.attr#protectionLevel}.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final int PROTECTION_FLAG_MODULE = 0x400000;
+
+    /**
+     * Additional flag for {@link #protectionLevel}, corresponding
      * to the <code>companion</code> value of
      * {@link android.R.attr#protectionLevel}.
      *
@@ -259,6 +272,10 @@ public class PermissionInfo extends PackageItemInfo implements Parcelable {
      * Additional flag for {@link #protectionLevel}, corresponding
      * to the <code>retailDemo</code> value of
      * {@link android.R.attr#protectionLevel}.
+     *
+     * @deprecated This flag has been replaced by the
+     *             {@link android.R.string#config_defaultRetailDemo retail demo role} and is a
+     *             no-op since {@link Build.VERSION_CODES#VANILLA_ICE_CREAM}.
      *
      * @hide
      */
@@ -309,7 +326,6 @@ public class PermissionInfo extends PackageItemInfo implements Parcelable {
             PROTECTION_FLAG_OEM,
             PROTECTION_FLAG_VENDOR_PRIVILEGED,
             PROTECTION_FLAG_SYSTEM_TEXT_CLASSIFIER,
-            PROTECTION_FLAG_DOCUMENTER,
             PROTECTION_FLAG_CONFIGURATOR,
             PROTECTION_FLAG_INCIDENT_REPORT_APPROVER,
             PROTECTION_FLAG_APP_PREDICTOR,
@@ -318,6 +334,7 @@ public class PermissionInfo extends PackageItemInfo implements Parcelable {
             PROTECTION_FLAG_RECENTS,
             PROTECTION_FLAG_ROLE,
             PROTECTION_FLAG_KNOWN_SIGNER,
+            PROTECTION_FLAG_MODULE,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface ProtectionFlags {}
@@ -362,6 +379,9 @@ public class PermissionInfo extends PackageItemInfo implements Parcelable {
     /**
      * The group this permission is a part of, as per
      * {@link android.R.attr#permissionGroup}.
+     * <p>
+     * The actual grouping of platform-defined runtime permissions is subject to change and can be
+     * queried with {@link PackageManager#getGroupOfPlatformPermission}.
      */
     public @Nullable String group;
 
@@ -473,7 +493,8 @@ public class PermissionInfo extends PackageItemInfo implements Parcelable {
      */
     public @Nullable CharSequence nonLocalizedDescription;
 
-    private static ForStringSet sForStringSet = Parcelling.Cache.getOrCreate(ForStringSet.class);
+    private static final ForStringSet sForStringSet =
+            Parcelling.Cache.getOrCreate(ForStringSet.class);
 
     /**
      * A {@link Set} of trusted signing certificate digests. If this permission has the {@link
@@ -482,7 +503,10 @@ public class PermissionInfo extends PackageItemInfo implements Parcelable {
      *
      * @hide
      */
-    public @Nullable Set<String> knownCerts;
+    // Already being used as mutable and most other fields in this class are also mutable.
+    @SuppressLint("MutableBareField")
+    @SystemApi
+    public @NonNull Set<String> knownCerts = Collections.emptySet();
 
     /** @hide */
     public static int fixProtectionLevel(int level) {
@@ -561,9 +585,6 @@ public class PermissionInfo extends PackageItemInfo implements Parcelable {
         if ((level & PermissionInfo.PROTECTION_FLAG_SYSTEM_TEXT_CLASSIFIER) != 0) {
             protLevel.append("|textClassifier");
         }
-        if ((level & PermissionInfo.PROTECTION_FLAG_DOCUMENTER) != 0) {
-            protLevel.append("|documenter");
-        }
         if ((level & PROTECTION_FLAG_CONFIGURATOR) != 0) {
             protLevel.append("|configurator");
         }
@@ -588,7 +609,44 @@ public class PermissionInfo extends PackageItemInfo implements Parcelable {
         if ((level & PermissionInfo.PROTECTION_FLAG_KNOWN_SIGNER) != 0) {
             protLevel.append("|knownSigner");
         }
+        if ((level & PermissionInfo.PROTECTION_FLAG_MODULE) != 0) {
+            protLevel.append(("|module"));
+        }
         return protLevel.toString();
+    }
+
+    /** @hide */
+    public static @NonNull String flagsToString(@Flags int flags) {
+        StringBuilder sb = new StringBuilder("[");
+        while (flags != 0) {
+            final int flag = 1 << Integer.numberOfTrailingZeros(flags);
+            flags &= ~flag;
+            switch (flag) {
+                case PermissionInfo.FLAG_COSTS_MONEY:
+                    sb.append("costsMoney");
+                    break;
+                case PermissionInfo.FLAG_REMOVED:
+                    sb.append("removed");
+                    break;
+                case PermissionInfo.FLAG_HARD_RESTRICTED:
+                    sb.append("hardRestricted");
+                    break;
+                case PermissionInfo.FLAG_SOFT_RESTRICTED:
+                    sb.append("softRestricted");
+                    break;
+                case PermissionInfo.FLAG_IMMUTABLY_RESTRICTED:
+                    sb.append("immutablyRestricted");
+                    break;
+                case PermissionInfo.FLAG_INSTALLED:
+                    sb.append("installed");
+                    break;
+                default: sb.append(flag);
+            }
+            if (flags != 0) {
+                sb.append("|");
+            }
+        }
+        return sb.append("]").toString();
     }
 
     /**
@@ -619,6 +677,8 @@ public class PermissionInfo extends PackageItemInfo implements Parcelable {
         descriptionRes = orig.descriptionRes;
         requestRes = orig.requestRes;
         nonLocalizedDescription = orig.nonLocalizedDescription;
+        // Note that knownCerts wasn't properly copied before Android U.
+        knownCerts = orig.knownCerts;
     }
 
     /**

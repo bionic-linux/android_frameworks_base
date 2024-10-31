@@ -22,6 +22,7 @@ import android.annotation.TestApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.VibrationEffect;
+import android.os.VibratorInfo;
 
 import com.android.internal.util.Preconditions;
 
@@ -35,6 +36,13 @@ import java.util.Objects;
  */
 @TestApi
 public final class PrimitiveSegment extends VibrationEffectSegment {
+
+    /** @hide */
+    public static final float DEFAULT_SCALE = 1f;
+
+    /** @hide */
+    public static final int DEFAULT_DELAY_MILLIS = 0;
+
     private final int mPrimitiveId;
     private final float mScale;
     private final int mDelay;
@@ -67,37 +75,63 @@ public final class PrimitiveSegment extends VibrationEffectSegment {
         return -1;
     }
 
+    /** @hide */
     @Override
-    public boolean hasNonZeroAmplitude() {
-        // Every primitive plays a vibration with a non-zero amplitude, even at scale == 0.
+    public boolean areVibrationFeaturesSupported(@NonNull VibratorInfo vibratorInfo) {
+        return vibratorInfo.isPrimitiveSupported(mPrimitiveId);
+    }
+
+    /** @hide */
+    @Override
+    public boolean isHapticFeedbackCandidate() {
         return true;
     }
 
+    /** @hide */
     @NonNull
     @Override
     public PrimitiveSegment resolve(int defaultAmplitude) {
         return this;
     }
 
+    /** @hide */
     @NonNull
     @Override
     public PrimitiveSegment scale(float scaleFactor) {
-        return new PrimitiveSegment(mPrimitiveId, VibrationEffect.scale(mScale, scaleFactor),
-                mDelay);
+        float newScale = VibrationEffect.scale(mScale, scaleFactor);
+        if (Float.compare(mScale, newScale) == 0) {
+            return this;
+        }
+
+        return new PrimitiveSegment(mPrimitiveId, newScale, mDelay);
     }
 
+    /** @hide */
+    @NonNull
+    @Override
+    public PrimitiveSegment scaleLinearly(float scaleFactor) {
+        float newScale = VibrationEffect.scaleLinearly(mScale, scaleFactor);
+        if (Float.compare(mScale, newScale) == 0) {
+            return this;
+        }
+
+        return new PrimitiveSegment(mPrimitiveId, newScale, mDelay);
+    }
+
+    /** @hide */
     @NonNull
     @Override
     public PrimitiveSegment applyEffectStrength(int effectStrength) {
         return this;
     }
 
+    /** @hide */
     @Override
     public void validate() {
         Preconditions.checkArgumentInRange(mPrimitiveId, VibrationEffect.Composition.PRIMITIVE_NOOP,
                 VibrationEffect.Composition.PRIMITIVE_LOW_TICK, "primitiveId");
         Preconditions.checkArgumentInRange(mScale, 0f, 1f, "scale");
-        Preconditions.checkArgumentNonnegative(mDelay, "primitive delay should be >= 0");
+        VibrationEffectSegment.checkDurationArgument(mDelay, "delay");
     }
 
     @Override
@@ -120,6 +154,13 @@ public final class PrimitiveSegment extends VibrationEffectSegment {
                 + ", scale=" + mScale
                 + ", delay=" + mDelay
                 + '}';
+    }
+
+    /** @hide */
+    @Override
+    public String toDebugString() {
+        return String.format("Primitive=%s(scale=%.2f, delay=%dms)",
+                VibrationEffect.Composition.primitiveToString(mPrimitiveId), mScale, mDelay);
     }
 
     @Override

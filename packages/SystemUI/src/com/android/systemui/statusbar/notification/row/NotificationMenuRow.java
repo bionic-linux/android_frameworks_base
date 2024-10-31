@@ -16,7 +16,6 @@
 
 package com.android.systemui.statusbar.notification.row;
 
-import static android.provider.Settings.Secure.SHOW_NOTIFICATION_SNOOZE;
 import static android.view.HapticFeedbackConstants.CLOCK_TICK;
 
 import static com.android.systemui.SwipeHelper.SWIPED_FAR_ENOUGH_SIZE_FRACTION;
@@ -40,10 +39,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 
+import com.android.app.animation.Interpolators;
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.systemui.R;
-import com.android.systemui.animation.Interpolators;
 import com.android.systemui.plugins.statusbar.NotificationMenuRowPlugin;
+import com.android.systemui.res.R;
 import com.android.systemui.statusbar.AlphaOptimizedImageView;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
 import com.android.systemui.statusbar.notification.people.PeopleNotificationIdentifier;
@@ -56,9 +55,6 @@ import java.util.Map;
 
 public class NotificationMenuRow implements NotificationMenuRowPlugin, View.OnClickListener,
         ExpandableNotificationRow.LayoutListener {
-
-    private static final boolean DEBUG = false;
-    private static final String TAG = "swipe";
 
     // Notification must be swiped at least this fraction of a single menu item to show menu
     private static final float SWIPED_FAR_ENOUGH_MENU_FRACTION = 0.25f;
@@ -82,7 +78,6 @@ public class NotificationMenuRow implements NotificationMenuRowPlugin, View.OnCl
     private ArrayList<MenuItem> mRightMenuItems;
     private final Map<View, MenuItem> mMenuItemsByView = new ArrayMap<>();
     private OnMenuEventListener mMenuListener;
-    private boolean mDismissRtl;
 
     private ValueAnimator mFadeAnimator;
     private boolean mAnimating;
@@ -247,7 +242,7 @@ public class NotificationMenuRow implements NotificationMenuRowPlugin, View.OnCl
     public void onLayout() {
         mIconsPlaced = false; // Force icons to be re-placed
         setMenuLocation();
-        mParent.removeListener();
+        mParent.setLayoutListener(null);
     }
 
     private void createMenuViews(boolean resetState) {
@@ -257,9 +252,7 @@ public class NotificationMenuRow implements NotificationMenuRowPlugin, View.OnCl
         mLeftMenuItems.clear();
         mRightMenuItems.clear();
 
-        boolean showSnooze = Settings.Secure.getInt(mContext.getContentResolver(),
-                SHOW_NOTIFICATION_SNOOZE, 0) == 1;
-
+        final boolean showSnooze = mParent.getShowSnooze();
         // Construct the menu items based on the notification
         if (showSnooze) {
             // Only show snooze for non-foreground notifications, and if the setting is on
@@ -302,12 +295,9 @@ public class NotificationMenuRow implements NotificationMenuRowPlugin, View.OnCl
         } else {
             mMenuContainer = new FrameLayout(mContext);
         }
-        // The setting can win (which is needed for tests) but if not set, then use the flag
         final int showDismissSetting =  Settings.Global.getInt(mContext.getContentResolver(),
-                Settings.Global.SHOW_NEW_NOTIF_DISMISS, -1);
-        final boolean newFlowHideShelf = showDismissSetting == -1
-                ? mContext.getResources().getBoolean(R.bool.flag_notif_updates)
-                : showDismissSetting == 1;
+                Settings.Global.SHOW_NEW_NOTIF_DISMISS, /* default = */ 1);
+        final boolean newFlowHideShelf = showDismissSetting == 1;
         if (newFlowHideShelf) {
             return;
         }
@@ -785,14 +775,6 @@ public class NotificationMenuRow implements NotificationMenuRowPlugin, View.OnCl
     @Override
     public boolean canBeDismissed() {
         return getParent().canViewBeDismissed();
-    }
-
-    @Override
-    public void setDismissRtl(boolean dismissRtl) {
-        mDismissRtl = dismissRtl;
-        if (mMenuContainer != null) {
-            createMenuViews(true);
-        }
     }
 
     public static class NotificationMenuItem implements MenuItem {

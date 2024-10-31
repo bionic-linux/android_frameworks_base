@@ -37,17 +37,23 @@ namespace android::gnss {
 class GnssMeasurementInterface {
 public:
     virtual ~GnssMeasurementInterface() {}
-    virtual jboolean setCallback(const std::unique_ptr<GnssMeasurementCallback>& callback,
-                                 bool enableFullTracking, bool enableCorrVecOutputs) = 0;
+    virtual jboolean setCallback(
+            const std::unique_ptr<GnssMeasurementCallback>& callback,
+            const android::hardware::gnss::IGnssMeasurementInterface::Options& options) = 0;
     virtual jboolean close() = 0;
+    virtual int getInterfaceVersion() = 0;
 };
 
 class GnssMeasurement : public GnssMeasurementInterface {
 public:
     GnssMeasurement(const sp<android::hardware::gnss::IGnssMeasurementInterface>& iGnssMeasurement);
-    jboolean setCallback(const std::unique_ptr<GnssMeasurementCallback>& callback,
-                         bool enableFullTracking, bool enableCorrVecOutputs) override;
+    jboolean setCallback(
+            const std::unique_ptr<GnssMeasurementCallback>& callback,
+            const android::hardware::gnss::IGnssMeasurementInterface::Options& options) override;
     jboolean close() override;
+    int getInterfaceVersion() override {
+        return mIGnssMeasurement->getInterfaceVersion();
+    }
 
 private:
     const sp<android::hardware::gnss::IGnssMeasurementInterface> mIGnssMeasurement;
@@ -57,9 +63,13 @@ class GnssMeasurement_V1_0 : public GnssMeasurementInterface {
 public:
     GnssMeasurement_V1_0(
             const sp<android::hardware::gnss::V1_0::IGnssMeasurement>& iGnssMeasurement);
-    jboolean setCallback(const std::unique_ptr<GnssMeasurementCallback>& callback,
-                         bool enableFullTracking, bool enableCorrVecOutputs) override;
+    jboolean setCallback(
+            const std::unique_ptr<GnssMeasurementCallback>& callback,
+            const android::hardware::gnss::IGnssMeasurementInterface::Options& options) override;
     jboolean close() override;
+    int getInterfaceVersion() override {
+        return 0;
+    }
 
 private:
     const sp<android::hardware::gnss::V1_0::IGnssMeasurement> mIGnssMeasurement_V1_0;
@@ -69,8 +79,9 @@ class GnssMeasurement_V1_1 : public GnssMeasurement_V1_0 {
 public:
     GnssMeasurement_V1_1(
             const sp<android::hardware::gnss::V1_1::IGnssMeasurement>& iGnssMeasurement);
-    jboolean setCallback(const std::unique_ptr<GnssMeasurementCallback>& callback,
-                         bool enableFullTracking, bool enableCorrVecOutputs) override;
+    jboolean setCallback(
+            const std::unique_ptr<GnssMeasurementCallback>& callback,
+            const android::hardware::gnss::IGnssMeasurementInterface::Options& options) override;
 
 private:
     const sp<android::hardware::gnss::V1_1::IGnssMeasurement> mIGnssMeasurement_V1_1;
@@ -80,8 +91,9 @@ class GnssMeasurement_V2_0 : public GnssMeasurement_V1_1 {
 public:
     GnssMeasurement_V2_0(
             const sp<android::hardware::gnss::V2_0::IGnssMeasurement>& iGnssMeasurement);
-    jboolean setCallback(const std::unique_ptr<GnssMeasurementCallback>& callback,
-                         bool enableFullTracking, bool enableCorrVecOutputs) override;
+    jboolean setCallback(
+            const std::unique_ptr<GnssMeasurementCallback>& callback,
+            const android::hardware::gnss::IGnssMeasurementInterface::Options& options) override;
 
 private:
     const sp<android::hardware::gnss::V2_0::IGnssMeasurement> mIGnssMeasurement_V2_0;
@@ -91,8 +103,9 @@ class GnssMeasurement_V2_1 : public GnssMeasurement_V2_0 {
 public:
     GnssMeasurement_V2_1(
             const sp<android::hardware::gnss::V2_1::IGnssMeasurement>& iGnssMeasurement);
-    jboolean setCallback(const std::unique_ptr<GnssMeasurementCallback>& callback,
-                         bool enableFullTracking, bool enableCorrVecOutputs) override;
+    jboolean setCallback(
+            const std::unique_ptr<GnssMeasurementCallback>& callback,
+            const android::hardware::gnss::IGnssMeasurementInterface::Options& options) override;
 
 private:
     const sp<android::hardware::gnss::V2_1::IGnssMeasurement> mIGnssMeasurement_V2_1;

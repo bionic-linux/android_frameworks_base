@@ -38,6 +38,8 @@ public class ShadowBluetoothAdapter extends org.robolectric.shadows.ShadowBlueto
     private List<BluetoothDevice> mMostRecentlyConnectedDevices;
     private BluetoothProfile.ServiceListener mServiceListener;
     private ParcelUuid[] mParcelUuids;
+    private int mIsLeAudioBroadcastSourceSupported;
+    private int mIsLeAudioBroadcastAssistantSupported;
 
     @Implementation
     protected boolean getProfileProxy(Context context, BluetoothProfile.ServiceListener listener,
@@ -69,7 +71,7 @@ public class ShadowBluetoothAdapter extends org.robolectric.shadows.ShadowBlueto
     }
 
     @Implementation
-    protected boolean removeActiveDevice(@BluetoothAdapter.ActiveDeviceUse int profiles) {
+    protected boolean removeActiveDevice(int profiles) {
         if (profiles != ACTIVE_DEVICE_AUDIO && profiles != ACTIVE_DEVICE_PHONE_CALL
                 && profiles != ACTIVE_DEVICE_ALL) {
             return false;
@@ -78,8 +80,7 @@ public class ShadowBluetoothAdapter extends org.robolectric.shadows.ShadowBlueto
     }
 
     @Implementation
-    protected boolean setActiveDevice(BluetoothDevice device,
-            @BluetoothAdapter.ActiveDeviceUse int profiles) {
+    protected boolean setActiveDevice(BluetoothDevice device, int profiles) {
         if (device == null) {
             return false;
         }
@@ -97,5 +98,23 @@ public class ShadowBluetoothAdapter extends org.robolectric.shadows.ShadowBlueto
 
     public void setUuids(ParcelUuid[] uuids) {
         mParcelUuids = uuids;
+    }
+
+    @Implementation
+    protected int isLeAudioBroadcastSourceSupported() {
+        return mIsLeAudioBroadcastSourceSupported;
+    }
+
+    public void setIsLeAudioBroadcastSourceSupported(int isSupported) {
+        mIsLeAudioBroadcastSourceSupported = isSupported;
+    }
+
+    @Implementation
+    protected int isLeAudioBroadcastAssistantSupported() {
+        return mIsLeAudioBroadcastAssistantSupported;
+    }
+
+    public void setIsLeAudioBroadcastAssistantSupported(int isSupported) {
+        mIsLeAudioBroadcastAssistantSupported = isSupported;
     }
 }

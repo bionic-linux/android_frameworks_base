@@ -40,7 +40,7 @@ interface IOverlayManager {
      *         requested user, an empty map is returned.
      */
     @UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
-    Map getAllOverlays(in int userId);
+    Map<String, List<OverlayInfo>> getAllOverlays(in int userId);
 
     /**
      * Returns information about all overlays for the given target package for
@@ -52,7 +52,7 @@ interface IOverlayManager {
      * @return A list of OverlayInfo objects; if no overlays exist for the
      *         requested package, an empty list is returned.
      */
-    List getOverlayInfosForTarget(in String targetPackageName, in int userId);
+    List<OverlayInfo> getOverlayInfosForTarget(in String targetPackageName, in int userId);
 
     /**
      * Returns information about the overlay with the given package name for the
@@ -190,4 +190,15 @@ interface IOverlayManager {
      * @throws SecurityException if the transaction failed
      */
     void commit(in OverlayManagerTransaction transaction);
+
+    /**
+     * Returns a String of a list of partitions from low priority to high.
+     */
+    String getPartitionOrder();
+
+    /**
+     * Returns a boolean which represent whether the partition list is sorted by default.
+     * If not then it should be sorted by /product/overlay/partition_order.xml.
+     */
+    boolean isDefaultPartitionOrder();
 }

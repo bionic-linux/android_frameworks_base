@@ -33,18 +33,24 @@ import android.app.admin.IKeyguardCallback;
 import android.app.admin.IKeyguardClient;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.hardware.display.DisplayManager;
+import android.os.Binder;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper;
 import android.testing.TestableLooper.RunWithLooper;
 import android.testing.ViewUtils;
+import android.view.Display;
 import android.view.SurfaceControlViewHost;
 import android.view.SurfaceView;
+import android.view.View;
 
 import androidx.test.filters.SmallTest;
 
+import com.android.keyguard.KeyguardSecurityModel.SecurityMode;
 import com.android.systemui.SysuiTestCase;
+import com.android.systemui.user.domain.interactor.SelectedUserInteractor;
 
 import org.junit.After;
 import org.junit.Before;
@@ -59,7 +65,7 @@ import org.mockito.MockitoAnnotations;
 @SmallTest
 public class AdminSecondaryLockScreenControllerTest extends SysuiTestCase {
 
-    private static final int TARGET_USER_ID = KeyguardUpdateMonitor.getCurrentUser();
+    private static final int TARGET_USER_ID = 0;
 
     private AdminSecondaryLockScreenController mTestController;
     private ComponentName mComponentName;
@@ -76,13 +82,17 @@ public class AdminSecondaryLockScreenControllerTest extends SysuiTestCase {
     @Mock
     private KeyguardUpdateMonitor mUpdateMonitor;
     @Mock
+    private SelectedUserInteractor mSelectedUserInteractor;
+
     private SurfaceControlViewHost.SurfacePackage mSurfacePackage;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        when(mSelectedUserInteractor.getSelectedUserId()).thenReturn(TARGET_USER_ID);
 
         mKeyguardSecurityContainer = spy(new KeyguardSecurityContainer(mContext));
+        mKeyguardSecurityContainer.setId(View.generateViewId());
         ViewUtils.attachView(mKeyguardSecurityContainer);
 
         mTestableLooper = TestableLooper.get(this);
@@ -94,8 +104,14 @@ public class AdminSecondaryLockScreenControllerTest extends SysuiTestCase {
         when(mKeyguardClient.queryLocalInterface(anyString())).thenReturn(mKeyguardClient);
         when(mKeyguardClient.asBinder()).thenReturn(mKeyguardClient);
 
+        Display display = mContext.getSystemService(DisplayManager.class).getDisplay(
+                Display.DEFAULT_DISPLAY);
+        mSurfacePackage = (new SurfaceControlViewHost(mContext, display,
+                new Binder())).getSurfacePackage();
+
         mTestController = new AdminSecondaryLockScreenController.Factory(
-                mContext, mKeyguardSecurityContainer, mUpdateMonitor, mHandler)
+                mContext, mKeyguardSecurityContainer, mUpdateMonitor, mHandler,
+                mSelectedUserInteractor)
                 .create(mKeyguardCallback);
     }
 
@@ -190,7 +206,7 @@ public class AdminSecondaryLockScreenControllerTest extends SysuiTestCase {
 
     private void verifyViewDismissed(SurfaceView v) throws Exception {
         verify(mKeyguardSecurityContainer).removeView(v);
-        verify(mKeyguardCallback).dismiss(true, TARGET_USER_ID, true);
+        verify(mKeyguardCallback).dismiss(true, TARGET_USER_ID, true, SecurityMode.Invalid);
         assertThat(mContext.isBound(mComponentName)).isFalse();
     }
 }

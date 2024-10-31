@@ -24,20 +24,21 @@ import static org.mockito.Mockito.when;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 import android.content.Intent;
-import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper;
 import android.view.View;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.plugins.ActivityStarter;
+import com.android.systemui.settings.FakeDisplayTracker;
+import com.android.systemui.shade.ShadeController;
 import com.android.systemui.statusbar.ActionClickLogger;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.NotificationLockscreenUserManager;
 import com.android.systemui.statusbar.SysuiStatusBarStateController;
-import com.android.systemui.statusbar.notification.NotificationEntryManager;
-import com.android.systemui.statusbar.notification.collection.legacy.NotificationGroupManagerLegacy;
+import com.android.systemui.statusbar.notification.collection.render.GroupExpansionManager;
 import com.android.systemui.statusbar.notification.row.ExpandableNotificationRow;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
@@ -51,12 +52,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @SmallTest
-@RunWith(AndroidTestingRunner.class)
+@RunWith(AndroidJUnit4.class)
 @TestableLooper.RunWithLooper
 public class StatusBarRemoteInputCallbackTest extends SysuiTestCase {
-    @Mock private NotificationEntryManager mEntryManager;
     @Mock private DeviceProvisionedController mDeviceProvisionedController;
-    @Mock private ShadeController mShadeController;
+    @Mock private com.android.systemui.shade.ShadeController mShadeController;
     @Mock private NotificationLockscreenUserManager mNotificationLockscreenUserManager;
     @Mock private KeyguardStateController mKeyguardStateController;
     @Mock private SysuiStatusBarStateController mStatusBarStateController;
@@ -70,7 +70,6 @@ public class StatusBarRemoteInputCallbackTest extends SysuiTestCase {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mDependency.injectTestDependency(NotificationEntryManager.class, mEntryManager);
         mDependency.injectTestDependency(DeviceProvisionedController.class,
                 mDeviceProvisionedController);
         mDependency.injectTestDependency(ShadeController.class, mShadeController);
@@ -78,9 +77,10 @@ public class StatusBarRemoteInputCallbackTest extends SysuiTestCase {
                 mNotificationLockscreenUserManager);
 
         mRemoteInputCallback = spy(new StatusBarRemoteInputCallback(mContext,
-                mock(NotificationGroupManagerLegacy.class), mNotificationLockscreenUserManager,
+                mock(GroupExpansionManager.class), mNotificationLockscreenUserManager,
                 mKeyguardStateController, mStatusBarStateController, mStatusBarKeyguardViewManager,
-                mActivityStarter, mShadeController, new CommandQueue(mContext),
+                mActivityStarter, mShadeController,
+                new CommandQueue(mContext, new FakeDisplayTracker(mContext)),
                 mock(ActionClickLogger.class), mFakeExecutor));
         mRemoteInputCallback.mChallengeReceiver = mRemoteInputCallback.new ChallengeReceiver();
     }
@@ -101,6 +101,6 @@ public class StatusBarRemoteInputCallbackTest extends SysuiTestCase {
         mRemoteInputCallback.onLockedRemoteInput(
                 mock(ExpandableNotificationRow.class), mock(View.class));
 
-        verify(mStatusBarKeyguardViewManager).showGenericBouncer(true);
+        verify(mStatusBarKeyguardViewManager).showBouncer(true);
     }
 }

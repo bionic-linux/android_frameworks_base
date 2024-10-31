@@ -22,6 +22,7 @@ import android.os.SystemClock;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayDeque;
@@ -31,6 +32,8 @@ import java.util.Iterator;
 /**
  * @hide
  */
+// Exported to Mainline modules; cannot use annotations
+// @android.ravenwood.annotation.RavenwoodKeepWholeClass
 public final class LocalLog {
 
     private final Deque<String> mLog;
@@ -63,7 +66,8 @@ public final class LocalLog {
         if (mUseLocalTimestamps) {
             logLine = LocalDateTime.now() + " - " + msg;
         } else {
-            logLine = SystemClock.elapsedRealtime() + " / " + Instant.now() + " - " + msg;
+            logLine = Duration.ofMillis(SystemClock.elapsedRealtime())
+                    + " / " + Instant.now() + " - " + msg;
         }
         append(logLine);
     }

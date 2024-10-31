@@ -68,23 +68,44 @@ public class DividerHandleView extends View {
             };
 
     private final Paint mPaint = new Paint();
-    private final int mWidth;
-    private final int mHeight;
-    private final int mCircleDiameter;
+    private int mWidth;
+    private int mHeight;
+    private int mTouchingWidth;
+    private int mTouchingHeight;
     private int mCurrentWidth;
     private int mCurrentHeight;
     private AnimatorSet mAnimator;
     private boolean mTouching;
+    private boolean mHovering;
+    private int mHoveringWidth;
+    private int mHoveringHeight;
+    private boolean mIsLeftRightSplit;
 
     public DividerHandleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         mPaint.setColor(getResources().getColor(R.color.docked_divider_handle, null));
         mPaint.setAntiAlias(true);
-        mWidth = getResources().getDimensionPixelSize(R.dimen.docked_divider_handle_width);
-        mHeight = getResources().getDimensionPixelSize(R.dimen.docked_divider_handle_height);
+        updateDimens();
+    }
+
+    private void updateDimens() {
+        mWidth = getResources().getDimensionPixelSize(mIsLeftRightSplit
+                ? R.dimen.split_divider_handle_height
+                : R.dimen.split_divider_handle_width);
+        mHeight = getResources().getDimensionPixelSize(mIsLeftRightSplit
+                ? R.dimen.split_divider_handle_width
+                : R.dimen.split_divider_handle_height);
         mCurrentWidth = mWidth;
         mCurrentHeight = mHeight;
-        mCircleDiameter = (mWidth + mHeight) / 3;
+        mTouchingWidth = mWidth > mHeight ? mWidth / 2 : mWidth;
+        mTouchingHeight = mHeight > mWidth ? mHeight / 2 : mHeight;
+        mHoveringWidth = mWidth > mHeight ? ((int) (mWidth * 1.5f)) : mWidth;
+        mHoveringHeight = mHeight > mWidth ? ((int) (mHeight * 1.5f)) : mHeight;
+    }
+
+    void setIsLeftRightSplit(boolean isLeftRightSplit) {
+        mIsLeftRightSplit = isLeftRightSplit;
+        updateDimens();
     }
 
     /** Sets touching state for this handle view. */
@@ -92,24 +113,32 @@ public class DividerHandleView extends View {
         if (touching == mTouching) {
             return;
         }
+        setInputState(touching, animate, mTouchingWidth, mTouchingHeight);
+        mTouching = touching;
+    }
+
+    /** Sets hovering state for this handle view. */
+    public void setHovering(boolean hovering, boolean animate) {
+        if (hovering == mHovering) {
+            return;
+        }
+        setInputState(hovering, animate, mHoveringWidth, mHoveringHeight);
+        mHovering = hovering;
+    }
+
+    private void setInputState(boolean stateOn, boolean animate, int stateWidth, int stateHeight) {
         if (mAnimator != null) {
             mAnimator.cancel();
             mAnimator = null;
         }
         if (!animate) {
-            if (touching) {
-                mCurrentWidth = mCircleDiameter;
-                mCurrentHeight = mCircleDiameter;
-            } else {
-                mCurrentWidth = mWidth;
-                mCurrentHeight = mHeight;
-            }
+            mCurrentWidth = stateOn ? stateWidth : mWidth;
+            mCurrentHeight = stateOn ? stateHeight : mHeight;
             invalidate();
         } else {
-            animateToTarget(touching ? mCircleDiameter : mWidth,
-                    touching ? mCircleDiameter : mHeight, touching);
+            animateToTarget(stateOn ? stateWidth : mWidth,
+                    stateOn ? stateHeight : mHeight, stateOn);
         }
-        mTouching = touching;
     }
 
     private void animateToTarget(int targetWidth, int targetHeight, boolean touching) {

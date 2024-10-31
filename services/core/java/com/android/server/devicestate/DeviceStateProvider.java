@@ -16,24 +16,87 @@
 
 package com.android.server.devicestate;
 
-import static android.hardware.devicestate.DeviceStateManager.MAXIMUM_DEVICE_STATE;
-import static android.hardware.devicestate.DeviceStateManager.MINIMUM_DEVICE_STATE;
+import static android.hardware.devicestate.DeviceStateManager.MAXIMUM_DEVICE_STATE_IDENTIFIER;
+import static android.hardware.devicestate.DeviceStateManager.MINIMUM_DEVICE_STATE_IDENTIFIER;
 
+import android.annotation.IntDef;
 import android.annotation.IntRange;
+import android.hardware.devicestate.DeviceState;
+import android.util.Dumpable;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
- * Responsible for providing the set of supported {@link DeviceState device states} as well as the
- * current device state.
+ * Responsible for providing the set of supported {@link DeviceState.Configuration device states} as
+ * well as the current device state.
  *
  * @see DeviceStatePolicy
  */
-public interface DeviceStateProvider {
+public interface DeviceStateProvider extends Dumpable {
+    int SUPPORTED_DEVICE_STATES_CHANGED_DEFAULT = 0;
+
+    /**
+     * Indicating that the supported device states changed callback is trigger for initial listener
+     * registration.
+     */
+    int SUPPORTED_DEVICE_STATES_CHANGED_INITIALIZED = 1;
+
+    /**
+     * Indicating that the supported device states have changed because the thermal condition
+     * returned to normal status from critical status.
+     */
+    int SUPPORTED_DEVICE_STATES_CHANGED_THERMAL_NORMAL = 2;
+
+    /**
+     * Indicating that the supported device states have changed because of thermal critical
+     * condition.
+     */
+    int SUPPORTED_DEVICE_STATES_CHANGED_THERMAL_CRITICAL = 3;
+
+    /**
+     * Indicating that the supported device states have changed because power save mode was enabled.
+     */
+    int SUPPORTED_DEVICE_STATES_CHANGED_POWER_SAVE_ENABLED = 4;
+
+    /**
+     * Indicating that the supported device states have changed because power save mode was
+     * disabled.
+     */
+    int SUPPORTED_DEVICE_STATES_CHANGED_POWER_SAVE_DISABLED = 5;
+
+    /**
+     * Indicating that the supported device states have changed because an external display was
+     * added.
+     */
+    int SUPPORTED_DEVICE_STATES_CHANGED_EXTERNAL_DISPLAY_ADDED = 6;
+
+    /**
+     * Indicating that the supported device states have changed because an external display was
+     * removed.
+     */
+    int SUPPORTED_DEVICE_STATES_CHANGED_EXTERNAL_DISPLAY_REMOVED = 7;
+
+    @IntDef(prefix = { "SUPPORTED_DEVICE_STATES_CHANGED_" }, value = {
+            SUPPORTED_DEVICE_STATES_CHANGED_DEFAULT,
+            SUPPORTED_DEVICE_STATES_CHANGED_INITIALIZED,
+            SUPPORTED_DEVICE_STATES_CHANGED_THERMAL_NORMAL,
+            SUPPORTED_DEVICE_STATES_CHANGED_THERMAL_CRITICAL,
+            SUPPORTED_DEVICE_STATES_CHANGED_POWER_SAVE_ENABLED,
+            SUPPORTED_DEVICE_STATES_CHANGED_POWER_SAVE_DISABLED,
+            SUPPORTED_DEVICE_STATES_CHANGED_EXTERNAL_DISPLAY_ADDED,
+            SUPPORTED_DEVICE_STATES_CHANGED_EXTERNAL_DISPLAY_REMOVED
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    @interface SupportedStatesUpdatedReason {}
+
     /**
      * Registers a listener for changes in provider state.
      * <p>
-     * It is <b>required</b> that {@link Listener#onSupportedDeviceStatesChanged(DeviceState[])} be
-     * called followed by {@link Listener#onStateChanged(int)} with the initial values on successful
-     * registration of the listener.
+     * It is <b>required</b> that
+     * {@link Listener#onSupportedDeviceStatesChanged(DeviceState[], int)} be called followed by
+     * {@link Listener#onStateChanged(int)} with the initial values on successful registration of
+     * the listener.
      */
     void setListener(Listener listener);
 
@@ -53,25 +116,29 @@ public interface DeviceStateProvider {
          * to zero and there must always be at least one supported device state.
          *
          * @param newDeviceStates array of supported device states.
+         * @param reason the reason for the supported device states change.
          *
          * @throws IllegalArgumentException if the list of device states is empty or if one of the
          * provided states contains an invalid identifier.
          */
-        void onSupportedDeviceStatesChanged(DeviceState[] newDeviceStates);
+        void onSupportedDeviceStatesChanged(DeviceState[] newDeviceStates,
+                @SupportedStatesUpdatedReason int reason);
 
         /**
          * Called to notify the listener of a change in current device state. Required to be called
          * once on successful registration of the listener and then once on every subsequent change
          * in device state. Value must have been included in the set of supported device states
          * provided in the most recent call to
-         * {@link #onSupportedDeviceStatesChanged(DeviceState[])}.
+         * {@link #onSupportedDeviceStatesChanged(DeviceState[], int)}.
          *
          * @param identifier the identifier of the new device state.
          *
-         * @throws IllegalArgumentException if the state is less than {@link MINIMUM_DEVICE_STATE}
-         * or greater than {@link MAXIMUM_DEVICE_STATE}.
+         * @throws IllegalArgumentException if the state is less than
+         * {@link MINIMUM_DEVICE_STATE_IDENTIFIER} or greater than
+         * {@link MAXIMUM_DEVICE_STATE_IDENTIFIER}.
          */
         void onStateChanged(
-                @IntRange(from = MINIMUM_DEVICE_STATE, to = MAXIMUM_DEVICE_STATE) int identifier);
+                @IntRange(from = MINIMUM_DEVICE_STATE_IDENTIFIER, to =
+                        MAXIMUM_DEVICE_STATE_IDENTIFIER) int identifier);
     }
 }

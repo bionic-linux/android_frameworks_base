@@ -18,12 +18,15 @@ package android.hardware.devicestate;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
 import android.content.Context;
 import android.hardware.devicestate.DeviceStateManager.DeviceStateCallback;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.Trace;
 import android.util.ArrayMap;
 
 import com.android.internal.annotations.GuardedBy;
@@ -31,7 +34,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 /**
@@ -44,13 +47,15 @@ import java.util.concurrent.Executor;
 @VisibleForTesting(visibility = Visibility.PACKAGE)
 public final class DeviceStateManagerGlobal {
     private static DeviceStateManagerGlobal sInstance;
+    private static final String TAG = "DeviceStateManagerGlobal";
+    private static final boolean DEBUG = Build.IS_DEBUGGABLE;
 
     /**
      * Returns an instance of {@link DeviceStateManagerGlobal}. May return {@code null} if a
      * connection with the device state service couldn't be established.
      */
     @Nullable
-    static DeviceStateManagerGlobal getInstance() {
+    public static DeviceStateManagerGlobal getInstance() {
         synchronized (DeviceStateManagerGlobal.class) {
             if (sInstance == null) {
                 IBinder b = ServiceManager.getService(Context.DEVICE_STATE_SERVICE);
@@ -81,14 +86,15 @@ public final class DeviceStateManagerGlobal {
     @VisibleForTesting
     public DeviceStateManagerGlobal(@NonNull IDeviceStateManager deviceStateManager) {
         mDeviceStateManager = deviceStateManager;
+        registerCallbackIfNeededLocked();
     }
 
     /**
-     * Returns the set of supported device states.
+     * Returns {@link List} of supported {@link DeviceState}s.
      *
-     * @see DeviceStateManager#getSupportedStates()
+     * @see DeviceStateManager#getSupportedDeviceStates()
      */
-    public int[] getSupportedStates() {
+    public List<DeviceState> getSupportedDeviceStates() {
         synchronized (mLock) {
             final DeviceStateInfo currentInfo;
             if (mLastReceivedInfo != null) {
@@ -105,7 +111,7 @@ public final class DeviceStateManagerGlobal {
                 }
             }
 
-            return Arrays.copyOf(currentInfo.supportedStates, currentInfo.supportedStates.length);
+            return List.copyOf(currentInfo.supportedStates);
         }
     }
 
@@ -116,27 +122,22 @@ public final class DeviceStateManagerGlobal {
      * DeviceStateRequest.Callback)
      * @see DeviceStateRequest
      */
+    @RequiresPermission(value = android.Manifest.permission.CONTROL_DEVICE_STATE,
+            conditional = true)
     public void requestState(@NonNull DeviceStateRequest request,
-            @Nullable DeviceStateRequest.Callback callback, @Nullable Executor executor) {
-        if (callback == null && executor != null) {
-            throw new IllegalArgumentException("Callback must be supplied with executor.");
-        } else if (executor == null && callback != null) {
-            throw new IllegalArgumentException("Executor must be supplied with callback.");
-        }
-
+            @Nullable Executor executor, @Nullable DeviceStateRequest.Callback callback) {
+        DeviceStateRequestWrapper requestWrapper = new DeviceStateRequestWrapper(request, callback,
+                executor);
         synchronized (mLock) {
-            registerCallbackIfNeededLocked();
-
             if (findRequestTokenLocked(request) != null) {
                 // This request has already been submitted.
                 return;
             }
-
             // Add the request wrapper to the mRequests array before requesting the state as the
             // callback could be triggered immediately if the mDeviceStateManager IBinder is in the
             // same process as this instance.
             IBinder token = new Binder();
-            mRequests.put(token, new DeviceStateRequestWrapper(request, callback, executor));
+            mRequests.put(token, requestWrapper);
 
             try {
                 mDeviceStateManager.requestState(token, request.getState(), request.getFlags());
@@ -149,22 +150,66 @@ public final class DeviceStateManagerGlobal {
 
     /**
      * Cancels a {@link DeviceStateRequest request} previously submitted with a call to
-     * {@link #requestState(DeviceStateRequest, DeviceStateRequest.Callback, Executor)}.
+     * {@link #requestState(DeviceStateRequest, Executor, DeviceStateRequest.Callback)}.
      *
-     * @see DeviceStateManager#cancelRequest(DeviceStateRequest)
+     * @see DeviceStateManager#cancelStateRequest
      */
-    public void cancelRequest(@NonNull DeviceStateRequest request) {
+    @RequiresPermission(value = android.Manifest.permission.CONTROL_DEVICE_STATE,
+            conditional = true)
+    public void cancelStateRequest() {
         synchronized (mLock) {
-            registerCallbackIfNeededLocked();
+            try {
+                mDeviceStateManager.cancelStateRequest();
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
+            }
+        }
+    }
 
-            final IBinder token = findRequestTokenLocked(request);
-            if (token == null) {
-                // This request has not been submitted.
+    /**
+     * Submits a {@link DeviceStateRequest request} to modify the base state of the device.
+     *
+     * @see DeviceStateManager#requestBaseStateOverride(DeviceStateRequest, Executor,
+     * DeviceStateRequest.Callback)
+     * @see DeviceStateRequest
+     */
+    @RequiresPermission(android.Manifest.permission.CONTROL_DEVICE_STATE)
+    public void requestBaseStateOverride(@NonNull DeviceStateRequest request,
+            @Nullable Executor executor, @Nullable DeviceStateRequest.Callback callback) {
+        DeviceStateRequestWrapper requestWrapper = new DeviceStateRequestWrapper(request, callback,
+                executor);
+        synchronized (mLock) {
+            if (findRequestTokenLocked(request) != null) {
+                // This request has already been submitted.
                 return;
             }
+            // Add the request wrapper to the mRequests array before requesting the state as the
+            // callback could be triggered immediately if the mDeviceStateManager IBinder is in the
+            // same process as this instance.
+            IBinder token = new Binder();
+            mRequests.put(token, requestWrapper);
 
             try {
-                mDeviceStateManager.cancelRequest(token);
+                mDeviceStateManager.requestBaseStateOverride(token, request.getState(),
+                        request.getFlags());
+            } catch (RemoteException ex) {
+                mRequests.remove(token);
+                throw ex.rethrowFromSystemServer();
+            }
+        }
+    }
+
+    /**
+     * Cancels a {@link DeviceStateRequest request} previously submitted with a call to
+     * {@link #requestBaseStateOverride(DeviceStateRequest, Executor, DeviceStateRequest.Callback)}.
+     *
+     * @see DeviceStateManager#cancelBaseStateOverride
+     */
+    @RequiresPermission(android.Manifest.permission.CONTROL_DEVICE_STATE)
+    public void cancelBaseStateOverride() {
+        synchronized (mLock) {
+            try {
+                mDeviceStateManager.cancelBaseStateOverride();
             } catch (RemoteException ex) {
                 throw ex.rethrowFromSystemServer();
             }
@@ -185,9 +230,6 @@ public final class DeviceStateManagerGlobal {
                 // This callback is already registered.
                 return;
             }
-
-            registerCallbackIfNeededLocked();
-
             // Add the callback wrapper to the mCallbacks array after registering the callback as
             // the callback could be triggered immediately if the mDeviceStateManager IBinder is in
             // the same process as this instance.
@@ -195,12 +237,9 @@ public final class DeviceStateManagerGlobal {
             mCallbacks.add(wrapper);
 
             if (mLastReceivedInfo != null) {
-                // Copy the array to prevent the callback from modifying the internal state.
-                final int[] supportedStates = Arrays.copyOf(mLastReceivedInfo.supportedStates,
-                        mLastReceivedInfo.supportedStates.length);
-                wrapper.notifySupportedStatesChanged(supportedStates);
-                wrapper.notifyBaseStateChanged(mLastReceivedInfo.baseState);
-                wrapper.notifyStateChanged(mLastReceivedInfo.currentState);
+                wrapper.notifySupportedDeviceStatesChanged(
+                        List.copyOf(mLastReceivedInfo.supportedStates));
+                wrapper.notifyDeviceStateChanged(mLastReceivedInfo.currentState);
             }
         }
     }
@@ -218,6 +257,22 @@ public final class DeviceStateManagerGlobal {
             if (indexToRemove != -1) {
                 mCallbacks.remove(indexToRemove);
             }
+        }
+    }
+
+    /**
+     * Provides notification to the system server that a device state feature overlay
+     * was dismissed. This should only be called from the {@link android.app.Activity} that
+     * was showing the overlay corresponding to the feature.
+     *
+     * Validation of there being an overlay visible and pending state request is handled on the
+     * system server.
+     */
+    public void onStateRequestOverlayDismissed(boolean shouldCancelRequest) {
+        try {
+            mDeviceStateManager.onStateRequestOverlayDismissed(shouldCancelRequest);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
         }
     }
 
@@ -265,20 +320,13 @@ public final class DeviceStateManagerGlobal {
         final int diff = oldInfo == null ? ~0 : info.diff(oldInfo);
         if ((diff & DeviceStateInfo.CHANGED_SUPPORTED_STATES) > 0) {
             for (int i = 0; i < callbacks.size(); i++) {
-                // Copy the array to prevent callbacks from modifying the internal state.
-                final int[] supportedStates = Arrays.copyOf(info.supportedStates,
-                        info.supportedStates.length);
-                callbacks.get(i).notifySupportedStatesChanged(supportedStates);
-            }
-        }
-        if ((diff & DeviceStateInfo.CHANGED_BASE_STATE) > 0) {
-            for (int i = 0; i < callbacks.size(); i++) {
-                callbacks.get(i).notifyBaseStateChanged(info.baseState);
+                callbacks.get(i).notifySupportedDeviceStatesChanged(
+                        List.copyOf(info.supportedStates));
             }
         }
         if ((diff & DeviceStateInfo.CHANGED_CURRENT_STATE) > 0) {
             for (int i = 0; i < callbacks.size(); i++) {
-                callbacks.get(i).notifyStateChanged(info.currentState);
+                callbacks.get(i).notifyDeviceStateChanged(info.currentState);
             }
         }
     }
@@ -294,20 +342,6 @@ public final class DeviceStateManagerGlobal {
         }
         if (request != null) {
             request.notifyRequestActive();
-        }
-    }
-
-    /**
-     * Handles a call from the server that a request for the supplied {@code token} has become
-     * suspended.
-     */
-    private void handleRequestSuspended(IBinder token) {
-        DeviceStateRequestWrapper request;
-        synchronized (mLock) {
-            request = mRequests.get(token);
-        }
-        if (request != null) {
-            request.notifyRequestSuspended();
         }
     }
 
@@ -337,11 +371,6 @@ public final class DeviceStateManagerGlobal {
         }
 
         @Override
-        public void onRequestSuspended(IBinder token) {
-            handleRequestSuspended(token);
-        }
-
-        @Override
         public void onRequestCanceled(IBinder token) {
             handleRequestCanceled(token);
         }
@@ -359,17 +388,30 @@ public final class DeviceStateManagerGlobal {
             mExecutor = executor;
         }
 
-        void notifySupportedStatesChanged(int[] newSupportedStates) {
+        void notifySupportedDeviceStatesChanged(List<DeviceState> newSupportedDeviceStates) {
             mExecutor.execute(() ->
-                    mDeviceStateCallback.onSupportedStatesChanged(newSupportedStates));
+                    mDeviceStateCallback.onSupportedStatesChanged(newSupportedDeviceStates));
         }
 
-        void notifyBaseStateChanged(int newBaseState) {
-            mExecutor.execute(() -> mDeviceStateCallback.onBaseStateChanged(newBaseState));
+        void notifyDeviceStateChanged(DeviceState newDeviceState) {
+            execute("notifyDeviceStateChanged",
+                    () -> mDeviceStateCallback.onDeviceStateChanged(newDeviceState));
         }
 
-        void notifyStateChanged(int newDeviceState) {
-            mExecutor.execute(() -> mDeviceStateCallback.onStateChanged(newDeviceState));
+        private void execute(String traceName, Runnable r) {
+            mExecutor.execute(() -> {
+                if (DEBUG) {
+                    Trace.beginSection(
+                            mDeviceStateCallback.getClass().getSimpleName() + "#" + traceName);
+                }
+                try {
+                    r.run();
+                } finally {
+                    if (DEBUG) {
+                        Trace.endSection();
+                    }
+                }
+            });
         }
     }
 
@@ -382,6 +424,8 @@ public final class DeviceStateManagerGlobal {
 
         DeviceStateRequestWrapper(@NonNull DeviceStateRequest request,
                 @Nullable DeviceStateRequest.Callback callback, @Nullable Executor executor) {
+            validateRequestWrapperParameters(callback, executor);
+
             mRequest = request;
             mCallback = callback;
             mExecutor = executor;
@@ -395,20 +439,21 @@ public final class DeviceStateManagerGlobal {
             mExecutor.execute(() -> mCallback.onRequestActivated(mRequest));
         }
 
-        void notifyRequestSuspended() {
-            if (mCallback == null) {
-                return;
-            }
-
-            mExecutor.execute(() -> mCallback.onRequestSuspended(mRequest));
-        }
-
         void notifyRequestCanceled() {
             if (mCallback == null) {
                 return;
             }
 
-            mExecutor.execute(() -> mCallback.onRequestSuspended(mRequest));
+            mExecutor.execute(() -> mCallback.onRequestCanceled(mRequest));
+        }
+
+        private void validateRequestWrapperParameters(
+                @Nullable DeviceStateRequest.Callback callback, @Nullable Executor executor) {
+            if (callback == null && executor != null) {
+                throw new IllegalArgumentException("Callback must be supplied with executor.");
+            } else if (executor == null && callback != null) {
+                throw new IllegalArgumentException("Executor must be supplied with callback.");
+            }
         }
     }
 }

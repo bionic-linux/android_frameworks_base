@@ -15,11 +15,13 @@
  */
 package com.android.keyguard;
 
+import static com.android.systemui.bouncer.shared.constants.KeyguardBouncerConstants.ColorId.NUM_PAD_KEY;
+
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.RippleDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.util.AttributeSet;
@@ -28,27 +30,29 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.accessibility.AccessibilityManager;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.android.internal.widget.LockPatternUtils;
 import com.android.settingslib.Utils;
-import com.android.systemui.R;
+import com.android.systemui.res.R;
 
-public class NumPadKey extends ViewGroup {
+/**
+ * Viewgroup for the bouncer numpad button, specifically for digits.
+ */
+public class NumPadKey extends ViewGroup implements NumPadAnimationListener {
     // list of "ABC", etc per digit, starting with '0'
     static String sKlondike[];
 
     private final TextView mDigitText;
     private final TextView mKlondikeText;
-    private final LockPatternUtils mLockPatternUtils;
     private final PowerManager mPM;
 
     private int mDigit = -1;
     private int mTextViewResId;
     private PasswordTextView mTextView;
+    private boolean mAnimationsEnabled = true;
 
     @Nullable
     private NumPadAnimator mAnimator;
@@ -101,10 +105,7 @@ public class NumPadKey extends ViewGroup {
         }
 
         setOnClickListener(mListener);
-        setOnHoverListener(new LiftToActivateListener(
-                (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE)));
 
-        mLockPatternUtils = new LockPatternUtils(context);
         mPM = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
@@ -132,9 +133,9 @@ public class NumPadKey extends ViewGroup {
         setContentDescription(mDigitText.getText().toString());
 
         Drawable background = getBackground();
-        if (background instanceof RippleDrawable) {
-            mAnimator = new NumPadAnimator(context, (RippleDrawable) background,
-                    R.style.NumPadKey);
+        if (background instanceof GradientDrawable) {
+            mAnimator = new NumPadAnimator(context, background.mutate(),
+                    R.style.NumPadKey, mDigitText, null);
         } else {
             mAnimator = null;
         }
@@ -149,7 +150,7 @@ public class NumPadKey extends ViewGroup {
      * Reload colors from resources.
      **/
     public void reloadColors() {
-        int textColor = Utils.getColorAttr(getContext(), android.R.attr.textColorPrimary)
+        int textColor = Utils.getColorAttr(getContext(), NUM_PAD_KEY)
                 .getDefaultColor();
         int klondikeColor = Utils.getColorAttr(getContext(), android.R.attr.textColorSecondary)
                 .getDefaultColor();
@@ -161,11 +162,16 @@ public class NumPadKey extends ViewGroup {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-            doHapticKeyClick();
-            if (mAnimator != null) mAnimator.start();
+        switch(event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                doHapticKeyClick();
+                if (mAnimator != null && mAnimationsEnabled) mAnimator.expand();
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                if (mAnimator != null && mAnimationsEnabled) mAnimator.contract();
+                break;
         }
-
         return super.onTouchEvent(event);
     }
 
@@ -175,7 +181,9 @@ public class NumPadKey extends ViewGroup {
         measureChildren(widthMeasureSpec, heightMeasureSpec);
 
         // Set width/height to the same value to ensure a smooth circle for the bg, but shrink
-        // the height to match the old pin bouncer
+        // the height to match the old pin bouncer.
+        // This is only used for PIN/PUK; the main PIN pad now uses ConstraintLayout, which will
+        // force our width/height to conform to the ratio in the layout.
         int width = getMeasuredWidth();
 
         boolean shortenHeight = mAnimator == null
@@ -201,7 +209,9 @@ public class NumPadKey extends ViewGroup {
         left = centerX - mKlondikeText.getMeasuredWidth() / 2;
         mKlondikeText.layout(left, top, left + mKlondikeText.getMeasuredWidth(), bottom);
 
-        if (mAnimator != null) mAnimator.onLayout(b - t);
+        int width = r - l;
+        int height = b - t;
+        if (mAnimator != null) mAnimator.onLayout(width, height);
     }
 
     @Override
@@ -211,10 +221,27 @@ public class NumPadKey extends ViewGroup {
 
     // Cause a VIRTUAL_KEY vibration
     public void doHapticKeyClick() {
-        if (mLockPatternUtils.isTactileFeedbackEnabled()) {
-            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
-                    HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING
-                    | HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+        performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
+                HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+    }
+
+    @Override
+    public void setProgress(float progress) {
+        if (mAnimator != null) {
+            mAnimator.setProgress(progress);
         }
+    }
+
+    /**
+     * Controls the animation when a key is pressed
+     */
+    public void setAnimationEnabled(boolean enabled) {
+        mAnimationsEnabled = enabled;
+    }
+
+    @Override
+    public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
+        super.onInitializeAccessibilityNodeInfo(info);
+        info.setTextEntryKey(true);
     }
 }

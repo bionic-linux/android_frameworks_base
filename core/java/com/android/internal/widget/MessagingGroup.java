@@ -21,6 +21,7 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.StyleRes;
+import android.app.Flags;
 import android.app.Person;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -32,7 +33,6 @@ import android.graphics.drawable.Icon;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Pools;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,9 +56,11 @@ import java.util.List;
  * A message of a {@link MessagingLayout}.
  */
 @RemoteViews.RemoteView
-public class MessagingGroup extends LinearLayout implements MessagingLinearLayout.MessagingChild {
-    private static Pools.SimplePool<MessagingGroup> sInstancePool
-            = new Pools.SynchronizedPool<>(10);
+public class MessagingGroup extends NotificationOptimizedLinearLayout implements
+        MessagingLinearLayout.MessagingChild {
+
+    private static final MessagingPool<MessagingGroup> sInstancePool =
+            new MessagingPool<>(10);
 
     /**
      * Images are displayed inline.
@@ -199,6 +201,10 @@ public class MessagingGroup extends LinearLayout implements MessagingLinearLayou
         if (nameOverride == null) {
             nameOverride = sender.getName();
         }
+        if (Flags.cleanUpSpansAndNewLines() && nameOverride != null) {
+            // remove formatting from sender name
+            nameOverride = nameOverride.toString();
+        }
         mSenderName = nameOverride;
         if (mSingleLine && !TextUtils.isEmpty(nameOverride)) {
             nameOverride = mContext.getResources().getString(
@@ -263,7 +269,8 @@ public class MessagingGroup extends LinearLayout implements MessagingLinearLayou
         return createdGroup;
     }
 
-    public void removeMessage(MessagingMessage messagingMessage) {
+    public void removeMessage(MessagingMessage messagingMessage,
+            ArrayList<MessagingLinearLayout.MessagingChild> toRecycle) {
         View view = messagingMessage.getView();
         boolean wasShown = view.isShown();
         ViewGroup messageParent = (ViewGroup) view.getParent();
@@ -271,15 +278,14 @@ public class MessagingGroup extends LinearLayout implements MessagingLinearLayou
             return;
         }
         messageParent.removeView(view);
-        Runnable recycleRunnable = () -> {
-            messageParent.removeTransientView(view);
-            messagingMessage.recycle();
-        };
         if (wasShown && !MessagingLinearLayout.isGone(view)) {
             messageParent.addTransientView(view, 0);
-            performRemoveAnimation(view, recycleRunnable);
+            performRemoveAnimation(view, () -> {
+                messageParent.removeTransientView(view);
+                messagingMessage.recycle();
+            });
         } else {
-            recycleRunnable.run();
+            toRecycle.add(messagingMessage);
         }
     }
 
@@ -338,7 +344,7 @@ public class MessagingGroup extends LinearLayout implements MessagingLinearLayou
     }
 
     public static void dropCache() {
-        sInstancePool = new Pools.SynchronizedPool<>(10);
+        sInstancePool.clear();
     }
 
     @Override
@@ -493,7 +499,9 @@ public class MessagingGroup extends LinearLayout implements MessagingLinearLayou
             int color = mSendingSpinnerContainer.getVisibility() == View.VISIBLE
                     ? mSendingTextColor : mTextColor;
             for (MessagingMessage message : mMessages) {
-                message.setColor(message.getMessage().isRemoteInputHistory() ? color : mTextColor);
+                final boolean isRemoteInputHistory =
+                        message.getMessage() != null && message.getMessage().isRemoteInputHistory();
+                message.setColor(isRemoteInputHistory ? color : mTextColor);
             }
         }
     }

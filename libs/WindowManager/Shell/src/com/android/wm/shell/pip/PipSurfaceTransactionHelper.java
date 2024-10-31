@@ -20,9 +20,11 @@ import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.view.Choreographer;
 import android.view.SurfaceControl;
 
 import com.android.wm.shell.R;
+import com.android.wm.shell.transition.Transitions;
 
 /**
  * Abstracts the common operations on {@link SurfaceControl.Transaction} for PiP transition.
@@ -36,6 +38,11 @@ public class PipSurfaceTransactionHelper {
     private final Rect mTmpDestinationRect = new Rect();
 
     private int mCornerRadius;
+    private int mShadowRadius;
+
+    public PipSurfaceTransactionHelper(Context context) {
+        onDensityOrFontScaleChanged(context);
+    }
 
     /**
      * Called when display size or font size of settings changed
@@ -44,6 +51,7 @@ public class PipSurfaceTransactionHelper {
      */
     public void onDensityOrFontScaleChanged(Context context) {
         mCornerRadius = context.getResources().getDimensionPixelSize(R.dimen.pip_corner_radius);
+        mShadowRadius = context.getResources().getDimensionPixelSize(R.dimen.pip_shadow_radius);
     }
 
     /**
@@ -73,7 +81,27 @@ public class PipSurfaceTransactionHelper {
      */
     public PipSurfaceTransactionHelper scale(SurfaceControl.Transaction tx, SurfaceControl leash,
             Rect sourceBounds, Rect destinationBounds) {
+        mTmpDestinationRectF.set(destinationBounds);
+        return scale(tx, leash, sourceBounds, mTmpDestinationRectF, 0 /* degrees */);
+    }
+
+    /**
+     * Operates the scale (setMatrix) on a given transaction and leash
+     * @return same {@link PipSurfaceTransactionHelper} instance for method chaining
+     */
+    public PipSurfaceTransactionHelper scale(SurfaceControl.Transaction tx, SurfaceControl leash,
+            Rect sourceBounds, RectF destinationBounds) {
         return scale(tx, leash, sourceBounds, destinationBounds, 0 /* degrees */);
+    }
+
+    /**
+     * Operates the scale (setMatrix) on a given transaction and leash
+     * @return same {@link PipSurfaceTransactionHelper} instance for method chaining
+     */
+    public PipSurfaceTransactionHelper scale(SurfaceControl.Transaction tx, SurfaceControl leash,
+            Rect sourceBounds, Rect destinationBounds, float degrees) {
+        mTmpDestinationRectF.set(destinationBounds);
+        return scale(tx, leash, sourceBounds, mTmpDestinationRectF, degrees);
     }
 
     /**
@@ -81,7 +109,7 @@ public class PipSurfaceTransactionHelper {
      * @return same {@link PipSurfaceTransactionHelper} instance for method chaining
      */
     public PipSurfaceTransactionHelper scale(SurfaceControl.Transaction tx, SurfaceControl leash,
-            Rect sourceBounds, Rect destinationBounds, float degrees) {
+            Rect sourceBounds, RectF destinationBounds, float degrees) {
         mTmpSourceRectF.set(sourceBounds);
         // We want the matrix to position the surface relative to the screen coordinates so offset
         // the source to 0,0
@@ -99,21 +127,39 @@ public class PipSurfaceTransactionHelper {
      * @return same {@link PipSurfaceTransactionHelper} instance for method chaining
      */
     public PipSurfaceTransactionHelper scaleAndCrop(SurfaceControl.Transaction tx,
-            SurfaceControl leash,
-            Rect sourceBounds, Rect destinationBounds, Rect insets) {
-        mTmpSourceRectF.set(sourceBounds);
+            SurfaceControl leash, Rect sourceRectHint,
+            Rect sourceBounds, Rect destinationBounds, Rect insets,
+            boolean isInPipDirection, float fraction) {
         mTmpDestinationRect.set(sourceBounds);
+        // Similar to {@link #scale}, we want to position the surface relative to the screen
+        // coordinates so offset the bounds to 0,0
+        mTmpDestinationRect.offsetTo(0, 0);
         mTmpDestinationRect.inset(insets);
-        // Scale by the shortest edge and offset such that the top/left of the scaled inset source
-        // rect aligns with the top/left of the destination bounds
-        final float scale = sourceBounds.width() <= sourceBounds.height()
-                ? (float) destinationBounds.width() / sourceBounds.width()
-                : (float) destinationBounds.height() / sourceBounds.height();
-        final float left = destinationBounds.left - insets.left * scale;
-        final float top = destinationBounds.top - insets.top * scale;
+        // Scale to the bounds no smaller than the destination and offset such that the top/left
+        // of the scaled inset source rect aligns with the top/left of the destination bounds
+        final float scale, left, top;
+        if (isInPipDirection
+                && sourceRectHint != null && sourceRectHint.width() < sourceBounds.width()) {
+            // scale by sourceRectHint if it's not edge-to-edge, for entering PiP transition only.
+            final float endScale = sourceBounds.width() <= sourceBounds.height()
+                    ? (float) destinationBounds.width() / sourceRectHint.width()
+                    : (float) destinationBounds.height() / sourceRectHint.height();
+            final float startScale = sourceBounds.width() <= sourceBounds.height()
+                    ? (float) destinationBounds.width() / sourceBounds.width()
+                    : (float) destinationBounds.height() / sourceBounds.height();
+            scale = (1 - fraction) * startScale + fraction * endScale;
+            left = destinationBounds.left - insets.left * scale;
+            top = destinationBounds.top - insets.top * scale;
+        } else {
+            scale = Math.max((float) destinationBounds.width() / sourceBounds.width(),
+                    (float) destinationBounds.height() / sourceBounds.height());
+            // Work around the rounding error by fix the position at very beginning.
+            left = scale == 1 ? 0 : destinationBounds.left - insets.left * scale;
+            top = scale == 1 ? 0 : destinationBounds.top - insets.top * scale;
+        }
         mTmpTransform.setScale(scale, scale);
         tx.setMatrix(leash, mTmpTransform, mTmpFloat9)
-                .setWindowCrop(leash, mTmpDestinationRect)
+                .setCrop(leash, mTmpDestinationRect)
                 .setPosition(leash, left, top);
         return this;
     }
@@ -137,7 +183,8 @@ public class PipSurfaceTransactionHelper {
         // destination are different.
         final float scale = srcW <= srcH ? (float) destW / srcW : (float) destH / srcH;
         final Rect crop = mTmpDestinationRect;
-        crop.set(0, 0, destW, destH);
+        crop.set(0, 0, Transitions.SHELL_TRANSITIONS_ROTATION ? destH
+                : destW, Transitions.SHELL_TRANSITIONS_ROTATION ? destW : destH);
         // Inverse scale for crop to fit in screen coordinates.
         crop.scale(1 / scale);
         crop.offset(insets.left, insets.top);
@@ -158,7 +205,7 @@ public class PipSurfaceTransactionHelper {
         mTmpTransform.setScale(scale, scale);
         mTmpTransform.postRotate(degrees);
         mTmpTransform.postTranslate(positionX, positionY);
-        tx.setMatrix(leash, mTmpTransform, mTmpFloat9).setWindowCrop(leash, crop);
+        tx.setMatrix(leash, mTmpTransform, mTmpFloat9).setCrop(leash, crop);
         return this;
     }
 
@@ -198,18 +245,30 @@ public class PipSurfaceTransactionHelper {
     }
 
     /**
-     * Re-parents the snapshot to the parent's surface control and shows it.
+     * Operates the shadow radius on a given transaction and leash
+     * @return same {@link PipSurfaceTransactionHelper} instance for method chaining
      */
-    public PipSurfaceTransactionHelper reparentAndShowSurfaceSnapshot(
-            SurfaceControl.Transaction t, SurfaceControl parent, SurfaceControl snapshot) {
-        t.reparent(snapshot, parent);
-        t.setLayer(snapshot, Integer.MAX_VALUE);
-        t.show(snapshot);
-        t.apply();
+    public PipSurfaceTransactionHelper shadow(SurfaceControl.Transaction tx, SurfaceControl leash,
+            boolean applyShadowRadius) {
+        tx.setShadowRadius(leash, applyShadowRadius ? mShadowRadius : 0);
         return this;
     }
 
     public interface SurfaceControlTransactionFactory {
         SurfaceControl.Transaction getTransaction();
+    }
+
+    /**
+     * Implementation of {@link SurfaceControlTransactionFactory} that returns
+     * {@link SurfaceControl.Transaction} with VsyncId being set.
+     */
+    public static class VsyncSurfaceControlTransactionFactory
+            implements SurfaceControlTransactionFactory {
+        @Override
+        public SurfaceControl.Transaction getTransaction() {
+            final SurfaceControl.Transaction tx = new SurfaceControl.Transaction();
+            tx.setFrameTimelineVsync(Choreographer.getInstance().getVsyncId());
+            return tx;
+        }
     }
 }

@@ -22,11 +22,12 @@ package com.android.internal.protolog.common;
  * a messageString, which is a format string for the log message (has to be a string literal or
  * a concatenation of string literals) and a vararg array of parameters for the formatter.
  *
- * The syntax for the message string is a subset of {@code java.util.Formatter} syntax.
+ * The syntax for the message string depends on
+ * {@link android.text.TextUtils#formatSimple(String, Object...)}}.
  * Supported conversions:
  * %b - boolean
- * %d, %o and %x - integral type (Short, Integer or Long)
- * %f, %e and %g - floating point type (Float or Double)
+ * %d %x - integral type (Short, Integer or Long)
+ * %f - floating point type (Float or Double)
  * %s - string
  * %% - a literal percent character
  * The width and precision modifiers are supported, argument_index and flags are not.
@@ -127,5 +128,30 @@ public class ProtoLog {
             throw new UnsupportedOperationException(
                     "ProtoLog calls MUST be processed with ProtoLogTool");
         }
+    }
+
+    /**
+     * Check if ProtoLog isEnabled for a target group.
+     * @param group Group to check enable status of.
+     * @return true iff this is being logged.
+     */
+    public static boolean isEnabled(IProtoLogGroup group, LogLevel level) {
+        if (REQUIRE_PROTOLOGTOOL) {
+            throw new UnsupportedOperationException(
+                    "ProtoLog calls MUST be processed with ProtoLogTool");
+        }
+        return false;
+    }
+
+    /**
+     * Get the single ProtoLog instance.
+     * @return A singleton instance of ProtoLog.
+     */
+    public static IProtoLog getSingleInstance() {
+        if (REQUIRE_PROTOLOGTOOL) {
+            throw new UnsupportedOperationException(
+                    "ProtoLog calls MUST be processed with ProtoLogTool");
+        }
+        return null;
     }
 }

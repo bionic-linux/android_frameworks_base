@@ -1,6 +1,7 @@
 package com.android.systemui.statusbar.policy;
 
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -124,5 +125,40 @@ public class CastControllerImplTest extends SysuiTestCase {
         if (error.get()) {
             fail("Concurrent modification exception");
         }
+    }
+
+    /** Regression test for b/317700495 */
+    @Test
+    public void removeCallbackWhileIterating_doesntCrash() {
+        final AtomicBoolean remove = new AtomicBoolean(false);
+        Callback callback = new Callback() {
+            @Override
+            public void onCastDevicesChanged() {
+                if (remove.get()) {
+                    mController.removeCallback(this);
+                }
+            }
+        };
+        mController.addCallback(callback);
+        // Add another callback so the iteration continues
+        mController.addCallback(() -> {});
+        remove.set(true);
+        mController.fireOnCastDevicesChanged();
+    }
+
+    @Test
+    public void hasConnectedCastDevice_connected() {
+        CastController.CastDevice castDevice = new CastController.CastDevice();
+        castDevice.state = CastController.CastDevice.STATE_CONNECTED;
+        mController.startCasting(castDevice);
+        assertTrue(mController.hasConnectedCastDevice());
+    }
+
+    @Test
+    public void hasConnectedCastDevice_notConnected() {
+        CastController.CastDevice castDevice = new CastController.CastDevice();
+        castDevice.state = CastController.CastDevice.STATE_CONNECTING;
+        mController.startCasting(castDevice);
+        assertTrue(mController.hasConnectedCastDevice());
     }
 }

@@ -27,6 +27,7 @@ import static android.view.Surface.rotationToString;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.res.Configuration;
@@ -36,10 +37,14 @@ import android.os.Parcelable;
 import android.util.proto.ProtoInputStream;
 import android.util.proto.ProtoOutputStream;
 import android.util.proto.WireTypeMismatchException;
+import android.view.Display;
 import android.view.DisplayInfo;
+import android.view.Surface;
 import android.view.WindowManager;
 
 import java.io.IOException;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Objects;
 
 /**
@@ -65,6 +70,7 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
      * the display level. Lower levels can override these values to provide custom bounds to enforce
      * features such as a max aspect ratio.
      */
+    @Nullable
     private Rect mAppBounds;
 
     /**
@@ -72,6 +78,13 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
      * {@link WindowManager#getMaximumWindowMetrics()}.
      */
     private final Rect mMaxBounds = new Rect();
+
+    /**
+     * The rotation of this window's apparent display. This can differ from mRotation in some
+     * situations (like letterbox).
+     */
+    @Surface.Rotation
+    private int mDisplayRotation = ROTATION_UNDEFINED;
 
     /**
      * The current rotation of this window container relative to the default
@@ -87,28 +100,12 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
     /** The current windowing mode of the configuration. */
     private @WindowingMode int mWindowingMode;
 
-    /** The display windowing mode of the configuration */
-    private @WindowingMode int mDisplayWindowingMode;
-
     /** Windowing mode is currently not defined. */
     public static final int WINDOWING_MODE_UNDEFINED = 0;
     /** Occupies the full area of the screen or the parent container. */
     public static final int WINDOWING_MODE_FULLSCREEN = 1;
     /** Always on-top (always visible). of other siblings in its parent container. */
     public static final int WINDOWING_MODE_PINNED = 2;
-    /** The primary container driving the screen to be in split-screen mode. */
-    // TODO: Remove once split-screen is migrated to wm-shell.
-    public static final int WINDOWING_MODE_SPLIT_SCREEN_PRIMARY = 3;
-    /**
-     * The containers adjacent to the {@link #WINDOWING_MODE_SPLIT_SCREEN_PRIMARY} container in
-     * split-screen mode.
-     * NOTE: Containers launched with the windowing mode with APIs like
-     * {@link ActivityOptions#setLaunchWindowingMode(int)} will be launched in
-     * {@link #WINDOWING_MODE_FULLSCREEN} if the display isn't currently in split-screen windowing
-     * mode
-     */
-    // TODO: Remove once split-screen is migrated to wm-shell.
-    public static final int WINDOWING_MODE_SPLIT_SCREEN_SECONDARY = 4;
     /** Can be freely resized within its parent container. */
     // TODO: Remove once freeform is migrated to wm-shell.
     public static final int WINDOWING_MODE_FREEFORM = 5;
@@ -121,10 +118,9 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
             WINDOWING_MODE_FULLSCREEN,
             WINDOWING_MODE_MULTI_WINDOW,
             WINDOWING_MODE_PINNED,
-            WINDOWING_MODE_SPLIT_SCREEN_PRIMARY,
-            WINDOWING_MODE_SPLIT_SCREEN_SECONDARY,
             WINDOWING_MODE_FREEFORM,
     })
+    @Retention(RetentionPolicy.SOURCE)
     public @interface WindowingMode {}
 
     /** The current activity type of the configuration. */
@@ -152,6 +148,7 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
             ACTIVITY_TYPE_ASSISTANT,
             ACTIVITY_TYPE_DREAM,
     })
+    @Retention(RetentionPolicy.SOURCE)
     public @interface ActivityType {}
 
     /** The current always on top status of the configuration. */
@@ -193,9 +190,9 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
     /** Bit that indicates that the {@link #mRotation} changed.
      * @hide */
     public static final int WINDOW_CONFIG_ROTATION = 1 << 6;
-    /** Bit that indicates that the {@link #mDisplayWindowingMode} changed.
+    /** Bit that indicates that the apparent-display changed.
      * @hide */
-    public static final int WINDOW_CONFIG_DISPLAY_WINDOWING_MODE = 1 << 7;
+    public static final int WINDOW_CONFIG_DISPLAY_ROTATION = 1 << 7;
 
     /** @hide */
     @IntDef(flag = true, prefix = { "WINDOW_CONFIG_" }, value = {
@@ -206,12 +203,9 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
             WINDOW_CONFIG_ACTIVITY_TYPE,
             WINDOW_CONFIG_ALWAYS_ON_TOP,
             WINDOW_CONFIG_ROTATION,
-            WINDOW_CONFIG_DISPLAY_WINDOWING_MODE,
+            WINDOW_CONFIG_DISPLAY_ROTATION,
     })
     public @interface WindowConfig {}
-
-    /** @hide */
-    public static final int PINNED_WINDOWING_MODE_ELEVATION_IN_DIP = 5;
 
     @UnsupportedAppUsage
     public WindowConfiguration() {
@@ -236,7 +230,7 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
         dest.writeInt(mActivityType);
         dest.writeInt(mAlwaysOnTop);
         dest.writeInt(mRotation);
-        dest.writeInt(mDisplayWindowingMode);
+        dest.writeInt(mDisplayRotation);
     }
 
     /** @hide */
@@ -248,7 +242,7 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
         mActivityType = source.readInt();
         mAlwaysOnTop = source.readInt();
         mRotation = source.readInt();
-        mDisplayWindowingMode = source.readInt();
+        mDisplayRotation = source.readInt();
     }
 
     @Override
@@ -271,9 +265,11 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
 
     /**
      * Sets the bounds to the provided {@link Rect}.
+     * Passing {@code null} sets the bounds {@link Rect} to empty.
+     *
      * @param rect the new bounds value.
      */
-    public void setBounds(Rect rect) {
+    public void setBounds(@Nullable Rect rect) {
         if (rect == null) {
             mBounds.setEmpty();
             return;
@@ -283,11 +279,13 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
     }
 
     /**
-     * Set {@link #mAppBounds} to the input Rect.
-     * @param rect The rect value to set {@link #mAppBounds} to.
+     * Sets the app bounds to the provided {@link Rect}.
+     * Passing {@code null} sets the bounds to {@code null}.
+     *
+     * @param rect the new app bounds value.
      * @see #getAppBounds()
      */
-    public void setAppBounds(Rect rect) {
+    public void setAppBounds(@Nullable Rect rect) {
         if (rect == null) {
             mAppBounds = null;
             return;
@@ -298,7 +296,9 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
 
     /**
      * Sets the maximum bounds to the provided {@link Rect}.
-     * @param rect the new bounds value.
+     * Passing {@code null} sets the bounds {@link Rect} to empty.
+     *
+     * @param rect the new max bounds value.
      * @see #getMaxBounds()
      */
     public void setMaxBounds(@Nullable Rect rect) {
@@ -318,12 +318,28 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
     }
 
     /**
+     * Sets the display rotation.
+     * @hide
+     */
+    public void setDisplayRotation(@Surface.Rotation int rotation) {
+        mDisplayRotation = rotation;
+    }
+
+    /**
      * Sets whether this window should be always on top.
      * @param alwaysOnTop {@code true} to set window always on top, otherwise {@code false}
      * @hide
      */
     public void setAlwaysOnTop(boolean alwaysOnTop) {
         mAlwaysOnTop = alwaysOnTop ? ALWAYS_ON_TOP_ON : ALWAYS_ON_TOP_OFF;
+    }
+
+    /**
+     * Unsets always-on-top to undefined.
+     * @hide
+     */
+    public void unsetAlwaysOnTop() {
+        mAlwaysOnTop = ALWAYS_ON_TOP_UNDEFINED;
     }
 
     private void setAlwaysOnTop(@AlwaysOnTop int alwaysOnTop) {
@@ -344,11 +360,13 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
     }
 
     /** @see #setAppBounds(Rect) */
+    @Nullable
     public Rect getAppBounds() {
         return mAppBounds;
     }
 
     /** @see #setBounds(Rect) */
+    @NonNull
     public Rect getBounds() {
         return mBounds;
     }
@@ -357,6 +375,14 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
     @NonNull
     public Rect getMaxBounds() {
         return mMaxBounds;
+    }
+
+    /**
+     * Gets the display rotation.
+     */
+    @SuppressLint("UnflaggedApi") // @TestApi without associated feature.
+    public @Surface.Rotation int getDisplayRotation() {
+        return mDisplayRotation;
     }
 
     public int getRotation() {
@@ -374,17 +400,6 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
     @WindowingMode
     public int getWindowingMode() {
         return mWindowingMode;
-    }
-
-    /** @hide */
-    public void setDisplayWindowingMode(@WindowingMode int windowingMode) {
-        mDisplayWindowingMode = windowingMode;
-    }
-
-    /** @hide */
-    @WindowingMode
-    public int getDisplayWindowingMode() {
-        return mDisplayWindowingMode;
     }
 
     public void setActivityType(@ActivityType int activityType) {
@@ -413,11 +428,11 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
         setBounds(other.mBounds);
         setAppBounds(other.mAppBounds);
         setMaxBounds(other.mMaxBounds);
+        setDisplayRotation(other.mDisplayRotation);
         setWindowingMode(other.mWindowingMode);
         setActivityType(other.mActivityType);
         setAlwaysOnTop(other.mAlwaysOnTop);
         setRotation(other.mRotation);
-        setDisplayWindowingMode(other.mDisplayWindowingMode);
     }
 
     /** Set this object to completely undefined.
@@ -431,11 +446,37 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
         setAppBounds(null);
         setBounds(null);
         setMaxBounds(null);
+        setDisplayRotation(ROTATION_UNDEFINED);
         setWindowingMode(WINDOWING_MODE_UNDEFINED);
         setActivityType(ACTIVITY_TYPE_UNDEFINED);
         setAlwaysOnTop(ALWAYS_ON_TOP_UNDEFINED);
         setRotation(ROTATION_UNDEFINED);
-        setDisplayWindowingMode(WINDOWING_MODE_UNDEFINED);
+    }
+
+    /** @hide */
+    public void scale(float scale) {
+        scaleBounds(scale, mBounds);
+        scaleBounds(scale, mMaxBounds);
+        if (mAppBounds != null) {
+            scaleBounds(scale, mAppBounds);
+        }
+    }
+
+    /**
+     * Size based scaling. This avoid inconsistent length when rounding 4 sides.
+     * E.g. left=12, right=18, scale=0.8. The scaled width can be:
+     *   int((right - left) * scale + 0.5) = int(4.8 + 0.5) = 5
+     * But with rounding both left and right, the width will be inconsistent:
+     *   int(right * scale + 0.5) - int(left * scale + 0.5) = int(14.9) - int(10.1) = 4
+     * @hide
+     */
+    private static void scaleBounds(float scale, Rect bounds) {
+        final int w = bounds.width();
+        final int h = bounds.height();
+        bounds.left = (int) (bounds.left * scale + .5f);
+        bounds.top = (int) (bounds.top * scale + .5f);
+        bounds.right = bounds.left + (int) (w * scale + .5f);
+        bounds.bottom = bounds.top + (int) (h * scale + .5f);
     }
 
     /**
@@ -480,10 +521,10 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
             changed |= WINDOW_CONFIG_ROTATION;
             setRotation(delta.mRotation);
         }
-        if (delta.mDisplayWindowingMode != WINDOWING_MODE_UNDEFINED
-                && mDisplayWindowingMode != delta.mDisplayWindowingMode) {
-            changed |= WINDOW_CONFIG_DISPLAY_WINDOWING_MODE;
-            setDisplayWindowingMode(delta.mDisplayWindowingMode);
+        if (delta.mDisplayRotation != ROTATION_UNDEFINED
+                && delta.mDisplayRotation != mDisplayRotation) {
+            changed |= WINDOW_CONFIG_DISPLAY_ROTATION;
+            setDisplayRotation(delta.mDisplayRotation);
         }
         return changed;
     }
@@ -514,8 +555,8 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
         if ((mask & WINDOW_CONFIG_ROTATION) != 0) {
             setRotation(delta.mRotation);
         }
-        if ((mask & WINDOW_CONFIG_DISPLAY_WINDOWING_MODE) != 0) {
-            setDisplayWindowingMode(delta.mDisplayWindowingMode);
+        if ((mask & WINDOW_CONFIG_DISPLAY_ROTATION) != 0) {
+            setDisplayRotation(delta.mDisplayRotation);
         }
     }
 
@@ -568,9 +609,9 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
             changes |= WINDOW_CONFIG_ROTATION;
         }
 
-        if ((compareUndefined || other.mDisplayWindowingMode != WINDOWING_MODE_UNDEFINED)
-                && mDisplayWindowingMode != other.mDisplayWindowingMode) {
-            changes |= WINDOW_CONFIG_DISPLAY_WINDOWING_MODE;
+        if ((compareUndefined || other.mDisplayRotation != ROTATION_UNDEFINED)
+                && mDisplayRotation != other.mDisplayRotation) {
+            changes |= WINDOW_CONFIG_DISPLAY_ROTATION;
         }
 
         return changes;
@@ -620,7 +661,8 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
         if (n != 0) return n;
         n = mRotation - that.mRotation;
         if (n != 0) return n;
-        n = mDisplayWindowingMode - that.mDisplayWindowingMode;
+
+        n = mDisplayRotation - that.mDisplayRotation;
         if (n != 0) return n;
 
         // if (n != 0) return n;
@@ -649,7 +691,7 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
         result = 31 * result + mActivityType;
         result = 31 * result + mAlwaysOnTop;
         result = 31 * result + mRotation;
-        result = 31 * result + mDisplayWindowingMode;
+        result = 31 * result + mDisplayRotation;
         return result;
     }
 
@@ -659,8 +701,9 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
         return "{ mBounds=" + mBounds
                 + " mAppBounds=" + mAppBounds
                 + " mMaxBounds=" + mMaxBounds
+                + " mDisplayRotation=" + (mRotation == ROTATION_UNDEFINED
+                        ? "undefined" : rotationToString(mDisplayRotation))
                 + " mWindowingMode=" + windowingModeToString(mWindowingMode)
-                + " mDisplayWindowingMode=" + windowingModeToString(mDisplayWindowingMode)
                 + " mActivityType=" + activityTypeToString(mActivityType)
                 + " mAlwaysOnTop=" + alwaysOnTopToString(mAlwaysOnTop)
                 + " mRotation=" + (mRotation == ROTATION_UNDEFINED
@@ -736,16 +779,6 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
     }
 
     /**
-     * Returns true if the activities associated with this window configuration display a decor
-     * view.
-     * @hide
-     */
-    public boolean hasWindowDecorCaption() {
-        return mActivityType == ACTIVITY_TYPE_STANDARD && (mWindowingMode == WINDOWING_MODE_FREEFORM
-                || mDisplayWindowingMode == WINDOWING_MODE_FREEFORM);
-    }
-
-    /**
      * Returns true if the tasks associated with this window configuration can be resized
      * independently of their parent container.
      * @hide
@@ -771,11 +804,8 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
         return isFloating(mWindowingMode);
     }
 
-    /**
-     * Returns true if the windowingMode represents a floating window.
-     * @hide
-     */
-    public static boolean isFloating(int windowingMode) {
+    /** Returns true if the windowingMode represents a floating window. */
+    public static boolean isFloating(@WindowingMode int windowingMode) {
         return windowingMode == WINDOWING_MODE_FREEFORM || windowingMode == WINDOWING_MODE_PINNED;
     }
 
@@ -787,15 +817,6 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
     public static boolean inMultiWindowMode(int windowingMode) {
         return windowingMode != WINDOWING_MODE_FULLSCREEN
                 && windowingMode != WINDOWING_MODE_UNDEFINED;
-    }
-
-    /**
-     * Returns true if the windowingMode represents a split window.
-     * @hide
-     */
-    public static boolean isSplitScreenWindowingMode(int windowingMode) {
-        return windowingMode == WINDOWING_MODE_SPLIT_SCREEN_PRIMARY
-                || windowingMode == WINDOWING_MODE_SPLIT_SCREEN_SECONDARY;
     }
 
     /**
@@ -820,15 +841,6 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
     }
 
     /**
-     * Returns true if any visible windows belonging to apps with this window configuration should
-     * be kept on screen when the app is killed due to something like the low memory killer.
-     * @hide
-     */
-    public boolean keepVisibleDeadAppWindowOnScreen() {
-        return mWindowingMode != WINDOWING_MODE_PINNED;
-    }
-
-    /**
      * Returns true if the backdrop on the client side should match the frame of the window.
      * Returns false, if the backdrop should be fullscreen.
      * @hide
@@ -846,9 +858,8 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
     }
 
     /**
-     * Returns true if this container can be put in either
-     * {@link #WINDOWING_MODE_SPLIT_SCREEN_PRIMARY} or
-     * {@link #WINDOWING_MODE_SPLIT_SCREEN_SECONDARY} windowing modes based on its current state.
+     * Returns true if this container can be put in {@link #WINDOWING_MODE_MULTI_WINDOW}
+     * windowing mode based on its current state.
      * @hide
      */
     public boolean supportSplitScreenWindowingMode() {
@@ -860,6 +871,23 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
         return activityType != ACTIVITY_TYPE_ASSISTANT && activityType != ACTIVITY_TYPE_DREAM;
     }
 
+    /**
+     * Checks if the two {@link Configuration}s are equal to each other for the fields that are read
+     * by {@link Display}.
+     * @hide
+     */
+    public static boolean areConfigurationsEqualForDisplay(@NonNull Configuration newConfig,
+            @NonNull Configuration oldConfig) {
+        // Only report different if max bounds and display rotation is changed, so that it will not
+        // report on Task resizing.
+        if (!newConfig.windowConfiguration.getMaxBounds().equals(
+                oldConfig.windowConfiguration.getMaxBounds())) {
+            return false;
+        }
+        return newConfig.windowConfiguration.getDisplayRotation()
+                == oldConfig.windowConfiguration.getDisplayRotation();
+    }
+
     /** @hide */
     public static String windowingModeToString(@WindowingMode int windowingMode) {
         switch (windowingMode) {
@@ -867,8 +895,6 @@ public class WindowConfiguration implements Parcelable, Comparable<WindowConfigu
             case WINDOWING_MODE_FULLSCREEN: return "fullscreen";
             case WINDOWING_MODE_MULTI_WINDOW: return "multi-window";
             case WINDOWING_MODE_PINNED: return "pinned";
-            case WINDOWING_MODE_SPLIT_SCREEN_PRIMARY: return "split-screen-primary";
-            case WINDOWING_MODE_SPLIT_SCREEN_SECONDARY: return "split-screen-secondary";
             case WINDOWING_MODE_FREEFORM: return "freeform";
         }
         return String.valueOf(windowingMode);

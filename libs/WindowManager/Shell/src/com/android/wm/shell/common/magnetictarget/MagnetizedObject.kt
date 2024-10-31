@@ -17,13 +17,10 @@ package com.android.wm.shell.common.magnetictarget
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.database.ContentObserver
 import android.graphics.PointF
-import android.os.Handler
-import android.os.UserHandle
+import android.os.VibrationAttributes
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.provider.Settings
 import android.view.MotionEvent
 import android.view.VelocityTracker
 import android.view.View
@@ -31,7 +28,7 @@ import android.view.ViewConfiguration
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.FloatPropertyCompat
 import androidx.dynamicanimation.animation.SpringForce
-import com.android.wm.shell.animation.PhysicsAnimator
+import com.android.wm.shell.shared.animation.PhysicsAnimator
 import kotlin.math.abs
 import kotlin.math.hypot
 
@@ -94,8 +91,9 @@ abstract class MagnetizedObject<T : Any>(
          * to [onUnstuckFromTarget] or [onReleasedInTarget].
          *
          * @param target The target that the object is now stuck to.
+         * @param draggedObject The object that is stuck to the target.
          */
-        fun onStuckToTarget(target: MagneticTarget)
+        fun onStuckToTarget(target: MagneticTarget, draggedObject: MagnetizedObject<*>)
 
         /**
          * Called when the object is no longer stuck to a target. This means that either touch
@@ -113,6 +111,7 @@ abstract class MagnetizedObject<T : Any>(
          * and [maybeConsumeMotionEvent] is now returning false.
          *
          * @param target The target that this object was just unstuck from.
+         * @param draggedObject The object being unstuck from the target.
          * @param velX The X velocity of the touch gesture when it exited the magnetic field.
          * @param velY The Y velocity of the touch gesture when it exited the magnetic field.
          * @param wasFlungOut Whether the object was unstuck via a fling gesture. This means that
@@ -122,6 +121,7 @@ abstract class MagnetizedObject<T : Any>(
          */
         fun onUnstuckFromTarget(
             target: MagneticTarget,
+            draggedObject: MagnetizedObject<*>,
             velX: Float,
             velY: Float,
             wasFlungOut: Boolean
@@ -132,8 +132,9 @@ abstract class MagnetizedObject<T : Any>(
          * velocity to reach it.
          *
          * @param target The target that the object was released in.
+         * @param draggedObject The object released in the target.
          */
-        fun onReleasedInTarget(target: MagneticTarget)
+        fun onReleasedInTarget(target: MagneticTarget, draggedObject: MagnetizedObject<*>)
     }
 
     private val animator: PhysicsAnimator<T> = PhysicsAnimator.getInstance(underlyingObject)
@@ -147,6 +148,8 @@ abstract class MagnetizedObject<T : Any>(
 
     private val velocityTracker: VelocityTracker = VelocityTracker.obtain()
     private val vibrator: Vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    private val vibrationAttributes: VibrationAttributes = VibrationAttributes.createForUsage(
+            VibrationAttributes.USAGE_TOUCH)
 
     private var touchDown = PointF()
     private var touchSlop = 0
@@ -268,10 +271,6 @@ abstract class MagnetizedObject<T : Any>(
      */
     var flungIntoTargetSpringConfig = springConfig
 
-    init {
-        initHapticSettingObserver(context)
-    }
-
     /**
      * Adds the provided MagneticTarget to this object. The object will now be attracted to the
      * target if it strays within its magnetic field or is flung towards it.
@@ -300,6 +299,13 @@ abstract class MagnetizedObject<T : Any>(
      */
     fun removeTarget(target: MagneticTarget) {
         associatedTargets.remove(target)
+    }
+
+    /**
+     * Removes all associated targets from this object.
+     */
+    fun clearAllTargets() {
+        associatedTargets.clear()
     }
 
     /**
@@ -350,8 +356,8 @@ abstract class MagnetizedObject<T : Any>(
 
         val targetObjectIsInMagneticFieldOf = associatedTargets.firstOrNull { target ->
             val distanceFromTargetCenter = hypot(
-                    ev.rawX - target.centerOnScreen.x,
-                    ev.rawY - target.centerOnScreen.y)
+                    ev.rawX - target.centerOnDisplayX(),
+                    ev.rawY - target.centerOnDisplayY())
             distanceFromTargetCenter < target.magneticFieldRadiusPx
         }
 
@@ -384,7 +390,7 @@ abstract class MagnetizedObject<T : Any>(
             // animate sticking to the magnet.
             targetObjectIsStuckTo = targetObjectIsInMagneticFieldOf
             cancelAnimations()
-            magnetListener.onStuckToTarget(targetObjectIsInMagneticFieldOf!!)
+            magnetListener.onStuckToTarget(targetObjectIsInMagneticFieldOf!!, this)
             animateStuckToTarget(targetObjectIsInMagneticFieldOf, velX, velY, false, null)
 
             vibrateIfEnabled(VibrationEffect.EFFECT_HEAVY_CLICK)
@@ -395,7 +401,8 @@ abstract class MagnetizedObject<T : Any>(
             // move the object out of the target using its own movement logic.
             cancelAnimations()
             magnetListener.onUnstuckFromTarget(
-                    targetObjectIsStuckTo!!, velocityTracker.xVelocity, velocityTracker.yVelocity,
+                    targetObjectIsStuckTo!!, this,
+                    velocityTracker.xVelocity, velocityTracker.yVelocity,
                     wasFlungOut = false)
             targetObjectIsStuckTo = null
 
@@ -404,7 +411,6 @@ abstract class MagnetizedObject<T : Any>(
 
         // First, check for relevant gestures concluding with an ACTION_UP.
         if (ev.action == MotionEvent.ACTION_UP) {
-
             velocityTracker.computeCurrentVelocity(1000 /* units */)
             val velX = velocityTracker.xVelocity
             val velY = velocityTracker.yVelocity
@@ -419,10 +425,11 @@ abstract class MagnetizedObject<T : Any>(
                     // the upward direction, tell the listener so the object can be animated out of
                     // the target.
                     magnetListener.onUnstuckFromTarget(
-                            targetObjectIsStuckTo!!, velX, velY, wasFlungOut = true)
+                            targetObjectIsStuckTo!!, this,
+                            velX, velY, wasFlungOut = true)
                 } else {
                     // If the object is stuck and not flung away, it was released inside the target.
-                    magnetListener.onReleasedInTarget(targetObjectIsStuckTo!!)
+                    magnetListener.onReleasedInTarget(targetObjectIsStuckTo!!, this)
                     vibrateIfEnabled(VibrationEffect.EFFECT_HEAVY_CLICK)
                 }
 
@@ -439,11 +446,11 @@ abstract class MagnetizedObject<T : Any>(
             if (flungToTarget != null) {
                 // If this is a fling-to-target, animate the object to the magnet and then release
                 // it.
-                magnetListener.onStuckToTarget(flungToTarget)
+                magnetListener.onStuckToTarget(flungToTarget, this)
                 targetObjectIsStuckTo = flungToTarget
 
                 animateStuckToTarget(flungToTarget, velX, velY, true) {
-                    magnetListener.onReleasedInTarget(flungToTarget)
+                    magnetListener.onReleasedInTarget(flungToTarget, this)
                     targetObjectIsStuckTo = null
                     vibrateIfEnabled(VibrationEffect.EFFECT_HEAVY_CLICK)
                 }
@@ -461,8 +468,8 @@ abstract class MagnetizedObject<T : Any>(
     /** Plays the given vibration effect if haptics are enabled. */
     @SuppressLint("MissingPermission")
     private fun vibrateIfEnabled(effectId: Int) {
-        if (hapticsEnabled && systemHapticsEnabled) {
-            vibrator.vibrate(VibrationEffect.createPredefined(effectId))
+        if (hapticsEnabled) {
+            vibrator.vibrate(VibrationEffect.createPredefined(effectId), vibrationAttributes)
         }
     }
 
@@ -540,7 +547,7 @@ abstract class MagnetizedObject<T : Any>(
         // Whether velocity is sufficient, depending on whether we're flinging into a target at the
         // top or the bottom of the screen.
         val velocitySufficient =
-                if (rawY < target.centerOnScreen.y) velY > flingToTargetMinVelocity
+                if (rawY < target.centerOnDisplayY()) velY > flingToTargetMinVelocity
                 else velY < flingToTargetMinVelocity
 
         if (!velocitySufficient) {
@@ -558,15 +565,15 @@ abstract class MagnetizedObject<T : Any>(
             val yIntercept = rawY - slope * rawX
 
             // ...calculate the x value when y = the target's y-coordinate.
-            targetCenterXIntercept = (target.centerOnScreen.y - yIntercept) / slope
+            targetCenterXIntercept = (target.centerOnDisplayY() - yIntercept) / slope
         }
 
         // The width of the area we're looking for a fling towards.
         val targetAreaWidth = target.targetView.width * flingToTargetWidthPercent
 
         // Velocity was sufficient, so return true if the intercept is within the target area.
-        return targetCenterXIntercept > target.centerOnScreen.x - targetAreaWidth / 2 &&
-                targetCenterXIntercept < target.centerOnScreen.x + targetAreaWidth / 2
+        return targetCenterXIntercept > target.centerOnDisplayX() - targetAreaWidth / 2 &&
+                targetCenterXIntercept < target.centerOnDisplayX() + targetAreaWidth / 2
     }
 
     /** Cancel animations on this object's x/y properties. */
@@ -599,6 +606,22 @@ abstract class MagnetizedObject<T : Any>(
     ) {
         val centerOnScreen = PointF()
 
+        /**
+         * Set screen vertical offset amount.
+         *
+         * Screen surface may be vertically shifted in some cases, for example when one-handed mode
+         * is enabled. [MagneticTarget] and [MagnetizedObject] set their location in screen
+         * coordinates (see [MagneticTarget.centerOnScreen] and
+         * [MagnetizedObject.getLocationOnScreen] respectively).
+         *
+         * When a [MagnetizedObject] is dragged, the touch location is determined by
+         * [MotionEvent.getRawX] and [MotionEvent.getRawY]. These work in display coordinates. When
+         * screen is shifted due to one-handed mode, display coordinates and screen coordinates do
+         * not match. To determine if a [MagnetizedObject] is dragged into a [MagneticTarget], view
+         * location on screen is translated to display coordinates using this offset value.
+         */
+        var screenVerticalOffset: Int = 0
+
         private val tempLoc = IntArray(2)
 
         fun updateLocationOnScreen() {
@@ -612,47 +635,26 @@ abstract class MagnetizedObject<T : Any>(
                         tempLoc[1] + targetView.height / 2f - targetView.translationY)
             }
         }
+
+        /**
+         * Get target center coordinate on x-axis on display. [centerOnScreen] has to be up to date
+         * by calling [updateLocationOnScreen] first.
+         */
+        fun centerOnDisplayX(): Float {
+            return centerOnScreen.x
+        }
+
+        /**
+         * Get target center coordinate on y-axis on display. [centerOnScreen] has to be up to date
+         * by calling [updateLocationOnScreen] first. Use [screenVerticalOffset] to update the
+         * screen offset compared to the display.
+         */
+        fun centerOnDisplayY(): Float {
+            return centerOnScreen.y + screenVerticalOffset
+        }
     }
 
     companion object {
-
-        /**
-         * Whether the HAPTIC_FEEDBACK_ENABLED setting is true.
-         *
-         * We put it in the companion object because we need to register a settings observer and
-         * [MagnetizedObject] doesn't have an obvious lifecycle so we don't have a good time to
-         * remove that observer. Since this settings is shared among all instances we just let all
-         * instances read from this value.
-         */
-        private var systemHapticsEnabled = false
-        private var hapticSettingObserverInitialized = false
-
-        private fun initHapticSettingObserver(context: Context) {
-            if (hapticSettingObserverInitialized) {
-                return
-            }
-
-            val hapticSettingObserver =
-                    object : ContentObserver(Handler.getMain()) {
-                        override fun onChange(selfChange: Boolean) {
-                            systemHapticsEnabled =
-                                    Settings.System.getIntForUser(
-                                            context.contentResolver,
-                                            Settings.System.HAPTIC_FEEDBACK_ENABLED,
-                                            0,
-                                            UserHandle.USER_CURRENT) != 0
-                        }
-                    }
-
-            context.contentResolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.HAPTIC_FEEDBACK_ENABLED),
-                    true /* notifyForDescendants */, hapticSettingObserver)
-
-            // Trigger the observer once to initialize systemHapticsEnabled.
-            hapticSettingObserver.onChange(false /* selfChange */)
-            hapticSettingObserverInitialized = true
-        }
-
         /**
          * Magnetizes the given view. Magnetized views are attracted to one or more magnetic
          * targets. Magnetic targets attract objects that are dragged near them, and hold them there

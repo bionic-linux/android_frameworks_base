@@ -26,6 +26,7 @@ import android.util.ArraySet;
 import com.android.internal.annotations.Immutable;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
@@ -40,6 +41,7 @@ import java.util.Set;
  */
 @TestApi
 @Immutable
+@android.ravenwood.annotation.RavenwoodKeepWholeClass
 public final class PackageTagsList implements Parcelable {
 
     // an empty set value matches any attribution tag (ie, wildcard)
@@ -140,6 +142,17 @@ public final class PackageTagsList implements Parcelable {
         return true;
     }
 
+    /**
+     * Returns a list of packages.
+     *
+     * @deprecated Do not use.
+     * @hide
+     */
+    @Deprecated
+    public @NonNull Collection<String> getPackages() {
+        return new ArrayList<>(mPackageTags.keySet());
+    }
+
     public static final @NonNull Parcelable.Creator<PackageTagsList> CREATOR =
             new Parcelable.Creator<PackageTagsList>() {
                 @SuppressWarnings("unchecked")
@@ -217,7 +230,7 @@ public final class PackageTagsList implements Parcelable {
                     if (j > 0) {
                         pw.print(", ");
                     }
-                    if (attributionTag.startsWith(packageName)) {
+                    if (attributionTag != null && attributionTag.startsWith(packageName)) {
                         pw.print(attributionTag.substring(packageName.length()));
                     } else {
                         pw.print(attributionTag);

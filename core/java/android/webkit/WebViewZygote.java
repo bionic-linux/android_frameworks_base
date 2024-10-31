@@ -16,6 +16,8 @@
 
 package android.webkit;
 
+import static android.webkit.Flags.updateServiceV2;
+
 import android.content.pm.PackageInfo;
 import android.os.Build;
 import android.os.ChildZygoteProcess;
@@ -25,6 +27,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.internal.annotations.GuardedBy;
+import com.android.internal.os.Zygote;
 
 /** @hide */
 public class WebViewZygote {
@@ -49,8 +52,8 @@ public class WebViewZygote {
     private static PackageInfo sPackage;
 
     /**
-     * Flag for whether multi-process WebView is enabled. If this is {@code false}, the zygote
-     * will not be started.
+     * Flag for whether multi-process WebView is enabled. If this is {@code false}, the zygote will
+     * not be started. Should be removed entirely after we remove the updateServiceV2 flag.
      */
     @GuardedBy("sLock")
     private static boolean sMultiprocessEnabled = false;
@@ -72,11 +75,19 @@ public class WebViewZygote {
 
     public static boolean isMultiprocessEnabled() {
         synchronized (sLock) {
-            return sMultiprocessEnabled && sPackage != null;
+            if (updateServiceV2()) {
+                return sPackage != null;
+            } else {
+                return sMultiprocessEnabled && sPackage != null;
+            }
         }
     }
 
     public static void setMultiprocessEnabled(boolean enabled) {
+        if (updateServiceV2()) {
+            throw new IllegalStateException(
+                    "setMultiprocessEnabled shouldn't be called if update_service_v2 flag is set.");
+        }
         synchronized (sLock) {
             sMultiprocessEnabled = enabled;
 
@@ -93,7 +104,8 @@ public class WebViewZygote {
             sPackage = packageInfo;
 
             // If multi-process is not enabled, then do not start the zygote service.
-            if (!sMultiprocessEnabled) {
+            // Only check sMultiprocessEnabled if updateServiceV2 is not enabled.
+            if (!updateServiceV2() && !sMultiprocessEnabled) {
                 return;
             }
 
@@ -127,13 +139,15 @@ public class WebViewZygote {
 
         try {
             String abi = sPackage.applicationInfo.primaryCpuAbi;
+            int runtimeFlags = Zygote.getMemorySafetyRuntimeFlagsForSecondaryZygote(
+                    sPackage.applicationInfo, null);
             sZygote = Process.ZYGOTE_PROCESS.startChildZygote(
                     "com.android.internal.os.WebViewZygoteInit",
                     "webview_zygote",
                     Process.WEBVIEW_ZYGOTE_UID,
                     Process.WEBVIEW_ZYGOTE_UID,
                     null,  // gids
-                    0,  // runtimeFlags
+                    runtimeFlags,
                     "webview_zygote",  // seInfo
                     abi,  // abi
                     TextUtils.join(",", Build.SUPPORTED_ABIS),

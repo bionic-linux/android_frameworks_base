@@ -17,11 +17,13 @@ package com.android.server.policy;
 
 import static android.view.KeyEvent.KEYCODE_POWER;
 
+import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.util.SparseLongArray;
 import android.view.KeyEvent;
 
+import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.ToBooleanFunction;
 
 import java.io.PrintWriter;
@@ -35,13 +37,18 @@ public class KeyCombinationManager {
     private static final String TAG = "KeyCombinationManager";
 
     // Store the received down time of keycode.
+    @GuardedBy("mLock")
     private final SparseLongArray mDownTimes = new SparseLongArray(2);
     private final ArrayList<TwoKeysCombinationRule> mRules = new ArrayList();
 
     // Selected rules according to current key down.
+    private final Object mLock = new Object();
+    @GuardedBy("mLock")
     private final ArrayList<TwoKeysCombinationRule> mActiveRules = new ArrayList();
     // The rule has been triggered by current keys.
+    @GuardedBy("mLock")
     private TwoKeysCombinationRule mTriggeredRule;
+    private final Handler mHandler;
 
     // Keys in a key combination must be pressed within this interval of each other.
     private static final long COMBINE_KEY_DELAY_MILLIS = 150;
@@ -86,6 +93,11 @@ public class KeyCombinationManager {
             return false;
         }
 
+        // The excessive delay before it dispatching to client.
+        long getKeyInterceptDelayMs() {
+            return COMBINE_KEY_DELAY_MILLIS;
+        }
+
         abstract void execute();
         abstract void cancel();
 
@@ -94,13 +106,41 @@ public class KeyCombinationManager {
             return KeyEvent.keyCodeToString(mKeyCode1) + " + "
                     + KeyEvent.keyCodeToString(mKeyCode2);
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o instanceof TwoKeysCombinationRule) {
+                TwoKeysCombinationRule that = (TwoKeysCombinationRule) o;
+                return (mKeyCode1 == that.mKeyCode1 && mKeyCode2 == that.mKeyCode2) || (
+                        mKeyCode1 == that.mKeyCode2 && mKeyCode2 == that.mKeyCode1);
+            }
+            return false;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = mKeyCode1;
+            result = 31 * result + mKeyCode2;
+            return result;
+        }
     }
 
-    public KeyCombinationManager() {
+    KeyCombinationManager(Handler handler) {
+        mHandler = handler;
     }
 
     void addRule(TwoKeysCombinationRule rule) {
+        if (mRules.contains(rule)) {
+            throw new IllegalArgumentException("Rule : " + rule + " already exists.");
+        }
         mRules.add(rule);
+    }
+
+    void removeRule(TwoKeysCombinationRule rule) {
+        mRules.remove(rule);
     }
 
     /**
@@ -109,6 +149,12 @@ public class KeyCombinationManager {
      * Return true if any active rule could be triggered by the key event, otherwise false.
      */
     boolean interceptKey(KeyEvent event, boolean interactive) {
+        synchronized (mLock) {
+            return interceptKeyLocked(event, interactive);
+        }
+    }
+
+    private boolean interceptKeyLocked(KeyEvent event, boolean interactive) {
         final boolean down = event.getAction() == KeyEvent.ACTION_DOWN;
         final int keyCode = event.getKeyCode();
         final int count = mActiveRules.size();
@@ -154,7 +200,7 @@ public class KeyCombinationManager {
                         return false;
                     }
                     Log.v(TAG, "Performing combination rule : " + rule);
-                    rule.execute();
+                    mHandler.post(rule::execute);
                     mTriggeredRule = rule;
                     return true;
                 });
@@ -169,7 +215,7 @@ public class KeyCombinationManager {
             for (int index = count - 1; index >= 0; index--) {
                 final TwoKeysCombinationRule rule = mActiveRules.get(index);
                 if (rule.shouldInterceptKey(keyCode)) {
-                    rule.cancel();
+                    mHandler.post(rule::cancel);
                     mActiveRules.remove(index);
                 }
             }
@@ -181,31 +227,45 @@ public class KeyCombinationManager {
      * Return the interceptTimeout to tell InputDispatcher when is ready to deliver to window.
      */
     long getKeyInterceptTimeout(int keyCode) {
-        if (forAllActiveRules((rule) -> rule.shouldInterceptKey(keyCode))) {
-            return mDownTimes.get(keyCode) + COMBINE_KEY_DELAY_MILLIS;
+        synchronized (mLock) {
+            if (mDownTimes.get(keyCode) == 0) {
+                return 0;
+            }
+            long delayMs = 0;
+            for (final TwoKeysCombinationRule rule : mActiveRules) {
+                if (rule.shouldInterceptKey(keyCode)) {
+                    delayMs = Math.max(delayMs, rule.getKeyInterceptDelayMs());
+                }
+            }
+            // Make sure the delay is less than COMBINE_KEY_DELAY_MILLIS.
+            delayMs = Math.min(delayMs, COMBINE_KEY_DELAY_MILLIS);
+            return mDownTimes.get(keyCode) + delayMs;
         }
-        return 0;
     }
 
     /**
      * True if the key event had been handled.
      */
     boolean isKeyConsumed(KeyEvent event) {
-        if ((event.getFlags() & KeyEvent.FLAG_FALLBACK) != 0) {
-            return false;
+        synchronized (mLock) {
+            if ((event.getFlags() & KeyEvent.FLAG_FALLBACK) != 0) {
+                return false;
+            }
+            return mTriggeredRule != null && mTriggeredRule.shouldInterceptKey(event.getKeyCode());
         }
-        return mTriggeredRule != null && mTriggeredRule.shouldInterceptKey(event.getKeyCode());
     }
 
     /**
      * True if power key is the candidate.
      */
     boolean isPowerKeyIntercepted() {
-        if (forAllActiveRules((rule) -> rule.shouldInterceptKey(KEYCODE_POWER))) {
-            // return false if only if power key pressed.
-            return mDownTimes.size() > 1 || mDownTimes.get(KEYCODE_POWER) == 0;
+        synchronized (mLock) {
+            if (forAllActiveRules((rule) -> rule.shouldInterceptKey(KEYCODE_POWER))) {
+                // return false if only if power key pressed.
+                return mDownTimes.size() > 1 || mDownTimes.get(KEYCODE_POWER) == 0;
+            }
+            return false;
         }
-        return false;
     }
 
     /**

@@ -18,7 +18,11 @@ package com.android.internal.app;
 
 import android.hardware.soundtrigger.SoundTrigger;
 import android.service.voice.HotwordDetectedResult;
+import android.service.voice.HotwordDetectionServiceFailure;
 import android.service.voice.HotwordRejectedResult;
+import android.service.voice.SoundTriggerFailure;
+import android.service.voice.VisualQueryDetectionServiceFailure;
+import com.android.internal.infra.AndroidFuture;
 
 /**
  * @hide
@@ -35,6 +39,13 @@ oneway interface IHotwordRecognitionStatusCallback {
     void onKeyphraseDetected(
             in SoundTrigger.KeyphraseRecognitionEvent recognitionEvent,
             in HotwordDetectedResult result);
+
+    /**
+     * Called when the keyphrase is detected from audio coming from an external source.
+     *
+     * @param result Successful detection result payload.
+     */
+    void onKeyphraseDetectedFromExternalSource(in HotwordDetectedResult result);
 
    /**
      * Called when a generic sound trigger event is witnessed.
@@ -55,11 +66,40 @@ oneway interface IHotwordRecognitionStatusCallback {
     void onRejected(in HotwordRejectedResult result);
 
     /**
-     * Called when the detection fails due to an error.
+     * Called when the detection fails due to an error occurs in the
+     * {@link HotwordDetectionService}.
      *
-     * @param status The error code that was seen.
+     * @param hotwordDetectionServiceFailure It provides the error code, error message and
+     *                                       suggested action.
      */
-    void onError(int status);
+    void onHotwordDetectionServiceFailure(
+        in HotwordDetectionServiceFailure hotwordDetectionServiceFailure);
+
+    /**
+     * Called when the detection fails due to an error occurs in the
+     * {@link VisualQueryDetectionService}.
+     *
+     * @param visualQueryDetectionServiceFailure It provides the error code, error message and
+     *                                           suggested action.
+     */
+    void onVisualQueryDetectionServiceFailure(
+        in VisualQueryDetectionServiceFailure visualQueryDetectionServiceFailure);
+
+    /**
+     * Called when the detection fails due to an error occurs in the
+     * {@link com.android.server.soundtrigger.SoundTriggerService}.
+     *
+     * @param soundTriggerFailure It provides the error code, error message and
+     *                                           suggested action.
+     */
+    void onSoundTriggerFailure(in SoundTriggerFailure soundTriggerFailure);
+
+    /**
+     * Called when the detection fails due to an unknown error occurs.
+     *
+     * @param errorMessage It provides the error message.
+     */
+    void onUnknownFailure(in String errorMessage);
 
     /**
      * Called when the recognition is paused temporarily for some reason.
@@ -81,4 +121,9 @@ oneway interface IHotwordRecognitionStatusCallback {
 
     /** Called when the hotword detection process is restarted */
     void onProcessRestarted();
+
+    /**
+     * Called when a file open request is sent.
+     */
+   void onOpenFile(in String filename, in AndroidFuture future);
 }

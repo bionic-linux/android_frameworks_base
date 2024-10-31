@@ -17,6 +17,7 @@
 package com.android.server.policy.keyguard;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -195,8 +196,24 @@ public class KeyguardServiceWrapper implements IKeyguardService {
 
     @Override // Binder interface
     public void doKeyguardTimeout(Bundle options) {
+        int userId = mKeyguardStateMonitor.getCurrentUser();
+        if (mKeyguardStateMonitor.isSecure(userId)) {
+            // Preemptively inform the cache that the keyguard will soon be showing, as calls to
+            // doKeyguardTimeout are a signal to lock the device as soon as possible.
+            mKeyguardStateMonitor.onShowingStateChanged(true, userId);
+        }
         try {
             mService.doKeyguardTimeout(options);
+        } catch (RemoteException e) {
+            Slog.w(TAG , "Remote Exception", e);
+        }
+    }
+
+    // Binder interface
+    @Override
+    public void showDismissibleKeyguard() {
+        try {
+            mService.showDismissibleKeyguard();
         } catch (RemoteException e) {
             Slog.w(TAG , "Remote Exception", e);
         }
@@ -248,6 +265,24 @@ public class KeyguardServiceWrapper implements IKeyguardService {
         }
     }
 
+    @Override
+    public void dismissKeyguardToLaunch(Intent intentToLaunch) {
+        try {
+            mService.dismissKeyguardToLaunch(intentToLaunch);
+        } catch (RemoteException e) {
+            Slog.w(TAG , "Remote Exception", e);
+        }
+    }
+
+    @Override
+    public void onSystemKeyPressed(int keycode) {
+        try {
+            mService.onSystemKeyPressed(keycode);
+        } catch (RemoteException e) {
+            Slog.w(TAG , "Remote Exception", e);
+        }
+    }
+
     @Override // Binder interface
     public IBinder asBinder() {
         return mService.asBinder();
@@ -259,10 +294,6 @@ public class KeyguardServiceWrapper implements IKeyguardService {
 
     public boolean isTrusted() {
         return mKeyguardStateMonitor.isTrusted();
-    }
-
-    public boolean hasLockscreenWallpaper() {
-        return mKeyguardStateMonitor.hasLockscreenWallpaper();
     }
 
     public boolean isSecure(int userId) {

@@ -23,14 +23,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
-import android.view.View;
 import android.widget.Switch;
 
 import androidx.annotation.Nullable;
 
 import com.android.internal.R;
 import com.android.internal.logging.MetricsLogger;
-import com.android.systemui.R.drawable;
+import com.android.systemui.animation.Expandable;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.plugins.ActivityStarter;
@@ -38,9 +37,11 @@ import com.android.systemui.plugins.FalsingManager;
 import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.qs.QSHost;
+import com.android.systemui.qs.QsEventLogger;
 import com.android.systemui.qs.ReduceBrightColorsController;
 import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
+import com.android.systemui.res.R.drawable;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -49,7 +50,7 @@ import javax.inject.Named;
 public class ReduceBrightColorsTile extends QSTileImpl<QSTile.BooleanState>
         implements ReduceBrightColorsController.Listener{
 
-    private final Icon mIcon = ResourceIcon.get(drawable.ic_reduce_bright_colors);
+    public static final String TILE_SPEC = "reduce_brightness";
     private final boolean mIsAvailable;
     private final ReduceBrightColorsController mReduceBrightColorsController;
     private boolean mIsListening;
@@ -59,6 +60,7 @@ public class ReduceBrightColorsTile extends QSTileImpl<QSTile.BooleanState>
             @Named(RBC_AVAILABLE) boolean isAvailable,
             ReduceBrightColorsController reduceBrightColorsController,
             QSHost host,
+            QsEventLogger uiEventLogger,
             @Background Looper backgroundLooper,
             @Main Handler mainHandler,
             FalsingManager falsingManager,
@@ -67,7 +69,7 @@ public class ReduceBrightColorsTile extends QSTileImpl<QSTile.BooleanState>
             ActivityStarter activityStarter,
             QSLogger qsLogger
     ) {
-        super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
+        super(host, uiEventLogger, backgroundLooper, mainHandler, falsingManager, metricsLogger,
                 statusBarStateController, activityStarter, qsLogger);
         mReduceBrightColorsController = reduceBrightColorsController;
         mReduceBrightColorsController.observe(getLifecycle(), this);
@@ -95,7 +97,7 @@ public class ReduceBrightColorsTile extends QSTileImpl<QSTile.BooleanState>
     }
 
     @Override
-    protected void handleClick(@Nullable View view) {
+    protected void handleClick(@Nullable Expandable expandable) {
         mReduceBrightColorsController.setReduceBrightColorsActivated(!mState.value);
     }
 
@@ -111,7 +113,9 @@ public class ReduceBrightColorsTile extends QSTileImpl<QSTile.BooleanState>
         state.label = mContext.getString(R.string.reduce_bright_colors_feature_name);
         state.expandedAccessibilityClassName = Switch.class.getName();
         state.contentDescription = state.label;
-        state.icon = mIcon;
+        state.icon = ResourceIcon.get(state.value
+                ? drawable.qs_extra_dim_icon_on
+                : drawable.qs_extra_dim_icon_off);
     }
 
     @Override

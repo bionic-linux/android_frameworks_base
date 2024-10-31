@@ -16,6 +16,10 @@
 
 package android.appwidget;
 
+import static android.appwidget.flags.Flags.FLAG_GENERATED_PREVIEWS;
+import static android.appwidget.flags.Flags.generatedPreviews;
+
+import android.annotation.FlaggedApi;
 import android.annotation.IdRes;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
@@ -143,7 +147,7 @@ public class AppWidgetProviderInfo implements Parcelable {
     public ComponentName provider;
 
     /**
-     * The default height of the widget when added to a host, in dp. The widget will get
+     * The default width of the widget when added to a host, in px. The widget will get
      * at least this width, and will often be given more, depending on the host.
      *
      * <p>This field corresponds to the <code>android:minWidth</code> attribute in
@@ -152,7 +156,7 @@ public class AppWidgetProviderInfo implements Parcelable {
     public int minWidth;
 
     /**
-     * The default height of the widget when added to a host, in dp. The widget will get
+     * The default height of the widget when added to a host, in px. The widget will get
      * at least this height, and will often be given more, depending on the host.
      *
      * <p>This field corresponds to the <code>android:minHeight</code> attribute in
@@ -161,7 +165,7 @@ public class AppWidgetProviderInfo implements Parcelable {
     public int minHeight;
 
     /**
-     * Minimum width (in dp) which the widget can be resized to. This field has no effect if it
+     * Minimum width (in px) which the widget can be resized to. This field has no effect if it
      * is greater than minWidth or if horizontal resizing isn't enabled (see {@link #resizeMode}).
      *
      * <p>This field corresponds to the <code>android:minResizeWidth</code> attribute in
@@ -170,7 +174,7 @@ public class AppWidgetProviderInfo implements Parcelable {
     public int minResizeWidth;
 
     /**
-     * Minimum height (in dp) which the widget can be resized to. This field has no effect if it
+     * Minimum height (in px) which the widget can be resized to. This field has no effect if it
      * is greater than minHeight or if vertical resizing isn't enabled (see {@link #resizeMode}).
      *
      * <p>This field corresponds to the <code>android:minResizeHeight</code> attribute in
@@ -179,7 +183,7 @@ public class AppWidgetProviderInfo implements Parcelable {
     public int minResizeHeight;
 
     /**
-     * Maximum width (in dp) which the widget can be resized to. This field has no effect if it is
+     * Maximum width (in px) which the widget can be resized to. This field has no effect if it is
      * smaller than minWidth or if horizontal resizing isn't enabled (see {@link #resizeMode}).
      *
      * <p>This field corresponds to the <code>android:maxResizeWidth</code> attribute in the
@@ -189,7 +193,7 @@ public class AppWidgetProviderInfo implements Parcelable {
     public int maxResizeWidth;
 
     /**
-     * Maximum height (in dp) which the widget can be resized to. This field has no effect if it is
+     * Maximum height (in px) which the widget can be resized to. This field has no effect if it is
      * smaller than minHeight or if vertical resizing isn't enabled (see {@link #resizeMode}).
      *
      * <p>This field corresponds to the <code>android:maxResizeHeight</code> attribute in the
@@ -355,6 +359,23 @@ public class AppWidgetProviderInfo implements Parcelable {
     @UnsupportedAppUsage
     public ActivityInfo providerInfo;
 
+    /** @hide */
+    public boolean isExtendedFromAppWidgetProvider;
+
+    /**
+     * Flags indicating the widget categories for which generated previews are available.
+     * These correspond to the previews set by this provider with
+     * {@link AppWidgetManager#setWidgetPreview}.
+     *
+     * @see #WIDGET_CATEGORY_HOME_SCREEN
+     * @see #WIDGET_CATEGORY_KEYGUARD
+     * @see #WIDGET_CATEGORY_SEARCHBOX
+     * @see AppWidgetManager#getWidgetPreview
+     */
+    @FlaggedApi(FLAG_GENERATED_PREVIEWS)
+    @SuppressLint("MutableBareField")
+    public int generatedPreviewCategories;
+
     public AppWidgetProviderInfo() {
 
     }
@@ -387,6 +408,10 @@ public class AppWidgetProviderInfo implements Parcelable {
         this.providerInfo = in.readTypedObject(ActivityInfo.CREATOR);
         this.widgetFeatures = in.readInt();
         this.descriptionRes = in.readInt();
+        this.isExtendedFromAppWidgetProvider = in.readBoolean();
+        if (generatedPreviews()) {
+            generatedPreviewCategories = in.readInt();
+        }
     }
 
     /**
@@ -510,6 +535,10 @@ public class AppWidgetProviderInfo implements Parcelable {
         out.writeTypedObject(this.providerInfo, flags);
         out.writeInt(this.widgetFeatures);
         out.writeInt(this.descriptionRes);
+        out.writeBoolean(this.isExtendedFromAppWidgetProvider);
+        if (generatedPreviews()) {
+            out.writeInt(this.generatedPreviewCategories);
+        }
     }
 
     @Override
@@ -539,6 +568,10 @@ public class AppWidgetProviderInfo implements Parcelable {
         that.providerInfo = this.providerInfo;
         that.widgetFeatures = this.widgetFeatures;
         that.descriptionRes = this.descriptionRes;
+        that.isExtendedFromAppWidgetProvider = this.isExtendedFromAppWidgetProvider;
+        if (generatedPreviews()) {
+            that.generatedPreviewCategories = this.generatedPreviewCategories;
+        }
         return that;
     }
 

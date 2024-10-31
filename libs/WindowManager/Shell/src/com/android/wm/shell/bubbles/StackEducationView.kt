@@ -18,8 +18,10 @@ package com.android.wm.shell.bubbles
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PointF
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.android.internal.util.ContrastColorUtil
@@ -27,22 +29,33 @@ import com.android.wm.shell.R
 import com.android.wm.shell.animation.Interpolators
 
 /**
- * User education view to highlight the collapsed stack of bubbles.
- * Shown only the first time a user taps the stack.
+ * User education view to highlight the collapsed stack of bubbles. Shown only the first time a user
+ * taps the stack.
  */
-class StackEducationView constructor(context: Context) : LinearLayout(context) {
+class StackEducationView(
+    context: Context,
+    private val positioner: BubblePositioner,
+    private val manager: Manager
+) : LinearLayout(context) {
 
-    private val TAG = if (BubbleDebugConfig.TAG_WITH_CLASS_NAME) "BubbleStackEducationView"
-        else BubbleDebugConfig.TAG_BUBBLES
+    companion object {
+        const val PREF_STACK_EDUCATION: String = "HasSeenBubblesOnboarding"
+        private const val ANIMATE_DURATION: Long = 200
+        private const val ANIMATE_DURATION_SHORT: Long = 40
+    }
 
-    private val ANIMATE_DURATION: Long = 200
-    private val ANIMATE_DURATION_SHORT: Long = 40
+    /** Callbacks to notify managers of [StackEducationView] about events. */
+    interface Manager {
+        /** Notifies whether backpress should be intercepted. */
+        fun updateWindowFlagsForBackpress(interceptBack: Boolean)
+    }
 
-    private val view by lazy { findViewById<View>(R.id.stack_education_layout) }
-    private val titleTextView by lazy { findViewById<TextView>(R.id.stack_education_title) }
-    private val descTextView by lazy { findViewById<TextView>(R.id.stack_education_description) }
+    private val view by lazy { requireViewById<View>(R.id.stack_education_layout) }
+    private val titleTextView by lazy { requireViewById<TextView>(R.id.stack_education_title) }
+    private val descTextView by lazy { requireViewById<TextView>(R.id.stack_education_description) }
 
-    private var isHiding = false
+    var isHiding = false
+        private set
 
     init {
         LayoutInflater.from(context).inflate(R.layout.bubble_stack_user_education, this)
@@ -58,13 +71,35 @@ class StackEducationView constructor(context: Context) : LinearLayout(context) {
 
     override fun setLayoutDirection(layoutDirection: Int) {
         super.setLayoutDirection(layoutDirection)
-        setDrawableDirection()
+        setDrawableDirection(layoutDirection == LAYOUT_DIRECTION_LTR)
     }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
         layoutDirection = resources.configuration.layoutDirection
         setTextColor()
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        setFocusableInTouchMode(true)
+        setOnKeyListener(object : OnKeyListener {
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
+                // if the event is a key down event on the enter button
+                if (event.action == KeyEvent.ACTION_UP &&
+                        keyCode == KeyEvent.KEYCODE_BACK && !isHiding) {
+                    hide(false)
+                    return true
+                }
+                return false
+            }
+        })
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        setOnKeyListener(null)
+        manager.updateWindowFlagsForBackpress(false /* interceptBack */)
     }
 
     private fun setTextColor() {
@@ -78,58 +113,96 @@ class StackEducationView constructor(context: Context) : LinearLayout(context) {
         descTextView.setTextColor(textColor)
     }
 
-    private fun setDrawableDirection() {
+    private fun setDrawableDirection(isOnLeft: Boolean) {
         view.setBackgroundResource(
-            if (resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_LTR)
-                R.drawable.bubble_stack_user_education_bg
-            else R.drawable.bubble_stack_user_education_bg_rtl)
+            if (isOnLeft) R.drawable.bubble_stack_user_education_bg
+            else R.drawable.bubble_stack_user_education_bg_rtl
+        )
     }
 
     /**
-     * If necessary, shows the user education view for the bubble stack. This appears the first
-     * time a user taps on a bubble.
+     * If necessary, shows the user education view for the bubble stack. This appears the first time
+     * a user taps on a bubble.
      *
-     * @return true if user education was shown, false otherwise.
+     * @return true if user education was shown and wasn't showing before, false otherwise.
      */
     fun show(stackPosition: PointF): Boolean {
+        isHiding = false
         if (visibility == VISIBLE) return false
 
+        manager.updateWindowFlagsForBackpress(true /* interceptBack */)
+        layoutParams.width =
+                if (positioner.isLargeScreen || positioner.isLandscape)
+                    context.resources.getDimensionPixelSize(R.dimen.bubbles_user_education_width)
+                else ViewGroup.LayoutParams.MATCH_PARENT
+
+        val isStackOnLeft = positioner.isStackOnLeft(stackPosition)
+        (view.layoutParams as MarginLayoutParams).apply {
+            // Update the horizontal margins depending on the stack position
+            val edgeMargin =
+                resources.getDimensionPixelSize(R.dimen.bubble_user_education_margin_horizontal)
+            leftMargin = if (isStackOnLeft) 0 else edgeMargin
+            rightMargin = if (isStackOnLeft) edgeMargin else 0
+        }
+
+        val stackPadding =
+            context.resources.getDimensionPixelSize(R.dimen.bubble_user_education_stack_padding)
         setAlpha(0f)
         setVisibility(View.VISIBLE)
+        setDrawableDirection(isOnLeft = isStackOnLeft)
         post {
+            requestFocus()
             with(view) {
-                val bubbleSize = context.resources.getDimensionPixelSize(
-                    R.dimen.bubble_size)
-                translationY = stackPosition.y + bubbleSize / 2 - getHeight() / 2
+                if (isStackOnLeft) {
+                    setPadding(
+                        positioner.bubbleSize + stackPadding,
+                        paddingTop,
+                        paddingRight,
+                        paddingBottom
+                    )
+                    translationX = 0f
+                } else {
+                    setPadding(
+                        paddingLeft,
+                        paddingTop,
+                        positioner.bubbleSize + stackPadding,
+                        paddingBottom
+                    )
+                    translationX = (positioner.screenRect.right - width - stackPadding).toFloat()
+                }
+                translationY = stackPosition.y + positioner.bubbleSize / 2 - getHeight() / 2
             }
             animate()
                 .setDuration(ANIMATE_DURATION)
                 .setInterpolator(Interpolators.FAST_OUT_SLOW_IN)
                 .alpha(1f)
         }
-        setShouldShow(false)
+        updateStackEducationSeen()
         return true
     }
 
     /**
      * If necessary, hides the stack education view.
      *
-     * @param fromExpansion if true this indicates the hide is happening due to the bubble being
-     *                      expanded, false if due to a touch outside of the bubble stack.
+     * @param isExpanding if true this indicates the hide is happening due to the bubble being
+     *   expanded, false if due to a touch outside of the bubble stack.
      */
-    fun hide(fromExpansion: Boolean) {
+    fun hide(isExpanding: Boolean) {
         if (visibility != VISIBLE || isHiding) return
+        isHiding = true
 
+        manager.updateWindowFlagsForBackpress(false /* interceptBack */)
         animate()
             .alpha(0f)
-            .setDuration(if (fromExpansion) ANIMATE_DURATION_SHORT else ANIMATE_DURATION)
+            .setDuration(if (isExpanding) ANIMATE_DURATION_SHORT else ANIMATE_DURATION)
             .withEndAction { visibility = GONE }
     }
 
-    private fun setShouldShow(shouldShow: Boolean) {
-        context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
-                .edit().putBoolean(PREF_STACK_EDUCATION, !shouldShow).apply()
+    private fun updateStackEducationSeen() {
+        context
+            .getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
+            .edit()
+            .putBoolean(PREF_STACK_EDUCATION, true)
+            .apply()
     }
 }
-
-const val PREF_STACK_EDUCATION: String = "HasSeenBubblesOnboarding"

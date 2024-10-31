@@ -19,7 +19,7 @@ package com.android.keyguard.dagger;
 import com.android.keyguard.KeyguardClockSwitch;
 import com.android.keyguard.KeyguardSliceView;
 import com.android.keyguard.KeyguardStatusView;
-import com.android.systemui.R;
+import com.android.systemui.res.R;
 
 import dagger.Module;
 import dagger.Provides;
@@ -34,6 +34,6 @@ public abstract class KeyguardStatusViewModule {
 
     @Provides
     static KeyguardSliceView getKeyguardSliceView(KeyguardClockSwitch keyguardClockSwitch) {
-        return keyguardClockSwitch.findViewById(R.id.keyguard_status_area);
+        return keyguardClockSwitch.findViewById(R.id.keyguard_slice_view);
     }
 }

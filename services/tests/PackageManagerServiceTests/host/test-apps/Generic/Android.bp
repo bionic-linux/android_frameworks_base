@@ -13,6 +13,7 @@
 // limitations under the License.
 
 package {
+    default_team: "trendy_team_framework_android_packages",
     // See: http://go/android-license-faq
     // A large-scale-change added 'default_applicable_licenses' to import
     // all of the 'license_kinds' from "frameworks_base_license"
@@ -24,30 +25,63 @@ package {
 android_test_helper_app {
     name: "PackageManagerTestAppStub",
     manifest: "AndroidManifestVersion1.xml",
-    srcs: []
+    srcs: [],
 }
 
 android_test_helper_app {
     name: "PackageManagerTestAppVersion1",
-    manifest: "AndroidManifestVersion1.xml"
+    manifest: "AndroidManifestVersion1.xml",
+    srcs: [
+        "src/**/*.kt",
+    ],
 }
 
 android_test_helper_app {
     name: "PackageManagerTestAppVersion2",
-    manifest: "AndroidManifestVersion2.xml"
+    manifest: "AndroidManifestVersion2.xml",
+    srcs: [
+        "src/**/*.kt",
+    ],
 }
 
 android_test_helper_app {
     name: "PackageManagerTestAppVersion3",
-    manifest: "AndroidManifestVersion3.xml"
+    manifest: "AndroidManifestVersion3.xml",
+    srcs: [
+        "src/**/*.kt",
+    ],
 }
 
 android_test_helper_app {
     name: "PackageManagerTestAppVersion4",
-    manifest: "AndroidManifestVersion4.xml"
+    manifest: "AndroidManifestVersion4.xml",
+    srcs: [
+        "src/**/*.kt",
+    ],
 }
 
 android_test_helper_app {
     name: "PackageManagerTestAppOriginalOverride",
-    manifest: "AndroidManifestOriginalOverride.xml"
+    manifest: "AndroidManifestOriginalOverride.xml",
+    srcs: [
+        "src/**/*.kt",
+    ],
+}
+
+android_test_helper_app {
+    name: "PackageManagerTestAppVersion2AltKey",
+    manifest: "AndroidManifestVersion2.xml",
+    srcs: [
+        "src/**/*.kt",
+    ],
+    certificate: ":FrameworksServicesTests_keyset_A_cert",
+    v4_signature: true,
+}
+
+android_test_helper_app {
+    name: "PackageManagerTestAppDifferentPkgName",
+    manifest: "AndroidManifestDifferentPkgName.xml",
+    srcs: [
+        "src/**/*.kt",
+    ],
 }

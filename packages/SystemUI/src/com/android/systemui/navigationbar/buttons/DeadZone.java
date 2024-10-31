@@ -20,14 +20,17 @@ import android.animation.ObjectAnimator;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.os.SystemClock;
+import android.util.FloatProperty;
 import android.util.Slog;
 import android.view.MotionEvent;
 import android.view.Surface;
 
 import com.android.systemui.Dependency;
-import com.android.systemui.R;
 import com.android.systemui.navigationbar.NavigationBarController;
 import com.android.systemui.navigationbar.NavigationBarView;
+import com.android.systemui.res.R;
+
+import javax.inject.Inject;
 
 /**
  * The "dead zone" consumes unintentional taps along the top edge of the navigation bar.
@@ -44,6 +47,21 @@ public class DeadZone {
     public static final int VERTICAL = 1;  // Consume taps along the left edge.
 
     private static final boolean CHATTY = true; // print to logcat when we eat a click
+
+    private static final FloatProperty<DeadZone> FLASH_PROPERTY =
+            new FloatProperty<DeadZone>("DeadZoneFlash") {
+        @Override
+        public void setValue(DeadZone object, float value) {
+            object.setFlash(value);
+        }
+
+        @Override
+        public Float get(DeadZone object) {
+            return object.getFlash();
+        }
+    };
+
+    private final boolean mUseDeadZone;
     private final NavigationBarController mNavBarController;
     private final NavigationBarView mNavigationBarView;
 
@@ -63,14 +81,18 @@ public class DeadZone {
     private final Runnable mDebugFlash = new Runnable() {
         @Override
         public void run() {
-            ObjectAnimator.ofFloat(DeadZone.this, "flash", 1f, 0f).setDuration(150).start();
+            ObjectAnimator.ofFloat(DeadZone.this, FLASH_PROPERTY, 1f, 0f).setDuration(150).start();
         }
     };
 
+    @Inject
     public DeadZone(NavigationBarView view) {
+        mUseDeadZone = view.getResources().getBoolean(R.bool.config_useDeadZone);
+
         mNavigationBarView = view;
         mNavBarController = Dependency.get(NavigationBarController.class);
         mDisplayId = view.getContext().getDisplayId();
+
         onConfigurationChanged(HORIZONTAL);
     }
 
@@ -90,12 +112,20 @@ public class DeadZone {
     }
 
     public void setFlashOnTouchCapture(boolean dbg) {
+        if (!mUseDeadZone) {
+            return;
+        }
+
         mShouldFlash = dbg;
         mFlashFrac = 0f;
         mNavigationBarView.postInvalidate();
     }
 
     public void onConfigurationChanged(int rotation) {
+        if (!mUseDeadZone) {
+            return;
+        }
+
         mDisplayRotation = rotation;
 
         final Resources res = mNavigationBarView.getResources();
@@ -116,6 +146,10 @@ public class DeadZone {
 
     // I made you a touch event...
     public boolean onTouchEvent(MotionEvent event) {
+        if (!mUseDeadZone) {
+            return false;
+        }
+
         if (DEBUG) {
             Slog.v(TAG, this + " onTouch: " + MotionEvent.actionToString(event.getAction()));
         }
@@ -169,17 +203,17 @@ public class DeadZone {
         if (mShouldFlash) mNavigationBarView.postInvalidate();
     }
 
-    public void setFlash(float f) {
+    private void setFlash(float f) {
         mFlashFrac = f;
         mNavigationBarView.postInvalidate();
     }
 
-    public float getFlash() {
+    private float getFlash() {
         return mFlashFrac;
     }
 
     public void onDraw(Canvas can) {
-        if (!mShouldFlash || mFlashFrac <= 0f) {
+        if (!mUseDeadZone || !mShouldFlash || mFlashFrac <= 0f) {
             return;
         }
 

@@ -24,28 +24,30 @@ import static org.mockito.Mockito.when;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Handler;
-import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
 import com.android.internal.logging.MetricsLogger;
-import com.android.systemui.R;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.classifier.FalsingManagerFake;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
-import com.android.systemui.qs.QSTileHost;
+import com.android.systemui.qs.QSHost;
+import com.android.systemui.qs.QsEventLogger;
 import com.android.systemui.qs.logging.QSLogger;
+import com.android.systemui.res.R;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-@RunWith(AndroidTestingRunner.class)
+@RunWith(AndroidJUnit4.class)
 @TestableLooper.RunWithLooper(setAsMainLooper = true)
 @SmallTest
 public class NfcTileTest extends SysuiTestCase {
@@ -60,7 +62,7 @@ public class NfcTileTest extends SysuiTestCase {
     @Mock
     private ActivityStarter mActivityStarter;
     @Mock
-    private QSTileHost mHost;
+    private QSHost mHost;
     @Mock
     private MetricsLogger mMetricsLogger;
     @Mock
@@ -69,6 +71,8 @@ public class NfcTileTest extends SysuiTestCase {
     private QSLogger mQSLogger;
     @Mock
     private BroadcastDispatcher mBroadcastDispatcher;
+    @Mock
+    private QsEventLogger mUiEventLogger;
 
     private TestableLooper mTestableLooper;
     private NfcTile mNfcTile;
@@ -83,6 +87,7 @@ public class NfcTileTest extends SysuiTestCase {
 
         mNfcTile = new NfcTile(
                 mHost,
+                mUiEventLogger,
                 mTestableLooper.getLooper(),
                 new Handler(mTestableLooper.getLooper()),
                 new FalsingManagerFake(),
@@ -94,6 +99,12 @@ public class NfcTileTest extends SysuiTestCase {
         );
 
         mNfcTile.initialize();
+        mTestableLooper.processAllMessages();
+    }
+
+    @After
+    public void tearDown() {
+        mNfcTile.destroy();
         mTestableLooper.processAllMessages();
     }
 

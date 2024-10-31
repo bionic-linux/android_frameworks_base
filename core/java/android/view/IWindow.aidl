@@ -29,6 +29,8 @@ import android.view.InsetsState;
 import android.view.IScrollCaptureResponseListener;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.inputmethod.ImeTracker;
+import android.window.ActivityWindowInfo;
 import android.window.ClientWindowFrames;
 
 import com.android.internal.os.IResultReceiver;
@@ -53,58 +55,43 @@ oneway interface IWindow {
      */
     void executeCommand(String command, String parameters, in ParcelFileDescriptor descriptor);
 
+    /**
+     * Please dispatch through WindowStateResizeItem instead of directly calling this method from
+     * the system server.
+     */
     void resized(in ClientWindowFrames frames, boolean reportDraw,
-            in MergedConfiguration newMergedConfiguration,
-            boolean forceLayout, boolean alwaysConsumeSystemBars, int displayId);
-
-    /**
-     * Called when the window location in parent display has changed. The offset will only be a
-     * nonzero value if the window is on an embedded display that is re-parented to another window.
-     */
-    void locationInParentDisplayChanged(in Point offset);
-
-    /**
-     * Called when the window insets configuration has changed.
-     *
-     * @param willMove The window frame will be moved soon.
-     * @param willResize The window frame will be resized soon.
-     */
-    void insetsChanged(in InsetsState insetsState, in boolean willMove, in boolean willResize);
+            in MergedConfiguration newMergedConfiguration, in InsetsState insetsState,
+            boolean forceLayout, boolean alwaysConsumeSystemBars, int displayId,
+            int syncSeqId, boolean dragResizing,
+            in @nullable ActivityWindowInfo activityWindowInfo);
 
     /**
      * Called when this window retrieved control over a specified set of insets sources.
-     *
-     * @param willMove The window frame will be moved soon.
-     * @param willResize The window frame will be resized soon.
      */
-    void insetsControlChanged(in InsetsState insetsState, in InsetsSourceControl[] activeControls,
-            in boolean willMove, in boolean willResize);
+    void insetsControlChanged(in InsetsState insetsState,
+            in InsetsSourceControl.Array activeControls);
 
     /**
      * Called when a set of insets source window should be shown by policy.
      *
      * @param types internal insets types (WindowInsets.Type.InsetsType) to show
      * @param fromIme true if this request originated from IME (InputMethodService).
+     * @param statsToken the token tracking the current IME request or {@code null} otherwise.
      */
-    void showInsets(int types, boolean fromIme);
+    void showInsets(int types, boolean fromIme, in @nullable ImeTracker.Token statsToken);
 
     /**
      * Called when a set of insets source window should be hidden by policy.
      *
      * @param types internal insets types (WindowInsets.Type.InsetsType) to hide
      * @param fromIme true if this request originated from IME (InputMethodService).
+     * @param statsToken the token tracking the current IME request or {@code null} otherwise.
      */
-    void hideInsets(int types, boolean fromIme);
+    void hideInsets(int types, boolean fromIme, in @nullable ImeTracker.Token statsToken);
 
     void moved(int newX, int newY);
     void dispatchAppVisibility(boolean visible);
     void dispatchGetNewSurface();
-
-    /**
-     * Tell the window that it is either gaining or losing focus.  Keep it up
-     * to date on the current state showing navigational focus (touch mode) too.
-     */
-    void windowFocusChanged(boolean hasFocus, boolean inTouchMode);
 
     void closeSystemDialogs(String reason);
 
@@ -122,11 +109,6 @@ oneway interface IWindow {
     void dispatchDragEvent(in DragEvent event);
 
     /**
-     * Pointer icon events
-     */
-    void updatePointerIcon(float x, float y);
-
-    /**
      * Called for non-application windows when the enter animation has completed.
      */
     void dispatchWindowShown();
@@ -142,4 +124,9 @@ oneway interface IWindow {
      * @param callbacks to receive responses
      */
     void requestScrollCapture(in IScrollCaptureResponseListener callbacks);
+
+    /**
+     * Dump the details of a window.
+     */
+    void dumpWindow(in ParcelFileDescriptor pfd);
 }

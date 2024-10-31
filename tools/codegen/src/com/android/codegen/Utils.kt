@@ -43,8 +43,8 @@ inline infix fun Int.times(action: () -> Unit) {
  * cccc dd
  */
 fun Iterable<Pair<String, String>>.columnize(separator: String = " | "): String {
-    val col1w = map { (a, _) -> a.length }.max()!!
-    val col2w = map { (_, b) -> b.length }.max()!!
+    val col1w = map { (a, _) -> a.length }.maxOrNull()!!
+    val col2w = map { (_, b) -> b.length }.maxOrNull()!!
     return map { it.first.padEnd(col1w) + separator + it.second.padEnd(col2w) }.joinToString("\n")
 }
 
@@ -136,15 +136,5 @@ private fun parseFailed(source: String, cause: Throwable? = null, desc: String =
                     .joinToString("\n") + "\n$desc",
             cause)
 }
-
-var <T> MutableList<T>.last
-    get() = last()
-    set(value) {
-        if (isEmpty()) {
-            add(value)
-        } else {
-            this[size - 1] = value
-        }
-    }
 
 inline fun <T> buildList(init: MutableList<T>.() -> Unit) = mutableListOf<T>().apply(init)

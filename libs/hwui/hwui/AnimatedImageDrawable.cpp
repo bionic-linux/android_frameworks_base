@@ -15,23 +15,22 @@
  */
 
 #include "AnimatedImageDrawable.h"
-#ifdef __ANDROID__ // Layoutlib does not support AnimatedImageThread
-#include "AnimatedImageThread.h"
-#endif
-
-#include <gui/TraceUtils.h>
-#include "pipeline/skia/SkiaUtils.h"
 
 #include <SkPicture.h>
 #include <SkRefCnt.h>
+#include <gui/TraceUtils.h>
 
 #include <optional>
 
+#include "AnimatedImageThread.h"
+#include "pipeline/skia/SkiaUtils.h"
+
 namespace android {
 
-AnimatedImageDrawable::AnimatedImageDrawable(sk_sp<SkAnimatedImage> animatedImage, size_t bytesUsed)
-        : mSkAnimatedImage(std::move(animatedImage)), mBytesUsed(bytesUsed) {
-    mTimeToShowNextSnapshot = ms2ns(mSkAnimatedImage->currentFrameDuration());
+AnimatedImageDrawable::AnimatedImageDrawable(sk_sp<SkAnimatedImage> animatedImage, size_t bytesUsed,
+                                             SkEncodedImageFormat format)
+        : mSkAnimatedImage(std::move(animatedImage)), mBytesUsed(bytesUsed), mFormat(format) {
+    mTimeToShowNextSnapshot = ms2ns(currentFrameDuration());
     setStagingBounds(mSkAnimatedImage->getBounds());
 }
 
@@ -92,7 +91,7 @@ bool AnimatedImageDrawable::isDirty(nsecs_t* outDelay) {
         // directly from mSkAnimatedImage.
         lock.unlock();
         std::unique_lock imageLock{mImageLock};
-        *outDelay = ms2ns(mSkAnimatedImage->currentFrameDuration());
+        *outDelay = ms2ns(currentFrameDuration());
         return true;
     } else {
         // The next snapshot has not yet been decoded, but we've already passed
@@ -109,8 +108,8 @@ AnimatedImageDrawable::Snapshot AnimatedImageDrawable::decodeNextFrame() {
     Snapshot snap;
     {
         std::unique_lock lock{mImageLock};
-        snap.mDurationMS = mSkAnimatedImage->decodeNextFrame();
-        snap.mPic.reset(mSkAnimatedImage->newPictureSnapshot());
+        snap.mDurationMS = adjustFrameDuration(mSkAnimatedImage->decodeNextFrame());
+        snap.mPic = mSkAnimatedImage->makePictureSnapshot();
     }
 
     return snap;
@@ -122,8 +121,8 @@ AnimatedImageDrawable::Snapshot AnimatedImageDrawable::reset() {
     {
         std::unique_lock lock{mImageLock};
         mSkAnimatedImage->reset();
-        snap.mPic.reset(mSkAnimatedImage->newPictureSnapshot());
-        snap.mDurationMS = mSkAnimatedImage->currentFrameDuration();
+        snap.mPic = mSkAnimatedImage->makePictureSnapshot();
+        snap.mDurationMS = currentFrameDuration();
     }
 
     return snap;
@@ -157,7 +156,6 @@ void AnimatedImageDrawable::onDraw(SkCanvas* canvas) {
         lazyPaint.emplace();
         lazyPaint->setAlpha(mProperties.mAlpha);
         lazyPaint->setColorFilter(mProperties.mColorFilter);
-        lazyPaint->setFilterQuality(kLow_SkFilterQuality);
     }
 
     canvas->concat(matrix);
@@ -185,10 +183,8 @@ void AnimatedImageDrawable::onDraw(SkCanvas* canvas) {
     } else if (starting) {
         // The image has animated, and now is being reset. Queue up the first
         // frame, but keep showing the current frame until the first is ready.
-#ifdef __ANDROID__ // Layoutlib does not support AnimatedImageThread
         auto& thread = uirenderer::AnimatedImageThread::getInstance();
         mNextSnapshot = thread.reset(sk_ref_sp(this));
-#endif
     }
 
     bool finalFrame = false;
@@ -214,10 +210,8 @@ void AnimatedImageDrawable::onDraw(SkCanvas* canvas) {
     }
 
     if (mRunning && !mNextSnapshot.valid()) {
-#ifdef __ANDROID__ // Layoutlib does not support AnimatedImageThread
         auto& thread = uirenderer::AnimatedImageThread::getInstance();
         mNextSnapshot = thread.decodeNextFrame(sk_ref_sp(this));
-#endif
     }
 
     if (!drawDirectly) {
@@ -275,7 +269,7 @@ int AnimatedImageDrawable::drawStaging(SkCanvas* canvas) {
         {
             std::unique_lock lock{mImageLock};
             mSkAnimatedImage->reset();
-            durationMS = mSkAnimatedImage->currentFrameDuration();
+            durationMS = currentFrameDuration();
         }
         {
             std::unique_lock lock{mSwapLock};
@@ -307,7 +301,7 @@ int AnimatedImageDrawable::drawStaging(SkCanvas* canvas) {
     {
         std::unique_lock lock{mImageLock};
         if (update) {
-            durationMS = mSkAnimatedImage->decodeNextFrame();
+            durationMS = adjustFrameDuration(mSkAnimatedImage->decodeNextFrame());
         }
 
         canvas->drawDrawable(mSkAnimatedImage.get());
@@ -335,6 +329,22 @@ SkRect AnimatedImageDrawable::onGetBounds() {
     // This must return a bounds that is valid for all possible states,
     // including if e.g. the client calls setBounds.
     return SkRectMakeLargest();
+}
+
+int AnimatedImageDrawable::adjustFrameDuration(int durationMs) {
+    if (durationMs == SkAnimatedImage::kFinished) {
+        return SkAnimatedImage::kFinished;
+    }
+
+    if (mFormat == SkEncodedImageFormat::kGIF) {
+        // Match Chrome & Firefox behavior that gifs with a duration <= 10ms is bumped to 100ms
+        return durationMs <= 10 ? 100 : durationMs;
+    }
+    return durationMs;
+}
+
+int AnimatedImageDrawable::currentFrameDuration() {
+    return adjustFrameDuration(mSkAnimatedImage->currentFrameDuration());
 }
 
 }  // namespace android

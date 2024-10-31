@@ -21,17 +21,20 @@ import android.os.VibratorInfo;
 import android.os.vibrator.RampSegment;
 import android.os.vibrator.StepSegment;
 import android.os.vibrator.VibrationEffectSegment;
+import android.util.MathUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Adapter that converts ramp segments that to a sequence of fixed step segments.
+ * Adapter that converts ramp segments to a sequence of fixed step segments.
  *
- * <p>This leaves the list unchanged if the device has compose PWLE capability.
+ * <p>This change preserves the frequency parameters by interpolating the ramp values.
+ *
+ * <p>The segments will not be changed if the device has {@link IVibrator#CAP_COMPOSE_PWLE_EFFECTS}.
  */
-final class RampToStepAdapter implements VibrationEffectAdapters.SegmentsAdapter<VibratorInfo> {
+final class RampToStepAdapter implements VibrationSegmentsAdapter {
 
     private final int mStepDuration;
 
@@ -40,8 +43,8 @@ final class RampToStepAdapter implements VibrationEffectAdapters.SegmentsAdapter
     }
 
     @Override
-    public int apply(List<VibrationEffectSegment> segments, int repeatIndex,
-            VibratorInfo info) {
+    public int adaptToVibrator(VibratorInfo info, List<VibrationEffectSegment> segments,
+            int repeatIndex) {
         if (info.hasCapability(IVibrator.CAP_COMPOSE_PWLE_EFFECTS)) {
             // The vibrator have PWLE capability, so keep the segments unchanged.
             return repeatIndex;
@@ -52,7 +55,7 @@ final class RampToStepAdapter implements VibrationEffectAdapters.SegmentsAdapter
             if (!(segment instanceof RampSegment)) {
                 continue;
             }
-            List<StepSegment> steps = apply((RampSegment) segment);
+            List<StepSegment> steps = convertRampToSteps(info, (RampSegment) segment);
             segments.remove(i);
             segments.addAll(i, steps);
             int addedSegments = steps.size() - 1;
@@ -65,11 +68,12 @@ final class RampToStepAdapter implements VibrationEffectAdapters.SegmentsAdapter
         return repeatIndex;
     }
 
-    private List<StepSegment> apply(RampSegment ramp) {
+    private List<StepSegment> convertRampToSteps(VibratorInfo info, RampSegment ramp) {
         if (Float.compare(ramp.getStartAmplitude(), ramp.getEndAmplitude()) == 0) {
             // Amplitude is the same, so return a single step to simulate this ramp.
             return Arrays.asList(
-                    new StepSegment(ramp.getStartAmplitude(), ramp.getStartFrequency(),
+                    new StepSegment(ramp.getStartAmplitude(),
+                            fillEmptyFrequency(info, ramp.getStartFrequencyHz()),
                             (int) ramp.getDuration()));
         }
 
@@ -77,17 +81,24 @@ final class RampToStepAdapter implements VibrationEffectAdapters.SegmentsAdapter
         int stepCount = (int) (ramp.getDuration() + mStepDuration - 1) / mStepDuration;
         for (int i = 0; i < stepCount - 1; i++) {
             float pos = (float) i / stepCount;
+            // Fill zero frequency values with the device resonant frequency before interpolating.
+            float startFrequencyHz = fillEmptyFrequency(info, ramp.getStartFrequencyHz());
+            float endFrequencyHz = fillEmptyFrequency(info, ramp.getEndFrequencyHz());
             steps.add(new StepSegment(
-                    interpolate(ramp.getStartAmplitude(), ramp.getEndAmplitude(), pos),
-                    interpolate(ramp.getStartFrequency(), ramp.getEndFrequency(), pos),
+                    MathUtils.lerp(ramp.getStartAmplitude(), ramp.getEndAmplitude(), pos),
+                    MathUtils.lerp(startFrequencyHz, endFrequencyHz, pos),
                     mStepDuration));
         }
         int duration = (int) ramp.getDuration() - mStepDuration * (stepCount - 1);
-        steps.add(new StepSegment(ramp.getEndAmplitude(), ramp.getEndFrequency(), duration));
+        float endFrequencyHz = fillEmptyFrequency(info, ramp.getEndFrequencyHz());
+        steps.add(new StepSegment(ramp.getEndAmplitude(), endFrequencyHz, duration));
         return steps;
     }
 
-    private static float interpolate(float start, float end, float position) {
-        return start + position * (end - start);
+    private static float fillEmptyFrequency(VibratorInfo info, float frequencyHz) {
+        if (Float.isNaN(info.getResonantFrequencyHz())) {
+            return 0;
+        }
+        return frequencyHz == 0 ? info.getResonantFrequencyHz() : frequencyHz;
     }
 }

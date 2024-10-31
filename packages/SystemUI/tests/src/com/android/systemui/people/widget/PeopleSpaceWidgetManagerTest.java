@@ -80,6 +80,8 @@ import android.app.people.IPeopleManager;
 import android.app.people.PeopleManager;
 import android.app.people.PeopleSpaceTile;
 import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProviderInfo;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -92,28 +94,31 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.platform.test.annotations.DisableFlags;
+import android.platform.test.annotations.EnableFlags;
 import android.service.notification.ConversationChannelWrapper;
 import android.service.notification.StatusBarNotification;
 import android.service.notification.ZenModeConfig;
-import android.testing.AndroidTestingRunner;
 import android.text.TextUtils;
 
 import androidx.preference.PreferenceManager;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
-import com.android.systemui.R;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.people.PeopleBackupFollowUpJob;
 import com.android.systemui.people.PeopleSpaceUtils;
 import com.android.systemui.people.SharedPreferencesHelper;
+import com.android.systemui.res.R;
+import com.android.systemui.settings.FakeUserTracker;
 import com.android.systemui.statusbar.NotificationListener;
 import com.android.systemui.statusbar.NotificationListener.NotificationHandler;
 import com.android.systemui.statusbar.SbnBuilder;
-import com.android.systemui.statusbar.notification.NotificationEntryManager;
 import com.android.systemui.statusbar.notification.collection.NoManSimulator;
 import com.android.systemui.statusbar.notification.collection.NoManSimulator.NotifEvent;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
 import com.android.systemui.statusbar.notification.collection.NotificationEntryBuilder;
+import com.android.systemui.statusbar.notification.collection.notifcollection.CommonNotifCollection;
 import com.android.systemui.util.concurrency.FakeExecutor;
 import com.android.systemui.util.time.FakeSystemClock;
 import com.android.wm.shell.bubbles.Bubbles;
@@ -138,7 +143,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @SmallTest
-@RunWith(AndroidTestingRunner.class)
+@RunWith(AndroidJUnit4.class)
 public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
     private static final long MIN_LINGER_DURATION = 5;
 
@@ -239,7 +244,7 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
     @Mock
     private LauncherApps mLauncherApps;
     @Mock
-    private NotificationEntryManager mNotificationEntryManager;
+    private CommonNotifCollection mNotifCollection;
     @Mock
     private PackageManager mPackageManager;
     @Mock
@@ -265,15 +270,16 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
 
     private final FakeExecutor mFakeExecutor = new FakeExecutor(mClock);
 
+    private final FakeUserTracker mUserTracker = new FakeUserTracker();
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         mLauncherApps = mock(LauncherApps.class);
-        mDependency.injectTestDependency(NotificationEntryManager.class, mNotificationEntryManager);
         mManager = new PeopleSpaceWidgetManager(mContext, mAppWidgetManager, mIPeopleManager,
-                mPeopleManager, mLauncherApps, mNotificationEntryManager, mPackageManager,
+                mPeopleManager, mLauncherApps, mNotifCollection, mPackageManager,
                 Optional.of(mBubbles), mUserManager, mBackupManager, mINotificationManager,
-                mNotificationManager, mFakeExecutor);
+                mNotificationManager, mFakeExecutor, mUserTracker);
         mManager.attach(mListenerService);
 
         verify(mListenerService).addNotificationHandler(mListenerCaptor.capture());
@@ -310,6 +316,12 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
                 .setId(1)
                 .setShortcutInfo(mShortcutInfo)
                 .build();
+
+        AppWidgetProviderInfo providerInfo = new AppWidgetProviderInfo();
+        providerInfo.provider = new ComponentName("com.android.systemui.tests",
+                "com.android.systemui.people.widget.PeopleSpaceWidgetProvider");
+        when(mAppWidgetManager.getInstalledProvidersForPackage(anyString(), any()))
+                .thenReturn(List.of(providerInfo));
     }
 
     @Test
@@ -482,6 +494,8 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
         int[] widgetIdsArray = {1};
         when(mAppWidgetManager.getAppWidgetIds(any())).thenReturn(widgetIdsArray);
 
+        when(mUserManager.isUserUnlocked(any())).thenReturn(true);
+
         NotificationChannel channel =
                 new NotificationChannel(TEST_CHANNEL_ID, TEST_CHANNEL_NAME, IMPORTANCE_DEFAULT);
         channel.setConversationId(TEST_PARENT_CHANNEL_ID, TEST_CONVERSATION_ID);
@@ -490,8 +504,25 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
                 UserHandle.getUserHandleForUid(0), channel, IMPORTANCE_HIGH);
         mClock.advanceTime(MIN_LINGER_DURATION);
 
-        verify(mAppWidgetManager, times(1)).updateAppWidget(anyInt(),
-                any());
+        verify(mAppWidgetManager, times(1)).updateAppWidget(anyInt(), any());
+    }
+
+    @Test
+    public void testOnNotificationChannelModified_userLocked() {
+        int[] widgetIdsArray = {1};
+        when(mAppWidgetManager.getAppWidgetIds(any())).thenReturn(widgetIdsArray);
+
+        when(mUserManager.isUserUnlocked(any())).thenReturn(false);
+
+        NotificationChannel channel =
+                new NotificationChannel(TEST_CHANNEL_ID, TEST_CHANNEL_NAME, IMPORTANCE_DEFAULT);
+        channel.setConversationId(TEST_PARENT_CHANNEL_ID, TEST_CONVERSATION_ID);
+
+        mNoMan.issueChannelModification(TEST_PACKAGE_A,
+                UserHandle.getUserHandleForUid(0), channel, IMPORTANCE_HIGH);
+        mClock.advanceTime(MIN_LINGER_DURATION);
+
+        verify(mAppWidgetManager, never()).updateAppWidget(anyInt(), any());
     }
 
     @Test
@@ -633,7 +664,7 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
                 .setShortcutInfo(mShortcutInfo)
                 .setId(1);
         NotificationEntry entry = builder.build();
-        when(mNotificationEntryManager.getVisibleNotifications()).thenReturn(List.of(entry));
+        when(mNotifCollection.getAllNotifs()).thenReturn(List.of(entry));
 
         NotifEvent notif1 = mNoMan.postNotif(builder);
         mClock.advanceTime(MIN_LINGER_DURATION);
@@ -692,7 +723,7 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
                 .setShortcutInfo(mShortcutInfo)
                 .setId(1);
         NotificationEntry entry = builder.build();
-        when(mNotificationEntryManager.getVisibleNotifications()).thenReturn(List.of(entry));
+        when(mNotifCollection.getAllNotifs()).thenReturn(List.of(entry));
 
         NotifEvent notif1 = mNoMan.postNotif(builder);
         mClock.advanceTime(MIN_LINGER_DURATION);
@@ -716,7 +747,7 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
                 .setShortcutInfo(mShortcutInfo)
                 .setId(1);
         NotificationEntry entry = builder.build();
-        when(mNotificationEntryManager.getVisibleNotifications()).thenReturn(List.of(entry));
+        when(mNotifCollection.getAllNotifs()).thenReturn(List.of(entry));
 
         NotifEvent notif1 = mNoMan.postNotif(builder);
         mClock.advanceTime(MIN_LINGER_DURATION);
@@ -740,7 +771,7 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
                 .setShortcutInfo(mShortcutInfo)
                 .setId(1);
         NotificationEntry entry = builder.build();
-        when(mNotificationEntryManager.getVisibleNotifications()).thenReturn(List.of(entry));
+        when(mNotifCollection.getAllNotifs()).thenReturn(List.of(entry));
 
         NotifEvent notif1 = mNoMan.postNotif(builder);
         mClock.advanceTime(MIN_LINGER_DURATION);
@@ -771,12 +802,12 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
                 .setId(1);
 
         NotificationEntry entry = builder.build();
-        when(mNotificationEntryManager.getVisibleNotifications()).thenReturn(List.of(entry));
+        when(mNotifCollection.getAllNotifs()).thenReturn(List.of(entry));
 
         NotifEvent notif1 = mNoMan.postNotif(builder);
         mClock.advanceTime(MIN_LINGER_DURATION);
 
-        when(mNotificationEntryManager.getVisibleNotifications()).thenReturn(List.of());
+        when(mNotifCollection.getAllNotifs()).thenReturn(List.of());
         NotifEvent notif1b = mNoMan.retractNotif(notif1.sbn.cloneLight(), 0);
         mClock.advanceTime(MIN_LINGER_DURATION);
 
@@ -814,7 +845,7 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
                 .setSbn(sbn)
                 .setId(1);
         NotificationEntry entry = builder.build();
-        when(mNotificationEntryManager.getVisibleNotifications()).thenReturn(List.of(entry));
+        when(mNotifCollection.getAllNotifs()).thenReturn(List.of(entry));
 
         NotifEvent notif1 = mNoMan.postNotif(builder);
         mClock.advanceTime(MIN_LINGER_DURATION);
@@ -858,7 +889,7 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
                 .setShortcutInfo(mShortcutInfo)
                 .setId(1);
         NotificationEntry entry = builder.build();
-        when(mNotificationEntryManager.getVisibleNotifications()).thenReturn(List.of(entry));
+        when(mNotifCollection.getAllNotifs()).thenReturn(List.of(entry));
 
         NotifEvent notif1 = mNoMan.postNotif(builder);
 
@@ -891,7 +922,7 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
                 .setShortcutInfo(mShortcutInfo)
                 .setId(1);
         NotificationEntry entry = builder.build();
-        when(mNotificationEntryManager.getVisibleNotifications()).thenReturn(List.of(entry));
+        when(mNotifCollection.getAllNotifs()).thenReturn(List.of(entry));
 
         NotifEvent notif1 = mNoMan.postNotif(builder);
         mClock.advanceTime(MIN_LINGER_DURATION);
@@ -922,7 +953,7 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
                 .setShortcutInfo(mShortcutInfo)
                 .setId(1);
         NotificationEntry entry = builder.build();
-        when(mNotificationEntryManager.getVisibleNotifications()).thenReturn(List.of(entry));
+        when(mNotifCollection.getAllNotifs()).thenReturn(List.of(entry));
 
         NotifEvent notif1 = mNoMan.postNotif(builder);
         mClock.advanceTime(MIN_LINGER_DURATION);
@@ -1215,8 +1246,7 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
                         .setPackageName(TEST_PACKAGE_A)
                         .setUserHandle(new UserHandle(0))
                         .build();
-        when(mNotificationEntryManager.getVisibleNotifications())
-                .thenReturn(List.of(mNotificationEntry));
+        when(mNotifCollection.getAllNotifs()).thenReturn(List.of(mNotificationEntry));
 
         PeopleSpaceTile actual =
                 mManager.augmentTileFromNotificationEntryManager(tile,
@@ -1224,8 +1254,7 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
 
         assertThat(actual.getNotificationContent().toString()).isEqualTo(NOTIFICATION_CONTENT_1);
 
-        verify(mNotificationEntryManager, times(1))
-                .getVisibleNotifications();
+        verify(mNotifCollection, times(1)).getAllNotifs();
     }
 
     @Test
@@ -1237,8 +1266,7 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
                         .setPackageName(TEST_PACKAGE_A)
                         .setUserHandle(new UserHandle(0))
                         .build();
-        when(mNotificationEntryManager.getVisibleNotifications())
-                .thenReturn(List.of(mNotificationEntry));
+        when(mNotifCollection.getAllNotifs()).thenReturn(List.of(mNotificationEntry));
 
         PeopleSpaceTile actual =
                 mManager.augmentTileFromNotificationEntryManager(tile,
@@ -1246,8 +1274,7 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
 
         assertThat(TextUtils.isEmpty(actual.getNotificationContent())).isTrue();
 
-        verify(mNotificationEntryManager, times(1))
-                .getVisibleNotifications();
+        verify(mNotifCollection, times(1)).getAllNotifs();
     }
 
     @Test
@@ -1546,6 +1573,49 @@ public class PeopleSpaceWidgetManagerTest extends SysuiTestCase {
                 String.valueOf(WIDGET_ID_WITH_SHORTCUT));
         assertThat(followUp.getStringSet(key11.toString(), new HashSet<>())).containsExactly(
                 String.valueOf(WIDGET_ID_WITH_KEY_IN_OPTIONS));
+    }
+
+    @Test
+    @DisableFlags({
+        android.appwidget.flags.Flags.FLAG_GENERATED_PREVIEWS,
+        android.appwidget.flags.Flags.FLAG_DRAW_DATA_PARCEL
+    })
+    public void testUpdateGeneratedPreview_flagDisabled() {
+        mManager.updateGeneratedPreviewForUser(mUserTracker.getUserHandle());
+        verify(mAppWidgetManager, times(0)).setWidgetPreview(any(), anyInt(), any());
+    }
+
+    @Test
+    @EnableFlags(android.appwidget.flags.Flags.FLAG_GENERATED_PREVIEWS)
+    @DisableFlags(android.appwidget.flags.Flags.FLAG_DRAW_DATA_PARCEL)
+    public void testUpdateGeneratedPreview_userLocked() {
+        when(mUserManager.isUserUnlocked(mUserTracker.getUserHandle())).thenReturn(false);
+
+        mManager.updateGeneratedPreviewForUser(mUserTracker.getUserHandle());
+        verify(mAppWidgetManager, times(0)).setWidgetPreview(any(), anyInt(), any());
+    }
+
+    @Test
+    @EnableFlags(android.appwidget.flags.Flags.FLAG_GENERATED_PREVIEWS)
+    @DisableFlags(android.appwidget.flags.Flags.FLAG_DRAW_DATA_PARCEL)
+    public void testUpdateGeneratedPreview_userUnlocked() {
+        when(mUserManager.isUserUnlocked(mUserTracker.getUserHandle())).thenReturn(true);
+        when(mAppWidgetManager.setWidgetPreview(any(), anyInt(), any())).thenReturn(true);
+
+        mManager.updateGeneratedPreviewForUser(mUserTracker.getUserHandle());
+        verify(mAppWidgetManager, times(1)).setWidgetPreview(any(), anyInt(), any());
+    }
+
+    @Test
+    @EnableFlags(android.appwidget.flags.Flags.FLAG_GENERATED_PREVIEWS)
+    @DisableFlags(android.appwidget.flags.Flags.FLAG_DRAW_DATA_PARCEL)
+    public void testUpdateGeneratedPreview_doesNotSetTwice() {
+        when(mUserManager.isUserUnlocked(mUserTracker.getUserHandle())).thenReturn(true);
+        when(mAppWidgetManager.setWidgetPreview(any(), anyInt(), any())).thenReturn(true);
+
+        mManager.updateGeneratedPreviewForUser(mUserTracker.getUserHandle());
+        mManager.updateGeneratedPreviewForUser(mUserTracker.getUserHandle());
+        verify(mAppWidgetManager, times(1)).setWidgetPreview(any(), anyInt(), any());
     }
 
     private void setFinalField(String fieldName, int value) {

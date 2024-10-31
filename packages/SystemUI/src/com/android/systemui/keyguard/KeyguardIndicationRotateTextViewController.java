@@ -16,39 +16,60 @@
 
 package com.android.systemui.keyguard;
 
+import static com.android.systemui.flags.Flags.KEYGUARD_TALKBACK_FIX;
+
 import android.annotation.Nullable;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.SystemClock;
 import android.text.TextUtils;
 
 import androidx.annotation.IntDef;
+import androidx.annotation.VisibleForTesting;
 
+import com.android.keyguard.logging.KeyguardLogger;
 import com.android.systemui.Dumpable;
 import com.android.systemui.dagger.qualifiers.Main;
+import com.android.systemui.flags.FeatureFlags;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
+import com.android.systemui.statusbar.KeyguardIndicationController;
 import com.android.systemui.statusbar.phone.KeyguardIndicationTextView;
 import com.android.systemui.util.ViewController;
 import com.android.systemui.util.concurrency.DelayableExecutor;
 
-import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Rotates through messages to show on the keyguard bottom area on the lock screen
- * NOTE: This controller should not be used on AoD to avoid waking up the AP too often.
+ * Animates through messages to show on the keyguard bottom area on the lock screen.
+ * Utilizes a {@link KeyguardIndicationTextView} for animations. This class handles the rotating
+ * nature of the messages including:
+ *  - ensuring a message is shown for its minimum amount of time. Minimum time is determined by
+ *  {@link KeyguardIndication#getMinVisibilityMillis()}
+ *  - showing the next message after a default of 3.5 seconds before animating to the next
+ *  - statically showing a single message if there is only one message to show
+ *  - showing certain messages immediately, assuming te current message has been shown for
+ *  at least {@link KeyguardIndication#getMinVisibilityMillis()}. For example, transient and
+ *  biometric messages are meant to be shown immediately.
+ *  - ending animations when dozing begins, and resuming when dozing ends. Rotating messages on
+ *  AoD is undesirable since it wakes up the AP too often.
  */
 public class KeyguardIndicationRotateTextViewController extends
         ViewController<KeyguardIndicationTextView> implements Dumpable {
     public static String TAG = "KgIndicationRotatingCtrl";
-    private static final long DEFAULT_INDICATION_SHOW_LENGTH = 3500; // milliseconds
+    private static final long DEFAULT_INDICATION_SHOW_LENGTH =
+            KeyguardIndicationController.DEFAULT_HIDE_DELAY_MS
+                    - KeyguardIndicationTextView.Y_IN_DURATION;
+    public static final long IMPORTANT_MSG_MIN_DURATION =
+            2000L + KeyguardIndicationTextView.Y_IN_DURATION;
 
     private final StatusBarStateController mStatusBarStateController;
+    private final KeyguardLogger mLogger;
     private final float mMaxAlpha;
     private final ColorStateList mInitialTextColorState;
 
@@ -57,18 +78,25 @@ public class KeyguardIndicationRotateTextViewController extends
 
     // Executor that will show the next message after a delay
     private final DelayableExecutor mExecutor;
-    @Nullable private ShowNextIndication mShowNextIndicationRunnable;
+    private final FeatureFlags mFeatureFlags;
+
+    @VisibleForTesting
+    @Nullable ShowNextIndication mShowNextIndicationRunnable;
 
     // List of indication types to show. The next indication to show is always at index 0
-    private final List<Integer> mIndicationQueue = new LinkedList<>();
+    private final List<Integer> mIndicationQueue = new ArrayList<>();
     private @IndicationType int mCurrIndicationType = INDICATION_TYPE_NONE;
+    private CharSequence mCurrMessage;
+    private long mLastIndicationSwitch;
 
     private boolean mIsDozing;
 
     public KeyguardIndicationRotateTextViewController(
             KeyguardIndicationTextView view,
             @Main DelayableExecutor executor,
-            StatusBarStateController statusBarStateController
+            StatusBarStateController statusBarStateController,
+            KeyguardLogger logger,
+            FeatureFlags flags
     ) {
         super(view);
         mMaxAlpha = view.getAlpha();
@@ -76,12 +104,15 @@ public class KeyguardIndicationRotateTextViewController extends
         mInitialTextColorState = mView != null
                 ? mView.getTextColors() : ColorStateList.valueOf(Color.WHITE);
         mStatusBarStateController = statusBarStateController;
+        mLogger = logger;
+        mFeatureFlags = flags;
         init();
     }
 
     @Override
     protected void onViewAttached() {
         mStatusBarStateController.addCallback(mStatusBarStateListener);
+        mView.setAlwaysAnnounceEnabled(mFeatureFlags.isEnabled(KEYGUARD_TALKBACK_FIX));
     }
 
     @Override
@@ -90,28 +121,34 @@ public class KeyguardIndicationRotateTextViewController extends
         cancelScheduledIndication();
     }
 
+    /** Destroy ViewController, removing any listeners. */
+    public void destroy() {
+        super.destroy();
+        onViewDetached();
+    }
+
     /**
      * Update the indication type with the given String.
      * @param type of indication
      * @param newIndication message to associate with this indication type
-     * @param showImmediately if true: shows this indication message immediately. Else, the text
-     *                        associated with this type is updated and will show when its turn in
-     *                        the IndicationQueue comes around.
+     * @param showAsap if true: shows this indication message as soon as possible. If false,
+     *                   the text associated with this type is updated and will show when its turn
+     *                   in the IndicationQueue comes around.
      */
     public void updateIndication(@IndicationType int type, KeyguardIndication newIndication,
-            boolean updateImmediately) {
-        if (type == INDICATION_TYPE_NOW_PLAYING
-                || type == INDICATION_TYPE_REVERSE_CHARGING) {
+            boolean showAsap) {
+        if (type == INDICATION_TYPE_REVERSE_CHARGING) {
             // temporarily don't show here, instead use AmbientContainer b/181049781
             return;
         }
-        final boolean hasPreviousIndication = mIndicationMessages.get(type) != null;
-        final boolean hasNewIndication = newIndication != null;
+        long minShowDuration = getMinVisibilityMillis(mIndicationMessages.get(mCurrIndicationType));
+        final boolean hasNewIndication = newIndication != null
+                && !TextUtils.isEmpty(newIndication.getMessage());
         if (!hasNewIndication) {
             mIndicationMessages.remove(type);
             mIndicationQueue.removeIf(x -> x == type);
         } else {
-            if (!hasPreviousIndication) {
+            if (!mIndicationQueue.contains(type)) {
                 mIndicationQueue.add(type);
             }
 
@@ -122,21 +159,39 @@ public class KeyguardIndicationRotateTextViewController extends
             return;
         }
 
-        final boolean showNow = updateImmediately
-                || mCurrIndicationType == INDICATION_TYPE_NONE
-                || mCurrIndicationType == type;
+        long currTime = SystemClock.uptimeMillis();
+        long timeSinceLastIndicationSwitch = currTime - mLastIndicationSwitch;
+        boolean currMsgShownForMinTime = timeSinceLastIndicationSwitch >= minShowDuration;
         if (hasNewIndication) {
-            if (showNow) {
+            if (mCurrIndicationType == INDICATION_TYPE_NONE || mCurrIndicationType == type) {
                 showIndication(type);
+            } else if (showAsap) {
+                if (currMsgShownForMinTime) {
+                    showIndication(type);
+                } else {
+                    mIndicationQueue.removeIf(x -> x == type);
+                    mIndicationQueue.add(0 /* index */, type /* type */);
+                    scheduleShowNextIndication(minShowDuration - timeSinceLastIndicationSwitch);
+                }
             } else if (!isNextIndicationScheduled()) {
-                scheduleShowNextIndication();
+                long nextShowTime = Math.max(
+                        getMinVisibilityMillis(mIndicationMessages.get(type)),
+                        DEFAULT_INDICATION_SHOW_LENGTH);
+                if (timeSinceLastIndicationSwitch >= nextShowTime) {
+                    showIndication(type);
+                } else {
+                    scheduleShowNextIndication(
+                            nextShowTime - timeSinceLastIndicationSwitch);
+                }
             }
             return;
         }
 
+        // Current indication is updated to empty.
+        // Update to empty even if `currMsgShownForMinTime` is false.
         if (mCurrIndicationType == type
                 && !hasNewIndication
-                && updateImmediately) {
+                && showAsap) {
             if (mShowNextIndicationRunnable != null) {
                 mShowNextIndicationRunnable.runImmediately();
             } else {
@@ -165,11 +220,10 @@ public class KeyguardIndicationRotateTextViewController extends
      * - will continue to be in the rotation of messages shown until hideTransient is called.
      */
     public void showTransient(CharSequence newIndication) {
-        final long inAnimationDuration = 600L; // see KeyguardIndicationTextView.getYInDuration
         updateIndication(INDICATION_TYPE_TRANSIENT,
                 new KeyguardIndication.Builder()
                         .setMessage(newIndication)
-                        .setMinVisibilityMillis(2000L + inAnimationDuration)
+                        .setMinVisibilityMillis(IMPORTANT_MSG_MIN_DURATION)
                         .setTextColor(mInitialTextColorState)
                         .build(),
                 /* showImmediately */true);
@@ -190,6 +244,16 @@ public class KeyguardIndicationRotateTextViewController extends
     }
 
     /**
+     * Clears all messages in the queue and sets the current message to an empty string.
+     */
+    public void clearMessages() {
+        mCurrIndicationType = INDICATION_TYPE_NONE;
+        mIndicationQueue.clear();
+        mIndicationMessages.clear();
+        mView.clearMessages();
+    }
+
+    /**
      * Immediately show the passed indication type and schedule the next indication to show.
      * Will re-add this indication to be re-shown after all other indications have been
      * rotated through.
@@ -197,27 +261,54 @@ public class KeyguardIndicationRotateTextViewController extends
     private void showIndication(@IndicationType int type) {
         cancelScheduledIndication();
 
+        final CharSequence previousMessage = mCurrMessage;
+        final @IndicationType int previousIndicationType = mCurrIndicationType;
         mCurrIndicationType = type;
+        mCurrMessage = mIndicationMessages.get(type) != null
+                ? mIndicationMessages.get(type).getMessage()
+                : null;
+
         mIndicationQueue.removeIf(x -> x == type);
         if (mCurrIndicationType != INDICATION_TYPE_NONE) {
             mIndicationQueue.add(type); // re-add to show later
         }
 
-        mView.switchIndication(mIndicationMessages.get(type));
+        mLastIndicationSwitch = SystemClock.uptimeMillis();
+        if (!TextUtils.equals(previousMessage, mCurrMessage)
+                || previousIndicationType != mCurrIndicationType) {
+            mLogger.logKeyguardSwitchIndication(type,
+                    mCurrMessage != null ? mCurrMessage.toString() : null);
+            mView.switchIndication(mIndicationMessages.get(type));
+        }
 
         // only schedule next indication if there's more than just this indication in the queue
         if (mCurrIndicationType != INDICATION_TYPE_NONE && mIndicationQueue.size() > 1) {
-            scheduleShowNextIndication();
+            scheduleShowNextIndication(Math.max(
+                    getMinVisibilityMillis(mIndicationMessages.get(type)),
+                    DEFAULT_INDICATION_SHOW_LENGTH));
         }
+    }
+
+    private long getMinVisibilityMillis(KeyguardIndication indication) {
+        if (indication == null) {
+            return 0;
+        }
+
+        if (indication.getMinVisibilityMillis() == null) {
+            return 0;
+        }
+
+        return indication.getMinVisibilityMillis();
     }
 
     protected boolean isNextIndicationScheduled() {
         return mShowNextIndicationRunnable != null;
     }
 
-    private void scheduleShowNextIndication() {
+
+    private void scheduleShowNextIndication(long msUntilShowNextMsg) {
         cancelScheduledIndication();
-        mShowNextIndicationRunnable = new ShowNextIndication(DEFAULT_INDICATION_SHOW_LENGTH);
+        mShowNextIndicationRunnable = new ShowNextIndication(msUntilShowNextMsg);
     }
 
     private void cancelScheduledIndication() {
@@ -241,7 +332,7 @@ public class KeyguardIndicationRotateTextViewController extends
                     if (mIsDozing) {
                         showIndication(INDICATION_TYPE_NONE);
                     } else if (mIndicationQueue.size() > 0) {
-                        showIndication(mIndicationQueue.remove(0));
+                        showIndication(mIndicationQueue.get(0));
                     }
                 }
             };
@@ -258,7 +349,7 @@ public class KeyguardIndicationRotateTextViewController extends
         ShowNextIndication(long delay) {
             mShowIndicationRunnable = () -> {
                 int type = mIndicationQueue.size() == 0
-                        ? INDICATION_TYPE_NONE : mIndicationQueue.remove(0);
+                        ? INDICATION_TYPE_NONE : mIndicationQueue.get(0);
                 showIndication(type);
             };
             mCancelDelayedRunnable = mExecutor.executeDelayed(mShowIndicationRunnable, delay);
@@ -278,11 +369,12 @@ public class KeyguardIndicationRotateTextViewController extends
     }
 
     @Override
-    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+    public void dump(PrintWriter pw, String[] args) {
         pw.println("KeyguardIndicationRotatingTextViewController:");
-        pw.println("    currentMessage=" + mView.getText());
+        pw.println("    currentTextViewMessage=" + mView.getText());
+        pw.println("    currentStoredMessage=" + mView.getMessage());
         pw.println("    dozing:" + mIsDozing);
-        pw.println("    queue:" + mIndicationQueue.toString());
+        pw.println("    queue:" + mIndicationQueue);
         pw.println("    showNextIndicationRunnable:" + mShowNextIndicationRunnable);
 
         if (hasIndications()) {
@@ -293,7 +385,9 @@ public class KeyguardIndicationRotateTextViewController extends
         }
     }
 
+    // only used locally to stop showing any messages & stop the rotating messages
     static final int INDICATION_TYPE_NONE = -1;
+
     public static final int INDICATION_TYPE_OWNER_INFO = 0;
     public static final int INDICATION_TYPE_DISCLOSURE = 1;
     public static final int INDICATION_TYPE_LOGOUT = 2;
@@ -301,10 +395,13 @@ public class KeyguardIndicationRotateTextViewController extends
     public static final int INDICATION_TYPE_ALIGNMENT = 4;
     public static final int INDICATION_TYPE_TRANSIENT = 5;
     public static final int INDICATION_TYPE_TRUST = 6;
-    public static final int INDICATION_TYPE_RESTING = 7;
+    public static final int INDICATION_TYPE_PERSISTENT_UNLOCK_MESSAGE = 7;
     public static final int INDICATION_TYPE_USER_LOCKED = 8;
-    public static final int INDICATION_TYPE_NOW_PLAYING = 9;
     public static final int INDICATION_TYPE_REVERSE_CHARGING = 10;
+    public static final int INDICATION_TYPE_BIOMETRIC_MESSAGE = 11;
+    public static final int INDICATION_TYPE_BIOMETRIC_MESSAGE_FOLLOW_UP = 12;
+    public static final int INDICATION_IS_DISMISSIBLE = 13;
+    public static final int INDICATION_TYPE_ADAPTIVE_AUTH = 14;
 
     @IntDef({
             INDICATION_TYPE_NONE,
@@ -315,11 +412,52 @@ public class KeyguardIndicationRotateTextViewController extends
             INDICATION_TYPE_ALIGNMENT,
             INDICATION_TYPE_TRANSIENT,
             INDICATION_TYPE_TRUST,
-            INDICATION_TYPE_RESTING,
+            INDICATION_TYPE_PERSISTENT_UNLOCK_MESSAGE,
             INDICATION_TYPE_USER_LOCKED,
-            INDICATION_TYPE_NOW_PLAYING,
             INDICATION_TYPE_REVERSE_CHARGING,
+            INDICATION_TYPE_BIOMETRIC_MESSAGE,
+            INDICATION_TYPE_BIOMETRIC_MESSAGE_FOLLOW_UP,
+            INDICATION_IS_DISMISSIBLE,
+            INDICATION_TYPE_ADAPTIVE_AUTH
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface IndicationType{}
+
+    /**
+     * Get human-readable string representation of the indication type.
+     */
+    public static String indicationTypeToString(@IndicationType int type) {
+        switch (type) {
+            case INDICATION_TYPE_NONE:
+                return "none";
+            case INDICATION_TYPE_DISCLOSURE:
+                return "disclosure";
+            case INDICATION_TYPE_OWNER_INFO:
+                return "owner_info";
+            case INDICATION_TYPE_LOGOUT:
+                return "logout";
+            case INDICATION_TYPE_BATTERY:
+                return "battery";
+            case INDICATION_TYPE_ALIGNMENT:
+                return "alignment";
+            case INDICATION_TYPE_TRANSIENT:
+                return "transient";
+            case INDICATION_TYPE_TRUST:
+                return "trust";
+            case INDICATION_TYPE_PERSISTENT_UNLOCK_MESSAGE:
+                return "persistent_unlock_message";
+            case INDICATION_TYPE_USER_LOCKED:
+                return "user_locked";
+            case INDICATION_TYPE_REVERSE_CHARGING:
+                return "reverse_charging";
+            case INDICATION_TYPE_BIOMETRIC_MESSAGE:
+                return "biometric_message";
+            case INDICATION_TYPE_BIOMETRIC_MESSAGE_FOLLOW_UP:
+                return "biometric_message_followup";
+            case INDICATION_TYPE_ADAPTIVE_AUTH:
+                return "adaptive_auth";
+            default:
+                return "unknown[" + type + "]";
+        }
+    }
 }

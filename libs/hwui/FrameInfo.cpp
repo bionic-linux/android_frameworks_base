@@ -15,28 +15,68 @@
  */
 #include "FrameInfo.h"
 
+#include <gui/TraceUtils.h>
+
 #include <cstring>
 
 namespace android {
 namespace uirenderer {
 
-const std::array FrameInfoNames{
-        "Flags",               "FrameTimelineVsyncId",   "IntendedVsync",
-        "Vsync",               "InputEventId",           "HandleInputStart",
-        "AnimationStart",      "PerformTraversalsStart", "DrawStart",
-        "FrameDeadline",       "FrameInterval",          "FrameStartTime",
-        "SyncQueued",          "SyncStart",              "IssueDrawCommandsStart",
-        "SwapBuffers",         "FrameCompleted",         "DequeueBufferDuration",
-        "QueueBufferDuration", "GpuCompleted",           "SwapBuffersCompleted",
-        "DisplayPresentTime",
+const std::array FrameInfoNames{"Flags",
+                                "FrameTimelineVsyncId",
+                                "IntendedVsync",
+                                "Vsync",
+                                "InputEventId",
+                                "HandleInputStart",
+                                "AnimationStart",
+                                "PerformTraversalsStart",
+                                "DrawStart",
+                                "FrameDeadline",
+                                "FrameInterval",
+                                "FrameStartTime",
+                                "SyncQueued",
+                                "SyncStart",
+                                "IssueDrawCommandsStart",
+                                "SwapBuffers",
+                                "FrameCompleted",
+                                "DequeueBufferDuration",
+                                "QueueBufferDuration",
+                                "GpuCompleted",
+                                "SwapBuffersCompleted",
+                                "DisplayPresentTime",
+                                "CommandSubmissionCompleted"
 
 };
 
-static_assert(static_cast<int>(FrameInfoIndex::NumIndexes) == 22,
+static_assert(static_cast<int>(FrameInfoIndex::NumIndexes) == 23,
               "Must update value in FrameMetrics.java#FRAME_STATS_COUNT (and here)");
 
 void FrameInfo::importUiThreadInfo(int64_t* info) {
     memcpy(mFrameInfo, info, UI_THREAD_FRAME_INFO_SIZE * sizeof(int64_t));
+    mSkippedFrameReason.reset();
+}
+
+const char* toString(SkippedFrameReason reason) {
+    switch (reason) {
+        case SkippedFrameReason::DrawingOff:
+            return "DrawingOff";
+        case SkippedFrameReason::ContextIsStopped:
+            return "ContextIsStopped";
+        case SkippedFrameReason::NothingToDraw:
+            return "NothingToDraw";
+        case SkippedFrameReason::NoOutputTarget:
+            return "NoOutputTarget";
+        case SkippedFrameReason::NoBuffer:
+            return "NoBuffer";
+        case SkippedFrameReason::AlreadyDrawn:
+            return "AlreadyDrawn";
+    }
+}
+
+void FrameInfo::setSkippedFrameReason(android::uirenderer::SkippedFrameReason reason) {
+    ATRACE_FORMAT_INSTANT("Frame skipped: %s", toString(reason));
+    addFlag(FrameInfoFlags::SkippedFrame);
+    mSkippedFrameReason = reason;
 }
 
 } /* namespace uirenderer */

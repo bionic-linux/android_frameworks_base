@@ -24,7 +24,9 @@ import com.android.internal.util.Preconditions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 /**
  * A CombinedVibration describes a combination of haptic effects to be performed by one or more
@@ -110,11 +112,74 @@ public abstract class CombinedVibration implements Parcelable {
     @TestApi
     public abstract long getDuration();
 
+    /**
+     * Returns true if this effect could represent a touch haptic feedback.
+     *
+     * <p>It is strongly recommended that an instance of {@link VibrationAttributes} is specified
+     * for each vibration, with the correct usage. When a vibration is played with usage UNKNOWN,
+     * then this method will be used to classify the most common use case and make sure they are
+     * covered by the user settings for "Touch feedback".
+     *
+     * @hide
+     */
+    public boolean isHapticFeedbackCandidate() {
+        return false;
+    }
+
     /** @hide */
     public abstract void validate();
 
+    /**
+     * Applies given effect transformation with a fixed parameter to each effect in this vibration.
+     *
+     * @param transformation The vibration effect transformation to be applied to all effects
+     * @param param          The fixed parameter to be applied in all effect transformations
+     * @return the result of running the given transformation on all effects of this vibration
+     * @hide
+     */
+    public abstract <ParamT> CombinedVibration transform(
+            VibrationEffect.Transformation<ParamT> transformation, ParamT param);
+
+    /**
+     * Applies given vibrator adapter to each effect in this combined vibration.
+     *
+     * @param adapter The vibrator adapter to be used on this vibration
+     * @return the result of running the given adapter on all effects of this vibration
+     * @hide
+     */
+    public abstract CombinedVibration adapt(VibratorAdapter adapter);
+
     /** @hide */
     public abstract boolean hasVibrator(int vibratorId);
+
+    /**
+     * Returns a compact version of the {@link #toString()} result for debugging purposes.
+     *
+     * @hide
+     */
+    public abstract String toDebugString();
+
+    /**
+     * Adapts a {@link VibrationEffect} to a specific device vibrator using the ID.
+     *
+     * <p>This can be used for adapting effects to the capabilities of the specific device vibrator
+     * it's been mapped to by the combined vibration.
+     *
+     * @hide
+     */
+    public interface VibratorAdapter {
+
+        /**
+         * Return the list of vibrator IDs available on the device, to be used by {@link
+         * CombinedVibration} to fan-out individual effects that aren't assigned to a specific
+         * vibrator.
+         */
+        int[] getAvailableVibratorIds();
+
+        /** Adapts a {@link VibrationEffect} to a given vibrator. */
+        @NonNull
+        VibrationEffect adaptToVibrator(int vibratorId, @NonNull VibrationEffect effect);
+    }
 
     /**
      * A combination of haptic effects that should be played in multiple vibrators in parallel.
@@ -314,8 +379,43 @@ public abstract class CombinedVibration implements Parcelable {
 
         /** @hide */
         @Override
+        public boolean isHapticFeedbackCandidate() {
+            return mEffect.isHapticFeedbackCandidate();
+        }
+
+        /** @hide */
+        @Override
         public void validate() {
             mEffect.validate();
+        }
+
+        /** @hide */
+        @Override
+        public <ParamT> CombinedVibration transform(
+                VibrationEffect.Transformation<ParamT> transformation, ParamT param) {
+            VibrationEffect newEffect = transformation.transform(mEffect, param);
+            if (mEffect.equals(newEffect)) {
+                return this;
+            }
+            // Make sure the validate methods are triggered
+            return CombinedVibration.createParallel(newEffect);
+        }
+
+        /** @hide */
+        @Override
+        public CombinedVibration adapt(VibratorAdapter adapter) {
+            ParallelCombination combination = CombinedVibration.startParallel();
+            boolean hasSameEffects = true;
+            for (int vibratorId : adapter.getAvailableVibratorIds()) {
+                VibrationEffect newEffect = adapter.adaptToVibrator(vibratorId, mEffect);
+                combination.addVibrator(vibratorId, newEffect);
+                hasSameEffects &= mEffect.equals(newEffect);
+            }
+            if (hasSameEffects) {
+                return this;
+            }
+            // Make sure the validate methods are triggered
+            return combination.combine();
         }
 
         /** @hide */
@@ -326,6 +426,9 @@ public abstract class CombinedVibration implements Parcelable {
 
         @Override
         public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
             if (!(o instanceof Mono)) {
                 return false;
             }
@@ -341,6 +444,13 @@ public abstract class CombinedVibration implements Parcelable {
         @Override
         public String toString() {
             return "Mono{mEffect=" + mEffect + '}';
+        }
+
+        /** @hide */
+        @Override
+        public String toDebugString() {
+            // Simplify vibration string, use the single effect to represent it.
+            return mEffect.toDebugString();
         }
 
         @Override
@@ -431,6 +541,17 @@ public abstract class CombinedVibration implements Parcelable {
 
         /** @hide */
         @Override
+        public boolean isHapticFeedbackCandidate() {
+            for (int i = 0; i < mEffects.size(); i++) {
+                if (!mEffects.valueAt(i).isHapticFeedbackCandidate()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /** @hide */
+        @Override
         public void validate() {
             Preconditions.checkArgument(mEffects.size() > 0,
                     "There should be at least one effect set for a combined effect");
@@ -441,12 +562,54 @@ public abstract class CombinedVibration implements Parcelable {
 
         /** @hide */
         @Override
+        public <ParamT> CombinedVibration transform(
+                VibrationEffect.Transformation<ParamT> transformation, ParamT param) {
+            ParallelCombination combination = CombinedVibration.startParallel();
+            boolean hasSameEffects = true;
+            for (int i = 0; i < mEffects.size(); i++) {
+                int vibratorId = mEffects.keyAt(i);
+                VibrationEffect effect = mEffects.valueAt(i);
+                VibrationEffect newEffect = transformation.transform(effect, param);
+                combination.addVibrator(vibratorId, newEffect);
+                hasSameEffects &= effect.equals(newEffect);
+            }
+            if (hasSameEffects) {
+                return this;
+            }
+            // Make sure the validate methods are triggered
+            return combination.combine();
+        }
+
+        /** @hide */
+        @Override
+        public CombinedVibration adapt(VibratorAdapter adapter) {
+            ParallelCombination combination = CombinedVibration.startParallel();
+            boolean hasSameEffects = true;
+            for (int i = 0; i < mEffects.size(); i++) {
+                int vibratorId = mEffects.keyAt(i);
+                VibrationEffect effect = mEffects.valueAt(i);
+                VibrationEffect newEffect = adapter.adaptToVibrator(vibratorId, effect);
+                combination.addVibrator(vibratorId, newEffect);
+                hasSameEffects &= effect.equals(newEffect);
+            }
+            if (hasSameEffects) {
+                return this;
+            }
+            // Make sure the validate methods are triggered
+            return combination.combine();
+        }
+
+        /** @hide */
+        @Override
         public boolean hasVibrator(int vibratorId) {
             return mEffects.indexOfKey(vibratorId) >= 0;
         }
 
         @Override
         public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
             if (!(o instanceof Stereo)) {
                 return false;
             }
@@ -470,6 +633,17 @@ public abstract class CombinedVibration implements Parcelable {
         @Override
         public String toString() {
             return "Stereo{mEffects=" + mEffects + '}';
+        }
+
+        /** @hide */
+        @Override
+        public String toDebugString() {
+            StringJoiner sj = new StringJoiner(",", "Stereo{", "}");
+            for (int i = 0; i < mEffects.size(); i++) {
+                sj.add(String.format(Locale.ROOT, "vibrator(id=%d): %s",
+                        mEffects.keyAt(i), mEffects.valueAt(i).toDebugString()));
+            }
+            return sj.toString();
         }
 
         @Override
@@ -513,6 +687,9 @@ public abstract class CombinedVibration implements Parcelable {
      */
     @TestApi
     public static final class Sequential extends CombinedVibration {
+        // If a vibration is playing more than 3 effects, it's probably not haptic feedback
+        private static final long MAX_HAPTIC_FEEDBACK_SEQUENCE_SIZE = 3;
+
         private final List<CombinedVibration> mEffects;
         private final List<Integer> mDelays;
 
@@ -575,6 +752,21 @@ public abstract class CombinedVibration implements Parcelable {
 
         /** @hide */
         @Override
+        public boolean isHapticFeedbackCandidate() {
+            final int effectCount = mEffects.size();
+            if (effectCount > MAX_HAPTIC_FEEDBACK_SEQUENCE_SIZE) {
+                return false;
+            }
+            for (int i = 0; i < effectCount; i++) {
+                if (!mEffects.get(i).isHapticFeedbackCandidate()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /** @hide */
+        @Override
         public void validate() {
             Preconditions.checkArgument(mEffects.size() > 0,
                     "There should be at least one effect set for a combined effect");
@@ -599,6 +791,43 @@ public abstract class CombinedVibration implements Parcelable {
 
         /** @hide */
         @Override
+        public <ParamT> CombinedVibration transform(
+                VibrationEffect.Transformation<ParamT> transformation, ParamT param) {
+            SequentialCombination combination = CombinedVibration.startSequential();
+            boolean hasSameEffects = true;
+            for (int i = 0; i < mEffects.size(); i++) {
+                CombinedVibration vibration = mEffects.get(i);
+                CombinedVibration newVibration = vibration.transform(transformation, param);
+                combination.addNext(newVibration, mDelays.get(i));
+                hasSameEffects &= vibration.equals(newVibration);
+            }
+            if (hasSameEffects) {
+                return this;
+            }
+            // Make sure the validate methods are triggered
+            return combination.combine();
+        }
+
+        /** @hide */
+        @Override
+        public CombinedVibration adapt(VibratorAdapter adapter) {
+            SequentialCombination combination = CombinedVibration.startSequential();
+            boolean hasSameEffects = true;
+            for (int i = 0; i < mEffects.size(); i++) {
+                CombinedVibration vibration = mEffects.get(i);
+                CombinedVibration newVibration = vibration.adapt(adapter);
+                combination.addNext(newVibration, mDelays.get(i));
+                hasSameEffects &= vibration.equals(newVibration);
+            }
+            if (hasSameEffects) {
+                return this;
+            }
+            // Make sure the validate methods are triggered
+            return combination.combine();
+        }
+
+        /** @hide */
+        @Override
         public boolean hasVibrator(int vibratorId) {
             final int effectCount = mEffects.size();
             for (int i = 0; i < effectCount; i++) {
@@ -611,6 +840,9 @@ public abstract class CombinedVibration implements Parcelable {
 
         @Override
         public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
             if (!(o instanceof Sequential)) {
                 return false;
             }
@@ -626,6 +858,17 @@ public abstract class CombinedVibration implements Parcelable {
         @Override
         public String toString() {
             return "Sequential{mEffects=" + mEffects + ", mDelays=" + mDelays + '}';
+        }
+
+        /** @hide */
+        @Override
+        public String toDebugString() {
+            StringJoiner sj = new StringJoiner(",", "Sequential{", "}");
+            for (int i = 0; i < mEffects.size(); i++) {
+                sj.add(String.format(Locale.ROOT, "delayMs=%d, effect=%s",
+                        mDelays.get(i), mEffects.get(i).toDebugString()));
+            }
+            return sj.toString();
         }
 
         @Override

@@ -26,11 +26,12 @@ import android.widget.TextView;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.keyguard.AlphaOptimizedLinearLayout;
-import com.android.systemui.R;
 import com.android.systemui.plugins.DarkIconDispatcher;
+import com.android.systemui.res.R;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry.OnSensitivityChangedListener;
 
+import java.util.ArrayList;
 
 /**
  * The view in the statusBar that contains part of the heads-up information
@@ -115,9 +116,9 @@ public class HeadsUpStatusBarView extends AlphaOptimizedLinearLayout {
         mShowingEntry = entry;
 
         if (mShowingEntry != null) {
-            CharSequence text = entry.headsUpStatusBarText;
-            if (entry.isSensitive()) {
-                text = entry.headsUpStatusBarTextPublic;
+            CharSequence text = entry.getHeadsUpStatusBarText().getValue();
+            if (entry.isSensitive().getValue()) {
+                text = entry.getHeadsUpStatusBarTextPublic().getValue();
             }
             mTextView.setText(text);
             mShowingEntry.addOnSensitivityChangedListener(mOnSensitivityChangedListener);
@@ -161,8 +162,8 @@ public class HeadsUpStatusBarView extends AlphaOptimizedLinearLayout {
         return mIconDrawingRect;
     }
 
-    public void onDarkChanged(Rect area, float darkIntensity, int tint) {
-        mTextView.setTextColor(DarkIconDispatcher.getTint(area, this, tint));
+    public void onDarkChanged(ArrayList<Rect> areas, float darkIntensity, int tint) {
+        mTextView.setTextColor(DarkIconDispatcher.getTint(areas, this, tint));
     }
 
     public void setOnDrawingRectChangedListener(Runnable onDrawingRectChangedListener) {

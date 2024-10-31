@@ -25,24 +25,40 @@ import com.android.systemui.controls.controller.ControlsBindingControllerImpl
 import com.android.systemui.controls.controller.ControlsController
 import com.android.systemui.controls.controller.ControlsControllerImpl
 import com.android.systemui.controls.controller.ControlsFavoritePersistenceWrapper
+import com.android.systemui.controls.controller.ControlsTileResourceConfiguration
 import com.android.systemui.controls.management.ControlsEditingActivity
 import com.android.systemui.controls.management.ControlsFavoritingActivity
 import com.android.systemui.controls.management.ControlsListingController
 import com.android.systemui.controls.management.ControlsListingControllerImpl
 import com.android.systemui.controls.management.ControlsProviderSelectorActivity
 import com.android.systemui.controls.management.ControlsRequestDialog
+import com.android.systemui.controls.panels.AuthorizedPanelsRepository
+import com.android.systemui.controls.panels.AuthorizedPanelsRepositoryImpl
+import com.android.systemui.controls.panels.SelectedComponentRepository
+import com.android.systemui.controls.panels.SelectedComponentRepositoryImpl
+import com.android.systemui.controls.settings.ControlsSettingsDialogManager
+import com.android.systemui.controls.settings.ControlsSettingsDialogManagerImpl
+import com.android.systemui.controls.settings.ControlsSettingsRepository
+import com.android.systemui.controls.settings.ControlsSettingsRepositoryImpl
 import com.android.systemui.controls.ui.ControlActionCoordinator
 import com.android.systemui.controls.ui.ControlActionCoordinatorImpl
 import com.android.systemui.controls.ui.ControlsActivity
 import com.android.systemui.controls.ui.ControlsUiController
 import com.android.systemui.controls.ui.ControlsUiControllerImpl
 import com.android.systemui.dagger.SysUISingleton
+import com.android.systemui.qs.QsEventLogger
+import com.android.systemui.qs.pipeline.shared.TileSpec
+import com.android.systemui.qs.tileimpl.QSTileImpl
+import com.android.systemui.qs.tiles.DeviceControlsTile
+import com.android.systemui.qs.tiles.viewmodel.QSTileConfig
+import com.android.systemui.qs.tiles.viewmodel.QSTileUIConfig
 import dagger.Binds
 import dagger.BindsOptionalOf
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
+import dagger.multibindings.StringKey
 
 /**
  * Module for injecting classes in `com.android.systemui.controls`-
@@ -63,6 +79,22 @@ abstract class ControlsModule {
         fun providesControlsFeatureEnabled(pm: PackageManager): Boolean {
             return pm.hasSystemFeature(PackageManager.FEATURE_CONTROLS)
         }
+
+        const val DEVICE_CONTROLS_SPEC = "controls"
+
+        @Provides
+        @IntoMap
+        @StringKey(DEVICE_CONTROLS_SPEC)
+        fun provideDeviceControlsTileConfig(uiEventLogger: QsEventLogger): QSTileConfig =
+                QSTileConfig(
+                        tileSpec = TileSpec.create(DEVICE_CONTROLS_SPEC),
+                        uiConfig =
+                        QSTileUIConfig.Resource(
+                                iconRes = com.android.systemui.res.R.drawable.controls_icon,
+                                labelRes = com.android.systemui.res.R.string.quick_controls_title
+                        ),
+                        instanceId = uiEventLogger.getNewInstanceId(),
+                )
     }
 
     @Binds
@@ -82,6 +114,16 @@ abstract class ControlsModule {
     abstract fun provideUiController(controller: ControlsUiControllerImpl): ControlsUiController
 
     @Binds
+    abstract fun provideSettingsManager(
+            manager: ControlsSettingsRepositoryImpl
+    ): ControlsSettingsRepository
+
+    @Binds
+    abstract fun provideDialogManager(
+            manager: ControlsSettingsDialogManagerImpl
+    ): ControlsSettingsDialogManager
+
+    @Binds
     abstract fun provideMetricsLogger(logger: ControlsMetricsLoggerImpl): ControlsMetricsLogger
 
     @Binds
@@ -89,8 +131,21 @@ abstract class ControlsModule {
         coordinator: ControlActionCoordinatorImpl
     ): ControlActionCoordinator
 
+    @Binds
+    abstract fun provideAuthorizedPanelsRepository(
+        repository: AuthorizedPanelsRepositoryImpl
+    ): AuthorizedPanelsRepository
+
+    @Binds
+    abstract fun providePreferredPanelRepository(
+        repository: SelectedComponentRepositoryImpl
+    ): SelectedComponentRepository
+
     @BindsOptionalOf
     abstract fun optionalPersistenceWrapper(): ControlsFavoritePersistenceWrapper
+
+    @BindsOptionalOf
+    abstract fun provideControlsTileResourceConfiguration(): ControlsTileResourceConfiguration
 
     @Binds
     @IntoMap
@@ -124,4 +179,9 @@ abstract class ControlsModule {
     @IntoMap
     @ClassKey(ControlsActivity::class)
     abstract fun provideControlsActivity(activity: ControlsActivity): Activity
+
+    @Binds
+    @IntoMap
+    @StringKey(DeviceControlsTile.TILE_SPEC)
+    abstract fun bindDeviceControlsTile(controlsTile: DeviceControlsTile): QSTileImpl<*>
 }

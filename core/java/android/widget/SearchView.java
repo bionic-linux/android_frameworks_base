@@ -492,6 +492,13 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
         if (!isFocusable()) return false;
         // If it is not iconified, then give the focus to the text field
         if (!isIconified()) {
+            if (direction == FOCUS_BACKWARD) {
+                final View found = focusSearch(FOCUS_BACKWARD);
+                if (found != null) {
+                    return found.requestFocus(FOCUS_BACKWARD, previouslyFocusedRect);
+                }
+                return false;
+            }
             boolean result = mSearchSrcTextView.requestFocus(direction, previouslyFocusedRect);
             if (result) {
                 updateViewsVisibility(false);
@@ -2102,7 +2109,7 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
                 return;
             }
 
-            if (imm.isActive(this)) {
+            if (imm.hasActiveInputConnection(this)) {
                 // This means that SearchAutoComplete is already connected to the IME.
                 // InputMethodManager#showSoftInput() is guaranteed to pass client-side focus check.
                 mHasPendingShowSoftInputRequest = false;

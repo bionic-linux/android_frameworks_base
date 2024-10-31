@@ -38,7 +38,6 @@ import android.location.LocationManager;
 import android.location.util.identity.CallerIdentity;
 import android.os.BatteryStats;
 import android.os.Binder;
-import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.util.IndentingPrintWriter;
@@ -83,8 +82,7 @@ public class GnssManagerService {
         mGnssMetrics = new GnssMetrics(mContext, IBatteryStats.Stub.asInterface(
                 ServiceManager.getService(BatteryStats.SERVICE_NAME)), mGnssNative);
 
-        mGnssLocationProvider = new GnssLocationProvider(mContext, injector, mGnssNative,
-                mGnssMetrics);
+        mGnssLocationProvider = new GnssLocationProvider(mContext, mGnssNative, mGnssMetrics);
         mGnssStatusProvider = new GnssStatusProvider(injector, mGnssNative);
         mGnssNmeaProvider = new GnssNmeaProvider(injector, mGnssNative);
         mGnssMeasurementsProvider = new GnssMeasurementsProvider(injector, mGnssNative);
@@ -107,6 +105,22 @@ public class GnssManagerService {
     /** Retrieve the GnssLocationProvider. */
     public GnssLocationProvider getGnssLocationProvider() {
         return mGnssLocationProvider;
+    }
+
+    /**
+     * Set whether the GnssLocationProvider is suspended on the device. This method was added to
+     * help support power management use cases on automotive devices.
+     */
+    public void setAutomotiveGnssSuspended(boolean suspended) {
+        mGnssLocationProvider.setAutomotiveGnssSuspended(suspended);
+    }
+
+    /**
+     * Return whether the GnssLocationProvider is suspended or not. This method was added to
+     * help support power management use cases on automotive devices.
+     */
+    public boolean isAutomotiveGnssSuspended() {
+        return mGnssLocationProvider.isAutomotiveGnssSuspended();
     }
 
     /** Retrieve the IGpsGeofenceHardware. */
@@ -260,17 +274,6 @@ public class GnssManagerService {
     }
 
     /**
-     * Send Ni Response, indicating a location request initiated by a network carrier.
-     */
-    public void sendNiResponse(int notifId, int userResponse) {
-        try {
-            mGnssLocationProvider.getNetInitiatedListener().sendNiResponse(notifId, userResponse);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
-    }
-
-    /**
      * Dump info for debugging.
      */
     public void dump(FileDescriptor fd, IndentingPrintWriter ipw, String[] args) {
@@ -280,6 +283,7 @@ public class GnssManagerService {
         }
 
         ipw.println("Capabilities: " + mGnssNative.getCapabilities());
+        ipw.println("GNSS Hardware Model Name: " + getGnssHardwareModelName());
 
         if (mGnssStatusProvider.isSupported()) {
             ipw.println("Status Provider:");
@@ -303,16 +307,16 @@ public class GnssManagerService {
         }
 
         if (mGnssAntennaInfoProvider.isSupported()) {
-            ipw.println("Navigation Message Provider:");
+            ipw.println("Antenna Info Provider:");
             ipw.increaseIndent();
             ipw.println("Antenna Infos: " + mGnssAntennaInfoProvider.getAntennaInfos());
             mGnssAntennaInfoProvider.dump(fd, ipw, args);
             ipw.decreaseIndent();
         }
 
-        GnssPowerStats powerStats = mGnssNative.getPowerStats();
+        GnssPowerStats powerStats = mGnssNative.getLastKnownPowerStats();
         if (powerStats != null) {
-            ipw.println("Last Power Stats:");
+            ipw.println("Last Known Power Stats:");
             ipw.increaseIndent();
             powerStats.dump(fd, ipw, args, mGnssNative.getCapabilities());
             ipw.decreaseIndent();
@@ -331,7 +335,7 @@ public class GnssManagerService {
         @Override
         public void onCapabilitiesChanged(GnssCapabilities oldCapabilities,
                 GnssCapabilities newCapabilities) {
-            long ident = Binder.clearCallingIdentity();
+            final long ident = Binder.clearCallingIdentity();
             try {
                 Intent intent = new Intent(LocationManager.ACTION_GNSS_CAPABILITIES_CHANGED)
                         .putExtra(LocationManager.EXTRA_GNSS_CAPABILITIES, newCapabilities)

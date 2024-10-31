@@ -29,16 +29,18 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import android.testing.AndroidTestingRunner;
 import android.view.MotionEvent;
 import android.view.accessibility.AccessibilityManager;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.testing.FakeMetricsLogger;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.classifier.FalsingDataProvider.GestureFinalizedListener;
+import com.android.systemui.flags.FakeFeatureFlags;
+import com.android.systemui.flags.Flags;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.util.concurrency.FakeExecutor;
 import com.android.systemui.util.time.FakeSystemClock;
@@ -56,7 +58,7 @@ import java.util.List;
 import java.util.Set;
 
 @SmallTest
-@RunWith(AndroidTestingRunner.class)
+@RunWith(AndroidJUnit4.class)
 public class BrightLineClassifierTest extends SysuiTestCase {
     private BrightLineFalsingManager mBrightLineFalsingManager;
     @Mock
@@ -65,6 +67,8 @@ public class BrightLineClassifierTest extends SysuiTestCase {
     private final Set<FalsingClassifier> mClassifiers = new HashSet<>();
     @Mock
     private SingleTapClassifier mSingleTapClassfier;
+    @Mock
+    private LongTapClassifier mLongTapClassifier;
     @Mock
     private DoubleTapClassifier mDoubleTapClassifier;
     @Mock
@@ -80,6 +84,7 @@ public class BrightLineClassifierTest extends SysuiTestCase {
     private AccessibilityManager mAccessibilityManager;
 
     private final FakeExecutor mFakeExecutor = new FakeExecutor(new FakeSystemClock());
+    private final FakeFeatureFlags mFakeFeatureFlags = new FakeFeatureFlags();
 
     private final FalsingClassifier.Result mFalsedResult =
             FalsingClassifier.Result.falsed(1, getClass().getSimpleName(), "");
@@ -94,16 +99,18 @@ public class BrightLineClassifierTest extends SysuiTestCase {
         when(mClassifierB.classifyGesture(anyInt(), anyDouble(), anyDouble()))
                 .thenReturn(mPassedResult);
         when(mSingleTapClassfier.isTap(any(List.class), anyDouble())).thenReturn(mPassedResult);
+        when(mLongTapClassifier.isTap(any(List.class), anyDouble())).thenReturn(mFalsedResult);
         when(mDoubleTapClassifier.classifyGesture(anyInt(), anyDouble(), anyDouble()))
                 .thenReturn(mPassedResult);
         mClassifiers.add(mClassifierA);
         mClassifiers.add(mClassifierB);
         when(mFalsingDataProvider.getRecentMotionEvents()).thenReturn(mMotionEventList);
         when(mKeyguardStateController.isShowing()).thenReturn(true);
+        when(mFalsingDataProvider.isUnfolded()).thenReturn(false);
         mBrightLineFalsingManager = new BrightLineFalsingManager(mFalsingDataProvider,
-                mMetricsLogger, mClassifiers, mSingleTapClassfier, mDoubleTapClassifier,
-                mHistoryTracker, mKeyguardStateController, mAccessibilityManager,
-                false);
+                mMetricsLogger, mClassifiers, mSingleTapClassfier, mLongTapClassifier,
+                mDoubleTapClassifier, mHistoryTracker, mKeyguardStateController,
+                mAccessibilityManager, false, mFakeFeatureFlags);
 
 
         ArgumentCaptor<GestureFinalizedListener> gestureCompleteListenerCaptor =
@@ -113,6 +120,7 @@ public class BrightLineClassifierTest extends SysuiTestCase {
                 gestureCompleteListenerCaptor.capture());
 
         mGestureFinalizedListener = gestureCompleteListenerCaptor.getValue();
+        mFakeFeatureFlags.set(Flags.FALSING_OFF_FOR_UNFOLDED, true);
     }
 
     @Test
@@ -142,6 +150,35 @@ public class BrightLineClassifierTest extends SysuiTestCase {
         when(mClassifierA.classifyGesture(anyInt(), anyDouble(), anyDouble()))
                 .thenReturn(mFalsedResult);
         assertThat(mBrightLineFalsingManager.isFalseTouch(0)).isTrue();
+    }
+
+    @Test
+    public void testIsFalseTouch_SeekBar_FalseTouch() {
+        when(mClassifierA.classifyGesture(anyInt(), anyDouble(), anyDouble()))
+                .thenReturn(mFalsedResult);
+        when(mSingleTapClassfier.isTap(any(List.class), anyDouble())).thenReturn(mFalsedResult);
+        assertThat(mBrightLineFalsingManager.isFalseTouch(Classifier.MEDIA_SEEKBAR)).isTrue();
+    }
+
+    @Test
+    public void testIsFalseTouch_SeekBar_RealTouch() {
+        when(mSingleTapClassfier.isTap(any(List.class), anyDouble())).thenReturn(mFalsedResult);
+        assertThat(mBrightLineFalsingManager.isFalseTouch(Classifier.MEDIA_SEEKBAR)).isFalse();
+    }
+
+    @Test
+    public void testIsFalseTouch_SeekBar_FalseTap() {
+        when(mClassifierA.classifyGesture(anyInt(), anyDouble(), anyDouble()))
+                .thenReturn(mFalsedResult);
+        when(mSingleTapClassfier.isTap(any(List.class), anyDouble())).thenReturn(mFalsedResult);
+        assertThat(mBrightLineFalsingManager.isFalseTouch(Classifier.MEDIA_SEEKBAR)).isTrue();
+    }
+
+    @Test
+    public void testIsFalseTouch_SeekBar_RealTap() {
+        when(mClassifierA.classifyGesture(anyInt(), anyDouble(), anyDouble()))
+                .thenReturn(mFalsedResult);
+        assertThat(mBrightLineFalsingManager.isFalseTouch(Classifier.MEDIA_SEEKBAR)).isFalse();
     }
 
     @Test
@@ -183,7 +220,7 @@ public class BrightLineClassifierTest extends SysuiTestCase {
     }
 
     @Test
-    public void testIsFalseTap_EmptyRecentEvents() {
+    public void testIsFalseSingleTap_EmptyRecentEvents() {
         // Ensure we look at prior events if recent events has already been emptied.
         when(mFalsingDataProvider.getRecentMotionEvents()).thenReturn(new ArrayList<>());
         when(mFalsingDataProvider.getPriorMotionEvents()).thenReturn(mMotionEventList);
@@ -194,7 +231,7 @@ public class BrightLineClassifierTest extends SysuiTestCase {
 
 
     @Test
-    public void testIsFalseTap_RobustCheck_NoFaceAuth() {
+    public void testIsFalseSingleTap_RobustCheck_NoFaceAuth() {
         when(mSingleTapClassfier.isTap(mMotionEventList, 0)).thenReturn(mPassedResult);
         when(mDoubleTapClassifier.classifyGesture(anyInt(), anyDouble(), anyDouble()))
                 .thenReturn(mFalsedResult);
@@ -204,10 +241,40 @@ public class BrightLineClassifierTest extends SysuiTestCase {
     }
 
     @Test
-    public void testIsFalseTap_RobustCheck_FaceAuth() {
+    public void testIsFalseSingleTap_RobustCheck_FaceAuth() {
         when(mSingleTapClassfier.isTap(mMotionEventList, 0)).thenReturn(mPassedResult);
         when(mFalsingDataProvider.isJustUnlockedWithFace()).thenReturn(true);
         assertThat(mBrightLineFalsingManager.isFalseTap(NO_PENALTY)).isFalse();
+    }
+
+    @Test
+    public void testIsFalseLongTap_EmptyRecentEvents() {
+        // Ensure we look at prior events if recent events has already been emptied.
+        when(mFalsingDataProvider.getRecentMotionEvents()).thenReturn(new ArrayList<>());
+        when(mFalsingDataProvider.getPriorMotionEvents()).thenReturn(mMotionEventList);
+
+        mBrightLineFalsingManager.isFalseLongTap(0);
+        verify(mLongTapClassifier).isTap(mMotionEventList, 0);
+    }
+
+    @Test
+    public void testIsFalseLongTap_FalseLongTap() {
+        when(mLongTapClassifier.isTap(mMotionEventList, 0)).thenReturn(mFalsedResult);
+        assertThat(mBrightLineFalsingManager.isFalseLongTap(NO_PENALTY)).isTrue();
+    }
+
+    @Test
+    public void testIsFalseLongTap_RobustCheck_NoFaceAuth() {
+        when(mLongTapClassifier.isTap(mMotionEventList, 0)).thenReturn(mPassedResult);
+        when(mFalsingDataProvider.isJustUnlockedWithFace()).thenReturn(false);
+        assertThat(mBrightLineFalsingManager.isFalseLongTap(NO_PENALTY)).isFalse();
+    }
+
+    @Test
+    public void testIsFalseLongTap_RobustCheck_FaceAuth() {
+        when(mLongTapClassifier.isTap(mMotionEventList, 0)).thenReturn(mPassedResult);
+        when(mFalsingDataProvider.isJustUnlockedWithFace()).thenReturn(true);
+        assertThat(mBrightLineFalsingManager.isFalseLongTap(NO_PENALTY)).isFalse();
     }
 
     @Test

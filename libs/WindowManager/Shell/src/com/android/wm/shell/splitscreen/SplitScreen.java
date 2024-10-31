@@ -17,9 +17,19 @@
 package com.android.wm.shell.splitscreen;
 
 import android.annotation.IntDef;
+import android.annotation.NonNull;
+import android.annotation.Nullable;
+import android.app.ActivityManager;
+import android.graphics.Rect;
+import android.os.Bundle;
+import android.window.RemoteTransition;
 
-import com.android.wm.shell.common.annotations.ExternalThread;
-import com.android.wm.shell.common.split.SplitLayout.SplitPosition;
+import com.android.internal.logging.InstanceId;
+import com.android.wm.shell.common.split.SplitScreenConstants.PersistentSnapPosition;
+import com.android.wm.shell.common.split.SplitScreenConstants.SplitPosition;
+import com.android.wm.shell.shared.annotations.ExternalThread;
+
+import java.util.concurrent.Executor;
 
 /**
  * Interface to engage split-screen feature.
@@ -53,16 +63,61 @@ public interface SplitScreen {
 
     /** Callback interface for listening to changes in a split-screen stage. */
     interface SplitScreenListener {
-        void onStagePositionChanged(@StageType int stage, @SplitPosition int position);
-        void onTaskStageChanged(int taskId, @StageType int stage, boolean visible);
+        default void onStagePositionChanged(@StageType int stage, @SplitPosition int position) {}
+        default void onTaskStageChanged(int taskId, @StageType int stage, boolean visible) {}
+        default void onSplitBoundsChanged(Rect rootBounds, Rect mainBounds, Rect sideBounds) {}
+        default void onSplitVisibilityChanged(boolean visible) {}
     }
 
     /**
-     * Returns a binder that can be passed to an external process to manipulate SplitScreen.
+     * Callback interface for listening to requests to enter split select. Used for desktop -> split
      */
-    default ISplitScreen createExternalInterface() {
-        return null;
+    interface SplitSelectListener {
+        default boolean onRequestEnterSplitSelect(ActivityManager.RunningTaskInfo taskInfo,
+                int splitPosition, Rect taskBounds) {
+            return false;
+        }
     }
+
+    /** Launches a pair of tasks into splitscreen */
+    void startTasks(int taskId1, @Nullable Bundle options1, int taskId2,
+            @Nullable Bundle options2, @SplitPosition int splitPosition,
+            @PersistentSnapPosition int snapPosition, @Nullable RemoteTransition remoteTransition,
+            InstanceId instanceId);
+
+    /** Registers listener that gets split screen callback. */
+    void registerSplitScreenListener(@NonNull SplitScreenListener listener,
+            @NonNull Executor executor);
+
+    /** Unregisters listener that gets split screen callback. */
+    void unregisterSplitScreenListener(@NonNull SplitScreenListener listener);
+
+    interface SplitInvocationListener {
+        /**
+         * Called whenever shell starts or stops the split screen animation
+         * @param animationRunning if {@code true} the animation has begun, if {@code false} the
+         *                         animation has finished
+         */
+        default void onSplitAnimationInvoked(boolean animationRunning) { }
+    }
+
+    /**
+     * Registers a {@link SplitInvocationListener} to notify when the animation to enter split
+     * screen has started and stopped
+     *
+     * @param executor callbacks to the listener will be executed on this executor
+     */
+    void registerSplitAnimationListener(@NonNull SplitInvocationListener listener,
+            @NonNull Executor executor);
+
+    /** Called when device waking up finished. */
+    void onFinishedWakingUp();
+
+    /** Called when requested to go to fullscreen from the current active split app. */
+    void goToFullscreenFromSplit();
+
+    /** Called when splitscreen focused app is changed. */
+    void setSplitscreenFocus(boolean leftOrTop);
 
     /** Get a string representation of a stage type */
     static String stageTypeToString(@StageType int stage) {

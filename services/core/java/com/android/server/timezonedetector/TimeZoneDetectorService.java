@@ -19,15 +19,14 @@ package com.android.server.timezonedetector;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.UserIdInt;
-import android.app.ActivityManager;
 import android.app.time.ITimeZoneDetectorListener;
 import android.app.time.TimeZoneCapabilitiesAndConfig;
 import android.app.time.TimeZoneConfiguration;
+import android.app.time.TimeZoneState;
 import android.app.timezonedetector.ITimeZoneDetectorService;
 import android.app.timezonedetector.ManualTimeZoneSuggestion;
 import android.app.timezonedetector.TelephonyTimeZoneSuggestion;
 import android.content.Context;
-import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -45,6 +44,8 @@ import com.android.server.SystemService;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -59,6 +60,7 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
         implements IBinder.DeathRecipient {
 
     static final String TAG = "time_zone_detector";
+    static final boolean DBG = false;
 
     /**
      * Handles the service lifecycle for {@link TimeZoneDetectorService} and
@@ -77,19 +79,36 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
             Handler handler = FgThread.getHandler();
 
             ServiceConfigAccessor serviceConfigAccessor =
-                    ServiceConfigAccessor.getInstance(context);
+                    ServiceConfigAccessorImpl.getInstance(context);
             TimeZoneDetectorStrategy timeZoneDetectorStrategy =
-                    TimeZoneDetectorStrategyImpl.create(context, handler, serviceConfigAccessor);
+                    TimeZoneDetectorStrategyImpl.create(handler, serviceConfigAccessor);
+            DeviceActivityMonitor deviceActivityMonitor =
+                    DeviceActivityMonitorImpl.create(context, handler);
+
+            // Wire up the telephony fallback behavior to activity detection.
+            deviceActivityMonitor.addListener(new DeviceActivityMonitor.Listener() {
+                @Override
+                public void onFlightComplete() {
+                    timeZoneDetectorStrategy.enableTelephonyTimeZoneFallback("onFlightComplete()");
+                }
+            });
 
             // Create and publish the local service for use by internal callers.
-            TimeZoneDetectorInternal internal =
-                    new TimeZoneDetectorInternalImpl(context, handler, timeZoneDetectorStrategy);
+            CurrentUserIdentityInjector currentUserIdentityInjector =
+                    CurrentUserIdentityInjector.REAL;
+            TimeZoneDetectorInternal internal = new TimeZoneDetectorInternalImpl(
+                    context, handler, currentUserIdentityInjector, timeZoneDetectorStrategy);
             publishLocalService(TimeZoneDetectorInternal.class, internal);
 
             // Publish the binder service so it can be accessed from other (appropriately
             // permissioned) processes.
-            TimeZoneDetectorService service = TimeZoneDetectorService.create(
-                    context, handler, timeZoneDetectorStrategy);
+            CallerIdentityInjector callerIdentityInjector = CallerIdentityInjector.REAL;
+            TimeZoneDetectorService service = new TimeZoneDetectorService(
+                    context, handler, callerIdentityInjector, timeZoneDetectorStrategy);
+
+            // Dump the device activity monitor when the service is dumped.
+            service.addDumpable(deviceActivityMonitor);
+
             publishBinderService(Context.TIME_ZONE_DETECTOR_SERVICE, service);
         }
     }
@@ -112,18 +131,14 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
      */
     @GuardedBy("mListeners")
     @NonNull
-    private final ArrayMap<IBinder, ITimeZoneDetectorListener> mListeners =
-            new ArrayMap<>();
+    private final ArrayMap<IBinder, ITimeZoneDetectorListener> mListeners = new ArrayMap<>();
 
-    private static TimeZoneDetectorService create(
-            @NonNull Context context, @NonNull Handler handler,
-            @NonNull TimeZoneDetectorStrategy timeZoneDetectorStrategy) {
-
-        CallerIdentityInjector callerIdentityInjector = CallerIdentityInjector.REAL;
-        TimeZoneDetectorService service = new TimeZoneDetectorService(
-                context, handler, callerIdentityInjector, timeZoneDetectorStrategy);
-        return service;
-    }
+    /**
+     * References to components that should be dumped when {@link
+     * #dump(FileDescriptor, PrintWriter, String[])} is called on the service.
+     */
+    @GuardedBy("mDumpables")
+    private final List<Dumpable> mDumpables = new ArrayList<>();
 
     @VisibleForTesting
     public TimeZoneDetectorService(@NonNull Context context, @NonNull Handler handler,
@@ -135,8 +150,9 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
         mTimeZoneDetectorStrategy = Objects.requireNonNull(timeZoneDetectorStrategy);
 
         // Wire up a change listener so that ITimeZoneDetectorListeners can be notified when
-        // the configuration changes for any reason.
-        mTimeZoneDetectorStrategy.addConfigChangeListener(this::handleConfigurationChanged);
+        // the detector state changes for any reason.
+        mTimeZoneDetectorStrategy.addChangeListener(
+                () -> mHandler.post(this::handleChangeOnHandlerThread));
     }
 
     @Override
@@ -149,11 +165,15 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
     TimeZoneCapabilitiesAndConfig getCapabilitiesAndConfig(@UserIdInt int userId) {
         enforceManageTimeZoneDetectorPermission();
 
+        // Resolve constants like USER_CURRENT to the true user ID as needed.
+        int resolvedUserId =
+                mCallerIdentityInjector.resolveUserId(userId, "getCapabilitiesAndConfig");
+
         final long token = mCallerIdentityInjector.clearCallingIdentity();
         try {
-            ConfigurationInternal configurationInternal =
-                    mTimeZoneDetectorStrategy.getConfigurationInternal(userId);
-            return configurationInternal.createCapabilitiesAndConfig();
+            final boolean bypassUserPolicyChecks = false;
+            return mTimeZoneDetectorStrategy.getCapabilitiesAndConfig(
+                    resolvedUserId, bypassUserPolicyChecks);
         } finally {
             mCallerIdentityInjector.restoreCallingIdentity(token);
         }
@@ -167,8 +187,8 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
 
     boolean updateConfiguration(
             @UserIdInt int userId, @NonNull TimeZoneConfiguration configuration) {
-        userId = ActivityManager.handleIncomingUser(Binder.getCallingPid(), Binder.getCallingUid(),
-                userId, false, false, "updateConfiguration", null);
+        // Resolve constants like USER_CURRENT to the true user ID as needed.
+        int resolvedUserId = mCallerIdentityInjector.resolveUserId(userId, "updateConfiguration");
 
         enforceManageTimeZoneDetectorPermission();
 
@@ -176,7 +196,9 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
 
         final long token = mCallerIdentityInjector.clearCallingIdentity();
         try {
-            return mTimeZoneDetectorStrategy.updateConfiguration(userId, configuration);
+            final boolean bypassUserPolicyChecks = false;
+            return mTimeZoneDetectorStrategy.updateConfiguration(
+                    resolvedUserId, configuration, bypassUserPolicyChecks);
         } finally {
             mCallerIdentityInjector.restoreCallingIdentity(token);
         }
@@ -251,13 +273,14 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
             if (!removedListener) {
                 Slog.w(TAG, "Notified of binder death for who=" + who
                         + ", but did not remove any listeners."
-                        + " mConfigurationListeners=" + mListeners);
+                        + " mListeners=" + mListeners);
             }
         }
     }
 
-    void handleConfigurationChanged() {
-        // Configuration has changed, but each user may have a different view of the configuration.
+    void handleChangeOnHandlerThread() {
+        // Detector state has changed. Each user may have a different view of the configuration so
+        // no information is passed; each client must query what they're interested in.
         // It's possible that this will cause unnecessary notifications but that shouldn't be a
         // problem.
         synchronized (mListeners) {
@@ -274,48 +297,128 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
     }
 
     /** Provided for command-line access. This is not exposed as a binder API. */
-    void suggestGeolocationTimeZone(@NonNull GeolocationTimeZoneSuggestion timeZoneSuggestion) {
+    void handleLocationAlgorithmEvent(@NonNull LocationAlgorithmEvent locationAlgorithmEvent) {
         enforceSuggestGeolocationTimeZonePermission();
-        Objects.requireNonNull(timeZoneSuggestion);
+        Objects.requireNonNull(locationAlgorithmEvent);
 
         mHandler.post(
-                () -> mTimeZoneDetectorStrategy.suggestGeolocationTimeZone(timeZoneSuggestion));
+                () -> mTimeZoneDetectorStrategy.handleLocationAlgorithmEvent(
+                        locationAlgorithmEvent));
     }
 
     @Override
-    public boolean suggestManualTimeZone(@NonNull ManualTimeZoneSuggestion timeZoneSuggestion) {
-        enforceSuggestManualTimeZonePermission();
-        Objects.requireNonNull(timeZoneSuggestion);
+    @NonNull
+    public TimeZoneState getTimeZoneState() {
+        enforceManageTimeZoneDetectorPermission();
 
-        int userId = mCallerIdentityInjector.getCallingUserId();
         final long token = mCallerIdentityInjector.clearCallingIdentity();
         try {
-            return mTimeZoneDetectorStrategy.suggestManualTimeZone(userId, timeZoneSuggestion);
+            return mTimeZoneDetectorStrategy.getTimeZoneState();
+        } finally {
+            mCallerIdentityInjector.restoreCallingIdentity(token);
+        }
+    }
+
+    void setTimeZoneState(@NonNull TimeZoneState timeZoneState) {
+        enforceManageTimeZoneDetectorPermission();
+
+        final long token = mCallerIdentityInjector.clearCallingIdentity();
+        try {
+            mTimeZoneDetectorStrategy.setTimeZoneState(timeZoneState);
         } finally {
             mCallerIdentityInjector.restoreCallingIdentity(token);
         }
     }
 
     @Override
-    public void suggestTelephonyTimeZone(@NonNull TelephonyTimeZoneSuggestion timeZoneSuggestion) {
-        enforceSuggestTelephonyTimeZonePermission();
-        Objects.requireNonNull(timeZoneSuggestion);
+    public boolean confirmTimeZone(@NonNull String timeZoneId) {
+        enforceManageTimeZoneDetectorPermission();
 
-        mHandler.post(() -> mTimeZoneDetectorStrategy.suggestTelephonyTimeZone(timeZoneSuggestion));
+        final long token = mCallerIdentityInjector.clearCallingIdentity();
+        try {
+            return mTimeZoneDetectorStrategy.confirmTimeZone(timeZoneId);
+        } finally {
+            mCallerIdentityInjector.restoreCallingIdentity(token);
+        }
+    }
+
+    @Override
+    public boolean setManualTimeZone(@NonNull ManualTimeZoneSuggestion suggestion) {
+        enforceManageTimeZoneDetectorPermission();
+
+        // This calls suggestManualTimeZone() as the logic is identical, it only differs in the
+        // permission required, which is handled on the line above.
+        int userId = mCallerIdentityInjector.getCallingUserId();
+        final long token = mCallerIdentityInjector.clearCallingIdentity();
+        try {
+            final boolean bypassUserPolicyChecks = false;
+            return mTimeZoneDetectorStrategy.suggestManualTimeZone(
+                    userId, suggestion, bypassUserPolicyChecks);
+        } finally {
+            mCallerIdentityInjector.restoreCallingIdentity(token);
+        }
+    }
+
+    @Override
+    public boolean suggestManualTimeZone(@NonNull ManualTimeZoneSuggestion suggestion) {
+        enforceSuggestManualTimeZonePermission();
+        Objects.requireNonNull(suggestion);
+
+        int userId = mCallerIdentityInjector.getCallingUserId();
+        final long token = mCallerIdentityInjector.clearCallingIdentity();
+        try {
+            final boolean bypassUserPolicyChecks = false;
+            return mTimeZoneDetectorStrategy.suggestManualTimeZone(
+                    userId, suggestion, bypassUserPolicyChecks);
+        } finally {
+            mCallerIdentityInjector.restoreCallingIdentity(token);
+        }
+    }
+
+    @Override
+    public void suggestTelephonyTimeZone(@NonNull TelephonyTimeZoneSuggestion suggestion) {
+        enforceSuggestTelephonyTimeZonePermission();
+        Objects.requireNonNull(suggestion);
+
+        mHandler.post(() -> mTimeZoneDetectorStrategy.suggestTelephonyTimeZone(suggestion));
     }
 
     boolean isTelephonyTimeZoneDetectionSupported() {
         enforceManageTimeZoneDetectorPermission();
 
-        return ServiceConfigAccessor.getInstance(mContext)
-                .isTelephonyTimeZoneDetectionFeatureSupported();
+        return mTimeZoneDetectorStrategy.isTelephonyTimeZoneDetectionSupported();
     }
 
     boolean isGeoTimeZoneDetectionSupported() {
         enforceManageTimeZoneDetectorPermission();
 
-        return ServiceConfigAccessor.getInstance(mContext)
-                .isGeoTimeZoneDetectionFeatureSupported();
+        return mTimeZoneDetectorStrategy.isGeoTimeZoneDetectionSupported();
+    }
+
+    /**
+     * Sends a signal to enable telephony fallback. Provided for command-line access for use
+     * during tests. This is not exposed as a binder API.
+     */
+    void enableTelephonyFallback(@NonNull String reason) {
+        enforceManageTimeZoneDetectorPermission();
+        mTimeZoneDetectorStrategy.enableTelephonyTimeZoneFallback(reason);
+    }
+
+    /**
+     * Registers the supplied {@link Dumpable} for dumping. When the service is dumped
+     * {@link Dumpable#dump(IndentingPrintWriter, String[])} will be called on the {@code dumpable}.
+     */
+    void addDumpable(@NonNull Dumpable dumpable) {
+        synchronized (mDumpables) {
+            mDumpables.add(dumpable);
+        }
+    }
+
+    @NonNull
+    MetricsTimeZoneDetectorState generateMetricsState() {
+        enforceManageTimeZoneDetectorPermission();
+
+        return mTimeZoneDetectorStrategy.generateMetricsState();
     }
 
     @Override
@@ -325,6 +428,13 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
 
         IndentingPrintWriter ipw = new IndentingPrintWriter(pw);
         mTimeZoneDetectorStrategy.dump(ipw, args);
+
+        synchronized (mDumpables) {
+            for (Dumpable dumpable : mDumpables) {
+                dumpable.dump(ipw, args);
+            }
+        }
+
         ipw.flush();
     }
 
@@ -344,7 +454,7 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
     private void enforceSuggestGeolocationTimeZonePermission() {
         // The associated method is only used for the shell command interface, it's not possible to
         // call it via Binder, and Shell currently can set the time zone directly anyway.
-        mContext.enforceCallingOrSelfPermission(
+        mContext.enforceCallingPermission(
                 android.Manifest.permission.SET_TIME_ZONE,
                 "suggest geolocation time zone");
     }
@@ -356,7 +466,7 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
     }
 
     private void enforceSuggestManualTimeZonePermission() {
-        mContext.enforceCallingOrSelfPermission(
+        mContext.enforceCallingPermission(
                 android.Manifest.permission.SUGGEST_MANUAL_TIME_AND_ZONE,
                 "suggest manual time and time zone");
     }

@@ -16,11 +16,12 @@
 
 package com.android.systemui.wmshell;
 
-import static android.view.Display.DEFAULT_DISPLAY;
-
 import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_BOUNCER_SHOWING;
 import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_BUBBLES_EXPANDED;
-import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_GLOBAL_ACTIONS_SHOWING;
+import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_BUBBLES_MANAGE_MENU_EXPANDED;
+import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_DIALOG_SHOWING;
+import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_FREEFORM_ACTIVE_IN_DESKTOP_MODE;
+import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_DISABLE_GESTURE_SPLIT_INVOCATION;
 import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_NOTIFICATION_PANEL_EXPANDED;
 import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_ONE_HANDED_ACTIVE;
 import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_QUICK_SETTINGS_EXPANDED;
@@ -28,46 +29,50 @@ import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_S
 import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_STATUS_BAR_KEYGUARD_SHOWING_OCCLUDED;
 
 import android.content.Context;
+import android.content.pm.UserInfo;
 import android.content.res.Configuration;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.inputmethodservice.InputMethodService;
 import android.os.IBinder;
-import android.os.ParcelFileDescriptor;
+import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
+
+import androidx.annotation.NonNull;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
-import com.android.systemui.Dependency;
-import com.android.systemui.SystemUI;
+import com.android.systemui.CoreStartable;
+import com.android.systemui.communal.ui.viewmodel.CommunalTransitionViewModel;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.dagger.WMComponent;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.keyguard.ScreenLifecycle;
 import com.android.systemui.keyguard.WakefulnessLifecycle;
 import com.android.systemui.model.SysUiState;
-import com.android.systemui.navigationbar.NavigationModeController;
-import com.android.systemui.shared.tracing.ProtoTraceable;
+import com.android.systemui.notetask.NoteTaskInitializer;
+import com.android.systemui.settings.DisplayTracker;
+import com.android.systemui.settings.UserTracker;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.policy.ConfigurationController;
-import com.android.systemui.statusbar.policy.UserInfoController;
-import com.android.systemui.tracing.ProtoTracer;
-import com.android.systemui.tracing.nano.SystemUiTraceProto;
-import com.android.wm.shell.ShellCommandHandler;
-import com.android.wm.shell.hidedisplaycutout.HideDisplayCutout;
-import com.android.wm.shell.legacysplitscreen.LegacySplitScreen;
-import com.android.wm.shell.nano.WmShellTraceProto;
+import com.android.systemui.statusbar.policy.KeyguardStateController;
+import com.android.systemui.util.kotlin.JavaAdapter;
+import com.android.wm.shell.common.desktopmode.DesktopModeTransitionSource;
+import com.android.wm.shell.desktopmode.DesktopMode;
+import com.android.wm.shell.desktopmode.DesktopModeTaskRepository;
 import com.android.wm.shell.onehanded.OneHanded;
 import com.android.wm.shell.onehanded.OneHandedEventCallback;
 import com.android.wm.shell.onehanded.OneHandedTransitionCallback;
 import com.android.wm.shell.onehanded.OneHandedUiEventLogger;
 import com.android.wm.shell.pip.Pip;
-import com.android.wm.shell.protolog.ShellProtoLogImpl;
+import com.android.wm.shell.recents.RecentTasks;
+import com.android.wm.shell.splitscreen.SplitScreen;
+import com.android.wm.shell.sysui.ShellInterface;
 
-import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executor;
 
@@ -90,84 +95,150 @@ import javax.inject.Inject;
  *       -> WMShell starts and binds SysUI with Shell components via exported Shell interfaces
  */
 @SysUISingleton
-public final class WMShell extends SystemUI
-        implements CommandQueue.Callbacks, ProtoTraceable<SystemUiTraceProto> {
+public final class WMShell implements
+        CoreStartable,
+        CommandQueue.Callbacks {
     private static final String TAG = WMShell.class.getName();
-    private static final int INVALID_SYSUI_STATE_MASK =
-            SYSUI_STATE_GLOBAL_ACTIONS_SHOWING
+    private static final long INVALID_SYSUI_STATE_MASK =
+            SYSUI_STATE_DIALOG_SHOWING
                     | SYSUI_STATE_STATUS_BAR_KEYGUARD_SHOWING
                     | SYSUI_STATE_STATUS_BAR_KEYGUARD_SHOWING_OCCLUDED
                     | SYSUI_STATE_BOUNCER_SHOWING
                     | SYSUI_STATE_NOTIFICATION_PANEL_EXPANDED
                     | SYSUI_STATE_BUBBLES_EXPANDED
+                    | SYSUI_STATE_BUBBLES_MANAGE_MENU_EXPANDED
                     | SYSUI_STATE_QUICK_SETTINGS_EXPANDED;
 
+    private final Context mContext;
     // Shell interfaces
+    private final ShellInterface mShell;
     private final Optional<Pip> mPipOptional;
-    private final Optional<LegacySplitScreen> mSplitScreenOptional;
+    private final Optional<SplitScreen> mSplitScreenOptional;
     private final Optional<OneHanded> mOneHandedOptional;
-    private final Optional<HideDisplayCutout> mHideDisplayCutoutOptional;
-    private final Optional<ShellCommandHandler> mShellCommandHandler;
+    private final Optional<DesktopMode> mDesktopModeOptional;
+    private final Optional<RecentTasks> mRecentTasksOptional;
 
     private final CommandQueue mCommandQueue;
     private final ConfigurationController mConfigurationController;
+    private final KeyguardStateController mKeyguardStateController;
     private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
-    private final NavigationModeController mNavigationModeController;
     private final ScreenLifecycle mScreenLifecycle;
     private final SysUiState mSysUiState;
     private final WakefulnessLifecycle mWakefulnessLifecycle;
-    private final ProtoTracer mProtoTracer;
+    private final UserTracker mUserTracker;
+    private final DisplayTracker mDisplayTracker;
+    private final NoteTaskInitializer mNoteTaskInitializer;
+    private final CommunalTransitionViewModel mCommunalTransitionViewModel;
+    private final JavaAdapter mJavaAdapter;
     private final Executor mSysUiMainExecutor;
 
+    // Listeners and callbacks. Note that we prefer member variable over anonymous class here to
+    // avoid the situation that some implementations, like KeyguardUpdateMonitor, use WeakReference
+    // internally and anonymous class could be released after registration.
+    private final ConfigurationController.ConfigurationListener mConfigurationListener =
+            new ConfigurationController.ConfigurationListener() {
+                @Override
+                public void onConfigChanged(Configuration newConfig) {
+                    mShell.onConfigurationChanged(newConfig);
+                }
+            };
+    private final KeyguardStateController.Callback mKeyguardStateCallback =
+            new KeyguardStateController.Callback() {
+                @Override
+                public void onKeyguardShowingChanged() {
+                    mShell.onKeyguardVisibilityChanged(mKeyguardStateController.isShowing(),
+                            mKeyguardStateController.isOccluded(),
+                            mKeyguardStateController.isAnimatingBetweenKeyguardAndSurfaceBehind());
+                }
+            };
+    private final KeyguardUpdateMonitorCallback mKeyguardUpdateMonitorCallback =
+            new KeyguardUpdateMonitorCallback() {
+                @Override
+                public void onKeyguardDismissAnimationFinished() {
+                    mShell.onKeyguardDismissAnimationFinished();
+                }
+            };
+    private final UserTracker.Callback mUserChangedCallback =
+            new UserTracker.Callback() {
+                @Override
+                public void onUserChanged(int newUser, @NonNull Context userContext) {
+                    mShell.onUserChanged(newUser, userContext);
+                }
+
+                @Override
+                public void onProfilesChanged(@NonNull List<UserInfo> profiles) {
+                    mShell.onUserProfilesChanged(profiles);
+                }
+            };
+
     private boolean mIsSysUiStateValid;
-    private KeyguardUpdateMonitorCallback mSplitScreenKeyguardCallback;
-    private KeyguardUpdateMonitorCallback mPipKeyguardCallback;
-    private KeyguardUpdateMonitorCallback mOneHandedKeyguardCallback;
     private WakefulnessLifecycle.Observer mWakefulnessObserver;
 
     @Inject
-    public WMShell(Context context,
+    public WMShell(
+            Context context,
+            ShellInterface shell,
             Optional<Pip> pipOptional,
-            Optional<LegacySplitScreen> splitScreenOptional,
+            Optional<SplitScreen> splitScreenOptional,
             Optional<OneHanded> oneHandedOptional,
-            Optional<HideDisplayCutout> hideDisplayCutoutOptional,
-            Optional<ShellCommandHandler> shellCommandHandler,
+            Optional<DesktopMode> desktopMode,
+            Optional<RecentTasks> recentTasks,
             CommandQueue commandQueue,
             ConfigurationController configurationController,
+            KeyguardStateController keyguardStateController,
             KeyguardUpdateMonitor keyguardUpdateMonitor,
-            NavigationModeController navigationModeController,
             ScreenLifecycle screenLifecycle,
             SysUiState sysUiState,
-            ProtoTracer protoTracer,
             WakefulnessLifecycle wakefulnessLifecycle,
+            UserTracker userTracker,
+            DisplayTracker displayTracker,
+            NoteTaskInitializer noteTaskInitializer,
+            CommunalTransitionViewModel communalTransitionViewModel,
+            JavaAdapter javaAdapter,
             @Main Executor sysUiMainExecutor) {
-        super(context);
+        mContext = context;
+        mShell = shell;
         mCommandQueue = commandQueue;
         mConfigurationController = configurationController;
+        mKeyguardStateController = keyguardStateController;
         mKeyguardUpdateMonitor = keyguardUpdateMonitor;
-        mNavigationModeController = navigationModeController;
         mScreenLifecycle = screenLifecycle;
         mSysUiState = sysUiState;
         mPipOptional = pipOptional;
         mSplitScreenOptional = splitScreenOptional;
         mOneHandedOptional = oneHandedOptional;
-        mHideDisplayCutoutOptional = hideDisplayCutoutOptional;
+        mDesktopModeOptional = desktopMode;
+        mRecentTasksOptional = recentTasks;
         mWakefulnessLifecycle = wakefulnessLifecycle;
-        mProtoTracer = protoTracer;
-        mShellCommandHandler = shellCommandHandler;
+        mUserTracker = userTracker;
+        mDisplayTracker = displayTracker;
+        mNoteTaskInitializer = noteTaskInitializer;
+        mCommunalTransitionViewModel = communalTransitionViewModel;
+        mJavaAdapter = javaAdapter;
         mSysUiMainExecutor = sysUiMainExecutor;
     }
 
     @Override
     public void start() {
-        // TODO: Consider piping config change and other common calls to a shell component to
-        //  delegate internally
-        mProtoTracer.add(this);
+        // Notify with the initial configuration and subscribe for new config changes
+        mShell.onConfigurationChanged(mContext.getResources().getConfiguration());
+        mConfigurationController.addCallback(mConfigurationListener);
+
+        // Subscribe to keyguard changes
+        mKeyguardStateController.addCallback(mKeyguardStateCallback);
+        mKeyguardUpdateMonitor.registerCallback(mKeyguardUpdateMonitorCallback);
+
+        // Subscribe to user changes
+        mUserTracker.addCallback(mUserChangedCallback, mContext.getMainExecutor());
+
         mCommandQueue.addCallback(this);
         mPipOptional.ifPresent(this::initPip);
         mSplitScreenOptional.ifPresent(this::initSplitScreen);
         mOneHandedOptional.ifPresent(this::initOneHanded);
-        mHideDisplayCutoutOptional.ifPresent(this::initHideDisplayCutout);
+        mDesktopModeOptional.ifPresent(this::initDesktopMode);
+        mRecentTasksOptional.ifPresent(this::initRecentTasks);
+
+        mNoteTaskInitializer.initialize();
     }
 
     @VisibleForTesting
@@ -179,57 +250,38 @@ public final class WMShell extends SystemUI
             }
         });
 
-        mPipKeyguardCallback = new KeyguardUpdateMonitorCallback() {
-            @Override
-            public void onKeyguardVisibilityChanged(boolean showing) {
-                if (showing) {
-                    pip.hidePipMenu(null, null);
-                }
-            }
-        };
-        mKeyguardUpdateMonitor.registerCallback(mPipKeyguardCallback);
-
         mSysUiState.addCallback(sysUiStateFlag -> {
             mIsSysUiStateValid = (sysUiStateFlag & INVALID_SYSUI_STATE_MASK) == 0;
             pip.onSystemUiStateChanged(mIsSysUiStateValid, sysUiStateFlag);
         });
-
-        mConfigurationController.addCallback(new ConfigurationController.ConfigurationListener() {
-            @Override
-            public void onConfigChanged(Configuration newConfig) {
-                pip.onConfigurationChanged(newConfig);
-            }
-
-            @Override
-            public void onDensityOrFontScaleChanged() {
-                pip.onDensityOrFontScaleChanged();
-            }
-
-            @Override
-            public void onOverlayChanged() {
-                pip.onOverlayChanged();
-            }
-        });
-
-        // The media session listener needs to be re-registered when switching users
-        UserInfoController userInfoController = Dependency.get(UserInfoController.class);
-        userInfoController.addCallback((String name, Drawable picture, String userAccount) ->
-                pip.registerSessionListenerForCurrentUser());
     }
 
     @VisibleForTesting
-    void initSplitScreen(LegacySplitScreen legacySplitScreen) {
-        mSplitScreenKeyguardCallback = new KeyguardUpdateMonitorCallback() {
+    void initSplitScreen(SplitScreen splitScreen) {
+        mWakefulnessLifecycle.addObserver(new WakefulnessLifecycle.Observer() {
             @Override
-            public void onKeyguardVisibilityChanged(boolean showing) {
-                // Hide the divider when keyguard is showing. Even though keyguard/statusbar is
-                // above everything, it is actually transparent except for notifications, so
-                // we still need to hide any surfaces that are below it.
-                // TODO(b/148906453): Figure out keyguard dismiss animation for divider view.
-                legacySplitScreen.onKeyguardVisibilityChanged(showing);
+            public void onFinishedWakingUp() {
+                splitScreen.onFinishedWakingUp();
             }
-        };
-        mKeyguardUpdateMonitor.registerCallback(mSplitScreenKeyguardCallback);
+        });
+        mCommandQueue.addCallback(new CommandQueue.Callbacks() {
+            @Override
+            public void moveFocusedTaskToFullscreen(int displayId) {
+                splitScreen.goToFullscreenFromSplit();
+            }
+
+            @Override
+            public void setSplitscreenFocus(boolean leftOrTop) {
+                splitScreen.setSplitscreenFocus(leftOrTop);
+            }
+        });
+        splitScreen.registerSplitAnimationListener(new SplitScreen.SplitInvocationListener() {
+            @Override
+            public void onSplitAnimationInvoked(boolean animationRunning) {
+                mSysUiState.setFlag(SYSUI_STATE_DISABLE_GESTURE_SPLIT_INVOCATION, animationRunning)
+                        .commitUpdate(mDisplayTracker.getDefaultDisplayId());
+            }
+        }, mSysUiMainExecutor);
     }
 
     @VisibleForTesting
@@ -239,7 +291,7 @@ public final class WMShell extends SystemUI
             public void onStartTransition(boolean isEntering) {
                 mSysUiMainExecutor.execute(() -> {
                     mSysUiState.setFlag(SYSUI_STATE_ONE_HANDED_ACTIVE,
-                            true).commitUpdate(DEFAULT_DISPLAY);
+                            true).commitUpdate(mDisplayTracker.getDefaultDisplayId());
                 });
             }
 
@@ -247,7 +299,7 @@ public final class WMShell extends SystemUI
             public void onStartFinished(Rect bounds) {
                 mSysUiMainExecutor.execute(() -> {
                     mSysUiState.setFlag(SYSUI_STATE_ONE_HANDED_ACTIVE,
-                            true).commitUpdate(DEFAULT_DISPLAY);
+                            true).commitUpdate(mDisplayTracker.getDefaultDisplayId());
                 });
             }
 
@@ -255,7 +307,7 @@ public final class WMShell extends SystemUI
             public void onStopFinished(Rect bounds) {
                 mSysUiMainExecutor.execute(() -> {
                     mSysUiState.setFlag(SYSUI_STATE_ONE_HANDED_ACTIVE,
-                            false).commitUpdate(DEFAULT_DISPLAY);
+                            false).commitUpdate(mDisplayTracker.getDefaultDisplayId());
                 });
             }
         });
@@ -264,24 +316,10 @@ public final class WMShell extends SystemUI
             @Override
             public void notifyExpandNotification() {
                 mSysUiMainExecutor.execute(
-                        () -> mCommandQueue.handleSystemKey(
-                                KeyEvent.KEYCODE_SYSTEM_NAVIGATION_DOWN));
+                        () -> mCommandQueue.handleSystemKey(new KeyEvent(KeyEvent.ACTION_DOWN,
+                                KeyEvent.KEYCODE_SYSTEM_NAVIGATION_DOWN)));
             }
         });
-
-        mOneHandedKeyguardCallback = new KeyguardUpdateMonitorCallback() {
-            @Override
-            public void onKeyguardVisibilityChanged(boolean showing) {
-                oneHanded.onKeyguardVisibilityChanged(showing);
-                oneHanded.stopOneHanded();
-            }
-
-            @Override
-            public void onUserSwitchComplete(int userId) {
-                oneHanded.onUserSwitch(userId);
-            }
-        };
-        mKeyguardUpdateMonitor.registerCallback(mOneHandedKeyguardCallback);
 
         mWakefulnessObserver =
                 new WakefulnessLifecycle.Observer() {
@@ -318,86 +356,75 @@ public final class WMShell extends SystemUI
             @Override
             public void setImeWindowStatus(int displayId, IBinder token, int vis,
                     int backDisposition, boolean showImeSwitcher) {
-                if (displayId == DEFAULT_DISPLAY && (vis & InputMethodService.IME_VISIBLE) != 0) {
+                if (displayId == mDisplayTracker.getDefaultDisplayId()
+                        && (vis & InputMethodService.IME_VISIBLE) != 0) {
                     oneHanded.stopOneHanded(
                             OneHandedUiEventLogger.EVENT_ONE_HANDED_TRIGGER_POP_IME_OUT);
                 }
             }
         });
+    }
 
-        mConfigurationController.addCallback(new ConfigurationController.ConfigurationListener() {
+    void initDesktopMode(DesktopMode desktopMode) {
+        desktopMode.addVisibleTasksListener(
+                new DesktopModeTaskRepository.VisibleTasksListener() {
+                    @Override
+                    public void onTasksVisibilityChanged(int displayId, int visibleTasksCount) {
+                        if (displayId == Display.DEFAULT_DISPLAY) {
+                            mSysUiState.setFlag(SYSUI_STATE_FREEFORM_ACTIVE_IN_DESKTOP_MODE,
+                                            visibleTasksCount > 0)
+                                    .commitUpdate(mDisplayTracker.getDefaultDisplayId());
+                        }
+                        // TODO(b/278084491): update sysui state for changes on other displays
+                    }
+                }, mSysUiMainExecutor);
+        mCommandQueue.addCallback(new CommandQueue.Callbacks() {
             @Override
-            public void onConfigChanged(Configuration newConfig) {
-                oneHanded.onConfigChanged(newConfig);
+            public void moveFocusedTaskToDesktop(int displayId) {
+                desktopMode.moveFocusedTaskToDesktop(displayId,
+                        DesktopModeTransitionSource.KEYBOARD_SHORTCUT);
+            }
+            @Override
+            public void moveFocusedTaskToFullscreen(int displayId) {
+                desktopMode.moveFocusedTaskToFullscreen(displayId,
+                        DesktopModeTransitionSource.KEYBOARD_SHORTCUT);
+            }
+            @Override
+            public void moveFocusedTaskToStageSplit(int displayId, boolean leftOrTop) {
+                desktopMode.moveFocusedTaskToStageSplit(displayId, leftOrTop);
             }
         });
     }
 
     @VisibleForTesting
-    void initHideDisplayCutout(HideDisplayCutout hideDisplayCutout) {
-        mConfigurationController.addCallback(new ConfigurationController.ConfigurationListener() {
-            @Override
-            public void onConfigChanged(Configuration newConfig) {
-                hideDisplayCutout.onConfigurationChanged(newConfig);
-            }
-        });
+    void initRecentTasks(RecentTasks recentTasks) {
+        recentTasks.addAnimationStateListener(mSysUiMainExecutor,
+                mCommandQueue::onRecentsAnimationStateChanged);
+        mJavaAdapter.alwaysCollectFlow(mCommunalTransitionViewModel.getRecentsBackgroundColor(),
+                recentTasks::setTransitionBackgroundColor);
     }
 
     @Override
-    public void writeToProto(SystemUiTraceProto proto) {
-        if (proto.wmShell == null) {
-            proto.wmShell = new WmShellTraceProto();
+    public boolean isDumpCritical() {
+        // Dump can't be critical because the shell has to dump on the main thread for
+        // synchronization reasons, which isn't reliably fast.
+        return false;
+    }
+
+    @Override
+    public void dump(PrintWriter pw, String[] args) {
+        Log.d(TAG, "Dumping with args: " + String.join(", ", args));
+
+        // Strip out the SysUI "dependency" arg before sending to WMShell
+        if (args[0].equals("dependency")) {
+            args = Arrays.copyOfRange(args, 1, args.length);
         }
-        // Dump to WMShell proto here
-        // TODO: Figure out how we want to synchronize while dumping to proto
-    }
 
-    @Override
-    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         // Handle commands if provided
-        if (mShellCommandHandler.isPresent()
-                && mShellCommandHandler.get().handleCommand(args, pw)) {
-            return;
-        }
-        // Handle logging commands if provided
-        if (handleLoggingCommand(args, pw)) {
+        if (mShell.handleCommand(args, pw)) {
             return;
         }
         // Dump WMShell stuff here if no commands were handled
-        mShellCommandHandler.ifPresent(
-                shellCommandHandler -> shellCommandHandler.dump(pw));
-    }
-
-    @Override
-    public void handleWindowManagerLoggingCommand(String[] args, ParcelFileDescriptor outFd) {
-        PrintWriter pw = new PrintWriter(new ParcelFileDescriptor.AutoCloseOutputStream(outFd));
-        handleLoggingCommand(args, pw);
-        pw.flush();
-        pw.close();
-    }
-
-    private boolean handleLoggingCommand(String[] args, PrintWriter pw) {
-        ShellProtoLogImpl protoLogImpl = ShellProtoLogImpl.getSingleInstance();
-        for (int i = 0; i < args.length; i++) {
-            switch (args[i]) {
-                case "enable-text": {
-                    String[] groups = Arrays.copyOfRange(args, i + 1, args.length);
-                    int result = protoLogImpl.startTextLogging(groups, pw);
-                    if (result == 0) {
-                        pw.println("Starting logging on groups: " + Arrays.toString(groups));
-                    }
-                    return true;
-                }
-                case "disable-text": {
-                    String[] groups = Arrays.copyOfRange(args, i + 1, args.length);
-                    int result = protoLogImpl.stopTextLogging(groups, pw);
-                    if (result == 0) {
-                        pw.println("Stopping logging on groups: " + Arrays.toString(groups));
-                    }
-                    return true;
-                }
-            }
-        }
-        return false;
+        mShell.dump(pw);
     }
 }

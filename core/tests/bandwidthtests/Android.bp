@@ -23,6 +23,7 @@ package {
 
 android_test {
     name: "BandwidthTests",
+    defaults: ["framework-connectivity-test-defaults"],
     // Include all test java files.
     srcs: ["src/**/*.java"],
     libs: [
@@ -30,6 +31,9 @@ android_test {
         "org.apache.http.legacy",
         "android.test.base",
     ],
-    static_libs: ["junit"],
+    static_libs: [
+        "junit",
+        "androidx.test.rules",
+    ],
     platform_apis: true,
 }

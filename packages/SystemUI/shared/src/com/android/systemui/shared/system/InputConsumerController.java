@@ -17,7 +17,6 @@
 package com.android.systemui.shared.system;
 
 import static android.view.Display.DEFAULT_DISPLAY;
-import static android.view.WindowManager.INPUT_CONSUMER_PIP;
 import static android.view.WindowManager.INPUT_CONSUMER_RECENTS_ANIMATION;
 
 import android.os.Binder;
@@ -137,24 +136,16 @@ public class InputConsumerController {
      * Registers the input consumer.
      */
     public void registerInputConsumer() {
-        registerInputConsumer(false);
-    }
-
-    /**
-     * Registers the input consumer.
-     * @param withSfVsync the flag set using sf vsync signal or no
-     */
-    public void registerInputConsumer(boolean withSfVsync) {
         if (mInputEventReceiver == null) {
             final InputChannel inputChannel = new InputChannel();
             try {
-                mWindowManager.destroyInputConsumer(mName, DEFAULT_DISPLAY);
+                mWindowManager.destroyInputConsumer(mToken, DEFAULT_DISPLAY);
                 mWindowManager.createInputConsumer(mToken, mName, DEFAULT_DISPLAY, inputChannel);
             } catch (RemoteException e) {
                 Log.e(TAG, "Failed to create input consumer", e);
             }
             mInputEventReceiver = new InputEventReceiver(inputChannel, Looper.myLooper(),
-                    withSfVsync ? Choreographer.getSfInstance() : Choreographer.getInstance());
+                    Choreographer.getInstance());
             if (mRegistrationListener != null) {
                 mRegistrationListener.onRegistrationChanged(true /* isRegistered */);
             }
@@ -167,7 +158,7 @@ public class InputConsumerController {
     public void unregisterInputConsumer() {
         if (mInputEventReceiver != null) {
             try {
-                mWindowManager.destroyInputConsumer(mName, DEFAULT_DISPLAY);
+                mWindowManager.destroyInputConsumer(mToken, DEFAULT_DISPLAY);
             } catch (RemoteException e) {
                 Log.e(TAG, "Failed to destroy input consumer", e);
             }

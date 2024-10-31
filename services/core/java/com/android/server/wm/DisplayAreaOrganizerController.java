@@ -65,7 +65,16 @@ public class DisplayAreaOrganizerController extends IDisplayAreaOrganizerControl
         @Override
         public void binderDied() {
             synchronized (mGlobalLock) {
-                mOrganizersByFeatureIds.remove(mFeature).destroy();
+                IDisplayAreaOrganizer featureOrganizer = getOrganizerByFeature(mFeature);
+                if (featureOrganizer != null) {
+                    IBinder organizerBinder = featureOrganizer.asBinder();
+                    if (!organizerBinder.equals(mOrganizer.asBinder()) &&
+                               organizerBinder.isBinderAlive()) {
+                        Slog.d(TAG, "Dead organizer replaced for feature=" + mFeature);
+                        return;
+                    }
+                    mOrganizersByFeatureIds.remove(mFeature).destroy();
+                }
             }
         }
     }
@@ -126,12 +135,6 @@ public class DisplayAreaOrganizerController extends IDisplayAreaOrganizerControl
                 ProtoLog.v(WM_DEBUG_WINDOW_ORGANIZER, "Register display organizer=%s uid=%d",
                         organizer.asBinder(), uid);
                 if (mOrganizersByFeatureIds.get(feature) != null) {
-                    if (mOrganizersByFeatureIds.get(feature).mOrganizer.asBinder()
-                            .isBinderAlive()) {
-                        throw new IllegalStateException(
-                                "Replacing existing organizer currently unsupported");
-                    }
-
                     mOrganizersByFeatureIds.remove(feature).destroy();
                     Slog.d(TAG, "Replacing dead organizer for feature=" + feature);
                 }
@@ -172,7 +175,7 @@ public class DisplayAreaOrganizerController extends IDisplayAreaOrganizerControl
                         organizer.asBinder(), uid);
                 mOrganizersByFeatureIds.entrySet().removeIf((entry) -> {
                     final boolean matches = entry.getValue().mOrganizer.asBinder()
-                            == organizer.asBinder();
+                            .equals(organizer.asBinder());
                     if (matches) {
                         entry.getValue().destroy();
                     }

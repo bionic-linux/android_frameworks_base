@@ -19,6 +19,8 @@ package com.android.server.am;
 import static android.app.ActivityManager.PROCESS_CAPABILITY_NONE;
 import static android.app.ActivityManager.PROCESS_STATE_CACHED_ACTIVITY;
 import static android.app.ActivityManager.PROCESS_STATE_NONEXISTENT;
+import static android.app.ActivityManagerInternal.OOM_ADJ_REASON_PROCESS_END;
+import static android.app.ActivityManagerInternal.OOM_ADJ_REASON_RESTRICTION_CHANGE;
 import static android.app.ActivityThread.PROC_START_SEQ_IDENT;
 import static android.content.pm.PackageManager.MATCH_DIRECT_BOOT_AUTO;
 import static android.net.NetworkPolicyManager.isProcStateAllowedWhileIdleOrPowerSaveMode;
@@ -27,11 +29,15 @@ import static android.os.MessageQueue.OnFileDescriptorEventListener.EVENT_INPUT;
 import static android.os.Process.SYSTEM_UID;
 import static android.os.Process.THREAD_PRIORITY_BACKGROUND;
 import static android.os.Process.ZYGOTE_POLICY_FLAG_EMPTY;
+import static android.os.Process.getAdvertisedMem;
 import static android.os.Process.getFreeMemory;
 import static android.os.Process.getTotalMemory;
 import static android.os.Process.killProcessQuiet;
 import static android.os.Process.startWebView;
+import static android.system.OsConstants.EAGAIN;
 
+import static com.android.sdksandbox.flags.Flags.selinuxInputSelector;
+import static com.android.sdksandbox.flags.Flags.selinuxSdkSandboxAudit;
 import static com.android.server.am.ActivityManagerDebugConfig.DEBUG_LRU;
 import static com.android.server.am.ActivityManagerDebugConfig.DEBUG_NETWORK;
 import static com.android.server.am.ActivityManagerDebugConfig.DEBUG_PROCESSES;
@@ -42,6 +48,7 @@ import static com.android.server.am.ActivityManagerDebugConfig.TAG_AM;
 import static com.android.server.am.ActivityManagerDebugConfig.TAG_WITH_CLASS_NAME;
 import static com.android.server.am.ActivityManagerService.DISPATCH_PROCESSES_CHANGED_UI_MSG;
 import static com.android.server.am.ActivityManagerService.DISPATCH_PROCESS_DIED_UI_MSG;
+import static com.android.server.am.ActivityManagerService.IDLE_UIDS_MSG;
 import static com.android.server.am.ActivityManagerService.KILL_APP_ZYGOTE_DELAY_MS;
 import static com.android.server.am.ActivityManagerService.KILL_APP_ZYGOTE_MSG;
 import static com.android.server.am.ActivityManagerService.PERSISTENT_MASK;
@@ -53,6 +60,8 @@ import static com.android.server.am.ActivityManagerService.TAG_LRU;
 import static com.android.server.am.ActivityManagerService.TAG_NETWORK;
 import static com.android.server.am.ActivityManagerService.TAG_PROCESSES;
 import static com.android.server.am.ActivityManagerService.TAG_UID_OBSERVERS;
+import static com.android.server.wm.WindowProcessController.STOPPED_STATE_FIRST_LAUNCH;
+import static com.android.server.wm.WindowProcessController.STOPPED_STATE_FORCE_STOPPED;
 
 import android.Manifest;
 import android.annotation.NonNull;
@@ -65,11 +74,11 @@ import android.app.AppProtoEnums;
 import android.app.ApplicationExitInfo;
 import android.app.ApplicationExitInfo.Reason;
 import android.app.ApplicationExitInfo.SubReason;
+import android.app.ApplicationStartInfo;
 import android.app.IApplicationThread;
 import android.app.IProcessObserver;
-import android.app.IUidObserver;
+import android.app.UidObserver;
 import android.compat.annotation.ChangeId;
-import android.compat.annotation.Disabled;
 import android.compat.annotation.EnabledAfter;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -93,6 +102,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.os.OomKillRecord;
 import android.os.PowerManager;
 import android.os.Process;
 import android.os.RemoteCallbackList;
@@ -103,7 +113,9 @@ import android.os.SystemProperties;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.os.storage.StorageManagerInternal;
+import android.provider.DeviceConfig;
 import android.system.Os;
+import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
@@ -124,16 +136,16 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.app.ProcessMap;
 import com.android.internal.os.Zygote;
 import com.android.internal.util.ArrayUtils;
-import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.MemInfoReader;
+import com.android.server.AppStateTracker;
 import com.android.server.LocalServices;
 import com.android.server.ServiceThread;
 import com.android.server.SystemConfig;
 import com.android.server.Watchdog;
 import com.android.server.am.ActivityManagerService.ProcessChangeItem;
 import com.android.server.compat.PlatformCompat;
-import com.android.server.pm.dex.DexManager;
-import com.android.server.pm.parsing.pkg.AndroidPackage;
+import com.android.server.pm.pkg.AndroidPackage;
+import com.android.server.pm.pkg.PackageStateInternal;
 import com.android.server.wm.ActivityServiceConnectionsHolder;
 import com.android.server.wm.WindowManagerService;
 import com.android.server.wm.WindowProcessController;
@@ -175,33 +187,36 @@ public final class ProcessList {
     static final String ANDROID_VOLD_APP_DATA_ISOLATION_ENABLED_PROPERTY =
             "persist.sys.vold_app_data_isolation_enabled";
 
+    private static final String APPLY_SDK_SANDBOX_AUDIT_RESTRICTIONS = ":isSdkSandboxAudit";
+    private static final String APPLY_SDK_SANDBOX_NEXT_RESTRICTIONS = ":isSdkSandboxNext";
+
     // OOM adjustments for processes in various states:
 
     // Uninitialized value for any major or minor adj fields
-    static final int INVALID_ADJ = -10000;
+    public static final int INVALID_ADJ = -10000;
 
     // Adjustment used in certain places where we don't know it yet.
     // (Generally this is something that is going to be cached, but we
     // don't know the exact value in the cached range to assign yet.)
-    static final int UNKNOWN_ADJ = 1001;
+    public static final int UNKNOWN_ADJ = 1001;
 
     // This is a process only hosting activities that are not visible,
     // so it can be killed without any disruption.
-    static final int CACHED_APP_MAX_ADJ = 999;
-    static final int CACHED_APP_MIN_ADJ = 900;
+    public static final int CACHED_APP_MAX_ADJ = 999;
+    public static final int CACHED_APP_MIN_ADJ = 900;
 
     // This is the oom_adj level that we allow to die first. This cannot be equal to
     // CACHED_APP_MAX_ADJ unless processes are actively being assigned an oom_score_adj of
     // CACHED_APP_MAX_ADJ.
-    static final int CACHED_APP_LMK_FIRST_ADJ = 950;
+    public static final int CACHED_APP_LMK_FIRST_ADJ = 950;
 
     // Number of levels we have available for different service connection group importance
     // levels.
-    static final int CACHED_APP_IMPORTANCE_LEVELS = 5;
+    public static final int CACHED_APP_IMPORTANCE_LEVELS = 5;
 
     // The B list of SERVICE_ADJ -- these are the old and decrepit
     // services that aren't as shiny and interesting as the ones in the A list.
-    static final int SERVICE_B_ADJ = 800;
+    public static final int SERVICE_B_ADJ = 800;
 
     // This is the process of the previous application that the user was in.
     // This process is kept above other things, because it is very common to
@@ -209,72 +224,74 @@ public final class ProcessList {
     // task switch (toggling between the two top recent apps) as well as normal
     // UI flow such as clicking on a URI in the e-mail app to view in the browser,
     // and then pressing back to return to e-mail.
-    static final int PREVIOUS_APP_ADJ = 700;
+    public static final int PREVIOUS_APP_ADJ = 700;
 
     // This is a process holding the home application -- we want to try
     // avoiding killing it, even if it would normally be in the background,
     // because the user interacts with it so much.
-    static final int HOME_APP_ADJ = 600;
+    public static final int HOME_APP_ADJ = 600;
 
     // This is a process holding an application service -- killing it will not
     // have much of an impact as far as the user is concerned.
-    static final int SERVICE_ADJ = 500;
+    public static final int SERVICE_ADJ = 500;
 
     // This is a process with a heavy-weight application.  It is in the
     // background, but we want to try to avoid killing it.  Value set in
     // system/rootdir/init.rc on startup.
-    static final int HEAVY_WEIGHT_APP_ADJ = 400;
+    public static final int HEAVY_WEIGHT_APP_ADJ = 400;
 
     // This is a process currently hosting a backup operation.  Killing it
     // is not entirely fatal but is generally a bad idea.
-    static final int BACKUP_APP_ADJ = 300;
+    public static final int BACKUP_APP_ADJ = 300;
 
     // This is a process bound by the system (or other app) that's more important than services but
     // not so perceptible that it affects the user immediately if killed.
-    static final int PERCEPTIBLE_LOW_APP_ADJ = 250;
+    public static final int PERCEPTIBLE_LOW_APP_ADJ = 250;
 
     // This is a process hosting services that are not perceptible to the user but the
     // client (system) binding to it requested to treat it as if it is perceptible and avoid killing
     // it if possible.
-    static final int PERCEPTIBLE_MEDIUM_APP_ADJ = 225;
+    public static final int PERCEPTIBLE_MEDIUM_APP_ADJ = 225;
 
     // This is a process only hosting components that are perceptible to the
     // user, and we really want to avoid killing them, but they are not
     // immediately visible. An example is background music playback.
-    static final int PERCEPTIBLE_APP_ADJ = 200;
+    public static final int PERCEPTIBLE_APP_ADJ = 200;
 
     // This is a process only hosting activities that are visible to the
     // user, so we'd prefer they don't disappear.
-    static final int VISIBLE_APP_ADJ = 100;
+    public static final int VISIBLE_APP_ADJ = 100;
     static final int VISIBLE_APP_LAYER_MAX = PERCEPTIBLE_APP_ADJ - VISIBLE_APP_ADJ - 1;
 
     // This is a process that was recently TOP and moved to FGS. Continue to treat it almost
     // like a foreground app for a while.
     // @see TOP_TO_FGS_GRACE_PERIOD
-    static final int PERCEPTIBLE_RECENT_FOREGROUND_APP_ADJ = 50;
+    public static final int PERCEPTIBLE_RECENT_FOREGROUND_APP_ADJ = 50;
 
     // This is the process running the current foreground app.  We'd really
     // rather not kill it!
-    static final int FOREGROUND_APP_ADJ = 0;
+    public static final int FOREGROUND_APP_ADJ = 0;
 
     // This is a process that the system or a persistent process has bound to,
     // and indicated it is important.
-    static final int PERSISTENT_SERVICE_ADJ = -700;
+    public static final int PERSISTENT_SERVICE_ADJ = -700;
 
     // This is a system persistent process, such as telephony.  Definitely
     // don't want to kill it, but doing so is not completely fatal.
-    static final int PERSISTENT_PROC_ADJ = -800;
+    public static final int PERSISTENT_PROC_ADJ = -800;
 
     // The system process runs at the default adjustment.
-    static final int SYSTEM_ADJ = -900;
+    public static final int SYSTEM_ADJ = -900;
 
     // Special code for native processes that are not being managed by the system (so
     // don't have an oom adj assigned by the system).
-    static final int NATIVE_ADJ = -1000;
+    public static final int NATIVE_ADJ = -1000;
 
-    // Memory pages are 4K.
-    static final int PAGE_SIZE = 4 * 1024;
+    // Memory page size.
+    static final int PAGE_SIZE = (int) Os.sysconf(OsConstants._SC_PAGESIZE);
 
+    // Activity manager's version of an undefined schedule group
+    static final int SCHED_GROUP_UNDEFINED = Integer.MIN_VALUE;
     // Activity manager's version of Process.THREAD_GROUP_BACKGROUND
     static final int SCHED_GROUP_BACKGROUND = 0;
       // Activity manager's version of Process.THREAD_GROUP_RESTRICTED
@@ -290,9 +307,6 @@ public final class ProcessList {
     // The minimum number of cached apps we want to be able to keep around,
     // without empty apps being able to push them out of memory.
     static final int MIN_CACHED_APPS = 2;
-
-    // We allow empty processes to stick around for at most 30 minutes.
-    static final long MAX_EMPTY_TIME = 30 * 60 * 1000;
 
     // Threshold of number of cached+empty where we consider memory critical.
     static final int TRIM_CRITICAL_THRESHOLD = 3;
@@ -338,7 +352,9 @@ public final class ProcessList {
     // LMK_PROCKILL
     // LMK_UPDATE_PROPS
     // LMK_KILL_OCCURRED
-    // LMK_STATE_CHANGED
+    // LMK_START_MONITORING
+    // LMK_BOOT_COMPLETED
+    // LMK_PROCS_PRIO
     static final byte LMK_TARGET = 0;
     static final byte LMK_PROCPRIO = 1;
     static final byte LMK_PROCREMOVE = 2;
@@ -348,7 +364,9 @@ public final class ProcessList {
     static final byte LMK_PROCKILL = 6; // Note: this is an unsolicited command
     static final byte LMK_UPDATE_PROPS = 7;
     static final byte LMK_KILL_OCCURRED = 8; // Msg to subscribed clients on kill occurred event
-    static final byte LMK_STATE_CHANGED = 9; // Msg to subscribed clients on state changed
+    static final byte LMK_START_MONITORING = 9; // Start monitoring if delayed earlier
+    static final byte LMK_BOOT_COMPLETED = 10;
+    static final byte LMK_PROCS_PRIO = 11;  // Batch option for LMK_PROCPRIO
 
     // Low Memory Killer Daemon command codes.
     // These must be kept in sync with async_event_type definitions in lmkd.h
@@ -360,52 +378,10 @@ public final class ProcessList {
     private static final long LMKD_RECONNECT_DELAY_MS = 1000;
 
     /**
-     * How long between a process kill and we actually receive its death recipient
+     * The cuttoff adj for the freezer, app processes with adj greater than this value will be
+     * eligible for the freezer.
      */
-    static final int PROC_KILL_TIMEOUT = 2000; // 2 seconds;
-
-    /**
-     * Native heap allocations will now have a non-zero tag in the most significant byte.
-     * @see <a href="https://source.android.com/devices/tech/debug/tagged-pointers">Tagged
-     * Pointers</a>
-     */
-    @ChangeId
-    @EnabledAfter(targetSdkVersion = Build.VERSION_CODES.Q)
-    private static final long NATIVE_HEAP_POINTER_TAGGING = 135754954; // This is a bug id.
-
-    /**
-     * Enable asynchronous (ASYNC) memory tag checking in this process. This
-     * flag will only have an effect on hardware supporting the ARM Memory
-     * Tagging Extension (MTE).
-     */
-    @ChangeId
-    @Disabled
-    private static final long NATIVE_MEMTAG_ASYNC = 135772972; // This is a bug id.
-
-    /**
-     * Enable synchronous (SYNC) memory tag checking in this process. This flag
-     * will only have an effect on hardware supporting the ARM Memory Tagging
-     * Extension (MTE). If both NATIVE_MEMTAG_ASYNC and this option is selected,
-     * this option takes preference and MTE is enabled in SYNC mode.
-     */
-    @ChangeId
-    @Disabled
-    private static final long NATIVE_MEMTAG_SYNC = 177438394; // This is a bug id.
-
-    /**
-     * Enable automatic zero-initialization of native heap memory allocations.
-     */
-    @ChangeId
-    @Disabled
-    private static final long NATIVE_HEAP_ZERO_INIT = 178038272; // This is a bug id.
-
-    /**
-     * Enable sampled memory bug detection in the app.
-     * @see <a href="https://source.android.com/devices/tech/debug/gwp-asan">GWP-ASan</a>.
-     */
-    @ChangeId
-    @Disabled
-    private static final long GWP_ASAN = 135634846; // This is a bug id.
+    static final int FREEZER_CUTOFF_ADJ = CACHED_APP_MIN_ADJ;
 
     /**
      * Apps have no access to the private data directories of any other app, even if the other
@@ -451,6 +427,8 @@ public final class ProcessList {
 
     private static LmkdConnection sLmkdConnection = null;
 
+    private static OomConnection sOomConnection = null;
+
     private boolean mOomLevelsSet = false;
 
     private boolean mAppDataIsolationEnabled = false;
@@ -472,9 +450,8 @@ public final class ProcessList {
      * Having a global counter ensures that seq numbers are monotonically increasing for a
      * particular uid even when the uidRecord is re-created.
      */
-    @GuardedBy("mService")
     @VisibleForTesting
-    long mProcStateSeqCounter = 0;
+    volatile long mProcStateSeqCounter = 0;
 
     /**
      * A global counter for generating sequence numbers to uniquely identify pending process starts.
@@ -531,6 +508,16 @@ public final class ProcessList {
     @GuardedBy("mService")
     final ProcessMap<AppZygote> mAppZygotes = new ProcessMap<AppZygote>();
 
+    /** Manages the {@link android.app.ApplicationStartInfo} records. */
+    @GuardedBy("mAppStartInfoTracker")
+    private final AppStartInfoTracker mAppStartInfoTracker = new AppStartInfoTracker();
+
+    /**
+     * The currently running SDK sandbox processes for a uid.
+     */
+    @GuardedBy("mService")
+    final SparseArray<ArrayList<ProcessRecord>> mSdkSandboxes = new SparseArray<>();
+
     /**
      * Managees the {@link android.app.ApplicationExitInfo} records.
      */
@@ -543,6 +530,12 @@ public final class ProcessList {
     @GuardedBy("mService")
     final ArrayMap<AppZygote, ArrayList<ProcessRecord>> mAppZygoteProcesses =
             new ArrayMap<AppZygote, ArrayList<ProcessRecord>>();
+
+    /**
+     * The list of apps in background restricted mode.
+     */
+    @GuardedBy("mService")
+    final ArraySet<ProcessRecord> mAppsInBackgroundRestricted = new ArraySet<>();
 
     private PlatformCompat mPlatformCompat = null;
 
@@ -569,6 +562,101 @@ public final class ProcessList {
     private final int[] mZygoteSigChldMessage = new int[3];
 
     ActivityManagerGlobalLock mProcLock;
+
+    private static final String PROPERTY_APPLY_SDK_SANDBOX_AUDIT_RESTRICTIONS =
+            "apply_sdk_sandbox_audit_restrictions";
+    private static final boolean DEFAULT_APPLY_SDK_SANDBOX_AUDIT_RESTRICTIONS = false;
+
+    private static final String PROPERTY_APPLY_SDK_SANDBOX_NEXT_RESTRICTIONS =
+            "apply_sdk_sandbox_next_restrictions";
+    private static final boolean DEFAULT_APPLY_SDK_SANDBOX_NEXT_RESTRICTIONS = false;
+
+    @GuardedBy("mService")
+    private ProcessListSettingsListener mProcessListSettingsListener;
+
+    @VisibleForTesting(visibility = VisibleForTesting.Visibility.PRIVATE)
+    ProcessListSettingsListener getProcessListSettingsListener() {
+        synchronized (mService) {
+            if (mProcessListSettingsListener == null) {
+                mProcessListSettingsListener = new ProcessListSettingsListener(mService.mContext);
+                mProcessListSettingsListener.registerObserver();
+            }
+            return mProcessListSettingsListener;
+        }
+    }
+
+    static class ProcessListSettingsListener implements DeviceConfig.OnPropertiesChangedListener {
+
+        private final Context mContext;
+        private final Object mLock = new Object();
+
+        @GuardedBy("mLock")
+        private boolean mSdkSandboxApplyRestrictionsAudit =
+                DeviceConfig.getBoolean(
+                DeviceConfig.NAMESPACE_ADSERVICES,
+                PROPERTY_APPLY_SDK_SANDBOX_AUDIT_RESTRICTIONS,
+                DEFAULT_APPLY_SDK_SANDBOX_AUDIT_RESTRICTIONS);
+
+        @GuardedBy("mLock")
+        private boolean mSdkSandboxApplyRestrictionsNext =
+                DeviceConfig.getBoolean(
+                DeviceConfig.NAMESPACE_ADSERVICES,
+                PROPERTY_APPLY_SDK_SANDBOX_NEXT_RESTRICTIONS,
+                DEFAULT_APPLY_SDK_SANDBOX_NEXT_RESTRICTIONS);
+
+        ProcessListSettingsListener(Context context) {
+            mContext = context;
+        }
+
+        private void registerObserver() {
+            DeviceConfig.addOnPropertiesChangedListener(
+                    DeviceConfig.NAMESPACE_ADSERVICES, mContext.getMainExecutor(), this);
+        }
+
+        @VisibleForTesting(visibility = VisibleForTesting.Visibility.PRIVATE)
+        void unregisterObserver() {
+            DeviceConfig.removeOnPropertiesChangedListener(this);
+        }
+
+        boolean applySdkSandboxRestrictionsAudit() {
+            synchronized (mLock) {
+                return mSdkSandboxApplyRestrictionsAudit;
+            }
+        }
+
+        boolean applySdkSandboxRestrictionsNext() {
+            synchronized (mLock) {
+                return mSdkSandboxApplyRestrictionsNext;
+            }
+        }
+
+        @Override
+        public void onPropertiesChanged(@NonNull DeviceConfig.Properties properties) {
+            synchronized (mLock) {
+                for (String name : properties.getKeyset()) {
+                    if (name == null) {
+                        continue;
+                    }
+
+                    switch (name) {
+                        case PROPERTY_APPLY_SDK_SANDBOX_AUDIT_RESTRICTIONS:
+                            mSdkSandboxApplyRestrictionsAudit =
+                                properties.getBoolean(
+                                    PROPERTY_APPLY_SDK_SANDBOX_AUDIT_RESTRICTIONS,
+                                    DEFAULT_APPLY_SDK_SANDBOX_AUDIT_RESTRICTIONS);
+                            break;
+                        case PROPERTY_APPLY_SDK_SANDBOX_NEXT_RESTRICTIONS:
+                            mSdkSandboxApplyRestrictionsNext =
+                                properties.getBoolean(
+                                    PROPERTY_APPLY_SDK_SANDBOX_NEXT_RESTRICTIONS,
+                                    DEFAULT_APPLY_SDK_SANDBOX_NEXT_RESTRICTIONS);
+                            break;
+                        default:
+                    }
+                }
+            }
+        }
+    }
 
     final class IsolatedUidRange {
         @VisibleForTesting
@@ -811,6 +899,23 @@ public final class ProcessList {
                     THREAD_PRIORITY_BACKGROUND, true /* allowIo */);
             sKillThread.start();
             sKillHandler = new KillHandler(sKillThread.getLooper());
+            sOomConnection = new OomConnection(new OomConnection.OomConnectionListener() {
+                @Override
+                public void handleOomEvent(OomKillRecord[] oomKills) {
+                    for (OomKillRecord oomKill: oomKills) {
+                        synchronized (mProcLock) {
+                            noteAppKill(
+                                oomKill.getPid(),
+                                oomKill.getUid(),
+                                ApplicationExitInfo.REASON_LOW_MEMORY,
+                                ApplicationExitInfo.SUBREASON_OOM_KILL,
+                                "oom");
+
+                            oomKill.logKillOccurred();
+                        }
+                    }
+                }
+            });
             sLmkdConnection = new LmkdConnection(sKillThread.getLooper().getQueue(),
                     new LmkdConnection.LmkdConnectionListener() {
                         @Override
@@ -858,15 +963,14 @@ public final class ProcessList {
                                                 < LmkdStatsReporter.KILL_OCCURRED_MSG_SIZE) {
                                             return false;
                                         }
-                                        LmkdStatsReporter.logKillOccurred(inputData);
-                                        return true;
-                                    case LMK_STATE_CHANGED:
-                                        if (receivedLen
-                                                != LmkdStatsReporter.STATE_CHANGED_MSG_SIZE) {
-                                            return false;
-                                        }
-                                        final int state = inputData.readInt();
-                                        LmkdStatsReporter.logStateChanged(state);
+                                        // Note: directly access
+                                        // ActiveServices.sNumForegroundServices, do not try to
+                                        // hold AMS lock here, otherwise it is a potential deadlock.
+                                        Pair<Integer, Integer> foregroundServices =
+                                                ActiveServices.sNumForegroundServices.get();
+                                        LmkdStatsReporter.logKillOccurred(inputData,
+                                                foregroundServices.first,
+                                                foregroundServices.second);
                                         return true;
                                     default:
                                         return false;
@@ -885,12 +989,14 @@ public final class ProcessList {
                         mSystemServerSocketForZygote.getFileDescriptor(),
                         EVENT_INPUT, this::handleZygoteMessages);
             }
+            mAppStartInfoTracker.init(mService);
             mAppExitInfoTracker.init(mService);
             mImperceptibleKillRunner = new ImperceptibleKillRunner(sKillThread.getLooper());
         }
     }
 
     void onSystemReady() {
+        mAppStartInfoTracker.onSystemReady();
         mAppExitInfoTracker.onSystemReady();
     }
 
@@ -1370,7 +1476,7 @@ public final class ProcessList {
     }
 
     public static long computeNextPssTime(int procState, ProcStateMemTracker tracker, boolean test,
-            boolean sleeping, long now) {
+            boolean sleeping, long now, long earliest) {
         boolean first;
         float scalingFactor;
         final int memState = sProcStateToProcMem[procState];
@@ -1401,7 +1507,7 @@ public final class ProcessList {
         if (delay > PSS_MAX_INTERVAL) {
             delay = PSS_MAX_INTERVAL;
         }
-        return now + delay;
+        return Math.max(now + delay, earliest);
     }
 
     long getMemLevel(int adjustment) {
@@ -1419,6 +1525,10 @@ public final class ProcessList {
      */
     long getCachedRestoreThresholdKb() {
         return mCachedRestoreLevel;
+    }
+
+    AppStartInfoTracker getAppStartInfoTracker() {
+        return mAppStartInfoTracker;
     }
 
     /**
@@ -1451,6 +1561,50 @@ public final class ProcessList {
             Slog.w("ActivityManager", "SLOW OOM ADJ: " + (now-start) + "ms for pid " + pid
                     + " = " + amt);
         }
+    }
+
+
+    // The max size for PROCS_PRIO cmd in LMKD
+    private static final int MAX_PROCS_PRIO_PACKET_SIZE = 3;
+
+    // (4 bytes per field * 4 fields * 3 processes per batch) + 4 bytes for the LMKD cmd
+    private static final int MAX_OOM_ADJ_BATCH_LENGTH = ((4 * 4) * MAX_PROCS_PRIO_PACKET_SIZE) + 4;
+
+    /**
+     * Set the out-of-memory badness adjustment for a list of processes.
+     *
+     * @param apps App list to adjust their respective oom score.
+     *
+     * {@hide}
+     */
+    public static void batchSetOomAdj(ArrayList<ProcessRecord> apps) {
+        final int totalApps = apps.size();
+        if (totalApps == 0) {
+            return;
+        }
+
+        ByteBuffer buf = ByteBuffer.allocate(MAX_OOM_ADJ_BATCH_LENGTH);
+        int total_procs_in_buf = 0;
+        buf.putInt(LMK_PROCS_PRIO);
+        for (int i = 0; i < totalApps; i++) {
+            final int pid = apps.get(i).getPid();
+            final int amt = apps.get(i).mState.getCurAdj();
+            final int uid = apps.get(i).uid;
+            if (pid <= 0 || amt == UNKNOWN_ADJ) continue;
+            if (total_procs_in_buf >= MAX_PROCS_PRIO_PACKET_SIZE) {
+                writeLmkd(buf, null);
+                buf.clear();
+                total_procs_in_buf = 0;
+                buf.allocate(MAX_OOM_ADJ_BATCH_LENGTH);
+                buf.putInt(LMK_PROCS_PRIO);
+            }
+            buf.putInt(pid);
+            buf.putInt(uid);
+            buf.putInt(amt);
+            buf.putInt(0);  // Default proc type to PROC_TYPE_APP
+            total_procs_in_buf++;
+        }
+        writeLmkd(buf, null);
     }
 
     /*
@@ -1518,6 +1672,15 @@ public final class ProcessList {
         return true;
     }
 
+    /**
+     * {@hide}
+     */
+    public static void startPsiMonitoringAfterBoot() {
+        ByteBuffer buf = ByteBuffer.allocate(4);
+        buf.putInt(LMK_START_MONITORING);
+        writeLmkd(buf, null);
+    }
+
     private static boolean writeLmkd(ByteBuffer buf, ByteBuffer repl) {
         if (!sLmkdConnection.isConnected()) {
             // try to connect immediately and then keep retrying
@@ -1568,6 +1731,7 @@ public final class ProcessList {
     void getMemoryInfo(ActivityManager.MemoryInfo outInfo) {
         final long homeAppMem = getMemLevel(HOME_APP_ADJ);
         final long cachedAppMem = getMemLevel(CACHED_APP_MIN_ADJ);
+        outInfo.advertisedMem = getAdvertisedMem();
         outInfo.availMem = getFreeMemory();
         outInfo.totalMem = getTotalMemory();
         outInfo.threshold = homeAppMem;
@@ -1667,119 +1831,6 @@ public final class ProcessList {
         return gidArray;
     }
 
-    private int memtagModeToZygoteMemtagLevel(int memtagMode) {
-        switch (memtagMode) {
-            case ApplicationInfo.MEMTAG_ASYNC:
-                return Zygote.MEMORY_TAG_LEVEL_ASYNC;
-            case ApplicationInfo.MEMTAG_SYNC:
-                return Zygote.MEMORY_TAG_LEVEL_SYNC;
-            default:
-                return Zygote.MEMORY_TAG_LEVEL_NONE;
-        }
-    }
-
-    // Returns the requested memory tagging level.
-    private int getRequestedMemtagLevel(ProcessRecord app) {
-        // Look at the process attribute first.
-        if (app.processInfo != null
-                && app.processInfo.memtagMode != ApplicationInfo.MEMTAG_DEFAULT) {
-            return memtagModeToZygoteMemtagLevel(app.processInfo.memtagMode);
-        }
-
-        // Then at the application attribute.
-        if (app.info.getMemtagMode() != ApplicationInfo.MEMTAG_DEFAULT) {
-            return memtagModeToZygoteMemtagLevel(app.info.getMemtagMode());
-        }
-
-        if (mPlatformCompat.isChangeEnabled(NATIVE_MEMTAG_SYNC, app.info)) {
-            return Zygote.MEMORY_TAG_LEVEL_SYNC;
-        }
-
-        if (mPlatformCompat.isChangeEnabled(NATIVE_MEMTAG_ASYNC, app.info)) {
-            return Zygote.MEMORY_TAG_LEVEL_ASYNC;
-        }
-
-        // Check to ensure the app hasn't explicitly opted-out of TBI via. the manifest attribute.
-        if (!app.info.allowsNativeHeapPointerTagging()) {
-            return Zygote.MEMORY_TAG_LEVEL_NONE;
-        }
-
-        // Check to see that the compat feature for TBI is enabled.
-        if (mPlatformCompat.isChangeEnabled(NATIVE_HEAP_POINTER_TAGGING, app.info)) {
-            return Zygote.MEMORY_TAG_LEVEL_TBI;
-        }
-
-        return Zygote.MEMORY_TAG_LEVEL_NONE;
-    }
-
-    private int decideTaggingLevel(ProcessRecord app) {
-        // Get the desired tagging level (app manifest + compat features).
-        int level = getRequestedMemtagLevel(app);
-
-        // Take into account the hardware capabilities.
-        if (Zygote.nativeSupportsMemoryTagging()) {
-            // MTE devices can not do TBI, because the Zygote process already has live MTE
-            // allocations. Downgrade TBI to NONE.
-            if (level == Zygote.MEMORY_TAG_LEVEL_TBI) {
-                level = Zygote.MEMORY_TAG_LEVEL_NONE;
-            }
-        } else if (Zygote.nativeSupportsTaggedPointers()) {
-            // TBI-but-not-MTE devices downgrade MTE modes to TBI.
-            // The idea is that if an app opts into full hardware tagging (MTE), it must be ok with
-            // the "fake" pointer tagging (TBI).
-            if (level == Zygote.MEMORY_TAG_LEVEL_ASYNC || level == Zygote.MEMORY_TAG_LEVEL_SYNC) {
-                level = Zygote.MEMORY_TAG_LEVEL_TBI;
-            }
-        } else {
-            // Otherwise disable all tagging.
-            level = Zygote.MEMORY_TAG_LEVEL_NONE;
-        }
-
-        return level;
-    }
-
-    private int decideGwpAsanLevel(ProcessRecord app) {
-        // Look at the process attribute first.
-       if (app.processInfo != null
-                && app.processInfo.gwpAsanMode != ApplicationInfo.GWP_ASAN_DEFAULT) {
-            return app.processInfo.gwpAsanMode == ApplicationInfo.GWP_ASAN_ALWAYS
-                    ? Zygote.GWP_ASAN_LEVEL_ALWAYS
-                    : Zygote.GWP_ASAN_LEVEL_NEVER;
-        }
-        // Then at the application attribute.
-        if (app.info.getGwpAsanMode() != ApplicationInfo.GWP_ASAN_DEFAULT) {
-            return app.info.getGwpAsanMode() == ApplicationInfo.GWP_ASAN_ALWAYS
-                    ? Zygote.GWP_ASAN_LEVEL_ALWAYS
-                    : Zygote.GWP_ASAN_LEVEL_NEVER;
-        }
-        // If the app does not specify gwpAsanMode, the default behavior is lottery among the
-        // system apps, and disabled for user apps, unless overwritten by the compat feature.
-        if (mPlatformCompat.isChangeEnabled(GWP_ASAN, app.info)) {
-            return Zygote.GWP_ASAN_LEVEL_ALWAYS;
-        }
-        if ((app.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
-            return Zygote.GWP_ASAN_LEVEL_LOTTERY;
-        }
-        return Zygote.GWP_ASAN_LEVEL_NEVER;
-    }
-
-    private boolean enableNativeHeapZeroInit(ProcessRecord app) {
-        // Look at the process attribute first.
-        if (app.processInfo != null
-                && app.processInfo.nativeHeapZeroInitialized != ApplicationInfo.ZEROINIT_DEFAULT) {
-            return app.processInfo.nativeHeapZeroInitialized == ApplicationInfo.ZEROINIT_ENABLED;
-        }
-        // Then at the application attribute.
-        if (app.info.getNativeHeapZeroInitialized() != ApplicationInfo.ZEROINIT_DEFAULT) {
-            return app.info.getNativeHeapZeroInitialized() == ApplicationInfo.ZEROINIT_ENABLED;
-        }
-        // Compat feature last.
-        if (mPlatformCompat.isChangeEnabled(NATIVE_HEAP_ZERO_INIT, app.info)) {
-            return true;
-        }
-        return false;
-    }
-
     /**
      * @return {@code true} if process start is successful, false otherwise.
      */
@@ -1790,13 +1841,14 @@ public final class ProcessList {
         if (app.isPendingStart()) {
             return true;
         }
-        long startTime = SystemClock.uptimeMillis();
+        final long startUptime = SystemClock.uptimeMillis();
+        final long startElapsedTime = SystemClock.elapsedRealtime();
         if (app.getPid() > 0 && app.getPid() != ActivityManagerService.MY_PID) {
-            checkSlow(startTime, "startProcess: removing from pids map");
+            checkSlow(startUptime, "startProcess: removing from pids map");
             mService.removePidLocked(app.getPid(), app);
             app.setBindMountPending(false);
             mService.mHandler.removeMessages(PROC_START_TIMEOUT_MSG, app);
-            checkSlow(startTime, "startProcess: done removing from pids map");
+            checkSlow(startUptime, "startProcess: done removing from pids map");
             app.setPid(0);
             app.setStartSeq(0);
         }
@@ -1809,9 +1861,9 @@ public final class ProcessList {
                 "startProcessLocked removing on hold: " + app);
         mService.mProcessesOnHold.remove(app);
 
-        checkSlow(startTime, "startProcess: starting to update cpu stats");
+        checkSlow(startUptime, "startProcess: starting to update cpu stats");
         mService.updateCpuStats();
-        checkSlow(startTime, "startProcess: done updating cpu stats");
+        checkSlow(startUptime, "startProcess: done updating cpu stats");
 
         try {
             final int userId = UserHandle.getUserId(app.uid);
@@ -1828,7 +1880,7 @@ public final class ProcessList {
             if (!app.isolated) {
                 int[] permGids = null;
                 try {
-                    checkSlow(startTime, "startProcess: getting gids from package manager");
+                    checkSlow(startUptime, "startProcess: getting gids from package manager");
                     final IPackageManager pm = AppGlobals.getPackageManager();
                     permGids = pm.getPackageGids(app.info.packageName,
                             MATCH_DIRECT_BOOT_AUTO, app.userId);
@@ -1838,7 +1890,8 @@ public final class ProcessList {
                             app.info.packageName);
                     externalStorageAccess = storageManagerInternal.hasExternalStorageAccess(uid,
                             app.info.packageName);
-                    if (pm.checkPermission(Manifest.permission.INSTALL_PACKAGES,
+                    if (mService.isAppFreezerExemptInstPkg()
+                            && pm.checkPermission(Manifest.permission.INSTALL_PACKAGES,
                             app.info.packageName, userId)
                             == PackageManager.PERMISSION_GRANTED) {
                         Slog.i(TAG, app.info.packageName + " is exempt from freezer");
@@ -1866,13 +1919,28 @@ public final class ProcessList {
                 gids = computeGidsForProcess(mountExternal, uid, permGids, externalStorageAccess);
             }
             app.setMountMode(mountExternal);
-            checkSlow(startTime, "startProcess: building args");
-            if (mService.mAtmInternal.isFactoryTestProcess(app.getWindowProcessController())) {
+            checkSlow(startUptime, "startProcess: building args");
+            if (app.getWindowProcessController().isFactoryTestProcess()) {
                 uid = 0;
             }
             int runtimeFlags = 0;
-            if ((app.info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+
+            boolean debuggableFlag = (app.info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+            boolean isProfileableByShell = app.info.isProfileableByShell();
+            boolean isProfileable = app.info.isProfileable();
+
+            if (app.isSdkSandbox) {
+                ApplicationInfo clientInfo = app.getClientInfoForSdkSandbox();
+                if (clientInfo != null) {
+                    debuggableFlag |= (clientInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+                    isProfileableByShell |= clientInfo.isProfileableByShell();
+                    isProfileable |= clientInfo.isProfileable();
+                }
+            }
+
+            if (debuggableFlag) {
                 runtimeFlags |= Zygote.DEBUG_ENABLE_JDWP;
+                runtimeFlags |= Zygote.DEBUG_ENABLE_PTRACE;
                 runtimeFlags |= Zygote.DEBUG_JAVA_DEBUGGABLE;
                 // Also turn on CheckJNI for debuggable apps. It's quite
                 // awkward to turn on otherwise.
@@ -1890,10 +1958,10 @@ public final class ProcessList {
             if ((app.info.flags & ApplicationInfo.FLAG_VM_SAFE_MODE) != 0 || mService.mSafeMode) {
                 runtimeFlags |= Zygote.DEBUG_ENABLE_SAFEMODE;
             }
-            if ((app.info.privateFlags & ApplicationInfo.PRIVATE_FLAG_PROFILEABLE_BY_SHELL) != 0) {
+            if (isProfileableByShell) {
                 runtimeFlags |= Zygote.PROFILE_FROM_SHELL;
             }
-            if ((app.info.privateFlagsExt & ApplicationInfo.PRIVATE_FLAG_EXT_PROFILEABLE) != 0) {
+            if (isProfileable) {
                 runtimeFlags |= Zygote.PROFILEABLE;
             }
             if ("1".equals(SystemProperties.get("debug.checkjni"))) {
@@ -1925,16 +1993,9 @@ public final class ProcessList {
                 mService.mNativeDebuggingApp = null;
             }
 
-            if (app.info.isEmbeddedDexUsed()) {
+            if (app.info.isEmbeddedDexUsed()
+                    || (app.processInfo != null && app.processInfo.useEmbeddedDex)) {
                 runtimeFlags |= Zygote.ONLY_USE_SYSTEM_OAT_FILES;
-            } else if (app.info.isPrivilegedApp()) {
-                final PackageList pkgList = app.getPkgList();
-                synchronized (pkgList) {
-                    if (DexManager.isPackageSelectedToRunOob(
-                            pkgList.getPackageListLocked().keySet())) {
-                        runtimeFlags |= Zygote.ONLY_USE_SYSTEM_OAT_FILES;
-                    }
-                }
             }
 
             if (!disableHiddenApiChecks && !mService.mHiddenApiBlacklist.isDisabled()) {
@@ -1960,10 +2021,8 @@ public final class ProcessList {
                 runtimeFlags |= Zygote.USE_APP_IMAGE_STARTUP_CACHE;
             }
 
-            runtimeFlags |= decideGwpAsanLevel(app);
-
             String invokeWith = null;
-            if ((app.info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+            if (debuggableFlag) {
                 // Debuggable apps may include a wrapper script with their library directory.
                 String wrapperFileName = app.info.nativeLibraryDir + "/wrap.sh";
                 StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
@@ -1992,23 +2051,21 @@ public final class ProcessList {
             app.setRequiredAbi(requiredAbi);
             app.setInstructionSet(instructionSet);
 
-            // If instructionSet is non-null, this indicates that the system_server is spawning a
-            // process with an ISA that may be different from its own. System (kernel and hardware)
-            // compatibility for these features is checked in the decideTaggingLevel in the
-            // system_server process (not the child process). As both MTE and TBI are only supported
-            // in aarch64, we can simply ensure that the new process is also aarch64. This prevents
-            // the mismatch where a 64-bit system server spawns a 32-bit child that thinks it should
-            // enable some tagging variant. Theoretically, a 32-bit system server could exist that
-            // spawns 64-bit processes, in which case the new process won't get any tagging. This is
-            // fine as we haven't seen this configuration in practice, and we can reasonable assume
-            // that if tagging is desired, the system server will be 64-bit.
-            if (instructionSet == null || instructionSet.equals("arm64")) {
-                runtimeFlags |= decideTaggingLevel(app);
+            // If this was an external service, the package name and uid in the passed in
+            // ApplicationInfo have been changed to match those of the calling package;
+            // that will incorrectly apply compat feature overrides for the calling package instead
+            // of the defining one.
+            ApplicationInfo definingAppInfo;
+            if (hostingRecord.getDefiningPackageName() != null) {
+                definingAppInfo = new ApplicationInfo(app.info);
+                definingAppInfo.packageName = hostingRecord.getDefiningPackageName();
+                definingAppInfo.uid = uid;
+            } else {
+                definingAppInfo = app.info;
             }
 
-            if (enableNativeHeapZeroInit(app)) {
-                runtimeFlags |= Zygote.NATIVE_HEAP_ZERO_INIT;
-            }
+            runtimeFlags |= Zygote.getMemorySafetyRuntimeFlags(
+                    definingAppInfo, app.processInfo, instructionSet, mPlatformCompat);
 
             // the per-user SELinux context must be set
             if (TextUtils.isEmpty(app.info.seInfoUser)) {
@@ -2016,15 +2073,16 @@ public final class ProcessList {
                         new IllegalStateException("SELinux tag not defined for "
                                 + app.info.packageName + " (uid " + app.uid + ")"));
             }
-            final String seInfo = app.info.seInfo
-                    + (TextUtils.isEmpty(app.info.seInfoUser) ? "" : app.info.seInfoUser);
+
+            String seInfo = updateSeInfo(app);
+
             // Start the process.  It will either succeed and return a result containing
             // the PID of the new process, or else throw a RuntimeException.
             final String entryPoint = "android.app.ActivityThread";
 
             return startProcessLocked(hostingRecord, entryPoint, app, uid, gids,
                     runtimeFlags, zygotePolicyFlags, mountExternal, seInfo, requiredAbi,
-                    instructionSet, invokeWith, startTime);
+                    instructionSet, invokeWith, startUptime, startElapsedTime);
         } catch (RuntimeException e) {
             Slog.e(ActivityManagerService.TAG, "Failure starting process " + app.processName, e);
 
@@ -2035,8 +2093,33 @@ public final class ProcessList {
             // the package was initially frozen through KILL_APPLICATION_MSG, so
             // it doesn't hurt to use it again.)
             mService.forceStopPackageLocked(app.info.packageName, UserHandle.getAppId(app.uid),
-                    false, false, true, false, false, app.userId, "start failure");
+                    false, false, true, false, false, false, app.userId, "start failure");
             return false;
+        }
+    }
+
+    @VisibleForTesting
+    @GuardedBy("mService")
+    String updateSeInfo(ProcessRecord app) {
+        String extraInfo = "";
+        // By the time the first the SDK sandbox process is started, device config service
+        // should be available. If both Next and Audit are enabled, Next takes precedence.
+        if (app.isSdkSandbox) {
+            if (getProcessListSettingsListener().applySdkSandboxRestrictionsNext()) {
+                extraInfo = APPLY_SDK_SANDBOX_NEXT_RESTRICTIONS;
+            } else if (selinuxSdkSandboxAudit()
+                    && getProcessListSettingsListener().applySdkSandboxRestrictionsAudit()) {
+                extraInfo = APPLY_SDK_SANDBOX_AUDIT_RESTRICTIONS;
+            }
+        }
+
+        // The order of selectors in seInfo matters, the string is terminated by the word complete.
+        if (selinuxInputSelector()) {
+            return app.info.seInfo + extraInfo + TextUtils.emptyIfNull(app.info.seInfoUser);
+        } else {
+            return app.info.seInfo
+                    + (TextUtils.isEmpty(app.info.seInfoUser) ? "" : app.info.seInfoUser)
+                    + extraInfo;
         }
     }
 
@@ -2044,7 +2127,7 @@ public final class ProcessList {
     boolean startProcessLocked(HostingRecord hostingRecord, String entryPoint, ProcessRecord app,
             int uid, int[] gids, int runtimeFlags, int zygotePolicyFlags, int mountExternal,
             String seInfo, String requiredAbi, String instructionSet, String invokeWith,
-            long startTime) {
+            long startUptime, long startElapsedTime) {
         app.setPendingStart(true);
         app.setRemoved(false);
         synchronized (mProcLock) {
@@ -2060,12 +2143,14 @@ public final class ProcessList {
                     + " with non-zero pid:" + app.getPid());
         }
         app.setDisabledCompatChanges(null);
+        app.setLoggableCompatChanges(null);
         if (mPlatformCompat != null) {
             app.setDisabledCompatChanges(mPlatformCompat.getDisabledChanges(app.info));
+            app.setLoggableCompatChanges(mPlatformCompat.getLoggableChanges(app.info));
         }
         final long startSeq = ++mProcStartSeqCounter;
         app.setStartSeq(startSeq);
-        app.setStartParams(uid, hostingRecord, seInfo, startTime);
+        app.setStartParams(uid, hostingRecord, seInfo, startUptime, startElapsedTime);
         app.setUsingWrapper(invokeWith != null
                 || Zygote.getWrapProperty(app.processName) != null);
         mPendingStarts.put(startSeq, app);
@@ -2082,7 +2167,7 @@ public final class ProcessList {
                 final Process.ProcessStartResult startResult = startProcess(hostingRecord,
                         entryPoint, app,
                         uid, gids, runtimeFlags, zygotePolicyFlags, mountExternal, seInfo,
-                        requiredAbi, instructionSet, invokeWith, startTime);
+                        requiredAbi, instructionSet, invokeWith, startUptime);
                 handleProcessStartedLocked(app, startResult.pid, startResult.usingWrapper,
                         startSeq, false);
             } catch (RuntimeException e) {
@@ -2090,7 +2175,7 @@ public final class ProcessList {
                         + app.processName, e);
                 app.setPendingStart(false);
                 mService.forceStopPackageLocked(app.info.packageName, UserHandle.getAppId(app.uid),
-                        false, false, true, false, false, app.userId, "start failure");
+                        false, false, true, false, false, false, app.userId, "start failure");
             }
             return app.getPid() > 0;
         }
@@ -2105,65 +2190,97 @@ public final class ProcessList {
             final int[] gids, final int runtimeFlags, int zygotePolicyFlags,
             final int mountExternal, final String requiredAbi, final String instructionSet,
             final String invokeWith, final long startSeq) {
-        // If there is a preceding instance of the process, wait for its death with a timeout.
+        final Runnable startRunnable = () -> {
+            try {
+                final Process.ProcessStartResult startResult = startProcess(app.getHostingRecord(),
+                        entryPoint, app, app.getStartUid(), gids, runtimeFlags, zygotePolicyFlags,
+                        mountExternal, app.getSeInfo(), requiredAbi, instructionSet, invokeWith,
+                        app.getStartTime());
+
+                synchronized (mService) {
+                    handleProcessStartedLocked(app, startResult, startSeq);
+                }
+            } catch (RuntimeException e) {
+                synchronized (mService) {
+                    Slog.e(ActivityManagerService.TAG, "Failure starting process "
+                            + app.processName, e);
+                    mPendingStarts.remove(startSeq);
+                    app.setPendingStart(false);
+                    mService.forceStopPackageLocked(app.info.packageName,
+                            UserHandle.getAppId(app.uid),
+                            false, false, true, false, false, false, app.userId, "start failure");
+                    app.doEarlyCleanupIfNecessaryLocked();
+                }
+            }
+        };
         // Use local reference since we are not using locks here
         final ProcessRecord predecessor = app.mPredecessor;
-        int prevPid;
-        if (predecessor != null && (prevPid = predecessor.getDyingPid()) > 0) {
-            long now = System.currentTimeMillis();
-            final long end = now + PROC_KILL_TIMEOUT;
-            final int oldPolicy = StrictMode.getThreadPolicyMask();
-            try {
-                StrictMode.setThreadPolicyMask(0);
-                Process.waitForProcessDeath(prevPid, PROC_KILL_TIMEOUT);
-                // It's killed successfully, but we'd make sure the cleanup work is done.
-                synchronized (predecessor) {
-                    if (app.mPredecessor != null) {
-                        now = System.currentTimeMillis();
-                        if (now < end) {
-                            try {
-                                predecessor.wait(end - now);
-                            } catch (InterruptedException e) {
-                            }
-                            if (System.currentTimeMillis() >= end) {
-                                Slog.w(TAG, predecessor + " " + prevPid
-                                        + " has died but its obituary delivery is slow.");
-                            }
-                        }
+        if (predecessor != null && predecessor.getDyingPid() > 0) {
+            handleProcessStartWithPredecessor(predecessor, startRunnable);
+        } else {
+            // Kick off the process start for real.
+            startRunnable.run();
+        }
+    }
+
+    /**
+     * Handle the case where the given process is killed but still not gone, but we'd need to start
+     * the new instance of it.
+     */
+    private void handleProcessStartWithPredecessor(final ProcessRecord predecessor,
+            final Runnable successorStartRunnable) {
+        // If there is a preceding instance of the process, wait for its death with a timeout.
+        if (predecessor.mSuccessorStartRunnable != null) {
+            // It's been watched already, this shouldn't happen.
+            Slog.wtf(TAG, "We've been watching for the death of " + predecessor);
+            return;
+        }
+        predecessor.mSuccessorStartRunnable = successorStartRunnable;
+        mService.mProcStartHandler.sendMessageDelayed(mService.mProcStartHandler.obtainMessage(
+                ProcStartHandler.MSG_PROCESS_KILL_TIMEOUT, predecessor),
+                mService.mConstants.mProcessKillTimeoutMs);
+    }
+
+    static final class ProcStartHandler extends Handler {
+        static final int MSG_PROCESS_DIED = 1;
+        static final int MSG_PROCESS_KILL_TIMEOUT = 2;
+
+        private final ActivityManagerService mService;
+
+        ProcStartHandler(ActivityManagerService service, Looper looper) {
+            super(looper);
+            mService = service;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_PROCESS_DIED:
+                    mService.mProcessList.handlePredecessorProcDied((ProcessRecord) msg.obj);
+                    break;
+                case MSG_PROCESS_KILL_TIMEOUT:
+                    synchronized (mService) {
+                        mService.handleProcessStartOrKillTimeoutLocked((ProcessRecord) msg.obj,
+                                /* isKillTimeout */ true);
                     }
-                    if (app.mPredecessor != null && app.mPredecessor.getPid() > 0) {
-                        // The cleanup work hasn't be done yet, let's log it and continue.
-                        Slog.w(TAG, predecessor + " " + prevPid
-                                + " has died, but its cleanup isn't done");
-                    }
-                }
-            } catch (Exception e) {
-                // It's still alive... maybe blocked at uninterruptible sleep ?
-                Slog.wtf(TAG, predecessor.toString() + " " + prevPid
-                        + " refused to die, but we need to launch " + app, e);
-            } finally {
-                StrictMode.setThreadPolicyMask(oldPolicy);
+                    break;
             }
         }
-        try {
-            final Process.ProcessStartResult startResult = startProcess(app.getHostingRecord(),
-                    entryPoint, app, app.getStartUid(), gids, runtimeFlags, zygotePolicyFlags,
-                    mountExternal, app.getSeInfo(), requiredAbi, instructionSet, invokeWith,
-                    app.getStartTime());
+    }
 
-            synchronized (mService) {
-                handleProcessStartedLocked(app, startResult, startSeq);
-            }
-        } catch (RuntimeException e) {
-            synchronized (mService) {
-                Slog.e(ActivityManagerService.TAG, "Failure starting process "
-                        + app.processName, e);
-                mPendingStarts.remove(startSeq);
-                app.setPendingStart(false);
-                mService.forceStopPackageLocked(app.info.packageName,
-                        UserHandle.getAppId(app.uid),
-                        false, false, true, false, false, app.userId, "start failure");
-            }
+    /**
+     * Called when the dying process we're waiting for is really gone.
+     */
+    private void handlePredecessorProcDied(ProcessRecord app) {
+        if (DEBUG_PROCESSES) {
+            Slog.i(TAG, app.toString() + " is really gone now");
+        }
+
+        // Now kick off the subsequent process start if there is any.
+        final Runnable start = app.mSuccessorStartRunnable;
+        if (start != null) {
+            app.mSuccessorStartRunnable = null;
+            start.run();
         }
     }
 
@@ -2238,7 +2355,7 @@ public final class ProcessList {
                 // not the calling one.
                 appInfo.packageName = app.getHostingRecord().getDefiningPackageName();
                 appInfo.uid = uid;
-                appZygote = new AppZygote(appInfo, uid, firstUid, lastUid);
+                appZygote = new AppZygote(appInfo, app.processInfo, uid, firstUid, lastUid);
                 mAppZygotes.put(app.info.processName, uid, appZygote);
                 zygoteProcessList = new ArrayList<ProcessRecord>();
                 mAppZygoteProcesses.put(appZygote, zygoteProcessList);
@@ -2264,13 +2381,13 @@ public final class ProcessList {
         Map<String, Pair<String, Long>> result = new ArrayMap<>(packages.length);
         int userId = UserHandle.getUserId(uid);
         for (String packageName : packages) {
-            AndroidPackage androidPackage = pmInt.getPackage(packageName);
-            if (androidPackage == null) {
+            final PackageStateInternal packageState = pmInt.getPackageStateInternal(packageName);
+            if (packageState == null) {
                 Slog.w(TAG, "Unknown package:" + packageName);
                 continue;
             }
-            String volumeUuid = androidPackage.getVolumeUuid();
-            long inode = pmInt.getCeDataInode(packageName, userId);
+            String volumeUuid = packageState.getVolumeUuid();
+            long inode = packageState.getUserStateOrDefault(userId).getCeDataInode();
             if (inode == 0) {
                 Slog.w(TAG, packageName + " inode == 0 (b/152760674)");
                 return null;
@@ -2314,16 +2431,27 @@ public final class ProcessList {
             Map<String, Pair<String, Long>> allowlistedAppDataInfoMap;
             boolean bindMountAppStorageDirs = false;
             boolean bindMountAppsData = mAppDataIsolationEnabled
-                    && (UserHandle.isApp(app.uid) || UserHandle.isIsolated(app.uid))
+                    && (UserHandle.isApp(app.uid) || UserHandle.isIsolated(app.uid)
+                        || app.isSdkSandbox)
                     && mPlatformCompat.isChangeEnabled(APP_DATA_DIRECTORY_ISOLATION, app.info);
 
             // Get all packages belongs to the same shared uid. sharedPackages is empty array
             // if it doesn't have shared uid.
             final PackageManagerInternal pmInt = mService.getPackageManagerInternal();
-            final String[] sharedPackages = pmInt.getSharedUserPackagesForPackage(
-                    app.info.packageName, app.userId);
-            final String[] targetPackagesList = sharedPackages.length == 0
-                    ? new String[]{app.info.packageName} : sharedPackages;
+
+            // In the case of sdk sandbox, the pkgDataInfoMap of only the client app associated with
+            // the sandbox is required to handle app visibility restrictions for the sandbox.
+            final String[] targetPackagesList;
+            if (app.isSdkSandbox) {
+                targetPackagesList = new String[]{app.sdkSandboxClientAppPackage};
+            } else {
+                final String[] sharedPackages = pmInt.getSharedUserPackagesForPackage(
+                        app.info.packageName, app.userId);
+                targetPackagesList = sharedPackages.length == 0
+                        ? new String[]{app.info.packageName} : sharedPackages;
+            }
+
+            final boolean hasAppStorage = hasAppStorage(pmInt, app.info.packageName);
 
             pkgDataInfoMap = getPackageAppDataInfoMap(pmInt, targetPackagesList, uid);
             if (pkgDataInfoMap == null) {
@@ -2345,6 +2473,12 @@ public final class ProcessList {
                 // TODO(b/152760674): Handle inode == 0 case properly, now we just give it a
                 // tmp free pass.
                 bindMountAppsData = false;
+            }
+
+            if (!hasAppStorage && !app.isSdkSandbox) {
+                bindMountAppsData = false;
+                pkgDataInfoMap = null;
+                allowlistedAppDataInfoMap = null;
             }
 
             int userId = UserHandle.getUserId(uid);
@@ -2370,8 +2504,35 @@ public final class ProcessList {
                 allowlistedAppDataInfoMap = null;
             }
 
+            boolean bindOverrideSysprops = false;
+            String[] syspropOverridePkgNames = DeviceConfig.getString(
+                    DeviceConfig.NAMESPACE_APP_COMPAT,
+                            "appcompat_sysprop_override_pkgs", "").split(",");
+            String[] pkgs = app.getPackageList();
+            for (int i = 0; i < pkgs.length; i++) {
+                if (ArrayUtils.contains(syspropOverridePkgNames, pkgs[i])) {
+                    bindOverrideSysprops = true;
+                    break;
+                }
+            }
+
+            AppStateTracker ast = mService.mServices.mAppStateTracker;
+            if (ast != null) {
+                final boolean inBgRestricted = ast.isAppBackgroundRestricted(
+                        app.info.uid, app.info.packageName);
+                if (inBgRestricted) {
+                    synchronized (mService) {
+                        mAppsInBackgroundRestricted.add(app);
+                    }
+                }
+                app.mState.setBackgroundRestricted(inBgRestricted);
+            }
+
             final Process.ProcessStartResult startResult;
             boolean regularZygote = false;
+            app.mProcessGroupCreated = false;
+            app.mSkipProcessGroupCreation = false;
+            long forkTimeNs = SystemClock.uptimeNanos();
             if (hostingRecord.usesWebviewZygote()) {
                 startResult = startWebView(entryPoint,
                         app.processName, uid, uid, gids, runtimeFlags, mountExternal,
@@ -2389,7 +2550,7 @@ public final class ProcessList {
                         app.info.dataDir, null, app.info.packageName,
                         /*zygotePolicyFlags=*/ ZYGOTE_POLICY_FLAG_EMPTY, isTopApp,
                         app.getDisabledCompatChanges(), pkgDataInfoMap, allowlistedAppDataInfoMap,
-                        false, false,
+                        false, false, false,
                         new String[]{PROC_START_SEQ_IDENT + app.getStartSeq()});
             } else {
                 regularZygote = true;
@@ -2399,14 +2560,36 @@ public final class ProcessList {
                         app.info.dataDir, invokeWith, app.info.packageName, zygotePolicyFlags,
                         isTopApp, app.getDisabledCompatChanges(), pkgDataInfoMap,
                         allowlistedAppDataInfoMap, bindMountAppsData, bindMountAppStorageDirs,
+                        bindOverrideSysprops,
                         new String[]{PROC_START_SEQ_IDENT + app.getStartSeq()});
+                // By now the process group should have been created by zygote.
+                app.mProcessGroupCreated = true;
+            }
+
+            if (android.app.Flags.appStartInfoTimestamps()) {
+                mAppStartInfoTracker.addTimestampToStart(app, forkTimeNs,
+                        ApplicationStartInfo.START_TIMESTAMP_FORK);
             }
 
             if (!regularZygote) {
                 // webview and app zygote don't have the permission to create the nodes
-                if (Process.createProcessGroup(uid, startResult.pid) < 0) {
-                    Slog.e(ActivityManagerService.TAG, "Unable to create process group for "
-                            + app.processName + " (" + startResult.pid + ")");
+                synchronized (app) {
+                    if (!app.mSkipProcessGroupCreation) {
+                        // If we're not told to skip the process group creation, go create it.
+                        final int res = Process.createProcessGroup(uid, startResult.pid);
+                        if (res < 0) {
+                            if (res == -OsConstants.ESRCH) {
+                                Slog.e(ActivityManagerService.TAG,
+                                        "Unable to create process group for "
+                                        + app.processName + " (" + startResult.pid + ")");
+                            } else {
+                                throw new AssertionError("Unable to create process group for "
+                                    + app.processName + " (" + startResult.pid + ")");
+                            }
+                        } else {
+                            app.mProcessGroupCreated = true;
+                        }
+                    }
                 }
             }
 
@@ -2422,6 +2605,17 @@ public final class ProcessList {
         } finally {
             Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
         }
+    }
+
+    private boolean hasAppStorage(PackageManagerInternal pmInt, String packageName) {
+        final AndroidPackage pkg = pmInt.getPackage(packageName);
+        if (pkg == null) {
+            Slog.w(TAG, "Unknown package " + packageName);
+            return false;
+        }
+        final PackageManager.Property noAppStorageProp =
+                    pkg.getProperties().get(PackageManager.PROPERTY_NO_APP_DATA_STORAGE);
+        return noAppStorageProp == null || !noAppStorageProp.getBoolean();
     }
 
     @GuardedBy("mService")
@@ -2441,8 +2635,10 @@ public final class ProcessList {
     ProcessRecord startProcessLocked(String processName, ApplicationInfo info,
             boolean knownToBeDead, int intentFlags, HostingRecord hostingRecord,
             int zygotePolicyFlags, boolean allowWhileBooting, boolean isolated, int isolatedUid,
+            boolean isSdkSandbox, int sdkSandboxUid, String sdkSandboxClientAppPackage,
             String abiOverride, String entryPoint, String[] entryPointArgs, Runnable crashHandler) {
         long startTime = SystemClock.uptimeMillis();
+        final long startTimeNs = SystemClock.elapsedRealtimeNanos();
         ProcessRecord app;
         if (!isolated) {
             app = getProcessRecordLocked(processName, info.uid);
@@ -2523,9 +2719,14 @@ public final class ProcessList {
             // and did the cleanup before the actual death notification. Check the dying processes.
             predecessor = mDyingProcesses.get(processName, info.uid);
             if (predecessor != null) {
-                if (app != null) {
+                // The process record could have existed but its pid is set to 0. In this case,
+                // the 'app' and 'predecessor' could end up pointing to the same instance;
+                // so make sure we check this case here.
+                if (app != null && app != predecessor) {
                     app.mPredecessor = predecessor;
                     predecessor.mSuccessor = app;
+                } else {
+                    app = null;
                 }
                 Slog.w(TAG_PROCESSES, predecessor.toString() + " is attached to a previous process "
                         + predecessor.getDyingPid());
@@ -2534,7 +2735,8 @@ public final class ProcessList {
 
         if (app == null) {
             checkSlow(startTime, "startProcess: creating new process record");
-            app = newProcessRecordLocked(info, processName, isolated, isolatedUid, hostingRecord);
+            app = newProcessRecordLocked(info, processName, isolated, isolatedUid, isSdkSandbox,
+                    sdkSandboxUid, sdkSandboxClientAppPackage, hostingRecord);
             if (app == null) {
                 Slog.w(TAG, "Failed making new process record for "
                         + processName + "/" + info.uid + " isolated=" + isolated);
@@ -2576,7 +2778,7 @@ public final class ProcessList {
     }
 
     @GuardedBy("mService")
-    private String isProcStartValidLocked(ProcessRecord app, long expectedStartSeq) {
+    String isProcStartValidLocked(ProcessRecord app, long expectedStartSeq) {
         StringBuilder sb = null;
         if (app.isKilledByAm()) {
             if (sb == null) sb = new StringBuilder();
@@ -2636,9 +2838,13 @@ public final class ProcessList {
                     + ", " + reason);
             app.setPendingStart(false);
             killProcessQuiet(pid);
-            Process.killProcessGroup(app.uid, app.getPid());
+            final int appPid = app.getPid();
+            if (appPid != 0) {
+                Process.killProcessGroup(app.uid, appPid);
+            }
             noteAppKill(app, ApplicationExitInfo.REASON_OTHER,
                     ApplicationExitInfo.SUBREASON_INVALID_START, reason);
+            app.doEarlyCleanupIfNecessaryLocked();
             return false;
         }
         mService.mBatteryStatsService.noteProcessStart(app.processName, app.info.uid);
@@ -2709,6 +2915,7 @@ public final class ProcessList {
                         ? PROC_START_TIMEOUT_WITH_WRAPPER : PROC_START_TIMEOUT);
             }
         }
+        dispatchProcessStarted(app, pid);
         checkSlow(app.getStartTime(), "startProcess: done updating pids map");
         return true;
     }
@@ -2750,8 +2957,8 @@ public final class ProcessList {
             int reasonCode, int subReason, String reason) {
         return killPackageProcessesLSP(packageName, appId, userId, minOomAdj,
                 false /* callerWillRestart */, true /* allowRestart */, true /* doit */,
-                false /* evenPersistent */, false /* setRemoved */, reasonCode,
-                subReason, reason);
+                false /* evenPersistent */, false /* setRemoved */, false /* uninstalling */,
+                reasonCode, subReason, reason);
     }
 
     @GuardedBy("mService")
@@ -2781,12 +2988,65 @@ public final class ProcessList {
         }
     }
 
+    private static boolean freezePackageCgroup(int packageUID, boolean freeze) {
+        try {
+            Process.freezeCgroupUid(packageUID, freeze);
+        } catch (RuntimeException e) {
+            final String logtxt = freeze ? "freeze" : "unfreeze";
+            Slog.e(TAG, "Unable to " + logtxt + " cgroup uid: " + packageUID + ": " + e);
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean unfreezePackageCgroup(int packageUID) {
+        return freezePackageCgroup(packageUID, false);
+    }
+
+    private static void freezeBinderAndPackageCgroup(List<Pair<ProcessRecord, Boolean>> procs,
+                                                     int packageUID) {
+        // Freeze all binder processes under the target UID (whose cgroup is about to be frozen).
+        // Since we're going to kill these, we don't need to unfreze them later.
+        // The procs list may not include all processes under the UID cgroup, but unincluded
+        // processes (forks) should not be Binder users.
+        int N = procs.size();
+        for (int i = 0; i < N; i++) {
+            final int pid = procs.get(i).first.getPid();
+            int nRetries = 0;
+            if (pid > 0) {
+                try {
+                    int rc;
+                    do {
+                        rc = CachedAppOptimizer.freezeBinder(pid, true, 10 /* timeout_ms */);
+                    } while (rc == -EAGAIN && nRetries++ < 1);
+                    if (rc != 0) Slog.e(TAG, "Unable to freeze binder for " + pid + ": " + rc);
+                } catch (RuntimeException e) {
+                    Slog.e(TAG, "Unable to freeze binder for " + pid + ": " + e);
+                }
+            }
+        }
+
+        // We freeze the entire UID (parent) cgroup so that newly-specialized processes also freeze
+        // despite being added to a child cgroup created after this call that would otherwise be
+        // unfrozen.
+        freezePackageCgroup(packageUID, true);
+    }
+
+    private static List<Pair<ProcessRecord, Boolean>> getUIDSublist(
+            List<Pair<ProcessRecord, Boolean>> procs, int startIdx) {
+        final int uid = procs.get(startIdx).first.uid;
+        int endIdx = startIdx + 1;
+        while (endIdx < procs.size() && procs.get(endIdx).first.uid == uid) ++endIdx;
+        return procs.subList(startIdx, endIdx);
+    }
+
     @GuardedBy({"mService", "mProcLock"})
     boolean killPackageProcessesLSP(String packageName, int appId,
             int userId, int minOomAdj, boolean callerWillRestart, boolean allowRestart,
-            boolean doit, boolean evenPersistent, boolean setRemoved, int reasonCode,
-            int subReason, String reason) {
-        ArrayList<ProcessRecord> procs = new ArrayList<>();
+            boolean doit, boolean evenPersistent, boolean setRemoved, boolean uninstalling,
+            int reasonCode, int subReason, String reason) {
+        final PackageManagerInternal pm = mService.getPackageManagerInternal();
+        final ArrayList<Pair<ProcessRecord, Boolean>> procs = new ArrayList<>();
 
         // Remove all processes this package may have touched: all with the
         // same UID (except for the system or root user), and all whose name
@@ -2803,7 +3063,18 @@ public final class ProcessList {
                 }
                 if (app.isRemoved()) {
                     if (doit) {
-                        procs.add(app);
+                        boolean shouldAllowRestart = false;
+                        if (!uninstalling && packageName != null) {
+                            // This package has a dependency on the given package being stopped,
+                            // while it's not being frozen nor uninstalled, allow to restart it.
+                            shouldAllowRestart = !app.getPkgList().containsKey(packageName)
+                                    && app.getPkgDeps() != null
+                                    && app.getPkgDeps().contains(packageName)
+                                    && app.info != null
+                                    && !pm.isPackageFrozen(app.info.packageName, app.uid,
+                                            app.userId);
+                        }
+                        procs.add(new Pair<>(app, shouldAllowRestart));
                     }
                     continue;
                 }
@@ -2818,8 +3089,10 @@ public final class ProcessList {
                     continue;
                 }
 
+                boolean shouldAllowRestart = false;
+
                 // If no package is specified, we call all processes under the
-                // give user id.
+                // given user id.
                 if (packageName == null) {
                     if (userId != UserHandle.USER_ALL && app.userId != userId) {
                         continue;
@@ -2839,8 +3112,15 @@ public final class ProcessList {
                     if (userId != UserHandle.USER_ALL && app.userId != userId) {
                         continue;
                     }
-                    if (!app.getPkgList().containsKey(packageName) && !isDep) {
+                    final boolean isInPkgList = app.getPkgList().containsKey(packageName);
+                    if (!isInPkgList && !isDep) {
                         continue;
+                    }
+                    if (!isInPkgList && isDep && !uninstalling && app.info != null
+                            && !pm.isPackageFrozen(app.info.packageName, app.uid, app.userId)) {
+                        // This package has a dependency on the given package being stopped,
+                        // while it's not being frozen nor uninstalled, allow to restart it.
+                        shouldAllowRestart = true;
                     }
                 }
 
@@ -2851,30 +3131,59 @@ public final class ProcessList {
                 if (setRemoved) {
                     app.setRemoved(true);
                 }
-                procs.add(app);
+                procs.add(new Pair<>(app, shouldAllowRestart));
             }
         }
 
-        int N = procs.size();
-        for (int i=0; i<N; i++) {
-            removeProcessLocked(procs.get(i), callerWillRestart, allowRestart,
-                    reasonCode, subReason, reason);
+        final boolean killingUserApp = appId >= Process.FIRST_APPLICATION_UID
+                                    && appId <= Process.LAST_APPLICATION_UID;
+
+        if (killingUserApp) {
+            procs.sort((o1, o2) -> Integer.compare(o1.first.uid, o2.first.uid));
         }
-        killAppZygotesLocked(packageName, appId, userId, false /* force */);
-        mService.updateOomAdjLocked(OomAdjuster.OOM_ADJ_REASON_PROCESS_END);
-        return N > 0;
+
+        int idx = 0;
+        while (idx < procs.size()) {
+            final List<Pair<ProcessRecord, Boolean>> uidProcs = getUIDSublist(procs, idx);
+            final int packageUID = uidProcs.get(0).first.uid;
+
+            // Do not freeze for system apps or for dependencies of the targeted package, but
+            // make sure to freeze the targeted package for all users if called with USER_ALL.
+            final boolean doFreeze = killingUserApp && UserHandle.getAppId(packageUID) == appId;
+
+            if (doFreeze) freezeBinderAndPackageCgroup(uidProcs, packageUID);
+
+            for (Pair<ProcessRecord, Boolean> proc : uidProcs) {
+                removeProcessLocked(proc.first, callerWillRestart, allowRestart || proc.second,
+                        reasonCode, subReason, reason, !doFreeze /* async */);
+            }
+            killAppZygotesLocked(packageName, appId, userId, false /* force */);
+
+            if (doFreeze) unfreezePackageCgroup(packageUID);
+
+            idx += uidProcs.size();
+        }
+        mService.updateOomAdjLocked(OOM_ADJ_REASON_PROCESS_END);
+        return procs.size() > 0;
     }
 
     @GuardedBy("mService")
     boolean removeProcessLocked(ProcessRecord app,
             boolean callerWillRestart, boolean allowRestart, int reasonCode, String reason) {
         return removeProcessLocked(app, callerWillRestart, allowRestart, reasonCode,
-                ApplicationExitInfo.SUBREASON_UNKNOWN, reason);
+                ApplicationExitInfo.SUBREASON_UNKNOWN, reason, true);
     }
 
     @GuardedBy("mService")
     boolean removeProcessLocked(ProcessRecord app, boolean callerWillRestart,
             boolean allowRestart, int reasonCode, int subReason, String reason) {
+        return removeProcessLocked(app, callerWillRestart, allowRestart, reasonCode, subReason,
+                reason, true);
+    }
+
+    @GuardedBy("mService")
+    boolean removeProcessLocked(ProcessRecord app, boolean callerWillRestart,
+            boolean allowRestart, int reasonCode, int subReason, String reason, boolean async) {
         final String name = app.processName;
         final int uid = app.uid;
         if (DEBUG_PROCESSES) Slog.d(TAG_PROCESSES,
@@ -2911,7 +3220,7 @@ public final class ProcessList {
                     needRestart = true;
                 }
             }
-            app.killLocked(reason, reasonCode, subReason, true);
+            app.killLocked(reason, reasonCode, subReason, true, async);
             mService.handleAppDiedLocked(app, pid, willRestart, allowRestart,
                     false /* fromBinderDied */);
             if (willRestart) {
@@ -2935,6 +3244,8 @@ public final class ProcessList {
             if (old == proc && proc.isPersistent()) {
                 // We are re-adding a persistent process.  Whatevs!  Just leave it there.
                 Slog.w(TAG, "Re-adding persistent process " + proc);
+                // Ensure that the mCrashing flag is cleared, since this is a restart
+                proc.resetCrashingOnRestart();
             } else if (old != null) {
                 if (old.isKilled()) {
                     // The old process has been killed, we probably haven't had
@@ -2975,6 +3286,14 @@ public final class ProcessList {
         if (proc.isolated) {
             mIsolatedProcesses.put(proc.uid, proc);
         }
+        if (proc.isSdkSandbox) {
+            ArrayList<ProcessRecord> sdkSandboxes = mSdkSandboxes.get(proc.uid);
+            if (sdkSandboxes == null) {
+                sdkSandboxes = new ArrayList<>();
+            }
+            sdkSandboxes.add(proc);
+            mSdkSandboxes.put(Process.getAppUidForSdkSandboxUid(proc.uid), sdkSandboxes);
+        }
     }
 
     @GuardedBy("mService")
@@ -2989,6 +3308,16 @@ public final class ProcessList {
         }
     }
 
+    ProcessRecord getSharedIsolatedProcess(String processName, int uid, String packageName) {
+        for (int i = 0, size = mIsolatedProcesses.size(); i < size; i++) {
+            final ProcessRecord app = mIsolatedProcesses.valueAt(i);
+            if (app.info.uid == uid && app.info.packageName.equals(packageName)
+                    && app.processName.equals(processName)) {
+                return app;
+            }
+        }
+        return null;
+    }
     @Nullable
     @GuardedBy("mService")
     List<Integer> getIsolatedProcessesLocked(int uid) {
@@ -3005,12 +3334,33 @@ public final class ProcessList {
         return ret;
     }
 
+    /**
+     * Returns the associated SDK sandbox processes for a UID. Note that this does
+     * NOT return a copy, so callers should not modify the result, or use it outside
+     * of the lock scope.
+     *
+     * @param uid UID to return sansdbox processes for
+     */
+    @Nullable
+    @GuardedBy("mService")
+    List<ProcessRecord> getSdkSandboxProcessesForAppLocked(int uid) {
+        return mSdkSandboxes.get(uid);
+    }
+
     @GuardedBy("mService")
     ProcessRecord newProcessRecordLocked(ApplicationInfo info, String customProcess,
-            boolean isolated, int isolatedUid, HostingRecord hostingRecord) {
+            boolean isolated, int isolatedUid, boolean isSdkSandbox, int sdkSandboxUid,
+            String sdkSandboxClientAppPackage, HostingRecord hostingRecord) {
         String proc = customProcess != null ? customProcess : info.processName;
         final int userId = UserHandle.getUserId(info.uid);
         int uid = info.uid;
+        if (isSdkSandbox) {
+            uid = sdkSandboxUid;
+        }
+        if (Process.isSdkSandboxUid(uid) && (!isSdkSandbox || sdkSandboxClientAppPackage == null)) {
+            Slog.e(TAG, "Abort creating new sandbox process as required parameters are missing.");
+            return null;
+        }
         if (isolated) {
             if (isolatedUid == 0) {
                 IsolatedUidRange uidRange = getOrCreateIsolatedUidRangeLocked(info, hostingRecord);
@@ -3036,15 +3386,37 @@ public final class ProcessList {
             // about the process state of the isolated UID *before* it is registered with the
             // owning application.
             mService.mBatteryStatsService.addIsolatedUid(uid, info.uid);
-            FrameworkStatsLog.write(FrameworkStatsLog.ISOLATED_UID_CHANGED, info.uid, uid,
-                    FrameworkStatsLog.ISOLATED_UID_CHANGED__EVENT__CREATED);
         }
-        final ProcessRecord r = new ProcessRecord(mService, info, proc, uid);
+        final ProcessRecord r = new ProcessRecord(mService, info, proc, uid,
+                sdkSandboxClientAppPackage,
+                hostingRecord.getDefiningUid(), hostingRecord.getDefiningProcessName());
         final ProcessStateRecord state = r.mState;
 
-        if (!mService.mBooted && !mService.mBooting
+        final boolean wasStopped = (info.flags & ApplicationInfo.FLAG_STOPPED) != 0;
+        // Check if we should mark the processrecord for first launch after force-stopping
+        if (wasStopped) {
+            // Check if the hosting record is for an activity or not. Since the stopped
+            // state tracking is handled differently to avoid WM calling back into AM,
+            // store the state in the correct record
+            if (hostingRecord.isTypeActivity()) {
+                final boolean wasPackageEverLaunched = mService
+                        .wasPackageEverLaunched(r.getApplicationInfo().packageName, r.userId);
+                // If the package was launched in the past but is currently stopped, only then
+                // should it be considered as force-stopped.
+                @WindowProcessController.StoppedState int stoppedState = wasPackageEverLaunched
+                        ? STOPPED_STATE_FORCE_STOPPED
+                        : STOPPED_STATE_FIRST_LAUNCH;
+                r.getWindowProcessController().setStoppedState(stoppedState);
+            } else {
+                r.setWasForceStopped(true);
+                // first launch is computed just before logging, for non-activity types
+            }
+        }
+
+        if (!isolated && !isSdkSandbox
                 && userId == UserHandle.USER_SYSTEM
-                && (info.flags & PERSISTENT_MASK) == PERSISTENT_MASK) {
+                && (info.flags & PERSISTENT_MASK) == PERSISTENT_MASK
+                && (TextUtils.equals(proc, info.processName))) {
             // The system process is initialized to SCHED_GROUP_DEFAULT in init.rc.
             state.setCurrentSchedulingGroup(ProcessList.SCHED_GROUP_DEFAULT);
             state.setSetSchedGroup(ProcessList.SCHED_GROUP_DEFAULT);
@@ -3087,7 +3459,7 @@ public final class ProcessList {
                             Slog.i(TAG_UID_OBSERVERS, "No more processes in " + uidRecord);
                         }
                         mService.enqueueUidChangeLocked(uidRecord, -1,
-                                UidRecord.CHANGE_GONE);
+                                UidRecord.CHANGE_GONE | UidRecord.CHANGE_PROCSTATE);
                         EventLogTags.writeAmUidStopped(uid);
                         mActiveUids.remove(uid);
                         mService.mFgsStartTempAllowList.removeUid(record.info.uid);
@@ -3104,6 +3476,17 @@ public final class ProcessList {
         if (record != null && record.appZygote) {
             removeProcessFromAppZygoteLocked(record);
         }
+        if (record != null && record.isSdkSandbox) {
+            final int appUid = Process.getAppUidForSdkSandboxUid(uid);
+            final ArrayList<ProcessRecord> sdkSandboxesForUid = mSdkSandboxes.get(appUid);
+            if (sdkSandboxesForUid != null) {
+                sdkSandboxesForUid.remove(record);
+                if (sdkSandboxesForUid.size() == 0) {
+                    mSdkSandboxes.remove(appUid);
+                }
+            }
+        }
+        mAppsInBackgroundRestricted.remove(record);
 
         return old;
     }
@@ -3664,7 +4047,7 @@ public final class ProcessList {
             if (cr.binding != null && !cr.serviceDead && cr.binding.service != null
                     && cr.binding.service.app != null
                     && cr.binding.service.app.getLruSeq() != mLruSeq
-                    && (cr.flags & Context.BIND_REDUCTION_FLAGS) == 0
+                    && cr.notHasFlag(Context.BIND_REDUCTION_FLAGS)
                     && !cr.binding.service.app.isPersistent()) {
                 if (cr.binding.service.app.mServices.hasClientActivities()) {
                     if (nextActivityIndex >= 0) {
@@ -3696,7 +4079,14 @@ public final class ProcessList {
         if (thread == null) {
             return null;
         }
-        final IBinder threadBinder = thread.asBinder();
+        return getLRURecordForAppLOSP(thread.asBinder());
+    }
+
+    @GuardedBy(anyOf = {"mService", "mProcLock"})
+    ProcessRecord getLRURecordForAppLOSP(IBinder threadBinder) {
+        if (threadBinder == null) {
+            return null;
+        }
         // Find the application record.
         for (int i = mLruProcesses.size() - 1; i >= 0; i--) {
             final ProcessRecord rec = mLruProcesses.get(i);
@@ -3780,6 +4170,10 @@ public final class ProcessList {
                 ActivityManager.RunningAppProcessInfo currApp =
                         new ActivityManager.RunningAppProcessInfo(app.processName,
                                 app.getPid(), app.getPackageList());
+                if (app.getPkgDeps() != null) {
+                    final int size = app.getPkgDeps().size();
+                    currApp.pkgDeps = app.getPkgDeps().toArray(new String[size]);
+                }
                 fillInProcMemInfoLOSP(app, currApp, clientTargetSdk);
                 if (state.getAdjSource() instanceof ProcessRecord) {
                     currApp.importanceReasonPid = ((ProcessRecord) state.getAdjSource()).getPid();
@@ -3808,7 +4202,7 @@ public final class ProcessList {
         return runList;
     }
 
-    @GuardedBy(anyOf = {"mService", "mProfileLock"})
+    @GuardedBy(anyOf = {"mService", "mProcLock"})
     int getLruSizeLOSP() {
         return mLruProcesses.size();
     }
@@ -3816,7 +4210,7 @@ public final class ProcessList {
     /**
      * Return the reference to the LRU list, call this function for read-only access
      */
-    @GuardedBy(anyOf = {"mService", "mProfileLock"})
+    @GuardedBy(anyOf = {"mService", "mProcLock"})
     ArrayList<ProcessRecord> getLruProcessesLOSP() {
         return mLruProcesses;
     }
@@ -3824,7 +4218,7 @@ public final class ProcessList {
     /**
      * Return the reference to the LRU list, call this function for read/write access
      */
-    @GuardedBy({"mService", "mProfileLock"})
+    @GuardedBy({"mService", "mProcLock"})
     ArrayList<ProcessRecord> getLruProcessesLSP() {
         return mLruProcesses;
     }
@@ -3833,12 +4227,12 @@ public final class ProcessList {
      * For test only
      */
     @VisibleForTesting
-    @GuardedBy({"mService", "mProfileLock"})
+    @GuardedBy({"mService", "mProcLock"})
     void setLruProcessServiceStartLSP(int pos) {
         mLruProcessServiceStart = pos;
     }
 
-    @GuardedBy(anyOf = {"mService", "mProfileLock"})
+    @GuardedBy(anyOf = {"mService", "mProcLock"})
     int getLruProcessServiceStartLOSP() {
         return mLruProcessServiceStart;
     }
@@ -3851,7 +4245,7 @@ public final class ProcessList {
      *                       to most recent used ProcessRecord.
      * @param callback The callback interface to accept the current ProcessRecord.
      */
-    @GuardedBy(anyOf = {"mService", "mProfileLock"})
+    @GuardedBy(anyOf = {"mService", "mProcLock"})
     void forEachLruProcessesLOSP(boolean iterateForward,
             @NonNull Consumer<ProcessRecord> callback) {
         if (iterateForward) {
@@ -3876,7 +4270,7 @@ public final class ProcessList {
      *                 a non-null object, the search will be halted and this object will be used
      *                 as the return value of this search function.
      */
-    @GuardedBy(anyOf = {"mService", "mProfileLock"})
+    @GuardedBy(anyOf = {"mService", "mProcLock"})
     <R> R searchEachLruProcessesLOSP(boolean iterateForward,
             @NonNull Function<ProcessRecord, R> callback) {
         if (iterateForward) {
@@ -3897,17 +4291,17 @@ public final class ProcessList {
         return null;
     }
 
-    @GuardedBy(anyOf = {"mService", "mProfileLock"})
+    @GuardedBy(anyOf = {"mService", "mProcLock"})
     boolean isInLruListLOSP(ProcessRecord app) {
         return mLruProcesses.contains(app);
     }
 
-    @GuardedBy(anyOf = {"mService", "mProfileLock"})
+    @GuardedBy(anyOf = {"mService", "mProcLock"})
     int getLruSeqLOSP() {
         return mLruSeq;
     }
 
-    @GuardedBy(anyOf = {"mService", "mProfileLock"})
+    @GuardedBy(anyOf = {"mService", "mProcLock"})
     MyProcessMap getProcessNamesLOSP() {
         return mProcessNames;
     }
@@ -4172,7 +4566,7 @@ public final class ProcessList {
                     total - mLruProcessServiceStart);
             writeProcessOomListToProto(proto,
                     ActivityManagerServiceDumpProcessesProto.LruProcesses.LIST, mService,
-                    mLruProcesses, false, dumpPackage);
+                    mLruProcesses, true, dumpPackage);
             proto.end(lruToken);
         }
 
@@ -4291,6 +4685,8 @@ public final class ProcessList {
                         r.mProfile.getLastPss() * 1024, new StringBuilder()));
                 proto.write(ProcessOomProto.Detail.LAST_SWAP_PSS, DebugUtils.sizeValueToString(
                         r.mProfile.getLastSwapPss() * 1024, new StringBuilder()));
+                // TODO(b/296454553): This proto field should be replaced with last cached RSS once
+                // AppProfiler is no longer collecting PSS.
                 proto.write(ProcessOomProto.Detail.LAST_CACHED_PSS, DebugUtils.sizeValueToString(
                         r.mProfile.getLastCachedPss() * 1024, new StringBuilder()));
                 proto.write(ProcessOomProto.Detail.CACHED, state.isCached());
@@ -4422,12 +4818,20 @@ public final class ProcessList {
                 pw.print("    ");
                 pw.print("state: cur="); pw.print(makeProcStateString(state.getCurProcState()));
                 pw.print(" set="); pw.print(makeProcStateString(state.getSetProcState()));
-                pw.print(" lastPss=");
-                DebugUtils.printSizeValue(pw, r.mProfile.getLastPss() * 1024);
-                pw.print(" lastSwapPss=");
-                DebugUtils.printSizeValue(pw, r.mProfile.getLastSwapPss() * 1024);
-                pw.print(" lastCachedPss=");
-                DebugUtils.printSizeValue(pw, r.mProfile.getLastCachedPss() * 1024);
+                // These values won't be collected if the flag is enabled.
+                if (service.mAppProfiler.isProfilingPss()) {
+                    pw.print(" lastPss=");
+                    DebugUtils.printSizeValue(pw, r.mProfile.getLastPss() * 1024);
+                    pw.print(" lastSwapPss=");
+                    DebugUtils.printSizeValue(pw, r.mProfile.getLastSwapPss() * 1024);
+                    pw.print(" lastCachedPss=");
+                    DebugUtils.printSizeValue(pw, r.mProfile.getLastCachedPss() * 1024);
+                } else {
+                    pw.print(" lastRss=");
+                    DebugUtils.printSizeValue(pw, r.mProfile.getLastRss() * 1024);
+                    pw.print(" lastCachedRss=");
+                    DebugUtils.printSizeValue(pw, r.mProfile.getLastCachedRss() * 1024);
+                }
                 pw.println();
                 pw.print(prefix);
                 pw.print("    ");
@@ -4642,6 +5046,10 @@ public final class ProcessList {
         }
     }
 
+    void dispatchProcessStarted(ProcessRecord app, int pid) {
+        // TODO(b/323959187) Add the implementation.
+    }
+
     void dispatchProcessDied(int pid, int uid) {
         int i = mProcessObservers.beginBroadcast();
         while (i > 0) {
@@ -4691,6 +5099,18 @@ public final class ProcessList {
     @GuardedBy(anyOf = {"mService", "mProcLock"})
     void updateApplicationInfoLOSP(List<String> packagesToUpdate, int userId,
             boolean updateFrameworkRes) {
+        final ArrayMap<String, ApplicationInfo> applicationInfoByPackage = new ArrayMap<>();
+        for (int i = packagesToUpdate.size() - 1; i >= 0; i--) {
+            final String packageName = packagesToUpdate.get(i);
+            final ApplicationInfo ai = mService.getPackageManagerInternal().getApplicationInfo(
+                    packageName, STOCK_PM_FLAGS, Process.SYSTEM_UID, userId);
+            if (ai != null) {
+                applicationInfoByPackage.put(packageName, ai);
+            }
+        }
+        mService.mActivityTaskManager.updateActivityApplicationInfo(userId,
+                applicationInfoByPackage);
+
         final ArrayList<WindowProcessController> targetProcesses = new ArrayList<>();
         for (int i = mLruProcesses.size() - 1; i >= 0; i--) {
             final ProcessRecord app = mLruProcesses.get(i);
@@ -4705,11 +5125,12 @@ public final class ProcessList {
             app.getPkgList().forEachPackage(packageName -> {
                 if (updateFrameworkRes || packagesToUpdate.contains(packageName)) {
                     try {
-                        final ApplicationInfo ai = AppGlobals.getPackageManager()
-                                .getApplicationInfo(packageName, STOCK_PM_FLAGS, app.userId);
+                        final ApplicationInfo ai = applicationInfoByPackage.get(packageName);
                         if (ai != null) {
                             if (ai.packageName.equals(app.info.packageName)) {
                                 app.info = ai;
+                                PlatformCompatCache.getInstance()
+                                        .onApplicationInfoChanged(ai);
                             }
                             app.getThread().scheduleApplicationInfoChanged(ai);
                             targetProcesses.add(app.getWindowProcessController());
@@ -4814,12 +5235,14 @@ public final class ProcessList {
         final boolean isAllowed =
                 isProcStateAllowedWhileIdleOrPowerSaveMode(uidRec.getCurProcState(),
                         uidRec.getCurCapability())
-                || isProcStateAllowedWhileOnRestrictBackground(uidRec.getCurProcState());
+                || isProcStateAllowedWhileOnRestrictBackground(uidRec.getCurProcState(),
+                        uidRec.getCurCapability());
         // Denotes whether uid's process state was previously allowed network access.
         final boolean wasAllowed =
                 isProcStateAllowedWhileIdleOrPowerSaveMode(uidRec.getSetProcState(),
                         uidRec.getSetCapability())
-                || isProcStateAllowedWhileOnRestrictBackground(uidRec.getSetProcState());
+                || isProcStateAllowedWhileOnRestrictBackground(uidRec.getSetProcState(),
+                        uidRec.getSetCapability());
 
         // When the uid is coming to foreground, AMS should inform the app thread that it should
         // block for the network rules to get updated before launching an activity.
@@ -4835,14 +5258,18 @@ public final class ProcessList {
     }
 
     /**
-     * Checks if any uid is coming from background to foreground or vice versa and if so, increments
-     * the {@link UidRecord#curProcStateSeq} corresponding to that uid using global seq counter
-     * {@link ProcessList#mProcStateSeqCounter} and notifies the app if it needs to block.
+     * Increments the {@link UidRecord#curProcStateSeq} for all uids using global seq counter
+     * {@link ProcessList#mProcStateSeqCounter} and checks if any uid is coming
+     * from background to foreground or vice versa and if so, notifies the app if it needs to block.
      */
     @VisibleForTesting
     @GuardedBy(anyOf = {"mService", "mProcLock"})
     void incrementProcStateSeqAndNotifyAppsLOSP(ActiveUids activeUids) {
-        if (mService.mWaitForNetworkTimeoutMs <= 0) {
+        for (int i = activeUids.size() - 1; i >= 0; --i) {
+            final UidRecord uidRec = activeUids.valueAt(i);
+            uidRec.curProcStateSeq = getNextProcStateSeq();
+        }
+        if (mService.mConstants.mNetworkAccessTimeoutMs <= 0) {
             return;
         }
         // Used for identifying which uids need to block for network.
@@ -4868,7 +5295,6 @@ public final class ProcessList {
                 continue;
             }
             synchronized (uidRec.networkStateLock) {
-                uidRec.curProcStateSeq = ++mProcStateSeqCounter; // TODO: use method
                 if (blockState == NETWORK_STATE_BLOCK) {
                     if (blockingUids == null) {
                         blockingUids = new ArrayList<>();
@@ -4879,7 +5305,7 @@ public final class ProcessList {
                         Slog.d(TAG_NETWORK, "uid going to background, notifying all blocking"
                                 + " threads for uid: " + uidRec);
                     }
-                    if (uidRec.waitingForNetwork) {
+                    if (uidRec.procStateSeqWaitingForNetwork != 0) {
                         uidRec.networkStateLock.notifyAll();
                     }
                 }
@@ -4911,6 +5337,10 @@ public final class ProcessList {
                 }
             }
         }
+    }
+
+    long getNextProcStateSeq() {
+        return ++mProcStateSeqCounter;
     }
 
     /**
@@ -4980,10 +5410,12 @@ public final class ProcessList {
             // App has been removed already, meaning cleanup has done.
             Slog.v(TAG, "Got obituary of " + pid + ":" + app.processName);
             app.unlinkDeathRecipient();
-            handlePrecedingAppDiedLocked(app);
             // It's really gone now, let's remove from the dying process list.
             mDyingProcesses.remove(app.processName, app.uid);
             app.setDyingPid(0);
+            handlePrecedingAppDiedLocked(app);
+            // Remove from the LRU list if it's still there.
+            removeLruProcessLocked(app);
             return true;
         }
         return false;
@@ -4996,25 +5428,98 @@ public final class ProcessList {
      */
     @GuardedBy("mService")
     boolean handlePrecedingAppDiedLocked(ProcessRecord app) {
-        synchronized (app) {
-            if (app.mSuccessor != null) {
-                // We don't allow restart with this ProcessRecord now,
-                // because we have created a new one already.
-                // If it's persistent, add the successor to mPersistentStartingProcesses
-                if (app.isPersistent() && !app.isRemoved()) {
-                    if (mService.mPersistentStartingProcesses.indexOf(app.mSuccessor) < 0) {
-                        mService.mPersistentStartingProcesses.add(app.mSuccessor);
-                    }
+        if (app.mSuccessor != null) {
+            // We don't allow restart with this ProcessRecord now,
+            // because we have created a new one already.
+            // If it's persistent, add the successor to mPersistentStartingProcesses
+            if (app.isPersistent() && !app.isRemoved()) {
+                if (mService.mPersistentStartingProcesses.indexOf(app.mSuccessor) < 0) {
+                    mService.mPersistentStartingProcesses.add(app.mSuccessor);
                 }
-                // clean up the field so the successor's proc starter could proceed.
-                app.mSuccessor.mPredecessor = null;
-                app.mSuccessor = null;
-                // Notify if anyone is waiting for it.
-                app.notifyAll();
-                return false;
             }
+            // clean up the field so the successor's proc starter could proceed.
+            app.mSuccessor.mPredecessor = null;
+            app.mSuccessor = null;
+            // Remove any pending timeout msg.
+            mService.mProcStartHandler.removeMessages(
+                    ProcStartHandler.MSG_PROCESS_KILL_TIMEOUT, app);
+            // Kick off the proc start for the succeeding instance
+            mService.mProcStartHandler.obtainMessage(
+                    ProcStartHandler.MSG_PROCESS_DIED, app).sendToTarget();
+            return false;
         }
         return true;
+    }
+
+    @GuardedBy("mService")
+    void updateBackgroundRestrictedForUidPackageLocked(int uid, String packageName,
+            boolean restricted) {
+        final UidRecord uidRec = getUidRecordLOSP(uid);
+        if (uidRec != null) {
+            final long nowElapsed = SystemClock.elapsedRealtime();
+            uidRec.forEachProcess(app -> {
+                if (TextUtils.equals(app.info.packageName, packageName)) {
+                    app.mState.setBackgroundRestricted(restricted);
+                    if (restricted) {
+                        mAppsInBackgroundRestricted.add(app);
+                        final long future = killAppIfBgRestrictedAndCachedIdleLocked(
+                                app, nowElapsed);
+                        if (future > 0
+                                && (mService.mDeterministicUidIdle
+                                        || !mService.mHandler.hasMessages(IDLE_UIDS_MSG))) {
+                            mService.mHandler.sendEmptyMessageDelayed(IDLE_UIDS_MSG,
+                                    future - nowElapsed);
+                        }
+                    } else {
+                        mAppsInBackgroundRestricted.remove(app);
+                    }
+                    if (!app.isKilledByAm()) {
+                        mService.enqueueOomAdjTargetLocked(app);
+                    }
+                }
+            });
+            /* Will be a no-op if nothing pending */
+            mService.updateOomAdjPendingTargetsLocked(OOM_ADJ_REASON_RESTRICTION_CHANGE);
+        }
+    }
+
+    /**
+     * Kill the given app if it's in cached idle and background restricted mode.
+     *
+     * @return A future timestamp when the app should be killed at, or a 0 if it shouldn't
+     * be killed or it has been killed.
+     */
+    @GuardedBy("mService")
+    long killAppIfBgRestrictedAndCachedIdleLocked(ProcessRecord app, long nowElapsed) {
+        final UidRecord uidRec = app.getUidRecord();
+        final long lastCanKillTime = app.mState.getLastCanKillOnBgRestrictedAndIdleTime();
+        if (!mService.mConstants.mKillBgRestrictedAndCachedIdle
+                || app.isKilled() || app.getThread() == null || uidRec == null || !uidRec.isIdle()
+                || !app.isCached() || app.mState.shouldNotKillOnBgRestrictedAndIdle()
+                || !app.mState.isBackgroundRestricted() || lastCanKillTime == 0) {
+            return 0;
+        }
+        final long future = lastCanKillTime
+                + mService.mConstants.mKillBgRestrictedAndCachedIdleSettleTimeMs;
+        if (future <= nowElapsed) {
+            app.killLocked("cached idle & background restricted",
+                    ApplicationExitInfo.REASON_OTHER,
+                    ApplicationExitInfo.SUBREASON_CACHED_IDLE_FORCED_APP_STANDBY,
+                    true);
+            return 0;
+        }
+        return future;
+    }
+
+    /**
+     * Called by {@link ActivityManagerService#enqueueUidChangeLocked} only, it doesn't schedule
+     * the standy killing checks because it should have been scheduled before enqueueing UID idle
+     * changed.
+     */
+    @GuardedBy("mService")
+    void killAppIfBgRestrictedAndCachedIdleLocked(UidRecord uidRec) {
+        final long nowElapsed = SystemClock.elapsedRealtime();
+        uidRec.forEachProcess(app -> killAppIfBgRestrictedAndCachedIdleLocked(app, nowElapsed));
     }
 
     /**
@@ -5027,12 +5532,24 @@ public final class ProcessList {
         }
 
         Watchdog.getInstance().processDied(app.processName, app.getPid());
-        if (app.getDeathRecipient() == null) {
+        if (app.getDeathRecipient() == null
+                && mDyingProcesses.get(app.processName, app.uid) == app) {
             // If we've done unlinkDeathRecipient before calling into this, remove from dying list.
             mDyingProcesses.remove(app.processName, app.uid);
             app.setDyingPid(0);
         }
         mAppExitInfoTracker.scheduleNoteProcessDied(app);
+    }
+
+    /**
+     * Called by ActivityManagerService when a recoverable native crash occurs.
+     */
+    @GuardedBy("mService")
+    void noteAppRecoverableCrash(final ProcessRecord app) {
+        if (DEBUG_PROCESSES) {
+            Slog.i(TAG, "note: " + app + " has a recoverable native crash");
+        }
+        mAppExitInfoTracker.scheduleNoteAppRecoverableCrash(app);
     }
 
     /**
@@ -5042,8 +5559,9 @@ public final class ProcessList {
     void noteAppKill(final ProcessRecord app, final @Reason int reason,
             final @SubReason int subReason, final String msg) {
         if (DEBUG_PROCESSES) {
-            Slog.i(TAG, "note: " + app + " is being killed, reason: " + reason
-                    + ", sub-reason: " + subReason + ", message: " + msg);
+            Slog.i(TAG, "note: " + app + " is being killed, reason: "
+                    + ApplicationExitInfo.reasonCodeToString(reason) + ", sub-reason: "
+                    + ApplicationExitInfo.subreasonToString(subReason) + ", message: " + msg);
         }
         if (app.getPid() > 0 && !app.isolated && app.getDeathRecipient() != null) {
             // We are killing it, put it into the dying process list.
@@ -5094,7 +5612,27 @@ public final class ProcessList {
         }
     }
 
-    private final class ImperceptibleKillRunner extends IUidObserver.Stub {
+    /**
+     * Get the number of foreground services in all processes and number of processes that have
+     * foreground service within.
+     */
+    Pair<Integer, Integer> getNumForegroundServices() {
+        int numForegroundServices = 0;
+        int procs = 0;
+        synchronized (mService) {
+            for (int i = 0, size = mLruProcesses.size(); i < size; i++) {
+                ProcessRecord pr = mLruProcesses.get(i);
+                int numFgs = pr.mServices.getNumForegroundServices();
+                if (numFgs > 0) {
+                    numForegroundServices += numFgs;
+                    procs++;
+                }
+            }
+        }
+        return new Pair<>(numForegroundServices, procs);
+    }
+
+    private final class ImperceptibleKillRunner extends UidObserver {
         private static final String EXTRA_PID = "pid";
         private static final String EXTRA_UID = "uid";
         private static final String EXTRA_TIMESTAMP = "timestamp";
@@ -5102,6 +5640,7 @@ public final class ProcessList {
         private static final String EXTRA_REQUESTER = "requester";
 
         private static final String DROPBOX_TAG_IMPERCEPTIBLE_KILL = "imperceptible_app_kill";
+        private static final boolean LOG_TO_DROPBOX = false;
 
         // uid -> killing information mapping
         private SparseArray<List<Bundle>> mWorkItems = new SparseArray<List<Bundle>>();
@@ -5207,7 +5746,7 @@ public final class ProcessList {
 
         private void handleDeviceIdle() {
             final DropBoxManager dbox = mService.mContext.getSystemService(DropBoxManager.class);
-            final boolean logToDropbox = dbox != null
+            final boolean logToDropbox = LOG_TO_DROPBOX && dbox != null
                     && dbox.isTagEnabled(DROPBOX_TAG_IMPERCEPTIBLE_KILL);
 
             synchronized (mService) {
@@ -5297,7 +5836,7 @@ public final class ProcessList {
             if (logToDropbox) {
                 final long now = SystemClock.elapsedRealtime();
                 final StringBuilder sb = new StringBuilder();
-                mService.appendDropBoxProcessHeaders(app, app.processName, sb);
+                mService.appendDropBoxProcessHeaders(app, app.processName, null, sb);
                 sb.append("Reason: " + reason).append("\n");
                 sb.append("Requester UID: " + requester).append("\n");
                 dbox.addText(DROPBOX_TAG_IMPERCEPTIBLE_KILL, sb.toString());
@@ -5349,20 +5888,8 @@ public final class ProcessList {
         }
 
         @Override
-        public void onUidActive(int uid) {
-        }
-
-        @Override
-        public void onUidIdle(int uid, boolean disabled) {
-        }
-
-        @Override
         public void onUidStateChanged(int uid, int procState, long procStateSeq, int capability) {
             mHandler.obtainMessage(H.MSG_UID_STATE_CHANGED, uid, procState).sendToTarget();
-        }
-
-        @Override
-        public void onUidCachedChanged(int uid, boolean cached) {
         }
     };
 }

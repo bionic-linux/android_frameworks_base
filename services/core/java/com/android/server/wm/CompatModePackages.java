@@ -17,11 +17,12 @@
 package com.android.server.wm;
 
 import static com.android.internal.protolog.ProtoLogGroup.WM_DEBUG_CONFIGURATION;
-import static com.android.server.wm.ActivityTaskManagerDebugConfig.POSTFIX_CONFIGURATION;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.TAG_ATM;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.TAG_WITH_CLASS_NAME;
-import static com.android.server.wm.ActivityTaskSupervisor.PRESERVE_WINDOWS;
+import static com.android.server.wm.CompatScaleProvider.COMPAT_SCALE_MODE_SYSTEM_FIRST;
+import static com.android.server.wm.CompatScaleProvider.COMPAT_SCALE_MODE_SYSTEM_LAST;
 
+import android.annotation.NonNull;
 import android.app.ActivityManager;
 import android.app.AppGlobals;
 import android.app.compat.CompatChanges;
@@ -32,6 +33,7 @@ import android.compat.annotation.Overridable;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageManager;
 import android.content.res.CompatibilityInfo;
+import android.content.res.CompatibilityInfo.CompatScale;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Handler;
@@ -43,11 +45,12 @@ import android.util.AtomicFile;
 import android.util.DisplayMetrics;
 import android.util.Slog;
 import android.util.SparseArray;
-import android.util.TypedXmlPullParser;
-import android.util.TypedXmlSerializer;
+import android.util.SparseBooleanArray;
 import android.util.Xml;
 
 import com.android.internal.protolog.common.ProtoLog;
+import com.android.modules.utils.TypedXmlPullParser;
+import com.android.modules.utils.TypedXmlSerializer;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -55,41 +58,66 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 public final class CompatModePackages {
-    private static final String TAG = TAG_WITH_CLASS_NAME ? "CompatModePackages" : TAG_ATM;
-    private static final String TAG_CONFIGURATION = TAG + POSTFIX_CONFIGURATION;
-
-    private final ActivityTaskManagerService mService;
-    private final AtomicFile mFile;
-
-    // Compatibility state: no longer ask user to select the mode.
-    private static final int COMPAT_FLAG_DONT_ASK = 1<<0;
-    // Compatibility state: compatibility mode is enabled.
-    private static final int COMPAT_FLAG_ENABLED = 1<<1;
+    /**
+     * <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> is the gatekeeper of all per-app buffer
+     * inverse downscale changes. Enabling this change will allow the following scaling factors:
+     * <a href="#DOWNSCALE_90">DOWNSCALE_90</a>
+     * <a href="#DOWNSCALE_85">DOWNSCALE_85</a>
+     * <a href="#DOWNSCALE_80">DOWNSCALE_80</a>
+     * <a href="#DOWNSCALE_75">DOWNSCALE_75</a>
+     * <a href="#DOWNSCALE_70">DOWNSCALE_70</a>
+     * <a href="#DOWNSCALE_65">DOWNSCALE_65</a>
+     * <a href="#DOWNSCALE_60">DOWNSCALE_60</a>
+     * <a href="#DOWNSCALE_55">DOWNSCALE_55</a>
+     * <a href="#DOWNSCALE_50">DOWNSCALE_50</a>
+     * <a href="#DOWNSCALE_45">DOWNSCALE_45</a>
+     * <a href="#DOWNSCALE_40">DOWNSCALE_40</a>
+     * <a href="#DOWNSCALE_35">DOWNSCALE_35</a>
+     * <a href="#DOWNSCALE_30">DOWNSCALE_30</a>
+     *
+     * If <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> is enabled for an app package, then
+     * the app will be forcibly resized to the lowest enabled scaling factor e.g. 1/0.8 if both
+     * 1/0.8 and 1/0.7 (* 100%) were enabled.
+     *
+     * When both <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a>
+     * and <a href="#DOWNSCALED">DOWNSCALED</a> are enabled, then
+     * <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> takes precedence.
+     */
+    @ChangeId
+    @Disabled
+    @Overridable
+    public static final long DOWNSCALED_INVERSE = 273564678L; // This is a Bug ID.
 
     /**
-     * CompatModePackages#DOWNSCALED is the gatekeeper of all per-app buffer downscaling
-     * changes.  Disabling this change will prevent the following scaling factors from working:
-     * CompatModePackages#DOWNSCALE_90
-     * CompatModePackages#DOWNSCALE_85
-     * CompatModePackages#DOWNSCALE_80
-     * CompatModePackages#DOWNSCALE_75
-     * CompatModePackages#DOWNSCALE_70
-     * CompatModePackages#DOWNSCALE_65
-     * CompatModePackages#DOWNSCALE_60
-     * CompatModePackages#DOWNSCALE_55
-     * CompatModePackages#DOWNSCALE_50
-     * CompatModePackages#DOWNSCALE_45
-     * CompatModePackages#DOWNSCALE_40
-     * CompatModePackages#DOWNSCALE_35
-     * CompatModePackages#DOWNSCALE_30
+     * <a href="#DOWNSCALED">DOWNSCALED</a> is the gatekeeper of all per-app buffer downscaling
+     * changes. Enabling this change will allow the following scaling factors:
+     * <a href="#DOWNSCALE_90">DOWNSCALE_90</a>
+     * <a href="#DOWNSCALE_85">DOWNSCALE_85</a>
+     * <a href="#DOWNSCALE_80">DOWNSCALE_80</a>
+     * <a href="#DOWNSCALE_75">DOWNSCALE_75</a>
+     * <a href="#DOWNSCALE_70">DOWNSCALE_70</a>
+     * <a href="#DOWNSCALE_65">DOWNSCALE_65</a>
+     * <a href="#DOWNSCALE_60">DOWNSCALE_60</a>
+     * <a href="#DOWNSCALE_55">DOWNSCALE_55</a>
+     * <a href="#DOWNSCALE_50">DOWNSCALE_50</a>
+     * <a href="#DOWNSCALE_45">DOWNSCALE_45</a>
+     * <a href="#DOWNSCALE_40">DOWNSCALE_40</a>
+     * <a href="#DOWNSCALE_35">DOWNSCALE_35</a>
+     * <a href="#DOWNSCALE_30">DOWNSCALE_30</a>
      *
-     * If CompatModePackages#DOWNSCALED is enabled for an app package, then the app will be forcibly
-     * resized to the highest enabled scaling factor e.g. 80% if both 80% and 70% were enabled.
+     * If <a href="#DOWNSCALED">DOWNSCALED</a> is enabled for an app package, then the app will be
+     * forcibly resized to the highest enabled scaling factor e.g. 80% if both 80% and 70% were
+     * enabled.
+     *
+     * When both <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a>
+     * and <a href="#DOWNSCALED">DOWNSCALED</a> are enabled, then
+     * <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> takes precedence.
      */
     @ChangeId
     @Disabled
@@ -97,9 +125,13 @@ public final class CompatModePackages {
     public static final long DOWNSCALED = 168419799L;
 
     /**
-     * With CompatModePackages#DOWNSCALED enabled, subsequently enabling change-id
-     * CompatModePackages#DOWNSCALE_90 for a package will force the app to assume it's
+     * With <a href="#DOWNSCALED">DOWNSCALED</a> enabled, subsequently enabling change-id
+     * <a href="#DOWNSCALE_90">DOWNSCALE_90</a> for a package will force the app to assume it's
      * running on a display with 90% the vertical and horizontal resolution of the real display.
+     *
+     * With <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> enabled will force the app to
+     * assume it's running on a display with 111.11% the vertical and horizontal resolution of
+     * the real display
      */
     @ChangeId
     @Disabled
@@ -107,9 +139,13 @@ public final class CompatModePackages {
     public static final long DOWNSCALE_90 = 182811243L;
 
     /**
-     * With CompatModePackages#DOWNSCALED enabled, subsequently enabling change-id
-     * CompatModePackages#DOWNSCALE_85 for a package will force the app to assume it's
+     * With <a href="#DOWNSCALED">DOWNSCALED</a> enabled, subsequently enabling change-id
+     * <a href="#DOWNSCALE_85">DOWNSCALE_85</a> for a package will force the app to assume it's
      * running on a display with 85% the vertical and horizontal resolution of the real display.
+     *
+     * With <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> enabled will force the app to
+     * assume it's running on a display with 117.65% the vertical and horizontal resolution of the
+     * real display
      */
     @ChangeId
     @Disabled
@@ -117,9 +153,13 @@ public final class CompatModePackages {
     public static final long DOWNSCALE_85 = 189969734L;
 
     /**
-     * With CompatModePackages#DOWNSCALED enabled, subsequently enabling change-id
-     * CompatModePackages#DOWNSCALE_80 for a package will force the app to assume it's
+     * With <a href="#DOWNSCALED">DOWNSCALED</a> enabled, subsequently enabling change-id
+     * <a href="#DOWNSCALE_80">DOWNSCALE_80</a> for a package will force the app to assume it's
      * running on a display with 80% the vertical and horizontal resolution of the real display.
+     *
+     * With <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> enabled will force the app to
+     * assume it's running on a display with 125% the vertical and horizontal resolution of the real
+     * display
      */
     @ChangeId
     @Disabled
@@ -127,9 +167,13 @@ public final class CompatModePackages {
     public static final long DOWNSCALE_80 = 176926753L;
 
     /**
-     * With CompatModePackages#DOWNSCALED enabled, subsequently enabling change-id
-     * CompatModePackages#DOWNSCALE_75 for a package will force the app to assume it's
+     * With <a href="#DOWNSCALED">DOWNSCALED</a> enabled, subsequently enabling change-id
+     * <a href="#DOWNSCALE_75">DOWNSCALE_75</a> for a package will force the app to assume it's
      * running on a display with 75% the vertical and horizontal resolution of the real display.
+     *
+     * With <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> enabled will force the app to
+     * assume it's running on a display with 133.33% the vertical and horizontal resolution of the
+     * real display
      */
     @ChangeId
     @Disabled
@@ -137,9 +181,13 @@ public final class CompatModePackages {
     public static final long DOWNSCALE_75 = 189969779L;
 
     /**
-     * With CompatModePackages#DOWNSCALED enabled, subsequently enabling change-id
-     * CompatModePackages#DOWNSCALE_70 for a package will force the app to assume it's
+     * With <a href="#DOWNSCALED">DOWNSCALED</a> enabled, subsequently enabling change-id
+     * <a href="#DOWNSCALE_70">DOWNSCALE_70</a> for a package will force the app to assume it's
      * running on a display with 70% the vertical and horizontal resolution of the real display.
+     *
+     * With <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> enabled will force the app to
+     * assume it's running on a display with 142.86% the vertical and horizontal resolution of the
+     * real display
      */
     @ChangeId
     @Disabled
@@ -147,9 +195,13 @@ public final class CompatModePackages {
     public static final long DOWNSCALE_70 = 176926829L;
 
     /**
-     * With CompatModePackages#DOWNSCALED enabled, subsequently enabling change-id
-     * CompatModePackages#DOWNSCALE_65 for a package will force the app to assume it's
+     * With <a href="#DOWNSCALED">DOWNSCALED</a> enabled, subsequently enabling change-id
+     * <a href="#DOWNSCALE_65">DOWNSCALE_65</a> for a package will force the app to assume it's
      * running on a display with 65% the vertical and horizontal resolution of the real display.
+     *
+     * With <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> enabled will force the app to
+     * assume it's running on a display with 153.85% the vertical and horizontal resolution of the
+     * real display
      */
     @ChangeId
     @Disabled
@@ -157,9 +209,13 @@ public final class CompatModePackages {
     public static final long DOWNSCALE_65 = 189969744L;
 
     /**
-     * With CompatModePackages#DOWNSCALED enabled, subsequently enabling change-id
-     * CompatModePackages#DOWNSCALE_60 for a package will force the app to assume it's
+     * With <a href="#DOWNSCALED">DOWNSCALED</a> enabled, subsequently enabling change-id
+     * <a href="#DOWNSCALE_60">DOWNSCALE_60</a> for a package will force the app to assume it's
      * running on a display with 60% the vertical and horizontal resolution of the real display.
+     *
+     * With <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> enabled will force the app to
+     * assume it's running on a display with 166.67% the vertical and horizontal resolution of the
+     * real display
      */
     @ChangeId
     @Disabled
@@ -167,9 +223,13 @@ public final class CompatModePackages {
     public static final long DOWNSCALE_60 = 176926771L;
 
     /**
-     * With CompatModePackages#DOWNSCALED enabled, subsequently enabling change-id
-     * CompatModePackages#DOWNSCALE_55 for a package will force the app to assume it's
+     * With <a href="#DOWNSCALED">DOWNSCALED</a> enabled, subsequently enabling change-id
+     * <a href="#DOWNSCALE_55">DOWNSCALE_55</a> for a package will force the app to assume it's
      * running on a display with 55% the vertical and horizontal resolution of the real display.
+     *
+     * With <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> enabled will force the app to
+     * assume it's running on a display with 181.82% the vertical and horizontal resolution of the
+     * real display
      */
     @ChangeId
     @Disabled
@@ -177,9 +237,13 @@ public final class CompatModePackages {
     public static final long DOWNSCALE_55 = 189970036L;
 
     /**
-     * With CompatModePackages#DOWNSCALED enabled, subsequently enabling change-id
-     * CompatModePackages#DOWNSCALE_50 for a package will force the app to assume it's
+     * With <a href="#DOWNSCALED">DOWNSCALED</a> enabled, subsequently enabling change-id
+     * <a href="#DOWNSCALE_50">DOWNSCALE_50</a> for a package will force the app to assume it's
      * running on a display with 50% vertical and horizontal resolution of the real display.
+     *
+     * With <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> enabled will force the app to
+     * assume it's running on a display with 200% the vertical and horizontal resolution of the real
+     * display
      */
     @ChangeId
     @Disabled
@@ -187,9 +251,13 @@ public final class CompatModePackages {
     public static final long DOWNSCALE_50 = 176926741L;
 
     /**
-     * With CompatModePackages#DOWNSCALED enabled, subsequently enabling change-id
-     * CompatModePackages#DOWNSCALE_45 for a package will force the app to assume it's
+     * With <a href="#DOWNSCALED">DOWNSCALED</a> enabled, subsequently enabling change-id
+     * <a href="#DOWNSCALE_45">DOWNSCALE_45</a> for a package will force the app to assume it's
      * running on a display with 45% the vertical and horizontal resolution of the real display.
+     *
+     * With <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> enabled will force the app to
+     * assume it's running on a display with 222.22% the vertical and horizontal resolution of the
+     * real display
      */
     @ChangeId
     @Disabled
@@ -197,9 +265,13 @@ public final class CompatModePackages {
     public static final long DOWNSCALE_45 = 189969782L;
 
     /**
-     * With CompatModePackages#DOWNSCALED enabled, subsequently enabling change-id
-     * CompatModePackages#DOWNSCALE_40 for a package will force the app to assume it's
+     * With <a href="#DOWNSCALED">DOWNSCALED</a> enabled, subsequently enabling change-id
+     * <a href="#DOWNSCALE_40">DOWNSCALE_40</a> for a package will force the app to assume it's
      * running on a display with 40% the vertical and horizontal resolution of the real display.
+     *
+     * With <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> enabled will force the app to
+     * assume it's running on a display with 250% the vertical and horizontal resolution of the real
+     * display
      */
     @ChangeId
     @Disabled
@@ -207,9 +279,13 @@ public final class CompatModePackages {
     public static final long DOWNSCALE_40 = 189970038L;
 
     /**
-     * With CompatModePackages#DOWNSCALED enabled, subsequently enabling change-id
-     * CompatModePackages#DOWNSCALE_35 for a package will force the app to assume it's
+     * With <a href="#DOWNSCALED">DOWNSCALED</a> enabled, subsequently enabling change-id
+     * <a href="#DOWNSCALE_35">DOWNSCALE_35</a> for a package will force the app to assume it's
      * running on a display with 35% the vertical and horizontal resolution of the real display.
+     *
+     * With <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> enabled will force the app to
+     * assume it's running on a display with 285.71% the vertical and horizontal resolution of the
+     * real display
      */
     @ChangeId
     @Disabled
@@ -217,9 +293,13 @@ public final class CompatModePackages {
     public static final long DOWNSCALE_35 = 189969749L;
 
     /**
-     * With CompatModePackages#DOWNSCALED enabled, subsequently enabling change-id
-     * CompatModePackages#DOWNSCALE_30 for a package will force the app to assume it's
+     * With <a href="#DOWNSCALED">DOWNSCALED</a> enabled, subsequently enabling change-id
+     * <a href="#DOWNSCALE_30">DOWNSCALE_30</a> for a package will force the app to assume it's
      * running on a display with 30% the vertical and horizontal resolution of the real display.
+     *
+     * With <a href="#DOWNSCALED_INVERSE">DOWNSCALED_INVERSE</a> enabled will force the app to
+     * assume it's running on a display with 333.33% the vertical and horizontal resolution of the
+     * real display
      */
     @ChangeId
     @Disabled
@@ -237,11 +317,15 @@ public final class CompatModePackages {
     @EnabledSince(targetSdkVersion = Build.VERSION_CODES.S)
     private static final long DO_NOT_DOWNSCALE_TO_1080P_ON_TV = 157629738L; // This is a Bug ID.
 
-    private final HashMap<String, Integer> mPackages = new HashMap<String, Integer>();
-
     private static final int MSG_WRITE = 300;
 
-    private final CompatHandler mHandler;
+    private static final String TAG = TAG_WITH_CLASS_NAME ? "CompatModePackages" : TAG_ATM;
+
+    // Compatibility state: no longer ask user to select the mode.
+    private static final int COMPAT_FLAG_DONT_ASK = 1 << 0;
+
+    // Compatibility state: compatibility mode is enabled.
+    private static final int COMPAT_FLAG_ENABLED = 1 << 1;
 
     private final class CompatHandler extends Handler {
         public CompatHandler(Looper looper) {
@@ -257,6 +341,14 @@ public final class CompatModePackages {
             }
         }
     }
+
+    private final ActivityTaskManagerService mService;
+    private final AtomicFile mFile;
+    private final HashMap<String, Integer> mPackages = new HashMap<>();
+    private final SparseBooleanArray mLegacyScreenCompatPackages = new SparseBooleanArray();
+    private final CompatHandler mHandler;
+
+    private final SparseArray<CompatScaleProvider> mProviders = new SparseArray<>();
 
     public CompatModePackages(ActivityTaskManagerService service, File systemDir, Handler handler) {
         mService = service;
@@ -334,6 +426,7 @@ public final class CompatModePackages {
             mPackages.remove(packageName);
             scheduleWrite();
         }
+        mLegacyScreenCompatPackages.delete(packageName.hashCode());
     }
 
     public void handlePackageAddedLocked(String packageName, boolean updated) {
@@ -365,55 +458,73 @@ public final class CompatModePackages {
         mHandler.sendMessageDelayed(msg, 10000);
     }
 
+    /**
+     * Returns {@code true} if the windows belonging to the package should be scaled with
+     * {@link DisplayContent#mCompatibleScreenScale}.
+     */
+    boolean useLegacyScreenCompatMode(String packageName) {
+        if (mLegacyScreenCompatPackages.size() == 0) {
+            return false;
+        }
+        return mLegacyScreenCompatPackages.get(packageName.hashCode());
+    }
+
     public CompatibilityInfo compatibilityInfoForPackageLocked(ApplicationInfo ai) {
         final boolean forceCompat = getPackageCompatModeEnabledLocked(ai);
-        final float compatScale = getCompatScale(ai.packageName, ai.uid);
+        final CompatScale compatScale = getCompatScaleFromProvider(ai.packageName, ai.uid);
+        final float appScale = compatScale != null
+                ? compatScale.mScaleFactor
+                : getCompatScale(ai.packageName, ai.uid, /* checkProvider= */ false);
+        final float densityScale = compatScale != null ? compatScale.mDensityScaleFactor : appScale;
         final Configuration config = mService.getGlobalConfiguration();
-        return new CompatibilityInfo(ai, config.screenLayout, config.smallestScreenWidthDp,
-                forceCompat, compatScale);
+        final CompatibilityInfo info = new CompatibilityInfo(ai, config.screenLayout,
+                config.smallestScreenWidthDp, forceCompat, appScale, densityScale);
+        // Ignore invalid info which may be a placeholder of isolated process.
+        if (ai.flags != 0 && ai.sourceDir != null) {
+            if (!info.supportsScreen() && !"android".equals(ai.packageName)) {
+                Slog.i(TAG, "Use legacy screen compat mode: " + ai.packageName);
+                mLegacyScreenCompatPackages.put(ai.packageName.hashCode(), true);
+            } else if (mLegacyScreenCompatPackages.size() > 0) {
+                mLegacyScreenCompatPackages.delete(ai.packageName.hashCode());
+            }
+        }
+        return info;
     }
 
     float getCompatScale(String packageName, int uid) {
+        return getCompatScale(packageName, uid, /* checkProvider= */ true);
+    }
+
+    private CompatScale getCompatScaleFromProvider(String packageName, int uid) {
+        for (int i = 0; i < mProviders.size(); i++) {
+            final CompatScaleProvider provider = mProviders.valueAt(i);
+            final CompatScale compatScale = provider.getCompatScale(packageName, uid);
+            if (compatScale != null) {
+                return compatScale;
+            }
+        }
+        return null;
+    }
+
+    private float getCompatScale(String packageName, int uid, boolean checkProviders) {
+        if (checkProviders) {
+            final CompatScale compatScale = getCompatScaleFromProvider(packageName, uid);
+            if (compatScale != null) {
+                return compatScale.mScaleFactor;
+            }
+        }
         final UserHandle userHandle = UserHandle.getUserHandleForUid(uid);
-        if (CompatChanges.isChangeEnabled(DOWNSCALED, packageName, userHandle)) {
-            if (CompatChanges.isChangeEnabled(DOWNSCALE_90, packageName, userHandle)) {
-                return 1f / 0.9f;
-            }
-            if (CompatChanges.isChangeEnabled(DOWNSCALE_85, packageName, userHandle)) {
-                return 1f / 0.85f;
-            }
-            if (CompatChanges.isChangeEnabled(DOWNSCALE_80, packageName, userHandle)) {
-                return 1f / 0.8f;
-            }
-            if (CompatChanges.isChangeEnabled(DOWNSCALE_75, packageName, userHandle)) {
-                return 1f / 0.75f;
-            }
-            if (CompatChanges.isChangeEnabled(DOWNSCALE_70, packageName, userHandle)) {
-                return 1f / 0.7f;
-            }
-            if (CompatChanges.isChangeEnabled(DOWNSCALE_65, packageName, userHandle)) {
-                return 1f / 0.65f;
-            }
-            if (CompatChanges.isChangeEnabled(DOWNSCALE_60, packageName, userHandle)) {
-                return 1f / 0.6f;
-            }
-            if (CompatChanges.isChangeEnabled(DOWNSCALE_55, packageName, userHandle)) {
-                return 1f / 0.55f;
-            }
-            if (CompatChanges.isChangeEnabled(DOWNSCALE_50, packageName, userHandle)) {
-                return 1f / 0.5f;
-            }
-            if (CompatChanges.isChangeEnabled(DOWNSCALE_45, packageName, userHandle)) {
-                return 1f / 0.45f;
-            }
-            if (CompatChanges.isChangeEnabled(DOWNSCALE_40, packageName, userHandle)) {
-                return 1f / 0.4f;
-            }
-            if (CompatChanges.isChangeEnabled(DOWNSCALE_35, packageName, userHandle)) {
-                return 1f / 0.35f;
-            }
-            if (CompatChanges.isChangeEnabled(DOWNSCALE_30, packageName, userHandle)) {
-                return 1f / 0.3f;
+
+        final boolean isDownscaledEnabled = CompatChanges.isChangeEnabled(
+                DOWNSCALED, packageName, userHandle);
+        final boolean isDownscaledInverseEnabled = CompatChanges.isChangeEnabled(
+                DOWNSCALED_INVERSE, packageName, userHandle);
+        if (isDownscaledEnabled || isDownscaledInverseEnabled) {
+            final float scalingFactor = getScalingFactor(packageName, userHandle);
+            if (scalingFactor != 1f) {
+                // For Upscaling the returned factor must be scalingFactor
+                // For Downscaling the returned factor must be 1f / scalingFactor
+                return isDownscaledInverseEnabled ? scalingFactor : 1f / scalingFactor;
             }
         }
 
@@ -427,6 +538,79 @@ public final class CompatModePackages {
             }
         }
 
+        return 1f;
+    }
+
+    void registerCompatScaleProvider(@CompatScaleProvider.CompatScaleModeOrderId int id,
+            @NonNull CompatScaleProvider provider) {
+        synchronized (mService.mGlobalLock) {
+            if (mProviders.contains(id)) {
+                throw new IllegalArgumentException("Duplicate id provided: " + id);
+            }
+            if (provider == null) {
+                throw new IllegalArgumentException("The passed CompatScaleProvider "
+                        + "can not be null");
+            }
+            if (!CompatScaleProvider.isValidOrderId(id)) {
+                throw new IllegalArgumentException(
+                        "Provided id " + id + " is not in range of valid ids for system "
+                                + "services [" + COMPAT_SCALE_MODE_SYSTEM_FIRST + ","
+                                + COMPAT_SCALE_MODE_SYSTEM_LAST + "]");
+            }
+            mProviders.put(id, provider);
+        }
+    }
+
+    void unregisterCompatScaleProvider(@CompatScaleProvider.CompatScaleModeOrderId int id) {
+        synchronized (mService.mGlobalLock) {
+            if (!mProviders.contains(id)) {
+                throw new IllegalArgumentException(
+                        "CompatScaleProvider with id (" + id + ") is not registered");
+            }
+            mProviders.remove(id);
+        }
+    }
+
+    private static float getScalingFactor(String packageName, UserHandle userHandle) {
+        if (CompatChanges.isChangeEnabled(DOWNSCALE_90, packageName, userHandle)) {
+            return 0.9f;
+        }
+        if (CompatChanges.isChangeEnabled(DOWNSCALE_85, packageName, userHandle)) {
+            return 0.85f;
+        }
+        if (CompatChanges.isChangeEnabled(DOWNSCALE_80, packageName, userHandle)) {
+            return 0.8f;
+        }
+        if (CompatChanges.isChangeEnabled(DOWNSCALE_75, packageName, userHandle)) {
+            return 0.75f;
+        }
+        if (CompatChanges.isChangeEnabled(DOWNSCALE_70, packageName, userHandle)) {
+            return 0.7f;
+        }
+        if (CompatChanges.isChangeEnabled(DOWNSCALE_65, packageName, userHandle)) {
+            return 0.65f;
+        }
+        if (CompatChanges.isChangeEnabled(DOWNSCALE_60, packageName, userHandle)) {
+            return 0.6f;
+        }
+        if (CompatChanges.isChangeEnabled(DOWNSCALE_55, packageName, userHandle)) {
+            return 0.55f;
+        }
+        if (CompatChanges.isChangeEnabled(DOWNSCALE_50, packageName, userHandle)) {
+            return 0.5f;
+        }
+        if (CompatChanges.isChangeEnabled(DOWNSCALE_45, packageName, userHandle)) {
+            return 0.45f;
+        }
+        if (CompatChanges.isChangeEnabled(DOWNSCALE_40, packageName, userHandle)) {
+            return 0.4f;
+        }
+        if (CompatChanges.isChangeEnabled(DOWNSCALE_35, packageName, userHandle)) {
+            return 0.35f;
+        }
+        if (CompatChanges.isChangeEnabled(DOWNSCALE_30, packageName, userHandle)) {
+            return 0.3f;
+        }
         return 1f;
     }
 
@@ -544,14 +728,23 @@ public final class CompatModePackages {
 
             scheduleWrite();
 
-            final Task rootTask = mService.getTopDisplayFocusedRootTask();
-            ActivityRecord starting = rootTask.restartPackage(packageName);
-
+            final ArrayList<WindowProcessController> restartedApps = new ArrayList<>();
+            mService.mRootWindowContainer.forAllWindows(w -> {
+                final ActivityRecord ar = w.mActivityRecord;
+                if (ar != null) {
+                    if (ar.packageName.equals(packageName) && !restartedApps.contains(ar.app)) {
+                        ar.restartProcessIfVisible();
+                        restartedApps.add(ar.app);
+                    }
+                } else if (w.getProcess().mInfo.packageName.equals(packageName)) {
+                    w.updateGlobalScale();
+                }
+            }, true /* traverseTopToBottom */);
             // Tell all processes that loaded this package about the change.
             SparseArray<WindowProcessController> pidMap = mService.mProcessMap.getPidMap();
             for (int i = pidMap.size() - 1; i >= 0; i--) {
                 final WindowProcessController app = pidMap.valueAt(i);
-                if (!app.mPkgList.contains(packageName)) {
+                if (!app.containsPackage(packageName) || restartedApps.contains(app)) {
                     continue;
                 }
                 try {
@@ -562,14 +755,6 @@ public final class CompatModePackages {
                     }
                 } catch (Exception e) {
                 }
-            }
-
-            if (starting != null) {
-                starting.ensureActivityConfiguration(0 /* globalChanges */,
-                        false /* preserveWindow */);
-                // And we need to make sure at this point that all other activities
-                // are made visible with the correct configuration.
-                rootTask.ensureActivitiesVisible(starting, 0, !PRESERVE_WINDOWS);
             }
         }
     }

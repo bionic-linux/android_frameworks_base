@@ -175,6 +175,28 @@ import java.util.Objects;
  * <br>These masks are an ORed composite of individual channel masks. For example
  * {@link #CHANNEL_OUT_STEREO} is composed of {@link #CHANNEL_OUT_FRONT_LEFT} and
  * {@link #CHANNEL_OUT_FRONT_RIGHT}.
+ * <p>
+ * The following diagram represents the layout of the output channels, as seen from above
+ * the listener (in the center at the "lis" position, facing the front-center channel).
+ * <pre>
+ *       TFL ----- TFC ----- TFR     T is Top
+ *       |  \       |       /  |
+ *       |   FL --- FC --- FR  |     F is Front
+ *       |   |\     |     /|   |
+ *       |   | BFL-BFC-BFR |   |     BF is Bottom Front
+ *       |   |             |   |
+ *       |   FWL   lis   FWR   |     W is Wide
+ *       |   |             |   |
+ *      TSL  SL    TC     SR  TSR    S is Side
+ *       |   |             |   |
+ *       |   BL --- BC -- BR   |     B is Back
+ *       |  /               \  |
+ *       TBL ----- TBC ----- TBR     C is Center, L/R is Left/Right
+ * </pre>
+ * All "T" (top) channels are above the listener, all "BF" (bottom-front) channels are below the
+ * listener, all others are in the listener's horizontal plane. When used in conjunction, LFE1 and
+ * LFE2 are below the listener, when used alone, LFE plane is undefined.
+ * See the channel definitions for the abbreviations
  *
  * <h5 id="channelIndexMask">Channel index masks</h5>
  * Channel index masks are introduced in API {@link android.os.Build.VERSION_CODES#M}. They allow
@@ -328,10 +350,31 @@ public final class AudioFormat implements Parcelable {
     public static final int ENCODING_MPEGH_LC_L3 = 25;
     /** Audio data format: MPEG-H low complexity profile, level 4 */
     public static final int ENCODING_MPEGH_LC_L4 = 26;
-    /** Audio data format: DTS UHD compressed */
-    public static final int ENCODING_DTS_UHD = 27;
+    /** Audio data format: DTS UHD Profile-1 compressed (aka DTS:X Profile 1)
+     * Has the same meaning and value as ENCODING_DTS_UHD_P1.
+     * @deprecated Use {@link #ENCODING_DTS_UHD_P1} instead. */
+    @Deprecated public static final int ENCODING_DTS_UHD = 27;
     /** Audio data format: DRA compressed */
     public static final int ENCODING_DRA = 28;
+    /** Audio data format: DTS HD Master Audio compressed
+     * DTS HD Master Audio stream is variable bit rate and contains lossless audio.
+     * Use {@link #ENCODING_DTS_HD_MA} for lossless audio content (DTS-HD MA Lossless)
+     * and use {@link #ENCODING_DTS_HD} for other DTS bitstreams with extension substream
+     * (DTS 8Ch Discrete, DTS Hi Res, DTS Express). */
+    public static final int ENCODING_DTS_HD_MA = 29;
+    /** Audio data format: DTS UHD Profile-1 compressed (aka DTS:X Profile 1)
+     * Has the same meaning and value as the deprecated {@link #ENCODING_DTS_UHD}.*/
+    public static final int ENCODING_DTS_UHD_P1 = 27;
+    /** Audio data format: DTS UHD Profile-2 compressed
+     * DTS-UHD Profile-2 supports delivery of Channel-Based Audio, Object-Based Audio
+     * and High Order Ambisonic presentations up to the fourth order.
+     * Use {@link #ENCODING_DTS_UHD_P1} to transmit DTS UHD Profile 1 (aka DTS:X Profile 1)
+     * bitstream.
+     * Use {@link #ENCODING_DTS_UHD_P2} to transmit DTS UHD Profile 2 (aka DTS:X Profile 2)
+     * bitstream. */
+    public static final int ENCODING_DTS_UHD_P2 = 30;
+    /** Audio data format: Direct Stream Digital */
+    public static final int ENCODING_DSD = 31;
 
     /** @hide */
     public static String toLogFriendlyEncoding(int enc) {
@@ -388,10 +431,16 @@ public final class AudioFormat implements Parcelable {
                 return "ENCODING_MPEGH_LC_L3";
             case ENCODING_MPEGH_LC_L4:
                 return "ENCODING_MPEGH_LC_L4";
-            case ENCODING_DTS_UHD:
-                return "ENCODING_DTS_UHD";
+            case ENCODING_DTS_UHD_P1:
+                return "ENCODING_DTS_UHD_P1";
             case ENCODING_DRA:
                 return "ENCODING_DRA";
+            case ENCODING_DTS_HD_MA:
+                return "ENCODING_DTS_HD_MA";
+            case ENCODING_DTS_UHD_P2:
+                return "ENCODING_DTS_UHD_P2";
+            case ENCODING_DSD:
+                return "ENCODING_DSD";
             default :
                 return "invalid encoding " + enc;
         }
@@ -417,43 +466,68 @@ public final class AudioFormat implements Parcelable {
 
     // Output channel mask definitions below are translated to the native values defined in
     //  in /system/media/audio/include/system/audio.h in the JNI code of AudioTrack
+    /** Front left output channel (see FL in channel diagram) */
     public static final int CHANNEL_OUT_FRONT_LEFT = 0x4;
+    /** Front right output channel (see FR in channel diagram) */
     public static final int CHANNEL_OUT_FRONT_RIGHT = 0x8;
+    /** Front center output channel (see FC in channel diagram) */
     public static final int CHANNEL_OUT_FRONT_CENTER = 0x10;
+    /** LFE "low frequency effect" channel
+     * When used in conjunction with {@link #CHANNEL_OUT_LOW_FREQUENCY_2}, it is intended
+     * to contain the left low-frequency effect signal, also referred to as "LFE1"
+     * in ITU-R BS.2159-8 */
     public static final int CHANNEL_OUT_LOW_FREQUENCY = 0x20;
+    /** Back left output channel (see BL in channel diagram) */
     public static final int CHANNEL_OUT_BACK_LEFT = 0x40;
+    /** Back right output channel (see BR in channel diagram) */
     public static final int CHANNEL_OUT_BACK_RIGHT = 0x80;
     public static final int CHANNEL_OUT_FRONT_LEFT_OF_CENTER = 0x100;
     public static final int CHANNEL_OUT_FRONT_RIGHT_OF_CENTER = 0x200;
+    /** Back center output channel (see BC in channel diagram) */
     public static final int CHANNEL_OUT_BACK_CENTER = 0x400;
+    /** Side left output channel (see SL in channel diagram) */
     public static final int CHANNEL_OUT_SIDE_LEFT =         0x800;
+    /** Side right output channel (see SR in channel diagram) */
     public static final int CHANNEL_OUT_SIDE_RIGHT =       0x1000;
-    /** @hide */
+    /** Top center (above listener) output channel (see TC in channel diagram) */
     public static final int CHANNEL_OUT_TOP_CENTER =       0x2000;
-    /** @hide */
+    /** Top front left output channel (see TFL in channel diagram above FL) */
     public static final int CHANNEL_OUT_TOP_FRONT_LEFT =   0x4000;
-    /** @hide */
+    /** Top front center output channel (see TFC in channel diagram above FC) */
     public static final int CHANNEL_OUT_TOP_FRONT_CENTER = 0x8000;
-    /** @hide */
+    /** Top front right output channel (see TFR in channel diagram above FR) */
     public static final int CHANNEL_OUT_TOP_FRONT_RIGHT = 0x10000;
-    /** @hide */
+    /** Top back left output channel (see TBL in channel diagram above BL) */
     public static final int CHANNEL_OUT_TOP_BACK_LEFT =   0x20000;
-    /** @hide */
+    /** Top back center output channel (see TBC in channel diagram above BC) */
     public static final int CHANNEL_OUT_TOP_BACK_CENTER = 0x40000;
-    /** @hide */
+    /** Top back right output channel (see TBR in channel diagram above BR) */
     public static final int CHANNEL_OUT_TOP_BACK_RIGHT =  0x80000;
-    /** @hide */
+    /** Top side left output channel (see TSL in channel diagram above SL) */
     public static final int CHANNEL_OUT_TOP_SIDE_LEFT = 0x100000;
-    /** @hide */
+    /** Top side right output channel (see TSR in channel diagram above SR) */
     public static final int CHANNEL_OUT_TOP_SIDE_RIGHT = 0x200000;
-    /** @hide */
+    /** Bottom front left output channel (see BFL in channel diagram below FL) */
     public static final int CHANNEL_OUT_BOTTOM_FRONT_LEFT = 0x400000;
-    /** @hide */
+    /** Bottom front center output channel (see BFC in channel diagram below FC) */
     public static final int CHANNEL_OUT_BOTTOM_FRONT_CENTER = 0x800000;
-    /** @hide */
+    /** Bottom front right output channel (see BFR in channel diagram below FR) */
     public static final int CHANNEL_OUT_BOTTOM_FRONT_RIGHT = 0x1000000;
-    /** @hide */
+    /** The second LFE channel
+     * When used in conjunction with {@link #CHANNEL_OUT_LOW_FREQUENCY}, it is intended
+     * to contain the right low-frequency effect signal, also referred to as "LFE2"
+     * in ITU-R BS.2159-8 */
     public static final int CHANNEL_OUT_LOW_FREQUENCY_2 = 0x2000000;
+    /** Front wide left output channel (see FWL in channel diagram) */
+    public static final int CHANNEL_OUT_FRONT_WIDE_LEFT = 0x4000000;
+    /** Front wide right output channel (see FWR in channel diagram) */
+    public static final int CHANNEL_OUT_FRONT_WIDE_RIGHT = 0x8000000;
+    /** @hide
+     * Haptic channels can be used by internal framework code. Use the same values as in native.
+     */
+    public static final int CHANNEL_OUT_HAPTIC_B = 0x10000000;
+    /** @hide */
+    public static final int CHANNEL_OUT_HAPTIC_A = 0x20000000;
 
     public static final int CHANNEL_OUT_MONO = CHANNEL_OUT_FRONT_LEFT;
     public static final int CHANNEL_OUT_STEREO = (CHANNEL_OUT_FRONT_LEFT | CHANNEL_OUT_FRONT_RIGHT);
@@ -466,8 +540,12 @@ public final class AudioFormat implements Parcelable {
     public static final int CHANNEL_OUT_SURROUND = (CHANNEL_OUT_FRONT_LEFT | CHANNEL_OUT_FRONT_RIGHT |
             CHANNEL_OUT_FRONT_CENTER | CHANNEL_OUT_BACK_CENTER);
     // aka 5POINT1_BACK
+    /** Output channel mask for 5.1 */
     public static final int CHANNEL_OUT_5POINT1 = (CHANNEL_OUT_FRONT_LEFT | CHANNEL_OUT_FRONT_RIGHT |
             CHANNEL_OUT_FRONT_CENTER | CHANNEL_OUT_LOW_FREQUENCY | CHANNEL_OUT_BACK_LEFT | CHANNEL_OUT_BACK_RIGHT);
+    /** Output channel mask for 6.1
+     *  Same as 5.1 with the addition of the back center channel */
+    public static final int CHANNEL_OUT_6POINT1 = (CHANNEL_OUT_5POINT1 | CHANNEL_OUT_BACK_CENTER);
     /** @hide */
     public static final int CHANNEL_OUT_5POINT1_SIDE = (CHANNEL_OUT_FRONT_LEFT | CHANNEL_OUT_FRONT_RIGHT |
             CHANNEL_OUT_FRONT_CENTER | CHANNEL_OUT_LOW_FREQUENCY |
@@ -477,26 +555,39 @@ public final class AudioFormat implements Parcelable {
     @Deprecated    public static final int CHANNEL_OUT_7POINT1 = (CHANNEL_OUT_FRONT_LEFT | CHANNEL_OUT_FRONT_RIGHT |
             CHANNEL_OUT_FRONT_CENTER | CHANNEL_OUT_LOW_FREQUENCY | CHANNEL_OUT_BACK_LEFT | CHANNEL_OUT_BACK_RIGHT |
             CHANNEL_OUT_FRONT_LEFT_OF_CENTER | CHANNEL_OUT_FRONT_RIGHT_OF_CENTER);
+    /** Output channel mask for 7.1 */
     // matches AUDIO_CHANNEL_OUT_7POINT1
     public static final int CHANNEL_OUT_7POINT1_SURROUND = (
             CHANNEL_OUT_FRONT_LEFT | CHANNEL_OUT_FRONT_CENTER | CHANNEL_OUT_FRONT_RIGHT |
             CHANNEL_OUT_SIDE_LEFT | CHANNEL_OUT_SIDE_RIGHT |
             CHANNEL_OUT_BACK_LEFT | CHANNEL_OUT_BACK_RIGHT |
             CHANNEL_OUT_LOW_FREQUENCY);
-    /** @hide */
+    /** Output channel mask for 5.1.2
+     *  Same as 5.1 with the addition of left and right top channels */
     public static final int CHANNEL_OUT_5POINT1POINT2 = (CHANNEL_OUT_5POINT1 |
             CHANNEL_OUT_TOP_SIDE_LEFT | CHANNEL_OUT_TOP_SIDE_RIGHT);
-    /** @hide */
+    /** Output channel mask for 5.1.4
+     * Same as 5.1 with the addition of four top channels */
     public static final int CHANNEL_OUT_5POINT1POINT4 = (CHANNEL_OUT_5POINT1 |
             CHANNEL_OUT_TOP_FRONT_LEFT | CHANNEL_OUT_TOP_FRONT_RIGHT |
             CHANNEL_OUT_TOP_BACK_LEFT | CHANNEL_OUT_TOP_BACK_RIGHT);
-    /** @hide */
+    /** Output channel mask for 7.1.2
+     * Same as 7.1 with the addition of left and right top channels*/
     public static final int CHANNEL_OUT_7POINT1POINT2 = (CHANNEL_OUT_7POINT1_SURROUND |
             CHANNEL_OUT_TOP_SIDE_LEFT | CHANNEL_OUT_TOP_SIDE_RIGHT);
-    /** @hide */
+    /** Output channel mask for 7.1.4
+     *  Same as 7.1 with the addition of four top channels */
     public static final int CHANNEL_OUT_7POINT1POINT4 = (CHANNEL_OUT_7POINT1_SURROUND |
             CHANNEL_OUT_TOP_FRONT_LEFT | CHANNEL_OUT_TOP_FRONT_RIGHT |
             CHANNEL_OUT_TOP_BACK_LEFT | CHANNEL_OUT_TOP_BACK_RIGHT);
+    /** Output channel mask for 9.1.4
+     * Same as 7.1.4 with the addition of left and right front wide channels */
+    public static final int CHANNEL_OUT_9POINT1POINT4 = (CHANNEL_OUT_7POINT1POINT4
+            | CHANNEL_OUT_FRONT_WIDE_LEFT | CHANNEL_OUT_FRONT_WIDE_RIGHT);
+    /** Output channel mask for 9.1.6
+     * Same as 9.1.4 with the addition of left and right top side channels */
+    public static final int CHANNEL_OUT_9POINT1POINT6 = (CHANNEL_OUT_9POINT1POINT4
+            | CHANNEL_OUT_TOP_SIDE_LEFT | CHANNEL_OUT_TOP_SIDE_RIGHT);
     /** @hide */
     public static final int CHANNEL_OUT_13POINT_360RA = (
             CHANNEL_OUT_FRONT_LEFT | CHANNEL_OUT_FRONT_CENTER | CHANNEL_OUT_FRONT_RIGHT |
@@ -516,6 +607,40 @@ public final class AudioFormat implements Parcelable {
             CHANNEL_OUT_BOTTOM_FRONT_CENTER |
             CHANNEL_OUT_LOW_FREQUENCY_2);
     // CHANNEL_OUT_ALL is not yet defined; if added then it should match AUDIO_CHANNEL_OUT_ALL
+
+    /** @hide */
+    @IntDef(flag = true, prefix = "CHANNEL_OUT", value = {
+            CHANNEL_OUT_FRONT_LEFT,
+            CHANNEL_OUT_FRONT_RIGHT,
+            CHANNEL_OUT_FRONT_CENTER,
+            CHANNEL_OUT_LOW_FREQUENCY,
+            CHANNEL_OUT_BACK_LEFT,
+            CHANNEL_OUT_BACK_RIGHT,
+            CHANNEL_OUT_FRONT_LEFT_OF_CENTER,
+            CHANNEL_OUT_FRONT_RIGHT_OF_CENTER,
+            CHANNEL_OUT_BACK_CENTER,
+            CHANNEL_OUT_SIDE_LEFT,
+            CHANNEL_OUT_SIDE_RIGHT,
+            CHANNEL_OUT_TOP_CENTER,
+            CHANNEL_OUT_TOP_FRONT_LEFT,
+            CHANNEL_OUT_TOP_FRONT_CENTER,
+            CHANNEL_OUT_TOP_FRONT_RIGHT,
+            CHANNEL_OUT_TOP_BACK_LEFT,
+            CHANNEL_OUT_TOP_BACK_CENTER,
+            CHANNEL_OUT_TOP_BACK_RIGHT,
+            CHANNEL_OUT_TOP_SIDE_LEFT,
+            CHANNEL_OUT_TOP_SIDE_RIGHT,
+            CHANNEL_OUT_BOTTOM_FRONT_LEFT,
+            CHANNEL_OUT_BOTTOM_FRONT_CENTER,
+            CHANNEL_OUT_BOTTOM_FRONT_RIGHT,
+            CHANNEL_OUT_LOW_FREQUENCY_2,
+            CHANNEL_OUT_FRONT_WIDE_LEFT,
+            CHANNEL_OUT_FRONT_WIDE_RIGHT,
+            CHANNEL_OUT_HAPTIC_B,
+            CHANNEL_OUT_HAPTIC_A
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ChannelOut {}
 
     /** Minimum value for sample rate,
      *  assuming AudioTrack and AudioRecord share the same limitations.
@@ -614,8 +739,44 @@ public final class AudioFormat implements Parcelable {
     public static final int CHANNEL_IN_Z_AXIS = 0x2000;
     public static final int CHANNEL_IN_VOICE_UPLINK = 0x4000;
     public static final int CHANNEL_IN_VOICE_DNLINK = 0x8000;
+    // CHANNEL_IN_BACK_LEFT to TOP_RIGHT are not microphone positions
+    // but surround channels which are used when dealing with multi-channel inputs,
+    // e.g. via HDMI input on TV.
+    /** @hide */
+    public static final int CHANNEL_IN_BACK_LEFT = 0x10000;
+    /** @hide */
+    public static final int CHANNEL_IN_BACK_RIGHT = 0x20000;
+    /** @hide */
+    public static final int CHANNEL_IN_CENTER = 0x40000;
+    /** @hide */
+    public static final int CHANNEL_IN_LOW_FREQUENCY = 0x100000;
+    /** @hide */
+    public static final int CHANNEL_IN_TOP_LEFT = 0x200000;
+    /** @hide */
+    public static final int CHANNEL_IN_TOP_RIGHT = 0x400000;
     public static final int CHANNEL_IN_MONO = CHANNEL_IN_FRONT;
     public static final int CHANNEL_IN_STEREO = (CHANNEL_IN_LEFT | CHANNEL_IN_RIGHT);
+    // Surround channel masks corresponding to output masks, used for
+    // surround sound inputs.
+    /** @hide */
+    public static final int CHANNEL_IN_2POINT0POINT2 = (
+            CHANNEL_IN_LEFT | CHANNEL_IN_RIGHT | CHANNEL_IN_TOP_LEFT | CHANNEL_IN_TOP_RIGHT);
+    /** @hide */
+    public static final int CHANNEL_IN_2POINT1POINT2 = (
+            CHANNEL_IN_LEFT | CHANNEL_IN_RIGHT | CHANNEL_IN_TOP_LEFT | CHANNEL_IN_TOP_RIGHT
+            | CHANNEL_IN_LOW_FREQUENCY);
+    /** @hide */
+    public static final int CHANNEL_IN_3POINT0POINT2 = (
+            CHANNEL_IN_LEFT | CHANNEL_IN_CENTER | CHANNEL_IN_RIGHT | CHANNEL_IN_TOP_LEFT
+            | CHANNEL_IN_TOP_RIGHT);
+    /** @hide */
+    public static final int CHANNEL_IN_3POINT1POINT2 = (
+            CHANNEL_IN_LEFT | CHANNEL_IN_CENTER | CHANNEL_IN_RIGHT | CHANNEL_IN_TOP_LEFT
+            | CHANNEL_IN_TOP_RIGHT | CHANNEL_IN_LOW_FREQUENCY);
+    /** @hide */
+    public static final int CHANNEL_IN_5POINT1 = (
+            CHANNEL_IN_LEFT | CHANNEL_IN_CENTER | CHANNEL_IN_RIGHT | CHANNEL_IN_BACK_LEFT
+            | CHANNEL_IN_BACK_RIGHT | CHANNEL_IN_LOW_FREQUENCY);
     /** @hide */
     public static final int CHANNEL_IN_FRONT_BACK = CHANNEL_IN_FRONT | CHANNEL_IN_BACK;
     // CHANNEL_IN_ALL is not yet defined; if added then it should match AUDIO_CHANNEL_IN_ALL
@@ -671,8 +832,11 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_MPEGH_BL_L4:
             case ENCODING_MPEGH_LC_L3:
             case ENCODING_MPEGH_LC_L4:
-            case ENCODING_DTS_UHD:
+            case ENCODING_DTS_UHD_P1:
             case ENCODING_DRA:
+            case ENCODING_DTS_HD_MA:
+            case ENCODING_DTS_UHD_P2:
+            case ENCODING_DSD:
                 return true;
             default:
                 return false;
@@ -708,8 +872,11 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_MPEGH_BL_L4:
             case ENCODING_MPEGH_LC_L3:
             case ENCODING_MPEGH_LC_L4:
-            case ENCODING_DTS_UHD:
+            case ENCODING_DTS_UHD_P1:
             case ENCODING_DRA:
+            case ENCODING_DTS_HD_MA:
+            case ENCODING_DTS_UHD_P2:
+            case ENCODING_DSD:
                 return true;
             default:
                 return false;
@@ -748,8 +915,10 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_MPEGH_BL_L4:
             case ENCODING_MPEGH_LC_L3:
             case ENCODING_MPEGH_LC_L4:
-            case ENCODING_DTS_UHD:
+            case ENCODING_DTS_UHD_P1:
             case ENCODING_DRA:
+            case ENCODING_DTS_HD_MA:
+            case ENCODING_DTS_UHD_P2:
                 return false;
             case ENCODING_INVALID:
             default:
@@ -788,8 +957,10 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_MPEGH_BL_L4:
             case ENCODING_MPEGH_LC_L3:
             case ENCODING_MPEGH_LC_L4:
-            case ENCODING_DTS_UHD:
+            case ENCODING_DTS_UHD_P1:
             case ENCODING_DRA:
+            case ENCODING_DTS_HD_MA:
+            case ENCODING_DTS_UHD_P2:
                 return false;
             case ENCODING_INVALID:
             default:
@@ -908,7 +1079,7 @@ public final class AudioFormat implements Parcelable {
      * @return one of the values that can be set in {@link Builder#setEncoding(int)} or
      * {@link AudioFormat#ENCODING_INVALID} if not set.
      */
-    public int getEncoding() {
+    public @EncodingCanBeInvalid int getEncoding() {
         return mEncoding;
     }
 
@@ -1076,8 +1247,11 @@ public final class AudioFormat implements Parcelable {
                 case ENCODING_MPEGH_BL_L4:
                 case ENCODING_MPEGH_LC_L3:
                 case ENCODING_MPEGH_LC_L4:
-                case ENCODING_DTS_UHD:
+                case ENCODING_DTS_UHD_P1:
                 case ENCODING_DRA:
+                case ENCODING_DTS_HD_MA:
+                case ENCODING_DTS_UHD_P2:
+                case ENCODING_DSD:
                     mEncoding = encoding;
                     break;
                 case ENCODING_INVALID:
@@ -1108,10 +1282,8 @@ public final class AudioFormat implements Parcelable {
          *    {@link AudioFormat#CHANNEL_OUT_BACK_CENTER},
          *    {@link AudioFormat#CHANNEL_OUT_SIDE_LEFT},
          *    {@link AudioFormat#CHANNEL_OUT_SIDE_RIGHT}.
-         *    <p> For a valid {@link AudioTrack} channel position mask,
-         *    the following conditions apply:
-         *    <br> (1) at most eight channel positions may be used;
-         *    <br> (2) right/left pairs should be matched.
+         *    <p> For output or {@link AudioTrack}, channel position masks which do not contain
+         *    matched left/right pairs are invalid.
          *    <p> For input or {@link AudioRecord}, the mask should be
          *    {@link AudioFormat#CHANNEL_IN_MONO} or
          *    {@link AudioFormat#CHANNEL_IN_STEREO}.  {@link AudioFormat#CHANNEL_IN_MONO} is
@@ -1305,11 +1477,52 @@ public final class AudioFormat implements Parcelable {
         ENCODING_MPEGH_BL_L4,
         ENCODING_MPEGH_LC_L3,
         ENCODING_MPEGH_LC_L4,
-        ENCODING_DTS_UHD,
-        ENCODING_DRA }
+        ENCODING_DTS_UHD_P1,
+        ENCODING_DRA,
+        ENCODING_DTS_HD_MA,
+        ENCODING_DTS_UHD_P2,
+        ENCODING_DSD }
     )
     @Retention(RetentionPolicy.SOURCE)
     public @interface Encoding {}
+
+    /** @hide same as @Encoding, but adding ENCODING_INVALID */
+    @IntDef(flag = false, prefix = "ENCODING", value = {
+            ENCODING_INVALID,
+            ENCODING_DEFAULT,
+            ENCODING_PCM_16BIT,
+            ENCODING_PCM_8BIT,
+            ENCODING_PCM_FLOAT,
+            ENCODING_AC3,
+            ENCODING_E_AC3,
+            ENCODING_DTS,
+            ENCODING_DTS_HD,
+            ENCODING_MP3,
+            ENCODING_AAC_LC,
+            ENCODING_AAC_HE_V1,
+            ENCODING_AAC_HE_V2,
+            ENCODING_IEC61937,
+            ENCODING_DOLBY_TRUEHD,
+            ENCODING_AAC_ELD,
+            ENCODING_AAC_XHE,
+            ENCODING_AC4,
+            ENCODING_E_AC3_JOC,
+            ENCODING_DOLBY_MAT,
+            ENCODING_OPUS,
+            ENCODING_PCM_24BIT_PACKED,
+            ENCODING_PCM_32BIT,
+            ENCODING_MPEGH_BL_L3,
+            ENCODING_MPEGH_BL_L4,
+            ENCODING_MPEGH_LC_L3,
+            ENCODING_MPEGH_LC_L4,
+            ENCODING_DTS_UHD_P1,
+            ENCODING_DRA,
+            ENCODING_DTS_HD_MA,
+            ENCODING_DTS_UHD_P2,
+            ENCODING_DSD }
+    )
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface EncodingCanBeInvalid {}
 
     /** @hide */
     public static final int[] SURROUND_SOUND_ENCODING = {
@@ -1326,8 +1539,10 @@ public final class AudioFormat implements Parcelable {
             ENCODING_MPEGH_BL_L4,
             ENCODING_MPEGH_LC_L3,
             ENCODING_MPEGH_LC_L4,
-            ENCODING_DTS_UHD,
-            ENCODING_DRA
+            ENCODING_DTS_UHD_P1,
+            ENCODING_DRA,
+            ENCODING_DTS_HD_MA,
+            ENCODING_DTS_UHD_P2
     };
 
     /** @hide */
@@ -1345,8 +1560,10 @@ public final class AudioFormat implements Parcelable {
             ENCODING_MPEGH_BL_L4,
             ENCODING_MPEGH_LC_L3,
             ENCODING_MPEGH_LC_L4,
-            ENCODING_DTS_UHD,
-            ENCODING_DRA }
+            ENCODING_DTS_UHD_P1,
+            ENCODING_DRA,
+            ENCODING_DTS_HD_MA,
+            ENCODING_DTS_UHD_P2 }
     )
     @Retention(RetentionPolicy.SOURCE)
     public @interface SurroundSoundEncoding {}
@@ -1388,10 +1605,14 @@ public final class AudioFormat implements Parcelable {
                 return "MPEG-H 3D Audio low complexity profile level 3";
             case ENCODING_MPEGH_LC_L4:
                 return "MPEG-H 3D Audio low complexity profile level 4";
-            case ENCODING_DTS_UHD:
-                return "DTS UHD";
+            case ENCODING_DTS_UHD_P1:
+                return "DTS UHD Profile 1";
             case ENCODING_DRA:
                 return "DRA";
+            case ENCODING_DTS_HD_MA:
+                return "DTS HD Master Audio";
+            case ENCODING_DTS_UHD_P2:
+                return "DTS UHD Profile 2";
             default:
                 return "Unknown surround sound format";
         }

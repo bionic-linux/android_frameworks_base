@@ -16,6 +16,7 @@
 
 package android.telephony.ims;
 
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -27,6 +28,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.telecom.VideoProfile;
+import android.telephony.CallState;
 import android.telephony.emergency.EmergencyNumber;
 import android.telephony.emergency.EmergencyNumber.EmergencyCallRouting;
 import android.telephony.emergency.EmergencyNumber.EmergencyServiceCategories;
@@ -78,8 +80,11 @@ public final class ImsCallProfile implements Parcelable {
     public static final int SERVICE_TYPE_EMERGENCY = 2;
 
     /**
-     * Call types
+     * This value is returned if there is no valid IMS call type defined for the call. For example,
+     * if an ongoing call is circuit-switched and {@link CallState#getImsCallType()} is called, this
+     * value will be returned.
      */
+    public static final int CALL_TYPE_NONE = 0;
     /**
      * IMSPhone to support IR.92 & IR.94 (voice + video upgrade/downgrade)
      */
@@ -295,6 +300,16 @@ public final class ImsCallProfile implements Parcelable {
             "android.telephony.ims.extra.IS_BUSINESS_CALL";
 
     /**
+     * The vendor IMS stack populates this {@code string} extra; it is used to hold the display name
+     * passed via the P-Asserted-Identity SIP header’s display-name field
+     *
+     * Reference: RFC3325
+     */
+    @FlaggedApi(com.android.server.telecom.flags.Flags.FLAG_BUSINESS_CALL_COMPOSER)
+    public static final String EXTRA_ASSERTED_DISPLAY_NAME =
+            "android.telephony.ims.extra.ASSERTED_DISPLAY_NAME";
+
+    /**
      * Values for EXTRA_OIR / EXTRA_CNAP
      */
     /**
@@ -317,6 +332,10 @@ public final class ImsCallProfile implements Parcelable {
      * Payphone presentation for Originating Identity.
      */
     public static final int OIR_PRESENTATION_PAYPHONE = 4;
+    /**
+     * Unavailable presentation for Originating Identity.
+     */
+    public static final int OIR_PRESENTATION_UNAVAILABLE = 5;
 
     //Values for EXTRA_DIALSTRING
     /**
@@ -839,7 +858,7 @@ public final class ImsCallProfile implements Parcelable {
         mServiceType = in.readInt();
         mCallType = in.readInt();
         mCallExtras = in.readBundle();
-        mMediaProfile = in.readParcelable(ImsStreamMediaProfile.class.getClassLoader());
+        mMediaProfile = in.readParcelable(ImsStreamMediaProfile.class.getClassLoader(), android.telephony.ims.ImsStreamMediaProfile.class);
         mEmergencyServiceCategories = in.readInt();
         mEmergencyUrns = in.createStringArrayList();
         mEmergencyCallRouting = in.readInt();
@@ -847,7 +866,8 @@ public final class ImsCallProfile implements Parcelable {
         mHasKnownUserIntentEmergency = in.readBoolean();
         mRestrictCause = in.readInt();
         mCallerNumberVerificationStatus = in.readInt();
-        Object[] accepted = in.readArray(RtpHeaderExtensionType.class.getClassLoader());
+        Object[] accepted = in.readArray(RtpHeaderExtensionType.class.getClassLoader(),
+                RtpHeaderExtensionType.class);
         mAcceptedRtpHeaderExtensionTypes = Arrays.stream(accepted)
                 .map(o -> (RtpHeaderExtensionType) o).collect(Collectors.toSet());
     }
@@ -989,6 +1009,8 @@ public final class ImsCallProfile implements Parcelable {
                 return ImsCallProfile.OIR_PRESENTATION_PAYPHONE;
             case PhoneConstants.PRESENTATION_UNKNOWN:
                 return ImsCallProfile.OIR_PRESENTATION_UNKNOWN;
+            case PhoneConstants.PRESENTATION_UNAVAILABLE:
+                return ImsCallProfile.OIR_PRESENTATION_UNAVAILABLE;
             default:
                 return ImsCallProfile.OIR_DEFAULT;
         }
@@ -1017,6 +1039,8 @@ public final class ImsCallProfile implements Parcelable {
                 return PhoneConstants.PRESENTATION_ALLOWED;
             case ImsCallProfile.OIR_PRESENTATION_PAYPHONE:
                 return PhoneConstants.PRESENTATION_PAYPHONE;
+            case ImsCallProfile.OIR_PRESENTATION_UNAVAILABLE:
+                return PhoneConstants.PRESENTATION_UNAVAILABLE;
             case ImsCallProfile.OIR_PRESENTATION_UNKNOWN:
                 return PhoneConstants.PRESENTATION_UNKNOWN;
             default:

@@ -17,7 +17,9 @@
 #pragma once
 
 #include <deque>
+#include <memory>
 
+#include "Mesh.h"
 #include "RecordingCanvas.h"
 #include "RenderNodeDrawable.h"
 #include "TreeInfo.h"
@@ -95,6 +97,8 @@ public:
 
     bool hasText() const { return mDisplayList.hasText(); }
 
+    bool hasFill() const { return mDisplayList.hasFill(); }
+
     /**
      * Attempts to reset and reuse this DisplayList.
      *
@@ -144,6 +148,8 @@ public:
      */
     void updateChildren(std::function<void(RenderNode*)> updateFn);
 
+    void visit(std::function<void(const RenderNode&)> func) const;
+
     /**
      *  Returns true if there is a child render node that is a projection receiver.
      */
@@ -167,6 +173,7 @@ public:
     std::deque<RenderNodeDrawable> mChildNodes;
     std::deque<FunctorDrawable*> mChildFunctors;
     std::vector<SkImage*> mMutableImages;
+    std::vector<std::shared_ptr<const MeshBufferData>> mMeshBufferData;
 
 private:
     std::vector<Pair<VectorDrawableRoot*, SkMatrix>> mVectorDrawables;

@@ -16,35 +16,42 @@
 
 package com.android.server.wm;
 
-import static android.app.WindowConfiguration.WINDOWING_MODE_FREEFORM;
-import static android.app.WindowConfiguration.WINDOWING_MODE_UNDEFINED;
+import static android.app.ActivityTaskManager.INVALID_TASK_ID;
+import static android.app.CameraCompatTaskInfo.cameraCompatControlStateToString;
+import static android.window.StartingWindowRemovalInfo.DEFER_MODE_NONE;
+import static android.window.StartingWindowRemovalInfo.DEFER_MODE_NORMAL;
+import static android.window.StartingWindowRemovalInfo.DEFER_MODE_ROTATION;
 
 import static com.android.internal.protolog.ProtoLogGroup.WM_DEBUG_WINDOW_ORGANIZER;
 import static com.android.server.wm.ActivityTaskManagerService.enforceTaskPermission;
 import static com.android.server.wm.DisplayContent.IME_TARGET_LAYERING;
 import static com.android.server.wm.SurfaceAnimator.ANIMATION_TYPE_STARTING_REVEAL;
-import static com.android.server.wm.WindowOrganizerController.CONTROLLABLE_CONFIGS;
-import static com.android.server.wm.WindowOrganizerController.CONTROLLABLE_WINDOW_CONFIGS;
+import static com.android.server.wm.WindowOrganizerController.configurationsAreEqualForOrganizer;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.app.WindowConfiguration;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.ParceledListSlice;
+import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
+import android.util.ArrayMap;
 import android.util.Slog;
 import android.util.proto.ProtoOutputStream;
+import android.view.Display;
 import android.view.SurfaceControl;
 import android.window.ITaskOrganizer;
 import android.window.ITaskOrganizerController;
+import android.window.IWindowlessStartingSurfaceCallback;
 import android.window.SplashScreenView;
 import android.window.StartingWindowInfo;
+import android.window.StartingWindowRemovalInfo;
 import android.window.TaskAppearedInfo;
 import android.window.TaskSnapshot;
 import android.window.WindowContainerToken;
@@ -54,13 +61,11 @@ import com.android.internal.protolog.common.ProtoLog;
 import com.android.internal.util.ArrayUtils;
 
 import java.io.PrintWriter;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.WeakHashMap;
-import java.util.function.Consumer;
 
 /**
  * Stores the TaskOrganizers associated with a given windowing mode and
@@ -69,22 +74,8 @@ import java.util.function.Consumer;
 class TaskOrganizerController extends ITaskOrganizerController.Stub {
     private static final String TAG = "TaskOrganizerController";
 
-    /**
-     * Masks specifying which configurations are important to report back to an organizer when
-     * changed.
-     */
-    private static final int REPORT_CONFIGS = CONTROLLABLE_CONFIGS;
-    private static final int REPORT_WINDOW_CONFIGS = CONTROLLABLE_WINDOW_CONFIGS;
-
-    // The set of modes that are currently supports
-    // TODO: Remove once the task organizer can support all modes
     @VisibleForTesting
-    static final int[] UNSUPPORTED_WINDOWING_MODES = {
-            WINDOWING_MODE_UNDEFINED,
-            WINDOWING_MODE_FREEFORM
-    };
-
-    private class DeathRecipient implements IBinder.DeathRecipient {
+    class DeathRecipient implements IBinder.DeathRecipient {
         ITaskOrganizer mTaskOrganizer;
 
         DeathRecipient(ITaskOrganizer organizer) {
@@ -94,7 +85,7 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
         @Override
         public void binderDied() {
             synchronized (mGlobalLock) {
-                final TaskOrganizerState state = mTaskOrganizerStates.remove(
+                final TaskOrganizerState state = mTaskOrganizerStates.get(
                         mTaskOrganizer.asBinder());
                 if (state != null) {
                     state.dispose();
@@ -108,121 +99,15 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
      * lifecycle order since we may be updating the visibility of task surface controls in a pending
      * transaction before they are presented to the task org.
      */
-    private class TaskOrganizerCallbacks {
+    private static class TaskOrganizerCallbacks {
         final ITaskOrganizer mTaskOrganizer;
-        final Consumer<Runnable> mDeferTaskOrgCallbacksConsumer;
 
-        TaskOrganizerCallbacks(ITaskOrganizer taskOrg,
-                Consumer<Runnable> deferTaskOrgCallbacksConsumer) {
-            mDeferTaskOrgCallbacksConsumer = deferTaskOrgCallbacksConsumer;
+        TaskOrganizerCallbacks(ITaskOrganizer taskOrg) {
             mTaskOrganizer = taskOrg;
         }
 
         IBinder getBinder() {
             return mTaskOrganizer.asBinder();
-        }
-
-        void addStartingWindow(Task task, ActivityRecord activity, int launchTheme,
-                TaskSnapshot taskSnapshot) {
-            final StartingWindowInfo info = task.getStartingWindowInfo(activity);
-            if (launchTheme != 0) {
-                info.splashScreenThemeResId = launchTheme;
-            }
-            info.mTaskSnapshot = taskSnapshot;
-            // make this happen prior than prepare surface
-            try {
-                mTaskOrganizer.addStartingWindow(info, activity.token);
-            } catch (RemoteException e) {
-                Slog.e(TAG, "Exception sending onTaskStart callback", e);
-            }
-        }
-
-        // Capture the animation surface control for activity's main window
-        private class StartingWindowAnimationAdaptor implements AnimationAdapter {
-            private SurfaceControl mAnimationLeash;
-            @Override
-            public boolean getShowWallpaper() {
-                return false;
-            }
-
-            @Override
-            public void startAnimation(SurfaceControl animationLeash, SurfaceControl.Transaction t,
-                    int type, SurfaceAnimator.OnAnimationFinishedCallback finishCallback) {
-                mAnimationLeash = animationLeash;
-            }
-
-            @Override
-            public void onAnimationCancelled(SurfaceControl animationLeash) {
-                if (mAnimationLeash == animationLeash) {
-                    mAnimationLeash = null;
-                }
-            }
-
-            @Override
-            public long getDurationHint() {
-                return 0;
-            }
-
-            @Override
-            public long getStatusBarTransitionsStartTime() {
-                return 0;
-            }
-
-            @Override
-            public void dump(PrintWriter pw, String prefix) {
-                pw.print(prefix + "StartingWindowAnimationAdaptor mCapturedLeash=");
-                pw.print(mAnimationLeash);
-                pw.println();
-            }
-
-            @Override
-            public void dumpDebug(ProtoOutputStream proto) {
-            }
-        }
-
-        void removeStartingWindow(Task task, boolean prepareAnimation) {
-            SurfaceControl windowAnimationLeash = null;
-            Rect mainFrame = null;
-            final boolean playShiftUpAnimation = !task.inMultiWindowMode();
-            if (prepareAnimation && playShiftUpAnimation) {
-                final ActivityRecord topActivity = task.topActivityContainsStartingWindow();
-                if (topActivity != null) {
-                    final WindowState mainWindow =
-                            topActivity.findMainWindow(false/* includeStartingApp */);
-                    if (mainWindow != null) {
-                        final StartingWindowAnimationAdaptor adaptor =
-                                new StartingWindowAnimationAdaptor();
-                        final SurfaceControl.Transaction t = mainWindow.getPendingTransaction();
-                        mainWindow.startAnimation(t, adaptor, false,
-                                ANIMATION_TYPE_STARTING_REVEAL);
-                        windowAnimationLeash = adaptor.mAnimationLeash;
-                        mainFrame = mainWindow.getRelativeFrame();
-                        t.setPosition(windowAnimationLeash, mainFrame.left, mainFrame.top);
-                    }
-                }
-            }
-            try {
-                mTaskOrganizer.removeStartingWindow(task.mTaskId, windowAnimationLeash,
-                        mainFrame, prepareAnimation);
-            } catch (RemoteException e) {
-                Slog.e(TAG, "Exception sending onStartTaskFinished callback", e);
-            }
-        }
-
-        void copySplashScreenView(Task task) {
-            try {
-                mTaskOrganizer.copySplashScreenView(task.mTaskId);
-            } catch (RemoteException e) {
-                Slog.e(TAG, "Exception sending copyStartingWindowView callback", e);
-            }
-        }
-
-        void onAppSplashScreenViewRemoved(Task task) {
-            try {
-                mTaskOrganizer.onAppSplashScreenViewRemoved(task.mTaskId);
-            } catch (RemoteException e) {
-                Slog.e(TAG, "Exception sending onAppSplashScreenViewRemoved callback", e);
-            }
         }
 
         SurfaceControl prepareLeash(Task task, String reason) {
@@ -239,7 +124,6 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
                 Slog.e(TAG, "Exception sending onTaskAppeared callback", e);
             }
         }
-
 
         void onTaskVanished(Task task) {
             ProtoLog.v(WM_DEBUG_WINDOW_ORGANIZER, "Task vanished taskId=%d", task.mTaskId);
@@ -290,19 +174,166 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
         }
     }
 
-    private class TaskOrganizerState {
+    /**
+     * Maintains a list of all the pending events for a given {@link android.window.TaskOrganizer}
+     */
+    static final class TaskOrganizerPendingEventsQueue {
+        private final WeakHashMap<Task, RunningTaskInfo> mLastSentTaskInfos = new WeakHashMap<>();
+        private final TaskOrganizerState mOrganizerState;
+        private RunningTaskInfo mTmpTaskInfo;
+        // Pending task events due to layout deferred.
+        private final ArrayList<PendingTaskEvent> mPendingTaskEvents = new ArrayList<>();
+
+        TaskOrganizerPendingEventsQueue(TaskOrganizerState taskOrganizerState) {
+            mOrganizerState = taskOrganizerState;
+        }
+
+        @VisibleForTesting
+        public ArrayList<PendingTaskEvent> getPendingEventList() {
+            return mPendingTaskEvents;
+        }
+
+        int numPendingTaskEvents() {
+            return mPendingTaskEvents.size();
+        }
+
+        void clearPendingTaskEvents() {
+            mPendingTaskEvents.clear();
+        }
+
+        void addPendingTaskEvent(PendingTaskEvent event) {
+            mPendingTaskEvents.add(event);
+        }
+
+        void removePendingTaskEvent(PendingTaskEvent event) {
+            mPendingTaskEvents.remove(event);
+        }
+
+        /**
+         * Removes all the pending task events for the given {@code task}.
+         *
+         * @param task
+         * @return true if a {@link PendingTaskEvent#EVENT_APPEARED} is still pending for the given
+         * {code task}.
+         */
+        boolean removePendingTaskEvents(Task task) {
+            boolean foundPendingAppearedEvents = false;
+            for (int i = mPendingTaskEvents.size() - 1; i >= 0; i--) {
+                PendingTaskEvent entry = mPendingTaskEvents.get(i);
+                if (task.mTaskId == entry.mTask.mTaskId) {
+                    // This task is vanished so remove all pending event of it.
+                    mPendingTaskEvents.remove(i);
+
+                    if (entry.mEventType == PendingTaskEvent.EVENT_APPEARED) {
+                        foundPendingAppearedEvents = true;
+                    }
+                }
+            }
+            return foundPendingAppearedEvents;
+        }
+
+        @Nullable
+        private PendingTaskEvent getPendingTaskEvent(Task task, int type) {
+            for (int i = mPendingTaskEvents.size() - 1; i >= 0; i--) {
+                PendingTaskEvent entry = mPendingTaskEvents.get(i);
+                if (task.mTaskId == entry.mTask.mTaskId && type == entry.mEventType) {
+                    return entry;
+                }
+            }
+            return null;
+        }
+
+        @VisibleForTesting
+        @Nullable
+        PendingTaskEvent getPendingLifecycleTaskEvent(Task task) {
+            for (int i = mPendingTaskEvents.size() - 1; i >= 0; i--) {
+                PendingTaskEvent entry = mPendingTaskEvents.get(i);
+                if (task.mTaskId == entry.mTask.mTaskId && entry.isLifecycleEvent()) {
+                    return entry;
+                }
+            }
+            return null;
+        }
+
+        void dispatchPendingEvents() {
+            if (mPendingTaskEvents.isEmpty()) {
+                return;
+            }
+            for (int i = 0, n = mPendingTaskEvents.size(); i < n; i++) {
+                dispatchPendingEvent(mPendingTaskEvents.get(i));
+            }
+            mPendingTaskEvents.clear();
+        }
+
+        private void dispatchPendingEvent(PendingTaskEvent event) {
+            final Task task = event.mTask;
+            switch (event.mEventType) {
+                case PendingTaskEvent.EVENT_APPEARED:
+                    if (task.taskAppearedReady()) {
+                        mOrganizerState.mOrganizer.onTaskAppeared(task);
+                    }
+                    break;
+                case PendingTaskEvent.EVENT_VANISHED:
+                    mOrganizerState.mOrganizer.onTaskVanished(task);
+                    mLastSentTaskInfos.remove(task);
+                    break;
+                case PendingTaskEvent.EVENT_INFO_CHANGED:
+                    dispatchTaskInfoChanged(event.mTask, event.mForce);
+                    break;
+                case PendingTaskEvent.EVENT_ROOT_BACK_PRESSED:
+                    mOrganizerState.mOrganizer.onBackPressedOnTaskRoot(task);
+                    break;
+            }
+        }
+
+        private void dispatchTaskInfoChanged(Task task, boolean force) {
+            RunningTaskInfo lastInfo = mLastSentTaskInfos.get(task);
+            if (mTmpTaskInfo == null) {
+                mTmpTaskInfo = new RunningTaskInfo();
+            }
+            mTmpTaskInfo.configuration.unset();
+            task.fillTaskInfo(mTmpTaskInfo);
+
+            boolean changed = !mTmpTaskInfo
+                    .equalsForTaskOrganizer(lastInfo)
+                    || !configurationsAreEqualForOrganizer(
+                    mTmpTaskInfo.configuration,
+                    lastInfo.configuration);
+            if (!(changed || force)) {
+                // mTmpTaskInfo will be reused next time.
+                return;
+            }
+            final RunningTaskInfo newInfo = mTmpTaskInfo;
+            mLastSentTaskInfos.put(task,
+                    mTmpTaskInfo);
+            // Since we've stored this, clean up the reference so a new one will be created next
+            // time.
+            // Transferring it this way means we only have to construct new RunningTaskInfos when
+            // they change.
+            mTmpTaskInfo = null;
+
+            if (task.isOrganized()) {
+                // Because we defer sending taskAppeared() until the app has drawn, we may receive a
+                // configuration change before the state actually has the task registered. As such
+                // we should ignore these change events to the organizer until taskAppeared(). If
+                // the task was created by the organizer, then we always send the info change.
+                mOrganizerState.mOrganizer.onTaskInfoChanged(task, newInfo);
+            }
+        }
+    }
+
+    @VisibleForTesting
+    class TaskOrganizerState {
         private final TaskOrganizerCallbacks mOrganizer;
         private final DeathRecipient mDeathRecipient;
         private final ArrayList<Task> mOrganizedTasks = new ArrayList<>();
+        private final TaskOrganizerPendingEventsQueue mPendingEventsQueue;
         private final int mUid;
 
         TaskOrganizerState(ITaskOrganizer organizer, int uid) {
-            final Consumer<Runnable> deferTaskOrgCallbacksConsumer =
-                    mDeferTaskOrgCallbacksConsumer != null
-                            ? mDeferTaskOrgCallbacksConsumer
-                            : mService.mWindowManager.mAnimator::addAfterPrepareSurfacesRunnable;
-            mOrganizer = new TaskOrganizerCallbacks(organizer, deferTaskOrgCallbacksConsumer);
+            mOrganizer = new TaskOrganizerCallbacks(organizer);
             mDeathRecipient = new DeathRecipient(organizer);
+            mPendingEventsQueue = new TaskOrganizerPendingEventsQueue(this);
             try {
                 organizer.asBinder().linkToDeath(mDeathRecipient, 0);
             } catch (RemoteException e) {
@@ -311,21 +342,14 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
             mUid = uid;
         }
 
-        void addStartingWindow(Task t, ActivityRecord activity, int launchTheme,
-                TaskSnapshot taskSnapshot) {
-            mOrganizer.addStartingWindow(t, activity, launchTheme, taskSnapshot);
+        @VisibleForTesting
+        DeathRecipient getDeathRecipient() {
+            return mDeathRecipient;
         }
 
-        void removeStartingWindow(Task t, boolean prepareAnimation) {
-            mOrganizer.removeStartingWindow(t, prepareAnimation);
-        }
-
-        void copySplashScreenView(Task t) {
-            mOrganizer.copySplashScreenView(t);
-        }
-
-        public void onAppSplashScreenViewRemoved(Task t) {
-            mOrganizer.onAppSplashScreenViewRemoved(t);
+        @VisibleForTesting
+        TaskOrganizerPendingEventsQueue getPendingEventsQueue() {
+            return mPendingEventsQueue;
         }
 
         /**
@@ -380,20 +404,35 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
             // possible.
             while (!mOrganizedTasks.isEmpty()) {
                 final Task t = mOrganizedTasks.get(0);
-                t.updateTaskOrganizerState(true /* forceUpdate */);
+                if (t.mCreatedByOrganizer) {
+                    // The tasks created by this organizer should ideally be deleted when this
+                    // organizer is disposed off to avoid inconsistent behavior.
+                    t.removeImmediately();
+                } else {
+                    t.updateTaskOrganizerState();
+                }
                 if (mOrganizedTasks.contains(t)) {
                     // updateTaskOrganizerState should remove the task from the list, but still
                     // check it again to avoid while-loop isn't terminate.
                     if (removeTask(t, t.mRemoveWithTaskOrganizer)) {
-                        TaskOrganizerController.this.onTaskVanishedInternal(
-                                mOrganizer.mTaskOrganizer, t);
+                        TaskOrganizerController.this.onTaskVanishedInternal(this, t);
+                    }
+                }
+                if (mService.getTransitionController().isShellTransitionsEnabled()) {
+                    // dispose is only called outside of transitions (eg during unregister). Since
+                    // we "migrate" surfaces when replacing organizers, visibility gets delegated
+                    // to transitions; however, since there is no transition at this point, we have
+                    // to manually show the surface here.
+                    if (t.mTaskOrganizer != null && t.getSurfaceControl() != null) {
+                        t.getSyncTransaction().show(t.getSurfaceControl());
                     }
                 }
             }
 
-            // Remove organizer state after removing tasks so we get a chance to send
-            // onTaskVanished.
-            mTaskOrganizerStates.remove(asBinder());
+            // Pending events queue for this organizer need to be cleared because this organizer
+            // has either died or unregistered itself.
+            mPendingEventsQueue.clearPendingTaskEvents();
+            mTaskOrganizerStates.remove(mOrganizer.getBinder());
         }
 
         void unlinkDeath() {
@@ -432,16 +471,10 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
     private final WindowManagerGlobalLock mGlobalLock;
 
     // List of task organizers by priority
-    private final LinkedList<ITaskOrganizer> mTaskOrganizers = new LinkedList<>();
-    private final HashMap<IBinder, TaskOrganizerState> mTaskOrganizerStates = new HashMap<>();
-    private final WeakHashMap<Task, RunningTaskInfo> mLastSentTaskInfos = new WeakHashMap<>();
-    // Pending task events due to layout deferred.
-    private final ArrayList<PendingTaskEvent> mPendingTaskEvents = new ArrayList<>();
+    private final ArrayDeque<ITaskOrganizer> mTaskOrganizers = new ArrayDeque<>();
+    private final ArrayMap<IBinder, TaskOrganizerState> mTaskOrganizerStates = new ArrayMap<>();
     // Set of organized tasks (by taskId) that dispatch back pressed to their organizers
-    private final HashSet<Integer> mInterceptBackPressedOnRootTasks = new HashSet();
-
-    private RunningTaskInfo mTmpTaskInfo;
-    private Consumer<Runnable> mDeferTaskOrgCallbacksConsumer;
+    private final HashSet<Integer> mInterceptBackPressedOnRootTasks = new HashSet<>();
 
     TaskOrganizerController(ActivityTaskManagerService atm) {
         mService = atm;
@@ -459,20 +492,6 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
     }
 
     /**
-     * Specifies the consumer to run to defer the task org callbacks. Can be overridden while
-     * testing to allow the callbacks to be sent synchronously.
-     */
-    @VisibleForTesting
-    public void setDeferTaskOrgCallbacksConsumer(Consumer<Runnable> consumer) {
-        mDeferTaskOrgCallbacksConsumer = consumer;
-    }
-
-    @VisibleForTesting
-    ArrayList<PendingTaskEvent> getPendingEventList() {
-        return mPendingTaskEvents;
-    }
-
-    /**
      * Register a TaskOrganizer to manage tasks as they enter the a supported windowing mode.
      */
     @Override
@@ -481,7 +500,8 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
         final int uid = Binder.getCallingUid();
         final long origId = Binder.clearCallingIdentity();
         try {
-            synchronized (mGlobalLock) {
+            final ArrayList<TaskAppearedInfo> taskInfos = new ArrayList<>();
+            final Runnable withGlobalLock = () -> {
                 ProtoLog.v(WM_DEBUG_WINDOW_ORGANIZER, "Register task organizer=%s uid=%d",
                         organizer.asBinder(), uid);
                 if (!mTaskOrganizerStates.containsKey(organizer.asBinder())) {
@@ -490,24 +510,27 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
                             new TaskOrganizerState(organizer, uid));
                 }
 
-                final ArrayList<TaskAppearedInfo> taskInfos = new ArrayList<>();
                 final TaskOrganizerState state = mTaskOrganizerStates.get(organizer.asBinder());
                 mService.mRootWindowContainer.forAllTasks((task) -> {
-                    if (ArrayUtils.contains(UNSUPPORTED_WINDOWING_MODES, task.getWindowingMode())) {
-                        return;
-                    }
-
                     boolean returnTask = !task.mCreatedByOrganizer;
-                    task.updateTaskOrganizerState(true /* forceUpdate */,
-                            returnTask /* skipTaskAppeared */);
-                    if (returnTask) {
-                        SurfaceControl outSurfaceControl = state.addTaskWithoutCallback(task,
+                    task.updateTaskOrganizerState(returnTask /* skipTaskAppeared */);
+                    // It is possible for the task to not yet have a surface control, so ensure that
+                    // the update succeeded in setting the organizer for the task before returning
+                    if (task.isOrganized() && returnTask) {
+                        SurfaceControl taskLeash = state.addTaskWithoutCallback(task,
                                 "TaskOrganizerController.registerTaskOrganizer");
-                        taskInfos.add(new TaskAppearedInfo(task.getTaskInfo(), outSurfaceControl));
+                        taskInfos.add(new TaskAppearedInfo(task.getTaskInfo(), taskLeash));
                     }
                 });
-                return new ParceledListSlice<>(taskInfos);
+            };
+            if (mService.getTransitionController().isShellTransitionsEnabled()) {
+                mService.getTransitionController().mRunningLock.runWhenIdle(1000, withGlobalLock);
+            } else {
+                synchronized (mGlobalLock) {
+                    withGlobalLock.run();
+                }
             }
+            return new ParceledListSlice<>(taskInfos);
         } finally {
             Binder.restoreCallingIdentity(origId);
         }
@@ -519,7 +542,7 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
         final int uid = Binder.getCallingUid();
         final long origId = Binder.clearCallingIdentity();
         try {
-            synchronized (mGlobalLock) {
+            final Runnable withGlobalLock = () -> {
                 final TaskOrganizerState state = mTaskOrganizerStates.get(organizer.asBinder());
                 if (state == null) {
                     return;
@@ -528,6 +551,13 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
                         organizer.asBinder(), uid);
                 state.unlinkDeath();
                 state.dispose();
+            };
+            if (mService.getTransitionController().isShellTransitionsEnabled()) {
+                mService.getTransitionController().mRunningLock.runWhenIdle(1000, withGlobalLock);
+            } else {
+                synchronized (mGlobalLock) {
+                    withGlobalLock.run();
+                }
             }
         } finally {
             Binder.restoreCallingIdentity(origId);
@@ -537,103 +567,276 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
     /**
      * @return the task organizer key for a given windowing mode.
      */
-    ITaskOrganizer getTaskOrganizer(int windowingMode) {
-        return isSupportedWindowingMode(windowingMode)
-                ? mTaskOrganizers.peekLast()
-                : null;
+    ITaskOrganizer getTaskOrganizer() {
+        return mTaskOrganizers.peekLast();
     }
 
-    boolean isSupportedWindowingMode(int winMode) {
-        return !ArrayUtils.contains(UNSUPPORTED_WINDOWING_MODES, winMode);
+    // Capture the animation surface control for activity's main window
+    static class StartingWindowAnimationAdaptor implements AnimationAdapter {
+
+        @Override
+        public boolean getShowWallpaper() {
+            return false;
+        }
+
+        @Override
+        public void startAnimation(SurfaceControl animationLeash, SurfaceControl.Transaction t,
+                int type, @NonNull SurfaceAnimator.OnAnimationFinishedCallback finishCallback) {
+        }
+
+        @Override
+        public void onAnimationCancelled(SurfaceControl animationLeash) {
+        }
+
+        @Override
+        public long getDurationHint() {
+            return 0;
+        }
+
+        @Override
+        public long getStatusBarTransitionsStartTime() {
+            return 0;
+        }
+
+        @Override
+        public void dump(PrintWriter pw, String prefix) {
+        }
+
+        @Override
+        public void dumpDebug(ProtoOutputStream proto) {
+        }
+    }
+
+    static SurfaceControl applyStartingWindowAnimation(WindowState window) {
+        final SurfaceControl.Transaction t = window.getPendingTransaction();
+        final StartingWindowAnimationAdaptor adaptor = new StartingWindowAnimationAdaptor();
+        window.startAnimation(t, adaptor, false, ANIMATION_TYPE_STARTING_REVEAL);
+        final SurfaceControl leash = window.getAnimationLeash();
+        if (leash == null) {
+            Slog.e(TAG, "Cannot start starting window animation, the window " + window
+                    + " was removed");
+            return null;
+        }
+        t.setPosition(leash, window.mSurfacePosition.x, window.mSurfacePosition.y);
+        return leash;
     }
 
     boolean addStartingWindow(Task task, ActivityRecord activity, int launchTheme,
             TaskSnapshot taskSnapshot) {
         final Task rootTask = task.getRootTask();
-        if (rootTask == null || rootTask.mTaskOrganizer == null || activity.mStartingData == null) {
+        if (rootTask == null || activity.mStartingData == null) {
             return false;
         }
-        final TaskOrganizerState state =
-                mTaskOrganizerStates.get(rootTask.mTaskOrganizer.asBinder());
-        state.addStartingWindow(task, activity, launchTheme, taskSnapshot);
+        final ITaskOrganizer lastOrganizer = getTaskOrganizer();
+        if (lastOrganizer == null) {
+            return false;
+        }
+        final StartingWindowInfo info = task.getStartingWindowInfo(activity);
+        if (launchTheme != 0) {
+            info.splashScreenThemeResId = launchTheme;
+        }
+        info.taskSnapshot = taskSnapshot;
+        info.appToken = activity.token;
+        // make this happen prior than prepare surface
+        try {
+            lastOrganizer.addStartingWindow(info);
+        } catch (RemoteException e) {
+            Slog.e(TAG, "Exception sending onTaskStart callback", e);
+            return false;
+        }
         return true;
     }
 
-    void removeStartingWindow(Task task, boolean prepareAnimation) {
+    void removeStartingWindow(Task task, ITaskOrganizer taskOrganizer, boolean prepareAnimation,
+            boolean hasImeSurface) {
         final Task rootTask = task.getRootTask();
-        if (rootTask == null || rootTask.mTaskOrganizer == null) {
+        if (rootTask == null) {
             return;
         }
-        final TaskOrganizerState state =
-                mTaskOrganizerStates.get(rootTask.mTaskOrganizer.asBinder());
-        state.removeStartingWindow(task, prepareAnimation);
+        final ITaskOrganizer lastOrganizer = taskOrganizer != null ? taskOrganizer
+                : getTaskOrganizer();
+        if (lastOrganizer == null) {
+            return;
+        }
+        final StartingWindowRemovalInfo removalInfo = new StartingWindowRemovalInfo();
+        removalInfo.taskId = task.mTaskId;
+        removalInfo.playRevealAnimation = prepareAnimation
+                && task.getDisplayContent() != null
+                && task.getDisplayInfo().state == Display.STATE_ON;
+        final boolean playShiftUpAnimation = !task.inMultiWindowMode();
+        final ActivityRecord topActivity = task.topActivityContainsStartingWindow();
+        if (topActivity != null) {
+            // Set defer remove mode for IME
+            final DisplayContent dc = topActivity.getDisplayContent();
+            if (hasImeSurface) {
+                if (topActivity.isVisibleRequested() && dc.mInputMethodWindow != null
+                        && dc.isFixedRotationLaunchingApp(topActivity)) {
+                    removalInfo.deferRemoveMode = DEFER_MODE_ROTATION;
+                } else {
+                    removalInfo.deferRemoveMode = DEFER_MODE_NORMAL;
+                }
+            }
+
+            final WindowState mainWindow =
+                    topActivity.findMainWindow(false/* includeStartingApp */);
+            // No app window for this activity, app might be crashed.
+            // Remove starting window immediately without playing reveal animation.
+            if (mainWindow == null || mainWindow.mRemoved) {
+                removalInfo.playRevealAnimation = false;
+            } else if (removalInfo.playRevealAnimation && playShiftUpAnimation) {
+                removalInfo.roundedCornerRadius =
+                        topActivity.mLetterboxUiController.getRoundedCornersRadius(mainWindow);
+                removalInfo.windowAnimationLeash = applyStartingWindowAnimation(mainWindow);
+                removalInfo.mainFrame = new Rect(mainWindow.getFrame());
+                removalInfo.mainFrame.offsetTo(mainWindow.mSurfacePosition.x,
+                        mainWindow.mSurfacePosition.y);
+            }
+        }
+        try {
+            lastOrganizer.removeStartingWindow(removalInfo);
+        } catch (RemoteException e) {
+            Slog.e(TAG, "Exception sending onStartTaskFinished callback", e);
+        }
     }
 
-    boolean copySplashScreenView(Task task) {
+    /**
+     * Create a starting surface which attach on a given surface.
+     * @param activity Target activity, this isn't necessary to be the top activity.
+     * @param root The root surface which the created surface will attach on.
+     * @param taskSnapshot Whether to draw snapshot.
+     * @param callback Called when surface is drawn and attached to the root surface.
+     * @return The taskId, this is a token and should be used to remove the surface, even if
+     *         the task was removed from hierarchy.
+     */
+    int addWindowlessStartingSurface(Task task, ActivityRecord activity, SurfaceControl root,
+            TaskSnapshot taskSnapshot, Configuration configuration,
+            IWindowlessStartingSurfaceCallback callback) {
         final Task rootTask = task.getRootTask();
-        if (rootTask == null || rootTask.mTaskOrganizer == null) {
+        if (rootTask == null) {
+            return INVALID_TASK_ID;
+        }
+        final ITaskOrganizer lastOrganizer = mTaskOrganizers.peekLast();
+        if (lastOrganizer == null) {
+            return INVALID_TASK_ID;
+        }
+        final StartingWindowInfo info = task.getStartingWindowInfo(activity);
+        info.taskInfo.configuration.setTo(configuration);
+        info.taskInfo.taskDescription = activity.taskDescription;
+        info.taskSnapshot = taskSnapshot;
+        info.windowlessStartingSurfaceCallback = callback;
+        info.rootSurface = root;
+        try {
+            lastOrganizer.addStartingWindow(info);
+        } catch (RemoteException e) {
+            Slog.e(TAG, "Exception sending addWindowlessStartingSurface ", e);
+            return INVALID_TASK_ID;
+        }
+        return task.mTaskId;
+    }
+
+    void removeWindowlessStartingSurface(int taskId, boolean immediately) {
+        final ITaskOrganizer lastOrganizer = mTaskOrganizers.peekLast();
+        if (lastOrganizer == null || taskId == 0) {
+            return;
+        }
+        final StartingWindowRemovalInfo removalInfo = new StartingWindowRemovalInfo();
+        removalInfo.taskId = taskId;
+        removalInfo.windowlessSurface = true;
+        removalInfo.removeImmediately = immediately;
+        removalInfo.deferRemoveMode = DEFER_MODE_NONE;
+        try {
+            lastOrganizer.removeStartingWindow(removalInfo);
+        } catch (RemoteException e) {
+            Slog.e(TAG, "Exception sending removeWindowlessStartingSurface ", e);
+        }
+    }
+
+    boolean copySplashScreenView(Task task, ITaskOrganizer taskOrganizer) {
+        final Task rootTask = task.getRootTask();
+        if (rootTask == null) {
             return false;
         }
-        final TaskOrganizerState state =
-                mTaskOrganizerStates.get(rootTask.mTaskOrganizer.asBinder());
-        state.copySplashScreenView(task);
+        final ITaskOrganizer lastOrganizer = taskOrganizer != null ? taskOrganizer
+                : getTaskOrganizer();
+        if (lastOrganizer == null) {
+            return false;
+        }
+        try {
+            lastOrganizer.copySplashScreenView(task.mTaskId);
+        } catch (RemoteException e) {
+            Slog.e(TAG, "Exception sending copyStartingWindowView callback", e);
+            return false;
+        }
         return true;
     }
 
+    boolean isSupportWindowlessStartingSurface() {
+        final ITaskOrganizer lastOrganizer = mTaskOrganizers.peekLast();
+        return lastOrganizer != null;
+    }
     /**
      * Notify the shell ({@link com.android.wm.shell.ShellTaskOrganizer} that the client has
      * removed the splash screen view.
      * @see com.android.wm.shell.ShellTaskOrganizer#onAppSplashScreenViewRemoved(int)
      * @see SplashScreenView#remove()
      */
-    public void onAppSplashScreenViewRemoved(Task task) {
+    public void onAppSplashScreenViewRemoved(Task task, ITaskOrganizer organizer) {
         final Task rootTask = task.getRootTask();
-        if (rootTask == null || rootTask.mTaskOrganizer == null) {
+        if (rootTask == null) {
             return;
         }
-        final TaskOrganizerState state =
-                mTaskOrganizerStates.get(rootTask.mTaskOrganizer.asBinder());
-        state.onAppSplashScreenViewRemoved(task);
+        final ITaskOrganizer lastOrganizer = organizer != null ? organizer : getTaskOrganizer();
+        if (lastOrganizer == null) {
+            return;
+        }
+        try {
+            lastOrganizer.onAppSplashScreenViewRemoved(task.mTaskId);
+        } catch (RemoteException e) {
+            Slog.e(TAG, "Exception sending onAppSplashScreenViewRemoved callback", e);
+        }
     }
 
     void onTaskAppeared(ITaskOrganizer organizer, Task task) {
         final TaskOrganizerState state = mTaskOrganizerStates.get(organizer.asBinder());
         if (state != null && state.addTask(task)) {
-            PendingTaskEvent pending = getPendingTaskEvent(task, PendingTaskEvent.EVENT_APPEARED);
+            final TaskOrganizerPendingEventsQueue pendingEvents =
+                    state.mPendingEventsQueue;
+            PendingTaskEvent pending = pendingEvents.getPendingTaskEvent(task,
+                    PendingTaskEvent.EVENT_APPEARED);
             if (pending == null) {
-                pending = new PendingTaskEvent(task, PendingTaskEvent.EVENT_APPEARED);
-                mPendingTaskEvents.add(pending);
+                pendingEvents.addPendingTaskEvent(new PendingTaskEvent(task,
+                        PendingTaskEvent.EVENT_APPEARED));
             }
         }
     }
 
     void onTaskVanished(ITaskOrganizer organizer, Task task) {
         final TaskOrganizerState state = mTaskOrganizerStates.get(organizer.asBinder());
-        if (state != null && state.removeTask(task, false /* removeFromSystem */)) {
-            onTaskVanishedInternal(organizer, task);
+        if (state != null && state.removeTask(task, task.mRemoveWithTaskOrganizer)) {
+            onTaskVanishedInternal(state, task);
         }
     }
 
-    private void onTaskVanishedInternal(ITaskOrganizer organizer, Task task) {
-        for (int i = mPendingTaskEvents.size() - 1; i >= 0; i--) {
-            PendingTaskEvent entry = mPendingTaskEvents.get(i);
-            if (task.mTaskId == entry.mTask.mTaskId) {
-                // This task is vanished so remove all pending event of it.
-                mPendingTaskEvents.remove(i);
-                if (entry.mEventType == PendingTaskEvent.EVENT_APPEARED) {
-                    // If task appeared callback still pend, ignore this callback too.
-                    return;
-                }
-            }
+    private void onTaskVanishedInternal(TaskOrganizerState organizerState, Task task) {
+        if (organizerState == null) {
+            Slog.i(TAG, "cannot send onTaskVanished because organizer state is not "
+                    + "present for this organizer");
+            return;
         }
-
-        PendingTaskEvent pending =
-                new PendingTaskEvent(task, organizer, PendingTaskEvent.EVENT_VANISHED);
-        mPendingTaskEvents.add(pending);
+        TaskOrganizerPendingEventsQueue pendingEventsQueue =
+                organizerState.mPendingEventsQueue;
+        boolean hadPendingAppearedEvents =
+                pendingEventsQueue.removePendingTaskEvents(task);
+        if (hadPendingAppearedEvents) {
+            return;
+        }
+        pendingEventsQueue.addPendingTaskEvent(new PendingTaskEvent(task,
+                organizerState.mOrganizer.mTaskOrganizer, PendingTaskEvent.EVENT_VANISHED));
     }
 
     @Override
-    public void createRootTask(int displayId, int windowingMode, @Nullable IBinder launchCookie) {
+    public void createRootTask(int displayId, int windowingMode, @Nullable IBinder launchCookie,
+            boolean removeWithTaskOrganizer) {
         enforceTaskPermission("createRootTask()");
         final long origId = Binder.clearCallingIdentity();
         try {
@@ -645,7 +848,7 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
                     return;
                 }
 
-                createRootTask(display, windowingMode, launchCookie);
+                createRootTask(display, windowingMode, launchCookie, removeWithTaskOrganizer);
             }
         } finally {
             Binder.restoreCallingIdentity(origId);
@@ -654,6 +857,12 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
 
     @VisibleForTesting
     Task createRootTask(DisplayContent display, int windowingMode, @Nullable IBinder launchCookie) {
+        return createRootTask(display, windowingMode, launchCookie,
+                false /* removeWithTaskOrganizer */);
+    }
+
+    Task createRootTask(DisplayContent display, int windowingMode, @Nullable IBinder launchCookie,
+            boolean removeWithTaskOrganizer) {
         ProtoLog.v(WM_DEBUG_WINDOW_ORGANIZER, "Create root task displayId=%d winMode=%d",
                 display.mDisplayId, windowingMode);
         // We want to defer the task appear signal until the task is fully created and attached to
@@ -666,6 +875,7 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
                 .setDeferTaskAppear(true)
                 .setLaunchCookie(launchCookie)
                 .setParent(display.getDefaultTaskDisplayArea())
+                .setRemoveWithTaskOrganizer(removeWithTaskOrganizer)
                 .build();
         task.setDeferTaskAppear(false /* deferTaskAppear */);
         return task;
@@ -688,7 +898,7 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
 
                 ProtoLog.v(WM_DEBUG_WINDOW_ORGANIZER, "Delete root task display=%d winMode=%d",
                         task.getDisplayId(), task.getWindowingMode());
-                task.removeImmediately("deleteRootTask");
+                task.remove(true /* withTransition */, "deleteRootTask");
                 return true;
             }
         } finally {
@@ -697,40 +907,24 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
     }
 
     void dispatchPendingEvents() {
-        if (mService.mWindowManager.mWindowPlacerLocked.isLayoutDeferred()
-                || mPendingTaskEvents.isEmpty()) {
+        if (mService.mWindowManager.mWindowPlacerLocked.isLayoutDeferred()) {
             return;
         }
+        for (int taskOrgIdx = 0; taskOrgIdx < mTaskOrganizerStates.size(); taskOrgIdx++) {
+            TaskOrganizerState taskOrganizerState = mTaskOrganizerStates.valueAt(taskOrgIdx);
+            taskOrganizerState.mPendingEventsQueue.dispatchPendingEvents();
+        }
+    }
 
-        for (int i = 0, n = mPendingTaskEvents.size(); i < n; i++) {
-            PendingTaskEvent event = mPendingTaskEvents.get(i);
-            final Task task = event.mTask;
-            final TaskOrganizerState state;
-            switch (event.mEventType) {
-                case PendingTaskEvent.EVENT_APPEARED:
-                    state = mTaskOrganizerStates.get(event.mTaskOrg.asBinder());
-                    if (state != null && task.taskAppearedReady()) {
-                        state.mOrganizer.onTaskAppeared(task);
-                    }
-                    break;
-                case PendingTaskEvent.EVENT_VANISHED:
-                    state = mTaskOrganizerStates.get(event.mTaskOrg.asBinder());
-                    if (state != null) {
-                        state.mOrganizer.onTaskVanished(task);
-                    }
-                    break;
-                case PendingTaskEvent.EVENT_INFO_CHANGED:
-                    dispatchTaskInfoChanged(event.mTask, event.mForce);
-                    break;
-                case PendingTaskEvent.EVENT_ROOT_BACK_PRESSED:
-                    state = mTaskOrganizerStates.get(event.mTaskOrg.asBinder());
-                    if (state != null) {
-                        state.mOrganizer.onBackPressedOnTaskRoot(task);
-                    }
-                    break;
+    void reportImeDrawnOnTask(Task task) {
+        final TaskOrganizerState state = mTaskOrganizerStates.get(task.mTaskOrganizer.asBinder());
+        if (state != null) {
+            try {
+                state.mOrganizer.mTaskOrganizer.onImeDrawnOnTask(task.mTaskId);
+            } catch (RemoteException e) {
+                Slog.e(TAG, "Exception sending onImeDrawnOnTask callback", e);
             }
         }
-        mPendingTaskEvents.clear();
     }
 
     void onTaskInfoChanged(Task task, boolean force) {
@@ -738,10 +932,30 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
             // Skip if task still not appeared.
             return;
         }
+        final TaskOrganizerState taskOrganizerState =
+                mTaskOrganizerStates.get(task.mTaskOrganizer.asBinder());
+        final TaskOrganizerPendingEventsQueue pendingEventsQueue =
+                taskOrganizerState.mPendingEventsQueue;
+        if (pendingEventsQueue == null) {
+            Slog.i(TAG, "cannot send onTaskInfoChanged because pending events queue is not "
+                    + "present for this organizer");
+            return;
+        }
+        if (force && pendingEventsQueue.numPendingTaskEvents() == 0) {
+            // There are task-info changed events do not result in
+            // - RootWindowContainer#performSurfacePlacementNoTrace OR
+            // - WindowAnimator#animate
+            // For instance, when an app requesting aspect ratio change when in PiP mode.
+            // To solve this, we directly dispatch the pending event if there are no events queued (
+            // otherwise, all pending events should be dispatched on next drawn).
+            pendingEventsQueue.dispatchTaskInfoChanged(task, true /* force */);
+            return;
+        }
 
         // Defer task info reporting while layout is deferred. This is because layout defer
         // blocks tend to do lots of re-ordering which can mess up animations in receivers.
-        PendingTaskEvent pending = getPendingLifecycleTaskEvent(task);
+        PendingTaskEvent pending = pendingEventsQueue
+                .getPendingLifecycleTaskEvent(task);
         if (pending == null) {
             pending = new PendingTaskEvent(task, PendingTaskEvent.EVENT_INFO_CHANGED);
         } else {
@@ -752,54 +966,10 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
                 return;
             }
             // Remove and add for re-ordering.
-            mPendingTaskEvents.remove(pending);
+            pendingEventsQueue.removePendingTaskEvent(pending);
         }
         pending.mForce |= force;
-        mPendingTaskEvents.add(pending);
-    }
-
-    private void dispatchTaskInfoChanged(Task task, boolean force) {
-        RunningTaskInfo lastInfo = mLastSentTaskInfos.get(task);
-        if (mTmpTaskInfo == null) {
-            mTmpTaskInfo = new RunningTaskInfo();
-        }
-        mTmpTaskInfo.configuration.unset();
-        task.fillTaskInfo(mTmpTaskInfo);
-
-        boolean changed = !mTmpTaskInfo.equalsForTaskOrganizer(lastInfo);
-        if (!changed) {
-            int cfgChanges = mTmpTaskInfo.configuration.diff(lastInfo.configuration);
-            final int winCfgChanges = (cfgChanges & ActivityInfo.CONFIG_WINDOW_CONFIGURATION) != 0
-                    ? (int) mTmpTaskInfo.configuration.windowConfiguration.diff(
-                            lastInfo.configuration.windowConfiguration,
-                            true /* compareUndefined */) : 0;
-            if ((winCfgChanges & REPORT_WINDOW_CONFIGS) == 0) {
-                cfgChanges &= ~ActivityInfo.CONFIG_WINDOW_CONFIGURATION;
-            }
-            changed = (cfgChanges & REPORT_CONFIGS) != 0;
-        }
-        if (!(changed || force)) {
-            // mTmpTaskInfo will be reused next time.
-            return;
-        }
-        final RunningTaskInfo newInfo = mTmpTaskInfo;
-        mLastSentTaskInfos.put(task, mTmpTaskInfo);
-        // Since we've stored this, clean up the reference so a new one will be created next time.
-        // Transferring it this way means we only have to construct new RunningTaskInfos when they
-        // change.
-        mTmpTaskInfo = null;
-
-        if (task.isOrganized()) {
-            // Because we defer sending taskAppeared() until the app has drawn, we may receive a
-            // configuration change before the state actually has the task registered. As such we
-            // should ignore these change events to the organizer until taskAppeared(). If the task
-            // was created by the organizer, then we always send the info change.
-            final TaskOrganizerState state = mTaskOrganizerStates.get(
-                    task.mTaskOrganizer.asBinder());
-            if (state != null) {
-                state.mOrganizer.onTaskInfoChanged(task, newInfo);
-            }
-        }
+        pendingEventsQueue.addPendingTaskEvent(pending);
     }
 
     @Override
@@ -808,17 +978,24 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
         final long origId = Binder.clearCallingIdentity();
         try {
             synchronized (mGlobalLock) {
-                DisplayContent dc = mService.mWindowManager.mRoot
+                final DisplayContent dc = mService.mWindowManager.mRoot
                         .getDisplayContent(displayId);
-                if (dc == null || dc.getImeTarget(IME_TARGET_LAYERING) == null) {
+                if (dc == null) {
                     return null;
                 }
+
+                final InsetsControlTarget imeLayeringTarget = dc.getImeTarget(IME_TARGET_LAYERING);
+                if (imeLayeringTarget == null || imeLayeringTarget.getWindow() == null) {
+                    return null;
+                }
+
                 // Avoid WindowState#getRootTask() so we don't attribute system windows to a task.
-                final Task task = dc.getImeTarget(IME_TARGET_LAYERING).getWindow().getTask();
+                final Task task = imeLayeringTarget.getWindow().getTask();
                 if (task == null) {
                     return null;
                 }
-                return task.getRootTask().mRemoteToken.toWindowContainerToken();
+
+                return task.mRemoteToken.toWindowContainerToken();
             }
         } finally {
             Binder.restoreCallingIdentity(origId);
@@ -951,73 +1128,105 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
         }
     }
 
+    @Override
+    public void updateCameraCompatControlState(WindowContainerToken token, int state) {
+        enforceTaskPermission("updateCameraCompatControlState()");
+        final long origId = Binder.clearCallingIdentity();
+        try {
+            synchronized (mGlobalLock) {
+                final WindowContainer wc = WindowContainer.fromBinder(token.asBinder());
+                if (wc == null) {
+                    Slog.w(TAG, "Could not resolve window from token");
+                    return;
+                }
+                final Task task = wc.asTask();
+                if (task == null) {
+                    Slog.w(TAG, "Could not resolve task from token");
+                    return;
+                }
+                ProtoLog.v(WM_DEBUG_WINDOW_ORGANIZER,
+                        "Update camera compat control state to %s for taskId=%d",
+                        cameraCompatControlStateToString(state), task.mTaskId);
+                final ActivityRecord activity = task.getTopNonFinishingActivity();
+                if (activity != null) {
+                    activity.updateCameraCompatStateFromUser(state);
+                }
+            }
+        } finally {
+            Binder.restoreCallingIdentity(origId);
+        }
+    }
+
     public boolean handleInterceptBackPressedOnTaskRoot(Task task) {
-        if (task == null || !task.isOrganized()
-                || !mInterceptBackPressedOnRootTasks.contains(task.mTaskId)) {
+        if (!shouldInterceptBackPressedOnRootTask(task)) {
+            return false;
+        }
+        final TaskOrganizerPendingEventsQueue pendingEventsQueue =
+                mTaskOrganizerStates.get(task.mTaskOrganizer.asBinder())
+                        .mPendingEventsQueue;
+        if (pendingEventsQueue == null) {
+            Slog.w(TAG, "cannot get handle BackPressedOnTaskRoot because organizerState is "
+                    + "not present");
             return false;
         }
 
         PendingTaskEvent pendingVanished =
-                getPendingTaskEvent(task, PendingTaskEvent.EVENT_VANISHED);
+                pendingEventsQueue.getPendingTaskEvent(task,
+                        PendingTaskEvent.EVENT_VANISHED);
         if (pendingVanished != null) {
             // This task will vanish before this callback so just ignore.
             return false;
         }
 
-        PendingTaskEvent pending = getPendingTaskEvent(
+        PendingTaskEvent pending = pendingEventsQueue.getPendingTaskEvent(
                 task, PendingTaskEvent.EVENT_ROOT_BACK_PRESSED);
         if (pending == null) {
             pending = new PendingTaskEvent(task, PendingTaskEvent.EVENT_ROOT_BACK_PRESSED);
         } else {
             // Pending already exist, remove and add for re-ordering.
-            mPendingTaskEvents.remove(pending);
+            pendingEventsQueue.removePendingTaskEvent(pending);
         }
-        mPendingTaskEvents.add(pending);
+        pendingEventsQueue.addPendingTaskEvent(pending);
         mService.mWindowManager.mWindowPlacerLocked.requestTraversal();
         return true;
     }
 
-    @Nullable
-    private PendingTaskEvent getPendingTaskEvent(Task task, int type) {
-        for (int i = mPendingTaskEvents.size() - 1; i >= 0; i--) {
-            PendingTaskEvent entry = mPendingTaskEvents.get(i);
-            if (task.mTaskId == entry.mTask.mTaskId && type == entry.mEventType) {
-                return entry;
-            }
-        }
-        return null;
-    }
-
-    @VisibleForTesting
-    @Nullable
-    PendingTaskEvent getPendingLifecycleTaskEvent(Task task) {
-        for (int i = mPendingTaskEvents.size() - 1; i >= 0; i--) {
-            PendingTaskEvent entry = mPendingTaskEvents.get(i);
-            if (task.mTaskId == entry.mTask.mTaskId && entry.isLifecycleEvent()) {
-                return entry;
-            }
-        }
-        return null;
+    boolean shouldInterceptBackPressedOnRootTask(Task task) {
+        return task != null && task.isOrganized()
+                && mInterceptBackPressedOnRootTasks.contains(task.mTaskId);
     }
 
     public void dump(PrintWriter pw, String prefix) {
         final String innerPrefix = prefix + "  ";
         pw.print(prefix); pw.println("TaskOrganizerController:");
-        for (final TaskOrganizerState state : mTaskOrganizerStates.values()) {
+        final ITaskOrganizer lastOrganizer = mTaskOrganizers.peekLast();
+        for (ITaskOrganizer organizer : mTaskOrganizers) {
+            final TaskOrganizerState state = mTaskOrganizerStates.get(organizer.asBinder());
             final ArrayList<Task> tasks = state.mOrganizedTasks;
             pw.print(innerPrefix + "  ");
-            pw.println(state.mOrganizer.mTaskOrganizer + " uid=" + state.mUid + ":");
+            pw.print(state.mOrganizer.mTaskOrganizer + " uid=" + state.mUid);
+            if (lastOrganizer == organizer) {
+                pw.print(" (active)");
+            }
+            pw.println(':');
             for (int k = 0; k < tasks.size(); k++) {
                 final Task task = tasks.get(k);
                 final int mode = task.getWindowingMode();
-                if (ArrayUtils.contains(UNSUPPORTED_WINDOWING_MODES, mode)) {
-                    continue;
-                }
                 pw.println(innerPrefix + "    ("
                         + WindowConfiguration.windowingModeToString(mode) + ") " + task);
             }
 
         }
         pw.println();
+    }
+
+    @VisibleForTesting
+    TaskOrganizerState getTaskOrganizerState(IBinder taskOrganizer) {
+        return mTaskOrganizerStates.get(taskOrganizer);
+    }
+
+    @VisibleForTesting
+    TaskOrganizerPendingEventsQueue getTaskOrganizerPendingEvents(IBinder taskOrganizer) {
+        return mTaskOrganizerStates.get(taskOrganizer).mPendingEventsQueue;
     }
 }

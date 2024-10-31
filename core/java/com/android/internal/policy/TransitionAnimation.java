@@ -16,15 +16,19 @@
 
 package com.android.internal.policy;
 
+import static android.view.WindowManager.TRANSIT_CLOSE;
 import static android.view.WindowManager.TRANSIT_FLAG_KEYGUARD_GOING_AWAY_NO_ANIMATION;
 import static android.view.WindowManager.TRANSIT_FLAG_KEYGUARD_GOING_AWAY_SUBTLE_ANIMATION;
 import static android.view.WindowManager.TRANSIT_FLAG_KEYGUARD_GOING_AWAY_TO_SHADE;
 import static android.view.WindowManager.TRANSIT_OLD_ACTIVITY_CLOSE;
 import static android.view.WindowManager.TRANSIT_OLD_ACTIVITY_OPEN;
+import static android.view.WindowManager.TRANSIT_OLD_NONE;
 import static android.view.WindowManager.TRANSIT_OLD_TRANSLUCENT_ACTIVITY_CLOSE;
 import static android.view.WindowManager.TRANSIT_OLD_TRANSLUCENT_ACTIVITY_OPEN;
+import static android.view.WindowManager.TRANSIT_OLD_UNSET;
 import static android.view.WindowManager.TRANSIT_OLD_WALLPAPER_INTRA_CLOSE;
 import static android.view.WindowManager.TRANSIT_OLD_WALLPAPER_INTRA_OPEN;
+import static android.view.WindowManager.TRANSIT_OPEN;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -34,12 +38,24 @@ import android.content.res.Configuration;
 import android.content.res.ResourceId;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorSpace;
+import android.graphics.Picture;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.hardware.HardwareBuffer;
+import android.media.Image;
+import android.media.ImageReader;
+import android.os.Handler;
 import android.os.SystemProperties;
 import android.util.Slog;
+import android.view.InflateException;
+import android.view.SurfaceControl;
 import android.view.WindowManager.LayoutParams;
 import android.view.WindowManager.TransitionOldType;
+import android.view.WindowManager.TransitionType;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -49,18 +65,26 @@ import android.view.animation.Interpolator;
 import android.view.animation.PathInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
+import android.window.ScreenCapture;
 
 import com.android.internal.R;
 
+import java.nio.ByteBuffer;
 import java.util.List;
 
 /** @hide */
 public class TransitionAnimation {
+    public static final int WALLPAPER_TRANSITION_NONE = 0;
+    public static final int WALLPAPER_TRANSITION_OPEN = 1;
+    public static final int WALLPAPER_TRANSITION_CLOSE = 2;
+    public static final int WALLPAPER_TRANSITION_INTRA_OPEN = 3;
+    public static final int WALLPAPER_TRANSITION_INTRA_CLOSE = 4;
+
     // These are the possible states for the enter/exit activities during a thumbnail transition
-    public static final int THUMBNAIL_TRANSITION_ENTER_SCALE_UP = 0;
-    public static final int THUMBNAIL_TRANSITION_EXIT_SCALE_UP = 1;
-    public static final int THUMBNAIL_TRANSITION_ENTER_SCALE_DOWN = 2;
-    public static final int THUMBNAIL_TRANSITION_EXIT_SCALE_DOWN = 3;
+    private static final int THUMBNAIL_TRANSITION_ENTER_SCALE_UP = 0;
+    private static final int THUMBNAIL_TRANSITION_EXIT_SCALE_UP = 1;
+    private static final int THUMBNAIL_TRANSITION_ENTER_SCALE_DOWN = 2;
+    private static final int THUMBNAIL_TRANSITION_EXIT_SCALE_DOWN = 3;
 
     /**
      * Maximum duration for the clip reveal animation. This is used when there is a lot of movement
@@ -72,8 +96,14 @@ public class TransitionAnimation {
 
     public static final int DEFAULT_APP_TRANSITION_DURATION = 336;
 
+    /** Fraction of animation at which the recents thumbnail stays completely transparent */
+    private static final float RECENTS_THUMBNAIL_FADEIN_FRACTION = 0.5f;
     /** Fraction of animation at which the recents thumbnail becomes completely transparent */
     private static final float RECENTS_THUMBNAIL_FADEOUT_FRACTION = 0.5f;
+
+    /** Interpolator to be used for animations that respond directly to a touch */
+    static final Interpolator TOUCH_RESPONSE_INTERPOLATOR =
+            new PathInterpolator(0.3f, 0f, 0.1f, 1f);
 
     private static final String DEFAULT_PACKAGE = "android";
 
@@ -86,7 +116,9 @@ public class TransitionAnimation {
             new PathInterpolator(0.3f, 0f, 0.1f, 1f);
     private final Interpolator mClipHorizontalInterpolator = new PathInterpolator(0, 0, 0.4f, 1f);
     private final Interpolator mDecelerateInterpolator;
+    private final Interpolator mFastOutLinearInInterpolator;
     private final Interpolator mLinearOutSlowInInterpolator;
+    private final Interpolator mThumbnailFadeInInterpolator;
     private final Interpolator mThumbnailFadeOutInterpolator;
     private final Rect mTmpFromClipRect = new Rect();
     private final Rect mTmpToClipRect = new Rect();
@@ -97,7 +129,6 @@ public class TransitionAnimation {
     private final int mDefaultWindowAnimationStyleResId;
 
     private final boolean mDebug;
-    private final boolean mGridLayoutRecentsEnabled;
     private final boolean mLowRamRecentsEnabled;
 
     public TransitionAnimation(Context context, boolean debug, String tag) {
@@ -107,8 +138,19 @@ public class TransitionAnimation {
 
         mDecelerateInterpolator = AnimationUtils.loadInterpolator(context,
                 com.android.internal.R.interpolator.decelerate_cubic);
+        mFastOutLinearInInterpolator = AnimationUtils.loadInterpolator(context,
+                com.android.internal.R.interpolator.fast_out_linear_in);
         mLinearOutSlowInInterpolator = AnimationUtils.loadInterpolator(context,
                 com.android.internal.R.interpolator.linear_out_slow_in);
+        mThumbnailFadeInInterpolator = input -> {
+            // Linear response for first fraction, then complete after that.
+            if (input < RECENTS_THUMBNAIL_FADEIN_FRACTION) {
+                return 0f;
+            }
+            float t = (input - RECENTS_THUMBNAIL_FADEIN_FRACTION)
+                    / (1f - RECENTS_THUMBNAIL_FADEIN_FRACTION);
+            return mFastOutLinearInInterpolator.getInterpolation(t);
+        };
         mThumbnailFadeOutInterpolator = input -> {
             // Linear response for first fraction, then complete after that.
             if (input < RECENTS_THUMBNAIL_FADEOUT_FRACTION) {
@@ -123,7 +165,6 @@ public class TransitionAnimation {
         mConfigShortAnimTime = context.getResources().getInteger(
                 com.android.internal.R.integer.config_shortAnimTime);
 
-        mGridLayoutRecentsEnabled = SystemProperties.getBoolean("ro.recents.grid", false);
         mLowRamRecentsEnabled = ActivityManager.isLowRamDeviceStatic();
 
         final TypedArray windowStyle = mContext.getTheme().obtainStyledAttributes(
@@ -181,6 +222,13 @@ public class TransitionAnimation {
                 DEFAULT_PACKAGE, com.android.internal.R.anim.cross_profile_apps_thumbnail_enter);
     }
 
+    @Nullable
+    public Animation createCrossProfileAppsThumbnailAnimationLocked(Rect appRect) {
+        final Animation animation = loadCrossProfileAppThumbnailEnterAnimation();
+        return prepareThumbnailAnimationWithDuration(animation, appRect.width(),
+                appRect.height(), 0, null);
+    }
+
     /** Load animation by resource Id from specific package. */
     @Nullable
     public Animation loadAnimationRes(String packageName, int resId) {
@@ -218,23 +266,89 @@ public class TransitionAnimation {
         return null;
     }
 
-    /** Load animation by attribute Id from android package. */
-    @Nullable
-    public Animation loadDefaultAnimationAttr(int animAttr) {
+    /** Get animation resId by attribute Id from specific LayoutParams */
+    public int getAnimationResId(LayoutParams lp, int animAttr, int transit) {
         int resId = Resources.ID_NULL;
-        Context context = mContext;
+        if (animAttr >= 0) {
+            AttributeCache.Entry ent = getCachedAnimations(lp);
+            if (ent != null) {
+                resId = ent.array.getResourceId(animAttr, 0);
+            }
+        }
+        resId = updateToTranslucentAnimIfNeeded(resId, transit);
+        return resId;
+    }
+
+    /** Get default animation resId */
+    public int getDefaultAnimationResId(int animAttr, int transit) {
+        int resId = Resources.ID_NULL;
         if (animAttr >= 0) {
             AttributeCache.Entry ent = getCachedAnimations(DEFAULT_PACKAGE,
                     mDefaultWindowAnimationStyleResId);
+            if (ent != null) {
+                resId = ent.array.getResourceId(animAttr, 0);
+            }
+        }
+        resId = updateToTranslucentAnimIfNeeded(resId, transit);
+        return resId;
+    }
+
+    /**
+     * Load animation by attribute Id from a specific AnimationStyle resource.
+     *
+     * @param translucent {@code true} if we're sure that the animation is applied on a translucent
+     *                    window container, {@code false} otherwise.
+     * @param transit {@link TransitionOldType} for the app transition of this animation, or
+     *                {@link TransitionOldType#TRANSIT_OLD_UNSET} if app transition type is unknown.
+     */
+    @Nullable
+    private Animation loadAnimationAttr(String packageName, int animStyleResId, int animAttr,
+            boolean translucent, @TransitionOldType int transit) {
+        if (animStyleResId == 0) {
+            return null;
+        }
+        int resId = Resources.ID_NULL;
+        Context context = mContext;
+        if (animAttr >= 0) {
+            packageName = packageName != null ? packageName : DEFAULT_PACKAGE;
+            AttributeCache.Entry ent = getCachedAnimations(packageName, animStyleResId);
             if (ent != null) {
                 context = ent.context;
                 resId = ent.array.getResourceId(animAttr, 0);
             }
         }
+        if (translucent) {
+            resId = updateToTranslucentAnimIfNeeded(resId);
+        } else if (transit != TRANSIT_OLD_UNSET) {
+            resId = updateToTranslucentAnimIfNeeded(resId, transit);
+        }
         if (ResourceId.isValid(resId)) {
             return loadAnimationSafely(context, resId, mTag);
         }
         return null;
+    }
+
+
+    /** Load animation by attribute Id from a specific AnimationStyle resource. */
+    @Nullable
+    public Animation loadAnimationAttr(String packageName, int animStyleResId, int animAttr,
+            boolean translucent) {
+        return loadAnimationAttr(packageName, animStyleResId, animAttr, translucent,
+                TRANSIT_OLD_UNSET);
+    }
+
+    /** Load animation by attribute Id from android package. */
+    @Nullable
+    public Animation loadDefaultAnimationAttr(int animAttr, boolean translucent) {
+        return loadAnimationAttr(DEFAULT_PACKAGE, mDefaultWindowAnimationStyleResId, animAttr,
+                translucent);
+    }
+
+    /** Load animation by attribute Id from android package. */
+    @Nullable
+    public Animation loadDefaultAnimationAttr(int animAttr, @TransitionOldType int transit) {
+        return loadAnimationAttr(DEFAULT_PACKAGE, mDefaultWindowAnimationStyleResId, animAttr,
+                false /* translucent */, transit);
     }
 
     @Nullable
@@ -347,8 +461,15 @@ public class TransitionAnimation {
         }
     }
 
-    public Animation createClipRevealAnimationLocked(int transit, boolean enter, Rect appFrame,
-            Rect displayFrame, Rect startRect) {
+    public Animation createClipRevealAnimationLocked(@TransitionType int transit,
+            int wallpaperTransit, boolean enter, Rect appFrame, Rect displayFrame, Rect startRect) {
+        return createClipRevealAnimationLockedCompat(
+                getTransitCompatType(transit, wallpaperTransit), enter, appFrame, displayFrame,
+                startRect);
+    }
+
+    public Animation createClipRevealAnimationLockedCompat(@TransitionOldType int transit,
+            boolean enter, Rect appFrame, Rect displayFrame, Rect startRect) {
         final Animation anim;
         if (enter) {
             final int appWidth = appFrame.width();
@@ -458,8 +579,14 @@ public class TransitionAnimation {
         return anim;
     }
 
-    public Animation createScaleUpAnimationLocked(int transit, boolean enter,
-            Rect containingFrame, Rect startRect) {
+    public Animation createScaleUpAnimationLocked(@TransitionType int transit, int wallpaperTransit,
+            boolean enter, Rect containingFrame, Rect startRect) {
+        return createScaleUpAnimationLockedCompat(getTransitCompatType(transit, wallpaperTransit),
+                enter, containingFrame, startRect);
+    }
+
+    public Animation createScaleUpAnimationLockedCompat(@TransitionOldType int transit,
+            boolean enter, Rect containingFrame, Rect startRect) {
         Animation a;
         setupDefaultNextAppTransitionStartRect(startRect, mTmpRect);
         final int appWidth = containingFrame.width();
@@ -514,12 +641,19 @@ public class TransitionAnimation {
         return a;
     }
 
+    public Animation createThumbnailEnterExitAnimationLocked(boolean enter, boolean scaleUp,
+            Rect containingFrame, @TransitionType int transit, int wallpaperTransit,
+            HardwareBuffer thumbnailHeader, Rect startRect) {
+        return createThumbnailEnterExitAnimationLockedCompat(enter, scaleUp, containingFrame,
+                getTransitCompatType(transit, wallpaperTransit), thumbnailHeader, startRect);
+    }
+
     /**
      * This animation is created when we are doing a thumbnail transition, for the activity that is
      * leaving, and the activity that is entering.
      */
-    public Animation createThumbnailEnterExitAnimationLocked(int thumbTransitState,
-            Rect containingFrame, int transit, HardwareBuffer thumbnailHeader,
+    public Animation createThumbnailEnterExitAnimationLockedCompat(boolean enter, boolean scaleUp,
+            Rect containingFrame, @TransitionOldType int transit, HardwareBuffer thumbnailHeader,
             Rect startRect) {
         final int appWidth = containingFrame.width();
         final int appHeight = containingFrame.height();
@@ -529,6 +663,7 @@ public class TransitionAnimation {
         final float thumbWidth = thumbWidthI > 0 ? thumbWidthI : 1;
         final int thumbHeightI = thumbnailHeader != null ? thumbnailHeader.getHeight() : appHeight;
         final float thumbHeight = thumbHeightI > 0 ? thumbHeightI : 1;
+        final int thumbTransitState = getThumbnailTransitionState(enter, scaleUp);
 
         switch (thumbTransitState) {
             case THUMBNAIL_TRANSITION_ENTER_SCALE_UP: {
@@ -587,8 +722,8 @@ public class TransitionAnimation {
      * This alternate animation is created when we are doing a thumbnail transition, for the
      * activity that is leaving, and the activity that is entering.
      */
-    public Animation createAspectScaledThumbnailEnterExitAnimationLocked(int thumbTransitState,
-            int orientation, int transit, Rect containingFrame, Rect contentInsets,
+    public Animation createAspectScaledThumbnailEnterExitAnimationLocked(boolean enter,
+            boolean scaleUp, int orientation, int transit, Rect containingFrame, Rect contentInsets,
             @Nullable Rect surfaceInsets, @Nullable Rect stableInsets, boolean freeform,
             Rect startRect, Rect defaultStartRect) {
         Animation a;
@@ -601,11 +736,11 @@ public class TransitionAnimation {
         final float thumbHeight = thumbHeightI > 0 ? thumbHeightI : 1;
         final int thumbStartX = mTmpRect.left - containingFrame.left - contentInsets.left;
         final int thumbStartY = mTmpRect.top - containingFrame.top;
+        final int thumbTransitState = getThumbnailTransitionState(enter, scaleUp);
 
         switch (thumbTransitState) {
             case THUMBNAIL_TRANSITION_ENTER_SCALE_UP:
             case THUMBNAIL_TRANSITION_EXIT_SCALE_DOWN: {
-                final boolean scaleUp = thumbTransitState == THUMBNAIL_TRANSITION_ENTER_SCALE_UP;
                 if (freeform && scaleUp) {
                     a = createAspectScaledThumbnailEnterFreeformAnimationLocked(
                             containingFrame, surfaceInsets, startRect, defaultStartRect);
@@ -631,10 +766,8 @@ public class TransitionAnimation {
                         // We scale the width and clip to the top/left square
                         float scale =
                                 thumbWidth / (appWidth - contentInsets.left - contentInsets.right);
-                        if (!mGridLayoutRecentsEnabled) {
-                            int unscaledThumbHeight = (int) (thumbHeight / scale);
-                            mTmpFromClipRect.bottom = mTmpFromClipRect.top + unscaledThumbHeight;
-                        }
+                        int unscaledThumbHeight = (int) (thumbHeight / scale);
+                        mTmpFromClipRect.bottom = mTmpFromClipRect.top + unscaledThumbHeight;
 
                         Animation scaleAnim = new ScaleAnimation(
                                 scaleUp ? scale : 1, scaleUp ? 1 : scale,
@@ -720,10 +853,138 @@ public class TransitionAnimation {
     }
 
     /**
+     * This animation runs for the thumbnail that gets cross faded with the enter/exit activity
+     * when a thumbnail is specified with the pending animation override.
+     */
+    public Animation createThumbnailAspectScaleAnimationLocked(Rect appRect,
+            @Nullable Rect contentInsets, HardwareBuffer thumbnailHeader, int orientation,
+            Rect startRect, Rect defaultStartRect, boolean scaleUp) {
+        Animation a;
+        final int thumbWidthI = thumbnailHeader.getWidth();
+        final float thumbWidth = thumbWidthI > 0 ? thumbWidthI : 1;
+        final int thumbHeightI = thumbnailHeader.getHeight();
+        final int appWidth = appRect.width();
+
+        float scaleW = appWidth / thumbWidth;
+        getNextAppTransitionStartRect(startRect, defaultStartRect, mTmpRect);
+        final float fromX;
+        float fromY;
+        final float toX;
+        float toY;
+        final float pivotX;
+        final float pivotY;
+        if (shouldScaleDownThumbnailTransition(orientation)) {
+            fromX = mTmpRect.left;
+            fromY = mTmpRect.top;
+
+            // For the curved translate animation to work, the pivot points needs to be at the
+            // same absolute position as the one from the real surface.
+            toX = mTmpRect.width() / 2 * (scaleW - 1f) + appRect.left;
+            toY = appRect.height() / 2 * (1 - 1 / scaleW) + appRect.top;
+            pivotX = mTmpRect.width() / 2;
+            pivotY = appRect.height() / 2 / scaleW;
+        } else {
+            pivotX = 0;
+            pivotY = 0;
+            fromX = mTmpRect.left;
+            fromY = mTmpRect.top;
+            toX = appRect.left;
+            toY = appRect.top;
+        }
+        if (scaleUp) {
+            // Animation up from the thumbnail to the full screen
+            Animation scale = new ScaleAnimation(1f, scaleW, 1f, scaleW, pivotX, pivotY);
+            scale.setInterpolator(TOUCH_RESPONSE_INTERPOLATOR);
+            scale.setDuration(THUMBNAIL_APP_TRANSITION_DURATION);
+            Animation alpha = new AlphaAnimation(1f, 0f);
+            alpha.setInterpolator(mThumbnailFadeOutInterpolator);
+            alpha.setDuration(THUMBNAIL_APP_TRANSITION_DURATION);
+            Animation translate = createCurvedMotion(fromX, toX, fromY, toY);
+            translate.setInterpolator(TOUCH_RESPONSE_INTERPOLATOR);
+            translate.setDuration(THUMBNAIL_APP_TRANSITION_DURATION);
+
+            mTmpFromClipRect.set(0, 0, thumbWidthI, thumbHeightI);
+            mTmpToClipRect.set(appRect);
+
+            // Containing frame is in screen space, but we need the clip rect in the
+            // app space.
+            mTmpToClipRect.offsetTo(0, 0);
+            mTmpToClipRect.right = (int) (mTmpToClipRect.right / scaleW);
+            mTmpToClipRect.bottom = (int) (mTmpToClipRect.bottom / scaleW);
+
+            if (contentInsets != null) {
+                mTmpToClipRect.inset((int) (-contentInsets.left * scaleW),
+                        (int) (-contentInsets.top * scaleW),
+                        (int) (-contentInsets.right * scaleW),
+                        (int) (-contentInsets.bottom * scaleW));
+            }
+
+            Animation clipAnim = new ClipRectAnimation(mTmpFromClipRect, mTmpToClipRect);
+            clipAnim.setInterpolator(TOUCH_RESPONSE_INTERPOLATOR);
+            clipAnim.setDuration(THUMBNAIL_APP_TRANSITION_DURATION);
+
+            // This AnimationSet uses the Interpolators assigned above.
+            AnimationSet set = new AnimationSet(false);
+            set.addAnimation(scale);
+            set.addAnimation(alpha);
+            set.addAnimation(translate);
+            set.addAnimation(clipAnim);
+            a = set;
+        } else {
+            // Animation down from the full screen to the thumbnail
+            Animation scale = new ScaleAnimation(scaleW, 1f, scaleW, 1f, pivotX, pivotY);
+            scale.setInterpolator(TOUCH_RESPONSE_INTERPOLATOR);
+            scale.setDuration(THUMBNAIL_APP_TRANSITION_DURATION);
+            Animation alpha = new AlphaAnimation(0f, 1f);
+            alpha.setInterpolator(mThumbnailFadeInInterpolator);
+            alpha.setDuration(THUMBNAIL_APP_TRANSITION_DURATION);
+            Animation translate = createCurvedMotion(toX, fromX, toY, fromY);
+            translate.setInterpolator(TOUCH_RESPONSE_INTERPOLATOR);
+            translate.setDuration(THUMBNAIL_APP_TRANSITION_DURATION);
+
+            // This AnimationSet uses the Interpolators assigned above.
+            AnimationSet set = new AnimationSet(false);
+            set.addAnimation(scale);
+            set.addAnimation(alpha);
+            set.addAnimation(translate);
+            a = set;
+
+        }
+        return prepareThumbnailAnimationWithDuration(a, appWidth, appRect.height(), 0,
+                null);
+    }
+
+    /**
+     * Creates an overlay with a background color and a thumbnail for the cross profile apps
+     * animation.
+     */
+    public HardwareBuffer createCrossProfileAppsThumbnail(
+            Drawable thumbnailDrawable, Rect frame) {
+        final int width = frame.width();
+        final int height = frame.height();
+
+        final Picture picture = new Picture();
+        final Canvas canvas = picture.beginRecording(width, height);
+        canvas.drawColor(Color.argb(0.6f, 0, 0, 0));
+        final int thumbnailSize = mContext.getResources().getDimensionPixelSize(
+                com.android.internal.R.dimen.cross_profile_apps_thumbnail_size);
+        thumbnailDrawable.setBounds(
+                (width - thumbnailSize) / 2,
+                (height - thumbnailSize) / 2,
+                (width + thumbnailSize) / 2,
+                (height + thumbnailSize) / 2);
+        thumbnailDrawable.setTint(mContext.getColor(android.R.color.white));
+        thumbnailDrawable.draw(canvas);
+        picture.endRecording();
+
+        return Bitmap.createBitmap(picture).getHardwareBuffer();
+    }
+
+    /**
      * Prepares the specified animation with a standard duration, interpolator, etc.
      */
     private Animation prepareThumbnailAnimation(Animation a, int appWidth, int appHeight,
-            int transit) {
+            @TransitionOldType int transit) {
         // Pick the desired duration.  If this is an inter-activity transition,
         // it  is the standard duration for that.  Otherwise we use the longer
         // task transition duration.
@@ -804,8 +1065,7 @@ public class TransitionAnimation {
      * @return whether the transition should show the thumbnail being scaled down.
      */
     private boolean shouldScaleDownThumbnailTransition(int orientation) {
-        return mGridLayoutRecentsEnabled
-                || orientation == Configuration.ORIENTATION_PORTRAIT;
+        return orientation == Configuration.ORIENTATION_PORTRAIT;
     }
 
     private static int updateToTranslucentAnimIfNeeded(int anim, @TransitionOldType int transit) {
@@ -818,6 +1078,32 @@ public class TransitionAnimation {
             return R.anim.activity_translucent_close_exit;
         }
         return anim;
+    }
+
+    private static int updateToTranslucentAnimIfNeeded(int anim) {
+        if (anim == R.anim.activity_open_enter) {
+            return R.anim.activity_translucent_open_enter;
+        }
+        if (anim == R.anim.activity_close_exit) {
+            return R.anim.activity_translucent_close_exit;
+        }
+        return anim;
+    }
+
+    private static @TransitionOldType int getTransitCompatType(@TransitionType int transit,
+            int wallpaperTransit) {
+        if (wallpaperTransit == WALLPAPER_TRANSITION_INTRA_OPEN) {
+            return TRANSIT_OLD_WALLPAPER_INTRA_OPEN;
+        } else if (wallpaperTransit == WALLPAPER_TRANSITION_INTRA_CLOSE) {
+            return TRANSIT_OLD_WALLPAPER_INTRA_CLOSE;
+        } else if (transit == TRANSIT_OPEN) {
+            return TRANSIT_OLD_ACTIVITY_OPEN;
+        } else if (transit == TRANSIT_CLOSE) {
+            return TRANSIT_OLD_ACTIVITY_CLOSE;
+        }
+
+        // We only do some special handle for above type, so use type NONE for default behavior.
+        return TRANSIT_OLD_NONE;
     }
 
     /**
@@ -843,10 +1129,33 @@ public class TransitionAnimation {
     }
 
     /**
+     * Return the current thumbnail transition state.
+     */
+    private int getThumbnailTransitionState(boolean enter, boolean scaleUp) {
+        if (enter) {
+            if (scaleUp) {
+                return THUMBNAIL_TRANSITION_ENTER_SCALE_UP;
+            } else {
+                return THUMBNAIL_TRANSITION_ENTER_SCALE_DOWN;
+            }
+        } else {
+            if (scaleUp) {
+                return THUMBNAIL_TRANSITION_EXIT_SCALE_UP;
+            } else {
+                return THUMBNAIL_TRANSITION_EXIT_SCALE_DOWN;
+            }
+        }
+    }
+
+    /**
      * Prepares the specified animation with a standard duration, interpolator, etc.
      */
-    private static Animation prepareThumbnailAnimationWithDuration(Animation a, int appWidth,
+    public static Animation prepareThumbnailAnimationWithDuration(Animation a, int appWidth,
             int appHeight, long duration, Interpolator interpolator) {
+        if (a == null) {
+            return null;
+        }
+
         if (duration > 0) {
             a.setDuration(duration);
         }
@@ -940,7 +1249,7 @@ public class TransitionAnimation {
     public static Animation loadAnimationSafely(Context context, int resId, String tag) {
         try {
             return AnimationUtils.loadAnimation(context, resId);
-        } catch (Resources.NotFoundException e) {
+        } catch (Resources.NotFoundException | InflateException e) {
             Slog.w(tag, "Unable to load animation resource", e);
             return null;
         }
@@ -972,4 +1281,135 @@ public class TransitionAnimation {
 
         return set;
     }
+
+    /** Sets the default attributes of the screenshot layer used for animation. */
+    public static void configureScreenshotLayer(SurfaceControl.Transaction t, SurfaceControl layer,
+            ScreenCapture.ScreenshotHardwareBuffer buffer) {
+        t.setBuffer(layer, buffer.getHardwareBuffer());
+        t.setDataSpace(layer, buffer.getColorSpace().getDataSpace());
+        // Avoid showing dimming effect for HDR content when running animations.
+        if (buffer.containsHdrLayers()) {
+            t.setDimmingEnabled(layer, false);
+        }
+    }
+
+    /** Returns whether the hardware buffer passed in is marked as protected. */
+    public static boolean hasProtectedContent(HardwareBuffer hardwareBuffer) {
+        return (hardwareBuffer.getUsage() & HardwareBuffer.USAGE_PROTECTED_CONTENT)
+                == HardwareBuffer.USAGE_PROTECTED_CONTENT;
+    }
+
+    /**
+     * Returns the luminance in 0~1. The surface control is the source of the hardware buffer,
+     * which will be used if the buffer is protected from reading.
+     */
+    public static float getBorderLuma(@NonNull HardwareBuffer hwBuffer,
+            @NonNull ColorSpace colorSpace, @NonNull SurfaceControl sourceSurfaceControl) {
+        if (hasProtectedContent(hwBuffer)) {
+            // The buffer cannot be read. Capture another buffer which excludes protected content
+            // from the source surface.
+            return getBorderLuma(sourceSurfaceControl, hwBuffer.getWidth(), hwBuffer.getHeight());
+        }
+        // Use the existing buffer directly.
+        return getBorderLuma(hwBuffer, colorSpace);
+    }
+
+    /** Returns the luminance in 0~1. */
+    public static float getBorderLuma(SurfaceControl surfaceControl, int w, int h) {
+        final ScreenCapture.ScreenshotHardwareBuffer buffer =
+                ScreenCapture.captureLayers(surfaceControl, new Rect(0, 0, w, h), 1);
+        if (buffer == null) {
+            return 0;
+        }
+        final HardwareBuffer hwBuffer = buffer.getHardwareBuffer();
+        final float luma = getBorderLuma(hwBuffer, buffer.getColorSpace());
+        if (hwBuffer != null) {
+            hwBuffer.close();
+        }
+        return luma;
+    }
+
+    /** Returns the luminance in 0~1. */
+    public static float getBorderLuma(HardwareBuffer hwBuffer, ColorSpace colorSpace) {
+        if (hwBuffer == null) {
+            return 0;
+        }
+        final int format = hwBuffer.getFormat();
+        // Only support RGB format in 4 bytes. And protected buffer is not readable.
+        if (format != HardwareBuffer.RGBA_8888 || hasProtectedContent(hwBuffer)) {
+            return 0;
+        }
+
+        final ImageReader ir = ImageReader.newInstance(hwBuffer.getWidth(), hwBuffer.getHeight(),
+                format, 1 /* maxImages */);
+        ir.getSurface().attachAndQueueBufferWithColorSpace(hwBuffer, colorSpace);
+        final Image image = ir.acquireLatestImage();
+        if (image == null || image.getPlaneCount() < 1) {
+            return 0;
+        }
+
+        final Image.Plane plane = image.getPlanes()[0];
+        final ByteBuffer buffer = plane.getBuffer();
+        final int width = image.getWidth();
+        final int height = image.getHeight();
+        final int pixelStride = plane.getPixelStride();
+        final int rowStride = plane.getRowStride();
+        final int sampling = 10;
+        final int[] histogram = new int[256];
+
+        // Grab the top and bottom borders.
+        int i = 0;
+        for (int x = 0, size = width - sampling; x < size; x += sampling) {
+            final int topLm = getPixelLuminance(buffer, x, 0, pixelStride, rowStride);
+            final int bottomLm = getPixelLuminance(buffer, x, height - 1, pixelStride, rowStride);
+            histogram[topLm]++;
+            histogram[bottomLm]++;
+        }
+
+        // Grab the left and right borders.
+        for (int y = 0, size = height - sampling; y < size; y += sampling) {
+            final int leftLm = getPixelLuminance(buffer, 0, y, pixelStride, rowStride);
+            final int rightLm = getPixelLuminance(buffer, width - 1, y, pixelStride, rowStride);
+            histogram[leftLm]++;
+            histogram[rightLm]++;
+        }
+
+        ir.close();
+
+        // Find the median from histogram.
+        final int halfNum = (width + height) / sampling;
+        int sum = 0;
+        int medianLuminance = 0;
+        for (i = 0; i < histogram.length; i++) {
+            sum += histogram[i];
+            if (sum >= halfNum) {
+                medianLuminance = i;
+                break;
+            }
+        }
+        return medianLuminance / 255f;
+    }
+
+    /** Returns the luminance of the pixel in 0~255. */
+    private static int getPixelLuminance(ByteBuffer buffer, int x, int y, int pixelStride,
+            int rowStride) {
+        final int color = buffer.getInt(y * rowStride + x * pixelStride);
+        // The buffer from ImageReader is always in native order (little-endian), so extract the
+        // color components in reversed order.
+        final int r = color & 0xff;
+        final int g = (color >> 8) & 0xff;
+        final int b = (color >> 16) & 0xff;
+        // Approximation of WCAG 2.0 relative luminance.
+        return ((r * 8) + (g * 22) + (b * 2)) >> 5;
+    }
+
+    /**
+     * For non-system server process, it must call this method to initialize the AttributeCache and
+     * start monitor package change, so the resources can be loaded correctly.
+     */
+    public static void initAttributeCache(Context context, Handler handler) {
+        AttributeCache.init(context);
+        AttributeCache.instance().monitorPackageRemove(handler);
+    }
+
 }

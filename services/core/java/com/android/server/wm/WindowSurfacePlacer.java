@@ -210,6 +210,10 @@ class WindowSurfacePlacer {
         return mInLayout;
     }
 
+    boolean isTraversalScheduled() {
+        return mTraversalScheduled;
+    }
+
     void requestTraversal() {
         if (mTraversalScheduled) {
             return;
@@ -228,7 +232,5 @@ class WindowSurfacePlacer {
 
     public void dump(PrintWriter pw, String prefix) {
         pw.println(prefix + "mTraversalScheduled=" + mTraversalScheduled);
-        pw.println(prefix + "mHoldScreenWindow=" + mService.mRoot.mHoldScreenWindow);
-        pw.println(prefix + "mObscuringWindow=" + mService.mRoot.mObscuringWindow);
     }
 }

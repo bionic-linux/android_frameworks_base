@@ -45,10 +45,13 @@ public final class FrameworksTestsFilter extends SelectTest {
             // Test specifications for FrameworksMockingCoreTests.
             "android.app.activity.ActivityThreadClientTest",
             "android.view.DisplayTest",
+            "android.window.ConfigurationHelperTest",
             // Test specifications for FrameworksCoreTests.
             "android.app.servertransaction.", // all tests under the package.
             "android.view.CutoutSpecificationTest",
             "android.view.DisplayCutoutTest",
+            "android.view.DisplayShapeTest",
+            "android.view.ImeBackAnimationControllerTest",
             "android.view.InsetsAnimationControlImplTest",
             "android.view.InsetsControllerTest",
             "android.view.InsetsFlagsTest",
@@ -59,10 +62,9 @@ public final class FrameworksTestsFilter extends SelectTest {
             "android.view.RoundedCornersTest",
             "android.view.WindowMetricsTest",
             "android.view.PendingInsetsControllerTest",
-            "android.window.WindowContextTest",
-            "android.window.WindowMetricsHelperTest",
+            "android.window.", // all tests under the package.
             "android.app.activity.ActivityThreadTest",
-            "android.window.WindowContextControllerTest"
+            "android.app.activity.RegisterComponentCallbacksTest"
     };
 
     public FrameworksTestsFilter(Bundle testArgs) {

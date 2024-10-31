@@ -16,16 +16,26 @@
 
 package com.android.systemui.classifier;
 
+import android.view.KeyEvent;
 import android.view.MotionEvent;
+
+import javax.inject.Inject;
 
 /** */
 public class FalsingCollectorFake implements FalsingCollector {
+
+    public KeyEvent lastKeyEvent = null;
+
     @Override
-    public void onSuccessfulUnlock() {
+    public void init() {
+    }
+
+    @Inject
+    public FalsingCollectorFake() {
     }
 
     @Override
-    public void onNotificationActive() {
+    public void onSuccessfulUnlock() {
     }
 
     @Override
@@ -33,60 +43,8 @@ public class FalsingCollectorFake implements FalsingCollector {
     }
 
     @Override
-    public void onNotificationStartDraggingDown() {
-    }
-
-    @Override
-    public void onNotificationStopDraggingDown() {
-    }
-
-    @Override
-    public void setNotificationExpanded() {
-    }
-
-    @Override
-    public void onQsDown() {
-    }
-
-    @Override
-    public void setQsExpanded(boolean expanded) {
-    }
-
-    @Override
     public boolean shouldEnforceBouncer() {
         return false;
-    }
-
-    @Override
-    public void onTrackingStarted(boolean secure) {
-    }
-
-    @Override
-    public void onTrackingStopped() {
-    }
-
-    @Override
-    public void onLeftAffordanceOn() {
-    }
-
-    @Override
-    public void onCameraOn() {
-    }
-
-    @Override
-    public void onAffordanceSwipingStarted(boolean rightCorner) {
-    }
-
-    @Override
-    public void onAffordanceSwipingAborted() {
-    }
-
-    @Override
-    public void onStartExpandingFromPulse() {
-    }
-
-    @Override
-    public void onExpansionFromPulseStopped() {
     }
 
     @Override
@@ -99,18 +57,6 @@ public class FalsingCollectorFake implements FalsingCollector {
     }
 
     @Override
-    public void onUnlockHintStarted() {
-    }
-
-    @Override
-    public void onCameraHintStarted() {
-    }
-
-    @Override
-    public void onLeftAffordanceHintStarted() {
-    }
-
-    @Override
     public void onScreenTurningOn() {
     }
 
@@ -119,27 +65,16 @@ public class FalsingCollectorFake implements FalsingCollector {
     }
 
     @Override
-    public void onNotificationStopDismissing() {
-    }
-
-    @Override
-    public void onNotificationDismissed() {
-    }
-
-    @Override
-    public void onNotificationStartDismissing() {
-    }
-
-    @Override
-    public void onNotificationDoubleTap(boolean accepted, float dx, float dy) {
-    }
-
-    @Override
     public void onBouncerShown() {
     }
 
     @Override
     public void onBouncerHidden() {
+    }
+
+    @Override
+    public void onKeyEvent(KeyEvent ev) {
+        lastKeyEvent = ev;
     }
 
     @Override
@@ -160,5 +95,9 @@ public class FalsingCollectorFake implements FalsingCollector {
 
     @Override
     public void updateFalseConfidence(FalsingClassifier.Result result) {
+    }
+
+    @Override
+    public void onA11yAction() {
     }
 }

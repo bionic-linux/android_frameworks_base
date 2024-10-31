@@ -17,10 +17,10 @@
 #include "JankTracker.h"
 
 #include <cutils/ashmem.h>
+#include <cutils/trace.h>
 #include <errno.h>
 #include <inttypes.h>
 #include <log/log.h>
-#include <sys/mman.h>
 
 #include <algorithm>
 #include <cmath>
@@ -111,19 +111,22 @@ void JankTracker::calculateLegacyJank(FrameInfo& frame) REQUIRES(mDataMutex) {
             // the actual time spent blocked.
             nsecs_t forgiveAmount =
                     std::min(expectedDequeueDuration, frame[FrameInfoIndex::DequeueBufferDuration]);
-            LOG_ALWAYS_FATAL_IF(forgiveAmount >= totalDuration,
-                                "Impossible dequeue duration! dequeue duration reported %" PRId64
-                                ", total duration %" PRId64,
-                                forgiveAmount, totalDuration);
+            if (forgiveAmount >= totalDuration) {
+                ALOGV("Impossible dequeue duration! dequeue duration reported %" PRId64
+                      ", total duration %" PRId64,
+                      forgiveAmount, totalDuration);
+                return;
+            }
             totalDuration -= forgiveAmount;
         }
     }
 
-    LOG_ALWAYS_FATAL_IF(totalDuration <= 0, "Impossible totalDuration %" PRId64 " start=%" PRIi64
-                        " gpuComplete=%" PRIi64, totalDuration,
-                        frame[FrameInfoIndex::IntendedVsync],
-                        frame[FrameInfoIndex::GpuCompleted]);
-
+    if (totalDuration <= 0) {
+        ALOGV("Impossible totalDuration %" PRId64 " start=%" PRIi64 " gpuComplete=%" PRIi64,
+              totalDuration, frame[FrameInfoIndex::IntendedVsync],
+              frame[FrameInfoIndex::GpuCompleted]);
+        return;
+    }
 
     // Only things like Surface.lockHardwareCanvas() are exempt from tracking
     if (CC_UNLIKELY(frame[FrameInfoIndex::Flags] & EXEMPT_FRAMES_FLAGS)) {
@@ -164,7 +167,8 @@ void JankTracker::calculateLegacyJank(FrameInfo& frame) REQUIRES(mDataMutex) {
             - lastFrameOffset + mFrameIntervalLegacy;
 }
 
-void JankTracker::finishFrame(FrameInfo& frame, std::unique_ptr<FrameMetricsReporter>& reporter) {
+void JankTracker::finishFrame(FrameInfo& frame, std::unique_ptr<FrameMetricsReporter>& reporter,
+                              int64_t frameNumber, int32_t surfaceControlId) {
     std::lock_guard lock(mDataMutex);
 
     calculateLegacyJank(frame);
@@ -173,7 +177,10 @@ void JankTracker::finishFrame(FrameInfo& frame, std::unique_ptr<FrameMetricsRepo
     int64_t totalDuration = frame.duration(FrameInfoIndex::IntendedVsync,
             FrameInfoIndex::FrameCompleted);
 
-    LOG_ALWAYS_FATAL_IF(totalDuration <= 0, "Impossible totalDuration %" PRId64, totalDuration);
+    if (totalDuration <= 0) {
+        ALOGV("Impossible totalDuration %" PRId64, totalDuration);
+        return;
+    }
     mData->reportFrame(totalDuration);
     (*mGlobalData)->reportFrame(totalDuration);
 
@@ -194,8 +201,9 @@ void JankTracker::finishFrame(FrameInfo& frame, std::unique_ptr<FrameMetricsRepo
     // If we are in triple buffering, we have enough buffers in queue to sustain a single frame
     // drop without jank, so adjust the frame interval to the deadline.
     if (isTripleBuffered) {
-        deadline += frameInterval;
-        frame.set(FrameInfoIndex::FrameDeadline) += frameInterval;
+        int64_t originalDeadlineDuration = deadline - frame[FrameInfoIndex::IntendedVsync];
+        deadline = mNextFrameStartUnstuffed + originalDeadlineDuration;
+        frame.set(FrameInfoIndex::FrameDeadline) = deadline;
     }
 
     // If we hit the deadline, cool!
@@ -253,7 +261,8 @@ void JankTracker::finishFrame(FrameInfo& frame, std::unique_ptr<FrameMetricsRepo
     }
 
     if (CC_UNLIKELY(reporter.get() != nullptr)) {
-        reporter->reportFrameMetrics(frame.data(), false /* hasPresentTime */);
+        reporter->reportFrameMetrics(frame.data(), false /* hasPresentTime */, frameNumber,
+                                     surfaceControlId);
     }
 }
 
@@ -269,7 +278,7 @@ void JankTracker::recomputeThresholds(int64_t frameBudget) REQUIRES(mDataMutex) 
 
 void JankTracker::dumpData(int fd, const ProfileDataDescription* description,
                            const ProfileData* data) {
-
+#ifdef __ANDROID__
     if (description) {
         switch (description->type) {
             case JankTrackerType::Generic:
@@ -287,9 +296,11 @@ void JankTracker::dumpData(int fd, const ProfileDataDescription* description,
     }
     data->dump(fd);
     dprintf(fd, "\n");
+#endif
 }
 
 void JankTracker::dumpFrames(int fd) {
+#ifdef __ANDROID__
     dprintf(fd, "\n\n---PROFILEDATA---\n");
     for (size_t i = 0; i < static_cast<size_t>(FrameInfoIndex::NumIndexes); i++) {
         dprintf(fd, "%s", FrameInfoNames[i]);
@@ -306,6 +317,7 @@ void JankTracker::dumpFrames(int fd) {
         }
     }
     dprintf(fd, "\n---PROFILEDATA---\n\n");
+#endif
 }
 
 void JankTracker::reset() REQUIRES(mDataMutex) {

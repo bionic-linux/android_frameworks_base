@@ -18,7 +18,6 @@ package com.android.systemui.statusbar.notification;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
@@ -26,23 +25,23 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-import android.test.suitebuilder.annotation.SmallTest;
-import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.SmallTest;
 
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.statusbar.NotificationLockscreenUserManager;
-import com.android.systemui.statusbar.phone.StatusBarKeyguardViewManager;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
+import org.junit.runner.RunWith;
 
 @SmallTest
-@org.junit.runner.RunWith(AndroidTestingRunner.class)
+@RunWith(AndroidJUnit4.class)
 @TestableLooper.RunWithLooper
 public class DynamicPrivacyControllerTest extends SysuiTestCase {
 
@@ -59,11 +58,9 @@ public class DynamicPrivacyControllerTest extends SysuiTestCase {
         mDynamicPrivacyController = new DynamicPrivacyController(
                 mLockScreenUserManager, mKeyguardStateController,
                 mock(StatusBarStateController.class));
-        mDynamicPrivacyController.setStatusBarKeyguardViewManager(
-                mock(StatusBarKeyguardViewManager.class));
         mDynamicPrivacyController.addListener(mListener);
         // Disable dynamic privacy by default
-        allowPrivateNotificationsInPublic(true);
+        allowNotificationsInPublic(false);
     }
 
     @Test
@@ -108,31 +105,26 @@ public class DynamicPrivacyControllerTest extends SysuiTestCase {
 
     @Test
     public void dynamicPrivacyOnlyWhenHidingPrivate() {
-        // Verify that when only hiding notifications, this isn't enabled
-        allowPrivateNotificationsInPublic(true);
-        when(mLockScreenUserManager.shouldHideNotifications(any())).thenReturn(
-                false);
-        assertFalse("Dynamic privacy shouldn't be enabled when only hiding notifications",
+        // Verify that when hiding notifications, this isn't enabled
+        allowNotificationsInPublic(false);
+        assertFalse("Dynamic privacy shouldn't be enabled when hiding notifications",
                 mDynamicPrivacyController.isDynamicPrivacyEnabled());
-        allowPrivateNotificationsInPublic(false);
-        assertTrue("Should be enabled when hiding notification contents",
+        allowNotificationsInPublic(true);
+        assertTrue("Should be enabled whenever notifications are visible",
                 mDynamicPrivacyController.isDynamicPrivacyEnabled());
     }
 
     private void enableDynamicPrivacy() {
-        allowPrivateNotificationsInPublic(false);
+        allowNotificationsInPublic(true);
     }
 
-    private void allowPrivateNotificationsInPublic(boolean allow) {
-        when(mLockScreenUserManager.userAllowsPrivateNotificationsInPublic(anyInt())).thenReturn(
-                allow);
+    private void allowNotificationsInPublic(boolean allow) {
+        when(mLockScreenUserManager.userAllowsNotificationsInPublic(anyInt())).thenReturn(allow);
     }
 
     @Test
     public void testNotNotifiedWithoutNotifications() {
         when(mKeyguardStateController.canDismissLockScreen()).thenReturn(true);
-        when(mLockScreenUserManager.shouldHideNotifications(anyInt())).thenReturn(
-                true);
         mDynamicPrivacyController.onUnlockedChanged();
         verifyNoMoreInteractions(mListener);
     }

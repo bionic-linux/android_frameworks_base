@@ -59,7 +59,8 @@ public final class IrisAuthenticator extends IBiometricAuthenticator.Stub {
     @Override
     public void prepareForAuthentication(boolean requireConfirmation, IBinder token,
             long sessionId, int userId, IBiometricSensorReceiver sensorReceiver,
-            String opPackageName, int cookie, boolean allowBackgroundAuthentication)
+            String opPackageName, long requestId, int cookie, boolean allowBackgroundAuthentication,
+            boolean isForLegacyFingerprintManager)
             throws RemoteException {
     }
 
@@ -68,7 +69,7 @@ public final class IrisAuthenticator extends IBiometricAuthenticator.Stub {
     }
 
     @Override
-    public void cancelAuthenticationFromService(IBinder token, String opPackageName)
+    public void cancelAuthenticationFromService(IBinder token, String opPackageName, long requestId)
             throws RemoteException {
     }
 

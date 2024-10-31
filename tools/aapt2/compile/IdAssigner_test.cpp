@@ -57,18 +57,18 @@ TEST_F(IdAssignerTests, AssignIdsWithReservedIds) {
   ASSERT_TRUE(assigner.Consume(context.get(), table.get()));
   ASSERT_TRUE(VerifyIds(table.get()));
 
-  Maybe<ResourceTable::SearchResult> maybe_result;
+  std::optional<ResourceTable::SearchResult> maybe_result;
 
   // Expect to fill in the gaps between 0x0101XXXX and 0x0104XXXX.
 
   maybe_result = table->FindResource(test::ParseNameOrDie("android:dimen/two"));
   ASSERT_TRUE(maybe_result);
-  EXPECT_EQ(make_value<ResourceId>(0x01020000), maybe_result.value().entry->id);
+  EXPECT_EQ(0x01020000, maybe_result.value().entry->id);
 
   maybe_result =
       table->FindResource(test::ParseNameOrDie("android:integer/three"));
   ASSERT_TRUE(maybe_result);
-  EXPECT_EQ(make_value<ResourceId>(0x01030000), maybe_result.value().entry->id);
+  EXPECT_EQ(0x01030000, maybe_result.value().entry->id);
 
   // Expect to bypass the reserved 0x0104XXXX IDs and use the next 0x0105XXXX
   // IDs.
@@ -76,17 +76,17 @@ TEST_F(IdAssignerTests, AssignIdsWithReservedIds) {
   maybe_result =
       table->FindResource(test::ParseNameOrDie("android:string/five"));
   ASSERT_TRUE(maybe_result);
-  EXPECT_EQ(make_value<ResourceId>(0x01050000), maybe_result.value().entry->id);
+  EXPECT_EQ(0x01050000, maybe_result.value().entry->id);
 
   // Expect to fill in the gaps between 0x01040000 and 0x01040006.
 
   maybe_result = table->FindResource(test::ParseNameOrDie("android:attr/bar"));
   ASSERT_TRUE(maybe_result);
-  EXPECT_EQ(make_value<ResourceId>(0x01040001), maybe_result.value().entry->id);
+  EXPECT_EQ(0x01040001, maybe_result.value().entry->id);
 
   maybe_result = table->FindResource(test::ParseNameOrDie("android:attr/baz"));
   ASSERT_TRUE(maybe_result);
-  EXPECT_EQ(make_value<ResourceId>(0x01040002), maybe_result.value().entry->id);
+  EXPECT_EQ(0x01040002, maybe_result.value().entry->id);
 }
 
 TEST_F(IdAssignerTests, FailWhenNonUniqueIdsAssigned) {
@@ -117,14 +117,28 @@ TEST_F(IdAssignerTests, FailWhenTypeHasTwoNonStagedIds) {
 }
 
 TEST_F(IdAssignerTests, FailWhenTypeHasTwoNonStagedIdsRegardlessOfStagedId) {
-  auto table = test::ResourceTableBuilder()
-                   .AddSimple("android:attr/foo", ResourceId(0x01050000))
-                   .AddSimple("android:attr/bar", ResourceId(0x01ff0006))
-                   .Add(NewResourceBuilder("android:attr/staged_baz")
-                            .SetId(0x01ff0000)
-                            .SetVisibility({.staged_api = true})
-                            .Build())
-                   .Build();
+  auto table =
+      test::ResourceTableBuilder()
+          .AddSimple("android:attr/foo", ResourceId(0x01050000))
+          .AddSimple("android:attr/bar", ResourceId(0x01ff0006))
+          .Add(NewResourceBuilder("android:attr/staged_baz")
+                   .SetId(0x01ff0000)
+                   .SetVisibility({.staged_api = true, .level = Visibility::Level::kPublic})
+                   .Build())
+          .Build();
+  IdAssigner assigner;
+  ASSERT_FALSE(assigner.Consume(context.get(), table.get()));
+}
+
+TEST_F(IdAssignerTests, FailWhenTypeHaveBothStagedAndNonStagedIds) {
+  auto table =
+      test::ResourceTableBuilder()
+          .AddSimple("android:attr/foo", ResourceId(0x01010000))
+          .Add(NewResourceBuilder("android:bool/staged_baz")
+                   .SetId(0x01010001)
+                   .SetVisibility({.staged_api = true, .level = Visibility::Level::kPublic})
+                   .Build())
+          .Build();
   IdAssigner assigner;
   ASSERT_FALSE(assigner.Consume(context.get(), table.get()));
 }
@@ -143,7 +157,7 @@ TEST_F(IdAssignerTests, AssignIdsWithIdMap) {
   ASSERT_TRUE(result);
 
   const ResourceTable::SearchResult& search_result = result.value();
-  EXPECT_EQ(make_value<ResourceId>(0x01010002), search_result.entry->id);
+  EXPECT_EQ(0x01010002, search_result.entry->id);
 }
 
 TEST_F(IdAssignerTests, UseAllEntryIds) {
@@ -191,12 +205,12 @@ TEST_F(IdAssignerTests, ExaustEntryIdsLastIdIsPublic) {
       for (auto& entry : type->entries) {
         if (!entry->id) {
           return ::testing::AssertionFailure()
-                 << "resource " << ResourceNameRef(package->name, type->type, entry->name)
+                 << "resource " << ResourceNameRef(package->name, type->named_type, entry->name)
                  << " has no ID";
         }
         if (!seen_ids.insert(entry->id.value()).second) {
           return ::testing::AssertionFailure()
-                 << "resource " << ResourceNameRef(package->name, type->type, entry->name)
+                 << "resource " << ResourceNameRef(package->name, type->named_type, entry->name)
                  << " has a non-unique ID" << std::hex << entry->id.value() << std::dec;
         }
       }

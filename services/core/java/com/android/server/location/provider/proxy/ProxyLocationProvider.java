@@ -59,7 +59,7 @@ public class ProxyLocationProvider extends AbstractLocationProvider implements
     private static final String EXTRA_LOCATION_TAGS = "android:location_allow_listed_tags";
     private static final String LOCATION_TAGS_SEPARATOR = ";";
 
-    private static final long RESET_DELAY_MS = 1000;
+    private static final long RESET_DELAY_MS = 10000;
 
     /**
      * Creates and registers this proxy. If no suitable service is available for the proxy, returns
@@ -103,7 +103,7 @@ public class ProxyLocationProvider extends AbstractLocationProvider implements
 
         mContext = context;
         mServiceWatcher = ServiceWatcher.create(context, provider,
-                new CurrentUserServiceSupplier(context, action, enableOverlayResId,
+                CurrentUserServiceSupplier.createFromConfig(context, action, enableOverlayResId,
                         nonOverlayPackageResId), this);
         mName = provider;
 
@@ -208,7 +208,7 @@ public class ProxyLocationProvider extends AbstractLocationProvider implements
             }
 
             @Override
-            public void onError() {
+            public void onError(Throwable t) {
                 synchronized (mLock) {
                     mFlushListeners.remove(callback);
                 }
@@ -305,7 +305,7 @@ public class ProxyLocationProvider extends AbstractLocationProvider implements
                     return;
                 }
 
-                reportLocation(LocationResult.wrap(location).validate());
+                reportLocation(LocationResult.wrap(location));
             }
         }
 
@@ -316,8 +316,7 @@ public class ProxyLocationProvider extends AbstractLocationProvider implements
                 if (mProxy != this) {
                     return;
                 }
-
-                reportLocation(LocationResult.wrap(locations).validate());
+                reportLocation(LocationResult.wrap(locations));
             }
         }
 

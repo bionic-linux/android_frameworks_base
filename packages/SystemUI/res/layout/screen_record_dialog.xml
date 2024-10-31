@@ -15,10 +15,10 @@
   limitations under the License.
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@drawable/rounded_bg_full">
+    android:orientation="vertical">
 
     <!-- Scrollview is necessary to fit everything in landscape layout -->
     <ScrollView
@@ -28,10 +28,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:paddingTop="26dp"
-            android:paddingBottom="30dp"
+            android:paddingStart="@dimen/dialog_side_padding"
+            android:paddingEnd="@dimen/dialog_side_padding"
+            android:paddingTop="@dimen/dialog_top_padding"
+            android:paddingBottom="@dimen/dialog_bottom_padding"
             android:orientation="vertical">
 
             <!-- Header -->
@@ -48,17 +48,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textAppearance="@style/TextAppearance.Dialog.Title"
                     android:fontFamily="@*android:string/config_headlineFontFamily"
-                    android:text="@string/screenrecord_start_label"
+                    android:text="@string/screenrecord_permission_dialog_title"
                     android:layout_marginTop="22dp"
                     android:layout_marginBottom="15dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/screenrecord_description"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="?android:textColorSecondary"
+                    android:text="@string/screenrecord_permission_dialog_warning_entire_screen"
+                    android:textAppearance="@style/TextAppearance.Dialog.Body.Message"
                     android:gravity="center"
                     android:layout_marginBottom="20dp"/>
 
@@ -74,7 +73,7 @@
                         android:tint="?android:attr/textColorSecondary"
                         android:layout_gravity="center"
                         android:layout_weight="0"
-                        android:layout_marginRight="@dimen/screenrecord_option_padding"/>
+                        android:layout_marginEnd="@dimen/screenrecord_option_padding"/>
                     <Spinner
                         android:id="@+id/screen_recording_options"
                         android:layout_width="0dp"
@@ -82,6 +81,7 @@
                         android:minHeight="48dp"
                         android:layout_weight="1"
                         android:popupBackground="@drawable/screenrecord_spinner_background"
+                        android:textColor="?androidprv:attr/materialColorOnSurface"
                         android:dropDownWidth="274dp"
                         android:prompt="@string/screenrecord_audio_label"/>
                     <Switch
@@ -107,16 +107,18 @@
                         android:src="@drawable/ic_touch"
                         android:tint="?android:attr/textColorSecondary"
                         android:layout_gravity="center"
-                        android:layout_marginRight="@dimen/screenrecord_option_padding"/>
+                        android:layout_marginEnd="@dimen/screenrecord_option_padding"/>
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:minHeight="48dp"
                         android:layout_weight="1"
+                        android:layout_gravity="fill_vertical"
+                        android:gravity="center_vertical"
                         android:text="@string/screenrecord_taps_label"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:fontFamily="@*android:string/config_headlineFontFamily"
-                        android:textColor="?android:attr/textColorPrimary"
+                        android:textColor="?androidprv:attr/materialColorOnSurface"
                         android:importantForAccessibility="no"/>
                     <Switch
                         android:layout_width="wrap_content"
@@ -142,25 +144,20 @@
                     android:layout_weight="0"
                     android:layout_gravity="start"
                     android:text="@string/cancel"
-                    android:textColor="?android:textColorPrimary"
-                    android:background="@drawable/screenrecord_button_background_outline"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="14sp"/>
+                    style="@style/Widget.Dialog.Button.BorderButton" />
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"/>
+
                 <TextView
                     android:id="@+id/button_start"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:layout_gravity="end"
-                    android:text="@string/screenrecord_start"
-                    android:textColor="@android:color/system_neutral1_900"
-                    android:background="@drawable/screenrecord_button_background_solid"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="14sp"/>
+                    android:text="@string/screenrecord_continue"
+                    style="@style/Widget.Dialog.Button" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -36,6 +36,7 @@ import static com.android.server.accessibility.gestures.TouchState.STATE_TOUCH_E
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import android.accessibilityservice.AccessibilityGestureEvent;
 import android.accessibilityservice.AccessibilityService;
@@ -53,6 +54,7 @@ import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.android.server.accessibility.AccessibilityManagerService;
+import com.android.server.accessibility.AccessibilityTraceManager;
 import com.android.server.accessibility.EventStreamTransformation;
 import com.android.server.accessibility.utils.GestureLogParser;
 import com.android.server.testutils.OffsettableClock;
@@ -107,6 +109,8 @@ public class TouchExplorerTest {
 
     @Mock
     private AccessibilityManagerService mMockAms;
+    @Mock
+    private AccessibilityTraceManager mMockTraceManager;
     @Captor
     private ArgumentCaptor<AccessibilityGestureEvent> mGestureCaptor;
 
@@ -143,6 +147,7 @@ public class TouchExplorerTest {
         if (Looper.myLooper() == null) {
             Looper.prepare();
         }
+        when(mMockAms.getTraceManager()).thenReturn(mMockTraceManager);
         mContext = InstrumentationRegistry.getContext();
         mTouchSlop = ViewConfiguration.get(mContext).getScaledTouchSlop();
         mCaptor = new EventCaptor();
@@ -248,7 +253,8 @@ public class TouchExplorerTest {
         goFromStateClearTo(STATE_TOUCH_EXPLORING_1FINGER);
         moveEachPointers(mLastEvent, p(10, 10));
         send(mLastEvent);
-
+        // Wait 10 ms to make sure that hover enter and exit are not scheduled for the same moment.
+        mHandler.fastForward(10);
         send(upEvent());
         // Wait for sending hover exit event to transit to clear state.
         mHandler.fastForward(USER_INTENT_TIMEOUT);

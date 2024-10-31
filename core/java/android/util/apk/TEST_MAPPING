@@ -1,21 +1,23 @@
 {
   "presubmit": [
     {
-      "name": "CtsContentTestCases",
+      "name": "FrameworksCoreTests",
+      "options": [
+        {
+          "include-filter": "android.util.apk.SourceStampVerifierTest"
+        }
+      ]
+    }
+  ],
+  "presubmit-large": [
+    {
+      "name": "CtsPackageManagerTestCases",
       "options": [
         {
           "include-filter": "android.content.pm.cts.PackageManagerShellCommandIncrementalTest"
         },
         {
-          "include-filter": "android.content.pm.cts.PackageManagerShellCommandTest"
-        }
-      ]
-    },
-    {
-      "name": "FrameworksCoreTests",
-      "options": [
-        {
-          "include-filter": "android.util.apk.SourceStampVerifierTest"
+          "include-filter": "android.content.pm.cts.PackageManagerShellCommandInstallTest"
         }
       ]
     }

@@ -19,7 +19,7 @@
     <View
         android:id="@+id/customizer_transparent_view"
         android:layout_width="match_parent"
-        android:layout_height="@*android:dimen/quick_qs_offset_height"
+        android:layout_height="@dimen/qs_header_system_icons_area_height"
         android:background="@android:color/transparent" />
 
     <com.android.keyguard.AlphaOptimizedLinearLayout
@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/qs_customizer_toolbar"
             android:navigationContentDescription="@*android:string/action_bar_up_description"
+            android:titleTextAppearance="@*android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title"
             style="@style/QSCustomizeToolbar"
             />
 

@@ -51,7 +51,7 @@
                 android:visibility="gone"
                 />
 
-            <com.android.internal.widget.CachingIconView
+            <com.android.internal.widget.NotificationRowIconView
                 android:id="@+id/icon"
                 android:layout_width="@dimen/notification_icon_circle_size"
                 android:layout_height="@dimen/notification_icon_circle_size"
@@ -67,6 +67,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:importantForAccessibility="no"
+                android:focusable="false"
                 />
 
             <!--
@@ -102,7 +103,8 @@
                     <NotificationTopLineView
                         android:id="@+id/notification_top_line"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/notification_headerless_line_height"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/notification_headerless_line_height"
                         android:layout_marginStart="@dimen/notification_content_margin_start"
                         android:clipChildren="false"
                         android:theme="@style/Theme.DeviceDefault.Notification"
@@ -119,7 +121,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/notification_header_separating_margin"
-                            android:ellipsize="marquee"
+                            android:ellipsize="end"
                             android:fadingEdge="horizontal"
                             android:singleLine="true"
                             android:textAlignment="viewStart"

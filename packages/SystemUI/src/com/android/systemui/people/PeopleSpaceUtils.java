@@ -55,9 +55,9 @@ import com.android.internal.logging.UiEventLogger;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.widget.MessagingMessage;
 import com.android.settingslib.utils.ThreadUtils;
-import com.android.systemui.R;
 import com.android.systemui.people.widget.PeopleSpaceWidgetManager;
 import com.android.systemui.people.widget.PeopleTileKey;
+import com.android.systemui.res.R;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
 
 import java.text.SimpleDateFormat;
@@ -466,7 +466,7 @@ public class PeopleSpaceUtils {
                 }
             }
         } catch (SQLException e) {
-            Log.e(TAG, "Failed to query contact: " + e);
+            Log.e(TAG, "Failed to query contact", e);
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -527,7 +527,7 @@ public class PeopleSpaceUtils {
                 lookupKeysWithBirthdaysToday.add(lookupKey);
             }
         } catch (SQLException e) {
-            Log.e(TAG, "Failed to query birthdays: " + e);
+            Log.e(TAG, "Failed to query birthdays", e);
         } finally {
             if (cursor != null) {
                 cursor.close();

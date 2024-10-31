@@ -31,6 +31,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ParceledListSlice;
 import android.content.pm.ServiceInfo;
 import android.os.IBinder;
+import android.os.IRemoteCallback;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.provider.DeviceConfig;
@@ -187,7 +188,7 @@ public class AppPredictionPerUserService extends
             @NonNull IPredictionCallback callback) {
         final AppPredictionSessionInfo sessionInfo = mSessionInfos.get(sessionId);
         if (sessionInfo == null) return;
-        final boolean serviceExists = resolveService(sessionId, false,
+        final boolean serviceExists = resolveService(sessionId, true,
                 sessionInfo.mUsesPeopleService,
                 s -> s.registerPredictionUpdates(sessionId, callback));
         if (serviceExists) {
@@ -235,6 +236,18 @@ public class AppPredictionPerUserService extends
         resolveService(sessionId, false, sessionInfo.mUsesPeopleService,
                 s -> s.onDestroyPredictionSession(sessionId));
         sessionInfo.destroy();
+    }
+
+    /**
+     * Requests the service to provide AppPredictionService features info.
+     */
+    @GuardedBy("mLock")
+    public void requestServiceFeaturesLocked(@NonNull AppPredictionSessionId sessionId,
+            @NonNull IRemoteCallback callback) {
+        final AppPredictionSessionInfo sessionInfo = mSessionInfos.get(sessionId);
+        if (sessionInfo == null) return;
+        resolveService(sessionId, true, sessionInfo.mUsesPeopleService,
+                s -> s.requestServiceFeatures(sessionId, callback));
     }
 
     @Override
@@ -398,18 +411,7 @@ public class AppPredictionPerUserService extends
         final IBinder.DeathRecipient mDeathRecipient;
 
         private final RemoteCallbackList<IPredictionCallback> mCallbacks =
-                new RemoteCallbackList<IPredictionCallback>() {
-                    @Override
-                    public void onCallbackDied(IPredictionCallback callback) {
-                        if (DEBUG) {
-                            Slog.d(TAG, "Binder died for session Id=" + mSessionId
-                                    + " and callback=" + callback.asBinder());
-                        }
-                        if (mCallbacks.getRegisteredCallbackCount() == 0) {
-                            destroy();
-                        }
-                    }
-                };
+                new RemoteCallbackList<>();
 
         AppPredictionSessionInfo(
                 @NonNull final AppPredictionSessionId id,

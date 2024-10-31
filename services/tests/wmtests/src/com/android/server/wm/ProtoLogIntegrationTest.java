@@ -27,6 +27,8 @@ import androidx.test.filters.SmallTest;
 
 import com.android.internal.protolog.ProtoLogGroup;
 import com.android.internal.protolog.ProtoLogImpl;
+import com.android.internal.protolog.common.IProtoLog;
+import com.android.internal.protolog.common.LogLevel;
 import com.android.internal.protolog.common.ProtoLog;
 
 import org.junit.After;
@@ -47,37 +49,32 @@ public class ProtoLogIntegrationTest {
     @Ignore("b/163095037")
     @Test
     public void testProtoLogToolIntegration() {
-        ProtoLogImpl mockedProtoLog = mock(ProtoLogImpl.class);
+        IProtoLog mockedProtoLog = mock(IProtoLog.class);
         runWith(mockedProtoLog, this::testProtoLog);
-        verify(mockedProtoLog).log(eq(ProtoLogImpl.LogLevel.ERROR), eq(ProtoLogGroup.TEST_GROUP),
-                anyInt(), eq(0b0010101001010111),
+        verify(mockedProtoLog).log(eq(LogLevel.ERROR), eq(ProtoLogGroup.TEST_GROUP),
+                anyInt(), eq(0b0010010111),
                 eq(com.android.internal.protolog.ProtoLogGroup.TEST_GROUP.isLogToLogcat()
-                        ? "Test completed successfully: %b %d %o %x %e %g %f %% %s"
+                        ? "Test completed successfully: %b %d %x %f %% %s"
                         : null),
-                eq(new Object[]{true, 1L, 2L, 3L, 0.4, 0.5, 0.6, "ok"}));
+                eq(new Object[]{true, 1L, 2L, 0.3, "ok"}));
     }
 
     private void testProtoLog() {
         ProtoLog.e(ProtoLogGroup.TEST_GROUP,
-                "Test completed successfully: %b %d %o %x %e %g %f %% %s.",
-                true, 1, 2, 3, 0.4, 0.5, 0.6, "ok");
+                "Test completed successfully: %b %d %x %f %% %s",
+                true, 1, 2, 0.3, "ok");
     }
 
     /**
      * Starts protolog for the duration of {@code runnable}, with a ProtoLogImpl instance installed.
      */
-    private void runWith(ProtoLogImpl mockInstance, Runnable runnable) {
-        ProtoLogImpl original = ProtoLogImpl.getSingleInstance();
-        original.startProtoLog(null);
+    private void runWith(IProtoLog mockInstance, Runnable runnable) {
+        IProtoLog original = ProtoLog.getSingleInstance();
+        ProtoLogImpl.setSingleInstance(mockInstance);
         try {
-            ProtoLogImpl.setSingleInstance(mockInstance);
-            try {
-                runnable.run();
-            } finally {
-                ProtoLogImpl.setSingleInstance(original);
-            }
+            runnable.run();
         } finally {
-            original.stopProtoLog(null, false);
+            ProtoLogImpl.setSingleInstance(original);
         }
     }
 }

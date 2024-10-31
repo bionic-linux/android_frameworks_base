@@ -20,6 +20,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.LoadedApk;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.ComponentName;
 import android.content.Context;
@@ -30,6 +31,7 @@ import android.content.pm.LauncherActivityInfo;
 import android.content.pm.LauncherApps;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.Rect;
@@ -65,7 +67,7 @@ import java.util.concurrent.Executor;
  * between updates, and will try recycling old views for each incoming
  * {@link RemoteViews}.
  */
-public class AppWidgetHostView extends FrameLayout {
+public class AppWidgetHostView extends FrameLayout implements AppWidgetHost.AppWidgetHostListener {
 
     static final String TAG = "AppWidgetHostView";
     private static final String KEY_JAILED_ARRAY = "jail";
@@ -96,12 +98,12 @@ public class AppWidgetHostView extends FrameLayout {
     AppWidgetProviderInfo mInfo;
     View mView;
     int mViewMode = VIEW_MODE_NOINIT;
-    int mLayoutId = -1;
+    // If true, we should not try to re-apply the RemoteViews on the next inflation.
+    boolean mColorMappingChanged = false;
     private InteractionHandler mInteractionHandler;
     private boolean mOnLightBackground;
     private SizeF mCurrentSize = null;
     private RemoteViews.ColorResources mColorResources = null;
-    private SparseIntArray mColorMapping = null;
     // Stores the last remote views last inflated.
     private RemoteViews mLastInflatedRemoteViews = null;
     private long mLastInflatedRemoteViewsId = -1;
@@ -151,6 +153,22 @@ public class AppWidgetHostView extends FrameLayout {
      */
     public void setInteractionHandler(InteractionHandler handler) {
         mInteractionHandler = getHandler(handler);
+    }
+
+    /**
+     * @hide
+     */
+    public static class AdapterChildHostView extends AppWidgetHostView {
+
+        public AdapterChildHostView(Context context) {
+            super(context);
+        }
+
+        @Override
+        public Context getRemoteContextEnsuringCorrectCachedApkPath() {
+            // To reduce noise in error messages
+            return null;
+        }
     }
 
     /**
@@ -310,17 +328,24 @@ public class AppWidgetHostView extends FrameLayout {
             super.onLayout(changed, left, top, right, bottom);
         } catch (final RuntimeException e) {
             Log.e(TAG, "Remote provider threw runtime exception, using error view instead.", e);
-            removeViewInLayout(mView);
-            View child = getErrorView();
-            prepareView(child);
-            addViewInLayout(child, 0, child.getLayoutParams());
-            measureChild(child, MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY),
-                    MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY));
-            child.layout(0, 0, child.getMeasuredWidth() + mPaddingLeft + mPaddingRight,
-                    child.getMeasuredHeight() + mPaddingTop + mPaddingBottom);
-            mView = child;
-            mViewMode = VIEW_MODE_ERROR;
+            handleViewError();
         }
+    }
+
+    /**
+     * Remove bad view and replace with error message view
+     */
+    private void handleViewError() {
+        removeViewInLayout(mView);
+        View child = getErrorView();
+        prepareView(child);
+        addViewInLayout(child, 0, child.getLayoutParams());
+        measureChild(child, MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY));
+        child.layout(0, 0, child.getMeasuredWidth() + mPaddingLeft + mPaddingRight,
+                child.getMeasuredHeight() + mPaddingTop + mPaddingBottom);
+        mView = child;
+        mViewMode = VIEW_MODE_ERROR;
     }
 
     /**
@@ -491,8 +516,11 @@ public class AppWidgetHostView extends FrameLayout {
     /**
      * Update the AppWidgetProviderInfo for this view, and reset it to the
      * initial layout.
+     *
+     * @hide
      */
-    void resetAppWidget(AppWidgetProviderInfo info) {
+    @Override
+    public void onUpdateProviderInfo(@Nullable AppWidgetProviderInfo info) {
         setAppWidget(mAppWidgetId, info);
         mViewMode = VIEW_MODE_NOINIT;
         updateAppWidget(null);
@@ -502,6 +530,7 @@ public class AppWidgetHostView extends FrameLayout {
      * Process a set of {@link RemoteViews} coming in as an update from the
      * AppWidget provider. Will animate into these new views as needed
      */
+    @Override
     public void updateAppWidget(RemoteViews remoteViews) {
         mLastInflatedRemoteViews = remoteViews;
         applyRemoteViews(remoteViews, true);
@@ -539,7 +568,6 @@ public class AppWidgetHostView extends FrameLayout {
                 return;
             }
             content = getDefaultView();
-            mLayoutId = -1;
             mViewMode = VIEW_MODE_DEFAULT;
         } else {
             // Select the remote view we are actually going to apply.
@@ -552,8 +580,11 @@ public class AppWidgetHostView extends FrameLayout {
                 inflateAsync(rvToApply);
                 return;
             }
-            int layoutId = rvToApply.getLayoutId();
-            if (rvToApply.canRecycleView(mView)) {
+            // Prepare a local reference to the remote Context so we're ready to
+            // inflate any requested LayoutParams.
+            mRemoteContext = getRemoteContextEnsuringCorrectCachedApkPath();
+
+            if (!mColorMappingChanged && rvToApply.canRecycleView(mView)) {
                 try {
                     rvToApply.reapply(mContext, mView, mInteractionHandler, mCurrentSize,
                             mColorResources);
@@ -578,7 +609,6 @@ public class AppWidgetHostView extends FrameLayout {
                 }
             }
 
-            mLayoutId = layoutId;
             mViewMode = VIEW_MODE_CONTENT;
         }
 
@@ -586,6 +616,7 @@ public class AppWidgetHostView extends FrameLayout {
     }
 
     private void applyContent(View content, boolean recycled, Exception exception) {
+        mColorMappingChanged = false;
         if (content == null) {
             if (mViewMode == VIEW_MODE_ERROR) {
                 // We've already done this -- nothing to do.
@@ -612,7 +643,7 @@ public class AppWidgetHostView extends FrameLayout {
     private void inflateAsync(@NonNull RemoteViews remoteViews) {
         // Prepare a local reference to the remote Context so we're ready to
         // inflate any requested LayoutParams.
-        mRemoteContext = getRemoteContext();
+        mRemoteContext = getRemoteContextEnsuringCorrectCachedApkPath();
         int layoutId = remoteViews.getLayoutId();
 
         if (mLastExecutionSignal != null) {
@@ -621,7 +652,7 @@ public class AppWidgetHostView extends FrameLayout {
 
         // If our stale view has been prepared to match active, and the new
         // layout matches, try recycling it
-        if (layoutId == mLayoutId && mView != null) {
+        if (!mColorMappingChanged && remoteViews.canRecycleView(mView)) {
             try {
                 mLastExecutionSignal = remoteViews.reapplyAsync(mContext,
                         mView,
@@ -661,7 +692,6 @@ public class AppWidgetHostView extends FrameLayout {
 
         @Override
         public void onViewApplied(View v) {
-            AppWidgetHostView.this.mLayoutId = mLayoutId;
             mViewMode = VIEW_MODE_CONTENT;
 
             applyContent(v, mIsReapply, null);
@@ -691,8 +721,11 @@ public class AppWidgetHostView extends FrameLayout {
     /**
      * Process data-changed notifications for the specified view in the specified
      * set of {@link RemoteViews} views.
+     *
+     * @hide
      */
-    void viewDataChanged(int viewId) {
+    @Override
+    public void onViewDataChanged(int viewId) {
         View v = findViewById(viewId);
         if ((v != null) && (v instanceof AdapterView<?>)) {
             AdapterView<?> adapterView = (AdapterView<?>) v;
@@ -714,8 +747,10 @@ public class AppWidgetHostView extends FrameLayout {
      * purposes of reading remote resources.
      * @hide
      */
-    protected Context getRemoteContext() {
+    protected Context getRemoteContextEnsuringCorrectCachedApkPath() {
         try {
+            ApplicationInfo expectedAppInfo = mInfo.providerInfo.applicationInfo;
+            LoadedApk.checkAndUpdateApkPaths(expectedAppInfo);
             // Return if cloned successfully, otherwise default
             Context newContext = mContext.createApplicationContext(
                     mInfo.providerInfo.applicationInfo,
@@ -726,6 +761,9 @@ public class AppWidgetHostView extends FrameLayout {
             return newContext;
         } catch (NameNotFoundException e) {
             Log.e(TAG, "Package name " +  mInfo.providerInfo.packageName + " not found");
+            return mContext;
+        } catch (NullPointerException e) {
+            Log.e(TAG, "Error trying to create the remote context.", e);
             return mContext;
         }
     }
@@ -758,7 +796,7 @@ public class AppWidgetHostView extends FrameLayout {
 
         try {
             if (mInfo != null) {
-                Context theirContext = getRemoteContext();
+                Context theirContext = getRemoteContextEnsuringCorrectCachedApkPath();
                 mRemoteContext = theirContext;
                 LayoutInflater inflater = (LayoutInflater)
                         theirContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -869,7 +907,10 @@ public class AppWidgetHostView extends FrameLayout {
 
     private InteractionHandler getHandler(InteractionHandler handler) {
         return (view, pendingIntent, response) -> {
-            AppWidgetManager.getInstance(mContext).noteAppWidgetTapped(mAppWidgetId);
+            AppWidgetManager manager = AppWidgetManager.getInstance(mContext);
+            if (manager != null) {
+                manager.noteAppWidgetTapped(mAppWidgetId);
+            }
             if (handler != null) {
                 return handler.onInteraction(view, pendingIntent, response);
             } else {
@@ -892,14 +933,36 @@ public class AppWidgetHostView extends FrameLayout {
      * {@link android.R.color#system_neutral1_500}.
      */
     public void setColorResources(@NonNull SparseIntArray colorMapping) {
-        if (mColorMapping != null && isSameColorMapping(mColorMapping, colorMapping)) {
+        if (mColorResources != null
+                && isSameColorMapping(mColorResources.getColorMapping(), colorMapping)) {
             return;
         }
-        mColorMapping = colorMapping.clone();
-        mColorResources = RemoteViews.ColorResources.create(mContext, mColorMapping);
-        mLayoutId = -1;
+        setColorResources(RemoteViews.ColorResources.create(mContext, colorMapping));
+    }
+
+    private void setColorResourcesStates(RemoteViews.ColorResources colorResources) {
+        mColorResources = colorResources;
+        mColorMappingChanged = true;
         mViewMode = VIEW_MODE_NOINIT;
+    }
+
+    /** @hide **/
+    public void setColorResources(RemoteViews.ColorResources colorResources) {
+        if (colorResources == mColorResources) {
+            return;
+        }
+        setColorResourcesStates(colorResources);
         reapplyLastRemoteViews();
+    }
+
+    /**
+     * @hide
+     */
+    public void setColorResourcesNoReapply(RemoteViews.ColorResources colorResources) {
+        if (colorResources == mColorResources) {
+            return;
+        }
+        setColorResourcesStates(colorResources);
     }
 
     /** Check if, in the current context, the two color mappings are equivalent. */
@@ -926,10 +989,20 @@ public class AppWidgetHostView extends FrameLayout {
     public void resetColorResources() {
         if (mColorResources != null) {
             mColorResources = null;
-            mColorMapping = null;
-            mLayoutId = -1;
+            mColorMappingChanged = true;
             mViewMode = VIEW_MODE_NOINIT;
             reapplyLastRemoteViews();
+        }
+    }
+
+    @Override
+    protected void dispatchDraw(@NonNull Canvas canvas) {
+        try {
+            super.dispatchDraw(canvas);
+        } catch (Exception e) {
+            // Catch draw exceptions that may be caused by RemoteViews
+            Log.e(TAG, "Drawing view failed: " + e);
+            post(this::handleViewError);
         }
     }
 }

@@ -18,8 +18,9 @@ package com.android.server.location.contexthub;
 
 import android.annotation.IntDef;
 import android.app.PendingIntent;
+import android.chre.flags.Flags;
 import android.content.Context;
-import android.hardware.contexthub.V1_0.ContextHubMsg;
+import android.hardware.contexthub.ErrorCode;
 import android.hardware.location.ContextHubInfo;
 import android.hardware.location.IContextHubClient;
 import android.hardware.location.IContextHubClientCallback;
@@ -32,9 +33,6 @@ import com.android.server.location.ClientManagerProto;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -47,11 +45,6 @@ import java.util.function.Consumer;
  */
 /* package */ class ContextHubClientManager {
     private static final String TAG = "ContextHubClientManager";
-
-    /*
-     * The DateFormat for printing RegistrationRecord.
-     */
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd HH:mm:ss.SSS");
 
     /*
      * The maximum host endpoint ID value that a client can be assigned.
@@ -126,14 +119,15 @@ import java.util.function.Consumer;
 
         @Override
         public String toString() {
-            String out = "";
-            out += DATE_FORMAT.format(new Date(mTimestamp)) + " ";
-            out += mAction == ACTION_REGISTERED ? "+ " : "- ";
-            out += mBroker;
+            StringBuilder sb = new StringBuilder();
+            sb.append(ContextHubServiceUtil.formatDateFromTimestamp(mTimestamp));
+            sb.append(" ");
+            sb.append(mAction == ACTION_REGISTERED ? "+ " : "- ");
+            sb.append(mBroker);
             if (mAction == ACTION_CANCELLED) {
-                out += " (cancelled)";
+                sb.append(" (cancelled)");
             }
-            return out;
+            return sb.toString();
         }
     }
 
@@ -226,40 +220,54 @@ import java.util.function.Consumer;
     /**
      * Handles a message sent from a nanoapp.
      *
-     * @param contextHubId the ID of the hub where the nanoapp sent the message from
-     * @param message the message send by a nanoapp
-     * @param nanoappPermissions the set of permissions the nanoapp holds
+     * @param contextHubId the ID of the hub where the nanoapp sent the message from.
+     * @param hostEndpointId The host endpoint ID of the client that this message is for.
+     * @param message the message send by a nanoapp.
+     * @param nanoappPermissions the set of permissions the nanoapp holds.
      * @param messagePermissions the set of permissions that should be used for attributing
-     * permissions when this message is consumed by a client
+     *        permissions when this message is consumed by a client.
+     * @return An error from ErrorCode.
      */
-    /* package */ void onMessageFromNanoApp(
-            int contextHubId, ContextHubMsg message, List<String> nanoappPermissions,
+    /* package */ byte onMessageFromNanoApp(int contextHubId, short hostEndpointId,
+            NanoAppMessage message, List<String> nanoappPermissions,
             List<String> messagePermissions) {
-        NanoAppMessage clientMessage = ContextHubServiceUtil.createNanoAppMessage(message);
-
         if (DEBUG_LOG_ENABLED) {
-            Log.v(TAG, "Received " + clientMessage);
+            Log.v(TAG, "Received " + message);
         }
 
-        if (clientMessage.isBroadcastMessage()) {
+        if (message.isBroadcastMessage()) {
+            if (Flags.reliableMessageImplementation() && message.isReliable()) {
+                Log.e(TAG, "Received reliable broadcast message from " + message.getNanoAppId());
+                return ErrorCode.PERMANENT_ERROR;
+            }
+
             // Broadcast messages shouldn't be sent with any permissions tagged per CHRE API
             // requirements.
             if (!messagePermissions.isEmpty()) {
-                Log.wtf(TAG, "Received broadcast message with permissions from " + message.appName);
+                Log.e(TAG, "Received broadcast message with permissions from "
+                        + message.getNanoAppId());
+                return ErrorCode.PERMANENT_ERROR;
             }
 
-            broadcastMessage(
-                    contextHubId, clientMessage, nanoappPermissions, messagePermissions);
-        } else {
-            ContextHubClientBroker proxy = mHostEndPointIdToClientMap.get(message.hostEndPoint);
-            if (proxy != null) {
-                proxy.sendMessageToClient(
-                        clientMessage, nanoappPermissions, messagePermissions);
-            } else {
-                Log.e(TAG, "Cannot send message to unregistered client (host endpoint ID = "
-                        + message.hostEndPoint + ")");
-            }
+            ContextHubEventLogger.getInstance().logMessageFromNanoapp(contextHubId, message,
+                    /* success= */ true);
+            broadcastMessage(contextHubId, message, nanoappPermissions, messagePermissions);
+            return ErrorCode.OK;
         }
+
+        ContextHubClientBroker proxy = mHostEndPointIdToClientMap.get(hostEndpointId);
+        if (proxy == null) {
+            ContextHubEventLogger.getInstance().logMessageFromNanoapp(contextHubId, message,
+                    /* success= */ false);
+            Log.e(TAG,
+                    "Cannot send message to unregistered client (host endpoint ID = "
+                            + hostEndpointId + ")");
+            return ErrorCode.DESTINATION_NOT_FOUND;
+        }
+
+        ContextHubEventLogger.getInstance().logMessageFromNanoapp(contextHubId, message,
+                /* success= */ true);
+        return proxy.sendMessageToClient(message, nanoappPermissions, messagePermissions);
     }
 
     /**
@@ -415,17 +423,21 @@ import java.util.function.Consumer;
 
     @Override
     public String toString() {
-        String out = "";
+        StringBuilder sb = new StringBuilder();
         for (ContextHubClientBroker broker : mHostEndPointIdToClientMap.values()) {
-            out += broker + "\n";
+            sb.append(broker);
+            sb.append(System.lineSeparator());
         }
 
-        out += "\nRegistration history:\n";
+        sb.append(System.lineSeparator());
+        sb.append("Registration History:");
+        sb.append(System.lineSeparator());
         Iterator<RegistrationRecord> it = mRegistrationRecordDeque.descendingIterator();
         while (it.hasNext()) {
-            out += it.next() + "\n";
+            sb.append(it.next());
+            sb.append(System.lineSeparator());
         }
 
-        return out;
+        return sb.toString();
     }
 }

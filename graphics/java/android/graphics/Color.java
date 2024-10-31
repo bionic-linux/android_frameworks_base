@@ -289,6 +289,9 @@ import java.util.function.DoubleUnaryOperator;
  */
 @AnyThread
 @SuppressAutoDoc
+@android.ravenwood.annotation.RavenwoodKeepWholeClass
+@android.ravenwood.annotation.RavenwoodClassLoadHook(
+        android.ravenwood.annotation.RavenwoodClassLoadHook.LIBANDROID_LOADING_HOOK)
 public class Color {
     @ColorInt public static final int BLACK       = 0xFF000000;
     @ColorInt public static final int DKGRAY      = 0xFF444444;
@@ -767,7 +770,7 @@ public class Color {
      * Returns the alpha component encoded in the specified color long.
      * The returned value is always in the range \([0..1]\).
      *
-     * @param color The color long whose blue channel to extract
+     * @param color The color long whose alpha channel to extract
      * @return A float value in the range \([0..1]\)
      *
      * @see #colorSpace(long)

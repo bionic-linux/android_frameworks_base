@@ -20,10 +20,9 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.TypedXmlPullParser;
-import android.util.TypedXmlSerializer;
 
-import com.android.internal.os.PowerCalculator;
+import com.android.modules.utils.TypedXmlPullParser;
+import com.android.modules.utils.TypedXmlSerializer;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -38,7 +37,10 @@ import java.lang.annotation.RetentionPolicy;
  *
  * @hide
  */
-public final class UidBatteryConsumer extends BatteryConsumer implements Parcelable {
+@android.ravenwood.annotation.RavenwoodKeepWholeClass
+public final class UidBatteryConsumer extends BatteryConsumer {
+
+    static final int CONSUMER_TYPE_UID = 1;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
@@ -49,8 +51,7 @@ public final class UidBatteryConsumer extends BatteryConsumer implements Parcela
     }
 
     /**
-     * The state of an application when it is either running a foreground (top) activity
-     * or a foreground service.
+     * The state of an application when it is either running a foreground (top) activity.
      */
     public static final int STATE_FOREGROUND = 0;
 
@@ -62,92 +63,105 @@ public final class UidBatteryConsumer extends BatteryConsumer implements Parcela
      * {@link android.app.ActivityManager#PROCESS_STATE_TRANSIENT_BACKGROUND},
      * {@link android.app.ActivityManager#PROCESS_STATE_BACKUP},
      * {@link android.app.ActivityManager#PROCESS_STATE_SERVICE},
-     * {@link android.app.ActivityManager#PROCESS_STATE_RECEIVER}.
+     * {@link android.app.ActivityManager#PROCESS_STATE_RECEIVER},
+     * {@link android.app.ActivityManager#PROCESS_STATE_FOREGROUND_SERVICE}.
      */
     public static final int STATE_BACKGROUND = 1;
 
-    private final int mUid;
-    @Nullable
-    private final String mPackageWithHighestDrain;
-    private final long mTimeInForegroundMs;
-    private final long mTimeInBackgroundMs;
+    static final int COLUMN_INDEX_UID = BatteryConsumer.COLUMN_COUNT;
+    static final int COLUMN_INDEX_PACKAGE_WITH_HIGHEST_DRAIN = COLUMN_INDEX_UID + 1;
+    static final int COLUMN_INDEX_TIME_IN_FOREGROUND = COLUMN_INDEX_UID + 2;
+    static final int COLUMN_INDEX_TIME_IN_BACKGROUND = COLUMN_INDEX_UID + 3;
+    static final int COLUMN_INDEX_TIME_IN_FOREGROUND_SERVICE = COLUMN_INDEX_UID + 4;
+    static final int COLUMN_COUNT = BatteryConsumer.COLUMN_COUNT + 5;
+
+    UidBatteryConsumer(BatteryConsumerData data) {
+        super(data);
+    }
+
+    private UidBatteryConsumer(@NonNull Builder builder) {
+        super(builder.mData, builder.mPowerComponentsBuilder.build());
+    }
 
     public int getUid() {
-        return mUid;
+        return mData.getInt(COLUMN_INDEX_UID);
     }
 
     @Nullable
     public String getPackageWithHighestDrain() {
-        return mPackageWithHighestDrain;
+        return mData.getString(COLUMN_INDEX_PACKAGE_WITH_HIGHEST_DRAIN);
     }
 
     /**
      * Returns the amount of time in milliseconds this UID spent in the specified state.
+     * @deprecated use {@link #getTimeInProcessStateMs} instead.
      */
+    @Deprecated
     public long getTimeInStateMs(@State int state) {
         switch (state) {
             case STATE_BACKGROUND:
-                return mTimeInBackgroundMs;
+                return mData.getInt(COLUMN_INDEX_TIME_IN_BACKGROUND)
+                        + mData.getInt(COLUMN_INDEX_TIME_IN_FOREGROUND_SERVICE);
             case STATE_FOREGROUND:
-                return mTimeInForegroundMs;
+                return mData.getInt(COLUMN_INDEX_TIME_IN_FOREGROUND);
         }
         return 0;
     }
 
-    private UidBatteryConsumer(@NonNull Builder builder) {
-        super(builder.mPowerComponentsBuilder.build());
-        mUid = builder.mUid;
-        mPackageWithHighestDrain = builder.mPackageWithHighestDrain;
-        mTimeInForegroundMs = builder.mTimeInForegroundMs;
-        mTimeInBackgroundMs = builder.mTimeInBackgroundMs;
-    }
-
-    private UidBatteryConsumer(@NonNull Parcel source) {
-        super(new PowerComponents(source));
-        mUid = source.readInt();
-        mPackageWithHighestDrain = source.readString();
-        mTimeInForegroundMs = source.readLong();
-        mTimeInBackgroundMs = source.readLong();
-    }
-
     /**
-     * Writes the contents into a Parcel.
+     * Returns the amount of time in milliseconds this UID spent in the specified process state.
      */
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeInt(mUid);
-        dest.writeString(mPackageWithHighestDrain);
-        dest.writeLong(mTimeInForegroundMs);
-        dest.writeLong(mTimeInBackgroundMs);
+    public long getTimeInProcessStateMs(@ProcessState int state) {
+        switch (state) {
+            case PROCESS_STATE_BACKGROUND:
+                return mData.getInt(COLUMN_INDEX_TIME_IN_BACKGROUND);
+            case PROCESS_STATE_FOREGROUND:
+                return mData.getInt(COLUMN_INDEX_TIME_IN_FOREGROUND);
+            case PROCESS_STATE_FOREGROUND_SERVICE:
+                return mData.getInt(COLUMN_INDEX_TIME_IN_FOREGROUND_SERVICE);
+        }
+        return 0;
     }
 
     @Override
     public void dump(PrintWriter pw, boolean skipEmptyComponents) {
-        final double consumedPower = getConsumedPower();
         pw.print("UID ");
         UserHandle.formatUid(pw, getUid());
         pw.print(": ");
-        PowerCalculator.printPowerMah(pw, consumedPower);
+        pw.print(BatteryStats.formatCharge(getConsumedPower()));
+
+        if (mData.layout.processStateDataIncluded) {
+            StringBuilder sb = new StringBuilder();
+            appendProcessStateData(sb, BatteryConsumer.PROCESS_STATE_FOREGROUND,
+                    skipEmptyComponents);
+            appendProcessStateData(sb, BatteryConsumer.PROCESS_STATE_BACKGROUND,
+                    skipEmptyComponents);
+            appendProcessStateData(sb, BatteryConsumer.PROCESS_STATE_FOREGROUND_SERVICE,
+                    skipEmptyComponents);
+            appendProcessStateData(sb, BatteryConsumer.PROCESS_STATE_CACHED,
+                    skipEmptyComponents);
+            pw.print(sb);
+        }
+
         pw.print(" ( ");
         mPowerComponents.dump(pw, skipEmptyComponents  /* skipTotalPowerComponent */);
         pw.print(" ) ");
     }
 
-    @NonNull
-    public static final Creator<UidBatteryConsumer> CREATOR = new Creator<UidBatteryConsumer>() {
-        public UidBatteryConsumer createFromParcel(@NonNull Parcel source) {
-            return new UidBatteryConsumer(source);
+    private void appendProcessStateData(StringBuilder sb, @ProcessState int processState,
+            boolean skipEmptyComponents) {
+        Dimensions dimensions = new Dimensions(POWER_COMPONENT_ANY, processState);
+        final double power = mPowerComponents.getConsumedPower(dimensions);
+        if (power == 0 && skipEmptyComponents) {
+            return;
         }
 
-        public UidBatteryConsumer[] newArray(int size) {
-            return new UidBatteryConsumer[size];
-        }
-    };
+        sb.append(" ").append(processStateToString(processState)).append(": ")
+                .append(BatteryStats.formatCharge(power));
+    }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    static UidBatteryConsumer create(BatteryConsumerData data) {
+        return new UidBatteryConsumer(data);
     }
 
     /** Serializes this object to XML */
@@ -158,14 +172,17 @@ public final class UidBatteryConsumer extends BatteryConsumer implements Parcela
 
         serializer.startTag(null, BatteryUsageStats.XML_TAG_UID);
         serializer.attributeInt(null, BatteryUsageStats.XML_ATTR_UID, getUid());
-        if (!TextUtils.isEmpty(mPackageWithHighestDrain)) {
+        final String packageWithHighestDrain = getPackageWithHighestDrain();
+        if (!TextUtils.isEmpty(packageWithHighestDrain)) {
             serializer.attribute(null, BatteryUsageStats.XML_ATTR_HIGHEST_DRAIN_PACKAGE,
-                    mPackageWithHighestDrain);
+                    packageWithHighestDrain);
         }
         serializer.attributeLong(null, BatteryUsageStats.XML_ATTR_TIME_IN_FOREGROUND,
-                mTimeInForegroundMs);
+                getTimeInProcessStateMs(PROCESS_STATE_FOREGROUND));
         serializer.attributeLong(null, BatteryUsageStats.XML_ATTR_TIME_IN_BACKGROUND,
-                mTimeInBackgroundMs);
+                getTimeInProcessStateMs(PROCESS_STATE_BACKGROUND));
+        serializer.attributeLong(null, BatteryUsageStats.XML_ATTR_TIME_IN_FOREGROUND_SERVICE,
+                getTimeInProcessStateMs(PROCESS_STATE_FOREGROUND_SERVICE));
         mPowerComponents.writeToXml(serializer);
         serializer.endTag(null, BatteryUsageStats.XML_TAG_UID);
     }
@@ -185,10 +202,13 @@ public final class UidBatteryConsumer extends BatteryConsumer implements Parcela
 
         consumerBuilder.setPackageWithHighestDrain(
                 parser.getAttributeValue(null, BatteryUsageStats.XML_ATTR_HIGHEST_DRAIN_PACKAGE));
-        consumerBuilder.setTimeInStateMs(STATE_FOREGROUND,
+        consumerBuilder.setTimeInProcessStateMs(PROCESS_STATE_FOREGROUND,
                 parser.getAttributeLong(null, BatteryUsageStats.XML_ATTR_TIME_IN_FOREGROUND));
-        consumerBuilder.setTimeInStateMs(STATE_BACKGROUND,
+        consumerBuilder.setTimeInProcessStateMs(PROCESS_STATE_BACKGROUND,
                 parser.getAttributeLong(null, BatteryUsageStats.XML_ATTR_TIME_IN_BACKGROUND));
+        consumerBuilder.setTimeInProcessStateMs(PROCESS_STATE_FOREGROUND_SERVICE,
+                parser.getAttributeLong(null,
+                        BatteryUsageStats.XML_ATTR_TIME_IN_FOREGROUND_SERVICE));
         while (!(eventType == XmlPullParser.END_TAG
                 && parser.getName().equals(BatteryUsageStats.XML_TAG_UID))
                 && eventType != XmlPullParser.END_DOCUMENT) {
@@ -204,27 +224,31 @@ public final class UidBatteryConsumer extends BatteryConsumer implements Parcela
     /**
      * Builder for UidBatteryConsumer.
      */
+    @android.ravenwood.annotation.RavenwoodKeepWholeClass
     public static final class Builder extends BaseBuilder<Builder> {
         private static final String PACKAGE_NAME_UNINITIALIZED = "";
         private final BatteryStats.Uid mBatteryStatsUid;
         private final int mUid;
+        private final boolean mIsVirtualUid;
         private String mPackageWithHighestDrain = PACKAGE_NAME_UNINITIALIZED;
-        public long mTimeInForegroundMs;
-        public long mTimeInBackgroundMs;
         private boolean mExcludeFromBatteryUsageStats;
 
-        public Builder(@NonNull String[] customPowerComponentNames,
-                boolean includePowerModels, @NonNull BatteryStats.Uid batteryStatsUid) {
-            super(customPowerComponentNames, includePowerModels);
-            mBatteryStatsUid = batteryStatsUid;
-            mUid = batteryStatsUid.getUid();
+        public Builder(BatteryConsumerData data, @NonNull BatteryStats.Uid batteryStatsUid,
+                double minConsumedPowerThreshold) {
+            this(data, batteryStatsUid, batteryStatsUid.getUid(), minConsumedPowerThreshold);
         }
 
-        public Builder(@NonNull String[] customPowerComponentNames, boolean includePowerModels,
-                int uid) {
-            super(customPowerComponentNames, includePowerModels);
-            mBatteryStatsUid = null;
+        public Builder(BatteryConsumerData data, int uid, double minConsumedPowerThreshold) {
+            this(data, null, uid, minConsumedPowerThreshold);
+        }
+
+        private Builder(BatteryConsumerData data, @Nullable BatteryStats.Uid batteryStatsUid,
+                int uid, double minConsumedPowerThreshold) {
+            super(data, CONSUMER_TYPE_UID, minConsumedPowerThreshold);
+            mBatteryStatsUid = batteryStatsUid;
             mUid = uid;
+            mIsVirtualUid = mUid == Process.SDK_SANDBOX_VIRTUAL_UID;
+            data.putLong(COLUMN_INDEX_UID, mUid);
         }
 
         @NonNull
@@ -240,6 +264,10 @@ public final class UidBatteryConsumer extends BatteryConsumer implements Parcela
             return mUid;
         }
 
+        public boolean isVirtualUid() {
+            return mIsVirtualUid;
+        }
+
         /**
          * Sets the name of the package owned by this UID that consumed the highest amount
          * of power since BatteryStats reset.
@@ -253,18 +281,42 @@ public final class UidBatteryConsumer extends BatteryConsumer implements Parcela
         /**
          * Sets the duration, in milliseconds, that this UID was active in a particular state,
          * such as foreground or background.
+         * @deprecated use {@link #setTimeInProcessStateMs} instead.
          */
+        @Deprecated
         @NonNull
         public Builder setTimeInStateMs(@State int state, long timeInStateMs) {
             switch (state) {
                 case STATE_FOREGROUND:
-                    mTimeInForegroundMs = timeInStateMs;
+                    mData.putLong(COLUMN_INDEX_TIME_IN_FOREGROUND, timeInStateMs);
                     break;
                 case STATE_BACKGROUND:
-                    mTimeInBackgroundMs = timeInStateMs;
+                    mData.putLong(COLUMN_INDEX_TIME_IN_BACKGROUND, timeInStateMs);
                     break;
                 default:
                     throw new IllegalArgumentException("Unsupported state: " + state);
+            }
+            return this;
+        }
+
+        /**
+         * Sets the duration, in milliseconds, that this UID was active in a particular process
+         * state, such as foreground service.
+         */
+        @NonNull
+        public Builder setTimeInProcessStateMs(@ProcessState int state, long timeInProcessStateMs) {
+            switch (state) {
+                case PROCESS_STATE_FOREGROUND:
+                    mData.putLong(COLUMN_INDEX_TIME_IN_FOREGROUND, timeInProcessStateMs);
+                    break;
+                case PROCESS_STATE_BACKGROUND:
+                    mData.putLong(COLUMN_INDEX_TIME_IN_BACKGROUND, timeInProcessStateMs);
+                    break;
+                case PROCESS_STATE_FOREGROUND_SERVICE:
+                    mData.putLong(COLUMN_INDEX_TIME_IN_FOREGROUND_SERVICE, timeInProcessStateMs);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unsupported process state: " + state);
             }
             return this;
         }
@@ -282,13 +334,21 @@ public final class UidBatteryConsumer extends BatteryConsumer implements Parcela
          */
         public Builder add(UidBatteryConsumer consumer) {
             mPowerComponentsBuilder.addPowerAndDuration(consumer.mPowerComponents);
-            mTimeInBackgroundMs += consumer.mTimeInBackgroundMs;
-            mTimeInForegroundMs += consumer.mTimeInForegroundMs;
+
+            setTimeInProcessStateMs(PROCESS_STATE_FOREGROUND,
+                    mData.getLong(COLUMN_INDEX_TIME_IN_FOREGROUND)
+                            + consumer.getTimeInProcessStateMs(PROCESS_STATE_FOREGROUND));
+            setTimeInProcessStateMs(PROCESS_STATE_BACKGROUND,
+                    mData.getLong(COLUMN_INDEX_TIME_IN_BACKGROUND)
+                            + consumer.getTimeInProcessStateMs(PROCESS_STATE_BACKGROUND));
+            setTimeInProcessStateMs(PROCESS_STATE_FOREGROUND_SERVICE,
+                    mData.getLong(COLUMN_INDEX_TIME_IN_FOREGROUND_SERVICE)
+                            + consumer.getTimeInProcessStateMs(PROCESS_STATE_FOREGROUND_SERVICE));
 
             if (mPackageWithHighestDrain == PACKAGE_NAME_UNINITIALIZED) {
-                mPackageWithHighestDrain = consumer.mPackageWithHighestDrain;
+                mPackageWithHighestDrain = consumer.getPackageWithHighestDrain();
             } else if (!TextUtils.equals(mPackageWithHighestDrain,
-                    consumer.mPackageWithHighestDrain)) {
+                    consumer.getPackageWithHighestDrain())) {
                 // Consider combining two UidBatteryConsumers with this distribution
                 // of power drain between packages:
                 // (package1=100, package2=10) and (package1=100, package2=101).
@@ -316,6 +376,9 @@ public final class UidBatteryConsumer extends BatteryConsumer implements Parcela
         public UidBatteryConsumer build() {
             if (mPackageWithHighestDrain == PACKAGE_NAME_UNINITIALIZED) {
                 mPackageWithHighestDrain = null;
+            }
+            if (mPackageWithHighestDrain != null) {
+                mData.putString(COLUMN_INDEX_PACKAGE_WITH_HIGHEST_DRAIN, mPackageWithHighestDrain);
             }
             return new UidBatteryConsumer(this);
         }

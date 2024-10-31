@@ -21,6 +21,7 @@ import static com.android.server.autofill.Helper.sVerbose;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -57,11 +58,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.autofill.AutofillManager;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.internal.R;
@@ -70,6 +73,7 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.util.ArrayUtils;
 import com.android.server.UiThread;
 import com.android.server.autofill.Helper;
+import com.android.server.utils.Slogf;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -177,8 +181,10 @@ final class SaveUi {
            @Nullable String servicePackageName, @NonNull ComponentName componentName,
            @NonNull SaveInfo info, @NonNull ValueFinder valueFinder,
            @NonNull OverlayControl overlayControl, @NonNull OnSaveListener listener,
-           boolean nightMode, boolean isUpdate, boolean compatMode) {
-        if (sVerbose) Slog.v(TAG, "nightMode: " + nightMode);
+           boolean nightMode, boolean isUpdate, boolean compatMode, boolean showServiceIcon) {
+        if (sVerbose) {
+            Slogf.v(TAG, "nightMode: %b displayId: %d", nightMode, context.getDisplayId());
+        }
         mThemeId = nightMode ? THEME_ID_DARK : THEME_ID_LIGHT;
         mPendingUi = pendingUi;
         mListener = new OneActionThenDestroyListener(listener);
@@ -199,8 +205,13 @@ final class SaveUi {
                 intent.putExtra(AutofillManager.EXTRA_RESTORE_CROSS_ACTIVITY, true);
 
                 PendingIntent p = PendingIntent.getActivityAsUser(this, /* requestCode= */ 0,
-                        intent, PendingIntent.FLAG_MUTABLE, /* options= */ null,
-                        UserHandle.CURRENT);
+                        intent,
+                        PendingIntent.FLAG_MUTABLE
+                                | PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT,
+                        ActivityOptions.makeBasic()
+                                .setPendingIntentCreatorBackgroundActivityStartMode(
+                                        ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED)
+                                .toBundle(), UserHandle.CURRENT);
                 if (sDebug) {
                     Slog.d(TAG, "startActivity add save UI restored with intent=" + intent);
                 }
@@ -288,7 +299,9 @@ final class SaveUi {
         }
         titleView.setText(mTitle);
 
-        setServiceIcon(context, view, serviceIcon);
+        if (showServiceIcon) {
+            setServiceIcon(context, view, serviceIcon);
+        }
 
         final boolean hasCustomDescription =
                 applyCustomDescription(context, view, valueFinder, info);
@@ -347,18 +360,33 @@ final class SaveUi {
         final Window window = mDialog.getWindow();
         window.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
         window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
-                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-                | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
+                | WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        window.setDimAmount(0.6f);
         window.addPrivateFlags(WindowManager.LayoutParams.SYSTEM_FLAG_SHOW_FOR_ALL_USERS);
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         window.setGravity(Gravity.BOTTOM | Gravity.CENTER);
         window.setCloseOnTouchOutside(true);
         final WindowManager.LayoutParams params = window.getAttributes();
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+
         params.accessibilityTitle = context.getString(R.string.autofill_save_accessibility_title);
         params.windowAnimations = R.style.AutofillSaveAnimation;
+        params.setTrustedOverlay();
 
+        ScrollView scrollView = view.findViewById(R.id.autofill_sheet_scroll_view);
+
+        View divider = view.findViewById(R.id.autofill_sheet_divider);
+
+        ViewTreeObserver observer = scrollView.getViewTreeObserver();
+        observer.addOnGlobalLayoutListener(() -> adjustDividerVisibility(scrollView, divider));
+
+        scrollView.getViewTreeObserver()
+                .addOnScrollChangedListener(() -> adjustDividerVisibility(scrollView, divider));
         show();
+    }
+
+    private void adjustDividerVisibility(ScrollView scrollView, View divider) {
+        boolean canScrollDown = scrollView.canScrollVertically(1); // 1 to check scrolling down
+        divider.setVisibility(canScrollDown ? View.VISIBLE : View.INVISIBLE);
     }
 
     private boolean applyCustomDescription(@NonNull Context context, @NonNull View saveUiView,
@@ -368,8 +396,7 @@ final class SaveUi {
             return false;
         }
         writeLog(MetricsEvent.AUTOFILL_SAVE_CUSTOM_DESCRIPTION);
-
-        final RemoteViews template = customDescription.getPresentation();
+        final RemoteViews template = Helper.sanitizeRemoteView(customDescription.getPresentation());
         if (template == null) {
             Slog.w(TAG, "No remote view on custom description");
             return false;
@@ -428,7 +455,8 @@ final class SaveUi {
                     }
                     final BatchUpdates batchUpdates = pair.second;
                     // First apply the updates...
-                    final RemoteViews templateUpdates = batchUpdates.getUpdates();
+                    final RemoteViews templateUpdates =
+                            Helper.sanitizeRemoteView(batchUpdates.getUpdates());
                     if (templateUpdates != null) {
                         if (sDebug) Slog.d(TAG, "Applying template updates for batch update #" + i);
                         templateUpdates.reapply(context, customSubtitleView);
@@ -555,25 +583,7 @@ final class SaveUi {
     private void setServiceIcon(Context context, View view, Drawable serviceIcon) {
         final ImageView iconView = view.findViewById(R.id.autofill_save_icon);
         final Resources res = context.getResources();
-
-        final int maxWidth = res.getDimensionPixelSize(R.dimen.autofill_save_icon_max_size);
-        final int maxHeight = maxWidth;
-        final int actualWidth = serviceIcon.getMinimumWidth();
-        final int actualHeight = serviceIcon.getMinimumHeight();
-
-        if (actualWidth <= maxWidth && actualHeight <= maxHeight) {
-            if (sDebug) {
-                Slog.d(TAG, "Adding service icon "
-                        + "(" + actualWidth + "x" + actualHeight + ") as it's less than maximum "
-                        + "(" + maxWidth + "x" + maxHeight + ").");
-            }
-            iconView.setImageDrawable(serviceIcon);
-        } else {
-            Slog.w(TAG, "Not adding service icon of size "
-                    + "(" + actualWidth + "x" + actualHeight + ") because maximum is "
-                    + "(" + maxWidth + "x" + maxHeight + ").");
-            ((ViewGroup)iconView.getParent()).removeView(iconView);
-        }
+        iconView.setImageDrawable(serviceIcon);
     }
 
     private static boolean isValidLink(PendingIntent pendingIntent, Intent intent) {

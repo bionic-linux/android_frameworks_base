@@ -16,13 +16,15 @@
 
 package com.android.server.biometrics.sensors.fingerprint.aidl;
 
-import static android.Manifest.permission.TEST_BIOMETRIC;
-
 import android.annotation.NonNull;
 import android.content.Context;
 import android.hardware.biometrics.ITestSession;
 import android.hardware.biometrics.ITestSessionCallback;
+import android.hardware.biometrics.fingerprint.AcquiredInfoAndVendorCode;
+import android.hardware.biometrics.fingerprint.EnrollmentProgressStep;
+import android.hardware.biometrics.fingerprint.NextEnrollment;
 import android.hardware.fingerprint.Fingerprint;
+import android.hardware.fingerprint.FingerprintEnrollOptions;
 import android.hardware.fingerprint.FingerprintManager;
 import android.hardware.fingerprint.IFingerprintServiceReceiver;
 import android.os.Binder;
@@ -30,9 +32,9 @@ import android.os.RemoteException;
 import android.util.Slog;
 
 import com.android.server.biometrics.HardwareAuthTokenUtils;
-import com.android.server.biometrics.Utils;
 import com.android.server.biometrics.sensors.BaseClientMonitor;
-import com.android.server.biometrics.sensors.fingerprint.FingerprintStateCallback;
+import com.android.server.biometrics.sensors.BiometricStateCallback;
+import com.android.server.biometrics.sensors.ClientMonitorCallback;
 import com.android.server.biometrics.sensors.fingerprint.FingerprintUtils;
 
 import java.util.HashSet;
@@ -47,11 +49,12 @@ import java.util.Set;
 class BiometricTestSessionImpl extends ITestSession.Stub {
 
     private static final String TAG = "fp/aidl/BiometricTestSessionImpl";
+    private static final int VHAL_ENROLLMENT_ID = 9999;
 
     @NonNull private final Context mContext;
     private final int mSensorId;
     @NonNull private final ITestSessionCallback mCallback;
-    @NonNull private final FingerprintStateCallback mFingerprintStateCallback;
+    @NonNull private final BiometricStateCallback mBiometricStateCallback;
     @NonNull private final FingerprintProvider mProvider;
     @NonNull private final Sensor mSensor;
     @NonNull private final Set<Integer> mEnrollmentIds;
@@ -113,59 +116,100 @@ class BiometricTestSessionImpl extends ITestSession.Stub {
         public void onUdfpsPointerUp(int sensorId) {
 
         }
+
+        @Override
+        public void onUdfpsOverlayShown() {
+
+        }
     };
 
     BiometricTestSessionImpl(@NonNull Context context, int sensorId,
             @NonNull ITestSessionCallback callback,
-            @NonNull FingerprintStateCallback fingerprintStateCallback,
+            @NonNull BiometricStateCallback biometricStateCallback,
             @NonNull FingerprintProvider provider,
             @NonNull Sensor sensor) {
         mContext = context;
         mSensorId = sensorId;
         mCallback = callback;
-        mFingerprintStateCallback = fingerprintStateCallback;
+        mBiometricStateCallback = biometricStateCallback;
         mProvider = provider;
         mSensor = sensor;
         mEnrollmentIds = new HashSet<>();
         mRandom = new Random();
     }
 
+    @android.annotation.EnforcePermission(android.Manifest.permission.TEST_BIOMETRIC)
     @Override
     public void setTestHalEnabled(boolean enabled) {
-        Utils.checkPermission(mContext, TEST_BIOMETRIC);
 
-        mProvider.setTestHalEnabled(enabled);
+        super.setTestHalEnabled_enforcePermission();
+
         mSensor.setTestHalEnabled(enabled);
+        mProvider.setTestHalEnabled(enabled);
     }
 
+    @android.annotation.EnforcePermission(android.Manifest.permission.TEST_BIOMETRIC)
     @Override
     public void startEnroll(int userId) {
-        Utils.checkPermission(mContext, TEST_BIOMETRIC);
+
+        super.startEnroll_enforcePermission();
 
         mProvider.scheduleEnroll(mSensorId, new Binder(), new byte[69], userId, mReceiver,
                 mContext.getOpPackageName(), FingerprintManager.ENROLL_ENROLL,
-                mFingerprintStateCallback);
+                (new FingerprintEnrollOptions.Builder()).build());
     }
 
+    @android.annotation.EnforcePermission(android.Manifest.permission.TEST_BIOMETRIC)
     @Override
-    public void finishEnroll(int userId) {
-        Utils.checkPermission(mContext, TEST_BIOMETRIC);
+    public void finishEnroll(int userId) throws RemoteException {
 
+        super.finishEnroll_enforcePermission();
+
+        Slog.i(TAG, "finishEnroll(): useVhalForTesting=" + mProvider.useVhalForTesting());
+        if (mProvider.useVhalForTesting()) {
+            final AcquiredInfoAndVendorCode[] acquiredInfoAndVendorCodes =
+                    {new AcquiredInfoAndVendorCode()};
+            final EnrollmentProgressStep[] enrollmentProgressSteps =
+                    {new EnrollmentProgressStep(), new EnrollmentProgressStep()};
+            enrollmentProgressSteps[0].durationMs = 100;
+            enrollmentProgressSteps[0].acquiredInfoAndVendorCodes = acquiredInfoAndVendorCodes;
+            enrollmentProgressSteps[1].durationMs = 200;
+            enrollmentProgressSteps[1].acquiredInfoAndVendorCodes = acquiredInfoAndVendorCodes;
+
+            final NextEnrollment nextEnrollment = new NextEnrollment();
+            nextEnrollment.id = VHAL_ENROLLMENT_ID;
+            nextEnrollment.progressSteps = enrollmentProgressSteps;
+            nextEnrollment.result = true;
+            mProvider.getVhal().setNextEnrollment(nextEnrollment);
+            mProvider.simulateVhalFingerDown(userId, mSensorId);
+            return;
+        }
+
+        //TODO (b341889971): delete the following lines when b/341889971 is resolved
         int nextRandomId = mRandom.nextInt();
         while (mEnrollmentIds.contains(nextRandomId)) {
             nextRandomId = mRandom.nextInt();
         }
 
         mEnrollmentIds.add(nextRandomId);
-        mSensor.getSessionForUser(userId).mHalSessionCallback
+        mSensor.getSessionForUser(userId).getHalSessionCallback()
                 .onEnrollmentProgress(nextRandomId, 0 /* remaining */);
     }
 
+    @android.annotation.EnforcePermission(android.Manifest.permission.TEST_BIOMETRIC)
     @Override
-    public void acceptAuthentication(int userId)  {
-        Utils.checkPermission(mContext, TEST_BIOMETRIC);
+    public void acceptAuthentication(int userId) throws RemoteException {
 
         // Fake authentication with any of the existing fingers
+        super.acceptAuthentication_enforcePermission();
+
+        if (mProvider.useVhalForTesting()) {
+            mProvider.getVhal().setEnrollmentHit(VHAL_ENROLLMENT_ID);
+            mProvider.simulateVhalFingerDown(userId, mSensorId);
+            return;
+        }
+
+        //TODO (b341889971): delete the following lines when b/341889971 is resolved
         List<Fingerprint> fingerprints = FingerprintUtils.getInstance(mSensorId)
                 .getBiometricsForUser(mContext, userId);
         if (fingerprints.isEmpty()) {
@@ -173,39 +217,60 @@ class BiometricTestSessionImpl extends ITestSession.Stub {
             return;
         }
         final int fid = fingerprints.get(0).getBiometricId();
-        mSensor.getSessionForUser(userId).mHalSessionCallback.onAuthenticationSucceeded(fid,
+        mSensor.getSessionForUser(userId).getHalSessionCallback().onAuthenticationSucceeded(fid,
                 HardwareAuthTokenUtils.toHardwareAuthToken(new byte[69]));
     }
 
+    @android.annotation.EnforcePermission(android.Manifest.permission.TEST_BIOMETRIC)
     @Override
-    public void rejectAuthentication(int userId)  {
-        Utils.checkPermission(mContext, TEST_BIOMETRIC);
+    public void rejectAuthentication(int userId) throws RemoteException  {
 
-        mSensor.getSessionForUser(userId).mHalSessionCallback.onAuthenticationFailed();
+        super.rejectAuthentication_enforcePermission();
+
+        if (mProvider.useVhalForTesting()) {
+            mProvider.getVhal().setEnrollmentHit(VHAL_ENROLLMENT_ID + 1);
+            mProvider.simulateVhalFingerDown(userId, mSensorId);
+            return;
+        }
+
+        //TODO (b341889971): delete the following lines when b/341889971 is resolved
+        mSensor.getSessionForUser(userId).getHalSessionCallback().onAuthenticationFailed();
     }
 
+    @android.annotation.EnforcePermission(android.Manifest.permission.TEST_BIOMETRIC)
     @Override
     public void notifyAcquired(int userId, int acquireInfo)  {
-        Utils.checkPermission(mContext, TEST_BIOMETRIC);
 
-        mSensor.getSessionForUser(userId).mHalSessionCallback
+        super.notifyAcquired_enforcePermission();
+
+        mSensor.getSessionForUser(userId).getHalSessionCallback()
                 .onAcquired((byte) acquireInfo, 0 /* vendorCode */);
     }
 
+    @android.annotation.EnforcePermission(android.Manifest.permission.TEST_BIOMETRIC)
     @Override
     public void notifyError(int userId, int errorCode)  {
-        Utils.checkPermission(mContext, TEST_BIOMETRIC);
 
-        mSensor.getSessionForUser(userId).mHalSessionCallback.onError((byte) errorCode,
+        super.notifyError_enforcePermission();
+
+        mSensor.getSessionForUser(userId).getHalSessionCallback().onError((byte) errorCode,
                 0 /* vendorCode */);
     }
 
+    @android.annotation.EnforcePermission(android.Manifest.permission.TEST_BIOMETRIC)
     @Override
-    public void cleanupInternalState(int userId)  {
-        Utils.checkPermission(mContext, TEST_BIOMETRIC);
+    public void cleanupInternalState(int userId) throws RemoteException {
+
+        super.cleanupInternalState_enforcePermission();
 
         Slog.d(TAG, "cleanupInternalState: " + userId);
-        mProvider.scheduleInternalCleanup(mSensorId, userId, new BaseClientMonitor.Callback() {
+
+        if (mProvider.useVhalForTesting()) {
+            Slog.i(TAG, "cleanup virtualhal configurations");
+            mProvider.getVhal().resetConfigurations(); //setEnrollments(new int[]{});
+        }
+
+        mProvider.scheduleInternalCleanup(mSensorId, userId, new ClientMonitorCallback() {
             @Override
             public void onClientStarted(@NonNull BaseClientMonitor clientMonitor) {
                 try {

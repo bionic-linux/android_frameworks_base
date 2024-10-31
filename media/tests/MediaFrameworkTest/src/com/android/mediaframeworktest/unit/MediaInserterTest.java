@@ -36,7 +36,8 @@ import android.provider.MediaStore.Files;
 import android.provider.MediaStore.Images;
 import android.provider.MediaStore.Video;
 import android.test.InstrumentationTestCase;
-import android.test.suitebuilder.annotation.SmallTest;
+
+import androidx.test.filters.SmallTest;
 
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
@@ -89,7 +90,7 @@ public class MediaInserterTest extends InstrumentationTestCase {
         MockitoAnnotations.initMocks(this);
 
         final Context attributionContext = getInstrumentation().getContext()
-                .createFeatureContext(TEST_FEATURE_ID);
+                .createAttributionContext(TEST_FEATURE_ID);
 
         final ContentProviderClient client = new ContentProviderClient(attributionContext
                         .getContentResolver(), mMockProvider, true);

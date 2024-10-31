@@ -16,12 +16,15 @@
 
 package com.android.systemui.statusbar.phone;
 
+import static android.view.View.ACCESSIBILITY_LIVE_REGION_NONE;
+import static android.view.View.ACCESSIBILITY_LIVE_REGION_POLITE;
+
 import static com.google.common.truth.Truth.assertThat;
 
-import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper;
 import android.view.View;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
 import com.android.systemui.SysuiTestCase;
@@ -32,7 +35,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @SmallTest
-@RunWith(AndroidTestingRunner.class)
+@RunWith(AndroidJUnit4.class)
 @TestableLooper.RunWithLooper
 public class KeyguardIndicationTextViewTest extends SysuiTestCase {
 
@@ -54,6 +57,22 @@ public class KeyguardIndicationTextViewTest extends SysuiTestCase {
         mKeyguardIndicationTextView.switchIndication(null /* text */, null);
 
         assertThat(mKeyguardIndicationTextView.getText()).isEqualTo("");
+    }
+
+    @Test
+    public void alwaysAnnounce_setsLiveRegionToNone() {
+        mKeyguardIndicationTextView.setAlwaysAnnounceEnabled(true);
+
+        assertThat(mKeyguardIndicationTextView.getAccessibilityLiveRegion()).isEqualTo(
+                ACCESSIBILITY_LIVE_REGION_NONE);
+    }
+
+    @Test
+    public void alwaysAnnounce_setsLiveRegionToDefaultPolite_whenDisabled() {
+        mKeyguardIndicationTextView.setAlwaysAnnounceEnabled(false);
+
+        assertThat(mKeyguardIndicationTextView.getAccessibilityLiveRegion()).isEqualTo(
+                ACCESSIBILITY_LIVE_REGION_POLITE);
     }
 
     @Test

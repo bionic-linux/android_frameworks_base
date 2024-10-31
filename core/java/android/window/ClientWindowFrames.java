@@ -17,9 +17,12 @@
 package android.window;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.graphics.Rect;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.util.Objects;
 
 /**
  * The window frame container class used by client side for layout.
@@ -27,47 +30,70 @@ import android.os.Parcelable;
  */
 public class ClientWindowFrames implements Parcelable {
     /** The actual window bounds. */
-    public final @NonNull Rect frame;
+    public final @NonNull Rect frame = new Rect();
 
     /**
      * The container frame that is usually the same as display size. It may exclude the area of
      * insets if the window layout parameter has specified fit-insets-sides.
      */
-    public final @NonNull Rect displayFrame;
+    public final @NonNull Rect displayFrame = new Rect();
 
-    /** The background area while the window is resizing. */
-    public final @NonNull Rect backdropFrame;
+    /**
+     * The frame to be referenced while applying gravity and MATCH_PARENT.
+     */
+    public final @NonNull Rect parentFrame = new Rect();
+
+    /**
+     * The frame this window attaches to. If this is not null, this is the frame of the parent
+     * window.
+     */
+    public @Nullable Rect attachedFrame;
+
+    public boolean isParentFrameClippedByDisplayCutout;
+
+    public float compatScale = 1f;
 
     public ClientWindowFrames() {
-        frame = new Rect();
-        displayFrame = new Rect();
-        backdropFrame = new Rect();
     }
 
-    public ClientWindowFrames(ClientWindowFrames other) {
-        frame = new Rect(other.frame);
-        displayFrame = new Rect(other.displayFrame);
-        backdropFrame = new Rect(other.backdropFrame);
+    public ClientWindowFrames(@NonNull ClientWindowFrames other) {
+        setTo(other);
     }
 
-    private ClientWindowFrames(Parcel in) {
-        frame = Rect.CREATOR.createFromParcel(in);
-        displayFrame = Rect.CREATOR.createFromParcel(in);
-        backdropFrame = Rect.CREATOR.createFromParcel(in);
+    private ClientWindowFrames(@NonNull Parcel in) {
+        readFromParcel(in);
+    }
+
+    /** Updates the current frames to the given frames. */
+    public void setTo(@NonNull ClientWindowFrames other) {
+        frame.set(other.frame);
+        displayFrame.set(other.displayFrame);
+        parentFrame.set(other.parentFrame);
+        if (other.attachedFrame != null) {
+            attachedFrame = new Rect(other.attachedFrame);
+        }
+        isParentFrameClippedByDisplayCutout = other.isParentFrameClippedByDisplayCutout;
+        compatScale = other.compatScale;
     }
 
     /** Needed for AIDL out parameters. */
     public void readFromParcel(Parcel in) {
         frame.readFromParcel(in);
         displayFrame.readFromParcel(in);
-        backdropFrame.readFromParcel(in);
+        parentFrame.readFromParcel(in);
+        attachedFrame = in.readTypedObject(Rect.CREATOR);
+        isParentFrameClippedByDisplayCutout = in.readBoolean();
+        compatScale = in.readFloat();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         frame.writeToParcel(dest, flags);
         displayFrame.writeToParcel(dest, flags);
-        backdropFrame.writeToParcel(dest, flags);
+        parentFrame.writeToParcel(dest, flags);
+        dest.writeTypedObject(attachedFrame, flags);
+        dest.writeBoolean(isParentFrameClippedByDisplayCutout);
+        dest.writeFloat(compatScale);
     }
 
     @Override
@@ -75,7 +101,33 @@ public class ClientWindowFrames implements Parcelable {
         final StringBuilder sb = new StringBuilder(32);
         return "ClientWindowFrames{frame=" + frame.toShortString(sb)
                 + " display=" + displayFrame.toShortString(sb)
-                + " backdrop=" + backdropFrame.toShortString(sb) + "}";
+                + " parentFrame=" + parentFrame.toShortString(sb)
+                + (attachedFrame != null ? " attachedFrame=" + attachedFrame.toShortString() : "")
+                + (isParentFrameClippedByDisplayCutout ? " parentClippedByDisplayCutout" : "")
+                + (compatScale != 1f ? " sizeCompatScale=" + compatScale : "") +  "}";
+    }
+
+    @Override
+    public boolean equals(@Nullable Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final ClientWindowFrames other = (ClientWindowFrames) o;
+        return frame.equals(other.frame)
+                && displayFrame.equals(other.displayFrame)
+                && parentFrame.equals(other.parentFrame)
+                && Objects.equals(attachedFrame, other.attachedFrame)
+                && isParentFrameClippedByDisplayCutout == other.isParentFrameClippedByDisplayCutout
+                && compatScale == other.compatScale;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frame, displayFrame, parentFrame, attachedFrame,
+                isParentFrameClippedByDisplayCutout, compatScale);
     }
 
     @Override

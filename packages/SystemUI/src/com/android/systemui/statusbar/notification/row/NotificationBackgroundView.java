@@ -16,6 +16,8 @@
 
 package com.android.systemui.statusbar.notification.row;
 
+import static com.android.systemui.util.ColorUtilKt.hexColorString;
+
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
@@ -27,43 +29,63 @@ import android.graphics.drawable.RippleDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.android.internal.util.ArrayUtils;
-import com.android.systemui.R;
-import com.android.systemui.statusbar.notification.ExpandAnimationParameters;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.android.internal.util.ContrastColorUtil;
+import com.android.settingslib.Utils;
+import com.android.systemui.Dumpable;
+import com.android.systemui.res.R;
+import com.android.systemui.util.DrawableDumpKt;
+
+import java.io.PrintWriter;
+import java.util.Arrays;
 
 /**
  * A view that can be used for both the dimmed and normal background of an notification.
  */
-public class NotificationBackgroundView extends View {
+public class NotificationBackgroundView extends View implements Dumpable {
 
     private final boolean mDontModifyCorners;
     private Drawable mBackground;
     private int mClipTopAmount;
-    private int mActualHeight;
     private int mClipBottomAmount;
     private int mTintColor;
+    @Nullable private Integer mRippleColor;
     private final float[] mCornerRadii = new float[8];
+    private final float[] mFocusOverlayCornerRadii = new float[8];
+    private float mFocusOverlayStroke = 0;
     private boolean mBottomIsRounded;
-    private int mBackgroundTop;
     private boolean mBottomAmountClips = true;
+    private int mActualHeight = -1;
+    private int mActualWidth = -1;
     private boolean mExpandAnimationRunning;
-    private float mActualWidth;
+    private int mExpandAnimationWidth = -1;
+    private int mExpandAnimationHeight = -1;
     private int mDrawableAlpha = 255;
-    private boolean mIsPressedAllowed;
+    private final ColorStateList mLightColoredStatefulColors;
+    private final ColorStateList mDarkColoredStatefulColors;
+    private final int mNormalColor;
 
     public NotificationBackgroundView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mDontModifyCorners = getResources().getBoolean(
-                R.bool.config_clipNotificationsToOutline);
+        mDontModifyCorners = getResources().getBoolean(R.bool.config_clipNotificationsToOutline);
+        mLightColoredStatefulColors = getResources().getColorStateList(
+                R.color.notification_state_color_light);
+        mDarkColoredStatefulColors = getResources().getColorStateList(
+                R.color.notification_state_color_dark);
+        mNormalColor = Utils.getColorAttrDefaultColor(mContext,
+                com.android.internal.R.attr.materialColorSurfaceContainerHigh);
+        mFocusOverlayStroke = getResources().getDimension(R.dimen.notification_focus_stroke_width);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (mClipTopAmount + mClipBottomAmount < mActualHeight - mBackgroundTop
-                || mExpandAnimationRunning) {
+        if (mClipTopAmount + mClipBottomAmount < getActualHeight() || mExpandAnimationRunning) {
             canvas.save();
             if (!mExpandAnimationRunning) {
-                canvas.clipRect(0, mClipTopAmount, getWidth(), mActualHeight - mClipBottomAmount);
+                canvas.clipRect(0, mClipTopAmount, getWidth(),
+                        getActualHeight() - mClipBottomAmount);
             }
             draw(canvas, mBackground);
             canvas.restore();
@@ -72,18 +94,24 @@ public class NotificationBackgroundView extends View {
 
     private void draw(Canvas canvas, Drawable drawable) {
         if (drawable != null) {
-            int top = mBackgroundTop;
-            int bottom = mActualHeight;
+            int top = 0;
+            int bottom = getActualHeight();
             if (mBottomIsRounded
                     && mBottomAmountClips
                     && !mExpandAnimationRunning) {
                 bottom -= mClipBottomAmount;
             }
-            int left = 0;
-            int right = getWidth();
+            final boolean isRtl = isLayoutRtl();
+            final int width = getWidth();
+            final int actualWidth = getActualWidth();
+
+            int left = isRtl ? width - actualWidth : 0;
+            int right = isRtl ? width : actualWidth;
+
             if (mExpandAnimationRunning) {
-                left = (int) ((getWidth() - mActualWidth) / 2.0f);
-                right = (int) (left + mActualWidth);
+                // Horizontally center this background view inside of the container
+                left = (int) ((width - actualWidth) / 2.0f);
+                right = (int) (left + actualWidth);
             }
             drawable.setBounds(left, top, right, bottom);
             drawable.draw(canvas);
@@ -108,6 +136,18 @@ public class NotificationBackgroundView extends View {
     }
 
     /**
+     * Stateful colors are colors that will overlay on the notification original color when one of
+     * hover states, pressed states or other similar states is activated.
+     */
+    private void setStatefulColors() {
+        if (mTintColor != mNormalColor) {
+            ColorStateList newColor = ContrastColorUtil.isColorDark(mTintColor)
+                    ? mDarkColoredStatefulColors : mLightColoredStatefulColors;
+            ((GradientDrawable) getStatefulBackgroundLayer().mutate()).setColor(newColor);
+        }
+    }
+
+    /**
      * Sets a background drawable. As we need to change our bounds independently of layout, we need
      * the notion of a background independently of the regular View background..
      */
@@ -117,6 +157,7 @@ public class NotificationBackgroundView extends View {
             unscheduleDrawable(mBackground);
         }
         mBackground = background;
+        mRippleColor = null;
         mBackground.mutate();
         if (mBackground != null) {
             mBackground.setCallback(this);
@@ -134,13 +175,20 @@ public class NotificationBackgroundView extends View {
         setCustomBackground(d);
     }
 
+    private Drawable getBaseBackgroundLayer() {
+        return ((LayerDrawable) mBackground).getDrawable(0);
+    }
+
+    private Drawable getStatefulBackgroundLayer() {
+        return ((LayerDrawable) mBackground).getDrawable(1);
+    }
+
     public void setTint(int tintColor) {
-        if (tintColor != 0) {
-            mBackground.setColorFilter(tintColor, PorterDuff.Mode.SRC_ATOP);
-        } else {
-            mBackground.clearColorFilter();
-        }
+        Drawable baseLayer = getBaseBackgroundLayer();
+        baseLayer.mutate().setTintMode(PorterDuff.Mode.SRC_ATOP);
+        baseLayer.setTint(tintColor);
         mTintColor = tintColor;
+        setStatefulColors();
         invalidate();
     }
 
@@ -152,8 +200,26 @@ public class NotificationBackgroundView extends View {
         invalidate();
     }
 
-    public int getActualHeight() {
-        return mActualHeight;
+    private int getActualHeight() {
+        if (mExpandAnimationRunning && mExpandAnimationHeight > -1) {
+            return mExpandAnimationHeight;
+        } else if (mActualHeight > -1) {
+            return mActualHeight;
+        }
+        return getHeight();
+    }
+
+    public void setActualWidth(int actualWidth) {
+        mActualWidth = actualWidth;
+    }
+
+    private int getActualWidth() {
+        if (mExpandAnimationRunning && mExpandAnimationWidth > -1) {
+            return mExpandAnimationWidth;
+        } else if (mActualWidth > -1) {
+            return mActualWidth;
+        }
+        return getWidth();
     }
 
     public void setClipTopAmount(int clipTopAmount) {
@@ -175,10 +241,6 @@ public class NotificationBackgroundView extends View {
 
     public void setState(int[] drawableState) {
         if (mBackground != null && mBackground.isStateful()) {
-            if (!mIsPressedAllowed) {
-                drawableState = ArrayUtils.removeInt(drawableState,
-                        com.android.internal.R.attr.state_pressed);
-            }
             mBackground.setState(drawableState);
         }
     }
@@ -187,6 +249,9 @@ public class NotificationBackgroundView extends View {
         if (mBackground instanceof RippleDrawable) {
             RippleDrawable ripple = (RippleDrawable) mBackground;
             ripple.setColor(ColorStateList.valueOf(color));
+            mRippleColor = color;
+        } else {
+            mRippleColor = null;
         }
     }
 
@@ -228,22 +293,34 @@ public class NotificationBackgroundView extends View {
         if (mDontModifyCorners) {
             return;
         }
-        if (mBackground instanceof LayerDrawable) {
-            GradientDrawable gradientDrawable =
-                    (GradientDrawable) ((LayerDrawable) mBackground).getDrawable(0);
-            gradientDrawable.setCornerRadii(mCornerRadii);
+        if (mBackground instanceof LayerDrawable layerDrawable) {
+            int numberOfLayers = layerDrawable.getNumberOfLayers();
+            for (int i = 0; i < numberOfLayers; i++) {
+                GradientDrawable gradientDrawable = (GradientDrawable) layerDrawable.getDrawable(i);
+                gradientDrawable.setCornerRadii(mCornerRadii);
+            }
+            updateFocusOverlayRadii(layerDrawable);
         }
     }
 
-    public void setBackgroundTop(int backgroundTop) {
-        mBackgroundTop = backgroundTop;
-        invalidate();
+    private void updateFocusOverlayRadii(LayerDrawable background) {
+        GradientDrawable overlay =
+                (GradientDrawable) background.findDrawableByLayerId(
+                        R.id.notification_focus_overlay);
+        for (int i = 0; i < mCornerRadii.length; i++) {
+            // in theory subtracting mFocusOverlayStroke/2 should be enough but notification
+            // background is still peeking a bit from below - probably due to antialiasing or
+            // overlay uneven scaling. So let's subtract full mFocusOverlayStroke to make sure the
+            // radius is a bit smaller and covers background corners fully
+            mFocusOverlayCornerRadii[i] = Math.max(0, mCornerRadii[i] - mFocusOverlayStroke);
+        }
+        overlay.setCornerRadii(mFocusOverlayCornerRadii);
     }
 
     /** Set the current expand animation size. */
-    public void setExpandAnimationSize(int actualWidth, int actualHeight) {
-        mActualHeight = actualHeight;
-        mActualWidth = actualWidth;
+    public void setExpandAnimationSize(int width, int height) {
+        mExpandAnimationHeight = height;
+        mExpandAnimationWidth = width;
         invalidate();
     }
 
@@ -262,7 +339,28 @@ public class NotificationBackgroundView extends View {
         invalidate();
     }
 
-    public void setPressedAllowed(boolean allowed) {
-        mIsPressedAllowed = allowed;
+    @Override
+    public void dump(PrintWriter pw, @NonNull String[] args) {
+        pw.println("mDontModifyCorners: " + mDontModifyCorners);
+        pw.println("mClipTopAmount: " + mClipTopAmount);
+        pw.println("mClipBottomAmount: " + mClipBottomAmount);
+        pw.println("mCornerRadii: " + Arrays.toString(mCornerRadii));
+        pw.println("mBottomIsRounded: " + mBottomIsRounded);
+        pw.println("mBottomAmountClips: " + mBottomAmountClips);
+        pw.println("mActualWidth: " + mActualWidth);
+        pw.println("mActualHeight: " + mActualHeight);
+        pw.println("mTintColor: " + hexColorString(mTintColor));
+        pw.println("mRippleColor: " + hexColorString(mRippleColor));
+        pw.println("mBackground: " + DrawableDumpKt.dumpToString(mBackground));
+    }
+
+    /** create a concise dump of this view's colors */
+    public String toDumpString() {
+        return "<NotificationBackgroundView"
+                + " tintColor=" + hexColorString(mTintColor)
+                + " rippleColor=" + hexColorString(mRippleColor)
+                + " bgColor=" + DrawableDumpKt.getSolidColor(mBackground)
+                + ">";
+
     }
 }

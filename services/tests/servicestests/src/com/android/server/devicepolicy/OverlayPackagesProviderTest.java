@@ -26,6 +26,7 @@ import static android.app.admin.DevicePolicyManager.REQUIRED_APP_MANAGED_USER;
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
@@ -46,7 +47,7 @@ import android.view.inputmethod.InputMethodInfo;
 
 import androidx.annotation.NonNull;
 import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.android.internal.R;
 
@@ -66,9 +67,7 @@ import java.util.Set;
 
 /**
  * Run this test with:
- *
  * {@code atest FrameworksServicesTests:com.android.server.devicepolicy.OwnersTest}
- *
  */
 @RunWith(AndroidJUnit4.class)
 public class OverlayPackagesProviderTest {
@@ -76,6 +75,7 @@ public class OverlayPackagesProviderTest {
     private static final ComponentName TEST_MDM_COMPONENT_NAME = new ComponentName(
             TEST_DPC_PACKAGE_NAME, "pc.package.name.DeviceAdmin");
     private static final int TEST_USER_ID = 123;
+    private static final String ROLE_HOLDER_PACKAGE_NAME = "test.role.holder.package.name";
 
     private @Mock Resources mResources;
 
@@ -85,8 +85,8 @@ public class OverlayPackagesProviderTest {
 
     private FakePackageManager mPackageManager;
     private String[] mSystemAppsWithLauncher;
-    private Set<String> mRegularMainlineModules = new HashSet<>();
-    private Map<String, String> mMainlineModuleToDeclaredMetadataMap = new HashMap<>();
+    private final Set<String> mRegularMainlineModules = new HashSet<>();
+    private final Map<String, String> mMainlineModuleToDeclaredMetadataMap = new HashMap<>();
     private OverlayPackagesProvider mHelper;
 
     @Before
@@ -113,7 +113,8 @@ public class OverlayPackagesProviderTest {
         setVendorDisallowedAppsManagedUser();
 
         mRealResources = InstrumentationRegistry.getTargetContext().getResources();
-        mHelper = new OverlayPackagesProvider(mTestContext, mInjector);
+        mHelper = new OverlayPackagesProvider(mTestContext, mInjector,
+                new RecursiveStringArrayResourceResolver(mResources));
     }
 
     @Test
@@ -211,7 +212,7 @@ public class OverlayPackagesProviderTest {
     }
 
     /**
-     * @see {@link #testAllowedAndDisallowedAtTheSameTimeManagedDevice}
+     * @see #testAllowedAndDisallowedAtTheSameTimeManagedDevice
      */
     @Test
     public void testAllowedAndDisallowedAtTheSameTimeManagedUser() {
@@ -222,7 +223,7 @@ public class OverlayPackagesProviderTest {
     }
 
     /**
-     * @see {@link #testAllowedAndDisallowedAtTheSameTimeManagedDevice}
+     * @see #testAllowedAndDisallowedAtTheSameTimeManagedDevice
      */
     @Test
     public void testAllowedAndDisallowedAtTheSameTimeManagedProfile() {
@@ -303,6 +304,26 @@ public class OverlayPackagesProviderTest {
 
         verifyAppsAreNonRequired(
                 ACTION_PROVISION_MANAGED_PROFILE, "package1", "package2", "package3");
+    }
+
+    @Test
+    public void testGetNonRequiredApps_managedProfile_roleHolder_works() {
+        when(mInjector.getDevicePolicyManagementRoleHolderPackageName(any()))
+                .thenReturn(ROLE_HOLDER_PACKAGE_NAME);
+        setSystemAppsWithLauncher("package1", "package2", ROLE_HOLDER_PACKAGE_NAME);
+
+        verifyAppsAreNonRequired(
+                ACTION_PROVISION_MANAGED_PROFILE, "package1", "package2");
+    }
+
+    @Test
+    public void testGetNonRequiredApps_managedDevice_roleHolder_works() {
+        when(mInjector.getDevicePolicyManagementRoleHolderPackageName(any()))
+                .thenReturn(ROLE_HOLDER_PACKAGE_NAME);
+        setSystemAppsWithLauncher("package1", "package2", ROLE_HOLDER_PACKAGE_NAME);
+
+        verifyAppsAreNonRequired(
+                ACTION_PROVISION_MANAGED_DEVICE, "package1", "package2");
     }
 
     private void setupRegularModulesWithManagedUser(String... regularModules) {
@@ -425,7 +446,7 @@ public class OverlayPackagesProviderTest {
     }
 
     private void setSystemInputMethods(String... packageNames) {
-        List<InputMethodInfo> inputMethods = new ArrayList<InputMethodInfo>();
+        List<InputMethodInfo> inputMethods = new ArrayList<>();
         for (String packageName : packageNames) {
             ApplicationInfo aInfo = new ApplicationInfo();
             aInfo.flags = ApplicationInfo.FLAG_SYSTEM;
@@ -445,6 +466,7 @@ public class OverlayPackagesProviderTest {
         mSystemAppsWithLauncher = apps;
     }
 
+    @SafeVarargs
     private <T> Set<T> setFromArray(T... array) {
         if (array == null) {
             return null;
@@ -453,6 +475,7 @@ public class OverlayPackagesProviderTest {
     }
 
     class FakePackageManager extends MockPackageManager {
+        @NonNull
         @Override
         public List<ResolveInfo> queryIntentActivitiesAsUser(Intent intent, int flags, int userId) {
             assertWithMessage("Expected an intent with action ACTION_MAIN")

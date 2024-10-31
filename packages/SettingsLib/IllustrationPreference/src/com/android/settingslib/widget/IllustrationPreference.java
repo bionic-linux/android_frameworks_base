@@ -17,12 +17,14 @@
 package com.android.settingslib.widget;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -32,14 +34,19 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import androidx.annotation.RawRes;
+import androidx.annotation.StringRes;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
+
+import com.android.settingslib.widget.flags.Flags;
+import com.android.settingslib.widget.preference.illustration.R;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -50,12 +57,29 @@ public class IllustrationPreference extends Preference {
     private static final String TAG = "IllustrationPreference";
 
     private static final boolean IS_ENABLED_LOTTIE_ADAPTIVE_COLOR = false;
+    private static final int SIZE_UNSPECIFIED = -1;
 
+    private int mMaxHeight = SIZE_UNSPECIFIED;
     private int mImageResId;
+    private boolean mCacheComposition = true;
     private boolean mIsAutoScale;
     private Uri mImageUri;
     private Drawable mImageDrawable;
     private View mMiddleGroundView;
+    private OnBindListener mOnBindListener;
+    private boolean mLottieDynamicColor;
+    private CharSequence mContentDescription;
+
+    /**
+     * Interface to listen in on when {@link #onBindViewHolder(PreferenceViewHolder)} occurs.
+     */
+    public interface OnBindListener {
+        /**
+         * Called when when {@link #onBindViewHolder(PreferenceViewHolder)} occurs.
+         * @param animationView the animation view for this preference.
+         */
+        void onBind(LottieAnimationView animationView);
+    }
 
     private final Animatable2.AnimationCallback mAnimationCallback =
             new Animatable2.AnimationCallback() {
@@ -98,11 +122,16 @@ public class IllustrationPreference extends Preference {
     public void onBindViewHolder(PreferenceViewHolder holder) {
         super.onBindViewHolder(holder);
 
+        final ImageView backgroundView =
+                (ImageView) holder.findViewById(R.id.background_view);
         final FrameLayout middleGroundLayout =
                 (FrameLayout) holder.findViewById(R.id.middleground_layout);
         final LottieAnimationView illustrationView =
                 (LottieAnimationView) holder.findViewById(R.id.lottie_view);
-
+        if (illustrationView != null && !TextUtils.isEmpty(mContentDescription)) {
+            illustrationView.setContentDescription(mContentDescription);
+            illustrationView.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
         // To solve the problem of non-compliant illustrations, we set the frame height
         // to 300dp and set the length of the short side of the screen to
         // the width of the frame.
@@ -114,7 +143,9 @@ public class IllustrationPreference extends Preference {
         lp.width = screenWidth < screenHeight ? screenWidth : screenHeight;
         illustrationFrame.setLayoutParams(lp);
 
-        handleImageWithAnimation(illustrationView);
+        illustrationView.setCacheComposition(mCacheComposition);
+        handleImageWithAnimation(illustrationView, illustrationFrame);
+        handleImageFrameMaxHeight(backgroundView, illustrationView);
 
         if (mIsAutoScale) {
             illustrationView.setScaleType(mIsAutoScale
@@ -127,6 +158,21 @@ public class IllustrationPreference extends Preference {
         if (IS_ENABLED_LOTTIE_ADAPTIVE_COLOR) {
             ColorUtils.applyDynamicColors(getContext(), illustrationView);
         }
+
+        if (mLottieDynamicColor) {
+            LottieColorUtils.applyDynamicColors(getContext(), illustrationView);
+        }
+
+        if (mOnBindListener != null) {
+            mOnBindListener.onBind(illustrationView);
+        }
+    }
+
+    /**
+     * Sets a listener to be notified when the views are binded.
+     */
+    public void setOnBindListener(OnBindListener listener) {
+        mOnBindListener = listener;
     }
 
     /**
@@ -170,7 +216,37 @@ public class IllustrationPreference extends Preference {
     }
 
     /**
-     * Sets image drawable to display image in {@link LottieAnimationView}
+     * To set content description of the {@link Illustration Preference}. This can use for talkback
+     * environment if developer wants to have a customization content.
+     *
+     * @param contentDescription The CharSequence of the content description.
+     */
+    public void setContentDescription(CharSequence contentDescription) {
+        if (!TextUtils.equals(mContentDescription, contentDescription)) {
+            mContentDescription = contentDescription;
+            notifyChanged();
+        }
+    }
+
+    /**
+     * To set content description of the {@link Illustration Preference}. This can use for talkback
+     * environment if developer wants to have a customization content.
+     *
+     * @param contentDescriptionResId The resource id of the content description.
+     */
+    public void setContentDescription(@StringRes int contentDescriptionResId) {
+        setContentDescription(getContext().getText(contentDescriptionResId));
+    }
+
+    /**
+     * Gets the lottie illustration resource id.
+     */
+    public int getLottieAnimationResId() {
+        return mImageResId;
+    }
+
+    /**
+     * Sets the image drawable to display image in {@link LottieAnimationView}.
      *
      * @param imageDrawable the drawable of an image
      */
@@ -183,7 +259,16 @@ public class IllustrationPreference extends Preference {
     }
 
     /**
-     * Sets image uri to display image in {@link LottieAnimationView}
+     * Gets the image drawable from display image in {@link LottieAnimationView}.
+     *
+     * @return the drawable of an image
+     */
+    public Drawable getImageDrawable() {
+        return mImageDrawable;
+    }
+
+    /**
+     * Sets the image uri to display image in {@link LottieAnimationView}.
      *
      * @param imageUri the Uri of an image
      */
@@ -193,6 +278,43 @@ public class IllustrationPreference extends Preference {
             mImageUri = imageUri;
             notifyChanged();
         }
+    }
+
+    /**
+     * Gets the image uri from display image in {@link LottieAnimationView}.
+     *
+     * @return the Uri of an image
+     */
+    public Uri getImageUri() {
+        return mImageUri;
+    }
+
+    /**
+     * Sets the maximum height of the views, still use the specific one if the maximum height was
+     * larger than the specific height from XML.
+     *
+     * @param maxHeight the maximum height of the frame views in terms of pixels.
+     */
+    public void setMaxHeight(int maxHeight) {
+        if (maxHeight != mMaxHeight) {
+            mMaxHeight = maxHeight;
+            notifyChanged();
+        }
+    }
+
+    /**
+     * Sets the lottie illustration apply dynamic color.
+     */
+    public void applyDynamicColor() {
+        mLottieDynamicColor = true;
+        notifyChanged();
+    }
+
+    /**
+     * Return if the lottie illustration apply dynamic color or not.
+     */
+    public boolean isApplyDynamicColor() {
+        return mLottieDynamicColor;
     }
 
     private void resetImageResourceCache() {
@@ -212,7 +334,8 @@ public class IllustrationPreference extends Preference {
         }
     }
 
-    private void handleImageWithAnimation(LottieAnimationView illustrationView) {
+    private void handleImageWithAnimation(LottieAnimationView illustrationView,
+            ViewGroup container) {
         if (mImageDrawable != null) {
             resetAnimations(illustrationView);
             illustrationView.setImageDrawable(mImageDrawable);
@@ -236,6 +359,25 @@ public class IllustrationPreference extends Preference {
         }
 
         if (mImageResId > 0) {
+            if (Flags.autoHideEmptyLottieRes()) {
+                // Check if resource is empty
+                try (InputStream is = illustrationView.getResources()
+                        .openRawResource(mImageResId)) {
+                    int check = is.read();
+                    // -1 = end of stream. if first read is end of stream, then file is empty
+                    if (check == -1) {
+                        illustrationView.setVisibility(View.GONE);
+                        container.setVisibility(View.GONE);
+                        return;
+                    }
+                } catch (IOException e) {
+                    Log.w(TAG, "Unable to open Lottie raw resource", e);
+                }
+
+                illustrationView.setVisibility(View.VISIBLE);
+                container.setVisibility(View.VISIBLE);
+            }
+
             resetAnimations(illustrationView);
             illustrationView.setImageResource(mImageResId);
             final Drawable drawable = illustrationView.getDrawable();
@@ -247,6 +389,23 @@ public class IllustrationPreference extends Preference {
                 startLottieAnimationWith(illustrationView, mImageResId);
             }
         }
+    }
+
+    private void handleImageFrameMaxHeight(ImageView backgroundView, ImageView illustrationView) {
+        if (mMaxHeight == SIZE_UNSPECIFIED) {
+            return;
+        }
+
+        final Resources res = backgroundView.getResources();
+        final int frameWidth = res.getDimensionPixelSize(R.dimen.settingslib_illustration_width);
+        final int frameHeight = res.getDimensionPixelSize(R.dimen.settingslib_illustration_height);
+        final int restrictedMaxHeight = Math.min(mMaxHeight, frameHeight);
+        backgroundView.setMaxHeight(restrictedMaxHeight);
+        illustrationView.setMaxHeight(restrictedMaxHeight);
+
+        // Ensures the illustration view size is smaller than or equal to the background view size.
+        final float aspectRatio = (float) frameWidth / frameHeight;
+        illustrationView.setMaxWidth((int) (restrictedMaxHeight * aspectRatio));
     }
 
     private void startAnimation(Drawable drawable) {
@@ -319,9 +478,17 @@ public class IllustrationPreference extends Preference {
 
         mIsAutoScale = false;
         if (attrs != null) {
-            final TypedArray a = context.obtainStyledAttributes(attrs,
-                    R.styleable.LottieAnimationView, 0 /*defStyleAttr*/, 0 /*defStyleRes*/);
-            mImageResId = a.getResourceId(R.styleable.LottieAnimationView_lottie_rawRes, 0);
+            TypedArray a = context.obtainStyledAttributes(attrs,
+                    com.airbnb.lottie.R.styleable.LottieAnimationView, 0 /*defStyleAttr*/, 0 /*defStyleRes*/);
+            mImageResId = a.getResourceId(com.airbnb.lottie.R.styleable.LottieAnimationView_lottie_rawRes, 0);
+            mCacheComposition = a.getBoolean(
+                    com.airbnb.lottie.R.styleable.LottieAnimationView_lottie_cacheComposition, true);
+
+            a = context.obtainStyledAttributes(attrs,
+                    R.styleable.IllustrationPreference, 0 /*defStyleAttr*/, 0 /*defStyleRes*/);
+            mLottieDynamicColor = a.getBoolean(R.styleable.IllustrationPreference_dynamicColor,
+                    false);
+
             a.recycle();
         }
     }

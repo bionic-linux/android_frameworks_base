@@ -16,12 +16,10 @@
 
 package com.android.wm.shell.pip;
 
-import android.content.res.Configuration;
 import android.graphics.Rect;
 
-import com.android.wm.shell.common.annotations.ExternalThread;
+import com.android.wm.shell.shared.annotations.ExternalThread;
 
-import java.io.PrintWriter;
 import java.util.function.Consumer;
 
 /**
@@ -29,41 +27,10 @@ import java.util.function.Consumer;
  */
 @ExternalThread
 public interface Pip {
-
-    /**
-     * Returns a binder that can be passed to an external process to manipulate PIP.
-     */
-    default IPip createExternalInterface() {
-        return null;
-    }
-
     /**
      * Expand PIP, it's possible that specific request to activate the window via Alt-tab.
      */
     default void expandPip() {
-    }
-
-    /**
-     * Hides the PIP menu.
-     */
-    default void hidePipMenu(Runnable onStartCallback, Runnable onEndCallback) {}
-
-    /**
-     * Called when configuration is changed.
-     */
-    default void onConfigurationChanged(Configuration newConfig) {
-    }
-
-    /**
-     * Called when display size or font size of settings changed
-     */
-    default void onDensityOrFontScaleChanged() {
-    }
-
-    /**
-     * Called when overlay package change invoked.
-     */
-    default void onOverlayChanged() {
     }
 
     /**
@@ -72,39 +39,16 @@ public interface Pip {
      * @param isSysUiStateValid Is SysUI state valid or not.
      * @param flag Current SysUI state.
      */
-    default void onSystemUiStateChanged(boolean isSysUiStateValid, int flag) {
+    default void onSystemUiStateChanged(boolean isSysUiStateValid, long flag) {
     }
 
     /**
-     * Registers the session listener for the current user.
-     */
-    default void registerSessionListenerForCurrentUser() {
-    }
-
-    /**
-     * Sets both shelf visibility and its height.
+     * Set the callback when {@link PipTaskOrganizer#isInPip()} state is changed.
      *
-     * @param visible visibility of shelf.
-     * @param height  to specify the height for shelf.
+     * @param callback The callback accepts the result of {@link PipTaskOrganizer#isInPip()}
+     *                 when it's changed.
      */
-    default void setShelfHeight(boolean visible, int height) {
-    }
-
-    /**
-     * Registers the pinned stack animation listener.
-     *
-     * @param callback The callback of pinned stack animation.
-     */
-    default void setPinnedStackAnimationListener(Consumer<Boolean> callback) {
-    }
-
-    /**
-     * Set the pinned stack with {@link PipAnimationController.AnimationType}
-     *
-     * @param animationType The pre-defined {@link PipAnimationController.AnimationType}
-     */
-    default void setPinnedStackAnimationType(int animationType) {
-    }
+    default void setOnIsInPipStateChangedListener(Consumer<Boolean> callback) {}
 
     /**
      * Called when showing Pip menu.
@@ -112,17 +56,22 @@ public interface Pip {
     default void showPictureInPictureMenu() {}
 
     /**
-     * Called by NavigationBar in order to listen in for PiP bounds change. This is mostly used
-     * for times where the PiP bounds could conflict with SystemUI elements, such as a stashed
-     * PiP and the Back-from-Edge gesture.
+     * Called by NavigationBar and TaskbarDelegate in order to listen in for PiP bounds change. This
+     * is mostly used for times where the PiP bounds could conflict with SystemUI elements, such as
+     * a stashed PiP and the Back-from-Edge gesture.
      */
-    default void setPipExclusionBoundsChangeListener(Consumer<Rect> listener) { }
+    default void addPipExclusionBoundsChangeListener(Consumer<Rect> listener) { }
 
     /**
-     * Dump the current state and information if need.
-     *
-     * @param pw The stream to dump information to.
+     * Remove a callback added previously. This is used when NavigationBar is removed from the
+     * view hierarchy or destroyed.
      */
-    default void dump(PrintWriter pw) {
+    default void removePipExclusionBoundsChangeListener(Consumer<Rect> listener) { }
+
+    /**
+     * @return {@link PipTransitionController} instance.
+     */
+    default PipTransitionController getPipTransitionController() {
+        return null;
     }
 }

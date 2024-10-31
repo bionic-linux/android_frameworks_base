@@ -16,11 +16,14 @@
 
 package com.android.server;
 
+import static android.app.admin.DevicePolicyResources.Strings.Core.WORK_PROFILE_DELETED_TITLE;
+
 import android.annotation.UserIdInt;
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -46,6 +49,7 @@ public class MasterClearReceiver extends BroadcastReceiver {
     private static final String TAG = "MasterClear";
     private boolean mWipeExternalStorage;
     private boolean mWipeEsims;
+    private boolean mShowWipeProgress = true;
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
@@ -74,12 +78,19 @@ public class MasterClearReceiver extends BroadcastReceiver {
             return;
         }
 
-        final boolean shutdown = intent.getBooleanExtra("shutdown", false);
         final String reason = intent.getStringExtra(Intent.EXTRA_REASON);
+
+        // Factory reset dialog has its own UI for the reset process, so suppress ours if indicated.
+        mShowWipeProgress = intent.getBooleanExtra(Intent.EXTRA_SHOW_WIPE_PROGRESS, true);
+
+        final boolean shutdown = intent.getBooleanExtra("shutdown", false);
         mWipeExternalStorage = intent.getBooleanExtra(Intent.EXTRA_WIPE_EXTERNAL_STORAGE, false);
         mWipeEsims = intent.getBooleanExtra(Intent.EXTRA_WIPE_ESIMS, false);
         final boolean forceWipe = intent.getBooleanExtra(Intent.EXTRA_FORCE_MASTER_CLEAR, false)
                 || intent.getBooleanExtra(Intent.EXTRA_FORCE_FACTORY_RESET, false);
+        // This is ONLY used by TestHarnessService within System Server, so we don't add a proper
+        // API constant in Intent for this.
+        final boolean keepMemtagMode = intent.getBooleanExtra("keep_memtag_mode", false);
 
         // TODO(b/189938391): properly handle factory reset on headless system user mode.
         final int sendingUserId = getSendingUserId();
@@ -102,9 +113,11 @@ public class MasterClearReceiver extends BroadcastReceiver {
                 try {
                     Slog.i(TAG, "Calling RecoverySystem.rebootWipeUserData(context, "
                             + "shutdown=" + shutdown + ", reason=" + reason
-                            + ", forceWipe=" + forceWipe + ", wipeEsims=" + mWipeEsims + ")");
+                            + ", forceWipe=" + forceWipe + ", wipeEsims=" + mWipeEsims
+                            + ", keepMemtagMode=" + keepMemtagMode + ")");
                     RecoverySystem
-                            .rebootWipeUserData(context, shutdown, reason, forceWipe, mWipeEsims);
+                            .rebootWipeUserData(
+                                context, shutdown, reason, forceWipe, mWipeEsims, keepMemtagMode);
                     Slog.wtf(TAG, "Still running after master clear?!");
                 } catch (IOException e) {
                     Slog.e(TAG, "Can't perform master clear/factory reset", e);
@@ -126,9 +139,9 @@ public class MasterClearReceiver extends BroadcastReceiver {
 
     private boolean wipeUser(Context context, @UserIdInt int userId, String wipeReason) {
         final UserManager userManager = context.getSystemService(UserManager.class);
-        final int result = userManager.removeUserOrSetEphemeral(
-                userId, /* evenWhenDisallowed= */ false);
-        if (result == UserManager.REMOVE_RESULT_ERROR) {
+        final int result = userManager.removeUserWhenPossible(
+                UserHandle.of(userId), /* overrideDevicePolicy= */ false);
+        if (!UserManager.isRemoveResultSuccessful(result)) {
             Slogf.e(TAG, "Can't remove user %d", userId);
             return false;
         }
@@ -155,13 +168,19 @@ public class MasterClearReceiver extends BroadcastReceiver {
         final Notification notification =
                 new Notification.Builder(context, SystemNotificationChannels.DEVICE_ADMIN)
                         .setSmallIcon(android.R.drawable.stat_sys_warning)
-                        .setContentTitle(context.getString(R.string.work_profile_deleted))
+                        .setContentTitle(getWorkProfileDeletedTitle(context))
                         .setContentText(wipeReason)
                         .setColor(context.getColor(R.color.system_notification_accent_color))
                         .setStyle(new Notification.BigTextStyle().bigText(wipeReason))
                         .build();
         context.getSystemService(NotificationManager.class).notify(
                 SystemMessageProto.SystemMessage.NOTE_PROFILE_WIPED, notification);
+    }
+
+    private String getWorkProfileDeletedTitle(Context context) {
+        final DevicePolicyManager dpm = context.getSystemService(DevicePolicyManager.class);
+        return dpm.getResources().getString(WORK_PROFILE_DELETED_TITLE,
+                () -> context.getString(R.string.work_profile_deleted));
     }
 
     private @UserIdInt int getCurrentForegroundUserId() {
@@ -181,15 +200,19 @@ public class MasterClearReceiver extends BroadcastReceiver {
         public WipeDataTask(Context context, Thread chainedTask) {
             mContext = context;
             mChainedTask = chainedTask;
-            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog = mShowWipeProgress
+                    ? new ProgressDialog(context, R.style.Theme_DeviceDefault_System)
+                    : null;
         }
 
         @Override
         protected void onPreExecute() {
-            mProgressDialog.setIndeterminate(true);
-            mProgressDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-            mProgressDialog.setMessage(mContext.getText(R.string.progress_erasing));
-            mProgressDialog.show();
+            if (mProgressDialog != null) {
+                mProgressDialog.setIndeterminate(true);
+                mProgressDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                mProgressDialog.setMessage(mContext.getText(R.string.progress_erasing));
+                mProgressDialog.show();
+            }
         }
 
         @Override
@@ -205,7 +228,9 @@ public class MasterClearReceiver extends BroadcastReceiver {
 
         @Override
         protected void onPostExecute(Void result) {
-            mProgressDialog.dismiss();
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
             mChainedTask.start();
         }
 

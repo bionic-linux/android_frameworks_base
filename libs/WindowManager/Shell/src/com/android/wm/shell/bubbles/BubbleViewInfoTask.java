@@ -22,6 +22,7 @@ import static com.android.wm.shell.bubbles.BubbleDebugConfig.TAG_BUBBLES;
 import static com.android.wm.shell.bubbles.BubbleDebugConfig.TAG_WITH_CLASS_NAME;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -38,12 +39,13 @@ import android.util.Log;
 import android.util.PathParser;
 import android.view.LayoutInflater;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.graphics.ColorUtils;
 import com.android.launcher3.icons.BitmapInfo;
+import com.android.launcher3.icons.BubbleIconFactory;
 import com.android.wm.shell.R;
+import com.android.wm.shell.bubbles.bar.BubbleBarExpandedView;
+import com.android.wm.shell.bubbles.bar.BubbleBarLayerView;
 
 import java.lang.ref.WeakReference;
 import java.util.Objects;
@@ -68,8 +70,11 @@ public class BubbleViewInfoTask extends AsyncTask<Void, Void, BubbleViewInfoTask
 
     private Bubble mBubble;
     private WeakReference<Context> mContext;
-    private WeakReference<BubbleController> mController;
+    private WeakReference<BubbleExpandedViewManager> mExpandedViewManager;
+    private WeakReference<BubbleTaskViewFactory> mTaskViewFactory;
+    private WeakReference<BubblePositioner> mPositioner;
     private WeakReference<BubbleStackView> mStackView;
+    private WeakReference<BubbleBarLayerView> mLayerView;
     private BubbleIconFactory mIconFactory;
     private boolean mSkipInflation;
     private Callback mCallback;
@@ -81,16 +86,22 @@ public class BubbleViewInfoTask extends AsyncTask<Void, Void, BubbleViewInfoTask
      */
     BubbleViewInfoTask(Bubble b,
             Context context,
-            BubbleController controller,
-            BubbleStackView stackView,
+            BubbleExpandedViewManager expandedViewManager,
+            BubbleTaskViewFactory taskViewFactory,
+            BubblePositioner positioner,
+            @Nullable BubbleStackView stackView,
+            @Nullable BubbleBarLayerView layerView,
             BubbleIconFactory factory,
             boolean skipInflation,
             Callback c,
             Executor mainExecutor) {
         mBubble = b;
         mContext = new WeakReference<>(context);
-        mController = new WeakReference<>(controller);
+        mExpandedViewManager = new WeakReference<>(expandedViewManager);
+        mTaskViewFactory = new WeakReference<>(taskViewFactory);
+        mPositioner = new WeakReference<>(positioner);
         mStackView = new WeakReference<>(stackView);
+        mLayerView = new WeakReference<>(layerView);
         mIconFactory = factory;
         mSkipInflation = skipInflation;
         mCallback = c;
@@ -99,8 +110,19 @@ public class BubbleViewInfoTask extends AsyncTask<Void, Void, BubbleViewInfoTask
 
     @Override
     protected BubbleViewInfo doInBackground(Void... voids) {
-        return BubbleViewInfo.populate(mContext.get(), mController.get(), mStackView.get(),
-                mIconFactory, mBubble, mSkipInflation);
+        if (!verifyState()) {
+            // If we're in an inconsistent state, then switched modes and should just bail now.
+            return null;
+        }
+        if (mLayerView.get() != null) {
+            return BubbleViewInfo.populateForBubbleBar(mContext.get(), mExpandedViewManager.get(),
+                    mTaskViewFactory.get(), mPositioner.get(), mLayerView.get(), mIconFactory,
+                    mBubble, mSkipInflation);
+        } else {
+            return BubbleViewInfo.populate(mContext.get(), mExpandedViewManager.get(),
+                    mTaskViewFactory.get(), mPositioner.get(), mStackView.get(), mIconFactory,
+                    mBubble, mSkipInflation);
+        }
     }
 
     @Override
@@ -108,7 +130,11 @@ public class BubbleViewInfoTask extends AsyncTask<Void, Void, BubbleViewInfoTask
         if (isCancelled() || viewInfo == null) {
             return;
         }
+
         mMainExecutor.execute(() -> {
+            if (!verifyState()) {
+                return;
+            }
             mBubble.setViewInfo(viewInfo);
             if (mCallback != null) {
                 mCallback.onBubbleViewsReady(mBubble);
@@ -116,25 +142,75 @@ public class BubbleViewInfoTask extends AsyncTask<Void, Void, BubbleViewInfoTask
         });
     }
 
+    private boolean verifyState() {
+        if (mExpandedViewManager.get().isShowingAsBubbleBar()) {
+            return mLayerView.get() != null;
+        } else {
+            return mStackView.get() != null;
+        }
+    }
+
     /**
      * Info necessary to render a bubble.
      */
     @VisibleForTesting
     public static class BubbleViewInfo {
-        BadgedImageView imageView;
-        BubbleExpandedView expandedView;
+        // TODO(b/273312602): for foldables it might make sense to populate all of the views
+
+        // Always populated
         ShortcutInfo shortcutInfo;
         String appName;
-        Bitmap bubbleBitmap;
-        Bitmap badgeBitmap;
+        Bitmap rawBadgeBitmap;
+
+        // Only populated when showing in taskbar
+        @Nullable BubbleBarExpandedView bubbleBarExpandedView;
+
+        // These are only populated when not showing in taskbar
+        @Nullable BadgedImageView imageView;
+        @Nullable BubbleExpandedView expandedView;
         int dotColor;
         Path dotPath;
-        Bubble.FlyoutMessage flyoutMessage;
+        @Nullable Bubble.FlyoutMessage flyoutMessage;
+        Bitmap bubbleBitmap;
+        Bitmap badgeBitmap;
+
+        @Nullable
+        public static BubbleViewInfo populateForBubbleBar(Context c,
+                BubbleExpandedViewManager expandedViewManager,
+                BubbleTaskViewFactory taskViewFactory,
+                BubblePositioner positioner,
+                BubbleBarLayerView layerView,
+                BubbleIconFactory iconFactory,
+                Bubble b,
+                boolean skipInflation) {
+            BubbleViewInfo info = new BubbleViewInfo();
+
+            if (!skipInflation && !b.isInflated()) {
+                BubbleTaskView bubbleTaskView = b.getOrCreateBubbleTaskView(taskViewFactory);
+                LayoutInflater inflater = LayoutInflater.from(c);
+                info.bubbleBarExpandedView = (BubbleBarExpandedView) inflater.inflate(
+                        R.layout.bubble_bar_expanded_view, layerView, false /* attachToRoot */);
+                info.bubbleBarExpandedView.initialize(
+                        expandedViewManager, positioner, false /* isOverflow */, bubbleTaskView);
+            }
+
+            if (!populateCommonInfo(info, c, b, iconFactory)) {
+                // if we failed to update common fields return null
+                return null;
+            }
+
+            return info;
+        }
 
         @VisibleForTesting
         @Nullable
-        public static BubbleViewInfo populate(Context c, BubbleController controller,
-                BubbleStackView stackView, BubbleIconFactory iconFactory, Bubble b,
+        public static BubbleViewInfo populate(Context c,
+                BubbleExpandedViewManager expandedViewManager,
+                BubbleTaskViewFactory taskViewFactory,
+                BubblePositioner positioner,
+                BubbleStackView stackView,
+                BubbleIconFactory iconFactory,
+                Bubble b,
                 boolean skipInflation) {
             BubbleViewInfo info = new BubbleViewInfo();
 
@@ -143,69 +219,20 @@ public class BubbleViewInfoTask extends AsyncTask<Void, Void, BubbleViewInfoTask
                 LayoutInflater inflater = LayoutInflater.from(c);
                 info.imageView = (BadgedImageView) inflater.inflate(
                         R.layout.bubble_view, stackView, false /* attachToRoot */);
-                info.imageView.initialize(controller.getPositioner());
+                info.imageView.initialize(positioner);
 
+                BubbleTaskView bubbleTaskView = b.getOrCreateBubbleTaskView(taskViewFactory);
                 info.expandedView = (BubbleExpandedView) inflater.inflate(
                         R.layout.bubble_expanded_view, stackView, false /* attachToRoot */);
-                info.expandedView.initialize(controller, stackView, false /* isOverflow */);
+                info.expandedView.initialize(
+                        expandedViewManager, stackView, positioner, false /* isOverflow */,
+                        bubbleTaskView);
             }
 
-            if (b.getShortcutInfo() != null) {
-                info.shortcutInfo = b.getShortcutInfo();
-            }
-
-            // App name & app icon
-            PackageManager pm = BubbleController.getPackageManagerForUser(c,
-                    b.getUser().getIdentifier());
-            ApplicationInfo appInfo;
-            Drawable badgedIcon;
-            Drawable appIcon;
-            try {
-                appInfo = pm.getApplicationInfo(
-                        b.getPackageName(),
-                        PackageManager.MATCH_UNINSTALLED_PACKAGES
-                                | PackageManager.MATCH_DISABLED_COMPONENTS
-                                | PackageManager.MATCH_DIRECT_BOOT_UNAWARE
-                                | PackageManager.MATCH_DIRECT_BOOT_AWARE);
-                if (appInfo != null) {
-                    info.appName = String.valueOf(pm.getApplicationLabel(appInfo));
-                }
-                appIcon = pm.getApplicationIcon(b.getPackageName());
-                badgedIcon = pm.getUserBadgedIcon(appIcon, b.getUser());
-            } catch (PackageManager.NameNotFoundException exception) {
-                // If we can't find package... don't think we should show the bubble.
-                Log.w(TAG, "Unable to find package: " + b.getPackageName());
+            if (!populateCommonInfo(info, c, b, iconFactory)) {
+                // if we failed to update common fields return null
                 return null;
             }
-
-            // Badged bubble image
-            Drawable bubbleDrawable = iconFactory.getBubbleDrawable(c, info.shortcutInfo,
-                    b.getIcon());
-            if (bubbleDrawable == null) {
-                // Default to app icon
-                bubbleDrawable = appIcon;
-            }
-
-            BitmapInfo badgeBitmapInfo = iconFactory.getBadgeBitmap(badgedIcon,
-                    b.isImportantConversation());
-            info.badgeBitmap = badgeBitmapInfo.icon;
-            info.bubbleBitmap = iconFactory.createBadgedIconBitmap(bubbleDrawable,
-                    null /* user */,
-                    true /* shrinkNonAdaptiveIcons */).icon;
-
-            // Dot color & placement
-            Path iconPath = PathParser.createPathFromPathData(
-                    c.getResources().getString(com.android.internal.R.string.config_icon_mask));
-            Matrix matrix = new Matrix();
-            float scale = iconFactory.getNormalizer().getScale(bubbleDrawable,
-                    null /* outBounds */, null /* path */, null /* outMaskShape */);
-            float radius = DEFAULT_PATH_SIZE / 2f;
-            matrix.setScale(scale /* x scale */, scale /* y scale */, radius /* pivot x */,
-                    radius /* pivot y */);
-            iconPath.transform(matrix);
-            info.dotPath = iconPath;
-            info.dotColor = ColorUtils.blendARGB(badgeBitmapInfo.color,
-                    Color.WHITE, WHITE_SCRIM_ALPHA);
 
             // Flyout
             info.flyoutMessage = b.getFlyoutMessage();
@@ -215,6 +242,83 @@ public class BubbleViewInfoTask extends AsyncTask<Void, Void, BubbleViewInfoTask
             }
             return info;
         }
+    }
+
+    /**
+     * Modifies the given {@code info} object and populates common fields in it.
+     *
+     * <p>This method returns {@code true} if the update was successful and {@code false} otherwise.
+     * Callers should assume that the info object is unusable if the update was unsuccessful.
+     */
+    private static boolean populateCommonInfo(
+            BubbleViewInfo info, Context c, Bubble b, BubbleIconFactory iconFactory) {
+        if (b.getShortcutInfo() != null) {
+            info.shortcutInfo = b.getShortcutInfo();
+        }
+
+        // App name & app icon
+        PackageManager pm = BubbleController.getPackageManagerForUser(c,
+                b.getUser().getIdentifier());
+        ApplicationInfo appInfo;
+        Drawable badgedIcon;
+        Drawable appIcon;
+        try {
+            appInfo = pm.getApplicationInfo(
+                    b.getPackageName(),
+                    PackageManager.MATCH_UNINSTALLED_PACKAGES
+                            | PackageManager.MATCH_DISABLED_COMPONENTS
+                            | PackageManager.MATCH_DIRECT_BOOT_UNAWARE
+                            | PackageManager.MATCH_DIRECT_BOOT_AWARE);
+            if (appInfo != null) {
+                info.appName = String.valueOf(pm.getApplicationLabel(appInfo));
+            }
+            appIcon = pm.getApplicationIcon(b.getPackageName());
+            badgedIcon = pm.getUserBadgedIcon(appIcon, b.getUser());
+        } catch (PackageManager.NameNotFoundException exception) {
+            // If we can't find package... don't think we should show the bubble.
+            Log.w(TAG, "Unable to find package: " + b.getPackageName());
+            return false;
+        }
+
+        Drawable bubbleDrawable = null;
+        try {
+            // Badged bubble image
+            bubbleDrawable = iconFactory.getBubbleDrawable(c, info.shortcutInfo,
+                    b.getIcon());
+        } catch (Exception e) {
+            // If we can't create the icon we'll default to the app icon
+            Log.w(TAG, "Exception creating icon for the bubble: " + b.getKey());
+        }
+
+        if (bubbleDrawable == null) {
+            // Default to app icon
+            bubbleDrawable = appIcon;
+        }
+
+        BitmapInfo badgeBitmapInfo = iconFactory.getBadgeBitmap(badgedIcon,
+                b.isImportantConversation());
+        info.badgeBitmap = badgeBitmapInfo.icon;
+        // Raw badge bitmap never includes the important conversation ring
+        info.rawBadgeBitmap = b.isImportantConversation()
+                ? iconFactory.getBadgeBitmap(badgedIcon, false).icon
+                : badgeBitmapInfo.icon;
+
+        float[] bubbleBitmapScale = new float[1];
+        info.bubbleBitmap = iconFactory.getBubbleBitmap(bubbleDrawable, bubbleBitmapScale);
+
+        // Dot color & placement
+        Path iconPath = PathParser.createPathFromPathData(
+                c.getResources().getString(com.android.internal.R.string.config_icon_mask));
+        Matrix matrix = new Matrix();
+        float scale = bubbleBitmapScale[0];
+        float radius = DEFAULT_PATH_SIZE / 2f;
+        matrix.setScale(scale /* x scale */, scale /* y scale */, radius /* pivot x */,
+                radius /* pivot y */);
+        iconPath.transform(matrix);
+        info.dotPath = iconPath;
+        info.dotColor = ColorUtils.blendARGB(badgeBitmapInfo.color,
+                Color.WHITE, WHITE_SCRIM_ALPHA);
+        return true;
     }
 
     @Nullable

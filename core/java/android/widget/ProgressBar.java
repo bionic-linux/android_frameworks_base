@@ -69,6 +69,7 @@ import android.widget.RemoteViews.RemoteView;
 import com.android.internal.R;
 
 import java.text.NumberFormat;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -138,6 +139,14 @@ import java.util.Locale;
  * </ul>
  * <p>The "inverse" styles provide an inverse color scheme for the spinner, which may be necessary
  * if your application uses a light colored theme (a white background).</p>
+ *
+ * <h4>Accessibility</h4>
+ * <p>
+ * Consider using
+ * {@link AccessibilityNodeInfo#setMinDurationBetweenContentChanges(Duration)} to
+ * convey to accessibility services that changes can be throttled. This may reduce the
+ * frequency of potentially disruptive notifications.
+ * </p>
  *
  * <p><strong>XML attributes</b></strong>
  * <p>
@@ -244,8 +253,6 @@ public class ProgressBar extends View {
     boolean mMirrorForRtl = false;
 
     private boolean mAggregatedIsVisible;
-
-    private CharSequence mCustomStateDescription = null;
 
     private final ArrayList<RefreshData> mRefreshData = new ArrayList<RefreshData>();
 
@@ -685,6 +692,9 @@ public class ProgressBar extends View {
                 swapCurrentDrawable(mProgressDrawable);
                 stopAnimation();
             }
+
+            notifyViewAccessibilityStateChangedIfNeeded(
+                    AccessibilityEvent.CONTENT_CHANGE_TYPE_UNDEFINED);
         }
     }
 
@@ -1622,18 +1632,21 @@ public class ProgressBar extends View {
     @Override
     @RemotableViewMethod
     public void setStateDescription(@Nullable CharSequence stateDescription) {
-        mCustomStateDescription = stateDescription;
-        if (stateDescription == null) {
-            super.setStateDescription(formatStateDescription(mProgress));
-        } else {
-            super.setStateDescription(stateDescription);
-        }
+        // Assume the previous custom state description is different from default state description.
+        // Otherwise when the argument is null to restore the default state description, we will
+        // send out a state description changed event even though the state description presented to
+        // the user doesn't change. Since mStateDescription in View is private, we can't prevent
+        // this event from sending out.
+        super.setStateDescription(stateDescription);
     }
 
     void onProgressRefresh(float scale, boolean fromUser, int progress) {
         if (AccessibilityManager.getInstance(mContext).isEnabled()
-                && mCustomStateDescription == null) {
-            super.setStateDescription(formatStateDescription(mProgress));
+                && getStateDescription() == null && !isIndeterminate()) {
+            AccessibilityEvent event = AccessibilityEvent.obtain();
+            event.setEventType(AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED);
+            event.setContentChangeTypes(AccessibilityEvent.CONTENT_CHANGE_TYPE_STATE_DESCRIPTION);
+            sendAccessibilityEventUnchecked(event);
         }
     }
 
@@ -2356,7 +2369,15 @@ public class ProgressBar extends View {
                     AccessibilityNodeInfo.RangeInfo.RANGE_TYPE_INT, getMin(), getMax(),
                     getProgress());
             info.setRangeInfo(rangeInfo);
-            info.setStateDescription(formatStateDescription(mProgress));
+        }
+
+        // Only set the default state description when custom state descripton is null.
+        if (getStateDescription() == null) {
+            if (isIndeterminate()) {
+                info.setStateDescription(getResources().getString(R.string.in_progress));
+            } else {
+                info.setStateDescription(formatStateDescription(mProgress));
+            }
         }
     }
 

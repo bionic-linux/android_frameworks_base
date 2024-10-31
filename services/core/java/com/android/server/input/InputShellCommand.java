@@ -18,20 +18,56 @@ package com.android.server.input;
 
 import static android.view.Display.DEFAULT_DISPLAY;
 import static android.view.Display.INVALID_DISPLAY;
+import static android.view.InputDevice.SOURCE_CLASS_POINTER;
+import static android.view.KeyEvent.KEYCODE_ALT_LEFT;
+import static android.view.KeyEvent.KEYCODE_ALT_RIGHT;
+import static android.view.KeyEvent.KEYCODE_CTRL_LEFT;
+import static android.view.KeyEvent.KEYCODE_CTRL_RIGHT;
+import static android.view.KeyEvent.KEYCODE_META_LEFT;
+import static android.view.KeyEvent.KEYCODE_META_RIGHT;
+import static android.view.KeyEvent.KEYCODE_SHIFT_LEFT;
+import static android.view.KeyEvent.KEYCODE_SHIFT_RIGHT;
+import static android.view.KeyEvent.META_ALT_LEFT_ON;
+import static android.view.KeyEvent.META_ALT_ON;
+import static android.view.KeyEvent.META_ALT_RIGHT_ON;
+import static android.view.KeyEvent.META_CTRL_LEFT_ON;
+import static android.view.KeyEvent.META_CTRL_ON;
+import static android.view.KeyEvent.META_CTRL_RIGHT_ON;
+import static android.view.KeyEvent.META_META_LEFT_ON;
+import static android.view.KeyEvent.META_META_ON;
+import static android.view.KeyEvent.META_META_RIGHT_ON;
+import static android.view.KeyEvent.META_SHIFT_LEFT_ON;
+import static android.view.KeyEvent.META_SHIFT_ON;
+import static android.view.KeyEvent.META_SHIFT_RIGHT_ON;
+import static android.view.MotionEvent.AXIS_HSCROLL;
+import static android.view.MotionEvent.AXIS_SCROLL;
+import static android.view.MotionEvent.AXIS_VSCROLL;
+import static android.view.MotionEvent.AXIS_X;
+import static android.view.MotionEvent.AXIS_Y;
+
+import static java.util.Collections.unmodifiableMap;
 
 import android.hardware.input.InputManager;
+import android.hardware.input.InputManagerGlobal;
 import android.os.ShellCommand;
 import android.os.SystemClock;
+import android.util.ArrayMap;
+import android.util.IntArray;
+import android.util.Pair;
 import android.view.InputDevice;
+import android.view.InputEvent;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
+import com.android.internal.annotations.VisibleForTesting;
+
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.BiConsumer;
 
 /**
  * Command that sends input events to the device.
@@ -51,23 +87,64 @@ public class InputShellCommand extends ShellCommand {
     private static final int DEFAULT_EDGE_FLAGS = 0;
     private static final int DEFAULT_BUTTON_STATE = 0;
     private static final int DEFAULT_FLAGS = 0;
+    private static final boolean INJECT_ASYNC = true;
+    private static final boolean INJECT_SYNC = false;
 
-    private static final Map<String, Integer> SOURCES = new HashMap<String, Integer>() {{
-            put("keyboard", InputDevice.SOURCE_KEYBOARD);
-            put("dpad", InputDevice.SOURCE_DPAD);
-            put("gamepad", InputDevice.SOURCE_GAMEPAD);
-            put("touchscreen", InputDevice.SOURCE_TOUCHSCREEN);
-            put("mouse", InputDevice.SOURCE_MOUSE);
-            put("stylus", InputDevice.SOURCE_STYLUS);
-            put("trackball", InputDevice.SOURCE_TRACKBALL);
-            put("touchpad", InputDevice.SOURCE_TOUCHPAD);
-            put("touchnavigation", InputDevice.SOURCE_TOUCH_NAVIGATION);
-            put("joystick", InputDevice.SOURCE_JOYSTICK);
-        }};
+    /** Modifier key to meta state */
+    private static final Map<Integer, Integer> MODIFIER;
+    static {
+        final Map<Integer, Integer> map = new ArrayMap<>();
+        map.put(KEYCODE_CTRL_LEFT, META_CTRL_LEFT_ON | META_CTRL_ON);
+        map.put(KEYCODE_CTRL_RIGHT, META_CTRL_RIGHT_ON | META_CTRL_ON);
+        map.put(KEYCODE_ALT_LEFT, META_ALT_LEFT_ON | META_ALT_ON);
+        map.put(KEYCODE_ALT_RIGHT, META_ALT_RIGHT_ON | META_ALT_ON);
+        map.put(KEYCODE_SHIFT_LEFT, META_SHIFT_LEFT_ON | META_SHIFT_ON);
+        map.put(KEYCODE_SHIFT_RIGHT, META_SHIFT_RIGHT_ON | META_SHIFT_ON);
+        map.put(KEYCODE_META_LEFT, META_META_LEFT_ON | META_META_ON);
+        map.put(KEYCODE_META_RIGHT, META_META_RIGHT_ON | META_META_ON);
 
-    private void injectKeyEvent(KeyEvent event) {
-        InputManager.getInstance().injectInputEvent(event,
-                InputManager.INJECT_INPUT_EVENT_MODE_WAIT_FOR_FINISH);
+        MODIFIER = unmodifiableMap(map);
+    }
+
+    /** String to device source */
+    private static final Map<String, Integer> SOURCES;
+    static {
+        final Map<String, Integer> map = new ArrayMap<>();
+        map.put("keyboard", InputDevice.SOURCE_KEYBOARD);
+        map.put("dpad", InputDevice.SOURCE_DPAD);
+        map.put("gamepad", InputDevice.SOURCE_GAMEPAD);
+        map.put("touchscreen", InputDevice.SOURCE_TOUCHSCREEN);
+        map.put("mouse", InputDevice.SOURCE_MOUSE);
+        map.put("stylus", InputDevice.SOURCE_STYLUS);
+        map.put("trackball", InputDevice.SOURCE_TRACKBALL);
+        map.put("touchpad", InputDevice.SOURCE_TOUCHPAD);
+        map.put("touchnavigation", InputDevice.SOURCE_TOUCH_NAVIGATION);
+        map.put("joystick", InputDevice.SOURCE_JOYSTICK);
+        map.put("rotaryencoder", InputDevice.SOURCE_ROTARY_ENCODER);
+
+        SOURCES = unmodifiableMap(map);
+    }
+
+    public InputShellCommand() {
+        this(InputShellCommand::injectInputEvent);
+    }
+
+    @VisibleForTesting
+    InputShellCommand(BiConsumer<InputEvent, Integer> inputEventInjector) {
+        mInputEventInjector = inputEventInjector;;
+    }
+
+    private static void injectInputEvent(InputEvent event, Integer injectMode) {
+        InputManagerGlobal.getInstance().injectInputEvent(event, injectMode);
+    }
+
+    private final BiConsumer<InputEvent, Integer> mInputEventInjector;
+
+    private void injectKeyEvent(KeyEvent event, boolean async) {
+        int injectMode = async
+                ? InputManager.INJECT_INPUT_EVENT_MODE_ASYNC
+                : InputManager.INJECT_INPUT_EVENT_MODE_WAIT_FOR_FINISH;
+        mInputEventInjector.accept(event, injectMode);
     }
 
     private int getInputDeviceId(int inputSource) {
@@ -113,19 +190,41 @@ public class InputShellCommand extends ShellCommand {
      */
     private void injectMotionEvent(int inputSource, int action, long downTime, long when,
             float x, float y, float pressure, int displayId) {
+        final Map<Integer, Float> axisValues =
+                Map.of(
+                        MotionEvent.AXIS_X, x,
+                        MotionEvent.AXIS_Y, y,
+                        MotionEvent.AXIS_PRESSURE, pressure);
+        injectMotionEvent(inputSource, action, downTime, when, axisValues, displayId);
+    }
+
+    /**
+     * Builds a MotionEvent and injects it into the event stream.
+     *
+     * @param inputSource the InputDevice.SOURCE_* sending the input event
+     * @param action the MotionEvent.ACTION_* for the event
+     * @param downTime the value of the ACTION_DOWN event happened
+     * @param when the value of SystemClock.uptimeMillis() at which the event happened
+     * @param axisValues a map of an axis to the respective axis value
+     * @param displayId the ID of the display associated to the event
+     */
+    private void injectMotionEvent(int inputSource, int action, long downTime, long when,
+            Map<Integer, Float> axisValues, int displayId) {
         final int pointerCount = 1;
         MotionEvent.PointerProperties[] pointerProperties =
                 new MotionEvent.PointerProperties[pointerCount];
-        MotionEvent.PointerCoords[] pointerCoords = new MotionEvent.PointerCoords[pointerCount];
         for (int i = 0; i < pointerCount; i++) {
             pointerProperties[i] = new MotionEvent.PointerProperties();
             pointerProperties[i].id = i;
             pointerProperties[i].toolType = getToolType(inputSource);
+        }
+        MotionEvent.PointerCoords[] pointerCoords = new MotionEvent.PointerCoords[pointerCount];
+        for (int i = 0; i < pointerCount; i++) {
             pointerCoords[i] = new MotionEvent.PointerCoords();
-            pointerCoords[i].x = x;
-            pointerCoords[i].y = y;
-            pointerCoords[i].pressure = pressure;
             pointerCoords[i].size = DEFAULT_SIZE;
+            for (var entry : axisValues.entrySet()) {
+                pointerCoords[i].setAxisValue(entry.getKey(), entry.getValue());
+            }
         }
         if (displayId == INVALID_DISPLAY
                 && (inputSource & InputDevice.SOURCE_CLASS_POINTER) != 0) {
@@ -135,7 +234,7 @@ public class InputShellCommand extends ShellCommand {
                 pointerProperties, pointerCoords, DEFAULT_META_STATE, DEFAULT_BUTTON_STATE,
                 DEFAULT_PRECISION_X, DEFAULT_PRECISION_Y, getInputDeviceId(inputSource),
                 DEFAULT_EDGE_FLAGS, inputSource, displayId, DEFAULT_FLAGS);
-        InputManager.getInstance().injectInputEvent(event,
+        mInputEventInjector.accept(event,
                 InputManager.INJECT_INPUT_EVENT_MODE_WAIT_FOR_FINISH);
     }
 
@@ -198,7 +297,9 @@ public class InputShellCommand extends ShellCommand {
                 runPress(inputSource, displayId);
             } else if ("roll".equals(arg)) {
                 runRoll(inputSource, displayId);
-            }  else if ("motionevent".equals(arg)) {
+            }  else if ("scroll".equals(arg)) {
+                runScroll(inputSource, displayId);
+            } else if ("motionevent".equals(arg)) {
                 runMotionEvent(inputSource, displayId);
             } else if ("keycombination".equals(arg)) {
                 runKeyCombination(inputSource, displayId);
@@ -220,14 +321,21 @@ public class InputShellCommand extends ShellCommand {
             for (String src : SOURCES.keySet()) {
                 out.println("      " + src);
             }
+            out.println("[axis_value] represents an option specifying the value of a given axis ");
+            out.println("      The syntax is as follows: --axis <axis_name>,<axis_value>");
+            out.println("            where <axis_name> is the name of the axis as defined in ");
+            out.println("            MotionEvent without the AXIS_ prefix (e.g. SCROLL, X)");
+            out.println("      Sample [axis_values] entry: `--axis Y,3`, `--axis SCROLL,-2`");
             out.println();
             out.printf("-d: specify the display ID.\n      (Default: %d for key event, "
                     + "%d for motion event if not specified.)",
                     INVALID_DISPLAY, DEFAULT_DISPLAY);
             out.println();
             out.println("The commands and default sources are:");
-            out.println("      text <string> (Default: touchscreen)");
-            out.println("      keyevent [--longpress|--doubletap] <key code number or name> ..."
+            out.println("      text <string> (Default: keyboard)");
+            out.println("      keyevent [--longpress|--duration <duration to hold key down in ms>]"
+                    + " [--doubletap] [--async] [--delay <duration between keycodes in ms>]"
+                    + " <key code number or name> ..."
                     + " (Default: keyboard)");
             out.println("      tap <x> <y> (Default: touchscreen)");
             out.println("      swipe <x1> <y1> <x2> <y2> [duration(ms)]"
@@ -237,8 +345,15 @@ public class InputShellCommand extends ShellCommand {
             out.println("      press (Default: trackball)");
             out.println("      roll <dx> <dy> (Default: trackball)");
             out.println("      motionevent <DOWN|UP|MOVE|CANCEL> <x> <y> (Default: touchscreen)");
-            out.println("      keycombination <key code 1> <key code 2> ..."
-                    + " (Default: keyboard)");
+            out.println("      scroll (Default: rotaryencoder). Has the following syntax:");
+            out.println("            scroll <x> <y> [axis_value] (for pointer-based sources)");
+            out.println("            scroll [axis_value] (for non-pointer-based sources)");
+            out.println("            Axis options: SCROLL, HSCROLL, VSCROLL");
+            out.println("            None or one or multiple axis value options can be specified.");
+            out.println("            To specify multiple axes, use one axis option for per axis.");
+            out.println("            Example: `scroll --axis VSCROLL,2 --axis SCROLL,-2.4`");
+            out.println("      keycombination [-t duration(ms)] <key code 1> <key code 2> ..."
+                    + " (Default: keyboard, the key order is important here.)");
         }
     }
 
@@ -278,32 +393,59 @@ public class InputShellCommand extends ShellCommand {
                 e.setSource(source);
             }
             e.setDisplayId(displayId);
-            injectKeyEvent(e);
+            injectKeyEvent(e, INJECT_SYNC);
         }
     }
 
     private void runKeyEvent(int inputSource, int displayId) {
+        boolean longPress = false;
+        boolean async = false;
+        boolean doubleTap = false;
+        long delayMs = 0;
+        long durationMs = 0;
+
         String arg = getNextArgRequired();
-        final boolean longpress = "--longpress".equals(arg);
-        if (longpress) {
-            arg = getNextArgRequired();
-        } else {
-            final boolean doubleTap = "--doubletap".equals(arg);
-            if (doubleTap) {
-                arg = getNextArgRequired();
-                final int keycode = KeyEvent.keyCodeFromString(arg);
-                sendKeyDoubleTap(inputSource, keycode, displayId);
-                return;
+        do {
+            if (!arg.startsWith("--")) break;
+            longPress = (longPress || arg.equals("--longpress"));
+            async = (async || arg.equals("--async"));
+            doubleTap = (doubleTap || arg.equals("--doubletap"));
+            if (arg.equals("--delay")) {
+                delayMs = Long.parseLong(getNextArgRequired());
+            } else if (arg.equals("--duration")) {
+                durationMs = Long.parseLong(getNextArgRequired());
             }
+        } while ((arg = getNextArg()) != null);
+
+        if (durationMs > 0 && longPress) {
+            getErrPrintWriter().println(
+                    "--duration and --longpress cannot be used at the same time.");
+            throw new IllegalArgumentException(
+                    "keyevent args should only contain either durationMs or longPress");
+        }
+        if (longPress) {
+            durationMs = ViewConfiguration.getLongPressTimeout();
         }
 
+        boolean firstInput = true;
         do {
-            final int keycode = KeyEvent.keyCodeFromString(arg);
-            sendKeyEvent(inputSource, keycode, longpress, displayId);
+            if (!firstInput && delayMs > 0) {
+                sleep(delayMs);
+            }
+            firstInput = false;
+
+            final int keyCode = KeyEvent.keyCodeFromString(arg);
+            sendKeyEvent(inputSource, keyCode, durationMs, displayId, async);
+            if (doubleTap) {
+                sleep(ViewConfiguration.getDoubleTapMinTime());
+                sendKeyEvent(inputSource, keyCode, durationMs, displayId, async);
+            }
         } while ((arg = getNextArg()) != null);
     }
 
-    private void sendKeyEvent(int inputSource, int keyCode, boolean longpress, int displayId) {
+    private void sendKeyEvent(
+            int inputSource, int keyCode, long durationMs, int displayId,
+            boolean async) {
         final long now = SystemClock.uptimeMillis();
 
         KeyEvent event = new KeyEvent(now, now, KeyEvent.ACTION_DOWN, keyCode, 0 /* repeatCount */,
@@ -311,24 +453,26 @@ public class InputShellCommand extends ShellCommand {
                 inputSource);
         event.setDisplayId(displayId);
 
-        injectKeyEvent(event);
-        if (longpress) {
-            // Some long press behavior would check the event time, we set a new event time here.
-            final long nextEventTime = now + ViewConfiguration.getGlobalActionKeyTimeout();
-            injectKeyEvent(KeyEvent.changeTimeRepeat(event, nextEventTime, 1 /* repeatCount */,
-                    KeyEvent.FLAG_LONG_PRESS));
-        }
-        injectKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
-    }
+        injectKeyEvent(event, async);
+        long firstSleepDurationMs = Math.min(durationMs, ViewConfiguration.getLongPressTimeout());
+        if (firstSleepDurationMs > 0) {
+            sleep(firstSleepDurationMs);
+            // Send FLAG_LONG_PRESS right after `longPressTimeout`, and resume sleep if needed.
+            if (durationMs >= ViewConfiguration.getLongPressTimeout()) {
+                // Some long press behavior would check the event time, we set a new event time
+                // here.
+                final long nextEventTime = now + ViewConfiguration.getLongPressTimeout();
+                KeyEvent longPressEvent = KeyEvent.changeTimeRepeat(event, nextEventTime,
+                        1 /* repeatCount */, KeyEvent.FLAG_LONG_PRESS);
+                injectKeyEvent(longPressEvent, async);
 
-    private void sendKeyDoubleTap(int inputSource, int keyCode, int displayId) {
-        sendKeyEvent(inputSource, keyCode, false, displayId);
-        try {
-            Thread.sleep(ViewConfiguration.getDoubleTapMinTime());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+                long secondSleepDurationMs = durationMs - firstSleepDurationMs;
+                if (secondSleepDurationMs > 0) {
+                    sleep(secondSleepDurationMs);
+                }
+            }
         }
-        sendKeyEvent(inputSource, keyCode, false, displayId);
+        injectKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP), async);
     }
 
     private void runTap(int inputSource, int displayId) {
@@ -371,11 +515,7 @@ public class InputShellCommand extends ShellCommand {
                 displayId);
         if (isDragDrop) {
             // long press until drag start.
-            try {
-                Thread.sleep(ViewConfiguration.getLongPressTimeout());
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            sleep(ViewConfiguration.getLongPressTimeout());
         }
         long now = SystemClock.uptimeMillis();
         final long endTime = down + duration;
@@ -399,6 +539,62 @@ public class InputShellCommand extends ShellCommand {
         inputSource = getSource(inputSource, InputDevice.SOURCE_TRACKBALL);
         sendMove(inputSource, Float.parseFloat(getNextArgRequired()),
                 Float.parseFloat(getNextArgRequired()), displayId);
+    }
+
+    private void runScroll(int inputSource, int displayId) {
+        inputSource = getSource(inputSource, InputDevice.SOURCE_ROTARY_ENCODER);
+        final boolean isPointerEvent = (inputSource & SOURCE_CLASS_POINTER) == SOURCE_CLASS_POINTER;
+        final Map<Integer, Float> axisValues = new HashMap<>();
+        if (isPointerEvent) {
+            axisValues.put(AXIS_X, Float.parseFloat(getNextArgRequired()));
+            axisValues.put(AXIS_Y, Float.parseFloat(getNextArgRequired()));
+        }
+        final Set<Integer> supportedAxes = Set.of(AXIS_HSCROLL, AXIS_VSCROLL, AXIS_SCROLL);
+        String nextOption;
+        while ((nextOption = getNextOption()) != null) {
+            switch (nextOption) {
+                case "--axis":
+                    final Pair<Integer, Float> axisAndValue = readAxisOptionValues(supportedAxes);
+                    axisValues.put(axisAndValue.first, axisAndValue.second);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unsupported option: " + nextOption);
+            }
+        }
+        final long now = SystemClock.uptimeMillis();
+        injectMotionEvent(inputSource, MotionEvent.ACTION_SCROLL, now /* downTime */,
+                now /* when */, axisValues, displayId);
+    }
+
+    /**
+     * Reads an axis value for the `--axis` command option.
+     *
+     * <p>The value for an `--axis` should be a single string containing the axis name without the
+     * `AXIS_` prefix, and comma, and a float value representing the value for the respective axis.
+     *
+     * <p>Example: `--axis SCROLL,2.4` represents "a value of 2.4 for AXIS_SCROLL"
+     *
+     * <p>This method should be called after the `--axis` option has already been read.
+     *
+     * @param supportedAxes the set of allowed axes to be read. If an axis option is read where the
+     *      axis is not present in this set, this method throws an {@link IllegalArgumentException}.
+     * @return a Pair of the axis and its respective value.
+     */
+    private Pair<Integer, Float> readAxisOptionValues(Set<Integer> supportedAxes) {
+        final String optionValue = getNextArgRequired();
+        final String[] axisAndValue = optionValue.split(",");
+        if (axisAndValue.length != 2) {
+            throw new IllegalArgumentException("Invalid --axis option value: " + optionValue);
+        }
+        final String axisName = "AXIS_" + axisAndValue[0];
+        final int axis = MotionEvent.axisFromString(axisName);
+        if (axis == -1) {
+            throw new IllegalArgumentException("Invalid axis name: " + axisName);
+        }
+        if (!supportedAxes.contains(axis)) {
+            throw new IllegalArgumentException("Unsupported axis: " + axisName);
+        }
+        return Pair.create(axis, Float.parseFloat(axisAndValue[1]));
     }
 
     /**
@@ -466,8 +662,16 @@ public class InputShellCommand extends ShellCommand {
 
     private void runKeyCombination(int inputSource, int displayId) {
         String arg = getNextArgRequired();
-        ArrayList<Integer> keyCodes = new ArrayList<>();
 
+        // Get duration (optional).
+        long duration = 0;
+        if ("-t".equals(arg)) {
+            arg = getNextArgRequired();
+            duration = Integer.parseInt(arg);
+            arg = getNextArgRequired();
+        }
+
+        IntArray keyCodes = new IntArray();
         while (arg != null) {
             final int keyCode = KeyEvent.keyCodeFromString(arg);
             if (keyCode == KeyEvent.KEYCODE_UNKNOWN) {
@@ -482,40 +686,54 @@ public class InputShellCommand extends ShellCommand {
             throw new IllegalArgumentException("keycombination requires at least 2 keycodes");
         }
 
-        sendKeyCombination(inputSource, keyCodes, displayId);
+        sendKeyCombination(inputSource, keyCodes, displayId, duration);
     }
 
-    private void injectKeyEventAsync(KeyEvent event) {
-        InputManager.getInstance().injectInputEvent(event,
-                InputManager.INJECT_INPUT_EVENT_MODE_ASYNC);
-    }
-
-    private void sendKeyCombination(int inputSource, ArrayList<Integer> keyCodes, int displayId) {
+    private void sendKeyCombination(int inputSource, IntArray keyCodes, int displayId,
+            long duration) {
         final long now = SystemClock.uptimeMillis();
         final int count = keyCodes.size();
         final KeyEvent[] events = new KeyEvent[count];
+        int metaState = 0;
         for (int i = 0; i < count; i++) {
-            final KeyEvent event = new KeyEvent(now, now, KeyEvent.ACTION_DOWN, keyCodes.get(i), 0,
-                    0 /*metaState*/, KeyCharacterMap.VIRTUAL_KEYBOARD, 0 /*scancode*/, 0 /*flags*/,
+            final int keyCode = keyCodes.get(i);
+            final KeyEvent event = new KeyEvent(now, now, KeyEvent.ACTION_DOWN, keyCode, 0,
+                    metaState, KeyCharacterMap.VIRTUAL_KEYBOARD, 0 /*scancode*/, 0 /*flags*/,
                     inputSource);
             event.setDisplayId(displayId);
             events[i] = event;
+            // The order is important here, metaState could be updated and applied to the next key.
+            metaState |= MODIFIER.getOrDefault(keyCode, 0);
         }
 
         for (KeyEvent event: events) {
             // Use async inject so interceptKeyBeforeQueueing or interceptKeyBeforeDispatching could
             // handle keys.
-            injectKeyEventAsync(event);
+            injectKeyEvent(event, INJECT_ASYNC);
         }
 
-        try {
-            Thread.sleep(ViewConfiguration.getTapTimeout());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(duration);
 
         for (KeyEvent event: events) {
-            injectKeyEventAsync(KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
+            final int keyCode = event.getKeyCode();
+            final KeyEvent upEvent = new KeyEvent(now, now, KeyEvent.ACTION_UP, keyCode,
+                    0, metaState, KeyCharacterMap.VIRTUAL_KEYBOARD, 0 /*scancode*/, 0 /*flags*/,
+                    inputSource);
+            injectKeyEvent(upEvent, INJECT_ASYNC);
+            metaState &= ~MODIFIER.getOrDefault(keyCode, 0);
+        }
+    }
+
+    /**
+     * Puts the thread to sleep for the provided time.
+     *
+     * @param milliseconds The time to sleep in milliseconds.
+     */
+    private void sleep(long milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }

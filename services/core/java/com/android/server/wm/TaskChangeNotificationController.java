@@ -20,6 +20,7 @@ import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.app.ITaskStackListener;
 import android.app.TaskInfo;
+import android.app.TaskStackListener;
 import android.content.ComponentName;
 import android.os.Binder;
 import android.os.Handler;
@@ -29,12 +30,12 @@ import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.window.TaskSnapshot;
 
+import com.android.internal.annotations.GuardedBy;
 import com.android.internal.os.SomeArgs;
 
 import java.util.ArrayList;
 
 class TaskChangeNotificationController {
-    private static final int LOG_TASK_STATE_MSG = 1;
     private static final int NOTIFY_TASK_STACK_CHANGE_LISTENERS_MSG = 2;
     private static final int NOTIFY_ACTIVITY_PINNED_LISTENERS_MSG = 3;
     private static final int NOTIFY_ACTIVITY_RESTART_ATTEMPT_LISTENERS_MSG = 4;
@@ -60,16 +61,16 @@ class TaskChangeNotificationController {
     private static final int NOTIFY_ACTIVITY_ROTATED_MSG = 26;
     private static final int NOTIFY_TASK_MOVED_TO_BACK_LISTENERS_MSG = 27;
     private static final int NOTIFY_LOCK_TASK_MODE_CHANGED_MSG = 28;
+    private static final int NOTIFY_TASK_SNAPSHOT_INVALIDATED_LISTENERS_MSG = 29;
 
     // Delay in notifying task stack change listeners (in millis)
     private static final int NOTIFY_TASK_STACK_CHANGE_LISTENERS_DELAY = 100;
 
-    // Global lock used by the service the instantiate objects of this class.
-    private final Object mServiceLock;
     private final ActivityTaskSupervisor mTaskSupervisor;
     private final Handler mHandler;
 
     // Task stack change listeners in a remote process.
+    @GuardedBy("mRemoteTaskStackListeners")
     private final RemoteCallbackList<ITaskStackListener> mRemoteTaskStackListeners =
             new RemoteCallbackList<>();
 
@@ -77,6 +78,7 @@ class TaskChangeNotificationController {
      * Task stack change listeners in a local process. Tracked separately so that they can be
      * called on the same thread.
      */
+    @GuardedBy("mLocalTaskStackListeners")
     private final ArrayList<ITaskStackListener> mLocalTaskStackListeners = new ArrayList<>();
 
     private final TaskStackConsumer mNotifyTaskStackChanged = (l, m) -> {
@@ -143,11 +145,14 @@ class TaskChangeNotificationController {
     };
 
     private final TaskStackConsumer mNotifyTaskProfileLocked = (l, m) -> {
-        l.onTaskProfileLocked(m.arg1, m.arg2);
+        l.onTaskProfileLocked((RunningTaskInfo) m.obj, m.arg1);
     };
 
     private final TaskStackConsumer mNotifyTaskSnapshotChanged = (l, m) -> {
         l.onTaskSnapshotChanged(m.arg1, (TaskSnapshot) m.obj);
+    };
+    private final TaskStackConsumer mNotifyTaskSnapshotInvalidated = (l, m) -> {
+        l.onTaskSnapshotInvalidated(m.arg1);
     };
 
     private final TaskStackConsumer mNotifyTaskDisplayChanged = (l, m) -> {
@@ -195,12 +200,6 @@ class TaskChangeNotificationController {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case LOG_TASK_STATE_MSG: {
-                    synchronized (mServiceLock) {
-                        mTaskSupervisor.logRootTaskState();
-                    }
-                    break;
-                }
                 case NOTIFY_TASK_STACK_CHANGE_LISTENERS_MSG:
                     forAllRemoteListeners(mNotifyTaskStackChanged, msg);
                     break;
@@ -248,6 +247,7 @@ class TaskChangeNotificationController {
                     break;
                 case NOTIFY_TASK_SNAPSHOT_CHANGED_LISTENERS_MSG:
                     forAllRemoteListeners(mNotifyTaskSnapshotChanged, msg);
+                    ((TaskSnapshot) msg.obj).removeReference(TaskSnapshot.REFERENCE_BROADCAST);
                     break;
                 case NOTIFY_BACK_PRESSED_ON_TASK_ROOT:
                     forAllRemoteListeners(mNotifyBackPressedOnTaskRoot, msg);
@@ -276,6 +276,9 @@ class TaskChangeNotificationController {
                 case NOTIFY_LOCK_TASK_MODE_CHANGED_MSG:
                     forAllRemoteListeners(mNotifyLockTaskModeChanged, msg);
                     break;
+                case NOTIFY_TASK_SNAPSHOT_INVALIDATED_LISTENERS_MSG:
+                    forAllRemoteListeners(mNotifyTaskSnapshotInvalidated, msg);
+                    break;
             }
             if (msg.obj instanceof SomeArgs) {
                 ((SomeArgs) msg.obj).recycle();
@@ -283,41 +286,42 @@ class TaskChangeNotificationController {
         }
     }
 
-    public TaskChangeNotificationController(Object serviceLock,
-            ActivityTaskSupervisor taskSupervisor, Handler handler) {
-        mServiceLock = serviceLock;
+    TaskChangeNotificationController(ActivityTaskSupervisor taskSupervisor, Handler handler) {
         mTaskSupervisor = taskSupervisor;
         mHandler = new MainHandler(handler.getLooper());
     }
 
     public void registerTaskStackListener(ITaskStackListener listener) {
-        synchronized (mServiceLock) {
-            if (listener != null) {
-                if (Binder.getCallingPid() == android.os.Process.myPid()) {
-                    if (!mLocalTaskStackListeners.contains(listener)) {
-                        mLocalTaskStackListeners.add(listener);
+        if (listener instanceof Binder) {
+            synchronized (mLocalTaskStackListeners) {
+                if (!mLocalTaskStackListeners.contains(listener)) {
+                    if (listener instanceof TaskStackListener) {
+                        ((TaskStackListener) listener).setIsLocal();
                     }
-                } else {
-                    mRemoteTaskStackListeners.register(listener);
+                    mLocalTaskStackListeners.add(listener);
                 }
+            }
+        } else if (listener != null) {
+            synchronized (mRemoteTaskStackListeners) {
+                mRemoteTaskStackListeners.register(listener);
             }
         }
     }
 
     public void unregisterTaskStackListener(ITaskStackListener listener) {
-        synchronized (mServiceLock) {
-            if (listener != null) {
-                if (Binder.getCallingPid() == android.os.Process.myPid()) {
-                    mLocalTaskStackListeners.remove(listener);
-                } else {
-                    mRemoteTaskStackListeners.unregister(listener);
-                }
+        if (listener instanceof Binder) {
+            synchronized (mLocalTaskStackListeners) {
+                mLocalTaskStackListeners.remove(listener);
+            }
+        } else if (listener != null) {
+            synchronized (mRemoteTaskStackListeners) {
+                mRemoteTaskStackListeners.unregister(listener);
             }
         }
     }
 
     private void forAllRemoteListeners(TaskStackConsumer callback, Message message) {
-        synchronized (mServiceLock) {
+        synchronized (mRemoteTaskStackListeners) {
             for (int i = mRemoteTaskStackListeners.beginBroadcast() - 1; i >= 0; i--) {
                 try {
                     // Make a one-way callback to the listener
@@ -331,7 +335,7 @@ class TaskChangeNotificationController {
     }
 
     private void forAllLocalListeners(TaskStackConsumer callback, Message message) {
-        synchronized (mServiceLock) {
+        synchronized (mLocalTaskStackListeners) {
             for (int i = mLocalTaskStackListeners.size() - 1; i >= 0; i--) {
                 try {
                     callback.accept(mLocalTaskStackListeners.get(i), message);
@@ -344,7 +348,7 @@ class TaskChangeNotificationController {
 
     /** Notifies all listeners when the task stack has changed. */
     void notifyTaskStackChanged() {
-        mHandler.sendEmptyMessage(LOG_TASK_STATE_MSG);
+        mTaskSupervisor.getActivityMetricsLogger().logWindowState();
         mHandler.removeMessages(NOTIFY_TASK_STACK_CHANGE_LISTENERS_MSG);
         final Message msg = mHandler.obtainMessage(NOTIFY_TASK_STACK_CHANGE_LISTENERS_MSG);
         forAllLocalListeners(mNotifyTaskStackChanged, msg);
@@ -471,9 +475,9 @@ class TaskChangeNotificationController {
      * Notify listeners that the task has been put in a locked state because one or more of the
      * activities inside it belong to a managed profile user that has been locked.
      */
-    void notifyTaskProfileLocked(int taskId, int userId) {
-        final Message msg = mHandler.obtainMessage(NOTIFY_TASK_PROFILE_LOCKED_LISTENERS_MSG, taskId,
-                userId);
+    void notifyTaskProfileLocked(RunningTaskInfo taskInfo, int userId) {
+        final Message msg = mHandler.obtainMessage(NOTIFY_TASK_PROFILE_LOCKED_LISTENERS_MSG,
+                userId, 0, taskInfo);
         forAllLocalListeners(mNotifyTaskProfileLocked, msg);
         msg.sendToTarget();
     }
@@ -482,9 +486,20 @@ class TaskChangeNotificationController {
      * Notify listeners that the snapshot of a task has changed.
      */
     void notifyTaskSnapshotChanged(int taskId, TaskSnapshot snapshot) {
+        snapshot.addReference(TaskSnapshot.REFERENCE_BROADCAST);
         final Message msg = mHandler.obtainMessage(NOTIFY_TASK_SNAPSHOT_CHANGED_LISTENERS_MSG,
                 taskId, 0, snapshot);
         forAllLocalListeners(mNotifyTaskSnapshotChanged, msg);
+        msg.sendToTarget();
+    }
+
+    /**
+     * Notify listeners that the snapshot of a task is invalidated.
+     */
+    void notifyTaskSnapshotInvalidated(int taskId) {
+        final Message msg = mHandler.obtainMessage(NOTIFY_TASK_SNAPSHOT_INVALIDATED_LISTENERS_MSG,
+                taskId, 0 /* unused */);
+        forAllLocalListeners(mNotifyTaskSnapshotInvalidated, msg);
         msg.sendToTarget();
     }
 

@@ -26,15 +26,17 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerExecutor;
 import android.os.Looper;
-import android.telephony.Annotation.CallState;
 import android.telephony.Annotation.DisconnectCauses;
 import android.telephony.Annotation.PreciseDisconnectCauses;
 import android.telephony.Annotation.RadioPowerState;
 import android.telephony.Annotation.SimActivationState;
 import android.telephony.Annotation.SrvccState;
 import android.telephony.TelephonyManager.DataEnabledReason;
+import android.telephony.TelephonyManager.EmergencyCallbackModeStopReason;
+import android.telephony.TelephonyManager.EmergencyCallbackModeType;
 import android.telephony.emergency.EmergencyNumber;
 import android.telephony.ims.ImsReasonInfo;
+import android.telephony.ims.MediaQualityStatus;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.telephony.IPhoneStateListener;
@@ -189,20 +191,6 @@ public class PhoneStateListener {
      */
     @Deprecated
     public static final int LISTEN_SIGNAL_STRENGTHS                         = 0x00000100;
-
-    /**
-     * Listen for changes of the network signal strengths (cellular) always reported from modem,
-     * even in some situations such as the screen of the device is off.
-     *
-     * @see #onSignalStrengthsChanged
-     *
-     * @hide
-     * @deprecated Use TelephonyManager#setSignalStrengthUpdateRequest
-     * instead.
-     */
-    @Deprecated
-    @RequiresPermission(android.Manifest.permission.LISTEN_ALWAYS_REPORTED_SIGNAL_STRENGTH)
-    public static final int LISTEN_ALWAYS_REPORTED_SIGNAL_STRENGTH          = 0x00000200;
 
     /**
      * Listen for changes to observed cell info.
@@ -413,7 +401,7 @@ public class PhoneStateListener {
 
     /**
      * Listen for call disconnect causes which contains {@link DisconnectCause} and
-     * {@link PreciseDisconnectCause}.
+     * the precise disconnect cause.
      *
      * <p>Requires permission {@link android.Manifest.permission#READ_PRECISE_PHONE_STATE}
      * or the calling app has carrier privileges
@@ -740,7 +728,7 @@ public class PhoneStateListener {
      */
     @Deprecated
     @RequiresPermission(value = android.Manifest.permission.READ_PHONE_STATE, conditional = true)
-    public void onCallStateChanged(@CallState int state, String phoneNumber) {
+    public void onCallStateChanged(@Annotation.CallState int state, String phoneNumber) {
         // default implementation empty
     }
 
@@ -757,6 +745,7 @@ public class PhoneStateListener {
      * @see TelephonyManager#DATA_CONNECTING
      * @see TelephonyManager#DATA_CONNECTED
      * @see TelephonyManager#DATA_SUSPENDED
+     * @see TelephonyManager#DATA_HANDOVER_IN_PROGRESS
      * @deprecated Use {@link TelephonyCallback.DataConnectionStateListener} instead.
      */
     @Deprecated
@@ -862,8 +851,8 @@ public class PhoneStateListener {
      * subId. Otherwise, this callback applies to
      * {@link SubscriptionManager#getDefaultSubscriptionId()}.
      *
-     * @param disconnectCause {@link DisconnectCause}.
-     * @param preciseDisconnectCause {@link PreciseDisconnectCause}.
+     * @param disconnectCause the disconnect cause
+     * @param preciseDisconnectCause the precise disconnect cause
      * @deprecated Use {@link TelephonyCallback.CallDisconnectCauseListener} instead.
      */
     @RequiresPermission(android.Manifest.permission.READ_PRECISE_PHONE_STATE)
@@ -1317,8 +1306,6 @@ public class PhoneStateListener {
         // default implementation empty
     }
 
-
-
     /**
      * The callback methods need to be called on the handler thread where
      * this object was created.  If the binder did that for us it'd be nice.
@@ -1582,12 +1569,48 @@ public class PhoneStateListener {
                     () -> mExecutor.execute(() -> psl.onRadioPowerStateChanged(state)));
         }
 
-        public void onCallAttributesChanged(CallAttributes callAttributes) {
+        public void onCallStatesChanged(List<CallState> callStateList) {
             PhoneStateListener psl = mPhoneStateListenerWeakRef.get();
             if (psl == null) return;
 
+            if (callStateList == null) return;
+            CallAttributes ca;
+            if (callStateList.isEmpty()) {
+                ca = new CallAttributes(
+                        new PreciseCallState(PreciseCallState.PRECISE_CALL_STATE_IDLE,
+                                PreciseCallState.PRECISE_CALL_STATE_IDLE,
+                                PreciseCallState.PRECISE_CALL_STATE_IDLE,
+                                DisconnectCause.NOT_VALID, PreciseDisconnectCause.NOT_VALID),
+                        TelephonyManager.NETWORK_TYPE_UNKNOWN, new CallQuality());
+            } else {
+                int foregroundCallState = PreciseCallState.PRECISE_CALL_STATE_IDLE;
+                int backgroundCallState = PreciseCallState.PRECISE_CALL_STATE_IDLE;
+                int ringingCallState = PreciseCallState.PRECISE_CALL_STATE_IDLE;
+                for (CallState cs : callStateList) {
+                    switch (cs.getCallClassification()) {
+                        case CallState.CALL_CLASSIFICATION_FOREGROUND:
+                            foregroundCallState = cs.getCallState();
+                            break;
+                        case CallState.CALL_CLASSIFICATION_BACKGROUND:
+                            backgroundCallState = cs.getCallState();
+                            break;
+                        case CallState.CALL_CLASSIFICATION_RINGING:
+                            ringingCallState = cs.getCallState();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ca = new CallAttributes(
+                        new PreciseCallState(
+                                ringingCallState, foregroundCallState, backgroundCallState,
+                                DisconnectCause.NOT_VALID, PreciseDisconnectCause.NOT_VALID),
+                        callStateList.get(0).getNetworkType(),
+                        callStateList.get(0).getCallQuality());
+            }
             Binder.withCleanCallingIdentity(
-                    () -> mExecutor.execute(() -> psl.onCallAttributesChanged(callAttributes)));
+                    () -> mExecutor.execute(
+                            () -> psl.onCallAttributesChanged(ca)));
         }
 
         public void onActiveDataSubIdChanged(int subId) {
@@ -1641,6 +1664,30 @@ public class PhoneStateListener {
         public void onLinkCapacityEstimateChanged(
                 List<LinkCapacityEstimate> linkCapacityEstimateList) {
             // default implementation empty
+        }
+
+        public final void onMediaQualityStatusChanged(MediaQualityStatus mediaQualityStatus) {
+            // not support. Can't override. Use TelephonyCallback.
+        }
+
+        /** @hide */
+        public final void onCallBackModeStarted(
+                @TelephonyManager.EmergencyCallbackModeType int type) {
+            // not support. Can't override. Use TelephonyCallback.
+        }
+
+        /** @hide */
+        public final void onCallBackModeStopped(@EmergencyCallbackModeType int type,
+                @EmergencyCallbackModeStopReason int reason) {
+            // not support. Can't override. Use TelephonyCallback.
+        }
+
+        public final void onSimultaneousCallingStateChanged(int[] subIds) {
+            // not supported on the deprecated interface - Use TelephonyCallback instead
+        }
+
+        public final void onCarrierRoamingNtnModeChanged(boolean active) {
+            // not supported on the deprecated interface - Use TelephonyCallback instead
         }
     }
 

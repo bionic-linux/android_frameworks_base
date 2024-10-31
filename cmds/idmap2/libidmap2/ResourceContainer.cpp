@@ -226,8 +226,10 @@ Result<OverlayData> CreateResourceMapping(ResourceId id, const ZipAssetsProvider
           *target_resource, OverlayData::ResourceIdValue{overlay_resource->data, rewrite_id}});
     } else {
       overlay_data.pairs.emplace_back(
-          OverlayData::Value{*target_resource, TargetValue{.data_type = overlay_resource->dataType,
-                                                           .data_value = overlay_resource->data}});
+          OverlayData::Value{*target_resource, TargetValueWithConfig{
+              .value = TargetValue{.data_type = overlay_resource->dataType,
+                                   .data_value = overlay_resource->data},
+              .config = std::string()}});
     }
   }
 
@@ -260,16 +262,17 @@ OverlayData CreateResourceMappingLegacy(const AssetManager2* overlay_am,
 }
 
 struct ResState {
-  std::unique_ptr<ApkAssets> apk_assets;
+  AssetManager2::ApkAssetsPtr apk_assets;
   const LoadedArsc* arsc;
   const LoadedPackage* package;
   std::unique_ptr<AssetManager2> am;
   ZipAssetsProvider* zip_assets;
 
-  static Result<ResState> Initialize(std::unique_ptr<ZipAssetsProvider> zip) {
+  static Result<ResState> Initialize(std::unique_ptr<ZipAssetsProvider> zip,
+                                     package_property_t flags) {
     ResState state;
     state.zip_assets = zip.get();
-    if ((state.apk_assets = ApkAssets::Load(std::move(zip))) == nullptr) {
+    if ((state.apk_assets = ApkAssets::Load(std::move(zip), flags)) == nullptr) {
       return Error("failed to load apk asset");
     }
 
@@ -282,7 +285,7 @@ struct ResState {
     }
 
     state.am = std::make_unique<AssetManager2>();
-    if (!state.am->SetApkAssets({state.apk_assets.get()})) {
+    if (!state.am->SetApkAssets({state.apk_assets}, false)) {
       return Error("failed to create asset manager");
     }
 
@@ -341,8 +344,8 @@ Result<const ResState*> ApkResourceContainer::GetState() const {
     return state;
   }
 
-  auto state =
-      ResState::Initialize(std::move(std::get<std::unique_ptr<ZipAssetsProvider>>(state_)));
+  auto state = ResState::Initialize(std::move(std::get<std::unique_ptr<ZipAssetsProvider>>(state_)),
+                                    PROPERTY_OPTIMIZE_NAME_LOOKUPS);
   if (!state) {
     return state.GetError();
   }

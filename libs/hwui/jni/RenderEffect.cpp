@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 #include "Bitmap.h"
+#include "ColorFilter.h"
 #include "GraphicsJNI.h"
+#include "SkBlendMode.h"
 #include "SkImageFilter.h"
 #include "SkImageFilters.h"
 #include "graphics_jni_helpers.h"
 #include "utils/Blur.h"
-#include <utils/Log.h>
 
 using namespace android::uirenderer;
 
@@ -75,11 +76,13 @@ static jlong createColorFilterEffect(
     jlong colorFilterHandle,
     jlong inputFilterHandle
 ) {
-    auto* colorFilter = reinterpret_cast<const SkColorFilter*>(colorFilterHandle);
+    auto colorFilter = android::uirenderer::ColorFilter::fromJava(colorFilterHandle);
+    auto skColorFilter =
+            colorFilter != nullptr ? colorFilter->getInstance() : sk_sp<SkColorFilter>();
     auto* inputFilter = reinterpret_cast<const SkImageFilter*>(inputFilterHandle);
-    sk_sp<SkImageFilter> colorFilterImageFilter = SkImageFilters::ColorFilter(
-            sk_ref_sp(colorFilter), sk_ref_sp(inputFilter), nullptr);
-   return reinterpret_cast<jlong>(colorFilterImageFilter.release());
+    sk_sp<SkImageFilter> colorFilterImageFilter =
+            SkImageFilters::ColorFilter(skColorFilter, sk_ref_sp(inputFilter), nullptr);
+    return reinterpret_cast<jlong>(colorFilterImageFilter.release());
 }
 
 static jlong createBlendModeEffect(
@@ -127,6 +130,32 @@ static jlong createShaderEffect(
     return reinterpret_cast<jlong>(shaderFilter.release());
 }
 
+static inline int ThrowIAEFmt(JNIEnv* env, const char* fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    int ret = jniThrowExceptionFmt(env, "java/lang/IllegalArgumentException", fmt, args);
+    va_end(args);
+    return ret;
+}
+
+static jlong createRuntimeShaderEffect(JNIEnv* env, jobject, jlong shaderBuilderHandle,
+                                       jstring inputShaderName) {
+    SkRuntimeShaderBuilder* builder =
+            reinterpret_cast<SkRuntimeShaderBuilder*>(shaderBuilderHandle);
+    ScopedUtfChars name(env, inputShaderName);
+
+    if (builder->child(name.c_str()).fChild == nullptr) {
+        ThrowIAEFmt(env,
+                    "unable to find a uniform with the name '%s' of the correct "
+                    "type defined by the provided RuntimeShader",
+                    name.c_str());
+        return 0;
+    }
+
+    sk_sp<SkImageFilter> filter = SkImageFilters::RuntimeShader(*builder, name.c_str(), nullptr);
+    return reinterpret_cast<jlong>(filter.release());
+}
+
 static void RenderEffect_safeUnref(SkImageFilter* filter) {
     SkSafeUnref(filter);
 }
@@ -136,15 +165,16 @@ static jlong getRenderEffectFinalizer(JNIEnv*, jobject) {
 }
 
 static const JNINativeMethod gRenderEffectMethods[] = {
-    {"nativeGetFinalizer", "()J", (void*)getRenderEffectFinalizer},
-    {"nativeCreateOffsetEffect", "(FFJ)J", (void*)createOffsetEffect},
-    {"nativeCreateBlurEffect", "(FFJI)J", (void*)createBlurEffect},
-    {"nativeCreateBitmapEffect", "(JFFFFFFFF)J", (void*)createBitmapEffect},
-    {"nativeCreateColorFilterEffect", "(JJ)J", (void*)createColorFilterEffect},
-    {"nativeCreateBlendModeEffect", "(JJI)J", (void*)createBlendModeEffect},
-    {"nativeCreateChainEffect", "(JJ)J", (void*)createChainEffect},
-    {"nativeCreateShaderEffect", "(J)J", (void*)createShaderEffect}
-};
+        {"nativeGetFinalizer", "()J", (void*)getRenderEffectFinalizer},
+        {"nativeCreateOffsetEffect", "(FFJ)J", (void*)createOffsetEffect},
+        {"nativeCreateBlurEffect", "(FFJI)J", (void*)createBlurEffect},
+        {"nativeCreateBitmapEffect", "(JFFFFFFFF)J", (void*)createBitmapEffect},
+        {"nativeCreateColorFilterEffect", "(JJ)J", (void*)createColorFilterEffect},
+        {"nativeCreateBlendModeEffect", "(JJI)J", (void*)createBlendModeEffect},
+        {"nativeCreateChainEffect", "(JJ)J", (void*)createChainEffect},
+        {"nativeCreateShaderEffect", "(J)J", (void*)createShaderEffect},
+        {"nativeCreateRuntimeShaderEffect", "(JLjava/lang/String;)J",
+         (void*)createRuntimeShaderEffect}};
 
 int register_android_graphics_RenderEffect(JNIEnv* env) {
     android::RegisterMethodsOrDie(env, "android/graphics/RenderEffect",

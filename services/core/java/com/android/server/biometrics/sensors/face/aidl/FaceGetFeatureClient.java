@@ -20,7 +20,6 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
 import android.hardware.biometrics.BiometricFaceConstants;
-import android.hardware.biometrics.BiometricsProtoEnums;
 import android.hardware.biometrics.face.IFace;
 import android.hardware.biometrics.face.ISession;
 import android.os.IBinder;
@@ -29,29 +28,36 @@ import android.provider.Settings;
 import android.util.Slog;
 
 import com.android.server.biometrics.BiometricsProto;
+import com.android.server.biometrics.log.BiometricContext;
+import com.android.server.biometrics.log.BiometricLogger;
+import com.android.server.biometrics.sensors.ClientMonitorCallback;
 import com.android.server.biometrics.sensors.ClientMonitorCallbackConverter;
 import com.android.server.biometrics.sensors.ErrorConsumer;
 import com.android.server.biometrics.sensors.HalClientMonitor;
+import com.android.server.biometrics.sensors.face.hidl.HidlToAidlSessionAdapter;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * Face-specific get feature client for the {@link IFace} AIDL HAL interface.
  */
-public class FaceGetFeatureClient extends HalClientMonitor<ISession> implements ErrorConsumer {
+public class FaceGetFeatureClient extends HalClientMonitor<AidlSession> implements ErrorConsumer {
 
     private static final String TAG = "FaceGetFeatureClient";
 
     private final int mUserId;
+    private final int mFeature;
 
-    FaceGetFeatureClient(@NonNull Context context, @NonNull LazyDaemon<ISession> lazyDaemon,
+    public FaceGetFeatureClient(@NonNull Context context, @NonNull Supplier<AidlSession> lazyDaemon,
             @NonNull IBinder token, @Nullable ClientMonitorCallbackConverter listener, int userId,
-            @NonNull String owner, int sensorId) {
+            @NonNull String owner, int sensorId, @NonNull BiometricLogger logger,
+            @NonNull BiometricContext biometricContext, int feature) {
         super(context, lazyDaemon, token, listener, userId, owner, 0 /* cookie */, sensorId,
-                BiometricsProtoEnums.MODALITY_UNKNOWN, BiometricsProtoEnums.ACTION_UNKNOWN,
-                BiometricsProtoEnums.CLIENT_UNKNOWN);
+                logger, biometricContext);
         mUserId = userId;
+        mFeature = feature;
     }
 
     @Override
@@ -60,7 +66,7 @@ public class FaceGetFeatureClient extends HalClientMonitor<ISession> implements 
     }
 
     @Override
-    public void start(@NonNull Callback callback) {
+    public void start(@NonNull ClientMonitorCallback callback) {
         super.start(callback);
         startHalOperation();
     }
@@ -68,7 +74,11 @@ public class FaceGetFeatureClient extends HalClientMonitor<ISession> implements 
     @Override
     protected void startHalOperation() {
         try {
-            getFreshDaemon().getFeatures();
+            ISession session = getFreshDaemon().getSession();
+            if (session instanceof HidlToAidlSessionAdapter) {
+                ((HidlToAidlSessionAdapter) session).setFeature(mFeature);
+            }
+            session.getFeatures();
         } catch (RemoteException e) {
             Slog.e(TAG, "Unable to getFeature", e);
             mCallback.onClientFinished(this, false /* success */);

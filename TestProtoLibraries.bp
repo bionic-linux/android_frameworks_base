@@ -15,8 +15,6 @@
 java_library_host {
     name: "platformtestprotos",
     srcs: [
-        ":libstats_atom_enum_protos",
-        ":libstats_atom_message_protos",
         ":libstats_internal_protos",
         ":statsd_internal_protos",
     ],
@@ -31,6 +29,6 @@ java_library_host {
         type: "full",
     },
     errorprone: {
-        javacflags: ["-Xep:MissingOverride:OFF"], // b/72714520
+        enabled: false,
     },
 }

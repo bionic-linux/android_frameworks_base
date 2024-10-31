@@ -16,6 +16,8 @@
 
 package com.android.systemui.settings
 
+import android.app.IActivityManager
+import android.app.UserSwitchObserver
 import android.content.BroadcastReceiver
 import android.content.ContentResolver
 import android.content.Context
@@ -23,6 +25,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.UserInfo
 import android.os.Handler
+import android.os.IRemoteCallback
 import android.os.UserHandle
 import android.os.UserManager
 import android.util.Log
@@ -30,12 +33,22 @@ import androidx.annotation.GuardedBy
 import androidx.annotation.WorkerThread
 import com.android.systemui.Dumpable
 import com.android.systemui.dump.DumpManager
+import com.android.systemui.flags.FeatureFlagsClassic
+import com.android.systemui.flags.Flags
 import com.android.systemui.util.Assert
-import java.io.FileDescriptor
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
 import java.io.PrintWriter
-import java.lang.IllegalStateException
 import java.lang.ref.WeakReference
+import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executor
+import javax.inject.Provider
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -54,30 +67,38 @@ import kotlin.reflect.KProperty
  *
  * Class constructed and initialized in [SettingsModule].
  */
-class UserTrackerImpl internal constructor(
+open class UserTrackerImpl internal constructor(
     private val context: Context,
+    private val featureFlagsProvider: Provider<FeatureFlagsClassic>,
     private val userManager: UserManager,
+    private val iActivityManager: IActivityManager,
     private val dumpManager: DumpManager,
-    private val backgroundHandler: Handler
+    private val appScope: CoroutineScope,
+    private val backgroundContext: CoroutineDispatcher,
+    private val backgroundHandler: Handler,
 ) : UserTracker, Dumpable, BroadcastReceiver() {
 
     companion object {
         private const val TAG = "UserTrackerImpl"
+        private const val USER_CHANGE_THRESHOLD = 5L * 1000 // 5 sec
     }
 
     var initialized = false
         private set
 
     private val mutex = Any()
+    private val isBackgroundUserSwitchEnabled: Boolean get() =
+        featureFlagsProvider.get().isEnabled(Flags.USER_TRACKER_BACKGROUND_CALLBACKS)
 
+    @Deprecated("Use UserInteractor.getSelectedUserId()")
     override var userId: Int by SynchronizedDelegate(context.userId)
-        private set
+        protected set
 
     override var userHandle: UserHandle by SynchronizedDelegate(context.user)
-        private set
+        protected set
 
     override var userContext: Context by SynchronizedDelegate(context)
-        private set
+        protected set
 
     override val userContentResolver: ContentResolver
         get() = userContext.contentResolver
@@ -95,12 +116,15 @@ class UserTrackerImpl internal constructor(
      * modified.
      */
     override var userProfiles: List<UserInfo> by SynchronizedDelegate(emptyList())
-        private set
+        protected set
 
     @GuardedBy("callbacks")
     private val callbacks: MutableList<DataItem> = ArrayList()
 
-    fun initialize(startingUser: Int) {
+    private var userSwitchingJob: Job? = null
+    private var afterUserSwitchingJob: Job? = null
+
+    open fun initialize(startingUser: Int) {
         if (initialized) {
             return
         }
@@ -108,23 +132,47 @@ class UserTrackerImpl internal constructor(
         setUserIdInternal(startingUser)
 
         val filter = IntentFilter().apply {
-            addAction(Intent.ACTION_USER_SWITCHED)
+            addAction(Intent.ACTION_LOCALE_CHANGED)
+            addAction(Intent.ACTION_USER_INFO_CHANGED)
+            addAction(Intent.ACTION_PROFILE_ADDED)
+            addAction(Intent.ACTION_PROFILE_REMOVED)
+            addAction(Intent.ACTION_PROFILE_AVAILABLE)
+            addAction(Intent.ACTION_PROFILE_UNAVAILABLE)
+            // These get called when a managed profile goes in or out of quiet mode.
             addAction(Intent.ACTION_MANAGED_PROFILE_AVAILABLE)
+            addAction(Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE)
+            addAction(Intent.ACTION_MANAGED_PROFILE_ADDED)
             addAction(Intent.ACTION_MANAGED_PROFILE_REMOVED)
+            addAction(Intent.ACTION_MANAGED_PROFILE_UNLOCKED)
         }
-        context.registerReceiverForAllUsers(this, filter, null /* permission */, backgroundHandler)
+        context.registerReceiverForAllUsers(this, filter, null, backgroundHandler)
+
+        registerUserSwitchObserver()
 
         dumpManager.registerDumpable(TAG, this)
     }
 
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
-            Intent.ACTION_USER_SWITCHED -> {
-                handleSwitchUser(intent.getIntExtra(Intent.EXTRA_USER_HANDLE, UserHandle.USER_NULL))
-            }
-            Intent.ACTION_MANAGED_PROFILE_AVAILABLE, Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE -> {
+            Intent.ACTION_LOCALE_CHANGED,
+            Intent.ACTION_USER_INFO_CHANGED,
+            Intent.ACTION_MANAGED_PROFILE_AVAILABLE,
+            Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE,
+            Intent.ACTION_MANAGED_PROFILE_ADDED,
+            Intent.ACTION_MANAGED_PROFILE_REMOVED,
+            Intent.ACTION_MANAGED_PROFILE_UNLOCKED,
+            Intent.ACTION_PROFILE_ADDED,
+            Intent.ACTION_PROFILE_REMOVED,
+            Intent.ACTION_PROFILE_AVAILABLE,
+            Intent.ACTION_PROFILE_UNAVAILABLE -> {
                 handleProfilesChanged()
             }
+        }
+    }
+
+    override fun createCurrentUserContext(context: Context): Context {
+        synchronized(mutex) {
+            return context.createContextAsUser(userHandle, 0)
         }
     }
 
@@ -142,35 +190,102 @@ class UserTrackerImpl internal constructor(
         return ctx to profiles
     }
 
+    private fun registerUserSwitchObserver() {
+        iActivityManager.registerUserSwitchObserver(object : UserSwitchObserver() {
+            override fun onBeforeUserSwitching(newUserId: Int) {
+                handleBeforeUserSwitching(newUserId)
+            }
+
+            override fun onUserSwitching(newUserId: Int, reply: IRemoteCallback?) {
+                if (isBackgroundUserSwitchEnabled) {
+                    userSwitchingJob?.cancel()
+                    userSwitchingJob = appScope.launch(backgroundContext) {
+                        handleUserSwitchingCoroutines(newUserId) {
+                            reply?.sendResult(null)
+                        }
+                    }
+                } else {
+                    handleUserSwitching(newUserId)
+                    reply?.sendResult(null)
+                }
+            }
+
+            override fun onUserSwitchComplete(newUserId: Int) {
+                if (isBackgroundUserSwitchEnabled) {
+                    afterUserSwitchingJob?.cancel()
+                    afterUserSwitchingJob = appScope.launch(backgroundContext) {
+                        handleUserSwitchComplete(newUserId)
+                    }
+                } else {
+                    handleUserSwitchComplete(newUserId)
+                }
+            }
+        }, TAG)
+    }
+
     @WorkerThread
-    private fun handleSwitchUser(newUser: Int) {
+    protected open fun handleBeforeUserSwitching(newUserId: Int) {
+        setUserIdInternal(newUserId)
+
+        notifySubscribers { callback, resultCallback ->
+            callback.onBeforeUserSwitching(newUserId)
+            resultCallback.run()
+        }.await()
+    }
+
+    @WorkerThread
+    protected open fun handleUserSwitching(newUserId: Int) {
         Assert.isNotMainThread()
-        if (newUser == UserHandle.USER_NULL) {
-            Log.w(TAG, "handleSwitchUser - Couldn't get new id from intent")
-            return
-        }
+        Log.i(TAG, "Switching to user $newUserId")
 
-        if (newUser == userId) return
-        Log.i(TAG, "Switching to user $newUser")
+        notifySubscribers { callback, resultCallback ->
+            callback.onUserChanging(newUserId, userContext, resultCallback)
+        }.await()
+    }
 
-        val (ctx, profiles) = setUserIdInternal(newUser)
+    @WorkerThread
+    protected open suspend fun handleUserSwitchingCoroutines(newUserId: Int, onDone: () -> Unit) =
+            coroutineScope {
+                Assert.isNotMainThread()
+                Log.i(TAG, "Switching to user $newUserId")
 
-        notifySubscribers {
-            onUserChanged(newUser, ctx)
-            onProfilesChanged(profiles)
+                for (callbackDataItem in synchronized(callbacks) { callbacks.toList() }) {
+                    val callback: UserTracker.Callback = callbackDataItem.callback.get() ?: continue
+                    launch(callbackDataItem.executor.asCoroutineDispatcher()) {
+                        val mutex = Mutex(true)
+                        val thresholdLogJob = launch(backgroundContext) {
+                            delay(USER_CHANGE_THRESHOLD)
+                            Log.e(TAG, "Failed to finish $callback in time")
+                        }
+                        callback.onUserChanging(userId, userContext) { mutex.unlock() }
+                        mutex.lock()
+                        thresholdLogJob.cancel()
+                    }.join()
+                }
+                onDone()
+            }
+
+    @WorkerThread
+    protected open fun handleUserSwitchComplete(newUserId: Int) {
+        Assert.isNotMainThread()
+        Log.i(TAG, "Switched to user $newUserId")
+
+        notifySubscribers { callback, _ ->
+            callback.onUserChanged(newUserId, userContext)
+            callback.onProfilesChanged(userProfiles)
         }
     }
 
     @WorkerThread
-    private fun handleProfilesChanged() {
+    protected open fun handleProfilesChanged() {
         Assert.isNotMainThread()
 
         val profiles = userManager.getProfiles(userId)
         synchronized(mutex) {
             userProfiles = profiles.map { UserInfo(it) } // save a "deep" copy
         }
-        notifySubscribers {
-            onProfilesChanged(profiles)
+        notifySubscribers { callback, _ ->
+            callback.onProfilesChanged(profiles)
         }
     }
 
@@ -186,24 +301,31 @@ class UserTrackerImpl internal constructor(
         }
     }
 
-    private inline fun notifySubscribers(crossinline action: UserTracker.Callback.() -> Unit) {
+    private inline fun notifySubscribers(
+            crossinline action: (UserTracker.Callback, resultCallback: Runnable) -> Unit
+    ): CountDownLatch {
         val list = synchronized(callbacks) {
             callbacks.toList()
         }
+        val latch = CountDownLatch(list.size)
         list.forEach {
-            if (it.callback.get() != null) {
+            val callback = it.callback.get()
+            if (callback != null) {
                 it.executor.execute {
-                    it.callback.get()?.action()
+                    action(callback) { latch.countDown() }
                 }
+            } else {
+                latch.countDown()
             }
         }
+        return latch
     }
 
-    override fun dump(fd: FileDescriptor, pw: PrintWriter, args: Array<out String>) {
+    override fun dump(pw: PrintWriter, args: Array<out String>) {
         pw.println("Initialized: $initialized")
         if (initialized) {
             pw.println("userId: $userId")
-            val ids = userProfiles.map { it.id }
+            val ids = userProfiles.map { it.toFullString() }
             pw.println("userProfiles: $ids")
         }
         val list = synchronized(callbacks) {

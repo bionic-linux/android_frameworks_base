@@ -48,6 +48,7 @@ import java.util.Map;
  * developer guide.</p>
  * </div>
  */
+@android.ravenwood.annotation.RavenwoodKeepWholeClass
 public class ClipDescription implements Parcelable {
     /**
      * The MIME type for a clip holding plain text.
@@ -123,6 +124,43 @@ public class ClipDescription implements Parcelable {
      * @hide
      */
     public static final String EXTRA_ACTIVITY_OPTIONS = "android.intent.extra.ACTIVITY_OPTIONS";
+
+    /**
+     * An instance id used for logging.
+     * <p>
+     * Type: {@link com.android.internal.logging.InstanceId}
+     * </p>
+     * @hide
+     */
+    public static final String EXTRA_LOGGING_INSTANCE_ID =
+            "android.intent.extra.LOGGING_INSTANCE_ID";
+
+    /**
+     * Indicates that a ClipData contains potentially sensitive information, such as a
+     * password or credit card number.
+     * <p>
+     * Type: boolean
+     * <p>
+     * This extra can be used to indicate that a ClipData contains sensitive information that
+     * should be redacted or hidden from view until a user takes explicit action to reveal it
+     * (e.g., by pasting).
+     * <p>
+     * Adding this extra does not change clipboard behavior or add additional security to
+     * the ClipData. Its purpose is essentially a rendering hint from the source application,
+     * asking that the data within be obfuscated or redacted, unless the user has taken action
+     * to make it visible.
+     */
+    public static final String EXTRA_IS_SENSITIVE = "android.content.extra.IS_SENSITIVE";
+
+    /** Indicates that a ClipData's source is a remote device.
+     * <p>
+     *     Type: boolean
+     * <p>
+     *     This extra can be used to indicate that a ClipData comes from a separate device rather
+     *     than being local. It is a rendering hint that can be used to take different behavior
+     *     based on the source device of copied data.
+     */
+    public static final String EXTRA_IS_REMOTE_DEVICE = "android.content.extra.IS_REMOTE_DEVICE";
 
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)

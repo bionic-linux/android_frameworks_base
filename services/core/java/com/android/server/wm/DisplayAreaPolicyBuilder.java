@@ -25,13 +25,24 @@ import static android.view.WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
 import static android.view.WindowManagerPolicyConstants.APPLICATION_LAYER;
 import static android.window.DisplayAreaOrganizer.FEATURE_DEFAULT_TASK_CONTAINER;
 import static android.window.DisplayAreaOrganizer.FEATURE_VENDOR_LAST;
+import static android.window.DisplayAreaOrganizer.FEATURE_WINDOWED_MAGNIFICATION;
+import static android.window.DisplayAreaOrganizer.FEATURE_WINDOWING_LAYER;
+import static android.window.DisplayAreaOrganizer.KEY_ROOT_DISPLAY_AREA_ID;
 
+import static com.android.internal.protolog.ProtoLogGroup.WM_DEBUG_WINDOW_ORGANIZER;
+
+import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.app.ActivityOptions;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.ArraySet;
+import android.window.DisplayAreaOrganizer;
+import android.window.WindowContainerToken;
 
+import com.android.internal.annotations.Keep;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.protolog.common.ProtoLog;
 import com.android.server.policy.WindowManagerPolicy;
 
 import java.util.ArrayList;
@@ -42,6 +53,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * A builder for instantiating a complex {@link DisplayAreaPolicy}
@@ -133,13 +145,8 @@ import java.util.function.BiFunction;
  * the window to the corresponding {@link DisplayArea.Tokens} under the returned root
  * {@link RootDisplayArea}.
  */
+@Keep
 class DisplayAreaPolicyBuilder {
-
-    /**
-     * Key to specify the {@link RootDisplayArea} to attach the window to. Should be used by the
-     * function passed in from {@link #setSelectRootForWindowFunc(BiFunction)}
-     */
-    static final String KEY_ROOT_DISPLAY_AREA_ID = "root_display_area_id";
 
     @Nullable private HierarchyBuilder mRootHierarchyBuilder;
     private final ArrayList<HierarchyBuilder> mDisplayAreaGroupHierarchyBuilders =
@@ -153,6 +160,8 @@ class DisplayAreaPolicyBuilder {
      * @see DefaultSelectRootForWindowFunction as an example.
      **/
     @Nullable private BiFunction<Integer, Bundle, RootDisplayArea> mSelectRootForWindowFunc;
+
+    @Nullable private Function<Bundle, TaskDisplayArea> mSelectTaskDisplayAreaFunc;
 
     /** Defines the root hierarchy for the whole logical display. */
     DisplayAreaPolicyBuilder setRootHierarchy(HierarchyBuilder rootHierarchyBuilder) {
@@ -181,14 +190,25 @@ class DisplayAreaPolicyBuilder {
     }
 
     /**
+     * The policy will use this function to find the {@link TaskDisplayArea}.
+     * @see DefaultSelectTaskDisplayAreaFunction as an example.
+     */
+    DisplayAreaPolicyBuilder setSelectTaskDisplayAreaFunc(
+            Function<Bundle, TaskDisplayArea> selectTaskDisplayAreaFunc) {
+        mSelectTaskDisplayAreaFunc = selectTaskDisplayAreaFunc;
+        return this;
+    }
+
+    /**
      * Makes sure the setting meets the requirement:
      * 1. {@link #mRootHierarchyBuilder} must be set.
      * 2. {@link RootDisplayArea} and {@link TaskDisplayArea} must have unique ids.
      * 3. {@link Feature} below the same {@link RootDisplayArea} must have unique ids.
      * 4. There must be exactly one {@link HierarchyBuilder} that contains the IME container.
      * 5. There must be exactly one {@link HierarchyBuilder} that contains the default
-     *    {@link TaskDisplayArea} with id {@link FEATURE_DEFAULT_TASK_CONTAINER}.
-     * 6. None of the ids is greater than {@link FEATURE_VENDOR_LAST}.
+     *    {@link TaskDisplayArea} with id
+     *    {@link DisplayAreaOrganizer#FEATURE_DEFAULT_TASK_CONTAINER}.
+     * 6. None of the ids is greater than {@link DisplayAreaOrganizer#FEATURE_VENDOR_LAST}.
      */
     private void validate() {
         if (mRootHierarchyBuilder == null) {
@@ -236,6 +256,10 @@ class DisplayAreaPolicyBuilder {
             throw new IllegalStateException("There must be a default TaskDisplayArea with id of "
                     + "FEATURE_DEFAULT_TASK_CONTAINER.");
         }
+
+        if (!mRootHierarchyBuilder.hasValidWindowingLayer()) {
+            throw new IllegalStateException("WindowingLayer must exist at the top level index");
+        }
     }
 
     /** Checks if the given hierarchy contains the default {@link TaskDisplayArea}. */
@@ -249,13 +273,18 @@ class DisplayAreaPolicyBuilder {
         return false;
     }
 
+    /** Returns {@code true} if the feature id can be used to put all window content. */
+    static boolean canBeWindowingLayer(int featureId) {
+        return featureId == FEATURE_WINDOWED_MAGNIFICATION || featureId == FEATURE_WINDOWING_LAYER;
+    }
+
     /**
      * Makes sure that ids meet requirement.
      * {@link RootDisplayArea} and {@link TaskDisplayArea} must have unique ids.
      * {@link Feature} below the same {@link RootDisplayArea} must have unique ids, but
      * {@link Feature} below different {@link RootDisplayArea} can have the same id so that we can
      * organize them together.
-     * None of the ids is greater than {@link FEATURE_VENDOR_LAST}
+     * None of the ids is greater than {@link DisplayAreaOrganizer#FEATURE_VENDOR_LAST}
      *
      * @param uniqueIdSet ids of {@link RootDisplayArea} and {@link TaskDisplayArea} that must be
      *                    unique,
@@ -311,6 +340,12 @@ class DisplayAreaPolicyBuilder {
     }
 
     Result build(WindowManagerService wmService) {
+        if (mRootHierarchyBuilder != null && !mRootHierarchyBuilder.hasValidWindowingLayer()) {
+            // Need an additional top layer for screen level animation.
+            mRootHierarchyBuilder.mFeatures.add(0 /* top level index */, new Feature.Builder(
+                    wmService.mPolicy, "WindowingLayer", FEATURE_WINDOWING_LAYER)
+                    .setExcludeRoundedCornerOverlay(false).all().build());
+        }
         validate();
 
         // Attach DA group roots to screen hierarchy before adding windows to group hierarchies.
@@ -328,7 +363,7 @@ class DisplayAreaPolicyBuilder {
                     mRootHierarchyBuilder.mRoot, displayAreaGroupRoots);
         }
         return new Result(wmService, mRootHierarchyBuilder.mRoot, displayAreaGroupRoots,
-                mSelectRootForWindowFunc);
+                mSelectRootForWindowFunc, mSelectTaskDisplayAreaFunc);
     }
 
     /**
@@ -369,6 +404,51 @@ class DisplayAreaPolicyBuilder {
                 }
             }
             return mDisplayRoot;
+        }
+    }
+
+    /**
+     * The default function to find {@link TaskDisplayArea} if there's no other function set
+     * through {@link #setSelectTaskDisplayAreaFunc(Function)}.
+     * <p>
+     * This function returns {@link TaskDisplayArea} specified by
+     * {@link ActivityOptions#getLaunchTaskDisplayArea()} if it is not {@code null}. Otherwise,
+     * returns {@link DisplayContent#getDefaultTaskDisplayArea()}.
+     * </p>
+     */
+    private static class DefaultSelectTaskDisplayAreaFunction implements
+            Function<Bundle, TaskDisplayArea> {
+        private final TaskDisplayArea mDefaultTaskDisplayArea;
+        private final int mDisplayId;
+
+        DefaultSelectTaskDisplayAreaFunction(TaskDisplayArea defaultTaskDisplayArea) {
+            mDefaultTaskDisplayArea = defaultTaskDisplayArea;
+            mDisplayId = defaultTaskDisplayArea.getDisplayId();
+        }
+
+        @Override
+        public TaskDisplayArea apply(@Nullable Bundle options) {
+            if (options == null) {
+                return mDefaultTaskDisplayArea;
+            }
+            final ActivityOptions activityOptions = new ActivityOptions(options);
+            final WindowContainerToken tdaToken = activityOptions.getLaunchTaskDisplayArea();
+            if (tdaToken == null) {
+                return mDefaultTaskDisplayArea;
+            }
+            final TaskDisplayArea tda = WindowContainer.fromBinder(tdaToken.asBinder())
+                    .asTaskDisplayArea();
+            if (tda == null) {
+                ProtoLog.w(WM_DEBUG_WINDOW_ORGANIZER, "The TaskDisplayArea with %s does not "
+                        + "exist.", tdaToken);
+                return mDefaultTaskDisplayArea;
+            }
+            if (tda.getDisplayId() != mDisplayId) {
+                throw new IllegalArgumentException("The specified TaskDisplayArea must attach "
+                        + "to Display#" + mDisplayId + ", but it is in Display#"
+                        + tda.getDisplayId());
+            }
+            return tda;
         }
     }
 
@@ -561,6 +641,11 @@ class DisplayAreaPolicyBuilder {
             }
         }
 
+        boolean hasValidWindowingLayer() {
+            // The windowing layer feature can only be the first one as the top hierarchy.
+            return !mFeatures.isEmpty() && canBeWindowingLayer(mFeatures.get(0).mId);
+        }
+
         private static int typeOfLayer(WindowManagerPolicy policy, int layer) {
             if (layer == APPLICATION_LAYER) {
                 return LEAF_TYPE_TASK_CONTAINERS;
@@ -727,11 +812,13 @@ class DisplayAreaPolicyBuilder {
     static class Result extends DisplayAreaPolicy {
         final List<RootDisplayArea> mDisplayAreaGroupRoots;
         final BiFunction<Integer, Bundle, RootDisplayArea> mSelectRootForWindowFunc;
+        private final Function<Bundle, TaskDisplayArea> mSelectTaskDisplayAreaFunc;
         private final TaskDisplayArea mDefaultTaskDisplayArea;
 
         Result(WindowManagerService wmService, RootDisplayArea root,
                 List<RootDisplayArea> displayAreaGroupRoots,
-                BiFunction<Integer, Bundle, RootDisplayArea> selectRootForWindowFunc) {
+                BiFunction<Integer, Bundle, RootDisplayArea> selectRootForWindowFunc,
+                Function<Bundle, TaskDisplayArea> selectTaskDisplayAreaFunc) {
             super(wmService, root);
             mDisplayAreaGroupRoots = Collections.unmodifiableList(displayAreaGroupRoots);
             mSelectRootForWindowFunc = selectRootForWindowFunc;
@@ -745,6 +832,9 @@ class DisplayAreaPolicyBuilder {
                 throw new IllegalStateException(
                         "No display area with FEATURE_DEFAULT_TASK_CONTAINER");
             }
+            mSelectTaskDisplayAreaFunc = selectTaskDisplayAreaFunc != null
+                    ? selectTaskDisplayAreaFunc
+                    : new DefaultSelectTaskDisplayAreaFunction(mDefaultTaskDisplayArea);
         }
 
         @Override
@@ -798,8 +888,31 @@ class DisplayAreaPolicyBuilder {
         }
 
         @Override
+        public DisplayArea<? extends WindowContainer> getWindowingArea() {
+            if (mRoot.mFeatures.isEmpty()) {
+                throw new IllegalStateException("There must be at least one feature.");
+            }
+            final Feature feature = mRoot.mFeatures.get(0);
+            if (canBeWindowingLayer(feature.mId)) {
+                final List<DisplayArea<WindowContainer>> areas =
+                        mRoot.mFeatureToDisplayAreas.get(feature);
+                if (areas.size() == 1) {
+                    return areas.get(0);
+                }
+            }
+            throw new IllegalStateException("There must be exactly one DisplayArea at top for the "
+                    + "FEATURE_WINDOWED_MAGNIFICATION or FEATURE_WINDOWING_LAYER");
+        }
+
+        @Override
         public TaskDisplayArea getDefaultTaskDisplayArea() {
             return mDefaultTaskDisplayArea;
+        }
+
+        @NonNull
+        @Override
+        public TaskDisplayArea getTaskDisplayArea(@Nullable Bundle options) {
+            return mSelectTaskDisplayAreaFunc.apply(options);
         }
     }
 

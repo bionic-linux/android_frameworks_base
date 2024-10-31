@@ -15,8 +15,8 @@
  */
 package android.hardware.camera2.extension;
 
-import android.hardware.camera2.extension.Size;
 import android.hardware.camera2.extension.OutputConfigId;
+import android.hardware.camera2.extension.Size;
 import android.view.Surface;
 
 /** @hide */
@@ -26,6 +26,8 @@ parcelable CameraOutputConfig
     Surface surface;
     int imageFormat;
     int capacity;
+    long usage;
+    long dynamicRangeProfile;
 
     const int TYPE_SURFACE = 0;
     const int TYPE_IMAGEREADER = 1;
@@ -35,5 +37,6 @@ parcelable CameraOutputConfig
     OutputConfigId outputId;
     int surfaceGroupId;
     String physicalCameraId;
-    List<OutputConfigId> surfaceSharingOutputConfigs;
+    List<CameraOutputConfig> sharedSurfaceConfigs;
+    boolean isMultiResolutionOutput;
 }

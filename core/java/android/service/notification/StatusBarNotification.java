@@ -139,6 +139,33 @@ public class StatusBarNotification implements Parcelable {
         this.groupKey = groupKey();
     }
 
+    /**
+     * @hide
+     */
+    public static int getUidFromKey(@NonNull String key) {
+        String[] parts = key.split("\\|");
+        if (parts.length >= 5) {
+            try {
+                int uid = Integer.parseInt(parts[4]);
+                return uid;
+            } catch (NumberFormatException e) {
+                return -1;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * @hide
+     */
+    public static String getPkgFromKey(@NonNull String key) {
+        String[] parts = key.split("\\|");
+        if (parts.length >= 2) {
+            return parts[1];
+        }
+        return null;
+    }
+
     private String key() {
         String sbnKey = user.getIdentifier() + "|" + pkg + "|" + id + "|" + tag + "|" + uid;
         if (overrideGroupKey != null && getNotification().isGroupSummary()) {
@@ -245,8 +272,10 @@ public class StatusBarNotification implements Parcelable {
     /**
      * @param notification Some kind of clone of this.notification.
      * @return A shallow copy of self, with notification in place of this.notification.
+     *
+     * @hide
      */
-    StatusBarNotification cloneShallow(Notification notification) {
+    public StatusBarNotification cloneShallow(Notification notification) {
         StatusBarNotification result = new StatusBarNotification(this.pkg, this.opPkg,
                 this.id, this.tag, this.uid, this.initialPid,
                 notification, this.user, this.overrideGroupKey, this.postTime);
@@ -268,6 +297,16 @@ public class StatusBarNotification implements Parcelable {
      */
     public boolean isOngoing() {
         return (notification.flags & Notification.FLAG_ONGOING_EVENT) != 0;
+    }
+
+    /**
+     * @hide
+     *
+     * Convenience method to check the notification's flags for
+     * {@link Notification#FLAG_NO_DISMISS}.
+     */
+    public boolean isNonDismissable() {
+        return (notification.flags & Notification.FLAG_NO_DISMISS) != 0;
     }
 
     /**
@@ -436,7 +475,7 @@ public class StatusBarNotification implements Parcelable {
             try {
                 ApplicationInfo ai = context.getPackageManager()
                         .getApplicationInfoAsUser(pkg, PackageManager.MATCH_UNINSTALLED_PACKAGES,
-                                getUserId());
+                                getNormalizedUserId());
                 mContext = context.createApplicationContext(ai,
                         Context.CONTEXT_RESTRICTED);
             } catch (PackageManager.NameNotFoundException e) {
@@ -473,7 +512,7 @@ public class StatusBarNotification implements Parcelable {
                         template.hashCode());
             }
             ArrayList<Person> people = getNotification().extras.getParcelableArrayList(
-                    Notification.EXTRA_PEOPLE_LIST);
+                    Notification.EXTRA_PEOPLE_LIST, android.app.Person.class);
             if (people != null && !people.isEmpty()) {
                 logMaker.addTaggedData(MetricsEvent.FIELD_NOTIFICATION_PEOPLE, people.size());
             }

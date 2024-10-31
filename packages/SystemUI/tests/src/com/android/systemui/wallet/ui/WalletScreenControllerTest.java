@@ -20,8 +20,11 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -39,9 +42,9 @@ import android.service.quickaccesswallet.GetWalletCardsResponse;
 import android.service.quickaccesswallet.QuickAccessWalletClient;
 import android.service.quickaccesswallet.QuickAccessWalletService;
 import android.service.quickaccesswallet.WalletCard;
-import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
 import com.android.internal.logging.UiEventLogger;
@@ -63,8 +66,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Collections;
+import java.util.List;
 
-@RunWith(AndroidTestingRunner.class)
+@RunWith(AndroidJUnit4.class)
 @TestableLooper.RunWithLooper
 @SmallTest
 public class WalletScreenControllerTest extends SysuiTestCase {
@@ -96,9 +100,11 @@ public class WalletScreenControllerTest extends SysuiTestCase {
     @Mock
     UiEventLogger mUiEventLogger;
     @Captor
-    ArgumentCaptor<Intent> mIntentCaptor;
+    ArgumentCaptor<PendingIntent> mIntentCaptor;
     @Captor
     ArgumentCaptor<QuickAccessWalletClient.OnWalletCardsRetrievedCallback> mCallbackCaptor;
+    @Captor
+    ArgumentCaptor<List<WalletCardViewInfo>> mPaymentCardDataCaptor;
     private WalletScreenController mController;
     private TestableLooper mTestableLooper;
 
@@ -107,7 +113,7 @@ public class WalletScreenControllerTest extends SysuiTestCase {
         MockitoAnnotations.initMocks(this);
         mTestableLooper = TestableLooper.get(this);
         when(mUserTracker.getUserContext()).thenReturn(mContext);
-        mWalletView = new WalletView(mContext);
+        mWalletView = spy(new WalletView(mContext));
         mWalletView.getCardCarousel().setExpectedViewWidth(CARD_CAROUSEL_WIDTH);
         when(mWalletClient.getLogo()).thenReturn(mWalletLogo);
         when(mWalletClient.getShortcutLongLabel()).thenReturn(SHORTCUT_LONG_LABEL);
@@ -324,6 +330,7 @@ public class WalletScreenControllerTest extends SysuiTestCase {
         assertEquals(GONE, mWalletView.getCardCarousel().getVisibility());
         assertEquals(VISIBLE, mWalletView.getEmptyStateView().getVisibility());
         assertEquals(GONE, mWalletView.getErrorView().getVisibility());
+        assertTrue(mWalletView.getAppButton().hasOnClickListeners());
     }
 
     @Test
@@ -374,10 +381,12 @@ public class WalletScreenControllerTest extends SysuiTestCase {
 
         mController.onCardClicked(walletCardViewInfo);
 
-        verify(mActivityStarter).startActivity(mIntentCaptor.capture(), eq(true));
+        verify(mActivityStarter).startPendingIntentDismissingKeyguard(mIntentCaptor.capture());
 
-        assertEquals(mWalletIntent.getAction(), mIntentCaptor.getValue().getAction());
-        assertEquals(mWalletIntent.getComponent(), mIntentCaptor.getValue().getComponent());
+        Intent actualIntent = mIntentCaptor.getValue().getIntent();
+
+        assertEquals(mWalletIntent.getAction(), actualIntent.getAction());
+        assertEquals(mWalletIntent.getComponent(), actualIntent.getComponent());
 
         verify(mUiEventLogger, times(1)).log(WalletUiEvent.QAW_CLICK_CARD);
     }
@@ -427,6 +436,41 @@ public class WalletScreenControllerTest extends SysuiTestCase {
         assertEquals(GONE, mWalletView.getVisibility());
     }
 
+    @Test
+    public void onWalletCardsRetrieved_cardDataAllUnknown_showsAllCards() {
+        List<WalletCard> walletCardList = List.of(
+                createWalletCardWithType(mContext, WalletCard.CARD_TYPE_UNKNOWN),
+                createWalletCardWithType(mContext, WalletCard.CARD_TYPE_UNKNOWN),
+                createWalletCardWithType(mContext, WalletCard.CARD_TYPE_UNKNOWN));
+        GetWalletCardsResponse response = new GetWalletCardsResponse(walletCardList, 0);
+        mController.onWalletCardsRetrieved(response);
+        mTestableLooper.processAllMessages();
+
+        verify(mWalletView).showCardCarousel(mPaymentCardDataCaptor.capture(), anyInt(),
+                anyBoolean(),
+                anyBoolean());
+        List<WalletCardViewInfo> paymentCardData = mPaymentCardDataCaptor.getValue();
+        assertEquals(paymentCardData.size(), walletCardList.size());
+    }
+
+    @Test
+    public void onWalletCardsRetrieved_cardDataDifferentTypes_onlyShowsPayment() {
+        List<WalletCard> walletCardList = List.of(createWalletCardWithType(mContext,
+                        WalletCard.CARD_TYPE_UNKNOWN),
+                createWalletCardWithType(mContext, WalletCard.CARD_TYPE_PAYMENT),
+                createWalletCardWithType(mContext, WalletCard.CARD_TYPE_NON_PAYMENT)
+        );
+        GetWalletCardsResponse response = new GetWalletCardsResponse(walletCardList, 0);
+        mController.onWalletCardsRetrieved(response);
+        mTestableLooper.processAllMessages();
+
+        verify(mWalletView).showCardCarousel(mPaymentCardDataCaptor.capture(), anyInt(),
+                anyBoolean(),
+                anyBoolean());
+        List<WalletCardViewInfo> paymentCardData = mPaymentCardDataCaptor.getValue();
+        assertEquals(paymentCardData.size(), 1);
+    }
+
     private WalletCard createNonActiveWalletCard(Context context) {
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(context, 0, mWalletIntent, PendingIntent.FLAG_IMMUTABLE);
@@ -449,6 +493,15 @@ public class WalletScreenControllerTest extends SysuiTestCase {
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(context, 0, mWalletIntent, PendingIntent.FLAG_IMMUTABLE);
         return new WalletCard.Builder(CARD_ID_1, createIcon(), "•••• 1234", pendingIntent)
+                .setCardIcon(createIcon())
+                .setCardLabel("Hold to reader")
+                .build();
+    }
+
+    private WalletCard createWalletCardWithType(Context context, int cardType) {
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(context, 0, mWalletIntent, PendingIntent.FLAG_IMMUTABLE);
+        return new WalletCard.Builder(CARD_ID_1, cardType, createIcon(), "•••• 1234", pendingIntent)
                 .setCardIcon(createIcon())
                 .setCardLabel("Hold to reader")
                 .build();

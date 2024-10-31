@@ -16,15 +16,20 @@
 
 package com.android.wm.shell.splitscreen;
 
-import static android.app.WindowConfiguration.WINDOWING_MODE_MULTI_WINDOW;
+import static com.android.wm.shell.protolog.ShellProtoLogGroup.WM_SHELL_SPLIT_SCREEN;
 
-import android.graphics.Rect;
+import android.content.Context;
 import android.view.SurfaceSession;
 import android.window.WindowContainerToken;
 import android.window.WindowContainerTransaction;
 
+import com.android.internal.protolog.common.ProtoLog;
+import com.android.launcher3.icons.IconProvider;
 import com.android.wm.shell.ShellTaskOrganizer;
 import com.android.wm.shell.common.SyncTransactionQueue;
+import com.android.wm.shell.windowdecor.WindowDecorViewModel;
+
+import java.util.Optional;
 
 /**
  * Main stage for split-screen mode. When split-screen is active all standard activity types launch
@@ -32,39 +37,28 @@ import com.android.wm.shell.common.SyncTransactionQueue;
  * @see StageCoordinator
  */
 class MainStage extends StageTaskListener {
-    private static final String TAG = MainStage.class.getSimpleName();
-
     private boolean mIsActive = false;
 
-    MainStage(ShellTaskOrganizer taskOrganizer, int displayId,
+    MainStage(Context context, ShellTaskOrganizer taskOrganizer, int displayId,
             StageListenerCallbacks callbacks, SyncTransactionQueue syncQueue,
-            SurfaceSession surfaceSession) {
-        super(taskOrganizer, displayId, callbacks, syncQueue, surfaceSession);
+            SurfaceSession surfaceSession, IconProvider iconProvider,
+            Optional<WindowDecorViewModel> windowDecorViewModel) {
+        super(context, taskOrganizer, displayId, callbacks, syncQueue, surfaceSession,
+                iconProvider, windowDecorViewModel);
     }
 
     boolean isActive() {
         return mIsActive;
     }
 
-    void activate(Rect rootBounds, WindowContainerTransaction wct) {
+    void activate(WindowContainerTransaction wct, boolean includingTopTask) {
         if (mIsActive) return;
+        ProtoLog.d(WM_SHELL_SPLIT_SCREEN, "activate: main stage includingTopTask=%b",
+                includingTopTask);
 
-        final WindowContainerToken rootToken = mRootTaskInfo.token;
-        wct.setBounds(rootToken, rootBounds)
-                .setWindowingMode(rootToken, WINDOWING_MODE_MULTI_WINDOW)
-                .setLaunchRoot(
-                        rootToken,
-                        CONTROLLED_WINDOWING_MODES,
-                        CONTROLLED_ACTIVITY_TYPES)
-                .reparentTasks(
-                        null /* currentParent */,
-                        rootToken,
-                        CONTROLLED_WINDOWING_MODES,
-                        CONTROLLED_ACTIVITY_TYPES,
-                        true /* onTop */)
-                // Moving the root task to top after the child tasks were re-parented , or the root
-                // task cannot be visible and focused.
-                .reorder(rootToken, true /* onTop */);
+        if (includingTopTask) {
+            reparentTopTask(wct);
+        }
 
         mIsActive = true;
     }
@@ -75,27 +69,17 @@ class MainStage extends StageTaskListener {
 
     void deactivate(WindowContainerTransaction wct, boolean toTop) {
         if (!mIsActive) return;
+        ProtoLog.d(WM_SHELL_SPLIT_SCREEN, "deactivate: main stage toTop=%b rootTaskInfo=%s",
+                toTop, mRootTaskInfo);
         mIsActive = false;
 
         if (mRootTaskInfo == null) return;
         final WindowContainerToken rootToken = mRootTaskInfo.token;
-        wct.setLaunchRoot(
-                        rootToken,
-                        null,
-                        null)
-                .reparentTasks(
-                        rootToken,
-                        null /* newParent */,
-                        CONTROLLED_WINDOWING_MODES_WHEN_ACTIVE,
-                        CONTROLLED_ACTIVITY_TYPES,
-                        toTop)
-                // We want this re-order to the bottom regardless since we are re-parenting
-                // all its tasks.
-                .reorder(rootToken, false /* onTop */);
-    }
-
-    void updateConfiguration(int windowingMode, Rect bounds, WindowContainerTransaction wct) {
-        wct.setBounds(mRootTaskInfo.token, bounds)
-                .setWindowingMode(mRootTaskInfo.token, windowingMode);
+        wct.reparentTasks(
+                rootToken,
+                null /* newParent */,
+                null /* windowingModes */,
+                null /* activityTypes */,
+                toTop);
     }
 }

@@ -16,10 +16,17 @@
 
 package android.os.storage;
 
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.UserIdInt;
+import android.content.pm.UserInfo;
+import android.multiuser.Flags;
+import android.os.IInstalld;
 import android.os.IVold;
+import android.os.ParcelFileDescriptor;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -113,7 +120,6 @@ public abstract class StorageManagerInternal {
      */
     public abstract void prepareAppDataAfterInstall(@NonNull String packageName, int uid);
 
-
     /**
      * Return true if uid is external storage service.
      */
@@ -135,4 +141,80 @@ public abstract class StorageManagerInternal {
      * {@link VolumeInfo#isPrimary()}
      */
     public abstract List<String> getPrimaryVolumeIds();
+
+    /**
+     * Tells StorageManager that CE storage for this user has been prepared.
+     *
+     * @param userId userId for which CE storage has been prepared
+     */
+    public abstract void markCeStoragePrepared(@UserIdInt int userId);
+
+    /**
+     * Returns true when CE storage for this user has been prepared.
+     *
+     * When the user key is unlocked and CE storage has been prepared,
+     * it's ok to access and modify CE directories on volumes for this user.
+     */
+    public abstract boolean isCeStoragePrepared(@UserIdInt int userId);
+
+    /**
+     * A listener for changes to the cloud provider.
+     */
+    public interface CloudProviderChangeListener {
+        /**
+         * Triggered when the cloud provider changes. A {@code null} value means there's currently
+         * no cloud provider.
+         */
+        void onCloudProviderChanged(int userId, @Nullable String authority);
+    }
+
+    /**
+     * Register a {@link CloudProviderChangeListener} to be notified when a cloud media provider
+     * changes. The listener will be called after registration with any currently set cloud media
+     * providers.
+     */
+    public abstract void registerCloudProviderChangeListener(
+            @NonNull CloudProviderChangeListener listener);
+
+    /**
+     * Prepares user data directories before moving storage or apps. This is required as adoptable
+     * storage unlock is tied to the prepare user data and storage needs to be unlocked before
+     * performing any operations on it. This will also create user data directories before
+     * initiating the move operations, which essential for ensuring the directories to have correct
+     * SELinux labels and permissions.
+     *
+     * @param fromVolumeUuid the source volume UUID from which content needs to be transferred
+     * @param toVolumeUuid the destination volume UUID to which contents are to be transferred
+     * @param users a list of users for whom to prepare storage
+     */
+    public abstract void prepareUserStorageForMove(String fromVolumeUuid, String toVolumeUuid,
+            List<UserInfo> users);
+
+    /**
+     * A proxy call to the corresponding method in Installer.
+     * @see com.android.server.pm.Installer#createFsveritySetupAuthToken()
+     */
+    public abstract IInstalld.IFsveritySetupAuthToken createFsveritySetupAuthToken(
+            ParcelFileDescriptor authFd, int uid) throws IOException;
+
+    /**
+     * A proxy call to the corresponding method in Installer.
+     * @see com.android.server.pm.Installer#enableFsverity()
+     */
+    public abstract int enableFsverity(IInstalld.IFsveritySetupAuthToken authToken, String filePath,
+            String packageName) throws IOException;
+
+    /**
+     * Registers a {@link ICeStorageLockEventListener} for receiving CE storage lock events.
+     */
+    @FlaggedApi(Flags.FLAG_ENABLE_BIOMETRICS_TO_UNLOCK_PRIVATE_SPACE)
+    public abstract void registerStorageLockEventListener(
+            @NonNull ICeStorageLockEventListener listener);
+
+    /**
+     * Unregisters the {@link ICeStorageLockEventListener} which was registered previously
+     */
+    @FlaggedApi(Flags.FLAG_ENABLE_BIOMETRICS_TO_UNLOCK_PRIVATE_SPACE)
+    public abstract void unregisterStorageLockEventListener(
+            @NonNull ICeStorageLockEventListener listener);
 }

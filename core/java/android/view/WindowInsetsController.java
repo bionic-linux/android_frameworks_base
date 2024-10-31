@@ -16,6 +16,7 @@
 
 package android.view;
 
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -23,10 +24,10 @@ import android.graphics.Insets;
 import android.inputmethodservice.InputMethodService;
 import android.os.Build;
 import android.os.CancellationSignal;
-import android.view.InsetsState.InternalInsetsType;
 import android.view.WindowInsets.Type;
 import android.view.WindowInsets.Type.InsetsType;
 import android.view.animation.Interpolator;
+import android.view.flags.Flags;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -79,14 +80,42 @@ public interface WindowInsetsController {
     int APPEARANCE_SEMI_TRANSPARENT_NAVIGATION_BARS = 1 << 6;
 
     /**
+     * Makes the caption bar transparent.
+     */
+    @FlaggedApi(Flags.FLAG_CUSTOMIZABLE_WINDOW_HEADERS)
+    int APPEARANCE_TRANSPARENT_CAPTION_BAR_BACKGROUND = 1 << 7;
+
+    /**
+     * When {@link WindowInsetsController#APPEARANCE_TRANSPARENT_CAPTION_BAR_BACKGROUND} is set,
+     * changes the foreground color of the caption bars so that the items on the bar can be read
+     * clearly on light backgrounds.
+     */
+    @FlaggedApi(Flags.FLAG_CUSTOMIZABLE_WINDOW_HEADERS)
+    int APPEARANCE_LIGHT_CAPTION_BARS = 1 << 8;
+
+    /**
+     * Same as {@link #APPEARANCE_LIGHT_NAVIGATION_BARS} but set by the system. The system will
+     * respect {@link #APPEARANCE_LIGHT_NAVIGATION_BARS} when this is cleared.
+     * @hide
+     */
+    int APPEARANCE_FORCE_LIGHT_NAVIGATION_BARS = 1 << 9;
+
+    /**
      * Determines the appearance of system bars.
      * @hide
      */
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef(flag = true, value = {APPEARANCE_OPAQUE_STATUS_BARS, APPEARANCE_OPAQUE_NAVIGATION_BARS,
-            APPEARANCE_LOW_PROFILE_BARS, APPEARANCE_LIGHT_STATUS_BARS,
-            APPEARANCE_LIGHT_NAVIGATION_BARS, APPEARANCE_SEMI_TRANSPARENT_STATUS_BARS,
-            APPEARANCE_SEMI_TRANSPARENT_NAVIGATION_BARS})
+    @IntDef(flag = true, value = {
+            APPEARANCE_OPAQUE_STATUS_BARS,
+            APPEARANCE_OPAQUE_NAVIGATION_BARS,
+            APPEARANCE_LOW_PROFILE_BARS,
+            APPEARANCE_LIGHT_STATUS_BARS,
+            APPEARANCE_LIGHT_NAVIGATION_BARS,
+            APPEARANCE_SEMI_TRANSPARENT_STATUS_BARS,
+            APPEARANCE_SEMI_TRANSPARENT_NAVIGATION_BARS,
+            APPEARANCE_TRANSPARENT_CAPTION_BAR_BACKGROUND,
+            APPEARANCE_LIGHT_CAPTION_BARS,
+            APPEARANCE_FORCE_LIGHT_NAVIGATION_BARS})
     @interface Appearance {
     }
 
@@ -201,6 +230,21 @@ public interface WindowInsetsController {
             @NonNull WindowInsetsAnimationControlListener listener);
 
     /**
+     * Lets the application add non-controllable listener object that can be called back
+     * when animation is invoked by the system by host calling methods such as {@link #show} or
+     * {@link #hide}.
+     *
+     * The listener is supposed to be used for logging only, using the control or
+     * relying on the timing of the callback in any other way is not supported.
+     *
+     * @param listener The {@link WindowInsetsAnimationControlListener} that gets called when
+     *                 the animation is driven by the system and not the host
+     * @hide
+     */
+    void setSystemDrivenInsetsAnimationLoggingListener(
+            @Nullable WindowInsetsAnimationControlListener listener);
+
+    /**
      * Controls the appearance of system bars.
      * <p>
      * For example, the following statement adds {@link #APPEARANCE_LIGHT_STATUS_BARS}:
@@ -219,21 +263,35 @@ public interface WindowInsetsController {
     void setSystemBarsAppearance(@Appearance int appearance, @Appearance int mask);
 
     /**
+     * Similar to {@link #setSystemBarsAppearance} but the given flag will only take effect when it
+     * is not controlled by {@link #setSystemBarsAppearance}.
+     *
+     * @see WindowInsetsController#getSystemBarsAppearance()
+     * @see android.R.attr#windowLightStatusBar
+     * @see android.R.attr#windowLightNavigationBar
+     * @hide
+     */
+    void setSystemBarsAppearanceFromResource(@Appearance int appearance, @Appearance int mask);
+
+    /**
      * Retrieves the requested appearance of system bars.
      *
      * @return The requested bitmask of system bar appearance controlled by this window.
      * @see #setSystemBarsAppearance(int, int)
+     * @see android.R.attr#windowLightStatusBar
+     * @see android.R.attr#windowLightNavigationBar
      */
     @Appearance int getSystemBarsAppearance();
 
     /**
-     * Notify the caption insets height change. The information will be used on the client side to,
-     * make sure the InsetsState has the correct caption insets.
+     * Sets the insets height for the IME caption bar, which corresponds to the
+     * "fake" IME navigation bar.
      *
-     * @param height the height of caption bar insets.
+     * @param height the insets height of the IME caption bar.
      * @hide
      */
-    void setCaptionInsetsHeight(int height);
+    default void setImeCaptionBarInsetsHeight(int height) {
+    }
 
     /**
      * Controls the behavior of system bars.
@@ -264,11 +322,10 @@ public interface WindowInsetsController {
     InsetsState getState();
 
     /**
-     * @return Whether the specified insets source is currently requested to be visible by the
-     *         application.
+     * @return Insets types that have been requested to be visible.
      * @hide
      */
-    boolean isRequestedVisible(@InternalInsetsType int type);
+    @InsetsType int getRequestedVisibleTypes();
 
     /**
      * Adds a {@link OnControllableInsetsChangedListener} to the window insets controller.

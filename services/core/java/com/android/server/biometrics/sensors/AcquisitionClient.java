@@ -19,30 +19,32 @@ package com.android.server.biometrics.sensors;
 import android.annotation.NonNull;
 import android.content.Context;
 import android.hardware.biometrics.BiometricConstants;
-import android.media.AudioAttributes;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.SystemClock;
+import android.os.VibrationAttributes;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Slog;
+
+import com.android.server.biometrics.log.BiometricContext;
+import com.android.server.biometrics.log.BiometricLogger;
+import com.android.server.biometrics.sensors.fingerprint.aidl.AidlSession;
+
+import java.util.function.Supplier;
 
 /**
  * Abstract {@link HalClientMonitor} subclass that operations eligible/interested in acquisition
  * messages should extend.
  */
-public abstract class AcquisitionClient<T> extends HalClientMonitor<T> implements Interruptable,
-        ErrorConsumer {
+public abstract class AcquisitionClient<T> extends HalClientMonitor<T> implements ErrorConsumer {
 
     private static final String TAG = "Biometrics/AcquisitionClient";
 
-    private static final AudioAttributes VIBRATION_SONIFICATION_ATTRIBUTES =
-            new AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                    .build();
+    private static final VibrationAttributes HARDWARE_FEEDBACK_VIBRATION_ATTRIBUTES =
+            VibrationAttributes.createForUsage(VibrationAttributes.USAGE_HARDWARE_FEEDBACK);
 
     private static final VibrationEffect SUCCESS_VIBRATION_EFFECT =
             VibrationEffect.get(VibrationEffect.EFFECT_CLICK);
@@ -55,20 +57,20 @@ public abstract class AcquisitionClient<T> extends HalClientMonitor<T> implement
     private boolean mShouldSendErrorToClient = true;
     private boolean mAlreadyCancelled;
 
+    public AcquisitionClient(@NonNull Context context, @NonNull Supplier<T> lazyDaemon,
+            @NonNull IBinder token, @NonNull ClientMonitorCallbackConverter listener, int userId,
+            @NonNull String owner, int cookie, int sensorId, boolean shouldVibrate,
+            @NonNull BiometricLogger logger, @NonNull BiometricContext biometricContext) {
+        super(context, lazyDaemon, token, listener, userId, owner, cookie, sensorId,
+                logger, biometricContext);
+        mPowerManager = context.getSystemService(PowerManager.class);
+        mShouldVibrate = shouldVibrate;
+    }
+
     /**
      * Stops the HAL operation specific to the ClientMonitor subclass.
      */
     protected abstract void stopHalOperation();
-
-    public AcquisitionClient(@NonNull Context context, @NonNull LazyDaemon<T> lazyDaemon,
-            @NonNull IBinder token, @NonNull ClientMonitorCallbackConverter listener, int userId,
-            @NonNull String owner, int cookie, int sensorId, boolean shouldVibrate,
-            int statsModality, int statsAction, int statsClient) {
-        super(context, lazyDaemon, token, listener, userId, owner, cookie, sensorId, statsModality,
-                statsAction, statsClient);
-        mPowerManager = context.getSystemService(PowerManager.class);
-        mShouldVibrate = shouldVibrate;
-    }
 
     @Override
     public void unableToStart() {
@@ -108,12 +110,11 @@ public abstract class AcquisitionClient<T> extends HalClientMonitor<T> implement
         // that do not handle lockout under the HAL. In these cases, ensure that the framework only
         // sends errors once per ClientMonitor.
         if (mShouldSendErrorToClient) {
-            logOnError(getContext(), errorCode, vendorCode, getTargetUserId());
+            getLogger().logOnError(getContext(), getOperationContext(),
+                    errorCode, vendorCode, getTargetUserId());
             try {
-                if (getListener() != null) {
-                    mShouldSendErrorToClient = false;
-                    getListener().onError(getSensorId(), getCookie(), errorCode, vendorCode);
-                }
+                mShouldSendErrorToClient = false;
+                getListener().onError(getSensorId(), getCookie(), errorCode, vendorCode);
             } catch (RemoteException e) {
                 Slog.w(TAG, "Failed to invoke sendError", e);
             }
@@ -140,14 +141,12 @@ public abstract class AcquisitionClient<T> extends HalClientMonitor<T> implement
     }
 
     @Override
-    public void cancelWithoutStarting(@NonNull Callback callback) {
+    public void cancelWithoutStarting(@NonNull ClientMonitorCallback callback) {
         Slog.d(TAG, "cancelWithoutStarting: " + this);
 
         final int errorCode = BiometricConstants.BIOMETRIC_ERROR_CANCELED;
         try {
-            if (getListener() != null) {
-                getListener().onError(getSensorId(), getCookie(), errorCode, 0 /* vendorCode */);
-            }
+            getListener().onError(getSensorId(), getCookie(), errorCode, 0 /* vendorCode */);
         } catch (RemoteException e) {
             Slog.w(TAG, "Failed to invoke sendError", e);
         }
@@ -166,7 +165,8 @@ public abstract class AcquisitionClient<T> extends HalClientMonitor<T> implement
 
     protected final void onAcquiredInternal(int acquiredInfo, int vendorCode,
             boolean shouldSend) {
-        super.logOnAcquired(getContext(), acquiredInfo, vendorCode, getTargetUserId());
+        getLogger().logOnAcquired(getContext(), getOperationContext(),
+                acquiredInfo, vendorCode, getTargetUserId());
         if (DEBUG) {
             Slog.v(TAG, "Acquired: " + acquiredInfo + " " + vendorCode
                     + ", shouldSend: " + shouldSend);
@@ -178,7 +178,7 @@ public abstract class AcquisitionClient<T> extends HalClientMonitor<T> implement
         }
 
         try {
-            if (getListener() != null && shouldSend) {
+            if (shouldSend) {
                 getListener().onAcquired(getSensorId(), acquiredInfo, vendorCode);
             }
         } catch (RemoteException e) {
@@ -194,23 +194,31 @@ public abstract class AcquisitionClient<T> extends HalClientMonitor<T> implement
 
     protected final void vibrateSuccess() {
         Vibrator vibrator = getContext().getSystemService(Vibrator.class);
-        if (vibrator != null) {
+        if (vibrator != null && mShouldVibrate) {
             vibrator.vibrate(Process.myUid(),
                     getContext().getOpPackageName(),
                     SUCCESS_VIBRATION_EFFECT,
                     getClass().getSimpleName() + "::success",
-                    VIBRATION_SONIFICATION_ATTRIBUTES);
+                    HARDWARE_FEEDBACK_VIBRATION_ATTRIBUTES);
         }
     }
 
-    protected final void vibrateError() {
-        Vibrator vibrator = getContext().getSystemService(Vibrator.class);
-        if (vibrator != null) {
-            vibrator.vibrate(Process.myUid(),
-                    getContext().getOpPackageName(),
-                    ERROR_VIBRATION_EFFECT,
-                    getClass().getSimpleName() + "::error",
-                    VIBRATION_SONIFICATION_ATTRIBUTES);
+    // TODO(b/317414324): Deprecate setIgnoreDisplayTouches
+    protected final void resetIgnoreDisplayTouches() {
+        final AidlSession session = (AidlSession) getFreshDaemon();
+        try {
+            session.getSession().setIgnoreDisplayTouches(false);
+        } catch (RemoteException e) {
+            Slog.e(TAG, "Remote exception when resetting setIgnoreDisplayTouches");
         }
+    }
+
+    @Override
+    public boolean isInterruptable() {
+        return true;
+    }
+
+    public boolean isAlreadyCancelled() {
+        return mAlreadyCancelled;
     }
 }

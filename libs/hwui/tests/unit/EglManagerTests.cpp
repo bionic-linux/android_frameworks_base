@@ -17,7 +17,10 @@
 #include <gtest/gtest.h>
 
 #include "renderthread/EglManager.h"
+#include "renderthread/RenderEffectCapabilityQuery.h"
 #include "tests/common/TestContext.h"
+
+#include <SkColorSpace.h>
 
 using namespace android;
 using namespace android::uirenderer;
@@ -40,5 +43,18 @@ TEST(EglManager, doesSurfaceLeak) {
         eglManager.destroySurface(surface);
     }
 
+    eglManager.destroy();
+}
+
+TEST(EglManager, verifyRenderEffectCacheSupported) {
+    EglManager eglManager;
+    eglManager.initialize();
+    auto* vendor = reinterpret_cast<const char*>(glGetString(GL_VENDOR));
+    auto* version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
+    // Make sure that EglManager initializes Properties::enableRenderEffectCache
+    // based on the given gl vendor and version within EglManager->initialize()
+    bool renderEffectCacheSupported = supportsRenderEffectCache(vendor, version);
+    EXPECT_EQ(renderEffectCacheSupported,
+              Properties::enableRenderEffectCache);
     eglManager.destroy();
 }

@@ -24,19 +24,25 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Slog;
 
+import com.android.server.biometrics.log.BiometricContext;
+import com.android.server.biometrics.log.BiometricLogger;
+import com.android.server.biometrics.sensors.ClientMonitorCallback;
 import com.android.server.biometrics.sensors.StopUserClient;
+
+import java.util.function.Supplier;
 
 public class FaceStopUserClient extends StopUserClient<ISession> {
     private static final String TAG = "FaceStopUserClient";
 
-    public FaceStopUserClient(@NonNull Context context, @NonNull LazyDaemon<ISession> lazyDaemon,
+    public FaceStopUserClient(@NonNull Context context, @NonNull Supplier<ISession> lazyDaemon,
             @Nullable IBinder token, int userId, int sensorId,
+            @NonNull BiometricLogger logger, @NonNull BiometricContext biometricContext,
             @NonNull UserStoppedCallback callback) {
-        super(context, lazyDaemon, token, userId, sensorId, callback);
+        super(context, lazyDaemon, token, userId, sensorId, logger, biometricContext, callback);
     }
 
     @Override
-    public void start(@NonNull Callback callback) {
+    public void start(@NonNull ClientMonitorCallback callback) {
         super.start(callback);
         startHalOperation();
     }
@@ -53,6 +59,5 @@ public class FaceStopUserClient extends StopUserClient<ISession> {
 
     @Override
     public void unableToStart() {
-
     }
 }

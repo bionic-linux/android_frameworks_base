@@ -71,7 +71,8 @@ class DiagonalClassifier extends FalsingClassifier {
             return Result.passed(0);
         }
 
-        if (interactionType == LEFT_AFFORDANCE || interactionType == RIGHT_AFFORDANCE) {
+        if (interactionType == LEFT_AFFORDANCE
+                || interactionType == RIGHT_AFFORDANCE) {
             return Result.passed(0);
         }
 

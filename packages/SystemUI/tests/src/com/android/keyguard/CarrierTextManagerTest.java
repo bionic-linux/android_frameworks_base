@@ -21,6 +21,8 @@ import static android.telephony.SubscriptionManager.DATA_ROAMING_DISABLE;
 import static android.telephony.SubscriptionManager.DATA_ROAMING_ENABLE;
 import static android.telephony.SubscriptionManager.NAME_SOURCE_CARRIER_ID;
 
+import static com.android.dx.mockito.inline.extended.ExtendedMockito.doReturn;
+
 import static com.google.common.truth.Truth.assertThat;
 
 import static junit.framework.Assert.assertTrue;
@@ -29,33 +31,45 @@ import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.provider.Settings;
 import android.telephony.ServiceState;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
-import android.test.suitebuilder.annotation.SmallTest;
 import android.testing.AndroidTestingRunner;
 import android.text.TextUtils;
 
-import com.android.systemui.R;
+import androidx.test.filters.SmallTest;
+
+import com.android.keyguard.logging.CarrierTextManagerLogger;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.keyguard.WakefulnessLifecycle;
+import com.android.systemui.kosmos.KosmosJavaAdapter;
+import com.android.systemui.log.LogBufferHelperKt;
+import com.android.systemui.res.R;
+import com.android.systemui.statusbar.pipeline.satellite.ui.viewmodel.FakeDeviceBasedSatelliteViewModel;
+import com.android.systemui.statusbar.pipeline.wifi.data.repository.FakeWifiRepository;
+import com.android.systemui.statusbar.pipeline.wifi.shared.model.WifiNetworkModel;
 import com.android.systemui.telephony.TelephonyListenerManager;
 import com.android.systemui.util.concurrency.FakeExecutor;
+import com.android.systemui.util.kotlin.JavaAdapter;
 import com.android.systemui.util.time.FakeSystemClock;
+
+import kotlinx.coroutines.test.TestScope;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -89,8 +103,9 @@ public class CarrierTextManagerTest extends SysuiTestCase {
     private static final SubscriptionInfo TEST_SUBSCRIPTION_ROAMING = new SubscriptionInfo(0, "", 0,
             TEST_CARRIER, TEST_CARRIER, NAME_SOURCE_CARRIER_ID, 0xFFFFFF, "",
             DATA_ROAMING_ENABLE, null, null, null, null, false, null, "");
-    @Mock
-    private WifiManager mWifiManager;
+    private FakeWifiRepository mWifiRepository = new FakeWifiRepository();
+    private final FakeDeviceBasedSatelliteViewModel mSatelliteViewModel =
+            new FakeDeviceBasedSatelliteViewModel();
     @Mock
     private WakefulnessLifecycle mWakefulnessLifecycle;
     @Mock
@@ -112,6 +127,14 @@ public class CarrierTextManagerTest extends SysuiTestCase {
 
     private CarrierTextManager mCarrierTextManager;
 
+    private CarrierTextManagerLogger mLogger =
+            new CarrierTextManagerLogger(
+                    LogBufferHelperKt.logcatLogBuffer("CarrierTextManagerLog"));
+
+    private final KosmosJavaAdapter mKosmos = new KosmosJavaAdapter(this);
+    private final TestScope mTestScope = mKosmos.getTestScope();
+    private final JavaAdapter mJavaAdapter = new JavaAdapter(mTestScope.getBackgroundScope());
+
     private Void checkMainThread(InvocationOnMock inv) {
         assertThat(mMainExecutor.isExecuting()).isTrue();
         assertThat(mBgExecutor.isExecuting()).isFalse();
@@ -122,7 +145,6 @@ public class CarrierTextManagerTest extends SysuiTestCase {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        mContext.addMockSystemService(WifiManager.class, mWifiManager);
         mContext.addMockSystemService(PackageManager.class, mPackageManager);
         when(mPackageManager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)).thenReturn(true);
         mContext.addMockSystemService(TelephonyManager.class, mTelephonyManager);
@@ -139,15 +161,27 @@ public class CarrierTextManagerTest extends SysuiTestCase {
         doAnswer(this::checkMainThread).when(mKeyguardUpdateMonitor)
                 .removeCallback(any(KeyguardUpdateMonitorCallback.class));
 
-        mCarrierTextCallbackInfo = new CarrierTextManager.CarrierTextCallbackInfo("",
-                new CharSequence[]{}, false, new int[]{});
+        mCarrierTextCallbackInfo = new CarrierTextManager.CarrierTextCallbackInfo(
+                /* carrierText= */ "",
+                /* listOfCarriers= */ new CharSequence[]{},
+                /* anySimReady= */ false,
+                /* subscriptionIds= */ new int[]{});
         when(mTelephonyManager.getSupportedModemCount()).thenReturn(3);
         when(mTelephonyManager.getActiveModemCount()).thenReturn(3);
 
         mCarrierTextManager = new CarrierTextManager.Builder(
-                mContext, mContext.getResources(), mWifiManager,
-                mTelephonyManager, mTelephonyListenerManager, mWakefulnessLifecycle, mMainExecutor,
-                mBgExecutor, mKeyguardUpdateMonitor)
+                mContext,
+                mContext.getResources(),
+                mWifiRepository,
+                mSatelliteViewModel,
+                mJavaAdapter,
+                mTelephonyManager,
+                mTelephonyListenerManager,
+                mWakefulnessLifecycle,
+                mMainExecutor,
+                mBgExecutor,
+                mKeyguardUpdateMonitor,
+                mLogger)
                 .setShowAirplaneMode(true)
                 .setShowMissingSim(true)
                 .build();
@@ -171,7 +205,7 @@ public class CarrierTextManagerTest extends SysuiTestCase {
         reset(mCarrierTextCallback);
         List<SubscriptionInfo> list = new ArrayList<>();
         list.add(TEST_SUBSCRIPTION);
-        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo(anyBoolean())).thenReturn(list);
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(list);
         when(mKeyguardUpdateMonitor.getSimState(0)).thenReturn(TelephonyManager.SIM_STATE_READY);
         mKeyguardUpdateMonitor.mServiceStates = new HashMap<>();
 
@@ -186,12 +220,55 @@ public class CarrierTextManagerTest extends SysuiTestCase {
         assertEquals(AIRPLANE_MODE_TEXT, captor.getValue().carrierText);
     }
 
+    /** regression test for b/281706473, caused by sending NULL plmn / spn to the logger */
+    @Test
+    public void testAirplaneMode_noSim_nullPlmn_nullSpn_doesNotCrash() {
+        // GIVEN - sticy broadcast that returns a null PLMN and null SPN
+        Intent stickyIntent = new Intent(TelephonyManager.ACTION_SERVICE_PROVIDERS_UPDATED);
+        stickyIntent.putExtra(TelephonyManager.EXTRA_SHOW_PLMN, true);
+        stickyIntent.removeExtra(TelephonyManager.EXTRA_PLMN);
+        stickyIntent.putExtra(TelephonyManager.EXTRA_SHOW_SPN, true);
+        stickyIntent.removeExtra(TelephonyManager.EXTRA_SPN);
+
+        mCarrierTextManager = new CarrierTextManager.Builder(
+                getContextSpyForStickyBroadcast(stickyIntent),
+                mContext.getResources(),
+                mWifiRepository,
+                mSatelliteViewModel,
+                mJavaAdapter,
+                mTelephonyManager,
+                mTelephonyListenerManager,
+                mWakefulnessLifecycle,
+                mMainExecutor,
+                mBgExecutor,
+                mKeyguardUpdateMonitor,
+                mLogger
+        )
+                .setShowAirplaneMode(true)
+                .setShowMissingSim(true)
+                .build();
+
+        // GIVEN - airplane mode is off (causing CTM to fetch the sticky broadcast)
+        Settings.Global.putInt(mContext.getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, 1);
+        reset(mCarrierTextCallback);
+        List<SubscriptionInfo> list = new ArrayList<>();
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(list);
+        when(mKeyguardUpdateMonitor.getSimState(0))
+                .thenReturn(TelephonyManager.SIM_STATE_NOT_READY);
+        mKeyguardUpdateMonitor.mServiceStates = new HashMap<>();
+
+        // WHEN CTM fetches the broadcast and attempts to log the result, no crash results
+        mCarrierTextManager.updateCarrierText();
+
+        // No assert, this test should not crash
+    }
+
     @Test
     public void testCardIOError() {
         reset(mCarrierTextCallback);
         List<SubscriptionInfo> list = new ArrayList<>();
         list.add(TEST_SUBSCRIPTION);
-        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo(anyBoolean())).thenReturn(list);
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(list);
         when(mKeyguardUpdateMonitor.getSimState(0)).thenReturn(TelephonyManager.SIM_STATE_READY);
         when(mKeyguardUpdateMonitor.getSimState(1)).thenReturn(
                 TelephonyManager.SIM_STATE_CARD_IO_ERROR);
@@ -224,7 +301,7 @@ public class CarrierTextManagerTest extends SysuiTestCase {
     @Test
     public void testWrongSlots() {
         reset(mCarrierTextCallback);
-        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo(anyBoolean())).thenReturn(
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(
                 new ArrayList<>());
         when(mKeyguardUpdateMonitor.getSimState(anyInt())).thenReturn(
                 TelephonyManager.SIM_STATE_CARD_IO_ERROR);
@@ -238,7 +315,7 @@ public class CarrierTextManagerTest extends SysuiTestCase {
     @Test
     public void testMoreSlotsThanSubs() {
         reset(mCarrierTextCallback);
-        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo(anyBoolean())).thenReturn(
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(
                 new ArrayList<>());
 
         // STOPSHIP(b/130246708) This line makes sure that SubscriptionManager provides the
@@ -289,7 +366,7 @@ public class CarrierTextManagerTest extends SysuiTestCase {
         list.add(TEST_SUBSCRIPTION);
         when(mKeyguardUpdateMonitor.getSimState(anyInt())).thenReturn(
                 TelephonyManager.SIM_STATE_READY);
-        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo(anyBoolean())).thenReturn(list);
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(list);
 
         mKeyguardUpdateMonitor.mServiceStates = new HashMap<>();
 
@@ -314,7 +391,7 @@ public class CarrierTextManagerTest extends SysuiTestCase {
         list.add(TEST_SUBSCRIPTION_ROAMING);
         when(mKeyguardUpdateMonitor.getSimState(anyInt())).thenReturn(
                 TelephonyManager.SIM_STATE_READY);
-        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo(anyBoolean())).thenReturn(list);
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(list);
 
         mKeyguardUpdateMonitor.mServiceStates = new HashMap<>();
 
@@ -339,7 +416,7 @@ public class CarrierTextManagerTest extends SysuiTestCase {
         list.add(TEST_SUBSCRIPTION_NULL);
         when(mKeyguardUpdateMonitor.getSimState(anyInt())).thenReturn(
                 TelephonyManager.SIM_STATE_READY);
-        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo(anyBoolean())).thenReturn(list);
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(list);
 
         mKeyguardUpdateMonitor.mServiceStates = new HashMap<>();
 
@@ -364,8 +441,20 @@ public class CarrierTextManagerTest extends SysuiTestCase {
         list.add(TEST_SUBSCRIPTION_NULL);
         when(mKeyguardUpdateMonitor.getSimState(anyInt())).thenReturn(
                 TelephonyManager.SIM_STATE_READY);
-        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo(anyBoolean())).thenReturn(list);
-        mockWifi();
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(list);
+
+        assertFalse(mWifiRepository.isWifiConnectedWithValidSsid());
+        mWifiRepository.setWifiNetwork(
+                new WifiNetworkModel.Active(
+                        /* networkId= */ 0,
+                        /* isValidated= */ false,
+                        /* level= */ 0,
+                        /* ssid= */ "",
+                        /* hotspotDeviceType= */ WifiNetworkModel.HotspotDeviceType.NONE,
+                        /* isPasspointAccessPoint= */ false,
+                        /* isOnlineSignUpForPasspointAccessPoint= */ false,
+                        /* passpointProviderFriendlyName= */ null));
+        assertTrue(mWifiRepository.isWifiConnectedWithValidSsid());
 
         mKeyguardUpdateMonitor.mServiceStates = new HashMap<>();
         ServiceState ss = mock(ServiceState.class);
@@ -386,17 +475,140 @@ public class CarrierTextManagerTest extends SysuiTestCase {
         assertNotEquals(AIRPLANE_MODE_TEXT, captor.getValue().carrierText);
     }
 
-    private void mockWifi() {
-        when(mWifiManager.isWifiEnabled()).thenReturn(true);
-        WifiInfo wifiInfo = mock(WifiInfo.class);
-        when(wifiInfo.getBSSID()).thenReturn("");
-        when(mWifiManager.getConnectionInfo()).thenReturn(wifiInfo);
+    @Test
+    public void carrierText_satelliteTextNull_isSatelliteFalse_textNotUsed() {
+        reset(mCarrierTextCallback);
+        List<SubscriptionInfo> list = new ArrayList<>();
+        list.add(TEST_SUBSCRIPTION);
+        when(mKeyguardUpdateMonitor.getSimState(anyInt())).thenReturn(
+                TelephonyManager.SIM_STATE_READY);
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(list);
+        mKeyguardUpdateMonitor.mServiceStates = new HashMap<>();
+
+        // WHEN the satellite text is null
+        mSatelliteViewModel.getCarrierText().setValue(null);
+        mTestScope.getTestScheduler().runCurrent();
+
+        ArgumentCaptor<CarrierTextManager.CarrierTextCallbackInfo> captor =
+                ArgumentCaptor.forClass(
+                        CarrierTextManager.CarrierTextCallbackInfo.class);
+        FakeExecutor.exhaustExecutors(mMainExecutor, mBgExecutor);
+
+        // THEN satellite mode is false and the default subscription carrier text is used
+        verify(mCarrierTextCallback).updateCarrierInfo(captor.capture());
+        assertThat(captor.getValue().isInSatelliteMode).isFalse();
+        assertThat(captor.getValue().carrierText).isEqualTo(TEST_CARRIER);
+    }
+
+    @Test
+    public void carrierText_hasSatelliteText_isSatelliteTrue_textUsed() {
+        reset(mCarrierTextCallback);
+        List<SubscriptionInfo> list = new ArrayList<>();
+        list.add(TEST_SUBSCRIPTION);
+        when(mKeyguardUpdateMonitor.getSimState(anyInt())).thenReturn(
+                TelephonyManager.SIM_STATE_READY);
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(list);
+        mKeyguardUpdateMonitor.mServiceStates = new HashMap<>();
+
+        // WHEN the satellite text is non-null
+        mSatelliteViewModel.getCarrierText().setValue("Satellite Test Text");
+        mTestScope.getTestScheduler().runCurrent();
+
+        ArgumentCaptor<CarrierTextManager.CarrierTextCallbackInfo> captor =
+                ArgumentCaptor.forClass(
+                        CarrierTextManager.CarrierTextCallbackInfo.class);
+        FakeExecutor.exhaustExecutors(mMainExecutor, mBgExecutor);
+
+        // THEN satellite mode is true and the satellite text is used
+        verify(mCarrierTextCallback).updateCarrierInfo(captor.capture());
+        assertThat(captor.getValue().isInSatelliteMode).isTrue();
+        assertThat(captor.getValue().carrierText).isEqualTo("Satellite Test Text");
+    }
+
+    @Test
+    public void carrierText_satelliteTextUpdates_autoTriggersCallback() {
+        reset(mCarrierTextCallback);
+        List<SubscriptionInfo> list = new ArrayList<>();
+        list.add(TEST_SUBSCRIPTION);
+        when(mKeyguardUpdateMonitor.getSimState(anyInt())).thenReturn(
+                TelephonyManager.SIM_STATE_READY);
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(list);
+        mKeyguardUpdateMonitor.mServiceStates = new HashMap<>();
+
+        // WHEN the satellite text is set
+        mSatelliteViewModel.getCarrierText().setValue("Test satellite text");
+        mTestScope.getTestScheduler().runCurrent();
+
+        // THEN we should automatically re-trigger #updateCarrierText and get callback info
+        ArgumentCaptor<CarrierTextManager.CarrierTextCallbackInfo> captor =
+                ArgumentCaptor.forClass(
+                        CarrierTextManager.CarrierTextCallbackInfo.class);
+        FakeExecutor.exhaustExecutors(mMainExecutor, mBgExecutor);
+        verify(mCarrierTextCallback).updateCarrierInfo(captor.capture());
+        // AND use the satellite text as the carrier text
+        assertThat(captor.getValue().isInSatelliteMode).isTrue();
+        assertThat(captor.getValue().carrierText).isEqualTo("Test satellite text");
+
+        // WHEN the satellite text is reset to null
+        reset(mCarrierTextCallback);
+        mSatelliteViewModel.getCarrierText().setValue(null);
+        mTestScope.getTestScheduler().runCurrent();
+
+        // THEN we should automatically re-trigger #updateCarrierText and get callback info
+        // that doesn't include the satellite info
+        FakeExecutor.exhaustExecutors(mMainExecutor, mBgExecutor);
+        verify(mCarrierTextCallback).updateCarrierInfo(captor.capture());
+        assertThat(captor.getValue().isInSatelliteMode).isFalse();
+        assertThat(captor.getValue().carrierText).isEqualTo(TEST_CARRIER);
+    }
+
+    @Test
+    public void carrierText_updatedWhileNotListening_getsNewValueWhenListening() {
+        reset(mCarrierTextCallback);
+        List<SubscriptionInfo> list = new ArrayList<>();
+        list.add(TEST_SUBSCRIPTION);
+        when(mKeyguardUpdateMonitor.getSimState(anyInt())).thenReturn(
+                TelephonyManager.SIM_STATE_READY);
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(list);
+        mKeyguardUpdateMonitor.mServiceStates = new HashMap<>();
+
+        mSatelliteViewModel.getCarrierText().setValue("Old satellite text");
+        mTestScope.getTestScheduler().runCurrent();
+
+        ArgumentCaptor<CarrierTextManager.CarrierTextCallbackInfo> captor =
+                ArgumentCaptor.forClass(
+                        CarrierTextManager.CarrierTextCallbackInfo.class);
+        FakeExecutor.exhaustExecutors(mMainExecutor, mBgExecutor);
+        verify(mCarrierTextCallback).updateCarrierInfo(captor.capture());
+        assertThat(captor.getValue().carrierText).isEqualTo("Old satellite text");
+
+        // WHEN we stop listening
+        reset(mCarrierTextCallback);
+        mCarrierTextManager.setListening(null);
+
+        // AND the satellite text updates
+        mSatelliteViewModel.getCarrierText().setValue("New satellite text");
+
+        // THEN we don't get new callback info because we aren't listening
+        verify(mCarrierTextCallback, never()).updateCarrierInfo(any());
+
+        // WHEN we start listening again
+        reset(mCarrierTextCallback);
+        mCarrierTextManager.setListening(mCarrierTextCallback);
+
+        // THEN we should automatically re-trigger #updateCarrierText and get callback info
+        // that includes the new satellite state and text
+        mTestScope.getTestScheduler().runCurrent();
+        FakeExecutor.exhaustExecutors(mMainExecutor, mBgExecutor);
+        verify(mCarrierTextCallback).updateCarrierInfo(captor.capture());
+        assertThat(captor.getValue().isInSatelliteMode).isTrue();
+        assertThat(captor.getValue().carrierText).isEqualTo("New satellite text");
     }
 
     @Test
     public void testCreateInfo_noSubscriptions() {
         reset(mCarrierTextCallback);
-        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo(anyBoolean())).thenReturn(
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(
                 new ArrayList<>());
 
         ArgumentCaptor<CarrierTextManager.CarrierTextCallbackInfo> captor =
@@ -414,6 +626,28 @@ public class CarrierTextManagerTest extends SysuiTestCase {
     }
 
     @Test
+    public void testCarrierText_oneValidSubscription() {
+        reset(mCarrierTextCallback);
+        List<SubscriptionInfo> list = new ArrayList<>();
+        list.add(TEST_SUBSCRIPTION);
+        when(mKeyguardUpdateMonitor.getSimState(anyInt())).thenReturn(
+                TelephonyManager.SIM_STATE_READY);
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(list);
+
+        mKeyguardUpdateMonitor.mServiceStates = new HashMap<>();
+
+        ArgumentCaptor<CarrierTextManager.CarrierTextCallbackInfo> captor =
+                ArgumentCaptor.forClass(
+                        CarrierTextManager.CarrierTextCallbackInfo.class);
+
+        mCarrierTextManager.updateCarrierText();
+        FakeExecutor.exhaustExecutors(mMainExecutor, mBgExecutor);
+        verify(mCarrierTextCallback).updateCarrierInfo(captor.capture());
+
+        assertThat(captor.getValue().carrierText).isEqualTo(TEST_CARRIER);
+    }
+
+    @Test
     public void testCarrierText_twoValidSubscriptions() {
         reset(mCarrierTextCallback);
         List<SubscriptionInfo> list = new ArrayList<>();
@@ -421,7 +655,7 @@ public class CarrierTextManagerTest extends SysuiTestCase {
         list.add(TEST_SUBSCRIPTION);
         when(mKeyguardUpdateMonitor.getSimState(anyInt())).thenReturn(
                 TelephonyManager.SIM_STATE_READY);
-        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo(anyBoolean())).thenReturn(list);
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(list);
 
         mKeyguardUpdateMonitor.mServiceStates = new HashMap<>();
 
@@ -446,7 +680,7 @@ public class CarrierTextManagerTest extends SysuiTestCase {
         when(mKeyguardUpdateMonitor.getSimState(anyInt()))
                 .thenReturn(TelephonyManager.SIM_STATE_READY)
                 .thenReturn(TelephonyManager.SIM_STATE_NOT_READY);
-        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo(anyBoolean())).thenReturn(list);
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(list);
 
         mKeyguardUpdateMonitor.mServiceStates = new HashMap<>();
 
@@ -471,7 +705,7 @@ public class CarrierTextManagerTest extends SysuiTestCase {
         when(mKeyguardUpdateMonitor.getSimState(anyInt()))
                 .thenReturn(TelephonyManager.SIM_STATE_NOT_READY)
                 .thenReturn(TelephonyManager.SIM_STATE_READY);
-        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo(anyBoolean())).thenReturn(list);
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(list);
 
         mKeyguardUpdateMonitor.mServiceStates = new HashMap<>();
 
@@ -498,7 +732,7 @@ public class CarrierTextManagerTest extends SysuiTestCase {
                 .thenReturn(TelephonyManager.SIM_STATE_READY)
                 .thenReturn(TelephonyManager.SIM_STATE_NOT_READY)
                 .thenReturn(TelephonyManager.SIM_STATE_READY);
-        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo(anyBoolean())).thenReturn(list);
+        when(mKeyguardUpdateMonitor.getFilteredSubscriptionInfo()).thenReturn(list);
         mKeyguardUpdateMonitor.mServiceStates = new HashMap<>();
 
         ArgumentCaptor<CarrierTextManager.CarrierTextCallbackInfo> captor =
@@ -511,5 +745,71 @@ public class CarrierTextManagerTest extends SysuiTestCase {
 
         assertEquals(TEST_CARRIER + SEPARATOR + TEST_CARRIER,
                 captor.getValue().carrierText);
+    }
+
+    @Test
+    public void testGetStatusForIccState() {
+        when(mKeyguardUpdateMonitor.isDeviceProvisioned()).thenReturn(false);
+        assertEquals(CarrierTextManager.StatusMode.SimMissingLocked,
+                mCarrierTextManager.getStatusForIccState(TelephonyManager.SIM_STATE_ABSENT));
+        assertEquals(CarrierTextManager.StatusMode.NetworkLocked,
+                mCarrierTextManager.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_NETWORK_LOCKED));
+        assertEquals(CarrierTextManager.StatusMode.SimNotReady,
+                mCarrierTextManager.getStatusForIccState(TelephonyManager.SIM_STATE_NOT_READY));
+        assertEquals(CarrierTextManager.StatusMode.SimLocked,
+                mCarrierTextManager.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_PIN_REQUIRED));
+        assertEquals(CarrierTextManager.StatusMode.SimPukLocked,
+                mCarrierTextManager.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_PUK_REQUIRED));
+        assertEquals(CarrierTextManager.StatusMode.Normal,
+                mCarrierTextManager.getStatusForIccState(TelephonyManager.SIM_STATE_READY));
+        assertEquals(CarrierTextManager.StatusMode.SimMissingLocked,
+                mCarrierTextManager.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_PERM_DISABLED));
+        assertEquals(CarrierTextManager.StatusMode.SimUnknown,
+                mCarrierTextManager.getStatusForIccState(TelephonyManager.SIM_STATE_UNKNOWN));
+        assertEquals(CarrierTextManager.StatusMode.SimIoError,
+                mCarrierTextManager.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_CARD_IO_ERROR));
+        assertEquals(CarrierTextManager.StatusMode.SimRestricted,
+                mCarrierTextManager.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_CARD_RESTRICTED));
+
+        when(mKeyguardUpdateMonitor.isDeviceProvisioned()).thenReturn(true);
+        assertEquals(CarrierTextManager.StatusMode.SimMissing,
+                mCarrierTextManager.getStatusForIccState(TelephonyManager.SIM_STATE_ABSENT));
+        assertEquals(CarrierTextManager.StatusMode.NetworkLocked,
+                mCarrierTextManager.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_NETWORK_LOCKED));
+        assertEquals(CarrierTextManager.StatusMode.SimNotReady,
+                mCarrierTextManager.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_NOT_READY));
+        assertEquals(CarrierTextManager.StatusMode.SimLocked,
+                mCarrierTextManager.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_PIN_REQUIRED));
+        assertEquals(CarrierTextManager.StatusMode.SimPukLocked,
+                mCarrierTextManager.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_PUK_REQUIRED));
+        assertEquals(CarrierTextManager.StatusMode.Normal,
+                mCarrierTextManager.getStatusForIccState(TelephonyManager.SIM_STATE_READY));
+        assertEquals(CarrierTextManager.StatusMode.SimPermDisabled,
+                mCarrierTextManager.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_PERM_DISABLED));
+        assertEquals(CarrierTextManager.StatusMode.SimUnknown,
+                mCarrierTextManager.getStatusForIccState(TelephonyManager.SIM_STATE_UNKNOWN));
+        assertEquals(CarrierTextManager.StatusMode.SimIoError,
+                mCarrierTextManager.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_CARD_IO_ERROR));
+        assertEquals(CarrierTextManager.StatusMode.SimRestricted,
+                mCarrierTextManager.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_CARD_RESTRICTED));
+    }
+
+    private Context getContextSpyForStickyBroadcast(Intent returnVal) {
+        Context contextSpy = spy(mContext);
+        doReturn(returnVal).when(contextSpy).registerReceiver(eq(null), any(IntentFilter.class));
+        return contextSpy;
     }
 }

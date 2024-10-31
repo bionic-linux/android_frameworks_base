@@ -18,6 +18,7 @@ package android.graphics;
 
 import android.annotation.ColorInt;
 import android.annotation.ColorLong;
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
@@ -29,6 +30,8 @@ import android.graphics.text.MeasuredText;
 import android.graphics.text.TextRunShaper;
 import android.os.Build;
 import android.text.TextShaper;
+
+import com.android.graphics.hwui.flags.Flags;
 
 import dalvik.annotation.optimization.CriticalNative;
 import dalvik.annotation.optimization.FastNative;
@@ -52,7 +55,7 @@ import java.lang.annotation.RetentionPolicy;
  * Canvas and Drawables</a> developer guide.</p></div>
  */
 public class Canvas extends BaseCanvas {
-    private static int sCompatiblityVersion = 0;
+    private static int sCompatibilityVersion = 0;
     private static boolean sCompatibilityRestore = false;
     private static boolean sCompatibilitySetBitmap = false;
 
@@ -71,7 +74,7 @@ public class Canvas extends BaseCanvas {
 
     // Maximum bitmap size as defined in Skia's native code
     // (see SkCanvas.cpp, SkDraw.cpp)
-    private static final int MAXMIMUM_BITMAP_SIZE = 32766;
+    private static final int MAXIMUM_BITMAP_SIZE = 32766;
 
     // Use a Holder to allow static initialization of Canvas in the boot image.
     private static class NoImagePreloadHolder {
@@ -114,6 +117,7 @@ public class Canvas extends BaseCanvas {
             throw new IllegalStateException("Immutable bitmap passed to Canvas constructor");
         }
         throwIfCannotDraw(bitmap);
+        bitmap.setGainmap(null);
         mNativeCanvasWrapper = nInitRaster(bitmap.getNativeInstance());
         mFinalizer = NoImagePreloadHolder.sRegistry.registerNativeAllocation(
                 this, mNativeCanvasWrapper);
@@ -149,6 +153,18 @@ public class Canvas extends BaseCanvas {
     }
 
     /**
+     * Indicates whether this Canvas is drawing high contrast text.
+     *
+     * @see android.view.accessibility.AccessibilityManager#isHighTextContrastEnabled()
+     * @return True if high contrast text is enabled, false otherwise.
+     *
+     * @hide
+     */
+    public boolean isHighContrastTextEnabled() {
+        return nIsHighContrastText(mNativeCanvasWrapper);
+    }
+
+    /**
      * Specify a bitmap for the canvas to draw into. All canvas state such as
      * layers, filters, and the save/restore stack are reset. Additionally,
      * the canvas' target density is updated to match that of the bitmap.
@@ -178,7 +194,7 @@ public class Canvas extends BaseCanvas {
                 throw new IllegalStateException();
             }
             throwIfCannotDraw(bitmap);
-
+            bitmap.setGainmap(null);
             nSetBitmap(mNativeCanvasWrapper, bitmap.getNativeInstance());
             mDensity = bitmap.mDensity;
         }
@@ -241,7 +257,7 @@ public class Canvas extends BaseCanvas {
 
     /**
      * Return true if the device that the current layer draws into is opaque
-     * (i.e. does not support per-pixel alpha).
+     * (that is, it does not support per-pixel alpha).
      *
      * @return true if the device that the current layer draws into is opaque
      */
@@ -315,7 +331,7 @@ public class Canvas extends BaseCanvas {
      * @see #getMaximumBitmapHeight()
      */
     public int getMaximumBitmapWidth() {
-        return MAXMIMUM_BITMAP_SIZE;
+        return MAXIMUM_BITMAP_SIZE;
     }
 
     /**
@@ -326,7 +342,7 @@ public class Canvas extends BaseCanvas {
      * @see #getMaximumBitmapWidth()
      */
     public int getMaximumBitmapHeight() {
-        return MAXMIMUM_BITMAP_SIZE;
+        return MAXIMUM_BITMAP_SIZE;
     }
 
     // the SAVE_FLAG constants must match their native equivalents
@@ -407,7 +423,7 @@ public class Canvas extends BaseCanvas {
     public static final int ALL_SAVE_FLAG = 0x1F;
 
     private static void checkValidSaveFlags(int saveFlags) {
-        if (sCompatiblityVersion >= Build.VERSION_CODES.P
+        if (sCompatibilityVersion >= Build.VERSION_CODES.P
                 && saveFlags != ALL_SAVE_FLAG) {
             throw new IllegalArgumentException(
                     "Invalid Layer Save Flag - only ALL_SAVE_FLAGS is allowed");
@@ -765,6 +781,19 @@ public class Canvas extends BaseCanvas {
     }
 
     /**
+     * Preconcat the current matrix with the specified matrix. If the specified
+     * matrix is null, this method does nothing. If the canvas's matrix is changed in the z-axis
+     * through this function, the deprecated {@link #getMatrix()} method will return a 3x3 with
+     * z-axis info stripped away.
+     *
+     * @param m The 4x4 matrix to preconcatenate with the current matrix
+     */
+    @FlaggedApi(Flags.FLAG_MATRIX_44)
+    public void concat(@Nullable Matrix44 m) {
+        if (m != null) nConcat(mNativeCanvasWrapper, m.mBackingArray);
+    }
+
+    /**
      * Completely replace the current matrix with the specified matrix. If the
      * matrix parameter is null, then the current matrix is reset to identity.
      *
@@ -816,7 +845,7 @@ public class Canvas extends BaseCanvas {
     }
 
     private static void checkValidClipOp(@NonNull Region.Op op) {
-        if (sCompatiblityVersion >= Build.VERSION_CODES.P
+        if (sCompatibilityVersion >= Build.VERSION_CODES.P
                 && op != Region.Op.INTERSECT && op != Region.Op.DIFFERENCE) {
             throw new IllegalArgumentException(
                     "Invalid Region.Op - only INTERSECT and DIFFERENCE are allowed");
@@ -1109,6 +1138,30 @@ public class Canvas extends BaseCanvas {
         return false;
     }
 
+    /**
+     * Intersect the current clip with the specified shader.
+     * The shader will be treated as an alpha mask, taking the intersection of the two.
+     *
+     * @param shader The shader to intersect with the current clip
+     */
+    @FlaggedApi(Flags.FLAG_CLIP_SHADER)
+    public void clipShader(@NonNull Shader shader) {
+        nClipShader(mNativeCanvasWrapper, shader.getNativeInstance(),
+                Region.Op.INTERSECT.nativeInt);
+    }
+
+    /**
+     * Set the clip to the difference of the current clip and the shader.
+     * The shader will be treated as an alpha mask, taking the difference of the two.
+     *
+     * @param shader The shader to intersect with the current clip
+     */
+    @FlaggedApi(Flags.FLAG_CLIP_SHADER)
+    public void clipOutShader(@NonNull Shader shader) {
+        nClipShader(mNativeCanvasWrapper, shader.getNativeInstance(),
+                Region.Op.DIFFERENCE.nativeInt);
+    }
+
     public @Nullable DrawFilter getDrawFilter() {
         return mDrawFilter;
     }
@@ -1272,11 +1325,10 @@ public class Canvas extends BaseCanvas {
      * in a way similar to quickReject, in that it tells you that drawing
      * outside of these bounds will be clipped out.
      *
-     * @param bounds Return the clip bounds here. If it is null, ignore it but
-     *               still return true if the current clip is non-empty.
+     * @param bounds Return the clip bounds here.
      * @return true if the current clip is non-empty.
      */
-    public boolean getClipBounds(@Nullable Rect bounds) {
+    public boolean getClipBounds(@NonNull Rect bounds) {
         return nGetClipBounds(mNativeCanvasWrapper, bounds);
     }
 
@@ -1383,7 +1435,7 @@ public class Canvas extends BaseCanvas {
     }
 
     /*package*/ static void setCompatibilityVersion(int apiLevel) {
-        sCompatiblityVersion = apiLevel;
+        sCompatibilityVersion = apiLevel;
         sCompatibilityRestore = apiLevel < Build.VERSION_CODES.M;
         sCompatibilitySetBitmap = apiLevel < Build.VERSION_CODES.O;
         nSetCompatibilityVersion(apiLevel);
@@ -1409,6 +1461,8 @@ public class Canvas extends BaseCanvas {
 
     @CriticalNative
     private static native boolean nIsOpaque(long canvasHandle);
+    @CriticalNative
+    private static native boolean nIsHighContrastText(long canvasHandle);
     @CriticalNative
     private static native int nGetWidth(long canvasHandle);
     @CriticalNative
@@ -1444,6 +1498,8 @@ public class Canvas extends BaseCanvas {
     private static native void nSkew(long canvasHandle, float sx, float sy);
     @CriticalNative
     private static native void nConcat(long nativeCanvas, long nativeMatrix);
+    @FastNative
+    private static native void nConcat(long nativeCanvas, float[] mat);
     @CriticalNative
     private static native void nSetMatrix(long nativeCanvas, long nativeMatrix);
     @CriticalNative
@@ -1451,6 +1507,8 @@ public class Canvas extends BaseCanvas {
             float left, float top, float right, float bottom, int regionOp);
     @CriticalNative
     private static native boolean nClipPath(long nativeCanvas, long nativePath, int regionOp);
+    @CriticalNative
+    private static native void nClipShader(long nativeCanvas, long nativeShader, int regionOp);
     @CriticalNative
     private static native void nSetDrawFilter(long nativeCanvas, long nativeFilter);
     @CriticalNative
@@ -1668,6 +1726,9 @@ public class Canvas extends BaseCanvas {
      * effectively treating them as zeros. In API level {@value Build.VERSION_CODES#P} and above
      * these parameters will be respected.
      *
+     * <p>Note: antialiasing is not supported, therefore {@link Paint#ANTI_ALIAS_FLAG} is
+     * ignored.</p>
+     *
      * @param bitmap The bitmap to draw using the mesh
      * @param meshWidth The number of columns in the mesh. Nothing is drawn if this is 0
      * @param meshHeight The number of rows in the mesh. Nothing is drawn if this is 0
@@ -1679,7 +1740,7 @@ public class Canvas extends BaseCanvas {
      *            null, there must be at least (meshWidth+1) * (meshHeight+1) + colorOffset values
      *            in the array.
      * @param colorOffset Number of color elements to skip before drawing
-     * @param paint May be null. The paint used to draw the bitmap
+     * @param paint May be null. The paint used to draw the bitmap. Antialiasing is not supported.
      */
     public void drawBitmapMesh(@NonNull Bitmap bitmap, int meshWidth, int meshHeight,
             @NonNull float[] verts, int vertOffset, @Nullable int[] colors, int colorOffset,
@@ -1833,9 +1894,12 @@ public class Canvas extends BaseCanvas {
     /**
      * Draws the specified bitmap as an N-patch (most often, a 9-patch.)
      *
+     * <p>Note: antialiasing is not supported, therefore {@link Paint#ANTI_ALIAS_FLAG} is
+     * ignored.</p>
+     *
      * @param patch The ninepatch object to render
      * @param dst The destination rectangle.
-     * @param paint The paint to draw the bitmap with. may be null
+     * @param paint The paint to draw the bitmap with. May be null. Antialiasing is not supported.
      */
     public void drawPatch(@NonNull NinePatch patch, @NonNull Rect dst, @Nullable Paint paint) {
         super.drawPatch(patch, dst, paint);
@@ -1844,9 +1908,12 @@ public class Canvas extends BaseCanvas {
     /**
      * Draws the specified bitmap as an N-patch (most often, a 9-patch.)
      *
+     * <p>Note: antialiasing is not supported, therefore {@link Paint#ANTI_ALIAS_FLAG} is
+     * ignored.</p>
+     *
      * @param patch The ninepatch object to render
      * @param dst The destination rectangle.
-     * @param paint The paint to draw the bitmap with. may be null
+     * @param paint The paint to draw the bitmap with. May be null. Antialiasing is not supported.
      */
     public void drawPatch(@NonNull NinePatch patch, @NonNull RectF dst, @Nullable Paint paint) {
         super.drawPatch(patch, dst, paint);
@@ -1861,6 +1928,17 @@ public class Canvas extends BaseCanvas {
      */
     public void drawPath(@NonNull Path path, @NonNull Paint paint) {
         super.drawPath(path, paint);
+    }
+
+    /**
+     * Draws the given region using the given paint.
+     *
+     * @param region The region to be drawn
+     * @param paint The paint used to draw the region
+     */
+    @FlaggedApi(Flags.FLAG_DRAW_REGION)
+    public void drawRegion(@NonNull Region region, @NonNull Paint paint) {
+        super.drawRegion(region, paint);
     }
 
     /**
@@ -2279,6 +2357,9 @@ public class Canvas extends BaseCanvas {
      * array is optional, but if it is present, then it is used to specify the index of each
      * triangle, rather than just walking through the arrays in order.
      *
+     * <p>Note: antialiasing is not supported, therefore {@link Paint#ANTI_ALIAS_FLAG} is
+     * ignored.</p>
+     *
      * @param mode How to interpret the array of vertices
      * @param vertexCount The number of values in the vertices array (and corresponding texs and
      *            colors arrays if non-null). Each logical vertex is two values (x, y), vertexCount
@@ -2293,8 +2374,9 @@ public class Canvas extends BaseCanvas {
      * @param colorOffset Number of values in colors to skip before drawing.
      * @param indices If not null, array of indices to reference into the vertex (texs, colors)
      *            array.
-     * @param indexCount number of entries in the indices array (if not null).
-     * @param paint Specifies the shader to use if the texs array is non-null.
+     * @param indexCount Number of entries in the indices array (if not null).
+     * @param paint Specifies the shader to use if the texs array is non-null. Antialiasing is not
+     *            supported.
      */
     public void drawVertices(@NonNull VertexMode mode, int vertexCount, @NonNull float[] verts,
             int vertOffset, @Nullable float[] texs, int texOffset, @Nullable int[] colors,

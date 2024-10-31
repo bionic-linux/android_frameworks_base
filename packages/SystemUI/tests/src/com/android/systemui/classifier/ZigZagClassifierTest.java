@@ -20,8 +20,8 @@ import static com.android.systemui.classifier.Classifier.BRIGHTNESS_SLIDER;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import android.testing.AndroidTestingRunner;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
 import com.android.systemui.util.DeviceConfigProxyFake;
@@ -34,7 +34,7 @@ import org.junit.runner.RunWith;
 import java.util.Random;
 
 @SmallTest
-@RunWith(AndroidTestingRunner.class)
+@RunWith(AndroidJUnit4.class)
 public class ZigZagClassifierTest extends ClassifierTest {
 
     private FalsingClassifier mClassifier;
@@ -64,6 +64,15 @@ public class ZigZagClassifierTest extends ClassifierTest {
         appendMoveEvent(0, 0);
         appendMoveEvent(0, 100);
         appendMoveEvent(0, 200);
+        assertThat(mClassifier.classifyGesture(0, 0.5, 1).isFalse()).isFalse();
+    }
+
+    @Test
+    public void testPass_dropClosingUpEvent() {
+        appendMoveEvent(0, 0);
+        appendMoveEvent(0, 100);
+        appendMoveEvent(0, 200);
+        appendUpEvent(0, 180); // this event would push us over the maxDevianceY
         assertThat(mClassifier.classifyGesture(0, 0.5, 1).isFalse()).isFalse();
     }
 

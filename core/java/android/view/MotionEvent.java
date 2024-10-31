@@ -16,13 +16,24 @@
 
 package android.view;
 
+import static android.os.IInputConstants.INPUT_EVENT_FLAG_CANCELED;
+import static android.os.IInputConstants.MOTION_EVENT_FLAG_HOVER_EXIT_PENDING;
 import static android.os.IInputConstants.INPUT_EVENT_FLAG_IS_ACCESSIBILITY_EVENT;
+import static android.os.IInputConstants.MOTION_EVENT_FLAG_IS_GENERATED_GESTURE;
+import static android.os.IInputConstants.MOTION_EVENT_FLAG_NO_FOCUS_CHANGE;
+import static android.os.IInputConstants.INPUT_EVENT_FLAG_TAINTED;
+import static android.os.IInputConstants.MOTION_EVENT_FLAG_TARGET_ACCESSIBILITY_FOCUS;
+import static android.os.IInputConstants.MOTION_EVENT_FLAG_WINDOW_IS_OBSCURED;
+import static android.os.IInputConstants.MOTION_EVENT_FLAG_WINDOW_IS_PARTIALLY_OBSCURED;
 import static android.view.Display.DEFAULT_DISPLAY;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
+import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.graphics.Matrix;
@@ -33,10 +44,13 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.android.hardware.input.Flags;
+
 import dalvik.annotation.optimization.CriticalNative;
 import dalvik.annotation.optimization.FastNative;
 
 import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Objects;
 
 /**
@@ -432,23 +446,42 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     @Deprecated
     public static final int ACTION_POINTER_ID_SHIFT = 8;
 
-    /**
-     * This flag indicates that the window that received this motion event is partly
-     * or wholly obscured by another visible window above it. This flag is set to true
-     * if the event directly passed through the obscured area.
-     *
-     * A security sensitive application can check this flag to identify situations in which
-     * a malicious application may have covered up part of its content for the purpose
-     * of misleading the user or hijacking touches.  An appropriate response might be
-     * to drop the suspect touches or to take additional precautions to confirm the user's
-     * actual intent.
-     */
-    public static final int FLAG_WINDOW_IS_OBSCURED = 0x1;
+    /** @hide */
+    @IntDef(prefix = { "ACTION_" }, value = {
+            ACTION_DOWN,
+            ACTION_UP,
+            ACTION_MOVE,
+            ACTION_CANCEL,
+            ACTION_OUTSIDE,
+            ACTION_POINTER_DOWN,
+            ACTION_POINTER_UP,
+            ACTION_HOVER_MOVE,
+            ACTION_SCROLL,
+            ACTION_HOVER_ENTER,
+            ACTION_HOVER_EXIT,
+            ACTION_BUTTON_PRESS,
+            ACTION_BUTTON_RELEASE,
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    @interface ActionMasked {}
 
     /**
      * This flag indicates that the window that received this motion event is partly
-     * or wholly obscured by another visible window above it. This flag is set to true
-     * even if the event did not directly pass through the obscured area.
+     * or wholly obscured by another visible window above it and the event directly passed through
+     * the obscured area.
+     *
+     * A security sensitive application can check this flag to identify situations in which
+     * a malicious application may have covered up part of its content for the purpose
+     * of misleading the user or hijacking touches.  An appropriate response might be
+     * to drop the suspect touches or to take additional precautions to confirm the user's
+     * actual intent.
+     */
+    public static final int FLAG_WINDOW_IS_OBSCURED = MOTION_EVENT_FLAG_WINDOW_IS_OBSCURED;
+
+    /**
+     * This flag indicates that the window that received this motion event is partly
+     * or wholly obscured by another visible window above it and the event did not directly pass
+     * through the obscured area.
      *
      * A security sensitive application can check this flag to identify situations in which
      * a malicious application may have covered up part of its content for the purpose
@@ -456,10 +489,11 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * to drop the suspect touches or to take additional precautions to confirm the user's
      * actual intent.
      *
-     * Unlike FLAG_WINDOW_IS_OBSCURED, this is true even if the window that received this event is
+     * Unlike FLAG_WINDOW_IS_OBSCURED, this is only true if the window that received this event is
      * obstructed in areas other than the touched location.
      */
-    public static final int FLAG_WINDOW_IS_PARTIALLY_OBSCURED = 0x2;
+    public static final int FLAG_WINDOW_IS_PARTIALLY_OBSCURED =
+            MOTION_EVENT_FLAG_WINDOW_IS_PARTIALLY_OBSCURED;
 
     /**
      * This private flag is only set on {@link #ACTION_HOVER_MOVE} events and indicates that
@@ -467,7 +501,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * prevent generating redundant {@link #ACTION_HOVER_ENTER} events.
      * @hide
      */
-    public static final int FLAG_HOVER_EXIT_PENDING = 0x4;
+    public static final int FLAG_HOVER_EXIT_PENDING = MOTION_EVENT_FLAG_HOVER_EXIT_PENDING;
 
     /**
      * This flag indicates that the event has been generated by a gesture generator. It
@@ -475,15 +509,20 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      *
      * @hide
      */
-    public static final int FLAG_IS_GENERATED_GESTURE = 0x8;
+    public static final int FLAG_IS_GENERATED_GESTURE = MOTION_EVENT_FLAG_IS_GENERATED_GESTURE;
 
     /**
-     * This flag associated with {@link #ACTION_POINTER_UP}, this indicates that the pointer
-     * has been canceled. Typically this is used for palm event when the user has accidental
-     * touches.
-     * @hide
+     * This flag is only set for events with {@link #ACTION_POINTER_UP} and {@link #ACTION_CANCEL}.
+     * It indicates that the pointer going up was an unintentional user touch. When FLAG_CANCELED
+     * is set, the typical actions that occur in response for a pointer going up (such as click
+     * handlers, end of drawing) should be aborted. This flag is typically set when the user was
+     * accidentally touching the screen, such as by gripping the device, or placing the palm on the
+     * screen.
+     *
+     * @see #ACTION_POINTER_UP
+     * @see #ACTION_CANCEL
      */
-    public static final int FLAG_CANCELED = 0x20;
+    public static final int FLAG_CANCELED = INPUT_EVENT_FLAG_CANCELED;
 
     /**
      * This flag indicates that the event will not cause a focus change if it is directed to an
@@ -492,7 +531,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * window into focus.
      * @hide
      */
-    public static final int FLAG_NO_FOCUS_CHANGE = 0x40;
+    public static final int FLAG_NO_FOCUS_CHANGE = MOTION_EVENT_FLAG_NO_FOCUS_CHANGE;
 
     /**
      * This flag indicates that this event was modified by or generated from an accessibility
@@ -511,7 +550,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * @see #isTainted
      * @see #setTainted
      */
-    public static final int FLAG_TAINTED = 0x80000000;
+    public static final int FLAG_TAINTED = INPUT_EVENT_FLAG_TAINTED;
 
     /**
      * Private flag indicating that this event was synthesized by the system and should be delivered
@@ -526,7 +565,23 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * @see #isTargetAccessibilityFocus()
      * @see #setTargetAccessibilityFocus(boolean)
      */
-    public static final int FLAG_TARGET_ACCESSIBILITY_FOCUS = 0x40000000;
+    public static final int FLAG_TARGET_ACCESSIBILITY_FOCUS =
+            MOTION_EVENT_FLAG_TARGET_ACCESSIBILITY_FOCUS;
+
+    /** @hide */
+    @IntDef(flag = true, prefix = { "FLAG_" }, value = {
+            FLAG_WINDOW_IS_OBSCURED,
+            FLAG_WINDOW_IS_PARTIALLY_OBSCURED,
+            FLAG_HOVER_EXIT_PENDING,
+            FLAG_IS_GENERATED_GESTURE,
+            FLAG_CANCELED,
+            FLAG_NO_FOCUS_CHANGE,
+            FLAG_IS_ACCESSIBILITY_EVENT,
+            FLAG_TAINTED,
+            FLAG_TARGET_ACCESSIBILITY_FOCUS,
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    @interface Flag {}
 
     /**
      * Flag indicating the motion event intersected the top edge of the screen.
@@ -627,7 +682,8 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * <li>For a touch screen or touch pad, reports the approximate size of the contact area in
      * relation to the maximum detectable size for the device.  The value is normalized
      * to a range from 0 (smallest detectable size) to 1 (largest detectable size),
-     * although it is not a linear scale.  This value is of limited use.
+     * although it is not a linear scale.  The value of size can be used to
+     * determine fat touch events.
      * To obtain calibrated size information, use
      * {@link #AXIS_TOUCH_MAJOR} or {@link #AXIS_TOOL_MAJOR}.
      * </ul>
@@ -1267,9 +1323,83 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      */
     public static final int AXIS_GENERIC_16 = 47;
 
+    /**
+     * Axis constant: X gesture offset axis of a motion event.
+     * <p>
+     * <ul>
+     * <li>For a touch pad, reports the distance that a swipe gesture has moved in the X axis, as a
+     * proportion of the touch pad's size. For example, if a touch pad is 1000 units wide, and a
+     * swipe gesture starts at X = 500 then moves to X = 400, this axis would have a value of
+     * -0.1.
+     * </ul>
+     * These values are relative to the state from the last event, not accumulated, so developers
+     * should make sure to process this axis value for all batched historical events.
+     * <p>
+     * This axis is only set on the first pointer in a motion event.
+     */
+    public static final int AXIS_GESTURE_X_OFFSET = 48;
+
+    /**
+     * Axis constant: Y gesture offset axis of a motion event.
+     *
+     * The same as {@link #AXIS_GESTURE_X_OFFSET}, but for the Y axis.
+     */
+    public static final int AXIS_GESTURE_Y_OFFSET = 49;
+
+    /**
+     * Axis constant: X scroll distance axis of a motion event.
+     * <p>
+     * <ul>
+     * <li>For a touch pad, reports the distance that should be scrolled in the X axis as a result
+     * of the user's two-finger scroll gesture, in display pixels.
+     * </ul>
+     * These values are relative to the state from the last event, not accumulated, so developers
+     * should make sure to process this axis value for all batched historical events.
+     * <p>
+     * This axis is only set on the first pointer in a motion event.
+     */
+    public static final int AXIS_GESTURE_SCROLL_X_DISTANCE = 50;
+
+    /**
+     * Axis constant: Y scroll distance axis of a motion event.
+     *
+     * The same as {@link #AXIS_GESTURE_SCROLL_X_DISTANCE}, but for the Y axis.
+     */
+    public static final int AXIS_GESTURE_SCROLL_Y_DISTANCE = 51;
+
+    /**
+     * Axis constant: pinch scale factor of a motion event.
+     * <p>
+     * <ul>
+     * <li>For a touch pad, reports the change in distance between the fingers when the user is
+     * making a pinch gesture, as a proportion of the previous distance. For example, if the fingers
+     * were 50 units apart and are now 52 units apart, the scale factor would be 1.04.
+     * </ul>
+     * These values are relative to the state from the last event, not accumulated, so developers
+     * should make sure to process this axis value for all batched historical events.
+     * <p>
+     * This axis is only set on the first pointer in a motion event.
+     */
+    public static final int AXIS_GESTURE_PINCH_SCALE_FACTOR = 52;
+
+    /**
+     * Axis constant: the number of fingers being used in a multi-finger swipe gesture.
+     * <p>
+     * <ul>
+     * <li>For a touch pad, reports the number of fingers being used in a multi-finger swipe gesture
+     * (with CLASSIFICATION_MULTI_FINGER_SWIPE).
+     * </ul>
+     * <p>
+     * Since CLASSIFICATION_MULTI_FINGER_SWIPE is a hidden API, so is this axis. It is only set on
+     * the first pointer in a motion event.
+     * @hide
+     */
+    public static final int AXIS_GESTURE_SWIPE_FINGER_COUNT = 53;
+
     // NOTE: If you add a new axis here you must also add it to:
-    //  native/include/android/input.h
-    //  frameworks/base/include/ui/KeycodeLabels.h
+    //  frameworks/native/include/android/input.h
+    //  frameworks/native/libs/input/InputEventLabels.cpp
+    //  cts/tests/tests/view/src/android/view/cts/MotionEventTest.java (testAxisFromToString)
 
     // Symbolic names of all axes.
     private static final SparseArray<String> AXIS_SYMBOLIC_NAMES = new SparseArray<String>();
@@ -1320,7 +1450,70 @@ public final class MotionEvent extends InputEvent implements Parcelable {
         names.append(AXIS_GENERIC_14, "AXIS_GENERIC_14");
         names.append(AXIS_GENERIC_15, "AXIS_GENERIC_15");
         names.append(AXIS_GENERIC_16, "AXIS_GENERIC_16");
+        names.append(AXIS_GESTURE_X_OFFSET, "AXIS_GESTURE_X_OFFSET");
+        names.append(AXIS_GESTURE_Y_OFFSET, "AXIS_GESTURE_Y_OFFSET");
+        names.append(AXIS_GESTURE_SCROLL_X_DISTANCE, "AXIS_GESTURE_SCROLL_X_DISTANCE");
+        names.append(AXIS_GESTURE_SCROLL_Y_DISTANCE, "AXIS_GESTURE_SCROLL_Y_DISTANCE");
+        names.append(AXIS_GESTURE_PINCH_SCALE_FACTOR, "AXIS_GESTURE_PINCH_SCALE_FACTOR");
+        names.append(AXIS_GESTURE_SWIPE_FINGER_COUNT, "AXIS_GESTURE_SWIPE_FINGER_COUNT");
     }
+
+    /** @hide */
+    @IntDef(prefix = { "AXIS_" }, value = {
+            AXIS_X,
+            AXIS_Y,
+            AXIS_PRESSURE,
+            AXIS_SIZE,
+            AXIS_TOUCH_MAJOR,
+            AXIS_TOUCH_MINOR,
+            AXIS_TOOL_MAJOR,
+            AXIS_TOOL_MINOR,
+            AXIS_ORIENTATION,
+            AXIS_VSCROLL,
+            AXIS_HSCROLL,
+            AXIS_Z,
+            AXIS_RX,
+            AXIS_RY,
+            AXIS_RZ,
+            AXIS_HAT_X,
+            AXIS_HAT_Y,
+            AXIS_LTRIGGER,
+            AXIS_RTRIGGER,
+            AXIS_THROTTLE,
+            AXIS_RUDDER,
+            AXIS_WHEEL,
+            AXIS_GAS,
+            AXIS_BRAKE,
+            AXIS_DISTANCE,
+            AXIS_TILT,
+            AXIS_SCROLL,
+            AXIS_RELATIVE_X,
+            AXIS_RELATIVE_Y,
+            AXIS_GENERIC_1,
+            AXIS_GENERIC_2,
+            AXIS_GENERIC_3,
+            AXIS_GENERIC_4,
+            AXIS_GENERIC_5,
+            AXIS_GENERIC_6,
+            AXIS_GENERIC_7,
+            AXIS_GENERIC_8,
+            AXIS_GENERIC_9,
+            AXIS_GENERIC_10,
+            AXIS_GENERIC_11,
+            AXIS_GENERIC_12,
+            AXIS_GENERIC_13,
+            AXIS_GENERIC_14,
+            AXIS_GENERIC_15,
+            AXIS_GENERIC_16,
+            AXIS_GESTURE_X_OFFSET,
+            AXIS_GESTURE_Y_OFFSET,
+            AXIS_GESTURE_SCROLL_X_DISTANCE,
+            AXIS_GESTURE_SCROLL_Y_DISTANCE,
+            AXIS_GESTURE_PINCH_SCALE_FACTOR,
+            AXIS_GESTURE_SWIPE_FINGER_COUNT,
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    @interface Axis {}
 
     /**
      * Button constant: Primary button (left mouse button).
@@ -1422,6 +1615,19 @@ public final class MotionEvent extends InputEvent implements Parcelable {
         "0x80000000",
     };
 
+    /** @hide */
+    @IntDef(flag = true, prefix = { "BUTTON_" }, value = {
+            BUTTON_PRIMARY,
+            BUTTON_SECONDARY,
+            BUTTON_TERTIARY,
+            BUTTON_BACK,
+            BUTTON_FORWARD,
+            BUTTON_STYLUS_PRIMARY,
+            BUTTON_STYLUS_SECONDARY,
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    @interface Button {}
+
     /**
      * Classification constant: None.
      *
@@ -1452,10 +1658,43 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      */
     public static final int CLASSIFICATION_DEEP_PRESS = 2;
 
+    /**
+     * Classification constant: touchpad scroll.
+     *
+     * The current event stream represents the user scrolling with two fingers on a touchpad.
+     *
+     * @see #getClassification
+     */
+    public static final int CLASSIFICATION_TWO_FINGER_SWIPE = 3;
+
+    /**
+     * Classification constant: multi-finger swipe.
+     *
+     * The current event stream represents the user swiping with three or more fingers on a
+     * touchpad. Unlike two-finger swipes, these are only to be handled by the system UI, which is
+     * why they have a separate constant from two-finger swipes.
+     *
+     * @see #getClassification
+     * @hide
+     */
+    public static final int CLASSIFICATION_MULTI_FINGER_SWIPE = 4;
+
+    /**
+     * Classification constant: touchpad pinch.
+     *
+     * The current event stream represents the user pinching with two fingers on a touchpad. The
+     * gesture is centered around the current cursor position.
+     *
+     * @see #getClassification
+     */
+    public static final int CLASSIFICATION_PINCH = 5;
+
     /** @hide */
     @Retention(SOURCE)
     @IntDef(prefix = { "CLASSIFICATION" }, value = {
-            CLASSIFICATION_NONE, CLASSIFICATION_AMBIGUOUS_GESTURE, CLASSIFICATION_DEEP_PRESS})
+            CLASSIFICATION_NONE, CLASSIFICATION_AMBIGUOUS_GESTURE, CLASSIFICATION_DEEP_PRESS,
+            CLASSIFICATION_TWO_FINGER_SWIPE, CLASSIFICATION_MULTI_FINGER_SWIPE,
+            CLASSIFICATION_PINCH})
     public @interface Classification {};
 
     /**
@@ -1494,6 +1733,22 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * @see #getToolType
      */
     public static final int TOOL_TYPE_ERASER = 4;
+
+    /**
+     * Tool type constant: The tool is a palm and should be rejected.
+     *
+     * @see #getToolType
+     *
+     * @hide
+     */
+    public static final int TOOL_TYPE_PALM = 5;
+
+    /** @hide */
+    @Retention(SOURCE)
+    @IntDef(prefix = { "TOOL_TYPE_" }, value = {
+            TOOL_TYPE_UNKNOWN, TOOL_TYPE_FINGER, TOOL_TYPE_STYLUS, TOOL_TYPE_MOUSE,
+            TOOL_TYPE_ERASER, TOOL_TYPE_PALM})
+    public @interface ToolType {};
 
     // NOTE: If you add a new tool type here you must also add it to:
     //  native/include/android/input.h
@@ -1594,6 +1849,8 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     private static native long nativeCopy(long destNativePtr, long sourceNativePtr,
             boolean keepHistory);
     @CriticalNative
+    private static native long nativeSplit(long destNativePtr, long sourceNativePtr, int idBits);
+    @CriticalNative
     private static native int nativeGetId(long nativePtr);
     @CriticalNative
     private static native int nativeGetDeviceId(long nativePtr);
@@ -1634,9 +1891,9 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     @CriticalNative
     private static native void nativeOffsetLocation(long nativePtr, float deltaX, float deltaY);
     @CriticalNative
-    private static native float nativeGetXOffset(long nativePtr);
+    private static native float nativeGetRawXOffset(long nativePtr);
     @CriticalNative
-    private static native float nativeGetYOffset(long nativePtr);
+    private static native float nativeGetRawYOffset(long nativePtr);
     @CriticalNative
     private static native float nativeGetXPrecision(long nativePtr);
     @CriticalNative
@@ -1662,6 +1919,9 @@ public final class MotionEvent extends InputEvent implements Parcelable {
 
     @CriticalNative
     private static native void nativeScale(long nativePtr, float scale);
+
+    @CriticalNative
+    private static native int nativeGetSurfaceRotation(long nativePtr);
 
     private MotionEvent() {
     }
@@ -1700,7 +1960,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      *
      * @param downTime The time (in ms) when the user originally pressed down to start
      * a stream of position events.  This must be obtained from {@link SystemClock#uptimeMillis()}.
-     * @param eventTime The the time (in ms) when this specific event was generated.  This
+     * @param eventTime The time (in ms) when this specific event was generated.  This
      * must be obtained from {@link SystemClock#uptimeMillis()}.
      * @param action The kind of action being performed, such as {@link #ACTION_DOWN}.
      * @param pointerCount The number of pointers that will be in this event.
@@ -1714,7 +1974,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * @param buttonState The state of buttons that are pressed.
      * @param xPrecision The precision of the X coordinate being reported.
      * @param yPrecision The precision of the Y coordinate being reported.
-     * @param deviceId The id for the device that this event came from.  An id of
+     * @param deviceId The ID for the device that this event came from.  An ID of
      * zero indicates that the event didn't come from a physical device; other
      * numbers are arbitrary and you shouldn't depend on the values.
      * @param edgeFlags A bitfield indicating which edges, if any, were touched by this
@@ -1722,18 +1982,19 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * @param source The source of this event.
      * @param displayId The display ID associated with this event.
      * @param flags The motion event flags.
-     * @hide
+     * @param classification The classification to give this event.
      */
-    static public MotionEvent obtain(long downTime, long eventTime,
-            int action, int pointerCount, PointerProperties[] pointerProperties,
-            PointerCoords[] pointerCoords, int metaState, int buttonState,
-            float xPrecision, float yPrecision, int deviceId,
-            int edgeFlags, int source, int displayId, int flags) {
+    public static @Nullable MotionEvent obtain(long downTime, long eventTime, int action,
+            int pointerCount,
+            @SuppressLint("ArrayReturn") @NonNull PointerProperties[] pointerProperties,
+            @SuppressLint("ArrayReturn") @NonNull PointerCoords[] pointerCoords, int metaState,
+            int buttonState, float xPrecision, float yPrecision, int deviceId, int edgeFlags,
+            int source, int displayId, int flags, @Classification int classification) {
         MotionEvent ev = obtain();
         final boolean success = ev.initialize(deviceId, source, displayId, action, flags, edgeFlags,
-                metaState, buttonState, CLASSIFICATION_NONE, 0, 0, xPrecision, yPrecision,
-                downTime * NS_PER_MS, eventTime * NS_PER_MS,
-                pointerCount, pointerProperties, pointerCoords);
+                metaState, buttonState, classification, 0, 0, xPrecision, yPrecision,
+                downTime * NS_PER_MS, eventTime * NS_PER_MS, pointerCount, pointerProperties,
+                pointerCoords);
         if (!success) {
             Log.e(TAG, "Could not initialize MotionEvent");
             ev.recycle();
@@ -1748,7 +2009,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      *
      * @param downTime The time (in ms) when the user originally pressed down to start
      * a stream of position events.  This must be obtained from {@link SystemClock#uptimeMillis()}.
-     * @param eventTime The the time (in ms) when this specific event was generated.  This
+     * @param eventTime The time (in ms) when this specific event was generated.  This
      * must be obtained from {@link SystemClock#uptimeMillis()}.
      * @param action The kind of action being performed, such as {@link #ACTION_DOWN}.
      * @param pointerCount The number of pointers that will be in this event.
@@ -1762,7 +2023,47 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * @param buttonState The state of buttons that are pressed.
      * @param xPrecision The precision of the X coordinate being reported.
      * @param yPrecision The precision of the Y coordinate being reported.
-     * @param deviceId The id for the device that this event came from.  An id of
+     * @param deviceId The ID for the device that this event came from.  An ID of
+     * zero indicates that the event didn't come from a physical device; other
+     * numbers are arbitrary and you shouldn't depend on the values.
+     * @param edgeFlags A bitfield indicating which edges, if any, were touched by this
+     * MotionEvent.
+     * @param source The source of this event.
+     * @param displayId The display ID associated with this event.
+     * @param flags The motion event flags.
+     * @hide
+     */
+    public static MotionEvent obtain(long downTime, long eventTime,
+            int action, int pointerCount, PointerProperties[] pointerProperties,
+            PointerCoords[] pointerCoords, int metaState, int buttonState,
+            float xPrecision, float yPrecision, int deviceId,
+            int edgeFlags, int source, int displayId, int flags) {
+        return obtain(downTime, eventTime, action, pointerCount, pointerProperties, pointerCoords,
+                metaState, buttonState, xPrecision, yPrecision, deviceId, edgeFlags, source,
+                displayId, flags, CLASSIFICATION_NONE);
+    }
+
+    /**
+     * Create a new MotionEvent, filling in all of the basic values that
+     * define the motion.
+     *
+     * @param downTime The time (in ms) when the user originally pressed down to start
+     * a stream of position events.  This must be obtained from {@link SystemClock#uptimeMillis()}.
+     * @param eventTime The time (in ms) when this specific event was generated.  This
+     * must be obtained from {@link SystemClock#uptimeMillis()}.
+     * @param action The kind of action being performed, such as {@link #ACTION_DOWN}.
+     * @param pointerCount The number of pointers that will be in this event.
+     * @param pointerProperties An array of <em>pointerCount</em> values providing
+     * a {@link PointerProperties} property object for each pointer, which must
+     * include the pointer identifier.
+     * @param pointerCoords An array of <em>pointerCount</em> values providing
+     * a {@link PointerCoords} coordinate object for each pointer.
+     * @param metaState The state of any meta / modifier keys that were in effect when
+     * the event was generated.
+     * @param buttonState The state of buttons that are pressed.
+     * @param xPrecision The precision of the X coordinate being reported.
+     * @param yPrecision The precision of the Y coordinate being reported.
+     * @param deviceId The ID for the device that this event came from.  An ID of
      * zero indicates that the event didn't come from a physical device; other
      * numbers are arbitrary and you shouldn't depend on the values.
      * @param edgeFlags A bitfield indicating which edges, if any, were touched by this
@@ -1786,7 +2087,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      *
      * @param downTime The time (in ms) when the user originally pressed down to start
      * a stream of position events.  This must be obtained from {@link SystemClock#uptimeMillis()}.
-     * @param eventTime The the time (in ms) when this specific event was generated.  This
+     * @param eventTime The time (in ms) when this specific event was generated.  This
      * must be obtained from {@link SystemClock#uptimeMillis()}.
      * @param action The kind of action being performed, such as {@link #ACTION_DOWN}.
      * @param pointerCount The number of pointers that will be in this event.
@@ -1798,7 +2099,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * the event was generated.
      * @param xPrecision The precision of the X coordinate being reported.
      * @param yPrecision The precision of the Y coordinate being reported.
-     * @param deviceId The id for the device that this event came from.  An id of
+     * @param deviceId The ID for the device that this event came from.  An ID of
      * zero indicates that the event didn't come from a physical device; other
      * numbers are arbitrary and you shouldn't depend on the values.
      * @param edgeFlags A bitfield indicating which edges, if any, were touched by this
@@ -1833,7 +2134,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      *
      * @param downTime The time (in ms) when the user originally pressed down to start
      * a stream of position events.  This must be obtained from {@link SystemClock#uptimeMillis()}.
-     * @param eventTime  The the time (in ms) when this specific event was generated.  This
+     * @param eventTime The time (in ms) when this specific event was generated.  This
      * must be obtained from {@link SystemClock#uptimeMillis()}.
      * @param action The kind of action being performed, such as {@link #ACTION_DOWN}.
      * @param x The X coordinate of this event.
@@ -1850,7 +2151,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * the event was generated.
      * @param xPrecision The precision of the X coordinate being reported.
      * @param yPrecision The precision of the Y coordinate being reported.
-     * @param deviceId The id for the device that this event came from.  An id of
+     * @param deviceId The ID for the device that this event came from.  An ID of
      * zero indicates that the event didn't come from a physical device; other
      * numbers are arbitrary and you shouldn't depend on the values.
      * @param edgeFlags A bitfield indicating which edges, if any, were touched by this
@@ -1860,7 +2161,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
             float x, float y, float pressure, float size, int metaState,
             float xPrecision, float yPrecision, int deviceId, int edgeFlags) {
         return obtain(downTime, eventTime, action, x, y, pressure, size, metaState,
-                xPrecision, yPrecision, deviceId, edgeFlags, InputDevice.SOURCE_UNKNOWN,
+                xPrecision, yPrecision, deviceId, edgeFlags, InputDevice.SOURCE_CLASS_POINTER,
                 DEFAULT_DISPLAY);
     }
 
@@ -1870,7 +2171,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      *
      * @param downTime The time (in ms) when the user originally pressed down to start
      * a stream of position events.  This must be obtained from {@link SystemClock#uptimeMillis()}.
-     * @param eventTime  The the time (in ms) when this specific event was generated.  This
+     * @param eventTime The time (in ms) when this specific event was generated.  This
      * must be obtained from {@link SystemClock#uptimeMillis()}.
      * @param action The kind of action being performed, such as {@link #ACTION_DOWN}.
      * @param x The X coordinate of this event.
@@ -1887,7 +2188,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * the event was generated.
      * @param xPrecision The precision of the X coordinate being reported.
      * @param yPrecision The precision of the Y coordinate being reported.
-     * @param deviceId The id for the device that this event came from.  An id of
+     * @param deviceId The ID for the device that this event came from.  An ID of
      * zero indicates that the event didn't come from a physical device; other
      * numbers are arbitrary and you shouldn't depend on the values.
      * @param source The source of this event.
@@ -1929,7 +2230,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      *
      * @param downTime The time (in ms) when the user originally pressed down to start
      * a stream of position events.  This must be obtained from {@link SystemClock#uptimeMillis()}.
-     * @param eventTime  The the time (in ms) when this specific event was generated.  This
+     * @param eventTime The time (in ms) when this specific event was generated.  This
      * must be obtained from {@link SystemClock#uptimeMillis()}.
      * @param action The kind of action being performed, such as {@link #ACTION_DOWN}.
      * @param pointerCount The number of pointers that are active in this event.
@@ -1947,7 +2248,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * the event was generated.
      * @param xPrecision The precision of the X coordinate being reported.
      * @param yPrecision The precision of the Y coordinate being reported.
-     * @param deviceId The id for the device that this event came from.  An id of
+     * @param deviceId The ID for the device that this event came from.  An ID of
      * zero indicates that the event didn't come from a physical device; other
      * numbers are arbitrary and you shouldn't depend on the values.
      * @param edgeFlags A bitfield indicating which edges, if any, were touched by this
@@ -1971,7 +2272,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      *
      * @param downTime The time (in ms) when the user originally pressed down to start
      * a stream of position events.  This must be obtained from {@link SystemClock#uptimeMillis()}.
-     * @param eventTime  The the time (in ms) when this specific event was generated.  This
+     * @param eventTime The time (in ms) when this specific event was generated.  This
      * must be obtained from {@link SystemClock#uptimeMillis()}.
      * @param action The kind of action being performed, such as {@link #ACTION_DOWN}.
      * @param x The X coordinate of this event.
@@ -2017,6 +2318,9 @@ public final class MotionEvent extends InputEvent implements Parcelable {
             float xOffset, float yOffset, float xPrecision, float yPrecision,
             long downTimeNanos, long eventTimeNanos,
             int pointerCount, PointerProperties[] pointerIds, PointerCoords[] pointerCoords) {
+        if (action == ACTION_CANCEL) {
+            flags |= FLAG_CANCELED;
+        }
         mNativePtr = nativeInitialize(mNativePtr, deviceId, source, displayId, action, flags,
                 edgeFlags, metaState, buttonState, classification, xOffset, yOffset,
                 xPrecision, yPrecision, downTimeNanos, eventTimeNanos, pointerCount, pointerIds,
@@ -2099,6 +2403,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /** @hide */
+    @TestApi
     @Override
     public int getDisplayId() {
         return nativeGetDisplayId(mNativePtr);
@@ -2161,6 +2466,29 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
+     * Returns {@code true} if this motion event is from a stylus pointer.
+     * @hide
+     */
+    public boolean isStylusPointer() {
+        final int actionIndex = getActionIndex();
+        return isFromSource(InputDevice.SOURCE_STYLUS)
+                && (getToolType(actionIndex) == TOOL_TYPE_STYLUS
+                || getToolType(actionIndex) == TOOL_TYPE_ERASER);
+    }
+
+    /**
+     * Returns {@code true} if this motion event is a hover event, identified by it having an action
+     * of either {@link #ACTION_HOVER_ENTER}, {@link #ACTION_HOVER_MOVE} or
+     * {@link #ACTION_HOVER_EXIT}.
+     * @hide
+     */
+    public boolean isHoverEvent() {
+        return getActionMasked() == ACTION_HOVER_ENTER
+                || getActionMasked() == ACTION_HOVER_EXIT
+                || getActionMasked() == ACTION_HOVER_MOVE;
+    }
+
+    /**
      * Gets the motion event flags.
      *
      * @see #FLAG_WINDOW_IS_OBSCURED
@@ -2181,6 +2509,11 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     public final void setTainted(boolean tainted) {
         final int flags = getFlags();
         nativeSetFlags(mNativePtr, tainted ? flags | FLAG_TAINTED : flags & ~FLAG_TAINTED);
+    }
+
+    private void setCanceled(boolean canceled) {
+        final int flags = getFlags();
+        nativeSetFlags(mNativePtr, canceled ? flags | FLAG_CANCELED : flags & ~FLAG_CANCELED);
     }
 
     /** @hide */
@@ -2253,18 +2586,18 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * @return Returns the time this event occurred,
      * in the {@link android.os.SystemClock#uptimeMillis} time base but with
      * nanosecond precision.
-     *
-     * @hide
      */
     @Override
-    @UnsupportedAppUsage
-    public final long getEventTimeNano() {
+    public long getEventTimeNanos() {
         return nativeGetEventTimeNanos(mNativePtr, HISTORY_CURRENT);
     }
 
     /**
-     * {@link #getX(int)} for the first pointer index (may be an
-     * arbitrary pointer identifier).
+     * Equivalent to {@link #getX(int)} for pointer index 0 (regardless of the
+     * pointer identifier).
+     *
+     * @return The X coordinate of the first pointer index in the coordinate
+     *      space of the view that received this motion event.
      *
      * @see #AXIS_X
      */
@@ -2273,8 +2606,11 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
-     * {@link #getY(int)} for the first pointer index (may be an
-     * arbitrary pointer identifier).
+     * Equivalent to {@link #getY(int)} for pointer index 0 (regardless of the
+     * pointer identifier).
+     *
+     * @return The Y coordinate of the first pointer index in the coordinate
+     *      space of the view that received this motion event.
      *
      * @see #AXIS_Y
      */
@@ -2399,7 +2735,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * @see #TOOL_TYPE_STYLUS
      * @see #TOOL_TYPE_MOUSE
      */
-    public final int getToolType(int pointerIndex) {
+    public @ToolType int getToolType(int pointerIndex) {
         return nativeGetToolType(mNativePtr, pointerIndex);
     }
 
@@ -2416,13 +2752,20 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
-     * Returns the X coordinate of this event for the given pointer
-     * <em>index</em> (use {@link #getPointerId(int)} to find the pointer
-     * identifier for this index).
-     * Whole numbers are pixels; the
-     * value may have a fraction for input devices that are sub-pixel precise.
-     * @param pointerIndex Raw index of pointer to retrieve.  Value may be from 0
-     * (the first pointer that is down) to {@link #getPointerCount()}-1.
+     * Returns the X coordinate of the pointer referenced by
+     * {@code pointerIndex} for this motion event. The coordinate is in the
+     * coordinate space of the view that received this motion event.
+     *
+     * <p>Use {@link #getPointerId(int)} to get the pointer identifier for the
+     * pointer referenced by {@code pointerIndex}.
+     *
+     * @param pointerIndex Index of the pointer for which the X coordinate is
+     *      returned. May be a value in the range of 0 (the first pointer that
+     *      is down) to {@link #getPointerCount()} - 1.
+     * @return The X coordinate of the pointer referenced by
+     *      {@code pointerIndex} for this motion event. The unit is pixels. The
+     *      value may contain a fractional portion for devices that are subpixel
+     *      precise.
      *
      * @see #AXIS_X
      */
@@ -2431,13 +2774,20 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
-     * Returns the Y coordinate of this event for the given pointer
-     * <em>index</em> (use {@link #getPointerId(int)} to find the pointer
-     * identifier for this index).
-     * Whole numbers are pixels; the
-     * value may have a fraction for input devices that are sub-pixel precise.
-     * @param pointerIndex Raw index of pointer to retrieve.  Value may be from 0
-     * (the first pointer that is down) to {@link #getPointerCount()}-1.
+     * Returns the Y coordinate of the pointer referenced by
+     * {@code pointerIndex} for this motion event. The coordinate is in the
+     * coordinate space of the view that received this motion event.
+     *
+     * <p>Use {@link #getPointerId(int)} to get the pointer identifier for the
+     * pointer referenced by {@code pointerIndex}.
+     *
+     * @param pointerIndex Index of the pointer for which the Y coordinate is
+     *      returned. May be a value in the range of 0 (the first pointer that
+     *      is down) to {@link #getPointerCount()} - 1.
+     * @return The Y coordinate of the pointer referenced by
+     *      {@code pointerIndex} for this motion event. The unit is pixels. The
+     *      value may contain a fractional portion for devices that are subpixel
+     *      precise.
      *
      * @see #AXIS_Y
      */
@@ -2446,13 +2796,8 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
-     * Returns the current pressure of this event for the given pointer
-     * <em>index</em> (use {@link #getPointerId(int)} to find the pointer
-     * identifier for this index).
-     * The pressure generally
-     * ranges from 0 (no pressure at all) to 1 (normal pressure), however
-     * values higher than 1 may be generated depending on the calibration of
-     * the input device.
+     * Returns the value of {@link #AXIS_PRESSURE} for the given pointer <em>index</em>.
+     *
      * @param pointerIndex Raw index of pointer to retrieve.  Value may be from 0
      * (the first pointer that is down) to {@link #getPointerCount()}-1.
      *
@@ -2463,14 +2808,8 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
-     * Returns a scaled value of the approximate size for the given pointer
-     * <em>index</em> (use {@link #getPointerId(int)} to find the pointer
-     * identifier for this index).
-     * This represents some approximation of the area of the screen being
-     * pressed; the actual value in pixels corresponding to the
-     * touch is normalized with the device specific range of values
-     * and scaled to a value between 0 and 1. The value of size can be used to
-     * determine fat touch events.
+     * Returns the value of {@link #AXIS_SIZE} for the given pointer <em>index</em>.
+     *
      * @param pointerIndex Raw index of pointer to retrieve.  Value may be from 0
      * (the first pointer that is down) to {@link #getPointerCount()}-1.
      *
@@ -2481,10 +2820,8 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
-     * Returns the length of the major axis of an ellipse that describes the touch
-     * area at the point of contact for the given pointer
-     * <em>index</em> (use {@link #getPointerId(int)} to find the pointer
-     * identifier for this index).
+     * Returns the value of {@link #AXIS_TOUCH_MAJOR} for the given pointer <em>index</em>.
+     *
      * @param pointerIndex Raw index of pointer to retrieve.  Value may be from 0
      * (the first pointer that is down) to {@link #getPointerCount()}-1.
      *
@@ -2495,10 +2832,8 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
-     * Returns the length of the minor axis of an ellipse that describes the touch
-     * area at the point of contact for the given pointer
-     * <em>index</em> (use {@link #getPointerId(int)} to find the pointer
-     * identifier for this index).
+     * Returns the value of {@link #AXIS_TOUCH_MINOR} for the given pointer <em>index</em>.
+     *
      * @param pointerIndex Raw index of pointer to retrieve.  Value may be from 0
      * (the first pointer that is down) to {@link #getPointerCount()}-1.
      *
@@ -2509,12 +2844,8 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
-     * Returns the length of the major axis of an ellipse that describes the size of
-     * the approaching tool for the given pointer
-     * <em>index</em> (use {@link #getPointerId(int)} to find the pointer
-     * identifier for this index).
-     * The tool area represents the estimated size of the finger or pen that is
-     * touching the device independent of its actual touch area at the point of contact.
+     * Returns the value of {@link #AXIS_TOOL_MAJOR} for the given pointer <em>index</em>.
+     *
      * @param pointerIndex Raw index of pointer to retrieve.  Value may be from 0
      * (the first pointer that is down) to {@link #getPointerCount()}-1.
      *
@@ -2525,12 +2856,8 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
-     * Returns the length of the minor axis of an ellipse that describes the size of
-     * the approaching tool for the given pointer
-     * <em>index</em> (use {@link #getPointerId(int)} to find the pointer
-     * identifier for this index).
-     * The tool area represents the estimated size of the finger or pen that is
-     * touching the device independent of its actual touch area at the point of contact.
+     * Returns the value of {@link #AXIS_TOOL_MINOR} for the given pointer <em>index</em>.
+     *
      * @param pointerIndex Raw index of pointer to retrieve.  Value may be from 0
      * (the first pointer that is down) to {@link #getPointerCount()}-1.
      *
@@ -2541,15 +2868,8 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
-     * Returns the orientation of the touch area and tool area in radians clockwise from vertical
-     * for the given pointer <em>index</em> (use {@link #getPointerId(int)} to find the pointer
-     * identifier for this index).
-     * An angle of 0 radians indicates that the major axis of contact is oriented
-     * upwards, is perfectly circular or is of unknown orientation.  A positive angle
-     * indicates that the major axis of contact is oriented to the right.  A negative angle
-     * indicates that the major axis of contact is oriented to the left.
-     * The full range is from -PI/2 radians (finger pointing fully left) to PI/2 radians
-     * (finger pointing fully right).
+     * Returns the value of {@link #AXIS_ORIENTATION} for the given pointer <em>index</em>.
+     *
      * @param pointerIndex Raw index of pointer to retrieve.  Value may be from 0
      * (the first pointer that is down) to {@link #getPointerCount()}-1.
      *
@@ -2683,12 +3003,13 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
-     * Returns the original raw X coordinate of this event.  For touch
-     * events on the screen, this is the original location of the event
-     * on the screen, before it had been adjusted for the containing window
-     * and views.
+     * Equivalent to {@link #getRawX(int)} for pointer index 0 (regardless of
+     * the pointer identifier).
      *
-     * @see #getX(int)
+     * @return The X coordinate of the first pointer index in the coordinate
+     *      space of the device display.
+     *
+     * @see #getX()
      * @see #AXIS_X
      */
     public final float getRawX() {
@@ -2696,12 +3017,13 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
-     * Returns the original raw Y coordinate of this event.  For touch
-     * events on the screen, this is the original location of the event
-     * on the screen, before it had been adjusted for the containing window
-     * and views.
+     * Equivalent to {@link #getRawY(int)} for pointer index 0 (regardless of
+     * the pointer identifier).
      *
-     * @see #getY(int)
+     * @return The Y coordinate of the first pointer index in the coordinate
+     *      space of the device display.
+     *
+     * @see #getY()
      * @see #AXIS_Y
      */
     public final float getRawY() {
@@ -2709,13 +3031,38 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
-     * Returns the original raw X coordinate of this event.  For touch
-     * events on the screen, this is the original location of the event
-     * on the screen, before it had been adjusted for the containing window
-     * and views.
+     * Returns the X coordinate of the pointer referenced by
+     * {@code pointerIndex} for this motion event. The coordinate is in the
+     * coordinate space of the device display, irrespective of system
+     * decorations and whether or not the system is in multi-window mode. If the
+     * app spans multiple screens in a multiple-screen environment, the
+     * coordinate space includes all of the spanned screens.
      *
-     * @param pointerIndex Raw index of pointer to retrieve.  Value may be from 0
-     * (the first pointer that is down) to {@link #getPointerCount()}-1.
+     * <p>In multi-window mode, the coordinate space extends beyond the bounds
+     * of the app window to encompass the entire display area. For example, if
+     * the motion event occurs in the right-hand window of split-screen mode in
+     * landscape orientation, the left edge of the screen&mdash;not the left
+     * edge of the window&mdash;is the origin from which the X coordinate is
+     * calculated.
+     *
+     * <p>In multiple-screen scenarios, the coordinate space can span screens.
+     * For example, if the app is spanning both screens of a dual-screen device,
+     * and the motion event occurs on the right-hand screen, the X coordinate is
+     * calculated from the left edge of the left-hand screen to the point of the
+     * motion event on the right-hand screen. When the app is restricted to a
+     * single screen in a multiple-screen environment, the coordinate space
+     * includes only the screen on which the app is running.
+     *
+     * <p>Use {@link #getPointerId(int)} to get the pointer identifier for the
+     * pointer referenced by {@code pointerIndex}.
+     *
+     * @param pointerIndex Index of the pointer for which the X coordinate is
+     *      returned. May be a value in the range of 0 (the first pointer that
+     *      is down) to {@link #getPointerCount()} - 1.
+     * @return The X coordinate of the pointer referenced by
+     *      {@code pointerIndex} for this motion event. The unit is pixels. The
+     *      value may contain a fractional portion for devices that are subpixel
+     *      precise.
      *
      * @see #getX(int)
      * @see #AXIS_X
@@ -2725,13 +3072,38 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
-     * Returns the original raw Y coordinate of this event.  For touch
-     * events on the screen, this is the original location of the event
-     * on the screen, before it had been adjusted for the containing window
-     * and views.
+     * Returns the Y coordinate of the pointer referenced by
+     * {@code pointerIndex} for this motion event. The coordinate is in the
+     * coordinate space of the device display, irrespective of system
+     * decorations and whether or not the system is in multi-window mode. If the
+     * app spans multiple screens in a multiple-screen environment, the
+     * coordinate space includes all of the spanned screens.
      *
-     * @param pointerIndex Raw index of pointer to retrieve.  Value may be from 0
-     * (the first pointer that is down) to {@link #getPointerCount()}-1.
+     * <p>In multi-window mode, the coordinate space extends beyond the bounds
+     * of the app window to encompass the entire device screen. For example, if
+     * the motion event occurs in the lower window of split-screen mode in
+     * portrait orientation, the top edge of the screen&mdash;not the top edge
+     * of the window&mdash;is the origin from which the Y coordinate is
+     * determined.
+     *
+     * <p>In multiple-screen scenarios, the coordinate space can span screens.
+     * For example, if the app is spanning both screens of a dual-screen device
+     * that's rotated 90 degrees, and the motion event occurs on the lower
+     * screen, the Y coordinate is calculated from the top edge of the upper
+     * screen to the point of the motion event on the lower screen. When the app
+     * is restricted to a single screen in a multiple-screen environment, the
+     * coordinate space includes only the screen on which the app is running.
+     *
+     * <p>Use {@link #getPointerId(int)} to get the pointer identifier for the
+     * pointer referenced by {@code pointerIndex}.
+     *
+     * @param pointerIndex Index of the pointer for which the Y coordinate is
+     *      returned. May be a value in the range of 0 (the first pointer that
+     *      is down) to {@link #getPointerCount()} - 1.
+     * @return The Y coordinate of the pointer referenced by
+     *      {@code pointerIndex} for this motion event. The unit is pixels. The
+     *      value may contain a fractional portion for devices that are subpixel
+     *      precise.
      *
      * @see #getY(int)
      * @see #AXIS_Y
@@ -2848,10 +3220,8 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      *
      * @see #getHistorySize
      * @see #getEventTime
-     *
-     * @hide
      */
-    public final long getHistoricalEventTimeNano(int pos) {
+    public long getHistoricalEventTimeNanos(int pos) {
         return nativeGetEventTimeNanos(mNativePtr, pos);
     }
 
@@ -3239,6 +3609,14 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * Sets this event's action.
      */
     public final void setAction(int action) {
+        final int actionMasked = action & ACTION_MASK;
+        if (actionMasked == ACTION_CANCEL) {
+            setCanceled(true);
+        } else if (actionMasked == ACTION_POINTER_UP) {
+            // Do nothing - we don't know what the real intent here is
+        } else {
+            setCanceled(false);
+        }
         nativeSetAction(mNativePtr, action);
     }
 
@@ -3453,7 +3831,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
                     nativeGetAction(mNativePtr), nativeGetFlags(mNativePtr),
                     nativeGetEdgeFlags(mNativePtr), nativeGetMetaState(mNativePtr),
                     nativeGetButtonState(mNativePtr), nativeGetClassification(mNativePtr),
-                    nativeGetXOffset(mNativePtr), nativeGetYOffset(mNativePtr),
+                    nativeGetRawXOffset(mNativePtr), nativeGetRawYOffset(mNativePtr),
                     nativeGetXPrecision(mNativePtr), nativeGetYPrecision(mNativePtr),
                     nativeGetDownTimeNanos(mNativePtr),
                     nativeGetEventTimeNanos(mNativePtr, HISTORY_CURRENT),
@@ -3477,86 +3855,30 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
-     * Splits a motion event such that it includes only a subset of pointer ids.
+     * Splits a motion event such that it includes only a subset of pointer IDs.
+     * @param idBits the bitset indicating all of the pointer IDs from this motion event that should
+     *               be in the new split event. idBits must be a non-empty subset of the pointer IDs
+     *               contained in this event.
      * @hide
      */
+    // TODO(b/327503168): Pass downTime as a parameter to split.
     @UnsupportedAppUsage
+    @NonNull
     public final MotionEvent split(int idBits) {
-        MotionEvent ev = obtain();
-        synchronized (gSharedTempLock) {
-            final int oldPointerCount = nativeGetPointerCount(mNativePtr);
-            ensureSharedTempPointerCapacity(oldPointerCount);
-            final PointerProperties[] pp = gSharedTempPointerProperties;
-            final PointerCoords[] pc = gSharedTempPointerCoords;
-            final int[] map = gSharedTempPointerIndexMap;
-
-            final int oldAction = nativeGetAction(mNativePtr);
-            final int oldActionMasked = oldAction & ACTION_MASK;
-            final int oldActionPointerIndex = (oldAction & ACTION_POINTER_INDEX_MASK)
-                    >> ACTION_POINTER_INDEX_SHIFT;
-            int newActionPointerIndex = -1;
-            int newPointerCount = 0;
-            for (int i = 0; i < oldPointerCount; i++) {
-                nativeGetPointerProperties(mNativePtr, i, pp[newPointerCount]);
-                final int idBit = 1 << pp[newPointerCount].id;
-                if ((idBit & idBits) != 0) {
-                    if (i == oldActionPointerIndex) {
-                        newActionPointerIndex = newPointerCount;
-                    }
-                    map[newPointerCount] = i;
-                    newPointerCount += 1;
-                }
-            }
-
-            if (newPointerCount == 0) {
-                throw new IllegalArgumentException("idBits did not match any ids in the event");
-            }
-
-            final int newAction;
-            if (oldActionMasked == ACTION_POINTER_DOWN || oldActionMasked == ACTION_POINTER_UP) {
-                if (newActionPointerIndex < 0) {
-                    // An unrelated pointer changed.
-                    newAction = ACTION_MOVE;
-                } else if (newPointerCount == 1) {
-                    // The first/last pointer went down/up.
-                    newAction = oldActionMasked == ACTION_POINTER_DOWN
-                            ? ACTION_DOWN
-                            : (getFlags() & FLAG_CANCELED) == 0 ? ACTION_UP : ACTION_CANCEL;
-                } else {
-                    // A secondary pointer went down/up.
-                    newAction = oldActionMasked
-                            | (newActionPointerIndex << ACTION_POINTER_INDEX_SHIFT);
-                }
-            } else {
-                // Simple up/down/cancel/move or other motion action.
-                newAction = oldAction;
-            }
-
-            final int historySize = nativeGetHistorySize(mNativePtr);
-            for (int h = 0; h <= historySize; h++) {
-                final int historyPos = h == historySize ? HISTORY_CURRENT : h;
-
-                for (int i = 0; i < newPointerCount; i++) {
-                    nativeGetPointerCoords(mNativePtr, map[i], historyPos, pc[i]);
-                }
-
-                final long eventTimeNanos = nativeGetEventTimeNanos(mNativePtr, historyPos);
-                if (h == 0) {
-                    ev.initialize(nativeGetDeviceId(mNativePtr), nativeGetSource(mNativePtr),
-                            nativeGetDisplayId(mNativePtr),
-                            newAction, nativeGetFlags(mNativePtr),
-                            nativeGetEdgeFlags(mNativePtr), nativeGetMetaState(mNativePtr),
-                            nativeGetButtonState(mNativePtr), nativeGetClassification(mNativePtr),
-                            nativeGetXOffset(mNativePtr), nativeGetYOffset(mNativePtr),
-                            nativeGetXPrecision(mNativePtr), nativeGetYPrecision(mNativePtr),
-                            nativeGetDownTimeNanos(mNativePtr), eventTimeNanos,
-                            newPointerCount, pp, pc);
-                } else {
-                    nativeAddBatch(ev.mNativePtr, eventTimeNanos, pc, 0);
-                }
-            }
-            return ev;
+        if (idBits == 0) {
+            throw new IllegalArgumentException(
+                    "idBits must contain at least one pointer from this motion event");
         }
+        final int currentBits = getPointerIdBits();
+        if ((currentBits & idBits) != idBits) {
+            throw new IllegalArgumentException(
+                    "idBits must be a non-empty subset of the pointer IDs from this MotionEvent, "
+                            + "got idBits: "
+                            + String.format("0x%x", idBits) + " for " + this);
+        }
+        MotionEvent event = obtain();
+        event.mNativePtr = nativeSplit(event.mNativePtr, this.mNativePtr, idBits);
+        return event;
     }
 
     /**
@@ -3766,9 +4088,12 @@ public final class MotionEvent extends InputEvent implements Parcelable {
                 return "AMBIGUOUS_GESTURE";
             case CLASSIFICATION_DEEP_PRESS:
                 return "DEEP_PRESS";
-
+            case CLASSIFICATION_TWO_FINGER_SWIPE:
+                return "TWO_FINGER_SWIPE";
+            case CLASSIFICATION_MULTI_FINGER_SWIPE:
+                return "MULTI_FINGER_SWIPE";
         }
-        return "NONE";
+        return "UNKNOWN";
     }
 
     /**
@@ -3779,7 +4104,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * @return The symbolic name of the specified tool type.
      * @hide
      */
-    public static String toolTypeToString(int toolType) {
+    public static String toolTypeToString(@ToolType int toolType) {
         String symbolicName = TOOL_TYPE_SYMBOLIC_NAMES.get(toolType);
         return symbolicName != null ? symbolicName : Integer.toString(toolType);
     }
@@ -3805,17 +4130,39 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
-     * Gets a rotation matrix that (when applied to a motionevent) will rotate that motion event
-     * such that the result coordinates end up in the same physical location on a display whose
-     * coordinates are rotated by `rotation`.
+     * Gets the rotation value of the transform for this MotionEvent.
      *
-     * For example, rotating 0,0 by 90 degrees will move a point from the physical top-left to
-     * the bottom-left of the 90-degree-rotated display.
+     * This MotionEvent's rotation can be changed by passing a rotation matrix to
+     * {@link #transform(Matrix)} to change the coordinate space of this event.
+     *
+     * @return the rotation value, or -1 if unknown or invalid.
+     * @see Surface.Rotation
+     * @see #createRotateMatrix(int, int, int)
      *
      * @hide
      */
+    public @Surface.Rotation int getSurfaceRotation() {
+        return nativeGetSurfaceRotation(mNativePtr);
+    }
+
+    /**
+     * Gets a rotation matrix that (when applied to a MotionEvent) will rotate that motion event
+     * such that the result coordinates end up in the same physical location on a frame whose
+     * coordinates are rotated by `rotation`.
+     *
+     * For example, rotating (0,0) by 90 degrees will move a point from the physical top-left to
+     * the bottom-left of the 90-degree-rotated frame.
+     *
+     * @param rotation the surface rotation of the output matrix
+     * @param rotatedFrameWidth the width of the rotated frame
+     * @param rotatedFrameHeight the height of the rotated frame
+     *
+     * @see #transform(Matrix)
+     * @see #getSurfaceRotation()
+     * @hide
+     */
     public static Matrix createRotateMatrix(
-            @Surface.Rotation int rotation, int displayW, int displayH) {
+            @Surface.Rotation int rotation, int rotatedFrameWidth, int rotatedFrameHeight) {
         if (rotation == Surface.ROTATION_0) {
             return new Matrix(Matrix.IDENTITY_MATRIX);
         }
@@ -3823,14 +4170,14 @@ public final class MotionEvent extends InputEvent implements Parcelable {
         float[] values = null;
         if (rotation == Surface.ROTATION_90) {
             values = new float[]{0, 1, 0,
-                    -1, 0, displayH,
+                    -1, 0, rotatedFrameHeight,
                     0, 0, 1};
         } else if (rotation == Surface.ROTATION_180) {
-            values = new float[]{-1, 0, displayW,
-                    0, -1, displayH,
+            values = new float[]{-1, 0, rotatedFrameWidth,
+                    0, -1, rotatedFrameHeight,
                     0, 0, 1};
         } else if (rotation == Surface.ROTATION_270) {
-            values = new float[]{0, -1, displayW,
+            values = new float[]{0, -1, rotatedFrameWidth,
                     1, 0, 0,
                     0, 0, 1};
         }
@@ -3861,12 +4208,47 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     /** @hide */
     @Override
     public final void cancel() {
+        setCanceled(true);
         setAction(ACTION_CANCEL);
     }
 
     public void writeToParcel(Parcel out, int flags) {
         out.writeInt(PARCEL_TOKEN_MOTION_EVENT);
         nativeWriteToParcel(mNativePtr, out);
+    }
+
+    /**
+     * Get the x coordinate of the location where the pointer should be dispatched.
+     *
+     * This is required because a mouse event, such as from a touchpad, may contain multiple
+     * pointers that should all be dispatched to the cursor position.
+     * @hide
+     */
+    public float getXDispatchLocation(int pointerIndex) {
+        if (isFromSource(InputDevice.SOURCE_MOUSE)) {
+            final float xCursorPosition = getXCursorPosition();
+            if (xCursorPosition != INVALID_CURSOR_POSITION) {
+                return xCursorPosition;
+            }
+        }
+        return getX(pointerIndex);
+    }
+
+    /**
+     * Get the y coordinate of the location where the pointer should be dispatched.
+     *
+     * This is required because a mouse event, such as from a touchpad, may contain multiple
+     * pointers that should all be dispatched to the cursor position.
+     * @hide
+     */
+    public float getYDispatchLocation(int pointerIndex) {
+        if (isFromSource(InputDevice.SOURCE_MOUSE)) {
+            final float yCursorPosition = getYCursorPosition();
+            if (yCursorPosition != INVALID_CURSOR_POSITION) {
+                return yCursorPosition;
+            }
+        }
+        return getY(pointerIndex);
     }
 
     /**
@@ -4008,6 +4390,51 @@ public final class MotionEvent extends InputEvent implements Parcelable {
         public float orientation;
 
         /**
+         * The movement of x position of a motion event.
+         *
+         * @see MotionEvent#AXIS_RELATIVE_X
+         * @hide
+         */
+        public float relativeX;
+
+        /**
+         * The movement of y position of a motion event.
+         *
+         * @see MotionEvent#AXIS_RELATIVE_Y
+         * @hide
+         */
+        public float relativeY;
+
+        /**
+         * Whether these coordinate data were generated by resampling.
+         *
+         * @hide
+         */
+        public boolean isResampled;
+
+        /**
+         * Returns true if these pointer coordinates were generated by resampling, rather than from
+         * an actual input event from the device at this time.
+         * <p>
+         * Resampling extrapolates or interpolates touch coordinates reported by the input device to
+         * better align them with the refresh rate of the display, resulting in smoother movements,
+         * in particular for scrolling. Resampled coordinates are always added to batches, so a
+         * motion event will always contain at least one sample that is an original event from the
+         * input device (i.e. for which this method will return {@code false}).
+         * </p><p>
+         * Resampling does not occur if unbuffered dispatch has been requested, or if it has been
+         * disabled by the manufacturer (for example, on hardware that already synchronizes its
+         * touch events and display frames).
+         * </p>
+         * @see android.view.View#requestUnbufferedDispatch(int)
+         * @see android.view.View#requestUnbufferedDispatch(MotionEvent)
+         */
+        @FlaggedApi(Flags.FLAG_POINTER_COORDS_IS_RESAMPLED_API)
+        public boolean isResampled() {
+            return isResampled;
+        }
+
+        /**
          * Clears the contents of this object.
          * Resets all axes to zero.
          */
@@ -4023,6 +4450,9 @@ public final class MotionEvent extends InputEvent implements Parcelable {
             toolMajor = 0;
             toolMinor = 0;
             orientation = 0;
+            relativeX = 0;
+            relativeY = 0;
+            isResampled = false;
         }
 
         /**
@@ -4053,6 +4483,9 @@ public final class MotionEvent extends InputEvent implements Parcelable {
             toolMajor = other.toolMajor;
             toolMinor = other.toolMinor;
             orientation = other.orientation;
+            relativeX = other.relativeX;
+            relativeY = other.relativeY;
+            isResampled = other.isResampled;
         }
 
         /**
@@ -4084,6 +4517,10 @@ public final class MotionEvent extends InputEvent implements Parcelable {
                     return toolMinor;
                 case AXIS_ORIENTATION:
                     return orientation;
+                case AXIS_RELATIVE_X:
+                    return relativeX;
+                case AXIS_RELATIVE_Y:
+                    return relativeY;
                 default: {
                     if (axis < 0 || axis > 63) {
                         throw new IllegalArgumentException("Axis out of range.");
@@ -4136,6 +4573,12 @@ public final class MotionEvent extends InputEvent implements Parcelable {
                     break;
                 case AXIS_ORIENTATION:
                     orientation = value;
+                    break;
+                case AXIS_RELATIVE_X:
+                    relativeX = value;
+                    break;
+                case AXIS_RELATIVE_Y:
+                    relativeY = value;
                     break;
                 default: {
                     if (axis < 0 || axis > 63) {
@@ -4220,7 +4663,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
          *
          * @see MotionEvent#getToolType(int)
          */
-        public int toolType;
+        public @ToolType int toolType;
 
         /**
          * Resets the pointer properties to their initial values.

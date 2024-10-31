@@ -19,8 +19,11 @@ package com.android.systemui.screenshot;
 import static android.os.FileUtils.closeQuietly;
 
 import android.annotation.IntRange;
+import android.content.ContentProvider;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
@@ -29,13 +32,16 @@ import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.os.SystemClock;
 import android.os.Trace;
+import android.os.UserHandle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Display;
 
 import androidx.concurrent.futures.CallbackToFutureAdapter;
 import androidx.exifinterface.media.ExifInterface;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.systemui.flags.FeatureFlags;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -46,6 +52,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
@@ -53,13 +60,17 @@ import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
-class ImageExporter {
+/** A class to help with exporting screenshot to storage. */
+public class ImageExporter {
     private static final String TAG = LogConfig.logTag(ImageExporter.class);
 
     static final Duration PENDING_ENTRY_TTL = Duration.ofHours(24);
 
     // ex: 'Screenshot_20201215-090626.png'
     private static final String FILENAME_PATTERN = "Screenshot_%1$tY%<tm%<td-%<tH%<tM%<tS.%2$s";
+    // ex: 'Screenshot_20201215-090626-display-1.png'
+    private static final String CONNECTED_DISPLAY_FILENAME_PATTERN =
+            "Screenshot_%1$tY%<tm%<td-%<tH%<tM%<tS-display-%2$d.%3$s";
     private static final String SCREENSHOTS_PATH = Environment.DIRECTORY_PICTURES
             + File.separator + Environment.DIRECTORY_SCREENSHOTS;
 
@@ -83,10 +94,12 @@ class ImageExporter {
     private final ContentResolver mResolver;
     private CompressFormat mCompressFormat = CompressFormat.PNG;
     private int mQuality = 100;
+    private final FeatureFlags mFlags;
 
     @Inject
-    ImageExporter(ContentResolver resolver) {
+    public ImageExporter(ContentResolver resolver, FeatureFlags flags) {
         mResolver = resolver;
+        mFlags = flags;
     }
 
     /**
@@ -113,7 +126,7 @@ class ImageExporter {
     /**
      * Writes the given Bitmap to outputFile.
      */
-    ListenableFuture<File> exportToRawFile(Executor executor, Bitmap bitmap,
+    public ListenableFuture<File> exportToRawFile(Executor executor, Bitmap bitmap,
             final File outputFile) {
         return CallbackToFutureAdapter.getFuture(
                 (completer) -> {
@@ -135,34 +148,89 @@ class ImageExporter {
     }
 
     /**
-     * Export the image using the given executor.
+     * Export the image using the given executor with an auto-generated file name based on display
+     * id.
      *
-     * @param executor the thread for execution
-     * @param bitmap the bitmap to export
-     *
+     * @param executor  the thread for execution
+     * @param bitmap    the bitmap to export
+     * @param displayId the display id the bitmap comes from.
      * @return a listenable future result
      */
-    ListenableFuture<Result> export(Executor executor, UUID requestId, Bitmap bitmap) {
-        return export(executor, requestId, bitmap, ZonedDateTime.now());
+    public ListenableFuture<Result> export(Executor executor, UUID requestId, Bitmap bitmap,
+            UserHandle owner, int displayId) {
+        ZonedDateTime captureTime = ZonedDateTime.now(ZoneId.systemDefault());
+        return export(executor,
+                new Task(mResolver, requestId, bitmap, captureTime, mCompressFormat,
+                        mQuality, /* publish */ true, owner, mFlags,
+                        createFilename(captureTime, mCompressFormat, displayId)));
+    }
+
+    /**
+     * Export the image using the given executor with a specified file name.
+     *
+     * @param executor the thread for execution
+     * @param bitmap   the bitmap to export
+     * @param format   the compress format of {@code bitmap} e.g. {@link CompressFormat.PNG}
+     * @param fileName a specified name for the exported file. No need to include file extension in
+     *                 file name. The extension will be internally appended based on
+     *                 {@code format}
+     * @return a listenable future result
+     */
+    public ListenableFuture<Result> export(Executor executor, UUID requestId, Bitmap bitmap,
+            CompressFormat format, UserHandle owner, String fileName) {
+        return export(executor,
+                new Task(mResolver,
+                        requestId,
+                        bitmap,
+                        ZonedDateTime.now(ZoneId.systemDefault()),
+                        format,
+                        mQuality, /* publish */ true, owner, mFlags,
+                        createSystemFileDisplayName(fileName, format),
+                        true /* allowOverwrite */));
     }
 
     /**
      * Export the image to MediaStore and publish.
      *
      * @param executor the thread for execution
-     * @param bitmap the bitmap to export
+     * @param bitmap   the bitmap to export
+     * @return a listenable future result
+     */
+    public ListenableFuture<Result> export(Executor executor, UUID requestId, Bitmap bitmap,
+            ZonedDateTime captureTime, UserHandle owner, int displayId) {
+        return export(executor, new Task(mResolver, requestId, bitmap, captureTime, mCompressFormat,
+                mQuality, /* publish */ true, owner, mFlags,
+                createFilename(captureTime, mCompressFormat, displayId)));
+    }
+
+    /**
+     * Export the image to MediaStore and publish.
      *
+     * @param executor the thread for execution
+     * @param bitmap   the bitmap to export
      * @return a listenable future result
      */
     ListenableFuture<Result> export(Executor executor, UUID requestId, Bitmap bitmap,
-            ZonedDateTime captureTime) {
+            ZonedDateTime captureTime, UserHandle owner, String fileName) {
+        return export(executor, new Task(mResolver, requestId, bitmap, captureTime, mCompressFormat,
+                mQuality, /* publish */ true, owner, mFlags,
+                createSystemFileDisplayName(fileName, mCompressFormat)));
+    }
 
-        final Task task = new Task(mResolver, requestId, bitmap, captureTime, mCompressFormat,
-                mQuality, /* publish */ true);
-
+    /**
+     * Export the image to MediaStore and publish.
+     *
+     * @param executor the thread for execution
+     * @param task the exporting image {@link Task}.
+     *
+     * @return a listenable future result
+     */
+    private ListenableFuture<Result> export(Executor executor, Task task) {
         return CallbackToFutureAdapter.getFuture(
                 (completer) -> {
                     executor.execute(() -> {
+                        // save images as quickly as possible on the background thread
+                        Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
                         try {
                             completer.set(task.execute());
                         } catch (ImageExportException | InterruptedException e) {
@@ -174,36 +242,14 @@ class ImageExporter {
         );
     }
 
-    /**
-     * Delete the entry.
-     *
-     * @param executor the thread for execution
-     * @param uri the uri of the image to publish
-     *
-     * @return a listenable future result
-     */
-    ListenableFuture<Result> delete(Executor executor, Uri uri) {
-        return CallbackToFutureAdapter.getFuture((completer) -> {
-            executor.execute(() -> {
-                mResolver.delete(uri, null);
-
-                Result result = new Result();
-                result.uri = uri;
-                result.deleted = true;
-                completer.set(result);
-            });
-            return "ContentResolver#delete";
-        });
-    }
-
-    static class Result {
-        Uri uri;
-        UUID requestId;
-        String fileName;
-        long timestamp;
-        CompressFormat format;
-        boolean published;
-        boolean deleted;
+    /** The result returned by the task exporting screenshots to storage. */
+    public static class Result {
+        public Uri uri;
+        public UUID requestId;
+        public String fileName;
+        public long timestamp;
+        public CompressFormat format;
+        public boolean published;
 
         @Override
         public String toString() {
@@ -214,7 +260,6 @@ class ImageExporter {
             sb.append(", timestamp=").append(timestamp);
             sb.append(", format=").append(format);
             sb.append(", published=").append(published);
-            sb.append(", deleted=").append(deleted);
             sb.append('}');
             return sb.toString();
         }
@@ -227,19 +272,41 @@ class ImageExporter {
         private final ZonedDateTime mCaptureTime;
         private final CompressFormat mFormat;
         private final int mQuality;
+        private final UserHandle mOwner;
         private final String mFileName;
         private final boolean mPublish;
+        private final FeatureFlags mFlags;
+
+        /**
+         * This variable specifies the behavior when a file to be exported has a same name and
+         * format as one of the file on disk. If this is set to true, the new file overwrite the
+         * old file; otherwise, the system adds a number to the end of the newly exported file. For
+         * example, if the file is screenshot.png, the newly exported file's display name will be
+         * screenshot(1).png.
+         */
+        private final boolean mAllowOverwrite;
 
         Task(ContentResolver resolver, UUID requestId, Bitmap bitmap, ZonedDateTime captureTime,
-                CompressFormat format, int quality, boolean publish) {
+                CompressFormat format, int quality, boolean publish, UserHandle owner,
+                FeatureFlags flags, String fileName) {
+            this(resolver, requestId, bitmap, captureTime, format, quality, publish, owner, flags,
+                    fileName, false /* allowOverwrite */);
+        }
+
+        Task(ContentResolver resolver, UUID requestId, Bitmap bitmap, ZonedDateTime captureTime,
+                CompressFormat format, int quality, boolean publish, UserHandle owner,
+                FeatureFlags flags, String fileName, boolean allowOverwrite) {
             mResolver = resolver;
             mRequestId = requestId;
             mBitmap = bitmap;
             mCaptureTime = captureTime;
             mFormat = format;
             mQuality = quality;
-            mFileName = createFilename(mCaptureTime, mFormat);
+            mOwner = owner;
+            mFileName = fileName;
             mPublish = publish;
+            mFlags = flags;
+            mAllowOverwrite = allowOverwrite;
         }
 
         public Result execute() throws ImageExportException, InterruptedException {
@@ -253,7 +320,8 @@ class ImageExporter {
                     start = Instant.now();
                 }
 
-                uri = createEntry(mResolver, mFormat, mCaptureTime, mFileName);
+                uri = createEntry(mResolver, mFormat, mCaptureTime, mFileName, mOwner, mFlags,
+                        mAllowOverwrite);
                 throwIfInterrupted();
 
                 writeImage(mResolver, mBitmap, mFormat, mQuality, uri);
@@ -297,16 +365,51 @@ class ImageExporter {
     }
 
     private static Uri createEntry(ContentResolver resolver, CompressFormat format,
-            ZonedDateTime time, String fileName) throws ImageExportException {
+            ZonedDateTime time, String fileName, UserHandle owner, FeatureFlags flags,
+            boolean allowOverwrite) throws ImageExportException {
         Trace.beginSection("ImageExporter_createEntry");
         try {
             final ContentValues values = createMetadata(time, format, fileName);
 
-            Uri uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            if (uri == null) {
+            Uri baseUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+            Uri uriWithUserId = ContentProvider.maybeAddUserId(baseUri, owner.getIdentifier());
+            Uri resultUri = null;
+
+            if (allowOverwrite) {
+                // Query to check if there is existing file with the same name and format.
+                Cursor cursor = resolver.query(
+                        baseUri,
+                        null,
+                        MediaStore.MediaColumns.DISPLAY_NAME + "=? AND "
+                                + MediaStore.MediaColumns.MIME_TYPE + "=?",
+                        new String[]{fileName, getMimeType(format)},
+                        null /* CancellationSignal */);
+                if (cursor != null) {
+                    if (cursor.moveToFirst()) {
+                        // If there is existing file, update the meta-data of its entry. The Entry's
+                        // corresponding uri is composed of volume base-uri(or with user-id) and
+                        // its row's unique ID.
+                        int idIndex = cursor.getColumnIndex(MediaStore.MediaColumns._ID);
+                        resultUri = ContentUris.withAppendedId(uriWithUserId,
+                                cursor.getLong(idIndex));
+                        resolver.update(resultUri, values, null);
+                        Log.d(TAG, "Updated existing URI: " + resultUri);
+                    }
+                    cursor.close();
+                }
+            }
+
+            if (resultUri == null) {
+                // If file overwriting is disabled or there is no existing file to overwrite, create
+                // and insert a new entry.
+                resultUri = resolver.insert(uriWithUserId, values);
+                Log.d(TAG, "Inserted new URI: " + resultUri);
+            }
+
+            if (resultUri == null) {
                 throw new ImageExportException(RESOLVER_INSERT_RETURNED_NULL);
             }
-            return uri;
+            return resultUri;
         } finally {
             Trace.endSection();
         }
@@ -377,8 +480,17 @@ class ImageExporter {
     }
 
     @VisibleForTesting
-    static String createFilename(ZonedDateTime time, CompressFormat format) {
-        return String.format(FILENAME_PATTERN, time, fileExtension(format));
+    static String createFilename(ZonedDateTime time, CompressFormat format, int displayId) {
+        if (displayId == Display.DEFAULT_DISPLAY) {
+            return String.format(FILENAME_PATTERN, time, fileExtension(format));
+        }
+        return String.format(CONNECTED_DISPLAY_FILENAME_PATTERN, time, displayId,
+            fileExtension(format));
+    }
+
+    @VisibleForTesting
+    static String createSystemFileDisplayName(String originalDisplayName, CompressFormat format) {
+        return originalDisplayName + "." + fileExtension(format);
     }
 
     static ContentValues createMetadata(ZonedDateTime captureTime, CompressFormat format,

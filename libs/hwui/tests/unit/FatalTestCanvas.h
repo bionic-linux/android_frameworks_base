@@ -19,6 +19,8 @@
 #include <SkCanvas.h>
 #include <gtest/gtest.h>
 
+class SkRRect;
+
 namespace {
 
 class TestCanvasBase : public SkCanvas {
@@ -66,10 +68,6 @@ public:
     }
     void onDrawPath(const SkPath&, const SkPaint&) {
         ADD_FAILURE() << "onDrawPath not expected in this test";
-    }
-    void onDrawImage2(const SkImage*, SkScalar dx, SkScalar dy, const SkSamplingOptions&,
-                      const SkPaint*) {
-        ADD_FAILURE() << "onDrawImage not expected in this test";
     }
     void onDrawImageRect2(const SkImage*, const SkRect&, const SkRect&, const SkSamplingOptions&,
                           const SkPaint*, SrcRectConstraint) {

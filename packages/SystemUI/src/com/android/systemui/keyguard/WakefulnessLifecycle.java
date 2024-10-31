@@ -30,10 +30,12 @@ import android.util.DisplayMetrics;
 import androidx.annotation.Nullable;
 
 import com.android.systemui.Dumpable;
-import com.android.systemui.R;
 import com.android.systemui.dagger.SysUISingleton;
+import com.android.systemui.dump.DumpManager;
+import com.android.systemui.power.domain.interactor.PowerInteractor;
+import com.android.systemui.res.R;
+import com.android.systemui.util.time.SystemClock;
 
-import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -42,8 +44,11 @@ import javax.inject.Inject;
 
 /**
  * Tracks the wakefulness lifecycle, including why we're waking or sleeping.
+ *
+ * @deprecated Collect flows from {@link PowerInteractor} instead.
  */
 @SysUISingleton
+@Deprecated
 public class WakefulnessLifecycle extends Lifecycle<WakefulnessLifecycle.Observer> implements
         Dumpable {
 
@@ -63,6 +68,7 @@ public class WakefulnessLifecycle extends Lifecycle<WakefulnessLifecycle.Observe
 
     private final Context mContext;
     private final DisplayMetrics mDisplayMetrics;
+    private final SystemClock mSystemClock;
 
     @Nullable
     private final IWallpaperManager mWallpaperManagerService;
@@ -70,6 +76,9 @@ public class WakefulnessLifecycle extends Lifecycle<WakefulnessLifecycle.Observe
     private int mWakefulness = WAKEFULNESS_AWAKE;
 
     private @PowerManager.WakeReason int mLastWakeReason = PowerManager.WAKE_REASON_UNKNOWN;
+
+    public static final long UNKNOWN_LAST_WAKE_TIME = -1;
+    private long mLastWakeTime = UNKNOWN_LAST_WAKE_TIME;
 
     @Nullable
     private Point mLastWakeOriginLocation = null;
@@ -83,10 +92,15 @@ public class WakefulnessLifecycle extends Lifecycle<WakefulnessLifecycle.Observe
     @Inject
     public WakefulnessLifecycle(
             Context context,
-            @Nullable IWallpaperManager wallpaperManagerService) {
+            @Nullable IWallpaperManager wallpaperManagerService,
+            SystemClock systemClock,
+            DumpManager dumpManager) {
         mContext = context;
         mDisplayMetrics = context.getResources().getDisplayMetrics();
         mWallpaperManagerService = wallpaperManagerService;
+        mSystemClock = systemClock;
+
+        dumpManager.registerDumpable(getClass().getSimpleName(), this);
     }
 
     public @Wakefulness int getWakefulness() {
@@ -98,6 +112,14 @@ public class WakefulnessLifecycle extends Lifecycle<WakefulnessLifecycle.Observe
      */
     public @PowerManager.WakeReason int getLastWakeReason() {
         return mLastWakeReason;
+    }
+
+    /**
+     * Returns the most recent time (in device uptimeMillis) the display woke up.
+     * Returns {@link UNKNOWN_LAST_WAKE_TIME} if there hasn't been a wakeup yet.
+     */
+    public long getLastWakeTime() {
+        return mLastWakeTime;
     }
 
     /**
@@ -114,6 +136,7 @@ public class WakefulnessLifecycle extends Lifecycle<WakefulnessLifecycle.Observe
         }
         setWakefulness(WAKEFULNESS_WAKING);
         mLastWakeReason = pmWakeReason;
+        mLastWakeTime = mSystemClock.uptimeMillis();
         updateLastWakeOriginLocation();
 
         if (mWallpaperManagerService != null) {
@@ -134,6 +157,7 @@ public class WakefulnessLifecycle extends Lifecycle<WakefulnessLifecycle.Observe
         }
         setWakefulness(WAKEFULNESS_AWAKE);
         dispatch(Observer::onFinishedWakingUp);
+        dispatch(Observer::onPostFinishedWakingUp);
     }
 
     public void dispatchStartedGoingToSleep(@PowerManager.GoToSleepReason int pmSleepReason) {
@@ -165,7 +189,7 @@ public class WakefulnessLifecycle extends Lifecycle<WakefulnessLifecycle.Observe
     }
 
     @Override
-    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+    public void dump(PrintWriter pw, String[] args) {
         pw.println("WakefulnessLifecycle:");
         pw.println("  mWakefulness=" + mWakefulness);
     }
@@ -232,6 +256,12 @@ public class WakefulnessLifecycle extends Lifecycle<WakefulnessLifecycle.Observe
     public interface Observer {
         default void onStartedWakingUp() {}
         default void onFinishedWakingUp() {}
+
+        /**
+         * Called after the finished waking up call, ensuring it's after all the other listeners,
+         * reacting to {@link #onFinishedWakingUp()}
+         */
+        default void onPostFinishedWakingUp() {}
         default void onStartedGoingToSleep() {}
         default void onFinishedGoingToSleep() {}
     }

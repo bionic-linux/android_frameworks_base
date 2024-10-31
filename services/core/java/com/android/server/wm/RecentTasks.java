@@ -16,7 +16,6 @@
 
 package com.android.server.wm;
 
-import static android.app.ActivityManager.FLAG_AND_UNLOCKED;
 import static android.app.ActivityManager.RECENT_IGNORE_UNAVAILABLE;
 import static android.app.ActivityManager.RECENT_WITH_EXCLUDED;
 import static android.app.ActivityTaskManager.INVALID_TASK_ID;
@@ -27,15 +26,19 @@ import static android.app.WindowConfiguration.ACTIVITY_TYPE_RECENTS;
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_UNDEFINED;
 import static android.app.WindowConfiguration.WINDOWING_MODE_MULTI_WINDOW;
 import static android.app.WindowConfiguration.WINDOWING_MODE_PINNED;
-import static android.app.WindowConfiguration.WINDOWING_MODE_SPLIT_SCREEN_PRIMARY;
 import static android.app.WindowConfiguration.WINDOWING_MODE_UNDEFINED;
 import static android.content.Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS;
 import static android.content.Intent.FLAG_ACTIVITY_MULTIPLE_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_DOCUMENT;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.os.Process.SYSTEM_UID;
+import static android.view.MotionEvent.CLASSIFICATION_MULTI_FINGER_SWIPE;
+import static android.view.WindowInsets.Type.mandatorySystemGestures;
+import static android.view.WindowManager.LayoutParams.FIRST_APPLICATION_WINDOW;
+import static android.view.WindowManager.LayoutParams.LAST_APPLICATION_WINDOW;
 
 import static com.android.internal.protolog.ProtoLogGroup.WM_DEBUG_TASKS;
+import static com.android.server.wm.ActivityRecord.State.RESUMED;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.DEBUG_RECENTS;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.DEBUG_RECENTS_TRIM_TASKS;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.POSTFIX_RECENTS;
@@ -58,17 +61,22 @@ import android.content.pm.ParceledListSlice;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Insets;
+import android.graphics.Rect;
 import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.os.SystemProperties;
+import android.os.SystemClock;
 import android.os.UserHandle;
 import android.text.TextUtils;
 import android.util.ArraySet;
+import android.util.IntArray;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
+import android.view.InsetsState;
 import android.view.MotionEvent;
+import android.view.WindowInsets;
 import android.view.WindowManagerPolicyConstants.PointerEventListener;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -85,9 +93,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Class for managing the recent tasks list. The list is ordered by most recent (index 0) to the
@@ -163,8 +171,9 @@ class RecentTasks {
 
     /**
      * Mapping of user id -> whether recent tasks have been loaded for that user.
+     * The AtomicBoolean per user will be locked when reading persisted task from storage.
      */
-    private final SparseBooleanArray mUsersWithRecentsLoaded = new SparseBooleanArray(
+    private final SparseArray<AtomicBoolean> mUsersWithRecentsLoaded = new SparseArray<>(
             DEFAULT_INITIAL_CAPACITY);
 
     /**
@@ -180,6 +189,8 @@ class RecentTasks {
 
     /** The non-empty tasks that are removed from recent tasks (see {@link #removeForAddTask}). */
     private final ArrayList<Task> mHiddenTasks = new ArrayList<>();
+    /** The maximum size that the hidden tasks are cached. */
+    private static final int MAX_HIDDEN_TASK_SIZE = 10;
 
     /** Whether to trim inactive tasks when activities are idle. */
     private boolean mCheckTrimmableTasksOnIdle;
@@ -202,12 +213,14 @@ class RecentTasks {
     private final HashMap<ComponentName, ActivityInfo> mTmpAvailActCache = new HashMap<>();
     private final HashMap<String, ApplicationInfo> mTmpAvailAppCache = new HashMap<>();
     private final SparseBooleanArray mTmpQuietProfileUserIds = new SparseBooleanArray();
+    private final Rect mTmpRect = new Rect();
 
     // TODO(b/127498985): This is currently a rough heuristic for interaction inside an app
     private final PointerEventListener mListener = new PointerEventListener() {
         @Override
         public void onPointerEvent(MotionEvent ev) {
-            if (!mFreezeTaskListReordering || ev.getAction() != MotionEvent.ACTION_DOWN) {
+            if (!mFreezeTaskListReordering || ev.getAction() != MotionEvent.ACTION_DOWN
+                    || ev.getClassification() == CLASSIFICATION_MULTI_FINGER_SWIPE) {
                 // Skip if we aren't freezing or starting a gesture
                 return;
             }
@@ -216,12 +229,33 @@ class RecentTasks {
             int y = (int) ev.getY();
             mService.mH.post(PooledLambda.obtainRunnable((nonArg) -> {
                 synchronized (mService.mGlobalLock) {
-                    // Unfreeze the task list once we touch down in a task
                     final RootWindowContainer rac = mService.mRootWindowContainer;
                     final DisplayContent dc = rac.getDisplayContent(displayId).mDisplayContent;
-                    if (dc.pointWithinAppWindow(x, y)) {
+                    final WindowState win = dc.getTouchableWinAtPointLocked((float) x, (float) y);
+                    if (win == null) {
+                        return;
+                    }
+
+                    // Verify the touch is within the mandatory system gesture inset bounds of the
+                    // window, use the raw insets state to ignore window z-order
+                    final InsetsState insetsState = dc.getInsetsStateController()
+                            .getRawInsetsState();
+                    mTmpRect.set(win.getFrame());
+                    mTmpRect.inset(insetsState.calculateInsets(win.getFrame(),
+                            mandatorySystemGestures(), false /* ignoreVisibility */));
+                    if (!mTmpRect.contains(x, y)) {
+                        return;
+                    }
+
+                    // Unfreeze the task list once we touch down in a task
+                    final boolean isAppWindowTouch = FIRST_APPLICATION_WINDOW <= win.mAttrs.type
+                            && win.mAttrs.type <= LAST_APPLICATION_WINDOW;
+                    if (isAppWindowTouch) {
                         final Task stack = mService.getTopDisplayFocusedRootTask();
                         final Task topTask = stack != null ? stack.getTopMostTask() : null;
+                        ProtoLog.i(WM_DEBUG_TASKS, "Resetting frozen recents task list"
+                                + " reason=app touch win=%s x=%d y=%d insetFrame=%s", win, x, y,
+                                mTmpRect);
                         resetFreezeTaskListReordering(topTask);
                     }
                 }
@@ -288,6 +322,8 @@ class RecentTasks {
             mFreezeTaskListReordering = true;
         }
 
+        ProtoLog.i(WM_DEBUG_TASKS, "Setting frozen recents task list");
+
         // Always update the reordering time when this is called to ensure that the timeout
         // is reset
         mService.mH.removeCallbacks(mResetFreezeTaskListOnTimeoutRunnable);
@@ -330,7 +366,9 @@ class RecentTasks {
         synchronized (mService.mGlobalLock) {
             final Task focusedStack = mService.getTopDisplayFocusedRootTask();
             final Task topTask = focusedStack != null ? focusedStack.getTopMostTask() : null;
-            resetFreezeTaskListReordering(topTask);
+            final Task reorderToEndTask = topTask != null && topTask.hasChild() ? topTask : null;
+            ProtoLog.i(WM_DEBUG_TASKS, "Resetting frozen recents task list reason=timeout");
+            resetFreezeTaskListReordering(reorderToEndTask);
         }
     }
 
@@ -349,11 +387,6 @@ class RecentTasks {
                     com.android.internal.R.integer.config_minNumVisibleRecentTasks_lowRam);
             mMaxNumVisibleTasks = res.getInteger(
                     com.android.internal.R.integer.config_maxNumVisibleRecentTasks_lowRam);
-        } else if (SystemProperties.getBoolean("ro.recents.grid", false)) {
-            mMinNumVisibleTasks = res.getInteger(
-                    com.android.internal.R.integer.config_minNumVisibleRecentTasks_grid);
-            mMaxNumVisibleTasks = res.getInteger(
-                    com.android.internal.R.integer.config_maxNumVisibleRecentTasks_grid);
         } else {
             mMinNumVisibleTasks = res.getInteger(
                     com.android.internal.R.integer.config_minNumVisibleRecentTasks);
@@ -381,8 +414,11 @@ class RecentTasks {
         final ComponentName cn = ComponentName.unflattenFromString(rawRecentsComponent);
         if (cn != null) {
             try {
-                final ApplicationInfo appInfo = AppGlobals.getPackageManager()
-                        .getApplicationInfo(cn.getPackageName(), 0, mService.mContext.getUserId());
+                final ApplicationInfo appInfo = AppGlobals.getPackageManager().getApplicationInfo(
+                        cn.getPackageName(),
+                        PackageManager.MATCH_UNINSTALLED_PACKAGES
+                                | PackageManager.MATCH_DISABLED_COMPONENTS,
+                        mService.mContext.getUserId());
                 if (appInfo != null) {
                     mRecentsUid = appInfo.uid;
                     mRecentsComponent = cn;
@@ -464,62 +500,89 @@ class RecentTasks {
 
     /**
      * Loads the persistent recentTasks for {@code userId} into this list from persistent storage.
-     * Does nothing if they are already loaded.
-     *
-     * @param userId the user Id
+     * Does nothing if they are already loaded. This may perform IO operation, so the caller should
+     * not hold a lock.
      */
-    void loadUserRecentsLocked(int userId) {
-        if (mUsersWithRecentsLoaded.get(userId)) {
-            // User already loaded, return early
-            return;
-        }
-
-        // Load the task ids if not loaded.
-        loadPersistedTaskIdsForUserLocked(userId);
-
-        // Check if any tasks are added before recents is loaded
-        final SparseBooleanArray preaddedTasks = new SparseBooleanArray();
-        for (final Task task : mTasks) {
-            if (task.mUserId == userId && shouldPersistTaskLocked(task)) {
-                preaddedTasks.put(task.mTaskId, true);
+    void loadRecentTasksIfNeeded(int userId) {
+        AtomicBoolean userLoaded;
+        synchronized (mService.mGlobalLock) {
+            userLoaded = mUsersWithRecentsLoaded.get(userId);
+            if (userLoaded == null) {
+                mUsersWithRecentsLoaded.append(userId, userLoaded = new AtomicBoolean());
             }
         }
+        synchronized (userLoaded) {
+            if (userLoaded.get()) {
+                // The recent tasks of the user are already loaded.
+                return;
+            }
+            // Read task files from storage.
+            final SparseBooleanArray persistedTaskIds =
+                    mTaskPersister.readPersistedTaskIdsFromFileForUser(userId);
+            final TaskPersister.RecentTaskFiles taskFiles = TaskPersister.loadTasksForUser(userId);
+            synchronized (mService.mGlobalLock) {
+                restoreRecentTasksLocked(userId, persistedTaskIds, taskFiles);
+            }
+            userLoaded.set(true);
+        }
+    }
 
-        Slog.i(TAG, "Loading recents for user " + userId + " into memory.");
-        List<Task> tasks = mTaskPersister.restoreTasksForUserLocked(userId, preaddedTasks);
+    /** Restores recent tasks from raw data (the files are already read into memory). */
+    private void restoreRecentTasksLocked(int userId, SparseBooleanArray persistedTaskIds,
+            TaskPersister.RecentTaskFiles taskFiles) {
+        mTaskPersister.setPersistedTaskIds(userId, persistedTaskIds);
+        mPersistedTaskIds.put(userId, persistedTaskIds.clone());
+        // Check if any tasks are added before recents is loaded.
+        final IntArray existedTaskIds = new IntArray();
+        for (int i = mTasks.size() - 1; i >= 0; i--) {
+            final Task task = mTasks.get(i);
+            if (task.mUserId == userId && shouldPersistTaskLocked(task)) {
+                existedTaskIds.add(task.mTaskId);
+            }
+        }
+        Slog.i(TAG, "Restoring recents for user " + userId);
+        final ArrayList<Task> tasks = mTaskPersister.restoreTasksForUserLocked(userId, taskFiles,
+                existedTaskIds);
+
+        // Tasks are ordered from most recent to least recent. Update the last active time to be
+        // in sync with task recency when device reboots, so the most recent task has the
+        // highest last active time
+        long currentElapsedTime = SystemClock.elapsedRealtime();
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            task.lastActiveTime = currentElapsedTime - i;
+        }
+
         mTasks.addAll(tasks);
         cleanupLocked(userId);
-        mUsersWithRecentsLoaded.put(userId, true);
 
         // If we have tasks added before loading recents, we need to update persistent task IDs.
-        if (preaddedTasks.size() > 0) {
+        if (existedTaskIds.size() > 0) {
             syncPersistentTaskIdsLocked();
         }
     }
 
-    private void loadPersistedTaskIdsForUserLocked(int userId) {
-        // An empty instead of a null set here means that no persistent taskIds were present
-        // on file when we loaded them.
-        if (mPersistedTaskIds.get(userId) == null) {
-            mPersistedTaskIds.put(userId, mTaskPersister.loadPersistedTaskIdsForUser(userId));
-            Slog.i(TAG, "Loaded persisted task ids for user " + userId);
-        }
+    private boolean isRecentTasksLoaded(int userId) {
+        final AtomicBoolean userLoaded = mUsersWithRecentsLoaded.get(userId);
+        return userLoaded != null && userLoaded.get();
     }
 
     /**
      * @return whether the {@param taskId} is currently in use for the given user.
      */
     boolean containsTaskId(int taskId, int userId) {
-        loadPersistedTaskIdsForUserLocked(userId);
-        return mPersistedTaskIds.get(userId).get(taskId);
+        final SparseBooleanArray taskIds = mPersistedTaskIds.get(userId);
+        return taskIds != null && taskIds.get(taskId);
     }
 
-    /**
-     * @return all the task ids for the user with the given {@param userId}.
-     */
-    SparseBooleanArray getTaskIdsForUser(int userId) {
-        loadPersistedTaskIdsForUserLocked(userId);
-        return mPersistedTaskIds.get(userId);
+    /** Returns all the task ids for the user from {@link #usersWithRecentsLoadedLocked}. */
+    SparseBooleanArray getTaskIdsForLoadedUser(int loadedUserId) {
+        final SparseBooleanArray taskIds = mPersistedTaskIds.get(loadedUserId);
+        if (taskIds == null) {
+            Slog.wtf(TAG, "Loaded user without loaded tasks, userId=" + loadedUserId);
+            return new SparseBooleanArray();
+        }
+        return taskIds;
     }
 
     /**
@@ -527,7 +590,7 @@ class RecentTasks {
      */
     void notifyTaskPersisterLocked(Task task, boolean flush) {
         final Task rootTask = task != null ? task.getRootTask() : null;
-        if (rootTask != null && rootTask.isHomeOrRecentsRootTask()) {
+        if (rootTask != null && rootTask.isActivityTypeHomeOrRecents()) {
             // Never persist the home or recents task.
             return;
         }
@@ -538,7 +601,7 @@ class RecentTasks {
     private void syncPersistentTaskIdsLocked() {
         for (int i = mPersistedTaskIds.size() - 1; i >= 0; i--) {
             int userId = mPersistedTaskIds.keyAt(i);
-            if (mUsersWithRecentsLoaded.get(userId)) {
+            if (isRecentTasksLoaded(userId)) {
                 // Recents are loaded only after task ids are loaded. Therefore, the set of taskids
                 // referenced here should not be null.
                 mPersistedTaskIds.valueAt(i).clear();
@@ -561,7 +624,7 @@ class RecentTasks {
 
     private static boolean shouldPersistTaskLocked(Task task) {
         final Task rootTask = task.getRootTask();
-        return task.isPersistable && (rootTask == null || !rootTask.isHomeOrRecentsRootTask());
+        return task.isPersistable && (rootTask == null || !rootTask.isActivityTypeHomeOrRecents());
     }
 
     void onSystemReadyLocked() {
@@ -594,7 +657,7 @@ class RecentTasks {
         int len = 0;
         for (int i = 0; i < usersWithRecentsLoaded.length; i++) {
             int userId = mUsersWithRecentsLoaded.keyAt(i);
-            if (mUsersWithRecentsLoaded.valueAt(i)) {
+            if (mUsersWithRecentsLoaded.valueAt(i).get()) {
                 usersWithRecentsLoaded[len++] = userId;
             }
         }
@@ -612,7 +675,7 @@ class RecentTasks {
      * @param userId the id of the user
      */
     void unloadUserDataFromMemoryLocked(int userId) {
-        if (mUsersWithRecentsLoaded.get(userId)) {
+        if (isRecentTasksLoaded(userId)) {
             Slog.i(TAG, "Unloading recents for user " + userId + " from memory.");
             mUsersWithRecentsLoaded.delete(userId);
             removeTasksForUserLocked(userId);
@@ -671,10 +734,8 @@ class RecentTasks {
     void removeTasksByPackageName(String packageName, int userId) {
         for (int i = mTasks.size() - 1; i >= 0; --i) {
             final Task task = mTasks.get(i);
-            final String taskPackageName =
-                    task.getBaseIntent().getComponent().getPackageName();
             if (task.mUserId != userId) continue;
-            if (!taskPackageName.equals(packageName)) continue;
+            if (!task.getBasePackageName().equals(packageName)) continue;
 
             mSupervisor.removeTask(task, true, REMOVE_FROM_RECENTS, "remove-package-task");
         }
@@ -848,8 +909,7 @@ class RecentTasks {
             if (task.effectiveUid != callingUid) {
                 continue;
             }
-            Intent intent = task.getBaseIntent();
-            if (intent == null || !callingPackage.equals(intent.getComponent().getPackageName())) {
+            if (!callingPackage.equals(task.getBasePackageName())) {
                 continue;
             }
             AppTaskImpl taskImpl = new AppTaskImpl(mService, task.mTaskId, callingUid);
@@ -878,11 +938,6 @@ class RecentTasks {
         return mService.mAmInternal.getCurrentProfileIds();
     }
 
-    @VisibleForTesting
-    boolean isUserRunning(int userId, int flags) {
-        return mService.mAmInternal.isUserRunning(userId, flags);
-    }
-
     /**
      * @return the list of recent tasks for presentation.
      */
@@ -898,13 +953,6 @@ class RecentTasks {
     private ArrayList<ActivityManager.RecentTaskInfo> getRecentTasksImpl(int maxNum, int flags,
             boolean getTasksAllowed, int userId, int callingUid) {
         final boolean withExcluded = (flags & RECENT_WITH_EXCLUDED) != 0;
-
-        if (!isUserRunning(userId, FLAG_AND_UNLOCKED)) {
-            Slog.i(TAG, "user " + userId + " is still locked. Cannot load recents");
-            return new ArrayList<>();
-        }
-        loadUserRecentsLocked(userId);
-
         final Set<Integer> includedUsers = getProfileIds(userId);
         includedUsers.add(Integer.valueOf(userId));
 
@@ -968,13 +1016,14 @@ class RecentTasks {
 
             if (!task.mUserSetupComplete) {
                 // Don't include task launched while user is not done setting-up.
-                if (DEBUG_RECENTS) {
-                    Slog.d(TAG_RECENTS, "Skipping, user setup not complete: " + task);
-                }
+
+                // NOTE: not guarding with DEBUG_RECENTS as it's not frequent enough to spam logcat,
+                // but is useful when running CTS.
+                Slog.d(TAG_RECENTS, "Skipping, user setup not complete: " + task);
                 continue;
             }
 
-            res.add(createRecentTaskInfo(task, true /* stripExtras */));
+            res.add(createRecentTaskInfo(task, true /* stripExtras */, getTasksAllowed));
         }
         return res;
     }
@@ -992,7 +1041,7 @@ class RecentTasks {
             }
             final Task rootTask = task.getRootTask();
             if ((task.isPersistable || task.inRecents)
-                    && (rootTask == null || !rootTask.isHomeOrRecentsRootTask())) {
+                    && (rootTask == null || !rootTask.isActivityTypeHomeOrRecents())) {
                 if (TaskPersister.DEBUG) Slog.d(TAG, "adding to persistentTaskIds task=" + task);
                 persistentTaskIds.add(task.mTaskId);
             } else {
@@ -1090,12 +1139,17 @@ class RecentTasks {
                     if (!mFreezeTaskListReordering) {
                         // Simple case: this is not an affiliated task, so we just move it to the
                         // front unless overridden by the provided activity options
+                        int indexToAdd = findIndexToAdd(task);
                         mTasks.remove(taskIndex);
-                        mTasks.add(0, task);
+                        mTasks.add(indexToAdd, task);
+                        if (taskIndex != 0) {
+                            // Only notify when position changes
+                            mTaskNotificationController.notifyTaskListUpdated();
+                        }
 
                         if (DEBUG_RECENTS) {
-                            Slog.d(TAG_RECENTS, "addRecent: moving to top " + task
-                                    + " from " + taskIndex);
+                            Slog.d(TAG_RECENTS, "addRecent: moving " + task + " to index "
+                                    + indexToAdd + " from " + taskIndex);
                         }
                     }
                     notifyTaskPersisterLocked(task, false);
@@ -1108,13 +1162,15 @@ class RecentTasks {
         }
 
         if (DEBUG_RECENTS) Slog.d(TAG_RECENTS, "addRecent: trimming tasks for " + task);
-        removeForAddTask(task);
+        final int removedIndex = removeForAddTask(task);
 
         task.inRecents = true;
         if (!isAffiliated || needAffiliationFix) {
             // If this is a simple non-affiliated task, or we had some failure trying to
             // handle it as part of an affilated task, then just place it at the top.
-            mTasks.add(0, task);
+            // But if the list is frozen, adding the task to the removed index to keep the order.
+            int indexToAdd = mFreezeTaskListReordering && removedIndex != -1 ? removedIndex : 0;
+            mTasks.add(indexToAdd, task);
             notifyTaskAdded(task);
             if (DEBUG_RECENTS) Slog.d(TAG_RECENTS, "addRecent: adding " + task);
         } else if (isAffiliated) {
@@ -1180,6 +1236,42 @@ class RecentTasks {
         notifyTaskPersisterLocked(task, false /* flush */);
     }
 
+    // Looks for a new index to move the recent Task. Note that the recent Task should not be
+    // placed higher than another recent Task that has higher hierarchical z-ordering.
+    private int findIndexToAdd(Task task) {
+        int indexToAdd = 0;
+        for (int i = 0; i < mTasks.size(); i++) {
+            final Task otherTask = mTasks.get(i);
+            if (task == otherTask) {
+                break;
+            }
+
+            if (!otherTask.isAttached()) {
+                // Stop searching if not attached.
+                break;
+            }
+
+            if (otherTask.inPinnedWindowingMode()) {
+                // Skip pip task without increasing index since pip is always on screen.
+                continue;
+            }
+
+            if (otherTask.topRunningActivity() == null) {
+                // Skip if there's no running activity in the Task.
+                continue;
+            }
+
+            // Stop searching if the task has higher z-ordering, or increase the index and
+            // continue the search.
+            if (task.compareTo(otherTask) > 0) {
+                break;
+            }
+
+            indexToAdd = i + 1;
+        }
+        return indexToAdd;
+    }
+
     /**
      * Add the task to the bottom if possible.
      */
@@ -1209,7 +1301,7 @@ class RecentTasks {
     void onActivityIdle(ActivityRecord r) {
         // Clean up the hidden tasks when going to home because the user may not be unable to return
         // to the task from recents.
-        if (!mHiddenTasks.isEmpty() && r.isActivityTypeHome()) {
+        if (!mHiddenTasks.isEmpty() && r.isActivityTypeHome() && r.isState(RESUMED)) {
             removeUnreachableHiddenTasks(r.getWindowingMode());
         }
         if (mCheckTrimmableTasksOnIdle) {
@@ -1367,16 +1459,6 @@ class RecentTasks {
         switch (task.getWindowingMode()) {
             case WINDOWING_MODE_PINNED:
                 return false;
-            case WINDOWING_MODE_SPLIT_SCREEN_PRIMARY:
-                if (DEBUG_RECENTS_TRIM_TASKS) {
-                    Slog.d(TAG, "\ttop=" + task.getRootTask().getTopMostTask());
-                }
-                final Task rootTask = task.getRootTask();
-                if (rootTask != null && rootTask.getTopMostTask() == task) {
-                    // Only the non-top task of the primary split screen mode is visible
-                    return false;
-                }
-                break;
             case WINDOWING_MODE_MULTI_WINDOW:
                 // Ignore tasks that are always on top
                 if (task.isAlwaysOnTopWhenVisible()) {
@@ -1390,6 +1472,13 @@ class RecentTasks {
             return false;
         }
 
+        // Ignore the task if it is started on a display which is not allow to show its tasks on
+        // Recents.
+        if (task.getDisplayContent() != null
+                && !task.getDisplayContent().canShowTasksInHostDeviceRecents()) {
+            return false;
+        }
+
         return true;
     }
 
@@ -1399,13 +1488,19 @@ class RecentTasks {
     private boolean isInVisibleRange(Task task, int taskIndex, int numVisibleTasks,
             boolean skipExcludedCheck) {
         if (!skipExcludedCheck) {
-            // Keep the most recent task even if it is excluded from recents
+            // Keep the most recent task of home display even if it is excluded from recents.
             final boolean isExcludeFromRecents =
                     (task.getBaseIntent().getFlags() & FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                             == FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS;
             if (isExcludeFromRecents) {
-                if (DEBUG_RECENTS_TRIM_TASKS) Slog.d(TAG, "\texcludeFromRecents=true");
-                return taskIndex == 0;
+                if (DEBUG_RECENTS_TRIM_TASKS) {
+                    Slog.d(TAG,
+                            "\texcludeFromRecents=true, taskIndex = " + taskIndex
+                                    + ", isOnHomeDisplay: " + task.isOnHomeDisplay());
+                }
+                // The Recents is only supported on default display now, we should only keep the
+                // most recent task of home display.
+                return (task.isOnHomeDisplay() && taskIndex == 0);
             }
         }
 
@@ -1456,9 +1551,13 @@ class RecentTasks {
         return task.compareTo(rootHomeTask) < 0;
     }
 
-    /** Remove the tasks that user may not be able to return. */
+    /** Remove the tasks that user may not be able to return when exceeds the cache limit. */
     private void removeUnreachableHiddenTasks(int windowingMode) {
-        for (int i = mHiddenTasks.size() - 1; i >= 0; i--) {
+        final int size = mHiddenTasks.size();
+        if (size <= MAX_HIDDEN_TASK_SIZE) {
+            return;
+        }
+        for (int i = size - 1; i >= MAX_HIDDEN_TASK_SIZE; i--) {
             final Task hiddenTask = mHiddenTasks.get(i);
             if (!hiddenTask.hasChild() || hiddenTask.inRecents) {
                 // The task was removed by other path or it became reachable (added to recents).
@@ -1482,14 +1581,14 @@ class RecentTasks {
      * If needed, remove oldest existing entries in recents that are for the same kind
      * of task as the given one.
      */
-    private void removeForAddTask(Task task) {
+    private int removeForAddTask(Task task) {
         // The adding task will be in recents so it is not hidden.
         mHiddenTasks.remove(task);
 
         final int removeIndex = findRemoveIndexForAddTask(task);
         if (removeIndex == -1) {
             // Nothing to trim
-            return;
+            return removeIndex;
         }
 
         // There is a similar task that will be removed for the addition of {@param task}, but it
@@ -1497,12 +1596,12 @@ class RecentTasks {
         // callbacks here.
         final Task removedTask = mTasks.remove(removeIndex);
         if (removedTask != task) {
-            if (removedTask.hasChild()) {
+            if (removedTask.hasChild() && !removedTask.isActivityTypeHome()) {
                 Slog.i(TAG, "Add " + removedTask + " to hidden list because adding " + task);
                 // A non-empty task is replaced by a new task. Because the removed task is no longer
                 // managed by the recent tasks list, add it to the hidden list to prevent the task
                 // from becoming dangling.
-                mHiddenTasks.add(removedTask);
+                mHiddenTasks.add(0, removedTask);
             }
             notifyTaskRemoved(removedTask, false /* wasTrimmed */, false /* killProcess */);
             if (DEBUG_RECENTS_TRIM_TASKS) {
@@ -1511,6 +1610,7 @@ class RecentTasks {
             }
         }
         notifyTaskPersisterLocked(removedTask, false /* flush */);
+        return removeIndex;
     }
 
     /**
@@ -1518,11 +1618,6 @@ class RecentTasks {
      * list (if any).
      */
     private int findRemoveIndexForAddTask(Task task) {
-        if (mFreezeTaskListReordering) {
-            // Defer removing tasks due to the addition of new tasks until the task list is unfrozen
-            return -1;
-        }
-
         final int recentsCount = mTasks.size();
         final Intent intent = task.intent;
         final boolean document = intent != null && intent.isDocument();
@@ -1539,7 +1634,7 @@ class RecentTasks {
                         task.affinity != null && task.affinity.equals(t.affinity);
                 final boolean sameIntent = intent != null && intent.filterEquals(trIntent);
                 boolean multiTasksAllowed = false;
-                final int flags = intent.getFlags();
+                final int flags = intent != null ? intent.getFlags() : 0;
                 if ((flags & (FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_NEW_DOCUMENT)) != 0
                         && (flags & FLAG_ACTIVITY_MULTIPLE_TASK) != 0) {
                     multiTasksAllowed = true;
@@ -1886,7 +1981,8 @@ class RecentTasks {
     /**
      * Creates a new RecentTaskInfo from a Task.
      */
-    ActivityManager.RecentTaskInfo createRecentTaskInfo(Task tr, boolean stripExtras) {
+    ActivityManager.RecentTaskInfo createRecentTaskInfo(Task tr, boolean stripExtras,
+            boolean getTasksAllowed) {
         final ActivityManager.RecentTaskInfo rti = new ActivityManager.RecentTaskInfo();
         // If the recent Task is detached, we consider it will be re-attached to the default
         // TaskDisplayArea because we currently only support recent overview in the default TDA.
@@ -1898,6 +1994,9 @@ class RecentTasks {
         rti.id = rti.isRunning ? rti.taskId : INVALID_TASK_ID;
         rti.persistentId = rti.taskId;
         rti.lastSnapshotData.set(tr.mLastTaskSnapshotData);
+        if (!getTasksAllowed) {
+            Task.trimIneffectiveInfo(tr, rti);
+        }
 
         // Fill in organized child task info for the task created by organizer.
         if (tr.mCreatedByOrganizer) {

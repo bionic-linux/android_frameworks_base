@@ -35,12 +35,14 @@ import android.widget.FrameLayout;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-import com.android.systemui.Dependency;
-import com.android.systemui.R;
 import com.android.systemui.assist.AssistLogger;
 import com.android.systemui.assist.AssistManager;
 import com.android.systemui.assist.AssistantSessionEvent;
 import com.android.systemui.dagger.SysUISingleton;
+import com.android.systemui.navigationbar.NavigationBarController;
+import com.android.systemui.res.R;
+
+import dagger.Lazy;
 
 import java.util.Locale;
 
@@ -65,6 +67,8 @@ public class DefaultUiController implements AssistManager.UiController {
     protected final AssistLogger mAssistLogger;
 
     private final WindowManager mWindowManager;
+    private final MetricsLogger mMetricsLogger;
+    private final Lazy<AssistManager> mAssistManagerLazy;
     private final WindowManager.LayoutParams mLayoutParams;
     private final PathInterpolator mProgressInterpolator = new PathInterpolator(.83f, 0, .84f, 1);
 
@@ -75,10 +79,15 @@ public class DefaultUiController implements AssistManager.UiController {
     private ValueAnimator mInvocationAnimator = new ValueAnimator();
 
     @Inject
-    public DefaultUiController(Context context, AssistLogger assistLogger) {
+    public DefaultUiController(Context context, AssistLogger assistLogger,
+            WindowManager windowManager, MetricsLogger metricsLogger,
+            Lazy<AssistManager> assistManagerLazy,
+            NavigationBarController navigationBarController) {
         mAssistLogger = assistLogger;
         mRoot = new FrameLayout(context);
-        mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        mWindowManager = windowManager;
+        mMetricsLogger = metricsLogger;
+        mAssistManagerLazy = assistManagerLazy;
 
         mLayoutParams = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
@@ -96,6 +105,7 @@ public class DefaultUiController implements AssistManager.UiController {
 
         mInvocationLightsView = (InvocationLightsView)
                 LayoutInflater.from(context).inflate(R.layout.invocation_lights, mRoot, false);
+        mInvocationLightsView.setNavigationBarController(navigationBarController);
         mRoot.addView(mInvocationLightsView);
     }
 
@@ -152,9 +162,9 @@ public class DefaultUiController implements AssistManager.UiController {
                     /* isInvocationComplete = */ false,
                     /* assistantComponent = */ null,
                     /* legacyDeviceState = */ null);
-            MetricsLogger.action(new LogMaker(MetricsEvent.ASSISTANT)
+            mMetricsLogger.write(new LogMaker(MetricsEvent.ASSISTANT)
                     .setType(MetricsEvent.TYPE_ACTION)
-                    .setSubtype(Dependency.get(AssistManager.class).toLoggingSubType(type)));
+                    .setSubtype(mAssistManagerLazy.get().toLoggingSubType(type)));
         }
         // Logs assistant invocation cancelled.
         if ((mInvocationAnimator == null || !mInvocationAnimator.isRunning())

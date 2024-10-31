@@ -22,7 +22,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Binder;
 import android.os.IBinder;
-import android.os.Process;
+import android.os.InputConfig;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.view.InputApplicationHandle;
@@ -51,7 +51,8 @@ class InputConsumerImpl implements IBinder.DeathRecipient {
     private final Rect mOldWindowCrop = new Rect();
 
     InputConsumerImpl(WindowManagerService service, IBinder token, String name,
-            InputChannel inputChannel, int clientPid, UserHandle clientUser, int displayId) {
+            InputChannel inputChannel, int clientPid, UserHandle clientUser, int displayId,
+            SurfaceControl.Transaction t) {
         mService = service;
         mToken = token;
         mName = name;
@@ -70,23 +71,19 @@ class InputConsumerImpl implements IBinder.DeathRecipient {
         mWindowHandle.name = name;
         mWindowHandle.token = mClientChannel.getToken();
         mWindowHandle.layoutParamsType = WindowManager.LayoutParams.TYPE_INPUT_CONSUMER;
-        mWindowHandle.layoutParamsFlags = 0;
         mWindowHandle.dispatchingTimeoutMillis = DEFAULT_DISPATCHING_TIMEOUT_MILLIS;
-        mWindowHandle.visible = true;
-        mWindowHandle.focusable = false;
-        mWindowHandle.hasWallpaper = false;
-        mWindowHandle.paused = false;
-        mWindowHandle.ownerPid = Process.myPid();
-        mWindowHandle.ownerUid = Process.myUid();
-        mWindowHandle.inputFeatures = 0;
+        mWindowHandle.ownerPid = WindowManagerService.MY_PID;
+        mWindowHandle.ownerUid = WindowManagerService.MY_UID;
         mWindowHandle.scaleFactor = 1.0f;
-        mWindowHandle.trustedOverlay = true;
+        mWindowHandle.inputConfig = InputConfig.NOT_FOCUSABLE;
 
-        mInputSurface = mService.makeSurfaceBuilder(mService.mRoot.getDisplayContent(displayId).getSession())
+        mInputSurface = mService.makeSurfaceBuilder(
+                        mService.mRoot.getDisplayContent(displayId).getSession())
                 .setContainerLayer()
                 .setName("Input Consumer " + name)
                 .setCallsite("InputConsumerImpl")
                 .build();
+        mWindowHandle.setTrustedOverlay(t, mInputSurface, true);
     }
 
     void linkToDeathRecipient() {
@@ -135,7 +132,7 @@ class InputConsumerImpl implements IBinder.DeathRecipient {
     void show(SurfaceControl.Transaction t, WindowContainer w) {
         t.show(mInputSurface);
         t.setInputWindowInfo(mInputSurface, mWindowHandle);
-        t.setRelativeLayer(mInputSurface, w.getSurfaceControl(), 1);
+        t.setRelativeLayer(mInputSurface, w.getSurfaceControl(), 1 + w.getChildCount());
     }
 
     void show(SurfaceControl.Transaction t, int layer) {
@@ -163,7 +160,7 @@ class InputConsumerImpl implements IBinder.DeathRecipient {
             if (dc == null) {
                 return;
             }
-            dc.getInputMonitor().destroyInputConsumer(mName);
+            dc.getInputMonitor().destroyInputConsumer(mToken);
             unlinkFromDeathRecipient();
         }
     }

@@ -16,33 +16,32 @@
 
 package com.android.systemui.sensorprivacy
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.DialogInterface.BUTTON_NEGATIVE
+import android.content.DialogInterface.BUTTON_POSITIVE
 import android.content.Intent
 import android.content.Intent.EXTRA_PACKAGE_NAME
 import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.hardware.SensorPrivacyManager
 import android.hardware.SensorPrivacyManager.EXTRA_ALL_SENSORS
 import android.hardware.SensorPrivacyManager.EXTRA_SENSOR
 import android.hardware.SensorPrivacyManager.Sources.DIALOG
 import android.os.Bundle
 import android.os.Handler
-import android.text.Html
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.widget.ImageView
-import com.android.internal.app.AlertActivity
-import com.android.internal.widget.DialogTitle
-import com.android.systemui.R
+import android.window.OnBackInvokedDispatcher
+import androidx.annotation.OpenForTesting
+import com.android.internal.camera.flags.Flags
+import com.android.internal.util.FrameworkStatsLog.PRIVACY_TOGGLE_DIALOG_INTERACTION
+import com.android.internal.util.FrameworkStatsLog.PRIVACY_TOGGLE_DIALOG_INTERACTION__ACTION__CANCEL
+import com.android.internal.util.FrameworkStatsLog.PRIVACY_TOGGLE_DIALOG_INTERACTION__ACTION__ENABLE
+import com.android.internal.util.FrameworkStatsLog.write
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.statusbar.phone.KeyguardDismissUtil
 import com.android.systemui.statusbar.policy.IndividualSensorPrivacyController
 import com.android.systemui.statusbar.policy.KeyguardStateController
 import javax.inject.Inject
-import com.android.internal.util.FrameworkStatsLog.PRIVACY_TOGGLE_DIALOG_INTERACTION
-import com.android.internal.util.FrameworkStatsLog.PRIVACY_TOGGLE_DIALOG_INTERACTION__ACTION__ENABLE
-import com.android.internal.util.FrameworkStatsLog.PRIVACY_TOGGLE_DIALOG_INTERACTION__ACTION__CANCEL
-import com.android.internal.util.FrameworkStatsLog.write
 
 /**
  * Dialog to be shown on top of apps that are attempting to use a sensor (e.g. microphone) which is
@@ -50,12 +49,13 @@ import com.android.internal.util.FrameworkStatsLog.write
  *
  * <p>The dialog is started for the user the app is running for which might be a secondary users.
  */
-class SensorUseStartedActivity @Inject constructor(
+@OpenForTesting
+open class SensorUseStartedActivity @Inject constructor(
     private val sensorPrivacyController: IndividualSensorPrivacyController,
     private val keyguardStateController: KeyguardStateController,
     private val keyguardDismissUtil: KeyguardDismissUtil,
     @Background private val bgHandler: Handler
-) : AlertActivity(), DialogInterface.OnClickListener {
+) : Activity(), DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
 
     companion object {
         private val LOG_TAG = SensorUseStartedActivity::class.java.simpleName
@@ -63,16 +63,19 @@ class SensorUseStartedActivity @Inject constructor(
         private const val SUPPRESS_REMINDERS_REMOVAL_DELAY_MILLIS = 2000L
         private const val UNLOCK_DELAY_MILLIS = 200L
 
-        private const val CAMERA = SensorPrivacyManager.Sensors.CAMERA
-        private const val MICROPHONE = SensorPrivacyManager.Sensors.MICROPHONE
-        private const val ALL_SENSORS = Integer.MAX_VALUE
+        internal const val CAMERA = SensorPrivacyManager.Sensors.CAMERA
+        internal const val MICROPHONE = SensorPrivacyManager.Sensors.MICROPHONE
+        internal const val ALL_SENSORS = Integer.MAX_VALUE
     }
 
     private var sensor = -1
     private lateinit var sensorUsePackageName: String
     private var unsuppressImmediately = false
 
-    private lateinit var sensorPrivacyListener: IndividualSensorPrivacyController.Callback
+    private var sensorPrivacyListener: IndividualSensorPrivacyController.Callback? = null
+
+    private var mDialog: AlertDialog? = null
+    private val mBackCallback = this::onBackInvoked
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,17 +90,16 @@ class SensorUseStartedActivity @Inject constructor(
 
         if (intent.getBooleanExtra(EXTRA_ALL_SENSORS, false)) {
             sensor = ALL_SENSORS
-            sensorPrivacyListener =
-                    IndividualSensorPrivacyController.Callback { _, _ ->
-                        if (!sensorPrivacyController.isSensorBlocked(MICROPHONE) &&
-                                !sensorPrivacyController.isSensorBlocked(CAMERA)) {
-                            dismiss()
-                        }
-                    }
-
-            sensorPrivacyController.addCallback(sensorPrivacyListener)
+            val callback = IndividualSensorPrivacyController.Callback { _, _ ->
+                if (!sensorPrivacyController.isSensorBlocked(MICROPHONE) &&
+                        !isCameraBlocked(sensorUsePackageName)) {
+                    finish()
+                }
+            }
+            sensorPrivacyListener = callback
+            sensorPrivacyController.addCallback(callback)
             if (!sensorPrivacyController.isSensorBlocked(MICROPHONE) &&
-                    !sensorPrivacyController.isSensorBlocked(CAMERA)) {
+                    !isCameraBlocked(sensorUsePackageName)) {
                 finish()
                 return
             }
@@ -108,72 +110,35 @@ class SensorUseStartedActivity @Inject constructor(
                     return
                 }
             }
-            sensorPrivacyListener =
-                    IndividualSensorPrivacyController.Callback {
-                        whichSensor: Int, isBlocked: Boolean ->
-                        if (whichSensor == sensor && !isBlocked) {
-                            dismiss()
-                        }
-                    }
-            sensorPrivacyController.addCallback(sensorPrivacyListener)
-
-            sensorPrivacyController.addCallback { _, isBlocked ->
-                if (!isBlocked) {
-                    dismiss()
+            val callback = IndividualSensorPrivacyController.Callback {
+                whichSensor: Int, isBlocked: Boolean ->
+                if (whichSensor != sensor) {
+                    // Ignore a callback; we're not interested in.
+                } else if ((whichSensor == CAMERA) && !isCameraBlocked(sensorUsePackageName)) {
+                    finish()
+                } else if ((whichSensor == MICROPHONE) && !isBlocked) {
+                    finish()
                 }
             }
-        }
+            sensorPrivacyListener = callback
+            sensorPrivacyController.addCallback(callback)
 
-        mAlertParams.apply {
-            try {
-                mCustomTitleView = mInflater.inflate(R.layout.sensor_use_started_title, null)
-                mCustomTitleView.findViewById<DialogTitle>(R.id.sensor_use_started_title_message)!!
-                        .setText(when (sensor) {
-                            MICROPHONE ->
-                                R.string.sensor_privacy_start_use_mic_dialog_title
-                            CAMERA ->
-                                R.string.sensor_privacy_start_use_camera_dialog_title
-                            ALL_SENSORS ->
-                                R.string.sensor_privacy_start_use_mic_camera_dialog_title
-                            else -> Resources.ID_NULL
-                        })
-
-                mCustomTitleView.findViewById<ImageView>(R.id.sensor_use_microphone_icon)!!
-                        .visibility = if (sensor == MICROPHONE || sensor == ALL_SENSORS) {
-                    VISIBLE
-                } else {
-                    GONE
-                }
-                mCustomTitleView.findViewById<ImageView>(R.id.sensor_use_camera_icon)!!
-                        .visibility = if (sensor == CAMERA || sensor == ALL_SENSORS) {
-                    VISIBLE
-                } else {
-                    GONE
-                }
-
-                mMessage = Html.fromHtml(getString(when (sensor) {
-                    MICROPHONE ->
-                        R.string.sensor_privacy_start_use_mic_dialog_content
-                    CAMERA ->
-                        R.string.sensor_privacy_start_use_camera_dialog_content
-                    ALL_SENSORS ->
-                        R.string.sensor_privacy_start_use_mic_camera_dialog_content
-                    else -> Resources.ID_NULL
-                }, packageManager.getApplicationInfo(sensorUsePackageName, 0)
-                        .loadLabel(packageManager)), 0)
-            } catch (e: PackageManager.NameNotFoundException) {
+            if ((sensor == CAMERA) && !isCameraBlocked(sensorUsePackageName)) {
+                finish()
+                return
+            } else if ((sensor == MICROPHONE) &&
+                    !sensorPrivacyController.isSensorBlocked(MICROPHONE)) {
                 finish()
                 return
             }
-
-            mPositiveButtonText = getString(
-                    com.android.internal.R.string.sensor_privacy_start_use_dialog_turn_on_button)
-            mNegativeButtonText = getString(android.R.string.cancel)
-            mPositiveButtonListener = this@SensorUseStartedActivity
-            mNegativeButtonListener = this@SensorUseStartedActivity
         }
 
-        setupAlert()
+        mDialog = SensorUseDialog(this, sensor, this, this)
+        mDialog!!.show()
+
+        onBackInvokedDispatcher.registerOnBackInvokedCallback(
+                OnBackInvokedDispatcher.PRIORITY_DEFAULT,
+                mBackCallback)
     }
 
     override fun onStart() {
@@ -186,7 +151,9 @@ class SensorUseStartedActivity @Inject constructor(
     override fun onClick(dialog: DialogInterface?, which: Int) {
         when (which) {
             BUTTON_POSITIVE -> {
-                if (keyguardStateController.isMethodSecure && keyguardStateController.isShowing) {
+                if (sensorPrivacyController.requiresAuthentication() &&
+                        keyguardStateController.isMethodSecure &&
+                        keyguardStateController.isShowing) {
                     keyguardDismissUtil.executeWhenUnlocked({
                         bgHandler.postDelayed({
                             disableSensorPrivacy()
@@ -212,7 +179,7 @@ class SensorUseStartedActivity @Inject constructor(
             }
         }
 
-        dismiss()
+        finish()
     }
 
     override fun onStop() {
@@ -229,16 +196,38 @@ class SensorUseStartedActivity @Inject constructor(
 
     override fun onDestroy() {
         super.onDestroy()
-        sensorPrivacyController.removeCallback(sensorPrivacyListener)
+        mDialog?.dismiss()
+        sensorPrivacyListener?.also { sensorPrivacyController.removeCallback(it) }
+        onBackInvokedDispatcher.unregisterOnBackInvokedCallback(mBackCallback)
     }
 
     override fun onBackPressed() {
+        onBackInvoked()
+    }
+
+    fun onBackInvoked() {
         // do not allow backing out
     }
 
     override fun onNewIntent(intent: Intent?) {
         setIntent(intent)
         recreate()
+    }
+
+    private fun isAutomotive(): Boolean {
+        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_AUTOMOTIVE)
+    }
+
+    private fun isCameraBlocked(packageName: String): Boolean {
+        if (Flags.cameraPrivacyAllowlist()) {
+            if (isAutomotive()) {
+                return sensorPrivacyController.isCameraPrivacyEnabled(packageName)
+            } else {
+                return sensorPrivacyController.isSensorBlocked(CAMERA)
+            }
+        } else {
+            return sensorPrivacyController.isSensorBlocked(CAMERA)
+        }
     }
 
     private fun disableSensorPrivacy() {
@@ -261,6 +250,12 @@ class SensorUseStartedActivity @Inject constructor(
         } else {
             sensorPrivacyController
                     .suppressSensorPrivacyReminders(sensor, suppressed)
+        }
+    }
+
+    override fun onDismiss(dialog: DialogInterface?) {
+        if (!isChangingConfigurations) {
+            finish()
         }
     }
 }

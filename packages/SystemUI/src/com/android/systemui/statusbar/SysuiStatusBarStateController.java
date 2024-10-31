@@ -21,15 +21,16 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 import android.annotation.IntDef;
 import android.view.View;
 
+import com.android.systemui.CoreStartable;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
-import com.android.systemui.statusbar.phone.StatusBar;
+import com.android.systemui.statusbar.phone.CentralSurfaces;
 
 import java.lang.annotation.Retention;
 
 /**
  * Sends updates to {@link StateListener}s about changes to the status bar state and dozing state
  */
-public interface SysuiStatusBarStateController extends StatusBarStateController {
+public interface SysuiStatusBarStateController extends StatusBarStateController, CoreStartable {
 
     // TODO: b/115739177 (remove this explicit ordering if we can)
     @Retention(SOURCE)
@@ -48,8 +49,9 @@ public interface SysuiStatusBarStateController extends StatusBarStateController 
      * notified before unranked, and we will sort ranked listeners from low to high
      *
      * @deprecated This method exists only to solve latent inter-dependencies from refactoring
-     * StatusBarState out of StatusBar.java. Any new listeners should be built not to need ranking
-     * (i.e., they are non-dependent on the order of operations of StatusBarState listeners).
+     * StatusBarState out of CentralSurfaces.java. Any new listeners should be built not to need
+     * ranking (i.e., they are non-dependent on the order of operations of StatusBarState
+     * listeners).
      */
     @Deprecated
     void addCallback(StateListener listener, int rank);
@@ -88,19 +90,18 @@ public interface SysuiStatusBarStateController extends StatusBarStateController 
     int getCurrentOrUpcomingState();
 
     /**
-     * Update the dozing state from {@link StatusBar}'s perspective
+     * Update the dozing state from {@link CentralSurfaces}'s perspective
      * @param isDozing well, are we dozing?
      * @return {@code true} if the state changed, else {@code false}
      */
     boolean setIsDozing(boolean isDozing);
 
     /**
-     * Changes the current doze amount.
-     *
-     * @param dozeAmount New doze/dark amount.
-     * @param animated If change should be animated or not. This will cancel current animations.
+     * Update the dreaming state from {@link CentralSurfaces}'s perspective
+     * @param isDreaming whether we are dreaming
+     * @return {@code true} if the state changed, else {@code false}
      */
-    void setDozeAmount(float dozeAmount, boolean animated);
+    boolean setIsDreaming(boolean isDreaming);
 
     /**
      * Changes the current doze amount, also starts the
@@ -111,13 +112,6 @@ public interface SysuiStatusBarStateController extends StatusBarStateController 
      * @param animated If change should be animated or not. This will cancel current animations.
      */
     void setAndInstrumentDozeAmount(View view, float dozeAmount, boolean animated);
-
-    /**
-     * Update the expanded state from {@link StatusBar}'s perspective
-     * @param expanded are we expanded?
-     * @return {@code true} if the state changed, else {@code false}
-     */
-    boolean setPanelExpanded(boolean expanded);
 
     /**
      * Sets whether to leave status bar open when hiding keyguard
@@ -153,11 +147,6 @@ public interface SysuiStatusBarStateController extends StatusBarStateController 
      * Is keyguard requested
      */
     boolean isKeyguardRequested();
-
-    /**
-     * Set the fullscreen state
-     */
-    void setFullscreenState(boolean isFullscreen);
 
     /**
      * Set pulsing

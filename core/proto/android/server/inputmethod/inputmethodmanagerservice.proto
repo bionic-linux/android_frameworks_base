@@ -31,7 +31,7 @@ message InputMethodManagerServiceProto {
     optional string cur_focused_window_soft_input_mode = 6;
     optional .android.view.inputmethod.EditorInfoProto cur_attribute = 7;
     optional string cur_id = 8;
-    optional bool show_requested = 9;
+    reserved 9; // deprecated show_requested
     optional bool show_explicitly_requested = 10;
     optional bool show_forced = 11;
     optional bool input_shown = 12;
@@ -39,7 +39,7 @@ message InputMethodManagerServiceProto {
     optional string cur_token = 14;
     optional int32 cur_token_display_id = 15;
     optional bool system_ready = 16;
-    optional int32 last_switch_user_id = 17;
+    reserved 17; // deprecated last_switch_user_id
     optional bool have_connection = 18;
     optional bool bound_to_method = 19;
     optional bool is_interactive = 20;

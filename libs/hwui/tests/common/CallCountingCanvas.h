@@ -19,6 +19,8 @@
 #include <SkCanvasVirtualEnforcer.h>
 #include <SkNoDrawCanvas.h>
 
+enum class SkBlendMode;
+
 namespace android {
 namespace uirenderer {
 namespace test {
@@ -105,12 +107,6 @@ public:
     void onDrawPoints(SkCanvas::PointMode mode, size_t count, const SkPoint pts[],
                       const SkPaint& paint) override {
         drawPoints++;
-    }
-
-    int drawImageCount = 0;
-    void onDrawImage2(const SkImage* image, SkScalar dx, SkScalar dy, const SkSamplingOptions&,
-                     const SkPaint* paint) override {
-        drawImageCount++;
     }
 
     int drawImageRectCount = 0;

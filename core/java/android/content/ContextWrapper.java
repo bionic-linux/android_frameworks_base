@@ -16,14 +16,19 @@
 
 package android.content;
 
+import android.annotation.CallbackExecutor;
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.annotation.UiContext;
+import android.app.BroadcastOptions;
 import android.app.IApplicationThread;
 import android.app.IServiceConnection;
+import android.app.compat.CompatChanges;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -47,23 +52,45 @@ import android.view.DisplayAdjustments;
 import android.view.WindowManager.LayoutParams.WindowType;
 import android.view.autofill.AutofillManager.AutofillClient;
 
+import com.android.internal.annotations.GuardedBy;
+import com.android.internal.annotations.VisibleForTesting;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.function.IntConsumer;
 
 /**
  * Proxying implementation of Context that simply delegates all of its calls to
  * another Context.  Can be subclassed to modify behavior without changing
  * the original Context.
  */
+@android.ravenwood.annotation.RavenwoodKeepWholeClass
 public class ContextWrapper extends Context {
     @UnsupportedAppUsage
     Context mBase;
+
+    /**
+     * A list to store {@link ComponentCallbacks} which
+     * passes to {@link #registerComponentCallbacks(ComponentCallbacks)} before
+     * {@link #attachBaseContext(Context)}.
+     * It is to provide compatibility behavior for Application targeted prior to
+     * {@link Build.VERSION_CODES#TIRAMISU}.
+     *
+     * @hide
+     */
+    @GuardedBy("mLock")
+    @VisibleForTesting
+    public List<ComponentCallbacks> mCallbacksRegisteredToSuper;
+
+    private final Object mLock = new Object();
 
     public ContextWrapper(Context base) {
         mBase = base;
@@ -494,8 +521,10 @@ public class ContextWrapper extends Context {
     /** @hide */
     @Override
     public void sendBroadcastMultiplePermissions(@NonNull Intent intent,
-            @NonNull String[] receiverPermissions, @Nullable String[] excludedPermissions) {
-        mBase.sendBroadcastMultiplePermissions(intent, receiverPermissions, excludedPermissions);
+            @NonNull String[] receiverPermissions, @Nullable String[] excludedPermissions,
+            @Nullable String[] excludedPackages, @Nullable BroadcastOptions options) {
+        mBase.sendBroadcastMultiplePermissions(intent, receiverPermissions, excludedPermissions,
+                excludedPackages, options);
     }
 
     /** @hide */
@@ -512,10 +541,8 @@ public class ContextWrapper extends Context {
         mBase.sendBroadcastAsUserMultiplePermissions(intent, user, receiverPermissions);
     }
 
-    /** @hide */
-    @SystemApi
     @Override
-    public void sendBroadcast(Intent intent, @Nullable String receiverPermission,
+    public void sendBroadcast(@NonNull Intent intent, @Nullable String receiverPermission,
             @Nullable Bundle options) {
         mBase.sendBroadcast(intent, receiverPermission, options);
     }
@@ -532,6 +559,14 @@ public class ContextWrapper extends Context {
         mBase.sendOrderedBroadcast(intent, receiverPermission);
     }
 
+    @SuppressLint("AndroidFrameworkRequiresPermission")
+    @Override
+    public void sendOrderedBroadcast(@NonNull Intent intent,
+            @Nullable String receiverPermission,
+            @Nullable Bundle options) {
+        mBase.sendOrderedBroadcast(intent, receiverPermission, options);
+    }
+
     @Override
     public void sendOrderedBroadcast(
             Intent intent, @Nullable String receiverPermission,
@@ -542,11 +577,9 @@ public class ContextWrapper extends Context {
                 initialData, initialExtras);
     }
 
-    /** @hide */
-    @SystemApi
     @Override
     public void sendOrderedBroadcast(
-            Intent intent, @Nullable String receiverPermission, @Nullable Bundle options,
+            @NonNull Intent intent, @Nullable String receiverPermission, @Nullable Bundle options,
             @Nullable BroadcastReceiver resultReceiver, @Nullable Handler scheduler,
             int initialCode, @Nullable String initialData, @Nullable Bundle initialExtras) {
         mBase.sendOrderedBroadcast(intent, receiverPermission,
@@ -619,6 +652,16 @@ public class ContextWrapper extends Context {
                 resultReceiver, scheduler, initialCode, initialData, initialExtras);
     }
 
+    /** @hide */
+    @Override
+    public void sendOrderedBroadcastAsUserMultiplePermissions(Intent intent, UserHandle user,
+            @Nullable String[] receiverPermission, int appOp, @Nullable Bundle options,
+            @Nullable BroadcastReceiver resultReceiver, @Nullable Handler scheduler,
+            int initialCode, @Nullable String initialData, @Nullable Bundle initialExtras) {
+        mBase.sendOrderedBroadcastAsUserMultiplePermissions(intent, user, receiverPermission, appOp,
+                options, resultReceiver, scheduler, initialCode, initialData, initialExtras);
+    }
+
     @Override
     public void sendOrderedBroadcast(@RequiresPermission @NonNull Intent intent,
             @Nullable String receiverPermission, @Nullable String receiverAppOp,
@@ -626,6 +669,17 @@ public class ContextWrapper extends Context {
             int initialCode, @Nullable String initialData, @Nullable Bundle initialExtras) {
         mBase.sendOrderedBroadcast(intent, receiverPermission, receiverAppOp, resultReceiver,
                 scheduler, initialCode, initialData, initialExtras);
+    }
+
+    /** @hide */
+    @Override
+    public void sendOrderedBroadcastMultiplePermissions(
+            @NonNull Intent intent, @NonNull String[] receiverPermissions,
+            @Nullable String receiverAppOp, @Nullable BroadcastReceiver resultReceiver,
+            @Nullable Handler scheduler, int initialCode, @Nullable String initialData,
+            @Nullable Bundle initialExtras, @Nullable Bundle options) {
+        mBase.sendOrderedBroadcastMultiplePermissions(intent, receiverPermissions, receiverAppOp,
+                resultReceiver, scheduler, initialCode, initialData, initialExtras, options);
     }
 
     @Override
@@ -756,12 +810,32 @@ public class ContextWrapper extends Context {
 
     /** @hide */
     @Override
+    @Nullable
+    public Intent registerReceiverForAllUsers(@Nullable BroadcastReceiver receiver,
+            @NonNull IntentFilter filter, @Nullable String broadcastPermission,
+            @Nullable Handler scheduler, int flags) {
+        return mBase.registerReceiverForAllUsers(receiver, filter, broadcastPermission,
+                scheduler, flags);
+    }
+
+    /** @hide */
+    @Override
     @UnsupportedAppUsage
     public Intent registerReceiverAsUser(@Nullable BroadcastReceiver receiver, UserHandle user,
             IntentFilter filter, @Nullable String broadcastPermission,
             @Nullable Handler scheduler) {
         return mBase.registerReceiverAsUser(receiver, user, filter, broadcastPermission,
                 scheduler);
+    }
+
+    /** @hide */
+    @Override
+    @UnsupportedAppUsage
+    public Intent registerReceiverAsUser(@Nullable BroadcastReceiver receiver, UserHandle user,
+            IntentFilter filter, @Nullable String broadcastPermission,
+            @Nullable Handler scheduler, int flags) {
+        return mBase.registerReceiverAsUser(receiver, user, filter, broadcastPermission,
+                scheduler, flags);
     }
 
     @Override
@@ -811,8 +885,20 @@ public class ContextWrapper extends Context {
     }
 
     @Override
+    public boolean bindService(@NonNull Intent service, @NonNull ServiceConnection conn,
+            @NonNull BindServiceFlags flags) {
+        return mBase.bindService(service, conn, flags);
+    }
+
+    @Override
     public boolean bindService(Intent service, int flags, Executor executor,
             ServiceConnection conn) {
+        return mBase.bindService(service, flags, executor, conn);
+    }
+
+    @Override
+    public boolean bindService(@NonNull Intent service, @NonNull BindServiceFlags flags,
+            @NonNull Executor executor, @NonNull ServiceConnection conn) {
         return mBase.bindService(service, flags, executor, conn);
     }
 
@@ -831,8 +917,22 @@ public class ContextWrapper extends Context {
 
     /** @hide */
     @Override
+    public boolean bindServiceAsUser(Intent service, ServiceConnection conn,
+            @NonNull BindServiceFlags flags, UserHandle user) {
+        return mBase.bindServiceAsUser(service, conn, flags, user);
+    }
+
+    /** @hide */
+    @Override
     public boolean bindServiceAsUser(Intent service, ServiceConnection conn, int flags,
             Handler handler, UserHandle user) {
+        return mBase.bindServiceAsUser(service, conn, flags, handler, user);
+    }
+
+    /** @hide */
+    @Override
+    public boolean bindServiceAsUser(Intent service, ServiceConnection conn,
+            @NonNull BindServiceFlags flags, Handler handler, UserHandle user) {
         return mBase.bindServiceAsUser(service, conn, flags, handler, user);
     }
 
@@ -853,7 +953,8 @@ public class ContextWrapper extends Context {
     }
 
     @Override
-    public @Nullable Object getSystemService(String name) {
+    // TODO(b/347269120): Re-add @Nullable
+    public Object getSystemService(String name) {
         return mBase.getSystemService(name);
     }
 
@@ -923,6 +1024,12 @@ public class ContextWrapper extends Context {
     @Override
     public int checkUriPermission(Uri uri, int pid, int uid, int modeFlags) {
         return mBase.checkUriPermission(uri, pid, uid, modeFlags);
+    }
+
+    @FlaggedApi(android.security.Flags.FLAG_CONTENT_URI_PERMISSION_APIS)
+    @Override
+    public int checkContentUriPermissionFull(@NonNull Uri uri, int pid, int uid, int modeFlags) {
+        return mBase.checkContentUriPermissionFull(uri, pid, uid, modeFlags);
     }
 
     @NonNull
@@ -995,6 +1102,11 @@ public class ContextWrapper extends Context {
     }
 
     @Override
+    public void revokeSelfPermissionsOnKill(@NonNull Collection<String> permissions) {
+        mBase.revokeSelfPermissionsOnKill(permissions);
+    }
+
+    @Override
     public Context createPackageContext(String packageName, int flags)
         throws PackageManager.NameNotFoundException {
         return mBase.createPackageContext(packageName, flags);
@@ -1019,6 +1131,15 @@ public class ContextWrapper extends Context {
     public Context createApplicationContext(ApplicationInfo application,
             int flags) throws PackageManager.NameNotFoundException {
         return mBase.createApplicationContext(application, flags);
+    }
+
+    /** @hide */
+    @Override
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @NonNull
+    public Context createContextForSdkInSandbox(@NonNull ApplicationInfo sdkInfo, int flags)
+            throws PackageManager.NameNotFoundException {
+        return mBase.createContextForSdkInSandbox(sdkInfo, flags);
     }
 
     /** @hide */
@@ -1048,6 +1169,11 @@ public class ContextWrapper extends Context {
     @Override
     public Context createDisplayContext(Display display) {
         return mBase.createDisplayContext(display);
+    }
+
+    @Override
+    public @NonNull Context createDeviceContext(int deviceId) {
+        return mBase.createDeviceContext(deviceId);
     }
 
     @Override
@@ -1114,8 +1240,40 @@ public class ContextWrapper extends Context {
      * @hide
      */
     @Override
+    public int getAssociatedDisplayId() {
+        return mBase.getAssociatedDisplayId();
+    }
+
+    /**
+     * @hide
+     */
+    @Override
     public void updateDisplay(int displayId) {
         mBase.updateDisplay(displayId);
+    }
+
+    /**
+     * @hide
+     */
+    @Override
+    public void updateDeviceId(int deviceId) {
+        mBase.updateDeviceId(deviceId);
+    }
+
+    @Override
+    public int getDeviceId() {
+        return mBase.getDeviceId();
+    }
+
+    @Override
+    public void registerDeviceIdChangeListener(@NonNull @CallbackExecutor Executor executor,
+            @NonNull IntConsumer listener) {
+        mBase.registerDeviceIdChangeListener(executor, listener);
+    }
+
+    @Override
+    public void unregisterDeviceIdChangeListener(@NonNull IntConsumer listener) {
+        mBase.unregisterDeviceIdChangeListener(listener);
     }
 
     @Override
@@ -1177,7 +1335,7 @@ public class ContextWrapper extends Context {
      */
     @Override
     public @Nullable IServiceConnection getServiceDispatcher(ServiceConnection conn,
-            Handler handler, int flags) {
+            Handler handler, long flags) {
         return mBase.getServiceDispatcher(conn, handler, flags);
     }
 
@@ -1187,6 +1345,14 @@ public class ContextWrapper extends Context {
     @Override
     public IApplicationThread getIApplicationThread() {
         return mBase.getIApplicationThread();
+    }
+
+    /**
+     * @hide
+     */
+    @Override
+    public IBinder getProcessToken() {
+        return mBase.getProcessToken();
     }
 
     /**
@@ -1274,5 +1440,91 @@ public class ContextWrapper extends Context {
             return false;
         }
         return mBase.isConfigurationContext();
+    }
+
+    /**
+     * Add a new {@link ComponentCallbacks} to the base application of the
+     * Context, which will be called at the same times as the ComponentCallbacks
+     * methods of activities and other components are called. Note that you
+     * <em>must</em> be sure to use {@link #unregisterComponentCallbacks} when
+     * appropriate in the future; this will not be removed for you.
+     * <p>
+     * After {@link Build.VERSION_CODES#TIRAMISU}, the {@link ComponentCallbacks} will be registered
+     * to {@link #getBaseContext() the base Context}, and can be only used after
+     * {@link #attachBaseContext(Context)}. Users can still call to
+     * {@code getApplicationContext().registerComponentCallbacks(ComponentCallbacks)} to add
+     * {@link ComponentCallbacks} to the base application.
+     *
+     * @param callback The interface to call.  This can be either a
+     * {@link ComponentCallbacks} or {@link ComponentCallbacks2} interface.
+     * @throws IllegalStateException if this method calls before {@link #attachBaseContext(Context)}
+     */
+    @Override
+    @android.ravenwood.annotation.RavenwoodThrow
+    public void registerComponentCallbacks(ComponentCallbacks callback) {
+        if (mBase != null) {
+            mBase.registerComponentCallbacks(callback);
+        } else if (!CompatChanges.isChangeEnabled(OVERRIDABLE_COMPONENT_CALLBACKS)) {
+            super.registerComponentCallbacks(callback);
+            synchronized (mLock) {
+                // Also register ComponentCallbacks to ContextWrapper, so we can find the correct
+                // Context to unregister it for compatibility.
+                if (mCallbacksRegisteredToSuper == null) {
+                    mCallbacksRegisteredToSuper = new ArrayList<>();
+                }
+                mCallbacksRegisteredToSuper.add(callback);
+            }
+        } else {
+            // Throw exception for Application targeting T+
+            throw new IllegalStateException("ComponentCallbacks must be registered after "
+                    + "this ContextWrapper is attached to a base Context.");
+        }
+    }
+
+    /**
+     * Remove a {@link ComponentCallbacks} object that was previously registered
+     * with {@link #registerComponentCallbacks(ComponentCallbacks)}.
+     * <p>
+     * After {@link Build.VERSION_CODES#TIRAMISU}, the {@link ComponentCallbacks} will be
+     * unregistered to {@link #getBaseContext() the base Context}, and can be only used after
+     * {@link #attachBaseContext(Context)}
+     * </p>
+     *
+     * @param callback The interface to call.  This can be either a
+     * {@link ComponentCallbacks} or {@link ComponentCallbacks2} interface.
+     * @throws IllegalStateException if this method calls before {@link #attachBaseContext(Context)}
+     */
+    @Override
+    @android.ravenwood.annotation.RavenwoodThrow
+    public void unregisterComponentCallbacks(ComponentCallbacks callback) {
+        // It usually means the ComponentCallbacks is registered before this ContextWrapper attaches
+        // to a base Context and Application is targeting prior to S-v2. We should unregister the
+        // ComponentCallbacks to the Application Context instead to prevent leak.
+        synchronized (mLock) {
+            if (mCallbacksRegisteredToSuper != null
+                    && mCallbacksRegisteredToSuper.contains(callback)) {
+                super.unregisterComponentCallbacks(callback);
+                mCallbacksRegisteredToSuper.remove(callback);
+            } else if (mBase != null) {
+                mBase.unregisterComponentCallbacks(callback);
+            } else if (CompatChanges.isChangeEnabled(OVERRIDABLE_COMPONENT_CALLBACKS)) {
+                // Throw exception for Application that is targeting S-v2+
+                throw new IllegalStateException("ComponentCallbacks must be unregistered after "
+                        + "this ContextWrapper is attached to a base Context.");
+            }
+        }
+        // Do nothing if the callback hasn't been registered to Application Context by
+        // super.unregisterComponentCallbacks() for Application that is targeting prior to T.
+    }
+
+    /**
+     * Closes temporary system dialogs. Some examples of temporary system dialogs are the
+     * notification window-shade and the recent tasks dialog.
+     *
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.BROADCAST_CLOSE_SYSTEM_DIALOGS)
+    public void closeSystemDialogs() {
+        mBase.closeSystemDialogs();
     }
 }

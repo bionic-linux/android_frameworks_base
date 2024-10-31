@@ -17,29 +17,37 @@
 package com.android.internal.security;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.os.Build;
-import android.os.SharedMemory;
 import android.os.SystemProperties;
-import android.system.ErrnoException;
+import android.os.incremental.V4Signature;
 import android.system.Os;
 import android.system.OsConstants;
-import android.util.Pair;
 import android.util.Slog;
-import android.util.apk.ApkSignatureVerifier;
-import android.util.apk.ByteBufferFactory;
-import android.util.apk.SignatureNotFoundException;
 
-import libcore.util.HexEncoding;
+import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.org.bouncycastle.asn1.nist.NISTObjectIdentifiers;
+import com.android.internal.org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
+import com.android.internal.org.bouncycastle.cms.CMSException;
+import com.android.internal.org.bouncycastle.cms.CMSProcessableByteArray;
+import com.android.internal.org.bouncycastle.cms.CMSSignedData;
+import com.android.internal.org.bouncycastle.cms.SignerInformation;
+import com.android.internal.org.bouncycastle.cms.SignerInformationVerifier;
+import com.android.internal.org.bouncycastle.cms.jcajce.JcaSimpleSignerInfoVerifierBuilder;
+import com.android.internal.org.bouncycastle.operator.OperatorCreationException;
 
 import java.io.File;
-import java.io.FileDescriptor;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.security.DigestException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 
 /** Provides fsverity related operations. */
 public abstract class VerityUtils {
@@ -51,13 +59,8 @@ public abstract class VerityUtils {
      */
     public static final String FSVERITY_SIGNATURE_FILE_EXTENSION = ".fsv_sig";
 
-    /** The maximum size of signature file.  This is just to avoid potential abuse. */
-    private static final int MAX_SIGNATURE_FILE_SIZE_BYTES = 8192;
-
     /** SHA256 hash size. */
     private static final int HASH_SIZE_BYTES = 32;
-
-    private static final boolean DEBUG = false;
 
     public static boolean isFsVeritySupported() {
         return Build.VERSION.DEVICE_INITIAL_SDK_INT >= Build.VERSION_CODES.R
@@ -74,22 +77,20 @@ public abstract class VerityUtils {
         return filePath + FSVERITY_SIGNATURE_FILE_EXTENSION;
     }
 
-    /** Enables fs-verity for the file with a PKCS#7 detached signature file. */
-    public static void setUpFsverity(@NonNull String filePath, @NonNull String signaturePath)
-            throws IOException {
-        if (Files.size(Paths.get(signaturePath)) > MAX_SIGNATURE_FILE_SIZE_BYTES) {
-            throw new SecurityException("Signature file is unexpectedly large: " + signaturePath);
-        }
-        setUpFsverity(filePath, Files.readAllBytes(Paths.get(signaturePath)));
-    }
-
-    /** Enables fs-verity for the file with a PKCS#7 detached signature bytes. */
-    public static void setUpFsverity(@NonNull String filePath, @NonNull byte[] pkcs7Signature)
-            throws IOException {
-        // This will fail if the public key is not already in .fs-verity kernel keyring.
-        int errno = enableFsverityNative(filePath, pkcs7Signature);
+    /** Enables fs-verity for the file without signature. */
+    public static void setUpFsverity(@NonNull String filePath) throws IOException {
+        int errno = enableFsverityNative(filePath);
         if (errno != 0) {
             throw new IOException("Failed to enable fs-verity on " + filePath + ": "
+                    + Os.strerror(errno));
+        }
+    }
+
+    /** Enables fs-verity for an open file without signature. */
+    public static void setUpFsverity(int fd) throws IOException {
+        int errno = enableFsverityForFdNative(fd);
+        if (errno != 0) {
+            throw new IOException("Failed to enable fs-verity on FD(" + fd + "): "
                     + Os.strerror(errno));
         }
     }
@@ -105,8 +106,100 @@ public abstract class VerityUtils {
         return (retval == 1);
     }
 
-    /** Returns hash of a root node for the fs-verity enabled file. */
-    public static byte[] getFsverityRootHash(@NonNull String filePath) {
+    /**
+     * Verifies the signature over the fs-verity digest using the provided certificate.
+     *
+     * This method should only be used by any existing fs-verity use cases that require
+     * PKCS#7 signature verification, if backward compatibility is necessary.
+     *
+     * Since PKCS#7 is too flexible, for the current specific need, only specific configuration
+     * will be accepted:
+     * <ul>
+     *   <li>Must use SHA256 as the digest algorithm
+     *   <li>Must use rsaEncryption as signature algorithm
+     *   <li>Must be detached / without content
+     *   <li>Must not include any signed or unsigned attributes
+     * </ul>
+     *
+     * It is up to the caller to provide an appropriate/trusted certificate.
+     *
+     * @param signatureBlock byte array of a PKCS#7 detached signature
+     * @param digest fs-verity digest with the common configuration using sha256
+     * @param derCertInputStream an input stream of a X.509 certificate in DER
+     * @return whether the verification succeeds
+     */
+    public static boolean verifyPkcs7DetachedSignature(@NonNull byte[] signatureBlock,
+            @NonNull byte[] digest, @NonNull InputStream derCertInputStream) {
+        if (digest.length != 32) {
+            Slog.w(TAG, "Only sha256 is currently supported");
+            return false;
+        }
+
+        try {
+            CMSSignedData signedData = new CMSSignedData(
+                    new CMSProcessableByteArray(toFormattedDigest(digest)),
+                    signatureBlock);
+
+            if (!signedData.isDetachedSignature()) {
+                Slog.w(TAG, "Expect only detached siganture");
+                return false;
+            }
+            if (!signedData.getCertificates().getMatches(null).isEmpty()) {
+                Slog.w(TAG, "Expect no certificate in signature");
+                return false;
+            }
+            if (!signedData.getCRLs().getMatches(null).isEmpty()) {
+                Slog.w(TAG, "Expect no CRL in signature");
+                return false;
+            }
+
+            X509Certificate trustedCert = (X509Certificate) CertificateFactory.getInstance("X.509")
+                    .generateCertificate(derCertInputStream);
+            SignerInformationVerifier verifier = new JcaSimpleSignerInfoVerifierBuilder()
+                    .build(trustedCert);
+
+            // Verify any signature with the trusted certificate.
+            for (SignerInformation si : signedData.getSignerInfos().getSigners()) {
+                // To be the most strict while dealing with the complicated PKCS#7 signature, reject
+                // everything we don't need.
+                if (si.getSignedAttributes() != null && si.getSignedAttributes().size() > 0) {
+                    Slog.w(TAG, "Unexpected signed attributes");
+                    return false;
+                }
+                if (si.getUnsignedAttributes() != null && si.getUnsignedAttributes().size() > 0) {
+                    Slog.w(TAG, "Unexpected unsigned attributes");
+                    return false;
+                }
+                if (!NISTObjectIdentifiers.id_sha256.getId().equals(si.getDigestAlgOID())) {
+                    Slog.w(TAG, "Unsupported digest algorithm OID: " + si.getDigestAlgOID());
+                    return false;
+                }
+                if (!PKCSObjectIdentifiers.rsaEncryption.getId().equals(si.getEncryptionAlgOID())) {
+                    Slog.w(TAG, "Unsupported encryption algorithm OID: "
+                            + si.getEncryptionAlgOID());
+                    return false;
+                }
+
+                if (si.verify(verifier)) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (CertificateException | CMSException | OperatorCreationException e) {
+            Slog.w(TAG, "Error occurred during the PKCS#7 signature verification", e);
+        }
+        return false;
+    }
+
+    /**
+     * Returns fs-verity digest for the file if enabled, otherwise returns null. The digest is a
+     * hash of root hash of fs-verity's Merkle tree with extra metadata.
+     *
+     * @see <a href="https://www.kernel.org/doc/html/latest/filesystems/fsverity.html#file-digest-computation">
+     *      File digest computation in Linux kernel documentation</a>
+     * @return Bytes of fs-verity digest, or null if the file does not have fs-verity enabled
+     */
+    public static @Nullable byte[] getFsverityDigest(@NonNull String filePath) {
         byte[] result = new byte[HASH_SIZE_BYTES];
         int retval = measureFsverityNative(filePath, result);
         if (retval < 0) {
@@ -118,209 +211,50 @@ public abstract class VerityUtils {
         return result;
     }
 
-    private static native int enableFsverityNative(@NonNull String filePath,
-            @NonNull byte[] pkcs7Signature);
+    /**
+     * Generates an fs-verity digest from a V4Signature.HashingInfo and the file's size.
+     */
+    public static @NonNull byte[] generateFsVerityDigest(long fileSize,
+            @NonNull V4Signature.HashingInfo hashingInfo)
+            throws DigestException, NoSuchAlgorithmException {
+        if (hashingInfo.rawRootHash == null || hashingInfo.rawRootHash.length != 32) {
+            throw new IllegalArgumentException("Expect a 32-byte rootHash for SHA256");
+        }
+        if (hashingInfo.log2BlockSize != 12) {
+            throw new IllegalArgumentException(
+                    "Unsupported log2BlockSize: " + hashingInfo.log2BlockSize);
+        }
+
+        var buffer = ByteBuffer.allocate(256);  // sizeof(fsverity_descriptor)
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
+        buffer.put((byte) 1);                   // version
+        buffer.put((byte) 1);                   // Merkle tree hash algorithm, 1 for SHA256
+        buffer.put(hashingInfo.log2BlockSize);  // log2(block-size), only log2(4096) is supported
+        buffer.put((byte) 0);                   // size of salt in bytes; 0 if none
+        buffer.putInt(0);                       // reserved, must be 0
+        buffer.putLong(fileSize);               // size of file the Merkle tree is built over
+        buffer.put(hashingInfo.rawRootHash);    // Merkle tree root hash
+        // The rest are zeros, including the latter half of root hash unused for SHA256.
+
+        return MessageDigest.getInstance("SHA-256").digest(buffer.array());
+    }
+
+    /** @hide */
+    @VisibleForTesting
+    public static byte[] toFormattedDigest(byte[] digest) {
+        // Construct fsverity_formatted_digest used in fs-verity's built-in signature verification.
+        ByteBuffer buffer = ByteBuffer.allocate(12 + digest.length); // struct size + sha256 size
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
+        buffer.put("FSVerity".getBytes(StandardCharsets.US_ASCII));
+        buffer.putShort((short) 1); // FS_VERITY_HASH_ALG_SHA256
+        buffer.putShort((short) digest.length);
+        buffer.put(digest);
+        return buffer.array();
+    }
+
+    private static native int enableFsverityNative(@NonNull String filePath);
+    private static native int enableFsverityForFdNative(int fd);
     private static native int measureFsverityNative(@NonNull String filePath,
             @NonNull byte[] digest);
     private static native int statxForFsverityNative(@NonNull String filePath);
-
-    /**
-     * Generates legacy Merkle tree and fs-verity metadata with Signing Block skipped.
-     *
-     * @deprecated This is only used for previous fs-verity implementation, and should never be used
-     *             on new devices.
-     * @return {@code SetupResult} that contains the result code, and when success, the
-     *         {@code FileDescriptor} to read all the data from.
-     */
-    @Deprecated
-    public static SetupResult generateApkVeritySetupData(@NonNull String apkPath) {
-        if (DEBUG) {
-            Slog.d(TAG, "Trying to install legacy apk verity to " + apkPath);
-        }
-        SharedMemory shm = null;
-        try {
-            final byte[] signedVerityHash = ApkSignatureVerifier.getVerityRootHash(apkPath);
-            if (signedVerityHash == null) {
-                if (DEBUG) {
-                    Slog.d(TAG, "Skip verity tree generation since there is no signed root hash");
-                }
-                return SetupResult.skipped();
-            }
-
-            Pair<SharedMemory, Integer> result =
-                    generateFsVerityIntoSharedMemory(apkPath, signedVerityHash);
-            shm = result.first;
-            int contentSize = result.second;
-            FileDescriptor rfd = shm.getFileDescriptor();
-            if (rfd == null || !rfd.valid()) {
-                return SetupResult.failed();
-            }
-            return SetupResult.ok(Os.dup(rfd), contentSize);
-        } catch (IOException | SecurityException | DigestException | NoSuchAlgorithmException
-                | SignatureNotFoundException | ErrnoException e) {
-            Slog.e(TAG, "Failed to set up apk verity: ", e);
-            return SetupResult.failed();
-        } finally {
-            if (shm != null) {
-                shm.close();
-            }
-        }
-    }
-
-    /**
-     * {@see ApkSignatureVerifier#generateApkVerityRootHash(String)}.
-     * @deprecated This is only used for previous fs-verity implementation, and should never be used
-     *             on new devices.
-     */
-    @Deprecated
-    public static byte[] generateApkVerityRootHash(@NonNull String apkPath)
-            throws NoSuchAlgorithmException, DigestException, IOException {
-        return ApkSignatureVerifier.generateApkVerityRootHash(apkPath);
-    }
-
-    /**
-     * {@see ApkSignatureVerifier#getVerityRootHash(String)}.
-     * @deprecated This is only used for previous fs-verity implementation, and should never be used
-     *             on new devices.
-     */
-    @Deprecated
-    public static byte[] getVerityRootHash(@NonNull String apkPath)
-            throws IOException, SignatureNotFoundException {
-        return ApkSignatureVerifier.getVerityRootHash(apkPath);
-    }
-
-    /**
-     * Returns a pair of {@code SharedMemory} and {@code Integer}. The {@code SharedMemory} contains
-     * Merkle tree and fsverity headers for the given apk, in the form that can immediately be used
-     * for fsverity setup. The data is aligned to the beginning of {@code SharedMemory}, and has
-     * length equals to the returned {@code Integer}.
-     */
-    private static Pair<SharedMemory, Integer> generateFsVerityIntoSharedMemory(String apkPath,
-            @NonNull byte[] expectedRootHash)
-            throws IOException, DigestException, NoSuchAlgorithmException,
-                   SignatureNotFoundException {
-        TrackedShmBufferFactory shmBufferFactory = new TrackedShmBufferFactory();
-        byte[] generatedRootHash =
-                ApkSignatureVerifier.generateApkVerity(apkPath, shmBufferFactory);
-        // We only generate Merkle tree once here, so it's important to make sure the root hash
-        // matches the signed one in the apk.
-        if (!Arrays.equals(expectedRootHash, generatedRootHash)) {
-            throw new SecurityException("verity hash mismatch: "
-                    + bytesToString(generatedRootHash) + " != " + bytesToString(expectedRootHash));
-        }
-
-        int contentSize = shmBufferFactory.getBufferLimit();
-        SharedMemory shm = shmBufferFactory.releaseSharedMemory();
-        if (shm == null) {
-            throw new IllegalStateException("Failed to generate verity tree into shared memory");
-        }
-        if (!shm.setProtect(OsConstants.PROT_READ)) {
-            throw new SecurityException("Failed to set up shared memory correctly");
-        }
-        return Pair.create(shm, contentSize);
-    }
-
-    private static String bytesToString(byte[] bytes) {
-        return HexEncoding.encodeToString(bytes);
-    }
-
-    /**
-     * @deprecated This is only used for previous fs-verity implementation, and should never be used
-     *             on new devices.
-     */
-    @Deprecated
-    public static class SetupResult {
-        /** Result code if verity is set up correctly. */
-        private static final int RESULT_OK = 1;
-
-        /** Result code if signature is not provided. */
-        private static final int RESULT_SKIPPED = 2;
-
-        /** Result code if the setup failed. */
-        private static final int RESULT_FAILED = 3;
-
-        private final int mCode;
-        private final FileDescriptor mFileDescriptor;
-        private final int mContentSize;
-
-        /** @deprecated */
-        @Deprecated
-        public static SetupResult ok(@NonNull FileDescriptor fileDescriptor, int contentSize) {
-            return new SetupResult(RESULT_OK, fileDescriptor, contentSize);
-        }
-
-        /** @deprecated */
-        @Deprecated
-        public static SetupResult skipped() {
-            return new SetupResult(RESULT_SKIPPED, null, -1);
-        }
-
-        /** @deprecated */
-        @Deprecated
-        public static SetupResult failed() {
-            return new SetupResult(RESULT_FAILED, null, -1);
-        }
-
-        private SetupResult(int code, FileDescriptor fileDescriptor, int contentSize) {
-            this.mCode = code;
-            this.mFileDescriptor = fileDescriptor;
-            this.mContentSize = contentSize;
-        }
-
-        public boolean isFailed() {
-            return mCode == RESULT_FAILED;
-        }
-
-        public boolean isOk() {
-            return mCode == RESULT_OK;
-        }
-
-        public @NonNull FileDescriptor getUnownedFileDescriptor() {
-            return mFileDescriptor;
-        }
-
-        public int getContentSize() {
-            return mContentSize;
-        }
-    }
-
-    /** A {@code ByteBufferFactory} that creates a shared memory backed {@code ByteBuffer}. */
-    private static class TrackedShmBufferFactory implements ByteBufferFactory {
-        private SharedMemory mShm;
-        private ByteBuffer mBuffer;
-
-        @Override
-        public ByteBuffer create(int capacity) {
-            try {
-                if (DEBUG) Slog.d(TAG, "Creating shared memory for apk verity");
-                // NB: This method is supposed to be called once according to the contract with
-                // ApkSignatureSchemeV2Verifier.
-                if (mBuffer != null) {
-                    throw new IllegalStateException("Multiple instantiation from this factory");
-                }
-                mShm = SharedMemory.create("apkverity", capacity);
-                if (!mShm.setProtect(OsConstants.PROT_READ | OsConstants.PROT_WRITE)) {
-                    throw new SecurityException("Failed to set protection");
-                }
-                mBuffer = mShm.mapReadWrite();
-                return mBuffer;
-            } catch (ErrnoException e) {
-                throw new SecurityException("Failed to set protection", e);
-            }
-        }
-
-        public SharedMemory releaseSharedMemory() {
-            if (mBuffer != null) {
-                SharedMemory.unmap(mBuffer);
-                mBuffer = null;
-            }
-            SharedMemory tmp = mShm;
-            mShm = null;
-            return tmp;
-        }
-
-        public int getBufferLimit() {
-            return mBuffer == null ? -1 : mBuffer.limit();
-        }
-    }
 }

@@ -3,7 +3,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="8016145283189546017">"Syöttölaitteet"</string>
     <string name="keyboard_layouts_label" msgid="6688773268302087545">"Android-näppäimistö"</string>
-    <string name="keyboard_layout_english_uk_label" msgid="6664258463319999632">"englanti (Iso-Britannia)"</string>
+    <string name="keyboard_layout_english_uk_label" msgid="6664258463319999632">"englanti (Yhdistynyt kuningaskunta)"</string>
     <string name="keyboard_layout_english_us_label" msgid="8994890249649106291">"englanti (Yhdysvallat)"</string>
     <string name="keyboard_layout_english_us_intl" msgid="3705168594034233583">"englanti (Yhdysvallat), kansainvälinen"</string>
     <string name="keyboard_layout_english_us_colemak_label" msgid="4194969610343455380">"englanti (Yhdysvallat), Colemak"</string>
@@ -50,4 +50,12 @@
     <string name="keyboard_layout_belarusian" msgid="7619281752698687588">"valkovenäjä"</string>
     <string name="keyboard_layout_mongolian" msgid="7678483495823936626">"mongoli"</string>
     <string name="keyboard_layout_georgian" msgid="4596185456863747454">"georgia"</string>
+    <string name="keyboard_layout_thai_kedmanee" msgid="6637147314580760938">"thai (kedmanee)"</string>
+    <string name="keyboard_layout_thai_pattachote" msgid="2547992342794252205">"thai (pattachote)"</string>
+    <string name="keyboard_layout_serbian_latin" msgid="3128791759390046571">"serbia (latinalainen)"</string>
+    <string name="keyboard_layout_montenegrin_latin" msgid="1467832503378949945">"montenegro (latinalainen)"</string>
+    <!-- no translation found for keyboard_layout_serbian_cyrillic (7013541044323542196) -->
+    <skip />
+    <!-- no translation found for keyboard_layout_montenegrin_cyrillic (2391253952894077421) -->
+    <skip />
 </resources>

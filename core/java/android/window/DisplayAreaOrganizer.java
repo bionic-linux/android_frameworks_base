@@ -34,6 +34,15 @@ import java.util.concurrent.Executor;
 public class DisplayAreaOrganizer extends WindowOrganizer {
 
     /**
+     * Key to specify the {@link com.android.server.wm.RootDisplayArea} to attach a window to.
+     * It will be used by the function passed in from
+     * {@link com.android.server.wm.DisplayAreaPolicyBuilder#setSelectRootForWindowFunc(BiFunction)}
+     * to find the Root DA to attach the window.
+     * @hide
+     */
+    public static final String KEY_ROOT_DISPLAY_AREA_ID = "root_display_area_id";
+
+    /**
      * The value in display area indicating that no value has been set.
      */
     public static final int FEATURE_UNDEFINED = -1;
@@ -92,12 +101,24 @@ public class DisplayAreaOrganizer extends WindowOrganizer {
     public static final int FEATURE_IME_PLACEHOLDER = FEATURE_SYSTEM_FIRST + 7;
 
     /**
-     * Display area for one handed background layer, which preventing when user
-     * turning the Dark theme on, they can not clearly identify the screen has entered
-     * one handed mode.
+     * Display area hosting IME window tokens (@see ImeContainer). By default, IMEs are parented
+     * to FEATURE_IME_PLACEHOLDER but can be reparented under other RootDisplayArea.
+     *
+     * This feature can register organizers in order to disable the reparenting logic and manage
+     * the position and settings of the container manually. This is useful for foldable devices
+     * which require custom UX rules for the IME position (e.g. IME on one screen and the focused
+     * app on another screen).
+     */
+    public static final int FEATURE_IME = FEATURE_SYSTEM_FIRST + 8;
+
+    /**
+     * Display area that includes all areas which can have windows. It is used to separate the
+     * window content to provide the ability of display level animation and display recording.
+     * It is usually only a placeholder that organizer should not control it. This only exists
+     * if {@link #FEATURE_WINDOWED_MAGNIFICATION} is not available to be the windowing layer.
      * @hide
      */
-    public static final int FEATURE_ONE_HANDED_BACKGROUND_PANEL = FEATURE_SYSTEM_FIRST + 8;
+    public static final int FEATURE_WINDOWING_LAYER = FEATURE_SYSTEM_FIRST + 9;
 
     /**
      * The last boundary of display area for system features
@@ -256,6 +277,7 @@ public class DisplayAreaOrganizer extends WindowOrganizer {
         }
     };
 
+    @RequiresPermission(android.Manifest.permission.MANAGE_ACTIVITY_TASKS)
     private IDisplayAreaOrganizerController getController() {
         try {
             return getWindowOrganizerController().getDisplayAreaOrganizerController();
@@ -263,5 +285,4 @@ public class DisplayAreaOrganizer extends WindowOrganizer {
             return null;
         }
     }
-
 }

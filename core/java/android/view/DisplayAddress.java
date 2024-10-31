@@ -33,7 +33,7 @@ public abstract class DisplayAddress implements Parcelable {
      *
      * @param physicalDisplayId A physical display ID.
      * @return The {@link Physical} address.
-     * @see SurfaceControl#getPhysicalDisplayIds
+     * @see com.android.server.display.DisplayControl#getPhysicalDisplayIds
      */
     @NonNull
     public static Physical fromPhysicalDisplayId(long physicalDisplayId) {
@@ -83,7 +83,7 @@ public abstract class DisplayAddress implements Parcelable {
          * Stable display ID combining port and model.
          *
          * @return An ID in the range [0, 2^64) interpreted as signed.
-         * @see SurfaceControl#getPhysicalDisplayIds
+         * @see com.android.server.display.DisplayControl#getPhysicalDisplayIds
          */
         public long getPhysicalDisplayId() {
             return mPhysicalDisplayId;
@@ -136,6 +136,30 @@ public abstract class DisplayAddress implements Parcelable {
         @Override
         public void writeToParcel(Parcel out, int flags) {
             out.writeLong(mPhysicalDisplayId);
+        }
+
+        /**
+         * This method is meant to check to see if the ports match
+         * @param a1 Address to compare
+         * @param a2 Address to compare
+         *
+         * @return true if the arguments have the same port, and at least one does not specify
+         *         a model.
+         */
+        public static boolean isPortMatch(DisplayAddress a1, DisplayAddress a2) {
+            // Both displays must be of type Physical
+            if (!(a1 instanceof Physical && a2 instanceof Physical)) {
+                return false;
+            }
+            Physical p1 = (Physical) a1;
+            Physical p2 = (Physical) a2;
+
+            // If both addresses specify a model, fallback to a basic match check (which
+            // also checks the port).
+            if (p1.getModel() != null && p2.getModel() != null) {
+                return p1.equals(p2);
+            }
+            return p1.getPort() == p2.getPort();
         }
 
         private Physical(long physicalDisplayId) {

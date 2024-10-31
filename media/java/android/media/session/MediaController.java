@@ -141,10 +141,9 @@ public final class MediaController {
         }
         try {
             return mSessionBinder.sendMediaButton(mContext.getPackageName(), keyEvent);
-        } catch (RemoteException e) {
-            // System is dead. =(
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
         }
-        return false;
     }
 
     /**
@@ -155,9 +154,8 @@ public final class MediaController {
     public @Nullable PlaybackState getPlaybackState() {
         try {
             return mSessionBinder.getPlaybackState();
-        } catch (RemoteException e) {
-            Log.wtf(TAG, "Error calling getPlaybackState.", e);
-            return null;
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
         }
     }
 
@@ -169,9 +167,8 @@ public final class MediaController {
     public @Nullable MediaMetadata getMetadata() {
         try {
             return mSessionBinder.getMetadata();
-        } catch (RemoteException e) {
-            Log.wtf(TAG, "Error calling getMetadata.", e);
-            return null;
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
         }
     }
 
@@ -185,10 +182,9 @@ public final class MediaController {
         try {
             ParceledListSlice list = mSessionBinder.getQueue();
             return list == null ? null : list.getList();
-        } catch (RemoteException e) {
-            Log.wtf(TAG, "Error calling getQueue.", e);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
         }
-        return null;
     }
 
     /**
@@ -197,10 +193,9 @@ public final class MediaController {
     public @Nullable CharSequence getQueueTitle() {
         try {
             return mSessionBinder.getQueueTitle();
-        } catch (RemoteException e) {
-            Log.wtf(TAG, "Error calling getQueueTitle", e);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
         }
-        return null;
     }
 
     /**
@@ -209,10 +204,9 @@ public final class MediaController {
     public @Nullable Bundle getExtras() {
         try {
             return mSessionBinder.getExtras();
-        } catch (RemoteException e) {
-            Log.wtf(TAG, "Error calling getExtras", e);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
         }
-        return null;
     }
 
     /**
@@ -232,9 +226,8 @@ public final class MediaController {
     public int getRatingType() {
         try {
             return mSessionBinder.getRatingType();
-        } catch (RemoteException e) {
-            Log.wtf(TAG, "Error calling getRatingType.", e);
-            return Rating.RATING_NONE;
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
         }
     }
 
@@ -246,24 +239,19 @@ public final class MediaController {
     public long getFlags() {
         try {
             return mSessionBinder.getFlags();
-        } catch (RemoteException e) {
-            Log.wtf(TAG, "Error calling getFlags.", e);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
         }
-        return 0;
     }
 
-    /**
-     * Get the current playback info for this session.
-     *
-     * @return The current playback info or null.
-     */
-    public @Nullable PlaybackInfo getPlaybackInfo() {
+    /** Returns the current playback info for this session. */
+    @NonNull
+    public PlaybackInfo getPlaybackInfo() {
         try {
             return mSessionBinder.getVolumeAttributes();
-        } catch (RemoteException e) {
-            Log.wtf(TAG, "Error calling getAudioInfo.", e);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
         }
-        return null;
     }
 
     /**
@@ -275,10 +263,9 @@ public final class MediaController {
     public @Nullable PendingIntent getSessionActivity() {
         try {
             return mSessionBinder.getLaunchPendingIntent();
-        } catch (RemoteException e) {
-            Log.wtf(TAG, "Error calling getPendingIntent.", e);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
         }
-        return null;
     }
 
     /**
@@ -308,8 +295,8 @@ public final class MediaController {
             //       AppOpsManager usages.
             mSessionBinder.setVolumeTo(mContext.getPackageName(), mContext.getOpPackageName(),
                     value, flags);
-        } catch (RemoteException e) {
-            Log.wtf(TAG, "Error calling setVolumeTo.", e);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
         }
     }
 
@@ -333,8 +320,8 @@ public final class MediaController {
             //       AppOpsManager usages.
             mSessionBinder.adjustVolume(mContext.getPackageName(), mContext.getOpPackageName(),
                     direction, flags);
-        } catch (RemoteException e) {
-            Log.wtf(TAG, "Error calling adjustVolumeBy.", e);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
         }
     }
 
@@ -399,22 +386,22 @@ public final class MediaController {
         }
         try {
             mSessionBinder.sendCommand(mContext.getPackageName(), command, args, cb);
-        } catch (RemoteException e) {
-            Log.d(TAG, "Dead object in sendCommand.", e);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
         }
     }
 
     /**
      * Get the session owner's package name.
      *
-     * @return The package name of of the session owner.
+     * @return The package name of the session owner.
      */
     public String getPackageName() {
         if (mPackageName == null) {
             try {
                 mPackageName = mSessionBinder.getPackageName();
-            } catch (RemoteException e) {
-                Log.d(TAG, "Dead object in getPackageName.", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
         return mPackageName;
@@ -434,8 +421,8 @@ public final class MediaController {
         // Get info from the connected session.
         try {
             mSessionInfo = mSessionBinder.getSessionInfo();
-        } catch (RemoteException e) {
-            Log.d(TAG, "Dead object in getSessionInfo.", e);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
         }
 
         if (mSessionInfo == null) {
@@ -458,8 +445,8 @@ public final class MediaController {
         if (mTag == null) {
             try {
                 mTag = mSessionBinder.getTag();
-            } catch (RemoteException e) {
-                Log.d(TAG, "Dead object in getTag.", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
         return mTag;
@@ -489,8 +476,8 @@ public final class MediaController {
             try {
                 mSessionBinder.registerCallback(mContext.getPackageName(), mCbStub);
                 mCbRegistered = true;
-            } catch (RemoteException e) {
-                Log.e(TAG, "Dead object in registerCallback", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
     }
@@ -508,8 +495,8 @@ public final class MediaController {
         if (mCbRegistered && mCallbacks.size() == 0) {
             try {
                 mSessionBinder.unregisterCallback(mCbStub);
-            } catch (RemoteException e) {
-                Log.e(TAG, "Dead object in removeCallbackLocked");
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
             mCbRegistered = false;
         }
@@ -618,12 +605,11 @@ public final class MediaController {
         }
 
         /**
-         * Override to handle changes to the audio info.
+         * Signals a change in the session's {@link PlaybackInfo PlaybackInfo}.
          *
-         * @param info The current audio info for this session.
+         * @param playbackInfo The latest known state of the session's playback info.
          */
-        public void onAudioInfoChanged(PlaybackInfo info) {
-        }
+        public void onAudioInfoChanged(@NonNull PlaybackInfo playbackInfo) {}
     }
 
     /**
@@ -646,8 +632,8 @@ public final class MediaController {
         public void prepare() {
             try {
                 mSessionBinder.prepare(mContext.getPackageName());
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling prepare.", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -670,8 +656,8 @@ public final class MediaController {
             }
             try {
                 mSessionBinder.prepareFromMediaId(mContext.getPackageName(), mediaId, extras);
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling prepare(" + mediaId + ").", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -696,8 +682,8 @@ public final class MediaController {
             }
             try {
                 mSessionBinder.prepareFromSearch(mContext.getPackageName(), query, extras);
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling prepare(" + query + ").", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -720,8 +706,8 @@ public final class MediaController {
             }
             try {
                 mSessionBinder.prepareFromUri(mContext.getPackageName(), uri, extras);
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling prepare(" + uri + ").", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -731,8 +717,8 @@ public final class MediaController {
         public void play() {
             try {
                 mSessionBinder.play(mContext.getPackageName());
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling play.", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -750,8 +736,8 @@ public final class MediaController {
             }
             try {
                 mSessionBinder.playFromMediaId(mContext.getPackageName(), mediaId, extras);
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling play(" + mediaId + ").", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -772,8 +758,8 @@ public final class MediaController {
             }
             try {
                 mSessionBinder.playFromSearch(mContext.getPackageName(), query, extras);
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling play(" + query + ").", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -791,8 +777,8 @@ public final class MediaController {
             }
             try {
                 mSessionBinder.playFromUri(mContext.getPackageName(), uri, extras);
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling play(" + uri + ").", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -803,8 +789,8 @@ public final class MediaController {
         public void skipToQueueItem(long id) {
             try {
                 mSessionBinder.skipToQueueItem(mContext.getPackageName(), id);
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling skipToItem(" + id + ").", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -815,8 +801,8 @@ public final class MediaController {
         public void pause() {
             try {
                 mSessionBinder.pause(mContext.getPackageName());
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling pause.", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -827,8 +813,8 @@ public final class MediaController {
         public void stop() {
             try {
                 mSessionBinder.stop(mContext.getPackageName());
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling stop.", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -840,8 +826,8 @@ public final class MediaController {
         public void seekTo(long pos) {
             try {
                 mSessionBinder.seekTo(mContext.getPackageName(), pos);
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling seekTo.", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -852,8 +838,8 @@ public final class MediaController {
         public void fastForward() {
             try {
                 mSessionBinder.fastForward(mContext.getPackageName());
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling fastForward.", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -863,8 +849,8 @@ public final class MediaController {
         public void skipToNext() {
             try {
                 mSessionBinder.next(mContext.getPackageName());
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling next.", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -875,8 +861,8 @@ public final class MediaController {
         public void rewind() {
             try {
                 mSessionBinder.rewind(mContext.getPackageName());
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling rewind.", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -886,8 +872,8 @@ public final class MediaController {
         public void skipToPrevious() {
             try {
                 mSessionBinder.previous(mContext.getPackageName());
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling previous.", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -901,8 +887,8 @@ public final class MediaController {
         public void setRating(Rating rating) {
             try {
                 mSessionBinder.rate(mContext.getPackageName(), rating);
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling rate.", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -919,8 +905,8 @@ public final class MediaController {
             }
             try {
                 mSessionBinder.setPlaybackSpeed(mContext.getPackageName(), speed);
-            } catch (RemoteException e) {
-                Log.wtf(TAG, "Error calling setPlaybackSpeed.", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
 
@@ -954,8 +940,8 @@ public final class MediaController {
             }
             try {
                 mSessionBinder.sendCustomAction(mContext.getPackageName(), action, args);
-            } catch (RemoteException e) {
-                Log.d(TAG, "Dead object in sendCustomAction.", e);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
             }
         }
     }
@@ -992,23 +978,23 @@ public final class MediaController {
         /**
          * Creates a new playback info.
          *
-         * @param playbackType The playback type. Should be {@link #PLAYBACK_TYPE_LOCAL} or
-         *                     {@link #PLAYBACK_TYPE_REMOTE}
-         * @param volumeControl The volume control. Should be one of:
-         *                      {@link VolumeProvider#VOLUME_CONTROL_ABSOLUTE},
-         *                      {@link VolumeProvider#VOLUME_CONTROL_RELATIVE}, and
-         *                      {@link VolumeProvider#VOLUME_CONTROL_FIXED}.
+         * @param playbackType The playback type. Should be {@link #PLAYBACK_TYPE_LOCAL} or {@link
+         *     #PLAYBACK_TYPE_REMOTE}
+         * @param volumeControl See {@link #getVolumeControl()}.
          * @param maxVolume The max volume. Should be equal or greater than zero.
          * @param currentVolume The current volume. Should be in the interval [0, maxVolume].
          * @param audioAttrs The audio attributes for this playback. Should not be null.
-         * @param volumeControlId The volume control ID. This is used for matching
-         *                        {@link RoutingSessionInfo} and {@link MediaSession}.
+         * @param volumeControlId See {@link #getVolumeControlId()}.
          * @hide
          */
         @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
-        public PlaybackInfo(@PlaybackType int playbackType, @ControlType int volumeControl,
-                @IntRange(from = 0) int maxVolume, @IntRange(from = 0) int currentVolume,
-                @NonNull AudioAttributes audioAttrs, @Nullable String volumeControlId) {
+        public PlaybackInfo(
+                @PlaybackType int playbackType,
+                @ControlType int volumeControl,
+                @IntRange(from = 0) int maxVolume,
+                @IntRange(from = 0) int currentVolume,
+                @NonNull AudioAttributes audioAttrs,
+                @Nullable String volumeControlId) {
             mPlaybackType = playbackType;
             mVolumeControl = volumeControl;
             mMaxVolume = maxVolume;
@@ -1022,7 +1008,7 @@ public final class MediaController {
             mVolumeControl = in.readInt();
             mMaxVolume = in.readInt();
             mCurrentVolume = in.readInt();
-            mAudioAttrs = in.readParcelable(null);
+            mAudioAttrs = in.readParcelable(null, android.media.AudioAttributes.class);
             mVolumeControlId = in.readString();
         }
 
@@ -1040,14 +1026,8 @@ public final class MediaController {
         }
 
         /**
-         * Get the type of volume control that can be used. One of:
-         * <ul>
-         * <li>{@link VolumeProvider#VOLUME_CONTROL_ABSOLUTE}</li>
-         * <li>{@link VolumeProvider#VOLUME_CONTROL_RELATIVE}</li>
-         * <li>{@link VolumeProvider#VOLUME_CONTROL_FIXED}</li>
-         * </ul>
-         *
-         * @return The type of volume control that may be used with this session.
+         * Get the volume control type associated to the session, as indicated by {@link
+         * VolumeProvider#getVolumeControl()}.
          */
         public int getVolumeControl() {
             return mVolumeControl;
@@ -1072,10 +1052,9 @@ public final class MediaController {
         }
 
         /**
-         * Get the audio attributes for this session. The attributes will affect
-         * volume handling for the session. When the volume type is
-         * {@link PlaybackInfo#PLAYBACK_TYPE_REMOTE} these may be ignored by the
-         * remote volume handler.
+         * Get the audio attributes for this session. The attributes will affect volume handling for
+         * the session. When the playback type is {@link PlaybackInfo#PLAYBACK_TYPE_REMOTE} these
+         * may be ignored by the remote volume handler.
          *
          * @return The attributes for this session.
          */
@@ -1084,19 +1063,9 @@ public final class MediaController {
         }
 
         /**
-         * Gets the volume control ID for this session. It can be used to identify which
-         * volume provider is used by the session.
-         * <p>
-         * When the session starts to use {@link #PLAYBACK_TYPE_REMOTE remote volume handling},
-         * a volume provider should be set and it may set the volume control ID of the provider
-         * if the session wants to inform which volume provider is used.
-         * It can be {@code null} if the session didn't set the volume control ID or it uses
-         * {@link #PLAYBACK_TYPE_LOCAL local playback}.
-         * </p>
-         *
-         * @return the volume control ID for this session or {@code null} if it uses local playback
-         * or not set.
-         * @see VolumeProvider#getVolumeControlId()
+         * Get the routing controller ID for this session, as indicated by {@link
+         * VolumeProvider#getVolumeControlId()}. Returns null if unset, or if {@link
+         * #getPlaybackType()} is {@link #PLAYBACK_TYPE_LOCAL}.
          */
         @Nullable
         public String getVolumeControlId() {
@@ -1203,7 +1172,7 @@ public final class MediaController {
         }
 
         @Override
-        public void onVolumeInfoChanged(PlaybackInfo info) {
+        public void onVolumeInfoChanged(@NonNull PlaybackInfo info) {
             MediaController controller = mController.get();
             if (controller != null) {
                 controller.postMessage(MSG_UPDATE_VOLUME, info, null);

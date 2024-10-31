@@ -1,10 +1,18 @@
 {
+  "imports": [
+    {
+      "path": "frameworks/base/core/tests/coretests/src/android/content/res"
+    },
+    {
+      "path": "frameworks/base/core/tests/coretests/src/com/android/internal/content/res"
+    }
+  ],
   "presubmit": [
     {
       "name": "CtsResourcesLoaderTests"
     },
     {
-      "name": "CtsContentTestCases",
+      "name": "CtsResourcesTestCases",
       "options": [
         {
           "exclude-annotation": "androidx.test.filters.FlakyTest"

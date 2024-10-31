@@ -17,143 +17,42 @@
 package com.android.keyguard;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import android.content.res.Resources;
+import android.database.ContentObserver;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.testing.AndroidTestingRunner;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import androidx.test.filters.SmallTest;
 
-import com.android.internal.colorextraction.ColorExtractor;
-import com.android.keyguard.clock.ClockManager;
-import com.android.systemui.R;
-import com.android.systemui.SysuiTestCase;
-import com.android.systemui.broadcast.BroadcastDispatcher;
-import com.android.systemui.colorextraction.SysuiColorExtractor;
-import com.android.systemui.keyguard.KeyguardUnlockAnimationController;
-import com.android.systemui.plugins.ClockPlugin;
-import com.android.systemui.plugins.statusbar.StatusBarStateController;
-import com.android.systemui.shared.system.smartspace.SmartspaceTransitionController;
+import com.android.systemui.Flags;
+import com.android.systemui.plugins.clocks.ClockFaceConfig;
+import com.android.systemui.plugins.clocks.ClockTickRate;
+import com.android.systemui.shared.clocks.ClockRegistry;
 import com.android.systemui.statusbar.StatusBarState;
-import com.android.systemui.statusbar.lockscreen.LockscreenSmartspaceController;
-import com.android.systemui.statusbar.phone.KeyguardBypassController;
-import com.android.systemui.statusbar.phone.NotificationIconAreaController;
-import com.android.systemui.statusbar.phone.NotificationIconContainer;
-import com.android.systemui.statusbar.policy.BatteryController;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.verification.VerificationMode;
 
 @SmallTest
 @RunWith(AndroidTestingRunner.class)
-public class KeyguardClockSwitchControllerTest extends SysuiTestCase {
-
-    @Mock
-    private KeyguardClockSwitch mView;
-    @Mock
-    private StatusBarStateController mStatusBarStateController;
-    @Mock
-    private SysuiColorExtractor mColorExtractor;
-    @Mock
-    private ClockManager mClockManager;
-    @Mock
-    KeyguardSliceViewController mKeyguardSliceViewController;
-    @Mock
-    NotificationIconAreaController mNotificationIconAreaController;
-    @Mock
-    BroadcastDispatcher mBroadcastDispatcher;
-    @Mock
-    BatteryController mBatteryController;
-    @Mock
-    KeyguardUpdateMonitor mKeyguardUpdateMonitor;
-    @Mock
-    KeyguardBypassController mBypassController;
-    @Mock
-    LockscreenSmartspaceController mSmartspaceController;
-
-    @Mock
-    Resources mResources;
-    KeyguardUnlockAnimationController mKeyguardUnlockAnimationController;
-    @Mock
-    SmartspaceTransitionController mSmartSpaceTransitionController;
-    @Mock
-    private ClockPlugin mClockPlugin;
-    @Mock
-    ColorExtractor.GradientColors mGradientColors;
-
-    @Mock
-    private NotificationIconContainer mNotificationIcons;
-    @Mock
-    private AnimatableClockView mClockView;
-    @Mock
-    private AnimatableClockView mLargeClockView;
-    @Mock
-    private FrameLayout mLargeClockFrame;
-
-    private final View mFakeSmartspaceView = new View(mContext);
-
-    private KeyguardClockSwitchController mController;
-    private View mStatusArea;
-
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-
-        when(mView.findViewById(R.id.left_aligned_notification_icon_container))
-                .thenReturn(mNotificationIcons);
-        when(mNotificationIcons.getLayoutParams()).thenReturn(
-                mock(RelativeLayout.LayoutParams.class));
-        when(mView.getContext()).thenReturn(getContext());
-
-        when(mView.findViewById(R.id.animatable_clock_view)).thenReturn(mClockView);
-        when(mView.findViewById(R.id.animatable_clock_view_large)).thenReturn(mLargeClockView);
-        when(mView.findViewById(R.id.lockscreen_clock_view_large)).thenReturn(mLargeClockFrame);
-        when(mClockView.getContext()).thenReturn(getContext());
-        when(mLargeClockView.getContext()).thenReturn(getContext());
-
-        when(mView.isAttachedToWindow()).thenReturn(true);
-        when(mResources.getString(anyInt())).thenReturn("h:mm");
-        when(mSmartspaceController.buildAndConnectView(any())).thenReturn(mFakeSmartspaceView);
-        mController = new KeyguardClockSwitchController(
-                mView,
-                mStatusBarStateController,
-                mColorExtractor,
-                mClockManager,
-                mKeyguardSliceViewController,
-                mNotificationIconAreaController,
-                mBroadcastDispatcher,
-                mBatteryController,
-                mKeyguardUpdateMonitor,
-                mBypassController,
-                mSmartspaceController,
-                mKeyguardUnlockAnimationController,
-                mSmartSpaceTransitionController
-        );
-
-        when(mStatusBarStateController.getState()).thenReturn(StatusBarState.SHADE);
-        when(mColorExtractor.getColors(anyInt())).thenReturn(mGradientColors);
-
-        mStatusArea = new View(getContext());
-        when(mView.findViewById(R.id.keyguard_status_area)).thenReturn(mStatusArea);
-    }
-
+public class KeyguardClockSwitchControllerTest extends KeyguardClockSwitchControllerBaseTest {
     @Test
     public void testInit_viewAlreadyAttached() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
         mController.init();
 
         verifyAttachment(times(1));
@@ -161,6 +60,8 @@ public class KeyguardClockSwitchControllerTest extends SysuiTestCase {
 
     @Test
     public void testInit_viewNotYetAttached() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
         ArgumentCaptor<View.OnAttachStateChangeListener> listenerArgumentCaptor =
                 ArgumentCaptor.forClass(View.OnAttachStateChangeListener.class);
 
@@ -177,12 +78,16 @@ public class KeyguardClockSwitchControllerTest extends SysuiTestCase {
 
     @Test
     public void testInitSubControllers() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
         mController.init();
         verify(mKeyguardSliceViewController).init();
     }
 
     @Test
     public void testInit_viewDetached() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
         ArgumentCaptor<View.OnAttachStateChangeListener> listenerArgumentCaptor =
                 ArgumentCaptor.forClass(View.OnAttachStateChangeListener.class);
         mController.init();
@@ -191,67 +96,223 @@ public class KeyguardClockSwitchControllerTest extends SysuiTestCase {
         verifyAttachment(times(1));
 
         listenerArgumentCaptor.getValue().onViewDetachedFromWindow(mView);
-
-        verify(mColorExtractor).removeOnColorsChangedListener(
-                any(ColorExtractor.OnColorsChangedListener.class));
+        verify(mClockEventController).unregisterListeners();
     }
 
     @Test
     public void testPluginPassesStatusBarState() {
-        ArgumentCaptor<ClockManager.ClockChangedListener> listenerArgumentCaptor =
-                ArgumentCaptor.forClass(ClockManager.ClockChangedListener.class);
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
+        ArgumentCaptor<ClockRegistry.ClockChangeListener> listenerArgumentCaptor =
+                ArgumentCaptor.forClass(ClockRegistry.ClockChangeListener.class);
 
         mController.init();
-        verify(mClockManager).addOnClockChangedListener(listenerArgumentCaptor.capture());
+        verify(mClockRegistry).registerClockChangeListener(listenerArgumentCaptor.capture());
 
-        listenerArgumentCaptor.getValue().onClockChanged(mClockPlugin);
-        verify(mView).setClockPlugin(mClockPlugin, StatusBarState.SHADE);
+        listenerArgumentCaptor.getValue().onCurrentClockChanged();
+        verify(mView, times(2)).setClock(mClockController, StatusBarState.SHADE);
+        verify(mClockEventController, times(2)).setClock(mClockController);
     }
 
     @Test
     public void testSmartspaceEnabledRemovesKeyguardStatusArea() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
         when(mSmartspaceController.isEnabled()).thenReturn(true);
-        when(mSmartspaceController.buildAndConnectView(any())).thenReturn(mFakeSmartspaceView);
         mController.init();
 
-        assertEquals(View.GONE, mStatusArea.getVisibility());
+        assertEquals(View.GONE, mSliceView.getVisibility());
+    }
+
+    @Test
+    public void onLocaleListChangedRebuildsSmartspaceView() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
+        when(mSmartspaceController.isEnabled()).thenReturn(true);
+        mController.init();
+
+        mController.onLocaleListChanged();
+        // Should be called once on initial setup, then once again for locale change
+        verify(mSmartspaceController, times(2)).buildAndConnectView(mView);
+    }
+
+    @Test
+    public void onLocaleListChanged_rebuildsSmartspaceViews_whenDecouplingEnabled() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
+        when(mSmartspaceController.isEnabled()).thenReturn(true);
+        when(mSmartspaceController.isDateWeatherDecoupled()).thenReturn(true);
+        mController.init();
+
+        mController.onLocaleListChanged();
+        // Should be called once on initial setup, then once again for locale change
+        verify(mSmartspaceController, times(2)).buildAndConnectDateView(mView);
+        verify(mSmartspaceController, times(2)).buildAndConnectWeatherView(mView);
+        verify(mSmartspaceController, times(2)).buildAndConnectView(mView);
     }
 
     @Test
     public void testSmartspaceDisabledShowsKeyguardStatusArea() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
         when(mSmartspaceController.isEnabled()).thenReturn(false);
         mController.init();
 
-        assertEquals(View.VISIBLE, mStatusArea.getVisibility());
-    }
-
-    @Test
-    public void testDetachRemovesSmartspaceView() {
-        when(mSmartspaceController.isEnabled()).thenReturn(true);
-        when(mSmartspaceController.buildAndConnectView(any())).thenReturn(mFakeSmartspaceView);
-        mController.init();
-        verify(mView).addView(eq(mFakeSmartspaceView), anyInt(), any());
-
-        ArgumentCaptor<View.OnAttachStateChangeListener> listenerArgumentCaptor =
-                ArgumentCaptor.forClass(View.OnAttachStateChangeListener.class);
-        verify(mView).addOnAttachStateChangeListener(listenerArgumentCaptor.capture());
-
-        listenerArgumentCaptor.getValue().onViewDetachedFromWindow(mView);
-        verify(mView).removeView(mFakeSmartspaceView);
+        assertEquals(View.VISIBLE, mSliceView.getVisibility());
     }
 
     @Test
     public void testRefresh() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
         mController.refresh();
 
         verify(mSmartspaceController).requestSmartspaceUpdate();
     }
 
+    @Test
+    public void testChangeToDoubleLineClockSetsSmallClock() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
+        when(mSecureSettings.getIntForUser(Settings.Secure.LOCKSCREEN_USE_DOUBLE_LINE_CLOCK, 1,
+                UserHandle.USER_CURRENT))
+                .thenReturn(0);
+        ArgumentCaptor<ContentObserver> observerCaptor =
+                ArgumentCaptor.forClass(ContentObserver.class);
+        mController.init();
+        mExecutor.runAllReady();
+        verify(mSecureSettings).registerContentObserverForUserSync(
+                eq(Settings.Secure.LOCKSCREEN_USE_DOUBLE_LINE_CLOCK),
+                    anyBoolean(), observerCaptor.capture(), eq(UserHandle.USER_ALL));
+        ContentObserver observer = observerCaptor.getValue();
+        mExecutor.runAllReady();
+
+        // When a settings change has occurred to the small clock, make sure the view is adjusted
+        reset(mView);
+        when(mView.getResources()).thenReturn(mResources);
+        observer.onChange(true);
+        mExecutor.runAllReady();
+        verify(mView).switchToClock(KeyguardClockSwitch.SMALL, /* animate */ true);
+    }
+
+    @Test
+    public void testGetClock_ForwardsToClock() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
+        assertEquals(mClockController, mController.getClock());
+    }
+
+    @Test
+    public void testGetLargeClockBottom_returnsExpectedValue() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
+        when(mLargeClockFrame.getVisibility()).thenReturn(View.VISIBLE);
+        when(mLargeClockFrame.getHeight()).thenReturn(100);
+        when(mSmallClockFrame.getHeight()).thenReturn(50);
+        when(mLargeClockView.getHeight()).thenReturn(40);
+        when(mSmallClockView.getHeight()).thenReturn(20);
+        mController.init();
+
+        assertEquals(170, mController.getClockBottom(1000));
+    }
+
+    @Test
+    public void testGetSmallLargeClockBottom_returnsExpectedValue() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
+        when(mLargeClockFrame.getVisibility()).thenReturn(View.GONE);
+        when(mLargeClockFrame.getHeight()).thenReturn(100);
+        when(mSmallClockFrame.getHeight()).thenReturn(50);
+        when(mLargeClockView.getHeight()).thenReturn(40);
+        when(mSmallClockView.getHeight()).thenReturn(20);
+        mController.init();
+
+        assertEquals(1120, mController.getClockBottom(1000));
+    }
+
+    @Test
+    public void testGetClockBottom_nullClock_returnsZero() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
+        when(mClockEventController.getClock()).thenReturn(null);
+        assertEquals(0, mController.getClockBottom(10));
+    }
+
+    @Test
+    public void testChangeLockscreenWeatherEnabledSetsWeatherViewVisible() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
+        when(mSmartspaceController.isWeatherEnabled()).thenReturn(true);
+        ArgumentCaptor<ContentObserver> observerCaptor =
+                ArgumentCaptor.forClass(ContentObserver.class);
+        mController.init();
+        mExecutor.runAllReady();
+        verify(mSecureSettings).registerContentObserverForUserSync(
+                eq(Settings.Secure.LOCK_SCREEN_WEATHER_ENABLED), anyBoolean(),
+                    observerCaptor.capture(), eq(UserHandle.USER_ALL));
+        ContentObserver observer = observerCaptor.getValue();
+        mExecutor.runAllReady();
+        // When a settings change has occurred, check that view is visible.
+        observer.onChange(true);
+        mExecutor.runAllReady();
+        assertEquals(View.VISIBLE, mFakeWeatherView.getVisibility());
+    }
+
+    @Test
+    public void testChangeClockDateWeatherEnabled_SetsDateWeatherViewVisibility() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
+        ArgumentCaptor<ClockRegistry.ClockChangeListener> listenerArgumentCaptor =
+                ArgumentCaptor.forClass(ClockRegistry.ClockChangeListener.class);
+        when(mSmartspaceController.isEnabled()).thenReturn(true);
+        when(mSmartspaceController.isDateWeatherDecoupled()).thenReturn(true);
+        when(mSmartspaceController.isWeatherEnabled()).thenReturn(true);
+        mController.init();
+        mExecutor.runAllReady();
+        assertEquals(View.VISIBLE, mFakeDateView.getVisibility());
+
+        when(mSmallClockController.getConfig())
+                .thenReturn(new ClockFaceConfig(ClockTickRate.PER_MINUTE, true, false, true));
+        when(mLargeClockController.getConfig())
+                .thenReturn(new ClockFaceConfig(ClockTickRate.PER_MINUTE, true, false, true));
+        verify(mClockRegistry).registerClockChangeListener(listenerArgumentCaptor.capture());
+        listenerArgumentCaptor.getValue().onCurrentClockChanged();
+
+        mExecutor.runAllReady();
+        assertEquals(View.INVISIBLE, mFakeDateView.getVisibility());
+    }
+
+    @Test
+    public void testGetClock_nullClock_returnsNull() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
+        when(mClockEventController.getClock()).thenReturn(null);
+        assertNull(mController.getClock());
+    }
+
     private void verifyAttachment(VerificationMode times) {
-        verify(mClockManager, times).addOnClockChangedListener(
-                any(ClockManager.ClockChangedListener.class));
-        verify(mColorExtractor, times).addOnColorsChangedListener(
-                any(ColorExtractor.OnColorsChangedListener.class));
-        verify(mView, times).updateColors(mGradientColors);
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
+        verify(mClockRegistry, times).registerClockChangeListener(
+                any(ClockRegistry.ClockChangeListener.class));
+        verify(mClockEventController, times).registerListeners(mView);
+    }
+
+    @Test
+    public void testSplitShadeEnabledSetToSmartspaceController() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
+        mController.setSplitShadeEnabled(true);
+        verify(mSmartspaceController, times(1)).setSplitShadeEnabled(true);
+        verify(mSmartspaceController, times(0)).setSplitShadeEnabled(false);
+    }
+
+    @Test
+    public void testSplitShadeDisabledSetToSmartspaceController() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_MIGRATE_CLOCKS_TO_BLUEPRINT);
+
+        mController.setSplitShadeEnabled(false);
+        verify(mSmartspaceController, times(1)).setSplitShadeEnabled(false);
+        verify(mSmartspaceController, times(0)).setSplitShadeEnabled(true);
     }
 }

@@ -23,19 +23,25 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.app.PendingIntent;
+import android.app.role.RoleManager;
+import android.content.Intent;
 import android.service.quickaccesswallet.GetWalletCardsRequest;
 import android.service.quickaccesswallet.QuickAccessWalletClient;
-import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
-import com.android.systemui.R;
 import com.android.systemui.SysuiTestCase;
+import com.android.systemui.animation.ActivityTransitionAnimator;
+import com.android.systemui.plugins.ActivityStarter;
+import com.android.systemui.res.R;
 import com.android.systemui.util.settings.SecureSettings;
 import com.android.systemui.util.time.FakeSystemClock;
 
@@ -49,19 +55,32 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-@RunWith(AndroidTestingRunner.class)
+import java.util.List;
+
+@RunWith(AndroidJUnit4.class)
 @TestableLooper.RunWithLooper
 @SmallTest
 public class QuickAccessWalletControllerTest extends SysuiTestCase {
 
+    private static final String WALLET_ROLE_HOLDER = "wallet.role.holder";
     @Mock
     private QuickAccessWalletClient mQuickAccessWalletClient;
     @Mock
     private SecureSettings mSecureSettings;
     @Mock
     private QuickAccessWalletClient.OnWalletCardsRetrievedCallback mCardsRetriever;
+    @Mock
+    private ActivityStarter mActivityStarter;
+    @Mock
+    private ActivityTransitionAnimator.Controller mAnimationController;
+    @Mock
+    private RoleManager mRoleManager;
     @Captor
     private ArgumentCaptor<GetWalletCardsRequest> mRequestCaptor;
+    @Captor
+    private ArgumentCaptor<Intent> mIntentCaptor;
+    @Captor
+    private ArgumentCaptor<PendingIntent> mPendingIntentCaptor;
 
     private FakeSystemClock mClock = new FakeSystemClock();
     private QuickAccessWalletController mController;
@@ -69,17 +88,28 @@ public class QuickAccessWalletControllerTest extends SysuiTestCase {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+
         when(mQuickAccessWalletClient.isWalletServiceAvailable()).thenReturn(true);
         when(mQuickAccessWalletClient.isWalletFeatureAvailable()).thenReturn(true);
         when(mQuickAccessWalletClient.isWalletFeatureAvailableWhenDeviceLocked()).thenReturn(true);
         mClock.setElapsedRealtime(100L);
 
+        doAnswer(invocation -> {
+            QuickAccessWalletClient.WalletPendingIntentCallback callback =
+                    (QuickAccessWalletClient.WalletPendingIntentCallback) invocation
+                            .getArguments()[1];
+            callback.onWalletPendingIntentRetrieved(null);
+            return null;
+        }).when(mQuickAccessWalletClient).getWalletPendingIntent(any(), any());
+
         mController = new QuickAccessWalletController(
                 mContext,
                 MoreExecutors.directExecutor(),
+                MoreExecutors.directExecutor(),
                 mSecureSettings,
                 mQuickAccessWalletClient,
-                mClock);
+                mClock,
+                mRoleManager);
     }
 
     @Test
@@ -87,6 +117,24 @@ public class QuickAccessWalletControllerTest extends SysuiTestCase {
         mController.updateWalletPreference();
 
         assertTrue(mController.isWalletEnabled());
+    }
+
+    @Test
+    public void walletRoleAvailable_isAvailable() {
+        when(mRoleManager.isRoleAvailable(eq(RoleManager.ROLE_WALLET))).thenReturn(true);
+        when(mRoleManager.getRoleHolders(eq(RoleManager.ROLE_WALLET)))
+                .thenReturn(List.of(WALLET_ROLE_HOLDER));
+
+        assertTrue(mController.isWalletRoleAvailable());
+    }
+
+    @Test
+    public void walletRoleAvailable_isNotAvailable() {
+        when(mRoleManager.isRoleAvailable(eq(RoleManager.ROLE_WALLET))).thenReturn(false);
+        when(mRoleManager.getRoleHolders(eq(RoleManager.ROLE_WALLET)))
+                .thenReturn(List.of(WALLET_ROLE_HOLDER));
+
+        assertFalse(mController.isWalletRoleAvailable());
     }
 
     @Test
@@ -151,12 +199,30 @@ public class QuickAccessWalletControllerTest extends SysuiTestCase {
 
         verify(mQuickAccessWalletClient)
                 .getWalletCards(
-                        eq(MoreExecutors.directExecutor()),
-                        mRequestCaptor.capture(),
+                        eq(MoreExecutors.directExecutor()), mRequestCaptor.capture(),
                         eq(mCardsRetriever));
 
         GetWalletCardsRequest request = mRequestCaptor.getValue();
         assertEquals(1, mRequestCaptor.getValue().getMaxCards());
+        assertEquals(
+                mContext.getResources().getDimensionPixelSize(R.dimen.wallet_tile_card_view_width),
+                request.getCardWidthPx());
+        assertEquals(
+                mContext.getResources().getDimensionPixelSize(R.dimen.wallet_tile_card_view_height),
+                request.getCardHeightPx());
+    }
+
+    @Test
+    public void queryWalletCards_walletEnabled_queryMultipleCards() {
+        mController.queryWalletCards(mCardsRetriever, 5);
+
+        verify(mQuickAccessWalletClient)
+                .getWalletCards(
+                        eq(MoreExecutors.directExecutor()), mRequestCaptor.capture(),
+                        eq(mCardsRetriever));
+
+        GetWalletCardsRequest request = mRequestCaptor.getValue();
+        assertEquals(5, mRequestCaptor.getValue().getMaxCards());
         assertEquals(
                 mContext.getResources().getDimensionPixelSize(R.dimen.wallet_tile_card_view_width),
                 request.getCardWidthPx());
@@ -172,5 +238,53 @@ public class QuickAccessWalletControllerTest extends SysuiTestCase {
         mController.queryWalletCards(mCardsRetriever);
 
         verify(mQuickAccessWalletClient, never()).getWalletCards(any(), any(), any());
+    }
+
+    @Test
+    public void getQuickAccessUiIntent_hasCards_noPendingIntent_startsWalletActivity() {
+        mController.startQuickAccessUiIntent(mActivityStarter, mAnimationController, true);
+        verify(mActivityStarter).startActivity(mIntentCaptor.capture(), eq(true),
+                any(ActivityTransitionAnimator.Controller.class), eq(true));
+        Intent intent = mIntentCaptor.getValue();
+        assertEquals(intent.getAction(), Intent.ACTION_VIEW);
+        assertEquals(
+                intent.getComponent().getClassName(),
+                "com.android.systemui.wallet.ui.WalletActivity");
+    }
+
+    @Test
+    public void getQuickAccessUiIntent_noCards_noPendingIntent_startsWalletActivity() {
+        mController.startQuickAccessUiIntent(mActivityStarter, mAnimationController, false);
+        verify(mActivityStarter).postStartActivityDismissingKeyguard(mIntentCaptor.capture(), eq(0),
+                any(ActivityTransitionAnimator.Controller.class));
+        Intent intent = mIntentCaptor.getValue();
+        assertEquals(intent.getAction(), Intent.ACTION_VIEW);
+        assertEquals(
+                intent.getComponent().getClassName(),
+                "com.android.systemui.wallet.ui.WalletActivity");
+    }
+
+    @Test
+    public void getQuickAccessUiIntent_targetActivityViaPendingIntent_intentComponentIsCorrect() {
+        doAnswer(invocation -> {
+            QuickAccessWalletClient.WalletPendingIntentCallback callback =
+                    (QuickAccessWalletClient.WalletPendingIntentCallback) invocation
+                            .getArguments()[1];
+            Intent intent = new Intent(Intent.ACTION_VIEW).setClassName(
+                    "com.google.android.apps.testapp",
+                    "com.google.android.apps.testapp.TestActivity");
+            callback.onWalletPendingIntentRetrieved(
+                    PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_IMMUTABLE));
+            return null;
+        }).when(mQuickAccessWalletClient).getWalletPendingIntent(any(), any());
+        mController.startQuickAccessUiIntent(mActivityStarter, mAnimationController, true);
+        verify(mActivityStarter).postStartActivityDismissingKeyguard(mPendingIntentCaptor.capture(),
+                any(ActivityTransitionAnimator.Controller.class));
+        PendingIntent pendingIntent = mPendingIntentCaptor.getValue();
+        Intent intent = pendingIntent.getIntent();
+        assertEquals(intent.getAction(), Intent.ACTION_VIEW);
+        assertEquals(
+                intent.getComponent().getClassName(),
+                "com.google.android.apps.testapp.TestActivity");
     }
 }

@@ -18,24 +18,22 @@
 
 #include "com_android_commands_hid_Device.h"
 
-#include <linux/uhid.h>
-
+#include <android-base/stringprintf.h>
+#include <android/looper.h>
 #include <fcntl.h>
 #include <inttypes.h>
-#include <unistd.h>
-#include <cstdio>
-#include <cstring>
-#include <memory>
-
-#include <android/looper.h>
 #include <jni.h>
+#include <linux/uhid.h>
 #include <log/log.h>
 #include <nativehelper/JNIHelp.h>
 #include <nativehelper/ScopedLocalRef.h>
 #include <nativehelper/ScopedPrimitiveArray.h>
 #include <nativehelper/ScopedUtfChars.h>
+#include <unistd.h>
 
-#include <android-base/stringprintf.h>
+#include <cstdio>
+#include <cstring>
+#include <memory>
 
 // Log debug messages about the output.
 static constexpr bool DEBUG_OUTPUT = false;
@@ -109,15 +107,15 @@ void DeviceCallback::onDeviceOpen() {
 
 void DeviceCallback::onDeviceGetReport(uint32_t requestId, uint8_t reportId) {
     JNIEnv* env = getJNIEnv();
-    env->CallVoidMethod(mCallbackObject, gDeviceCallbackClassInfo.onDeviceGetReport,
-            requestId, reportId);
+    env->CallVoidMethod(mCallbackObject, gDeviceCallbackClassInfo.onDeviceGetReport, requestId,
+                        reportId);
     checkAndClearException(env, "onDeviceGetReport");
 }
 
-void DeviceCallback::onDeviceSetReport(uint8_t rType,
-                                    const std::vector<uint8_t>& data) {
+void DeviceCallback::onDeviceSetReport(uint32_t id, uint8_t rType,
+                                       const std::vector<uint8_t>& data) {
     JNIEnv* env = getJNIEnv();
-    env->CallVoidMethod(mCallbackObject, gDeviceCallbackClassInfo.onDeviceSetReport, rType,
+    env->CallVoidMethod(mCallbackObject, gDeviceCallbackClassInfo.onDeviceSetReport, id, rType,
                         toJbyteArray(env, data).get());
     checkAndClearException(env, "onDeviceSetReport");
 }
@@ -136,8 +134,9 @@ JNIEnv* DeviceCallback::getJNIEnv() {
     return env;
 }
 
-std::unique_ptr<Device> Device::open(int32_t id, const char* name, int32_t vid, int32_t pid,
-                                     uint16_t bus, const std::vector<uint8_t>& descriptor,
+std::unique_ptr<Device> Device::open(int32_t id, const char* name, const char* uniq, int32_t vid,
+                                     int32_t pid, uint16_t bus,
+                                     const std::vector<uint8_t>& descriptor,
                                      std::unique_ptr<DeviceCallback> callback) {
     size_t size = descriptor.size();
     if (size > HID_MAX_DESCRIPTOR_SIZE) {
@@ -154,8 +153,7 @@ std::unique_ptr<Device> Device::open(int32_t id, const char* name, int32_t vid, 
     struct uhid_event ev = {};
     ev.type = UHID_CREATE2;
     strlcpy(reinterpret_cast<char*>(ev.u.create2.name), name, sizeof(ev.u.create2.name));
-    std::string uniq = android::base::StringPrintf("Id: %d", id);
-    strlcpy(reinterpret_cast<char*>(ev.u.create2.uniq), uniq.c_str(), sizeof(ev.u.create2.uniq));
+    strlcpy(reinterpret_cast<char*>(ev.u.create2.uniq), uniq, sizeof(ev.u.create2.uniq));
     memcpy(&ev.u.create2.rd_data, descriptor.data(), size * sizeof(ev.u.create2.rd_data[0]));
     ev.u.create2.rd_size = size;
     ev.u.create2.bus = bus;
@@ -236,6 +234,14 @@ void Device::sendGetFeatureReportReply(uint32_t id, const std::vector<uint8_t>& 
     writeEvent(mFd, ev, "UHID_GET_REPORT_REPLY");
 }
 
+void Device::sendSetReportReply(uint32_t id, bool success) const {
+    struct uhid_event ev = {};
+    ev.type = UHID_SET_REPORT_REPLY;
+    ev.u.set_report_reply.id = id;
+    ev.u.set_report_reply.err = success ? 0 : EIO;
+    writeEvent(mFd, ev, "UHID_SET_REPORT_REPLY");
+}
+
 int Device::handleEvents(int events) {
     if (events & (ALOOPER_EVENT_ERROR | ALOOPER_EVENT_HANGUP)) {
         ALOGE("uhid node was closed or an error occurred. events=0x%x", events);
@@ -249,7 +255,6 @@ int Device::handleEvents(int events) {
         mDeviceCallback->onDeviceError();
         return 0;
     }
-
     switch (ev.type) {
         case UHID_OPEN: {
             mDeviceCallback->onDeviceOpen();
@@ -271,7 +276,7 @@ int Device::handleEvents(int events) {
                 ALOGD("Received SET_REPORT: id=%" PRIu32 " rnum=%" PRIu8 " data=%s", set_report.id,
                       set_report.rnum, toString(data).c_str());
             }
-            mDeviceCallback->onDeviceSetReport(set_report.rtype, data);
+            mDeviceCallback->onDeviceSetReport(set_report.id, set_report.rtype, data);
             break;
         }
         case UHID_OUTPUT: {
@@ -309,10 +314,21 @@ std::vector<uint8_t> getData(JNIEnv* env, jbyteArray javaArray) {
     return data;
 }
 
-static jlong openDevice(JNIEnv* env, jclass /* clazz */, jstring rawName, jint id, jint vid,
-                        jint pid, jint bus, jbyteArray rawDescriptor, jobject callback) {
+static jlong openDevice(JNIEnv* env, jclass /* clazz */, jstring rawName, jstring rawUniq, jint id,
+                        jint vid, jint pid, jint bus, jbyteArray rawDescriptor, jobject callback) {
     ScopedUtfChars name(env, rawName);
     if (name.c_str() == nullptr) {
+        return 0;
+    }
+
+    std::string uniq;
+    if (rawUniq != nullptr) {
+        uniq = ScopedUtfChars(env, rawUniq);
+    } else {
+        uniq = android::base::StringPrintf("Id: %d", id);
+    }
+
+    if (uniq.c_str() == nullptr) {
         return 0;
     }
 
@@ -321,7 +337,8 @@ static jlong openDevice(JNIEnv* env, jclass /* clazz */, jstring rawName, jint i
     std::unique_ptr<uhid::DeviceCallback> cb(new uhid::DeviceCallback(env, callback));
 
     std::unique_ptr<uhid::Device> d =
-            uhid::Device::open(id, reinterpret_cast<const char*>(name.c_str()), vid, pid, bus, desc,
+            uhid::Device::open(id, reinterpret_cast<const char*>(name.c_str()),
+                               reinterpret_cast<const char*>(uniq.c_str()), vid, pid, bus, desc,
                                std::move(cb));
     return reinterpret_cast<jlong>(d.release());
 }
@@ -347,6 +364,15 @@ static void sendGetFeatureReportReply(JNIEnv* env, jclass /* clazz */, jlong ptr
     }
 }
 
+static void sendSetReportReply(JNIEnv*, jclass /* clazz */, jlong ptr, jint id, jboolean success) {
+    uhid::Device* d = reinterpret_cast<uhid::Device*>(ptr);
+    if (d) {
+        d->sendSetReportReply(id, success);
+    } else {
+        ALOGE("Could not send set report reply, Device* is null!");
+    }
+}
+
 static void closeDevice(JNIEnv* /* env */, jclass /* clazz */, jlong ptr) {
     uhid::Device* d = reinterpret_cast<uhid::Device*>(ptr);
     if (d) {
@@ -356,12 +382,13 @@ static void closeDevice(JNIEnv* /* env */, jclass /* clazz */, jlong ptr) {
 
 static JNINativeMethod sMethods[] = {
         {"nativeOpenDevice",
-         "(Ljava/lang/String;IIII[B"
+         "(Ljava/lang/String;Ljava/lang/String;IIII[B"
          "Lcom/android/commands/hid/Device$DeviceCallback;)J",
          reinterpret_cast<void*>(openDevice)},
         {"nativeSendReport", "(J[B)V", reinterpret_cast<void*>(sendReport)},
         {"nativeSendGetFeatureReportReply", "(JI[B)V",
          reinterpret_cast<void*>(sendGetFeatureReportReply)},
+        {"nativeSendSetReportReply", "(JIZ)V", reinterpret_cast<void*>(sendSetReportReply)},
         {"nativeCloseDevice", "(J)V", reinterpret_cast<void*>(closeDevice)},
 };
 
@@ -376,7 +403,7 @@ int register_com_android_commands_hid_Device(JNIEnv* env) {
     uhid::gDeviceCallbackClassInfo.onDeviceGetReport =
             env->GetMethodID(clazz, "onDeviceGetReport", "(II)V");
     uhid::gDeviceCallbackClassInfo.onDeviceSetReport =
-            env->GetMethodID(clazz, "onDeviceSetReport", "(B[B)V");
+            env->GetMethodID(clazz, "onDeviceSetReport", "(IB[B)V");
     uhid::gDeviceCallbackClassInfo.onDeviceOutput =
             env->GetMethodID(clazz, "onDeviceOutput", "(B[B)V");
     uhid::gDeviceCallbackClassInfo.onDeviceError =

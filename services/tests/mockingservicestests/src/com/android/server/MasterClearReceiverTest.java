@@ -24,7 +24,6 @@ import static com.google.common.truth.Truth.assertWithMessage;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.same;
@@ -155,10 +154,11 @@ public final class MasterClearReceiverTest {
         intent.putExtra(Intent.EXTRA_REASON, "Self destruct");
         intent.putExtra(Intent.EXTRA_FORCE_FACTORY_RESET, true);
         intent.putExtra(Intent.EXTRA_WIPE_ESIMS, true);
+        intent.putExtra("keep_memtag_mode", true);
         mReceiver.onReceive(mContext, intent);
 
         verifyRebootWipeUserData(/* shutdown= */ true, /* reason= */ "Self destruct",
-                /* force= */ true, /* wipeEuicc= */ true);
+                /* force= */ true, /* wipeEuicc= */ true, /* keepMemtagMode= */ true);
         verifyWipeExternalData();
     }
 
@@ -212,7 +212,7 @@ public final class MasterClearReceiverTest {
             mRebootWipeUserDataLatch.countDown();
             return null;
         }).when(() -> RecoverySystem
-                .rebootWipeUserData(any(), anyBoolean(), any(), anyBoolean(), anyBoolean()));
+                .rebootWipeUserData(any(), anyBoolean(), any(), anyBoolean(), anyBoolean(), anyBoolean()));
     }
 
     private void expectWipeExternalData() {
@@ -226,7 +226,7 @@ public final class MasterClearReceiverTest {
     }
 
     private void expectWipeNonSystemUser() {
-        when(mUserManager.removeUserOrSetEphemeral(anyInt(), anyBoolean()))
+        when(mUserManager.removeUserWhenPossible(any(), anyBoolean()))
                 .thenReturn(UserManager.REMOVE_RESULT_REMOVED);
     }
 
@@ -245,11 +245,16 @@ public final class MasterClearReceiverTest {
 
     private void verifyRebootWipeUserData(boolean shutdown, String reason, boolean force,
             boolean wipeEuicc) throws Exception {
+        verifyRebootWipeUserData(shutdown, reason, force, wipeEuicc, /* keepMemtagMode= */ false);
+    }
+
+    private void verifyRebootWipeUserData(boolean shutdown, String reason, boolean force,
+            boolean wipeEuicc, boolean keepMemtagMode) throws Exception {
         boolean called = mRebootWipeUserDataLatch.await(5, TimeUnit.SECONDS);
         assertWithMessage("rebootWipeUserData not called in 5s").that(called).isTrue();
 
         verify(()-> RecoverySystem.rebootWipeUserData(same(mContext), eq(shutdown), eq(reason),
-                eq(force), eq(wipeEuicc)));
+                eq(force), eq(wipeEuicc), eq(keepMemtagMode)));
     }
 
     private void verifyNoRebootWipeUserData() {
@@ -266,7 +271,7 @@ public final class MasterClearReceiverTest {
     }
 
     private void verifyWipeNonSystemUser() {
-        verify(mUserManager).removeUserOrSetEphemeral(anyInt(), anyBoolean());
+        verify(mUserManager).removeUserWhenPossible(any(), anyBoolean());
     }
 
     private void setPendingResultForUser(int userId) {

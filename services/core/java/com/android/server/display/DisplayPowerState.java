@@ -26,7 +26,12 @@ import android.util.Slog;
 import android.view.Choreographer;
 import android.view.Display;
 
+import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.os.BackgroundThread;
+import com.android.server.display.utils.DebugUtils;
+
 import java.io.PrintWriter;
+import java.util.concurrent.Executor;
 
 /**
  * Controls the display power state.
@@ -48,7 +53,9 @@ import java.io.PrintWriter;
 final class DisplayPowerState {
     private static final String TAG = "DisplayPowerState";
 
-    private static boolean DEBUG = false;
+    // To enable these logs, run:
+    // 'adb shell setprop persist.log.tag.DisplayPowerState DEBUG && adb reboot'
+    private static final boolean DEBUG = DebugUtils.isDebuggable(TAG);
     private static String COUNTER_COLOR_FADE = "ColorFadeLevel";
 
     private final Handler mHandler;
@@ -71,10 +78,19 @@ final class DisplayPowerState {
 
     private Runnable mCleanListener;
 
+    private Executor mAsyncDestroyExecutor;
+
     private volatile boolean mStopped;
 
     DisplayPowerState(
             DisplayBlanker blanker, ColorFade colorFade, int displayId, int displayState) {
+        this(blanker, colorFade, displayId, displayState, BackgroundThread.getExecutor());
+    }
+
+    @VisibleForTesting
+    DisplayPowerState(
+            DisplayBlanker blanker, ColorFade colorFade, int displayId, int displayState,
+            Executor asyncDestroyExecutor) {
         mHandler = new Handler(true /*async*/);
         mChoreographer = Choreographer.getInstance();
         mBlanker = blanker;
@@ -82,6 +98,7 @@ final class DisplayPowerState {
         mPhotonicModulator = new PhotonicModulator();
         mPhotonicModulator.start();
         mDisplayId = displayId;
+        mAsyncDestroyExecutor = asyncDestroyExecutor;
 
         // At boot time, we don't know the screen's brightness,
         // so prepare to set it to a known state when the state is next applied.
@@ -142,12 +159,13 @@ final class DisplayPowerState {
     /**
      * Sets whether the screen is on, off, or dozing.
      */
-    public void setScreenState(int state) {
+    public void setScreenState(int state, @Display.StateReason int reason) {
         if (mScreenState != state) {
             if (DEBUG) {
-                Slog.d(TAG, "setScreenState: state=" + state);
+                Slog.w(TAG,
+                        "setScreenState: state=" + Display.stateToString(state)
+                        + "; reason=" + Display.stateReasonToString(reason));
             }
-
             mScreenState = state;
             mScreenReady = false;
             scheduleScreenUpdate();
@@ -316,7 +334,11 @@ final class DisplayPowerState {
     public void stop() {
         mStopped = true;
         mPhotonicModulator.interrupt();
-        dismissColorFade();
+        mColorFadePrepared = false;
+        mColorFadeReady = true;
+        if (mColorFade != null) {
+            mAsyncDestroyExecutor.execute(mColorFade::destroy);
+        }
         mCleanListener = null;
         mHandler.removeCallbacksAndMessages(null);
     }
@@ -337,6 +359,15 @@ final class DisplayPowerState {
 
         mPhotonicModulator.dump(pw);
         if (mColorFade != null) mColorFade.dump(pw);
+    }
+
+    /**
+     * Resets the screen state to unknown. Useful when the underlying display-device changes for the
+     * LogicalDisplay and we do not know the last state that was sent to it.
+     */
+    void resetScreenState() {
+        mScreenState = Display.STATE_UNKNOWN;
+        mScreenReady = false;
     }
 
     private void scheduleScreenUpdate() {
@@ -391,7 +422,8 @@ final class DisplayPowerState {
         }
     };
 
-    private final Runnable mColorFadeDrawRunnable = new Runnable() {
+    @VisibleForTesting
+    final Runnable mColorFadeDrawRunnable = new Runnable() {
         @Override
         public void run() {
             mColorFadeDrawPending = false;
@@ -411,7 +443,7 @@ final class DisplayPowerState {
      * Updates the state of the screen and backlight asynchronously on a separate thread.
      */
     private final class PhotonicModulator extends Thread {
-        private static final int INITIAL_SCREEN_STATE = Display.STATE_OFF; // unknown, assume off
+        private static final int INITIAL_SCREEN_STATE = Display.STATE_UNKNOWN;
         private static final float INITIAL_BACKLIGHT_FLOAT = PowerManager.BRIGHTNESS_INVALID_FLOAT;
 
         private final Object mLock = new Object();
@@ -494,7 +526,11 @@ final class DisplayPowerState {
                     if (!backlightChanged) {
                         mBacklightChangeInProgress = false;
                     }
-                    if (!stateChanged && !backlightChanged) {
+                    boolean valid = state != Display.STATE_UNKNOWN && !Float.isNaN(brightnessState);
+                    boolean changed = stateChanged || backlightChanged;
+                    if (!valid || !changed) {
+                        mStateChangeInProgress = false;
+                        mBacklightChangeInProgress = false;
                         try {
                             mLock.wait();
                         } catch (InterruptedException ex) {

@@ -47,7 +47,7 @@
     <item msgid="287997784730044767">"Activées"</item>
   </string-array>
   <string-array name="tile_states_battery">
-    <item msgid="6311253873330062961">"Non disponible"</item>
+    <item msgid="6311253873330062961">"Non accessible"</item>
     <item msgid="7838121007534579872">"Désactivé"</item>
     <item msgid="1578872232501319194">"Activé"</item>
   </string-array>
@@ -86,6 +86,11 @@
     <item msgid="5715725170633593906">"Désactivé"</item>
     <item msgid="2075645297847971154">"Activé"</item>
   </string-array>
+  <string-array name="tile_states_color_correction">
+    <item msgid="2840507878437297682">"Non disponible"</item>
+    <item msgid="1909756493418256167">"Désactivée"</item>
+    <item msgid="4531508423703413340">"Activée"</item>
+  </string-array>
   <string-array name="tile_states_inversion">
     <item msgid="3638187931191394628">"Non disponible"</item>
     <item msgid="9103697205127645916">"Désactivée"</item>
@@ -121,6 +126,11 @@
     <item msgid="8259411607272330225">"Désactivé"</item>
     <item msgid="578444932039713369">"Activé"</item>
   </string-array>
+  <string-array name="tile_states_record_issue">
+    <item msgid="1727196795383575383">"Non accessible"</item>
+    <item msgid="9061144428113385092">"Désactivé"</item>
+    <item msgid="2984256114867200368">"Activé"</item>
+  </string-array>
   <string-array name="tile_states_reverse">
     <item msgid="3574611556622963971">"Non disponible"</item>
     <item msgid="8707481475312432575">"Désactivé"</item>
@@ -142,7 +152,7 @@
     <item msgid="8998632451221157987">"Activé"</item>
   </string-array>
   <string-array name="tile_states_controls">
-    <item msgid="8199009425335668294">"Non disponible"</item>
+    <item msgid="8199009425335668294">"Non disponibles"</item>
     <item msgid="4544919905196727508">"Désactivées"</item>
     <item msgid="3422023746567004609">"Activées"</item>
   </string-array>
@@ -151,9 +161,34 @@
     <item msgid="7571394439974244289">"Désactivé"</item>
     <item msgid="6866424167599381915">"Activé"</item>
   </string-array>
+  <string-array name="tile_states_qr_code_scanner">
+    <item msgid="7435143266149257618">"Non accessible"</item>
+    <item msgid="3301403109049256043">"Désactivé"</item>
+    <item msgid="8878684975184010135">"Activé"</item>
+  </string-array>
   <string-array name="tile_states_alarm">
     <item msgid="4936533380177298776">"Non disponible"</item>
     <item msgid="2710157085538036590">"Désactivée"</item>
     <item msgid="7809470840976856149">"Activée"</item>
+  </string-array>
+  <string-array name="tile_states_onehanded">
+    <item msgid="8189342855739930015">"Indisponible"</item>
+    <item msgid="146088982397753810">"Désactivé"</item>
+    <item msgid="460891964396502657">"Activé"</item>
+  </string-array>
+  <string-array name="tile_states_dream">
+    <item msgid="6184819793571079513">"Non accessible"</item>
+    <item msgid="8014986104355098744">"Désactivé"</item>
+    <item msgid="5966994759929723339">"Activé"</item>
+  </string-array>
+  <string-array name="tile_states_font_scaling">
+    <item msgid="3173069902082305985">"Non accessible"</item>
+    <item msgid="2478289035899842865">"Désactivée"</item>
+    <item msgid="5137565285664080143">"Activée"</item>
+  </string-array>
+  <string-array name="tile_states_hearing_devices">
+    <item msgid="1235334096484287173">"Non accessible"</item>
+    <item msgid="3079622119444911877">"Désactivé"</item>
+    <item msgid="3028994095749238254">"Activé"</item>
   </string-array>
 </resources>

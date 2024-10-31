@@ -495,6 +495,9 @@ public abstract class CallScreeningService extends Service {
              * Note: Calls will still be logged with type
              * {@link android.provider.CallLog.Calls#BLOCKED_TYPE}, regardless of how this property
              * is set.
+             * <p>
+             * Note: Only the carrier and system call screening apps can use this parameter;
+             * this parameter is ignored otherwise.
              */
             public Builder setSkipCallLog(boolean shouldSkipCallLog) {
                 mShouldSkipCallLog = shouldSkipCallLog;
@@ -632,8 +635,9 @@ public abstract class CallScreeningService extends Service {
      * post-dial digits are passed.
      * <p>
      * Calls with a {@link Call.Details#getHandlePresentation()} of
-     * {@link TelecomManager#PRESENTATION_RESTRICTED}, {@link TelecomManager#PRESENTATION_UNKNOWN}
-     * or {@link TelecomManager#PRESENTATION_PAYPHONE} presentation are not provided to the
+     * {@link TelecomManager#PRESENTATION_RESTRICTED}, {@link TelecomManager#PRESENTATION_UNKNOWN},
+     * {@link TelecomManager#PRESENTATION_UNAVAILABLE} or
+     * {@link TelecomManager#PRESENTATION_PAYPHONE} presentation are not provided to the
      * {@link CallScreeningService}.
      *
      * @param callDetails Information about a new call, see {@link Call.Details}.

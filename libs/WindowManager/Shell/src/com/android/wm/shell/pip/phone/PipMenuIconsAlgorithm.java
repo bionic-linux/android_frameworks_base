@@ -18,8 +18,6 @@ package com.android.wm.shell.pip.phone;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -50,8 +48,6 @@ public class PipMenuIconsAlgorithm {
         mDragHandle = dragHandle;
         mSettingsButton = settingsButton;
         mDismissButton = dismissButton;
-
-        bindInitialViewState();
     }
 
     /**
@@ -71,23 +67,5 @@ public class PipMenuIconsAlgorithm {
             params.gravity = gravity;
             v.setLayoutParams(params);
         }
-    }
-
-    /** Calculate the initial state of the menu icons. Called when the menu is first created. */
-    private void bindInitialViewState() {
-        if (mViewRoot == null || mTopEndContainer == null || mDragHandle == null
-                || mSettingsButton == null || mDismissButton == null) {
-            Log.e(TAG, "One of the required views is null.");
-            return;
-        }
-        // The menu view layout starts out with the settings button aligned at the top|end of the
-        // view group next to the dismiss button. On phones, the settings button should be aligned
-        // to the top|start of the view, so move it to parent view group to then align it to the
-        // top|start of the menu.
-        mTopEndContainer.removeView(mSettingsButton);
-        mViewRoot.addView(mSettingsButton);
-
-        setLayoutGravity(mDragHandle, Gravity.START | Gravity.TOP);
-        setLayoutGravity(mSettingsButton, Gravity.START | Gravity.TOP);
     }
 }

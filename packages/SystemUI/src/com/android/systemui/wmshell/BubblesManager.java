@@ -21,17 +21,14 @@ import static android.app.NotificationManager.BUBBLE_PREFERENCE_SELECTED;
 import static android.provider.Settings.Secure.NOTIFICATION_BUBBLES;
 import static android.service.notification.NotificationListenerService.REASON_APP_CANCEL;
 import static android.service.notification.NotificationListenerService.REASON_APP_CANCEL_ALL;
-import static android.service.notification.NotificationListenerService.REASON_CANCEL;
-import static android.service.notification.NotificationListenerService.REASON_CANCEL_ALL;
-import static android.service.notification.NotificationListenerService.REASON_CLICK;
 import static android.service.notification.NotificationListenerService.REASON_GROUP_SUMMARY_CANCELED;
 import static android.service.notification.NotificationStats.DISMISSAL_BUBBLE;
 import static android.service.notification.NotificationStats.DISMISS_SENTIMENT_NEUTRAL;
 
-import static com.android.systemui.statusbar.StatusBarState.SHADE;
-import static com.android.systemui.statusbar.notification.NotificationEntryManager.UNDEFINED_DISMISS_REASON;
+import static com.android.server.notification.Flags.screenshareNotificationHiding;
 import static com.android.wm.shell.bubbles.BubbleDebugConfig.TAG_BUBBLES;
 import static com.android.wm.shell.bubbles.BubbleDebugConfig.TAG_WITH_CLASS_NAME;
+import static com.android.wm.shell.protolog.ShellProtoLogGroup.WM_SHELL_BUBBLES;
 
 import android.app.INotificationManager;
 import android.app.Notification;
@@ -39,61 +36,54 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.UserInfo;
-import android.content.res.Configuration;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.service.dreams.IDreamManager;
 import android.service.notification.NotificationListenerService.RankingMap;
 import android.service.notification.ZenModeConfig;
-import android.util.ArraySet;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.protolog.common.ProtoLog;
 import com.android.internal.statusbar.IStatusBarService;
-import com.android.internal.statusbar.NotificationVisibility;
-import com.android.systemui.Dumpable;
 import com.android.systemui.dagger.SysUISingleton;
-import com.android.systemui.dump.DumpManager;
+import com.android.systemui.flags.FeatureFlags;
 import com.android.systemui.model.SysUiState;
-import com.android.systemui.plugins.statusbar.StatusBarStateController;
-import com.android.systemui.scrim.ScrimView;
+import com.android.systemui.shade.ShadeController;
 import com.android.systemui.shared.system.QuickStepContract;
-import com.android.systemui.statusbar.FeatureFlags;
 import com.android.systemui.statusbar.NotificationLockscreenUserManager;
 import com.android.systemui.statusbar.NotificationShadeWindowController;
+import com.android.systemui.statusbar.notification.NotifPipelineFlags;
 import com.android.systemui.statusbar.notification.NotificationChannelHelper;
-import com.android.systemui.statusbar.notification.NotificationEntryListener;
-import com.android.systemui.statusbar.notification.NotificationEntryManager;
 import com.android.systemui.statusbar.notification.collection.NotifCollection;
 import com.android.systemui.statusbar.notification.collection.NotifPipeline;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
-import com.android.systemui.statusbar.notification.collection.coordinator.BubbleCoordinator;
-import com.android.systemui.statusbar.notification.collection.legacy.NotificationGroupManagerLegacy;
+import com.android.systemui.statusbar.notification.collection.notifcollection.CommonNotifCollection;
 import com.android.systemui.statusbar.notification.collection.notifcollection.DismissedByUserStats;
 import com.android.systemui.statusbar.notification.collection.notifcollection.NotifCollectionListener;
-import com.android.systemui.statusbar.notification.interruption.NotificationInterruptStateProvider;
-import com.android.systemui.statusbar.notification.logging.NotificationLogger;
-import com.android.systemui.statusbar.phone.ScrimController;
-import com.android.systemui.statusbar.phone.ShadeController;
-import com.android.systemui.statusbar.policy.ConfigurationController;
+import com.android.systemui.statusbar.notification.collection.render.NotificationVisibilityProvider;
+import com.android.systemui.statusbar.notification.interruption.VisualInterruptionDecisionProvider;
+import com.android.systemui.statusbar.phone.StatusBarWindowCallback;
+import com.android.systemui.statusbar.policy.KeyguardStateController;
+import com.android.systemui.statusbar.policy.SensitiveNotificationProtectionController;
 import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.wm.shell.bubbles.Bubble;
 import com.android.wm.shell.bubbles.BubbleEntry;
 import com.android.wm.shell.bubbles.Bubbles;
 
-import java.io.FileDescriptor;
-import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 import java.util.function.IntConsumer;
@@ -102,26 +92,36 @@ import java.util.function.IntConsumer;
  * The SysUi side bubbles manager which communicate with other SysUi components.
  */
 @SysUISingleton
-public class BubblesManager implements Dumpable {
+public class BubblesManager {
 
     private static final String TAG = TAG_WITH_CLASS_NAME ? "BubblesManager" : TAG_BUBBLES;
 
     private final Context mContext;
     private final Bubbles mBubbles;
     private final NotificationShadeWindowController mNotificationShadeWindowController;
+    private final KeyguardStateController mKeyguardStateController;
     private final ShadeController mShadeController;
     private final IStatusBarService mBarService;
     private final INotificationManager mNotificationManager;
-    private final NotificationInterruptStateProvider mNotificationInterruptStateProvider;
-    private final NotificationGroupManagerLegacy mNotificationGroupManager;
-    private final NotificationEntryManager mNotificationEntryManager;
+    private final IDreamManager mDreamManager;
+    private final NotificationVisibilityProvider mVisibilityProvider;
+    private final VisualInterruptionDecisionProvider mVisualInterruptionDecisionProvider;
+    private final NotificationLockscreenUserManager mNotifUserManager;
+    private final SensitiveNotificationProtectionController mSensitiveNotifProtectionController;
+    private final CommonNotifCollection mCommonNotifCollection;
     private final NotifPipeline mNotifPipeline;
+    private final NotifPipelineFlags mNotifPipelineFlags;
     private final Executor mSysuiMainExecutor;
+    private final Executor mSysuiUiBgExecutor;
 
-    private ScrimView mBubbleScrim;
     private final Bubbles.SysuiProxy mSysuiProxy;
     // TODO (b/145659174): allow for multiple callbacks to support the "shadow" new notif pipeline
     private final List<NotifCallback> mCallbacks = new ArrayList<>();
+    private final StatusBarWindowCallback mStatusBarWindowCallback;
+    private final Runnable mSensitiveStateChangedListener;
+    private boolean mPanelExpanded;
+    private boolean mKeyguardShowing;
+    private boolean mDreamingOrInPreview;
 
     /**
      * Creates {@link BubblesManager}, returns {@code null} if Optional {@link Bubbles} not present
@@ -131,28 +131,44 @@ public class BubblesManager implements Dumpable {
     public static BubblesManager create(Context context,
             Optional<Bubbles> bubblesOptional,
             NotificationShadeWindowController notificationShadeWindowController,
-            StatusBarStateController statusBarStateController,
+            KeyguardStateController keyguardStateController,
             ShadeController shadeController,
-            ConfigurationController configurationController,
             @Nullable IStatusBarService statusBarService,
             INotificationManager notificationManager,
-            NotificationInterruptStateProvider interruptionStateProvider,
+            IDreamManager dreamManager,
+            NotificationVisibilityProvider visibilityProvider,
+            VisualInterruptionDecisionProvider visualInterruptionDecisionProvider,
             ZenModeController zenModeController,
             NotificationLockscreenUserManager notifUserManager,
-            NotificationGroupManagerLegacy groupManager,
-            NotificationEntryManager entryManager,
+            SensitiveNotificationProtectionController sensitiveNotificationProtectionController,
+            CommonNotifCollection notifCollection,
             NotifPipeline notifPipeline,
             SysUiState sysUiState,
             FeatureFlags featureFlags,
-            DumpManager dumpManager,
-            Executor sysuiMainExecutor) {
+            NotifPipelineFlags notifPipelineFlags,
+            Executor sysuiMainExecutor,
+            Executor sysuiUiBgExecutor) {
         if (bubblesOptional.isPresent()) {
-            return new BubblesManager(context, bubblesOptional.get(),
-                    notificationShadeWindowController, statusBarStateController, shadeController,
-                    configurationController, statusBarService, notificationManager,
-                    interruptionStateProvider, zenModeController, notifUserManager,
-                    groupManager, entryManager, notifPipeline, sysUiState, featureFlags,
-                    dumpManager, sysuiMainExecutor);
+            return new BubblesManager(context,
+                    bubblesOptional.get(),
+                    notificationShadeWindowController,
+                    keyguardStateController,
+                    shadeController,
+                    statusBarService,
+                    notificationManager,
+                    dreamManager,
+                    visibilityProvider,
+                    visualInterruptionDecisionProvider,
+                    zenModeController,
+                    notifUserManager,
+                    sensitiveNotificationProtectionController,
+                    notifCollection,
+                    notifPipeline,
+                    sysUiState,
+                    featureFlags,
+                    notifPipelineFlags,
+                    sysuiMainExecutor,
+                    sysuiUiBgExecutor);
         } else {
             return null;
         }
@@ -162,73 +178,52 @@ public class BubblesManager implements Dumpable {
     BubblesManager(Context context,
             Bubbles bubbles,
             NotificationShadeWindowController notificationShadeWindowController,
-            StatusBarStateController statusBarStateController,
+            KeyguardStateController keyguardStateController,
             ShadeController shadeController,
-            ConfigurationController configurationController,
             @Nullable IStatusBarService statusBarService,
             INotificationManager notificationManager,
-            NotificationInterruptStateProvider interruptionStateProvider,
+            IDreamManager dreamManager,
+            NotificationVisibilityProvider visibilityProvider,
+            VisualInterruptionDecisionProvider visualInterruptionDecisionProvider,
             ZenModeController zenModeController,
             NotificationLockscreenUserManager notifUserManager,
-            NotificationGroupManagerLegacy groupManager,
-            NotificationEntryManager entryManager,
+            SensitiveNotificationProtectionController sensitiveNotificationProtectionController,
+            CommonNotifCollection notifCollection,
             NotifPipeline notifPipeline,
             SysUiState sysUiState,
             FeatureFlags featureFlags,
-            DumpManager dumpManager,
-            Executor sysuiMainExecutor) {
+            NotifPipelineFlags notifPipelineFlags,
+            Executor sysuiMainExecutor,
+            Executor sysuiUiBgExecutor) {
         mContext = context;
         mBubbles = bubbles;
         mNotificationShadeWindowController = notificationShadeWindowController;
+        mKeyguardStateController = keyguardStateController;
         mShadeController = shadeController;
         mNotificationManager = notificationManager;
-        mNotificationInterruptStateProvider = interruptionStateProvider;
-        mNotificationGroupManager = groupManager;
-        mNotificationEntryManager = entryManager;
+        mDreamManager = dreamManager;
+        mVisibilityProvider = visibilityProvider;
+        mVisualInterruptionDecisionProvider = visualInterruptionDecisionProvider;
+        mNotifUserManager = notifUserManager;
+        mSensitiveNotifProtectionController = sensitiveNotificationProtectionController;
+        mCommonNotifCollection = notifCollection;
         mNotifPipeline = notifPipeline;
+        mNotifPipelineFlags = notifPipelineFlags;
         mSysuiMainExecutor = sysuiMainExecutor;
+        mSysuiUiBgExecutor = sysuiUiBgExecutor;
 
         mBarService = statusBarService == null
                 ? IStatusBarService.Stub.asInterface(
                 ServiceManager.getService(Context.STATUS_BAR_SERVICE))
                 : statusBarService;
 
-        mBubbleScrim = new ScrimView(mContext);
-        mBubbleScrim.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
-        mBubbles.setBubbleScrim(mBubbleScrim, (executor, looper) -> {
-            mBubbleScrim.setExecutor(executor, looper);
-        });
+        setupNotifPipeline();
 
-        if (featureFlags.isNewNotifPipelineRenderingEnabled()) {
-            setupNotifPipeline();
-        } else {
-            setupNEM();
-        }
-
-        dumpManager.registerDumpable(TAG, this);
-
-        statusBarStateController.addCallback(new StatusBarStateController.StateListener() {
+        // TODO(b/327410864): use KeyguardTransitionInteractor to listen for keyguard changes
+        mKeyguardStateController.addCallback(new KeyguardStateController.Callback() {
             @Override
-            public void onStateChanged(int newState) {
-                boolean isShade = newState == SHADE;
-                bubbles.onStatusBarStateChanged(isShade);
-            }
-        });
-
-        configurationController.addCallback(new ConfigurationController.ConfigurationListener() {
-            @Override
-            public void onConfigChanged(Configuration newConfig) {
-                mBubbles.onConfigChanged(newConfig);
-            }
-
-            @Override
-            public void onUiModeChanged() {
-                mBubbles.updateForThemeChanges();
-            }
-
-            @Override
-            public void onThemeChanged() {
-                mBubbles.updateForThemeChanges();
+            public void onKeyguardShowingChanged() {
+                updateKeyguardAndDreamingState();
             }
         });
 
@@ -256,11 +251,51 @@ public class BubblesManager implements Dumpable {
                         mBubbles.onCurrentProfilesChanged(currentProfiles);
                     }
 
+                    @Override
+                    public void onUserRemoved(int userId) {
+                        mBubbles.onUserRemoved(userId);
+                    }
+
                 });
+
+        // Store callback in a field so it won't get GC'd
+        mStatusBarWindowCallback =
+                (keyguardShowing, keyguardOccluded, keyguardGoingAway, bouncerShowing, isDozing,
+                        panelExpanded, isDreaming) -> {
+                    if (panelExpanded != mPanelExpanded) {
+                        mPanelExpanded = panelExpanded;
+                        mBubbles.onNotificationPanelExpandedChanged(panelExpanded);
+                    }
+                    if (!mKeyguardShowing && mDreamingOrInPreview && !isDreaming) {
+                        // We check for dreaming state changes when keyguard status changes.
+                        // This causes us to miss events if dreaming state changes after keyguard.
+                        // Add a check here for the case where keyguard is dismissed before
+                        // dreaming state changes. Otherwise bubbles remain invisible.
+                        // TODO(b/327410864): use KeyguardTransitionInteractor for dreaming changes
+                        updateKeyguardAndDreamingState();
+                    }
+                };
+        notificationShadeWindowController.registerCallback(mStatusBarWindowCallback);
+
+        mSensitiveStateChangedListener = new Runnable() {
+            @Override
+            public void run() {
+                if (!screenshareNotificationHiding()) {
+                    return;
+                }
+                bubbles.onSensitiveNotificationProtectionStateChanged(
+                        mSensitiveNotifProtectionController.isSensitiveStateActive());
+            }
+        };
+
+        if (screenshareNotificationHiding()) {
+            mSensitiveNotifProtectionController
+                    .registerSensitiveStateListener(mSensitiveStateChangedListener);
+        }
 
         mSysuiProxy = new Bubbles.SysuiProxy() {
             @Override
-            public void isNotificationShadeExpand(Consumer<Boolean> callback) {
+            public void isNotificationPanelExpand(Consumer<Boolean> callback) {
                 sysuiMainExecutor.execute(() -> {
                     callback.accept(mNotificationShadeWindowController.getPanelExpanded());
                 });
@@ -269,23 +304,22 @@ public class BubblesManager implements Dumpable {
             @Override
             public void getPendingOrActiveEntry(String key, Consumer<BubbleEntry> callback) {
                 sysuiMainExecutor.execute(() -> {
-                    NotificationEntry entry =
-                            mNotificationEntryManager.getPendingOrActiveNotif(key);
+                    final NotificationEntry entry = mCommonNotifCollection.getEntry(key);
                     callback.accept(entry == null ? null : notifToBubbleEntry(entry));
                 });
             }
 
             @Override
-            public void getShouldRestoredEntries(ArraySet<String> savedBubbleKeys,
+            public void getShouldRestoredEntries(Set<String> savedBubbleKeys,
                     Consumer<List<BubbleEntry>> callback) {
                 sysuiMainExecutor.execute(() -> {
                     List<BubbleEntry> result = new ArrayList<>();
-                    List<NotificationEntry> activeEntries =
-                            mNotificationEntryManager.getActiveNotificationsForCurrentUser();
-                    for (int i = 0; i < activeEntries.size(); i++) {
-                        NotificationEntry entry = activeEntries.get(i);
-                        if (savedBubbleKeys.contains(entry.getKey())
-                                && mNotificationInterruptStateProvider.shouldBubbleUp(entry)
+                    final Collection<NotificationEntry> activeEntries =
+                            mCommonNotifCollection.getAllNotifs();
+                    for (NotificationEntry entry : activeEntries) {
+                        if (mNotifUserManager.isCurrentProfile(entry.getSbn().getUserId())
+                                && savedBubbleKeys.contains(entry.getKey())
+                                && shouldBubbleUp(entry)
                                 && entry.isBubble()) {
                             result.add(notifToBubbleEntry(entry));
                         }
@@ -297,8 +331,7 @@ public class BubblesManager implements Dumpable {
             @Override
             public void setNotificationInterruption(String key) {
                 sysuiMainExecutor.execute(() -> {
-                    final NotificationEntry entry =
-                            mNotificationEntryManager.getPendingOrActiveNotif(key);
+                    final NotificationEntry entry = mCommonNotifCollection.getEntry(key);
                     if (entry != null
                             && entry.getImportance() >= NotificationManager.IMPORTANCE_HIGH) {
                         entry.setInterruption();
@@ -316,8 +349,7 @@ public class BubblesManager implements Dumpable {
             @Override
             public void notifyRemoveNotification(String key, int reason) {
                 sysuiMainExecutor.execute(() -> {
-                    final NotificationEntry entry =
-                            mNotificationEntryManager.getPendingOrActiveNotif(key);
+                    final NotificationEntry entry = mCommonNotifCollection.getEntry(key);
                     if (entry != null) {
                         for (NotifCallback cb : mCallbacks) {
                             cb.removeNotification(entry, getDismissedByUserStats(entry, true),
@@ -337,47 +369,11 @@ public class BubblesManager implements Dumpable {
             }
 
             @Override
-            public void notifyMaybeCancelSummary(String key) {
-                sysuiMainExecutor.execute(() -> {
-                    final NotificationEntry entry =
-                            mNotificationEntryManager.getPendingOrActiveNotif(key);
-                    if (entry != null) {
-                        for (NotifCallback cb : mCallbacks) {
-                            cb.maybeCancelSummary(entry);
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void removeNotificationEntry(String key) {
-                sysuiMainExecutor.execute(() -> {
-                    final NotificationEntry entry =
-                            mNotificationEntryManager.getPendingOrActiveNotif(key);
-                    if (entry != null) {
-                        mNotificationGroupManager.onEntryRemoved(entry);
-                    }
-                });
-            }
-
-            @Override
             public void updateNotificationBubbleButton(String key) {
                 sysuiMainExecutor.execute(() -> {
-                    final NotificationEntry entry =
-                            mNotificationEntryManager.getPendingOrActiveNotif(key);
+                    final NotificationEntry entry = mCommonNotifCollection.getEntry(key);
                     if (entry != null && entry.getRow() != null) {
                         entry.getRow().updateBubbleButton();
-                    }
-                });
-            }
-
-            @Override
-            public void updateNotificationSuppression(String key) {
-                sysuiMainExecutor.execute(() -> {
-                    final NotificationEntry entry =
-                            mNotificationEntryManager.getPendingOrActiveNotif(key);
-                    if (entry != null) {
-                        mNotificationGroupManager.updateSuppression(entry);
                     }
                 });
             }
@@ -387,14 +383,27 @@ public class BubblesManager implements Dumpable {
                 sysuiMainExecutor.execute(() -> {
                     sysUiState.setFlag(QuickStepContract.SYSUI_STATE_BUBBLES_EXPANDED, shouldExpand)
                             .commitUpdate(mContext.getDisplayId());
+                    if (!shouldExpand) {
+                        sysUiState.setFlag(
+                                QuickStepContract.SYSUI_STATE_BUBBLES_MANAGE_MENU_EXPANDED,
+                                false).commitUpdate(mContext.getDisplayId());
+                    }
                 });
             }
 
             @Override
+            public void onManageMenuExpandChanged(boolean menuExpanded) {
+                sysuiMainExecutor.execute(() -> {
+                    sysUiState.setFlag(QuickStepContract.SYSUI_STATE_BUBBLES_MANAGE_MENU_EXPANDED,
+                            menuExpanded).commitUpdate(mContext.getDisplayId());
+                });
+            }
+
+
+            @Override
             public void onUnbubbleConversation(String key) {
                 sysuiMainExecutor.execute(() -> {
-                    final NotificationEntry entry =
-                            mNotificationEntryManager.getPendingOrActiveNotif(key);
+                    final NotificationEntry entry = mCommonNotifCollection.getEntry(key);
                     if (entry != null) {
                         onUserChangedBubble(entry, false /* shouldBubble */);
                     }
@@ -404,125 +413,26 @@ public class BubblesManager implements Dumpable {
         mBubbles.setSysuiProxy(mSysuiProxy);
     }
 
-    private void setupNEM() {
-        mNotificationEntryManager.addNotificationEntryListener(
-                new NotificationEntryListener() {
-                    @Override
-                    public void onPendingEntryAdded(NotificationEntry entry) {
-                        BubblesManager.this.onEntryAdded(entry);
-                    }
-
-                    @Override
-                    public void onPreEntryUpdated(NotificationEntry entry) {
-                        BubblesManager.this.onEntryUpdated(entry);
-                    }
-
-                    @Override
-                    public void onEntryRemoved(NotificationEntry entry,
-                            @Nullable NotificationVisibility visibility,
-                            boolean removedByUser, int reason) {
-                        BubblesManager.this.onEntryRemoved(entry);
-                    }
-
-                    @Override
-                    public void onNotificationRankingUpdated(RankingMap rankingMap) {
-                        BubblesManager.this.onRankingUpdate(rankingMap);
-                    }
-                });
-
-        // The new pipeline takes care of this as a NotifDismissInterceptor BubbleCoordinator
-        mNotificationEntryManager.addNotificationRemoveInterceptor(
-                (key, entry, dismissReason) -> {
-                    final boolean isClearAll = dismissReason == REASON_CANCEL_ALL;
-                    final boolean isUserDismiss = dismissReason == REASON_CANCEL
-                            || dismissReason == REASON_CLICK;
-                    final boolean isAppCancel = dismissReason == REASON_APP_CANCEL
-                            || dismissReason == REASON_APP_CANCEL_ALL;
-                    final boolean isSummaryCancel =
-                            dismissReason == REASON_GROUP_SUMMARY_CANCELED;
-
-                    // Need to check for !appCancel here because the notification may have
-                    // previously been dismissed & entry.isRowDismissed would still be true
-                    boolean userRemovedNotif =
-                            (entry != null && entry.isRowDismissed() && !isAppCancel)
-                                    || isClearAll || isUserDismiss || isSummaryCancel;
-
-                    if (userRemovedNotif) {
-                        return handleDismissalInterception(entry);
-                    }
-                    return false;
-                });
-
-        mNotificationGroupManager.registerGroupChangeListener(
-                new NotificationGroupManagerLegacy.OnGroupChangeListener() {
-                    @Override
-                    public void onGroupSuppressionChanged(
-                            NotificationGroupManagerLegacy.NotificationGroup group,
-                            boolean suppressed) {
-                        // More notifications could be added causing summary to no longer
-                        // be suppressed -- in this case need to remove the key.
-                        final String groupKey = group.summary != null
-                                ? group.summary.getSbn().getGroupKey()
-                                : null;
-                        if (!suppressed && groupKey != null) {
-                            mBubbles.removeSuppressedSummaryIfNecessary(groupKey, null, null);
-                        }
-                    }
-                });
-
-        addNotifCallback(new NotifCallback() {
-            @Override
-            public void removeNotification(NotificationEntry entry,
-                    DismissedByUserStats dismissedByUserStats, int reason) {
-                mNotificationEntryManager.performRemoveNotification(entry.getSbn(),
-                        dismissedByUserStats, reason);
-            }
-
-            @Override
-            public void invalidateNotifications(String reason) {
-                mNotificationEntryManager.updateNotifications(reason);
-            }
-
-            @Override
-            public void maybeCancelSummary(NotificationEntry entry) {
-                // Check if removed bubble has an associated suppressed group summary that needs
-                // to be removed now.
-                final String groupKey = entry.getSbn().getGroupKey();
-                mBubbles.removeSuppressedSummaryIfNecessary(groupKey, (summaryKey) -> {
-                    final NotificationEntry summary =
-                            mNotificationEntryManager.getActiveNotificationUnfiltered(summaryKey);
-                    if (summary != null) {
-                        mNotificationEntryManager.performRemoveNotification(
-                                summary.getSbn(),
-                                getDismissedByUserStats(summary, false),
-                                UNDEFINED_DISMISS_REASON);
-                    }
-                }, mSysuiMainExecutor);
-
-                // Check if we still need to remove the summary from NoManGroup because the summary
-                // may not be in the mBubbleData.mSuppressedGroupKeys list and removed above.
-                // For example:
-                // 1. Bubbled notifications (group) is posted to shade and are visible bubbles
-                // 2. User expands bubbles so now their respective notifications in the shade are
-                // hidden, including the group summary
-                // 3. User removes all bubbles
-                // 4. We expect all the removed bubbles AND the summary (note: the summary was
-                // never added to the suppressedSummary list in BubbleData, so we add this check)
-                NotificationEntry summary = mNotificationGroupManager.getLogicalGroupSummary(entry);
-                if (summary != null) {
-                    ArrayList<NotificationEntry> summaryChildren =
-                            mNotificationGroupManager.getLogicalChildren(summary.getSbn());
-                    boolean isSummaryThisNotif = summary.getKey().equals(entry.getKey());
-                    if (!isSummaryThisNotif && (summaryChildren == null
-                            || summaryChildren.isEmpty())) {
-                        mNotificationEntryManager.performRemoveNotification(
-                                summary.getSbn(),
-                                getDismissedByUserStats(summary, false),
-                                UNDEFINED_DISMISS_REASON);
-                    }
-                }
-            }
+    private void updateKeyguardAndDreamingState() {
+        mSysuiUiBgExecutor.execute(() -> {
+            mKeyguardShowing = mKeyguardStateController.isShowing();
+            mDreamingOrInPreview = isDreamingOrInPreview();
+            boolean isUnlockedShade = !mKeyguardShowing && !mDreamingOrInPreview;
+            ProtoLog.d(WM_SHELL_BUBBLES,
+                    "handleKeyguardOrDreamChange isUnlockedShade=%b keyguardShowing=%b "
+                            + "dreamingOrInPreview=%b",
+                    isUnlockedShade, mKeyguardShowing, mDreamingOrInPreview);
+            mBubbles.onStatusBarStateChanged(isUnlockedShade);
         });
+    }
+
+    private boolean isDreamingOrInPreview() {
+        try {
+            return mDreamManager.isDreamingOrInPreview();
+        } catch (RemoteException e) {
+            Log.e(TAG, "Failed to query dream manager.", e);
+            return false;
+        }
     }
 
     private void setupNotifPipeline() {
@@ -533,33 +443,46 @@ public class BubblesManager implements Dumpable {
             }
 
             @Override
-            public void onEntryUpdated(NotificationEntry entry) {
-                BubblesManager.this.onEntryUpdated(entry);
+            public void onEntryUpdated(NotificationEntry entry, boolean fromSystem) {
+                BubblesManager.this.onEntryUpdated(entry, fromSystem);
             }
 
             @Override
             public void onEntryRemoved(NotificationEntry entry,
                     @NotifCollection.CancellationReason int reason) {
-                BubblesManager.this.onEntryRemoved(entry);
+                if (reason == REASON_APP_CANCEL || reason == REASON_APP_CANCEL_ALL) {
+                    BubblesManager.this.onEntryRemoved(entry);
+                }
             }
 
             @Override
             public void onRankingUpdate(RankingMap rankingMap) {
                 BubblesManager.this.onRankingUpdate(rankingMap);
             }
+
+            @Override
+            public void onNotificationChannelModified(
+                    String pkgName,
+                    UserHandle user,
+                    NotificationChannel channel,
+                    int modificationType) {
+                BubblesManager.this.onNotificationChannelModified(
+                        pkgName,
+                        user,
+                        channel,
+                        modificationType);
+            }
         });
     }
 
     void onEntryAdded(NotificationEntry entry) {
-        if (mNotificationInterruptStateProvider.shouldBubbleUp(entry)
-                && entry.isBubble()) {
+        if (shouldBubbleUp(entry) && entry.isBubble()) {
             mBubbles.onEntryAdded(notifToBubbleEntry(entry));
         }
     }
 
-    void onEntryUpdated(NotificationEntry entry) {
-        mBubbles.onEntryUpdated(notifToBubbleEntry(entry),
-                mNotificationInterruptStateProvider.shouldBubbleUp(entry));
+    void onEntryUpdated(NotificationEntry entry, boolean fromSystem) {
+        mBubbles.onEntryUpdated(notifToBubbleEntry(entry), shouldBubbleUp(entry), fromSystem);
     }
 
     void onEntryRemoved(NotificationEntry entry) {
@@ -571,44 +494,29 @@ public class BubblesManager implements Dumpable {
         HashMap<String, Pair<BubbleEntry, Boolean>> pendingOrActiveNotif = new HashMap<>();
         for (int i = 0; i < orderedKeys.length; i++) {
             String key = orderedKeys[i];
-            NotificationEntry entry = mNotificationEntryManager.getPendingOrActiveNotif(key);
-            BubbleEntry bubbleEntry = entry != null
-                    ? notifToBubbleEntry(entry)
-                    : null;
-            boolean shouldBubbleUp = entry != null
-                    ? mNotificationInterruptStateProvider.shouldBubbleUp(entry)
-                    : false;
+            final NotificationEntry entry = mCommonNotifCollection.getEntry(key);
+            BubbleEntry bubbleEntry = entry != null ? notifToBubbleEntry(entry) : null;
+            boolean shouldBubbleUp = entry != null ? shouldBubbleUp(entry) : false;
             pendingOrActiveNotif.put(key, new Pair<>(bubbleEntry, shouldBubbleUp));
         }
         mBubbles.onRankingUpdated(rankingMap, pendingOrActiveNotif);
     }
 
-    /**
-     * Gets the DismissedByUserStats used by {@link NotificationEntryManager}.
-     * Will not be necessary when using the new notification pipeline's {@link NotifCollection}.
-     * Instead, this is taken care of by {@link BubbleCoordinator}.
-     */
+    void onNotificationChannelModified(
+            String pkg,
+            UserHandle user,
+            NotificationChannel channel,
+            int modificationType) {
+        mBubbles.onNotificationChannelModified(pkg, user, channel, modificationType);
+    }
+
     private DismissedByUserStats getDismissedByUserStats(
             NotificationEntry entry,
             boolean isVisible) {
         return new DismissedByUserStats(
                 DISMISSAL_BUBBLE,
                 DISMISS_SENTIMENT_NEUTRAL,
-                NotificationVisibility.obtain(
-                        entry.getKey(),
-                        entry.getRanking().getRank(),
-                        mNotificationEntryManager.getActiveNotificationsCount(),
-                        isVisible,
-                        NotificationLogger.getNotificationLocation(entry)));
-    }
-
-    /**
-     * Returns the scrim drawn behind the bubble stack. This is managed by {@link ScrimController}
-     * since we want the scrim's appearance and behavior to be identical to that of the notification
-     * shade scrim.
-     */
-    public ScrimView getScrimForBubble() {
-        return mBubbleScrim;
+                mVisibilityProvider.obtain(entry, isVisible));
     }
 
     /**
@@ -643,7 +551,10 @@ public class BubblesManager implements Dumpable {
                                     REASON_GROUP_SUMMARY_CANCELED);
                         }
                     } else {
-                        mNotificationGroupManager.onEntryRemoved(entry);
+                        for (NotifCallback cb : mCallbacks) {
+                            cb.removeNotification(entry, getDismissedByUserStats(entry, true),
+                                    REASON_GROUP_SUMMARY_CANCELED);
+                        }
                     }
                 }, mSysuiMainExecutor);
     }
@@ -696,7 +607,7 @@ public class BubblesManager implements Dumpable {
         } catch (RemoteException e) {
             Log.e(TAG, e.getMessage());
         }
-        mShadeController.collapsePanel(true);
+        mShadeController.collapseShade(true);
         if (entry.getRow() != null) {
             entry.getRow().updateBubbleButton();
         }
@@ -718,6 +629,8 @@ public class BubblesManager implements Dumpable {
         if (channel == null || appPkg == null) {
             return;
         }
+
+        entry.setFlagBubble(shouldBubble);
 
         // Update the state in NotificationManagerService
         try {
@@ -742,16 +655,11 @@ public class BubblesManager implements Dumpable {
         }
 
         if (shouldBubble) {
-            mShadeController.collapsePanel(true);
+            mShadeController.collapseShade(true);
             if (entry.getRow() != null) {
                 entry.getRow().updateBubbleButton();
             }
         }
-    }
-
-    @Override
-    public void dump(@NonNull FileDescriptor fd, @NonNull PrintWriter pw, @NonNull String[] args) {
-        mBubbles.dump(fd, pw, args);
     }
 
     /** Checks whether bubbles are enabled for this user, handles negative userIds. */
@@ -765,10 +673,21 @@ public class BubblesManager implements Dumpable {
         }
     }
 
-    static BubbleEntry notifToBubbleEntry(NotificationEntry e) {
-        return new BubbleEntry(e.getSbn(), e.getRanking(), e.isClearable(),
+    @VisibleForTesting
+    BubbleEntry notifToBubbleEntry(NotificationEntry e) {
+        return new BubbleEntry(e.getSbn(), e.getRanking(), isDismissableFromBubbles(e),
                 e.shouldSuppressNotificationDot(), e.shouldSuppressNotificationList(),
                 e.shouldSuppressPeek());
+    }
+
+    private boolean isDismissableFromBubbles(NotificationEntry e) {
+        // Bubbles are only accessible from the unlocked state,
+        // so we can calculate this from the Notification flags only.
+        return e.isDismissableForState(/*isLocked=*/ false);
+    }
+
+    private boolean shouldBubbleUp(NotificationEntry e) {
+        return mVisualInterruptionDecisionProvider.makeAndLogBubbleDecision(e).getShouldInterrupt();
     }
 
     /**
@@ -790,15 +709,5 @@ public class BubblesManager implements Dumpable {
          * filtered from the shade.
          */
         void invalidateNotifications(@NonNull String reason);
-
-        /**
-         * Called on a bubbled entry that has been removed when there are no longer
-         * bubbled entries in its group.
-         *
-         * Checks whether its group has any other (non-bubbled) children. If it doesn't,
-         * removes all remnants of the group's summary from the notification pipeline.
-         * TODO: (b/145659174) Only old pipeline needs this - delete post-migration.
-         */
-        void maybeCancelSummary(@NonNull NotificationEntry entry);
     }
 }

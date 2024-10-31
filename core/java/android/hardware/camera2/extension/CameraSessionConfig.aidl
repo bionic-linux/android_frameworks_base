@@ -24,4 +24,6 @@ parcelable CameraSessionConfig
     List<CameraOutputConfig> outputConfigs;
     CameraMetadataNative sessionParameter;
     int sessionTemplateId;
+    int sessionType;
+    int colorSpace = -1;
 }

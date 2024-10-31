@@ -17,10 +17,10 @@
 package com.android.keyguard;
 
 import static android.app.slice.Slice.HINT_LIST_ITEM;
-import static android.view.Display.DEFAULT_DISPLAY;
 
 import android.app.PendingIntent;
 import android.net.Uri;
+import android.os.Handler;
 import android.os.Trace;
 import android.provider.Settings;
 import android.util.Log;
@@ -40,17 +40,17 @@ import androidx.slice.widget.SliceLiveData;
 
 import com.android.keyguard.dagger.KeyguardStatusViewScope;
 import com.android.systemui.Dumpable;
+import com.android.systemui.Flags;
+import com.android.systemui.dagger.qualifiers.Background;
+import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.dump.DumpManager;
 import com.android.systemui.keyguard.KeyguardSliceProvider;
 import com.android.systemui.plugins.ActivityStarter;
-import com.android.systemui.statusbar.notification.AnimatableProperty;
-import com.android.systemui.statusbar.notification.PropertyAnimator;
-import com.android.systemui.statusbar.notification.stack.AnimationProperties;
+import com.android.systemui.settings.DisplayTracker;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.ViewController;
 
-import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
@@ -64,16 +64,18 @@ public class KeyguardSliceViewController extends ViewController<KeyguardSliceVie
         Dumpable {
     private static final String TAG = "KeyguardSliceViewCtrl";
 
+    private final Handler mHandler;
+    private final Handler mBgHandler;
     private final ActivityStarter mActivityStarter;
     private final ConfigurationController mConfigurationController;
     private final TunerService mTunerService;
     private final DumpManager mDumpManager;
+    private final DisplayTracker mDisplayTracker;
     private int mDisplayId;
     private LiveData<Slice> mLiveData;
     private Uri mKeyguardSliceUri;
     private Slice mSlice;
     private Map<View, PendingIntent> mClickActions;
-    private int mLockScreenMode = KeyguardUpdateMonitor.LOCK_SCREEN_MODE_NORMAL;
 
     TunerService.Tunable mTunable = (key, newValue) -> setupUri(newValue);
 
@@ -84,7 +86,7 @@ public class KeyguardSliceViewController extends ViewController<KeyguardSliceVie
             mView.onDensityOrFontScaleChanged();
         }
         @Override
-        public void onOverlayChanged() {
+        public void onThemeChanged() {
             mView.onOverlayChanged();
         }
     };
@@ -109,16 +111,22 @@ public class KeyguardSliceViewController extends ViewController<KeyguardSliceVie
 
     @Inject
     public KeyguardSliceViewController(
+            @Main Handler handler,
+            @Background Handler bgHandler,
             KeyguardSliceView keyguardSliceView,
             ActivityStarter activityStarter,
             ConfigurationController configurationController,
             TunerService tunerService,
-            DumpManager dumpManager) {
+            DumpManager dumpManager,
+            DisplayTracker displayTracker) {
         super(keyguardSliceView);
+        mHandler = handler;
+        mBgHandler = bgHandler;
         mActivityStarter = activityStarter;
         mConfigurationController = configurationController;
         mTunerService = tunerService;
         mDumpManager = dumpManager;
+        mDisplayTracker = displayTracker;
     }
 
     @Override
@@ -129,21 +137,20 @@ public class KeyguardSliceViewController extends ViewController<KeyguardSliceVie
         }
         mTunerService.addTunable(mTunable, Settings.Secure.KEYGUARD_SLICE_URI);
         // Make sure we always have the most current slice
-        if (mDisplayId == DEFAULT_DISPLAY && mLiveData != null) {
+        if (mDisplayId == mDisplayTracker.getDefaultDisplayId() && mLiveData != null) {
             mLiveData.observeForever(mObserver);
         }
         mConfigurationController.addCallback(mConfigurationListener);
-        mDumpManager.registerDumpable(
+        mDumpManager.registerNormalDumpable(
                 TAG + "@" + Integer.toHexString(
                         KeyguardSliceViewController.this.hashCode()),
                 KeyguardSliceViewController.this);
-        mView.updateLockScreenMode(mLockScreenMode);
     }
 
     @Override
     protected void onViewDetached() {
         // TODO(b/117344873) Remove below work around after this issue be fixed.
-        if (mDisplayId == DEFAULT_DISPLAY) {
+        if (mDisplayId == mDisplayTracker.getDefaultDisplayId()) {
             mLiveData.removeObserver(mObserver);
         }
         mTunerService.removeTunable(mTunable);
@@ -157,14 +164,6 @@ public class KeyguardSliceViewController extends ViewController<KeyguardSliceVie
         ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) mView.getLayoutParams();
         lp.topMargin = (int) clockTopTextPadding;
         mView.setLayoutParams(lp);
-    }
-
-    /**
-     * Updates the lockscreen mode which may change the layout of the keyguard slice view.
-     */
-    public void updateLockScreenMode(int mode) {
-        mLockScreenMode = mode;
-        mView.updateLockScreenMode(mLockScreenMode);
     }
 
     /**
@@ -193,31 +192,34 @@ public class KeyguardSliceViewController extends ViewController<KeyguardSliceVie
      * Update contents of the view.
      */
     public void refresh() {
-        Slice slice;
-        Trace.beginSection("KeyguardSliceViewController#refresh");
-        // We can optimize performance and avoid binder calls when we know that we're bound
-        // to a Slice on the same process.
-        if (KeyguardSliceProvider.KEYGUARD_SLICE_URI.equals(mKeyguardSliceUri.toString())) {
-            KeyguardSliceProvider instance = KeyguardSliceProvider.getAttachedInstance();
-            if (instance != null) {
-                slice = instance.onBindSlice(mKeyguardSliceUri);
-            } else {
-                Log.w(TAG, "Keyguard slice not bound yet?");
-                slice = null;
-            }
-        } else {
-            // TODO: Make SliceViewManager injectable
-            slice = SliceViewManager.getInstance(mView.getContext()).bindSlice(mKeyguardSliceUri);
-        }
-        mObserver.onChanged(slice);
-        Trace.endSection();
-    }
 
-    /**
-     * Update position of the view, with optional animation
-     */
-    void updatePosition(int x, AnimationProperties props, boolean animate) {
-        PropertyAnimator.setProperty(mView, AnimatableProperty.TRANSLATION_X, x, props, animate);
+        Trace.beginSection("KeyguardSliceViewController#refresh");
+        try {
+            Slice slice;
+            if (KeyguardSliceProvider.KEYGUARD_SLICE_URI.equals(mKeyguardSliceUri.toString())) {
+                KeyguardSliceProvider instance = KeyguardSliceProvider.getAttachedInstance();
+                if (instance != null) {
+                    if (Flags.sliceManagerBinderCallBackground()) {
+                        mBgHandler.post(() -> {
+                            Slice _slice = instance.onBindSlice(mKeyguardSliceUri);
+                            mHandler.post(() -> mObserver.onChanged(_slice));
+                        });
+                        return;
+                    }
+                    slice = instance.onBindSlice(mKeyguardSliceUri);
+                } else {
+                    Log.w(TAG, "Keyguard slice not bound yet?");
+                    slice = null;
+                }
+            } else {
+                // TODO: Make SliceViewManager injectable
+                slice = SliceViewManager.getInstance(mView.getContext()).bindSlice(
+                        mKeyguardSliceUri);
+            }
+            mObserver.onChanged(slice);
+        } finally {
+            Trace.endSection();
+        }
     }
 
     void showSlice(Slice slice) {
@@ -246,9 +248,8 @@ public class KeyguardSliceViewController extends ViewController<KeyguardSliceVie
     }
 
     @Override
-    public void dump(@NonNull FileDescriptor fd, @NonNull PrintWriter pw, @NonNull String[] args) {
+    public void dump(@NonNull PrintWriter pw, @NonNull String[] args) {
         pw.println("  mSlice: " + mSlice);
         pw.println("  mClickActions: " + mClickActions);
-        pw.println("  mLockScreenMode: " + mLockScreenMode);
     }
 }

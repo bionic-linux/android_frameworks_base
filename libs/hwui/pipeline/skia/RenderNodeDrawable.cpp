@@ -15,16 +15,24 @@
  */
 
 #include "RenderNodeDrawable.h"
+
+#include <SkPaint.h>
 #include <SkPaintFilterCanvas.h>
+#include <SkPoint.h>
+#include <SkRRect.h>
+#include <SkRect.h>
 #include <gui/TraceUtils.h>
+#include <include/effects/SkImageFilters.h>
+#ifdef __ANDROID__
+#include <include/gpu/ganesh/SkImageGanesh.h>
+#endif
+
+#include <optional>
+
 #include "RenderNode.h"
 #include "SkiaDisplayList.h"
 #include "StretchMask.h"
 #include "TransformCanvas.h"
-
-#include <include/effects/SkImageFilters.h>
-
-#include <optional>
 
 namespace android {
 namespace uirenderer {
@@ -48,6 +56,7 @@ void RenderNodeDrawable::drawBackwardsProjectedNodes(SkCanvas* canvas,
                                                      int nestLevel) const {
     LOG_ALWAYS_FATAL_IF(0 == nestLevel && !displayList.mProjectionReceiver);
     for (auto& child : displayList.mChildNodes) {
+        if (!child.getRenderNode()->isRenderable()) continue;
         const RenderProperties& childProperties = child.getNodeProperties();
 
         // immediate children cannot be projected on their parent
@@ -87,6 +96,10 @@ static void clipOutline(const Outline& outline, SkCanvas* canvas, const SkRect* 
     if (!outline.getAsRoundRect(&possibleRect, &radius)) {
         if (pendingClip) {
             canvas->clipRect(*pendingClip);
+        }
+        const SkPath* path = outline.getPath();
+        if (path) {
+            canvas->clipPath(*path, SkClipOp::kIntersect, true);
         }
         return;
     }
@@ -193,6 +206,7 @@ protected:
         paint.setAlpha((uint8_t)paint.getAlpha() * mAlpha);
         return true;
     }
+
     void onDrawDrawable(SkDrawable* drawable, const SkMatrix* matrix) override {
         // We unroll the drawable using "this" canvas, so that draw calls contained inside will
         // get their alpha applied. The default SkPaintFilterCanvas::onDrawDrawable does not unroll.
@@ -220,10 +234,10 @@ void RenderNodeDrawable::drawContent(SkCanvas* canvas) const {
     // TODO should we let the bound of the drawable do this for us?
     const SkRect bounds = SkRect::MakeWH(properties.getWidth(), properties.getHeight());
     bool quickRejected = properties.getClipToBounds() && canvas->quickReject(bounds);
-    auto clipBounds = canvas->getLocalClipBounds();
-    SkIRect srcBounds = SkIRect::MakeWH(bounds.width(), bounds.height());
-    SkIPoint offset = SkIPoint::Make(0.0f, 0.0f);
     if (!quickRejected) {
+        auto clipBounds = canvas->getLocalClipBounds();
+        SkIRect srcBounds = SkIRect::MakeWH(bounds.width(), bounds.height());
+        SkIPoint offset = SkIPoint::Make(0.0f, 0.0f);
         SkiaDisplayList* displayList = renderNode->getDisplayList().asSkiaDl();
         const LayerProperties& layerProperties = properties.layerProperties();
         // composing a hardware layer
@@ -231,14 +245,43 @@ void RenderNodeDrawable::drawContent(SkCanvas* canvas) const {
             SkASSERT(properties.effectiveLayerType() == LayerType::RenderLayer);
             SkPaint paint;
             layerNeedsPaint(layerProperties, alphaMultiplier, &paint);
-            const auto snapshotResult = renderNode->updateSnapshotIfRequired(
-                canvas->recordingContext(),
-                layerProperties.getImageFilter(),
-                clipBounds.roundOut()
-            );
-            sk_sp<SkImage> snapshotImage = snapshotResult->snapshot;
-            srcBounds = snapshotResult->outSubset;
-            offset = snapshotResult->outOffset;
+            sk_sp<SkImage> snapshotImage;
+            auto* imageFilter = layerProperties.getImageFilter();
+            auto recordingContext = canvas->recordingContext();
+            // On some GL vendor implementations, caching the result of
+            // getLayerSurface->makeImageSnapshot() causes a call to
+            // Fence::waitForever without a corresponding signal. This would
+            // lead to ANRs throughout the system.
+            // Instead only cache the SkImage created with the SkImageFilter
+            // for supported devices. Otherwise just create a new SkImage with
+            // the corresponding SkImageFilter each time.
+            // See b/193145089 and b/197263715
+            if (!Properties::enableRenderEffectCache) {
+                snapshotImage = renderNode->getLayerSurface()->makeImageSnapshot();
+                if (imageFilter) {
+                    auto subset = SkIRect::MakeWH(srcBounds.width(), srcBounds.height());
+
+#ifdef __ANDROID__
+                    if (recordingContext) {
+                        snapshotImage = SkImages::MakeWithFilter(
+                                recordingContext, snapshotImage, imageFilter, subset,
+                                clipBounds.roundOut(), &srcBounds, &offset);
+                    } else
+#endif
+                    {
+                        snapshotImage = SkImages::MakeWithFilter(snapshotImage, imageFilter, subset,
+                                                                 clipBounds.roundOut(), &srcBounds,
+                                                                 &offset);
+                    }
+                }
+            } else {
+                const auto snapshotResult = renderNode->updateSnapshotIfRequired(
+                        recordingContext, layerProperties.getImageFilter(), clipBounds.roundOut());
+                snapshotImage = snapshotResult->snapshot;
+                srcBounds = snapshotResult->outSubset;
+                offset = snapshotResult->outOffset;
+            }
+
             const auto dstBounds = SkIRect::MakeXYWH(offset.x(),
                                                      offset.y(),
                                                      srcBounds.width(),
@@ -265,8 +308,10 @@ void RenderNodeDrawable::drawContent(SkCanvas* canvas) const {
                 // with the same canvas transformation + clip into the target
                 // canvas then draw the layer on top
                 if (renderNode->hasHolePunches()) {
-                    TransformCanvas transformCanvas(canvas, SkBlendMode::kClear);
+                    canvas->save();
+                    TransformCanvas transformCanvas(canvas, SkBlendMode::kDstOut);
                     displayList->draw(&transformCanvas);
+                    canvas->restore();
                 }
                 canvas->drawImageRect(snapshotImage, SkRect::Make(srcBounds),
                                       SkRect::Make(dstBounds), sampling, &paint,
@@ -332,7 +377,7 @@ void RenderNodeDrawable::drawContent(SkCanvas* canvas) const {
 }
 
 void RenderNodeDrawable::setViewProperties(const RenderProperties& properties, SkCanvas* canvas,
-                                           float* alphaMultiplier) {
+                                           float* alphaMultiplier, bool ignoreLayer) {
     if (properties.getLeft() != 0 || properties.getTop() != 0) {
         canvas->translate(properties.getLeft(), properties.getTop());
     }
@@ -348,7 +393,8 @@ void RenderNodeDrawable::setViewProperties(const RenderProperties& properties, S
             canvas->concat(*properties.getTransformMatrix());
         }
     }
-    if (Properties::getStretchEffectBehavior() == StretchEffectBehavior::UniformScale) {
+    if (Properties::getStretchEffectBehavior() == StretchEffectBehavior::UniformScale &&
+        !ignoreLayer) {
         const StretchEffect& stretch = properties.layerProperties().getStretchEffect();
         if (!stretch.isEmpty()) {
             canvas->concat(
@@ -358,10 +404,10 @@ void RenderNodeDrawable::setViewProperties(const RenderProperties& properties, S
     const bool isLayer = properties.effectiveLayerType() != LayerType::None;
     int clipFlags = properties.getClippingFlags();
     if (properties.getAlpha() < 1) {
-        if (isLayer) {
+        if (isLayer && !ignoreLayer) {
             clipFlags &= ~CLIP_TO_BOUNDS;  // bounds clipping done by layer
         }
-        if (CC_LIKELY(isLayer || !properties.getHasOverlappingRendering())) {
+        if (CC_LIKELY(isLayer || !properties.getHasOverlappingRendering()) || ignoreLayer) {
             *alphaMultiplier = properties.getAlpha();
         } else {
             // savelayer needed to create an offscreen buffer

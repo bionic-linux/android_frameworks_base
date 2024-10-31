@@ -17,12 +17,12 @@
 package com.android.systemui.classifier;
 
 import static com.android.systemui.classifier.Classifier.BRIGHTNESS_SLIDER;
-import static com.android.systemui.classifier.Classifier.QS_SWIPE;
+import static com.android.systemui.classifier.Classifier.QS_SWIPE_SIDE;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import android.testing.AndroidTestingRunner;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
 import com.android.systemui.util.DeviceConfigProxyFake;
@@ -33,7 +33,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @SmallTest
-@RunWith(AndroidTestingRunner.class)
+@RunWith(AndroidJUnit4.class)
 public class DistanceClassifierTest extends ClassifierTest {
 
     private FalsingDataProvider mDataProvider;
@@ -94,7 +94,9 @@ public class DistanceClassifierTest extends ClassifierTest {
         mClassifier.onTouchEvent(appendMoveEvent(1, 16, 3));
         mClassifier.onTouchEvent(appendMoveEvent(1, 17, 300));
         mClassifier.onTouchEvent(appendMoveEvent(1, 18, 301));
-        mClassifier.onTouchEvent(appendUpEvent(1, 19, 501));
+        mClassifier.onTouchEvent(appendMoveEvent(1, 19, 501));
+        mClassifier.onTouchEvent(appendUpEvent(1, 19, 501)); //event will be dropped
+
         assertThat(mClassifier.classifyGesture(0, 0.5, 1).isFalse()).isTrue();
     }
 
@@ -106,9 +108,9 @@ public class DistanceClassifierTest extends ClassifierTest {
     }
 
     @Test
-    public void testPass_QsSwipeAlwaysPasses() {
+    public void testPass_QsSwipeSideAlwaysPasses() {
         mClassifier.onTouchEvent(appendDownEvent(1, 1));
-        assertThat(mClassifier.classifyGesture(QS_SWIPE, 0.5, 1).isFalse())
+        assertThat(mClassifier.classifyGesture(QS_SWIPE_SIDE, 0.5, 1).isFalse())
                 .isFalse();
     }
 }

@@ -22,12 +22,17 @@ import static com.android.server.am.ActivityManagerDebugConfig.DEBUG_MU;
 import static com.android.server.am.ActivityManagerDebugConfig.POSTFIX_MU;
 import static com.android.server.am.ActivityManagerDebugConfig.TAG_AM;
 import static com.android.server.am.ActivityManagerDebugConfig.TAG_WITH_CLASS_NAME;
+import static com.android.server.am.PendingIntentRecord.CANCEL_REASON_OWNER_CANCELED;
+import static com.android.server.am.PendingIntentRecord.CANCEL_REASON_SUPERSEDED;
 
 import android.annotation.Nullable;
 import android.app.Activity;
 import android.app.ActivityManagerInternal;
+import android.app.ActivityOptions;
 import android.app.AppGlobals;
 import android.app.PendingIntent;
+import android.app.PendingIntentStats;
+import android.app.compat.CompatChanges;
 import android.content.IIntentSender;
 import android.content.Intent;
 import android.os.Binder;
@@ -51,6 +56,7 @@ import com.android.internal.util.RingBuffer;
 import com.android.internal.util.function.pooled.PooledLambda;
 import com.android.server.AlarmManagerInternal;
 import com.android.server.LocalServices;
+import com.android.server.am.PendingIntentRecord.CancellationReason;
 import com.android.server.wm.ActivityTaskManagerInternal;
 import com.android.server.wm.SafeActivityOptions;
 
@@ -60,6 +66,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Helper class for {@link ActivityManagerService} responsible for managing pending intents.
@@ -124,6 +131,38 @@ public class PendingIntentController {
                 }
             }
             Bundle.setDefusable(bOptions, true);
+            ActivityOptions opts = ActivityOptions.fromBundle(bOptions);
+            if (opts != null && opts.getPendingIntentBackgroundActivityStartMode()
+                    != ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_SYSTEM_DEFINED) {
+                Slog.wtf(TAG, "Resetting option setPendingIntentBackgroundActivityStartMode("
+                        + opts.getPendingIntentBackgroundActivityStartMode()
+                        + ") to SYSTEM_DEFINED from the options provided by the pending "
+                        + "intent creator ("
+                        + packageName
+                        + ") because this option is meant for the pending intent sender");
+                if (CompatChanges.isChangeEnabled(PendingIntent.PENDING_INTENT_OPTIONS_CHECK,
+                        callingUid)) {
+                    throw new IllegalArgumentException("pendingIntentBackgroundActivityStartMode "
+                            + "must not be set when creating a PendingIntent");
+                }
+                opts.setPendingIntentBackgroundActivityStartMode(
+                        ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_SYSTEM_DEFINED);
+            }
+
+            if (opts != null && opts.isPendingIntentBackgroundActivityLaunchAllowedByPermission()) {
+                Slog.wtf(TAG,
+                        "Resetting option pendingIntentBackgroundActivityLaunchAllowedByPermission"
+                                + " which is set by the pending intent creator ("
+                                + packageName
+                                + ") because this option is meant for the pending intent sender");
+                if (CompatChanges.isChangeEnabled(PendingIntent.PENDING_INTENT_OPTIONS_CHECK,
+                        callingUid)) {
+                    throw new IllegalArgumentException(
+                            "pendingIntentBackgroundActivityLaunchAllowedByPermission "
+                                    + "can not be set by creator of a PendingIntent");
+                }
+                opts.setPendingIntentBackgroundActivityLaunchAllowedByPermission(false);
+            }
 
             final boolean noCreate = (flags & PendingIntent.FLAG_NO_CREATE) != 0;
             final boolean cancelCurrent = (flags & PendingIntent.FLAG_CANCEL_CURRENT) != 0;
@@ -133,7 +172,7 @@ public class PendingIntentController {
 
             PendingIntentRecord.Key key = new PendingIntentRecord.Key(type, packageName, featureId,
                     token, resultWho, requestCode, intents, resolvedTypes, flags,
-                    SafeActivityOptions.fromBundle(bOptions), userId);
+                    new SafeActivityOptions(opts), userId);
             WeakReference<PendingIntentRecord> ref;
             ref = mIntentSenderRecords.get(key);
             PendingIntentRecord rec = ref != null ? ref.get() : null;
@@ -155,7 +194,7 @@ public class PendingIntentController {
                     }
                     return rec;
                 }
-                makeIntentSenderCanceled(rec);
+                makeIntentSenderCanceled(rec, CANCEL_REASON_SUPERSEDED);
                 mIntentSenderRecords.remove(key);
                 decrementUidStatLocked(rec);
             }
@@ -170,7 +209,7 @@ public class PendingIntentController {
     }
 
     boolean removePendingIntentsForPackage(String packageName, int userId, int appId,
-            boolean doIt) {
+            boolean doIt, @CancellationReason int cancelReason) {
 
         boolean didSomething = false;
         synchronized (mLock) {
@@ -220,7 +259,7 @@ public class PendingIntentController {
                 }
                 didSomething = true;
                 it.remove();
-                makeIntentSenderCanceled(pir);
+                makeIntentSenderCanceled(pir, cancelReason);
                 decrementUidStatLocked(pir);
                 if (pir.key.activity != null) {
                     final Message m = PooledLambda.obtainMessage(
@@ -253,13 +292,14 @@ public class PendingIntentController {
             } catch (RemoteException e) {
                 throw new SecurityException(e);
             }
-            cancelIntentSender(rec, true);
+            cancelIntentSender(rec, true, CANCEL_REASON_OWNER_CANCELED);
         }
     }
 
-    public void cancelIntentSender(PendingIntentRecord rec, boolean cleanActivity) {
+    public void cancelIntentSender(PendingIntentRecord rec, boolean cleanActivity,
+            @CancellationReason int cancelReason) {
         synchronized (mLock) {
-            makeIntentSenderCanceled(rec);
+            makeIntentSenderCanceled(rec, cancelReason);
             mIntentSenderRecords.remove(rec.key);
             decrementUidStatLocked(rec);
             if (cleanActivity && rec.key.activity != null) {
@@ -271,9 +311,11 @@ public class PendingIntentController {
         }
     }
 
-    void registerIntentSenderCancelListener(IIntentSender sender, IResultReceiver receiver) {
+    boolean registerIntentSenderCancelListener(IIntentSender sender, IResultReceiver receiver) {
         if (!(sender instanceof PendingIntentRecord)) {
-            return;
+            Slog.w(TAG, "registerIntentSenderCancelListener called on non-PendingIntentRecord");
+            // In this case, it's not "success", but we don't know if it's canceld either.
+            return true;
         }
         boolean isCancelled;
         synchronized (mLock) {
@@ -281,12 +323,9 @@ public class PendingIntentController {
             isCancelled = pendingIntent.canceled;
             if (!isCancelled) {
                 pendingIntent.registerCancelListenerLocked(receiver);
-            }
-        }
-        if (isCancelled) {
-            try {
-                receiver.send(Activity.RESULT_CANCELED, null);
-            } catch (RemoteException e) {
+                return true;
+            } else {
+                return false;
             }
         }
     }
@@ -324,8 +363,10 @@ public class PendingIntentController {
         }
     }
 
-    private void makeIntentSenderCanceled(PendingIntentRecord rec) {
+    private void makeIntentSenderCanceled(PendingIntentRecord rec,
+            @CancellationReason int cancelReason) {
         rec.canceled = true;
+        rec.cancelReason = cancelReason;
         final RemoteCallbackList<IResultReceiver> callbacks = rec.detachCancelListenersLocked();
         if (callbacks != null) {
             final Message m = PooledLambda.obtainMessage(
@@ -420,6 +461,55 @@ public class PendingIntentController {
                 pw.println("  (nothing)");
             }
         }
+    }
+
+    /**
+     * Provides some stats tracking of the current state of the PendingIntent queue.
+     *
+     * Data about the pending intent queue is intended to be used for memory impact tracking.
+     * Returned data (one per uid) will consist of instances of PendingIntentStats containing
+     * (I) number of PendingIntents and (II) total size of all bundled extras in the PIs.
+     *
+     * @hide
+     */
+    public List<PendingIntentStats> dumpPendingIntentStatsForStatsd() {
+        List<PendingIntentStats> pendingIntentStats = new ArrayList<>();
+
+        synchronized (mLock) {
+            if (mIntentSenderRecords.size() > 0) {
+                // First, aggregate PendingIntent data by package uid.
+                final SparseIntArray countsByUid = new SparseIntArray();
+                final SparseIntArray bundleSizesByUid = new SparseIntArray();
+
+                for (WeakReference<PendingIntentRecord> reference : mIntentSenderRecords.values()) {
+                    if (reference == null || reference.get() == null) {
+                        continue;
+                    }
+                    PendingIntentRecord record = reference.get();
+                    int index = countsByUid.indexOfKey(record.uid);
+
+                    if (index < 0) { // ie. the key was not found
+                        countsByUid.put(record.uid, 1);
+                        bundleSizesByUid.put(record.uid,
+                                record.key.requestIntent.getExtrasTotalSize());
+                    } else {
+                        countsByUid.put(record.uid, countsByUid.valueAt(index) + 1);
+                        bundleSizesByUid.put(record.uid,
+                                bundleSizesByUid.valueAt(index)
+                                + record.key.requestIntent.getExtrasTotalSize());
+                    }
+                }
+
+                // Now generate the output.
+                for (int i = 0, size = countsByUid.size(); i < size; i++) {
+                    pendingIntentStats.add(new PendingIntentStats(
+                            countsByUid.keyAt(i),
+                            countsByUid.valueAt(i),
+                            /* NB: int conversion here */ bundleSizesByUid.valueAt(i) / 1024));
+                }
+            }
+        }
+        return pendingIntentStats;
     }
 
     /**

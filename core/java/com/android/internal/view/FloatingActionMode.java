@@ -33,7 +33,7 @@ import android.widget.PopupWindow;
 
 import com.android.internal.R;
 import com.android.internal.view.menu.MenuBuilder;
-import com.android.internal.widget.FloatingToolbar;
+import com.android.internal.widget.floatingtoolbar.FloatingToolbar;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -222,6 +222,7 @@ public final class FloatingActionMode extends ActionMode {
     private boolean isContentRectWithinBounds() {
         mContext.getDisplayNoVerify().getRealSize(mDisplaySize);
         mScreenRect.set(0, 0, mDisplaySize.x, mDisplaySize.y);
+        mScreenRect.offset(mRootViewPositionOnScreen[0], mRootViewPositionOnScreen[1]);
 
         return intersectsClosed(mContentRectOnScreen, mScreenRect)
             && intersectsClosed(mContentRectOnScreen, mViewRectOnScreen);

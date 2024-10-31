@@ -17,6 +17,7 @@
 package com.android.keyguard.dagger;
 
 import com.android.keyguard.KeyguardStatusViewController;
+import com.android.systemui.shade.ShadeViewStateProvider;
 import com.android.systemui.statusbar.phone.KeyguardStatusBarView;
 import com.android.systemui.statusbar.phone.KeyguardStatusBarViewController;
 
@@ -34,7 +35,10 @@ public interface KeyguardStatusBarViewComponent {
     /** Simple factory for {@link KeyguardStatusBarViewComponent}. */
     @Subcomponent.Factory
     interface Factory {
-        KeyguardStatusBarViewComponent build(@BindsInstance KeyguardStatusBarView view);
+        KeyguardStatusBarViewComponent build(
+                @BindsInstance KeyguardStatusBarView view,
+                @BindsInstance ShadeViewStateProvider
+                        shadeViewStateProvider);
     }
 
     /** Builds a {@link KeyguardStatusViewController}. */

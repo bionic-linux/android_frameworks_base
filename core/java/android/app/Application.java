@@ -53,6 +53,7 @@ import java.util.ArrayList;
  */
 public class Application extends ContextWrapper implements ComponentCallbacks2 {
     private static final String TAG = "Application";
+
     @UnsupportedAppUsage
     private ArrayList<ActivityLifecycleCallbacks> mActivityLifecycleCallbacks =
             new ArrayList<ActivityLifecycleCallbacks>();
@@ -205,6 +206,13 @@ public class Application extends ContextWrapper implements ComponentCallbacks2 {
          */
         default void onActivityPostDestroyed(@NonNull Activity activity) {
         }
+
+        /**
+         * Called when the Activity configuration was changed.
+         * @hide
+         */
+        default void onActivityConfigurationChanged(@NonNull Activity activity) {
+        }
     }
 
     /**
@@ -224,6 +232,13 @@ public class Application extends ContextWrapper implements ComponentCallbacks2 {
 
     public Application() {
         super(null);
+    }
+
+    private String getLoadedApkInfo() {
+        if (mLoadedApk == null) {
+            return "null";
+        }
+        return mLoadedApk + "/pkg=" + mLoadedApk.mPackageName;
     }
 
     /**
@@ -554,6 +569,16 @@ public class Application extends ContextWrapper implements ComponentCallbacks2 {
         }
     }
 
+    /* package */ void dispatchActivityConfigurationChanged(@NonNull Activity activity) {
+        Object[] callbacks = collectActivityLifecycleCallbacks();
+        if (callbacks != null) {
+            for (int i = 0; i < callbacks.length; i++) {
+                ((ActivityLifecycleCallbacks) callbacks[i]).onActivityConfigurationChanged(
+                        activity);
+            }
+        }
+    }
+
     @UnsupportedAppUsage
     private Object[] collectActivityLifecycleCallbacks() {
         Object[] callbacks = null;
@@ -591,9 +616,8 @@ public class Application extends ContextWrapper implements ComponentCallbacks2 {
             Log.v(TAG, "getAutofillClient(): null on super, trying to find activity thread");
         }
         // Okay, ppl use the application context when they should not. This breaks
-        // autofill among other things. We pick the focused activity since autofill
-        // interacts only with the currently focused activity and we need the fill
-        // client only if a call comes from the focused activity. Sigh...
+        // autofill among other things. Below is a mitigation to find the top resumed
+        // activity.
         final ActivityThread activityThread = ActivityThread.currentActivityThread();
         if (activityThread == null) {
             return null;
@@ -609,16 +633,27 @@ public class Application extends ContextWrapper implements ComponentCallbacks2 {
             if (activity == null) {
                 continue;
             }
+            if (record.isTopResumedActivity) {
+                if (android.view.autofill.Helper.sVerbose) {
+                    Log.v(TAG, "getAutofillClient(): found top resumed activity for " + this +
+                            ": " + activity);
+                }
+                return activity.getAutofillClient();
+            }
+            // As a back up option, we pick the focused activity since autofill interacts only
+            // with the currently focused activity and we need the fill client only if a call
+            // comes from the focused activity.
             if (activity.getWindow().getDecorView().hasFocus()) {
                 if (android.view.autofill.Helper.sVerbose) {
-                    Log.v(TAG, "getAutofillClient(): found activity for " + this + ": " + activity);
+                    Log.v(TAG, "getAutofillClient(): found focused activity for " + this +
+                            ": " + activity);
                 }
-                return activity;
+                return activity.getAutofillClient();
             }
         }
         if (android.view.autofill.Helper.sVerbose) {
             Log.v(TAG, "getAutofillClient(): none of the " + activityCount + " activities on "
-                    + this + " have focus");
+                    + this + " are top resumed nor have focus");
         }
         return null;
     }

@@ -31,7 +31,7 @@ import "frameworks/base/core/proto/android/server/appstatetracker.proto";
 import "frameworks/base/core/proto/android/server/statlogger.proto";
 import "frameworks/base/core/proto/android/privacy.proto";
 import "frameworks/base/core/proto/android/util/quotatracker.proto";
-import "frameworks/proto_logging/stats/enums/app/job/enums.proto";
+import "frameworks/proto_logging/stats/enums/app/job/job_enums.proto";
 import "frameworks/proto_logging/stats/enums/server/job/enums.proto";
 
 message JobSchedulerServiceDumpProto {
@@ -1073,6 +1073,7 @@ message JobStatusDumpProto {
         RARE = 3;
         NEVER = 4;
         RESTRICTED = 5;
+        EXEMPTED = 6;
     }
     optional Bucket standby_bucket = 17;
     optional bool is_exempted_from_app_standby = 27;

@@ -86,6 +86,11 @@
     <item msgid="5715725170633593906">"Kapalı"</item>
     <item msgid="2075645297847971154">"Açık"</item>
   </string-array>
+  <string-array name="tile_states_color_correction">
+    <item msgid="2840507878437297682">"Bilinmiyor"</item>
+    <item msgid="1909756493418256167">"Kapalı"</item>
+    <item msgid="4531508423703413340">"Açık"</item>
+  </string-array>
   <string-array name="tile_states_inversion">
     <item msgid="3638187931191394628">"Kullanılamıyor"</item>
     <item msgid="9103697205127645916">"Kapalı"</item>
@@ -121,6 +126,11 @@
     <item msgid="8259411607272330225">"Kapalı"</item>
     <item msgid="578444932039713369">"Açık"</item>
   </string-array>
+  <string-array name="tile_states_record_issue">
+    <item msgid="1727196795383575383">"Yok"</item>
+    <item msgid="9061144428113385092">"Kapalı"</item>
+    <item msgid="2984256114867200368">"Açık"</item>
+  </string-array>
   <string-array name="tile_states_reverse">
     <item msgid="3574611556622963971">"Kullanılamıyor"</item>
     <item msgid="8707481475312432575">"Kapalı"</item>
@@ -151,9 +161,34 @@
     <item msgid="7571394439974244289">"Kapalı"</item>
     <item msgid="6866424167599381915">"Açık"</item>
   </string-array>
+  <string-array name="tile_states_qr_code_scanner">
+    <item msgid="7435143266149257618">"Kullanılamıyor"</item>
+    <item msgid="3301403109049256043">"Kapalı"</item>
+    <item msgid="8878684975184010135">"Açık"</item>
+  </string-array>
   <string-array name="tile_states_alarm">
     <item msgid="4936533380177298776">"Kullanılamıyor"</item>
     <item msgid="2710157085538036590">"Kapalı"</item>
     <item msgid="7809470840976856149">"Açık"</item>
+  </string-array>
+  <string-array name="tile_states_onehanded">
+    <item msgid="8189342855739930015">"Bilinmiyor"</item>
+    <item msgid="146088982397753810">"Kapalı"</item>
+    <item msgid="460891964396502657">"Açık"</item>
+  </string-array>
+  <string-array name="tile_states_dream">
+    <item msgid="6184819793571079513">"Kullanılamıyor"</item>
+    <item msgid="8014986104355098744">"Kapalı"</item>
+    <item msgid="5966994759929723339">"Açık"</item>
+  </string-array>
+  <string-array name="tile_states_font_scaling">
+    <item msgid="3173069902082305985">"Kullanılamıyor"</item>
+    <item msgid="2478289035899842865">"Kapalı"</item>
+    <item msgid="5137565285664080143">"Açık"</item>
+  </string-array>
+  <string-array name="tile_states_hearing_devices">
+    <item msgid="1235334096484287173">"Yok"</item>
+    <item msgid="3079622119444911877">"Kapalı"</item>
+    <item msgid="3028994095749238254">"Açık"</item>
   </string-array>
 </resources>

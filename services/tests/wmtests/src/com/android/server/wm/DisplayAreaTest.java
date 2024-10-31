@@ -16,7 +16,10 @@
 
 package com.android.server.wm;
 
+import static android.app.WindowConfiguration.WINDOWING_MODE_MULTI_WINDOW;
 import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LOCKED;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_NOSENSOR;
 import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 import static android.view.WindowManager.LayoutParams.TYPE_APPLICATION;
 import static android.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
@@ -24,7 +27,6 @@ import static android.view.WindowManager.LayoutParams.TYPE_PRESENTATION;
 import static android.view.WindowManager.LayoutParams.TYPE_WALLPAPER;
 import static android.window.DisplayAreaOrganizer.FEATURE_DEFAULT_TASK_CONTAINER;
 import static android.window.DisplayAreaOrganizer.FEATURE_VENDOR_FIRST;
-import static android.window.DisplayAreaOrganizer.FEATURE_VENDOR_LAST;
 
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.doNothing;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.doReturn;
@@ -44,10 +46,13 @@ import static com.android.server.wm.testing.Assert.assertThrows;
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -61,8 +66,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.platform.test.annotations.Presubmit;
 import android.view.SurfaceControl;
-import android.view.View;
-import android.view.WindowManager;
+import android.window.DisplayAreaInfo;
 import android.window.IDisplayAreaOrganizer;
 
 import com.google.android.collect.Lists;
@@ -75,6 +79,7 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Tests for the {@link DisplayArea} container.
@@ -152,7 +157,7 @@ public class DisplayAreaTest extends WindowTestsBase {
     public void testForAllTaskDisplayAreas_onlyTraversesDisplayAreaOfTypeAny() {
         final RootDisplayArea root =
                 new DisplayAreaPolicyBuilderTest.SurfacelessDisplayAreaRoot(mWm);
-        final Function<TaskDisplayArea, Boolean> callback0 = tda -> false;
+        final Predicate<TaskDisplayArea> callback0 = tda -> false;
         final Consumer<TaskDisplayArea> callback1 = tda -> { };
         final BiFunction<TaskDisplayArea, Integer, Integer> callback2 = (tda, result) -> result;
         final Function<TaskDisplayArea, TaskDisplayArea> callback3 = tda -> null;
@@ -398,9 +403,9 @@ public class DisplayAreaTest extends WindowTestsBase {
                 parentBounds.right / 2, parentBounds.bottom);
         final Rect childBounds2 = new Rect(parentBounds.right / 2, parentBounds.top,
                 parentBounds.right, parentBounds.bottom);
-        TestDisplayArea parentDa = new TestDisplayArea(mWm, parentBounds);
-        TestDisplayArea childDa1 = new TestDisplayArea(mWm, childBounds1);
-        TestDisplayArea childDa2 = new TestDisplayArea(mWm, childBounds2);
+        TestDisplayArea parentDa = new TestDisplayArea(mWm, parentBounds, "Parent");
+        TestDisplayArea childDa1 = new TestDisplayArea(mWm, childBounds1, "Child1");
+        TestDisplayArea childDa2 = new TestDisplayArea(mWm, childBounds2, "Child2");
         parentDa.addChild(childDa1, 0);
         parentDa.addChild(childDa2, 1);
 
@@ -444,17 +449,11 @@ public class DisplayAreaTest extends WindowTestsBase {
     @Test
     public void testGetOrientation() {
         final DisplayArea.Tokens area = new DisplayArea.Tokens(mWm, ABOVE_TASKS, "test");
-        final WindowToken token = createWindowToken(TYPE_APPLICATION_OVERLAY);
-        spyOn(token);
-        doReturn(mock(DisplayContent.class)).when(token).getDisplayContent();
-        doNothing().when(token).setParent(any());
-        final WindowState win = createWindowState(token);
-        spyOn(win);
-        doNothing().when(win).setParent(any());
+        mDisplayContent.addChild(area, POSITION_TOP);
+        final WindowState win = createWindow(null, TYPE_APPLICATION_OVERLAY, "overlay");
         win.mAttrs.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-        token.addChild(win, 0);
-        area.addChild(token);
-
+        win.mToken.reparent(area, POSITION_TOP);
+        spyOn(win);
         doReturn(true).when(win).isVisible();
 
         assertEquals("Visible window can request orientation",
@@ -466,28 +465,6 @@ public class DisplayAreaTest extends WindowTestsBase {
         assertEquals("Invisible window cannot request orientation",
                 ActivityInfo.SCREEN_ORIENTATION_NOSENSOR,
                 area.getOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR));
-    }
-
-    @Test
-    public void testSetIgnoreOrientationRequest() {
-        final DisplayArea.Tokens area = new DisplayArea.Tokens(mWm, ABOVE_TASKS, "test");
-        final WindowToken token = createWindowToken(TYPE_APPLICATION_OVERLAY);
-        spyOn(token);
-        doReturn(mock(DisplayContent.class)).when(token).getDisplayContent();
-        doNothing().when(token).setParent(any());
-        final WindowState win = createWindowState(token);
-        spyOn(win);
-        doNothing().when(win).setParent(any());
-        win.mAttrs.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-        token.addChild(win, 0);
-        area.addChild(token);
-        doReturn(true).when(win).isVisible();
-
-        assertEquals(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE, area.getOrientation());
-
-        area.setIgnoreOrientationRequest(true /* ignoreOrientationRequest */);
-
-        assertEquals(ActivityInfo.SCREEN_ORIENTATION_UNSET, area.getOrientation());
     }
 
     @Test
@@ -512,7 +489,49 @@ public class DisplayAreaTest extends WindowTestsBase {
     }
 
     @Test
-    public void testSetIgnoreOrientationRequest_updateOrientationRequestingTaskDisplayArea() {
+    public void testSetIgnoreOrientationRequest_callSuperOnDescendantOrientationChangedNoSensor() {
+        final TaskDisplayArea tda = mDisplayContent.getDefaultTaskDisplayArea();
+        final Task stack =
+                new TaskBuilder(mSupervisor).setOnTop(!ON_TOP).setCreateActivity(true).build();
+        final ActivityRecord activity = stack.getTopNonFinishingActivity();
+
+        tda.setIgnoreOrientationRequest(true /* ignoreOrientationRequest */);
+
+        activity.setRequestedOrientation(SCREEN_ORIENTATION_NOSENSOR);
+
+        verify(tda).onDescendantOrientationChanged(any());
+        verify(mDisplayContent).onDescendantOrientationChanged(any());
+
+        tda.setIgnoreOrientationRequest(false /* ignoreOrientationRequest */);
+        activity.setRequestedOrientation(SCREEN_ORIENTATION_NOSENSOR);
+
+        verify(tda).onDescendantOrientationChanged(any());
+        verify(mDisplayContent).onDescendantOrientationChanged(any());
+    }
+
+    @Test
+    public void testSetIgnoreOrientationRequest_callSuperOnDescendantOrientationChangedLocked() {
+        final TaskDisplayArea tda = mDisplayContent.getDefaultTaskDisplayArea();
+        final Task stack =
+                new TaskBuilder(mSupervisor).setOnTop(!ON_TOP).setCreateActivity(true).build();
+        final ActivityRecord activity = stack.getTopNonFinishingActivity();
+
+        tda.setIgnoreOrientationRequest(true /* ignoreOrientationRequest */);
+
+        activity.setRequestedOrientation(SCREEN_ORIENTATION_LOCKED);
+
+        verify(tda).onDescendantOrientationChanged(any());
+        verify(mDisplayContent).onDescendantOrientationChanged(any());
+
+        tda.setIgnoreOrientationRequest(false /* ignoreOrientationRequest */);
+        activity.setRequestedOrientation(SCREEN_ORIENTATION_LOCKED);
+
+        verify(tda).onDescendantOrientationChanged(any());
+        verify(mDisplayContent).onDescendantOrientationChanged(any());
+    }
+
+    @Test
+    public void testGetOrientationRequestingTaskDisplayArea_updateOrientationTaskDisplayArea() {
         final TaskDisplayArea tda = mDisplayContent.getDefaultTaskDisplayArea();
         final Task stack =
                 new TaskBuilder(mSupervisor).setOnTop(!ON_TOP).setCreateActivity(true).build();
@@ -524,7 +543,7 @@ public class DisplayAreaTest extends WindowTestsBase {
         // TDA is no longer handling orientation request, clear the last focused TDA.
         tda.setIgnoreOrientationRequest(true /* ignoreOrientationRequest */);
 
-        assertThat(mDisplayContent.getOrientationRequestingTaskDisplayArea()).isNull();
+        assertThat(mDisplayContent.getOrientationRequestingTaskDisplayArea()).isEqualTo(tda);
 
         // TDA now handles orientation request, update last focused TDA based on the focused app.
         tda.setIgnoreOrientationRequest(false /* ignoreOrientationRequest */);
@@ -559,6 +578,7 @@ public class DisplayAreaTest extends WindowTestsBase {
         final IDisplayAreaOrganizer mockDisplayAreaOrganizer = mock(IDisplayAreaOrganizer.class);
         doReturn(mock(IBinder.class)).when(mockDisplayAreaOrganizer).asBinder();
         displayArea.mOrganizer = mockDisplayAreaOrganizer;
+        displayArea.mDisplayAreaAppearedSent = true;
         spyOn(mWm.mAtmService.mWindowOrganizerController.mDisplayAreaOrganizerController);
         mDisplayContent.addChild(displayArea, 0);
 
@@ -570,16 +590,28 @@ public class DisplayAreaTest extends WindowTestsBase {
     }
 
     @Test
-    public void testRegisterSameFeatureOrganizer_expectThrowsException() {
-        final IDisplayAreaOrganizer mockDisplayAreaOrganizer = mock(IDisplayAreaOrganizer.class);
-        final IBinder binder = mock(IBinder.class);
-        doReturn(true).when(binder).isBinderAlive();
-        doReturn(binder).when(mockDisplayAreaOrganizer).asBinder();
-        final DisplayAreaOrganizerController controller =
-                mWm.mAtmService.mWindowOrganizerController.mDisplayAreaOrganizerController;
-        controller.registerOrganizer(mockDisplayAreaOrganizer, FEATURE_VENDOR_FIRST);
-        assertThrows(IllegalStateException.class,
-                () -> controller.registerOrganizer(mockDisplayAreaOrganizer, FEATURE_VENDOR_FIRST));
+    public void testGetDisplayAreaInfo() {
+        final DisplayArea<WindowContainer> displayArea = new DisplayArea<>(
+                mWm, BELOW_TASKS, "NewArea", FEATURE_VENDOR_FIRST);
+        mDisplayContent.addChild(displayArea, 0);
+        final DisplayAreaInfo info = displayArea.getDisplayAreaInfo();
+
+        assertThat(info.token).isEqualTo(displayArea.mRemoteToken.toWindowContainerToken());
+        assertThat(info.configuration).isEqualTo(displayArea.getConfiguration());
+        assertThat(info.displayId).isEqualTo(mDisplayContent.getDisplayId());
+        assertThat(info.featureId).isEqualTo(displayArea.mFeatureId);
+        assertThat(info.rootDisplayAreaId).isEqualTo(mDisplayContent.mFeatureId);
+
+        final TaskDisplayArea tda = mDisplayContent.getDefaultTaskDisplayArea();
+        final int tdaIndex = tda.getParent().mChildren.indexOf(tda);
+        final RootDisplayArea root =
+                new DisplayAreaGroup(mWm, "TestRoot", FEATURE_VENDOR_FIRST + 1);
+        mDisplayContent.addChild(root, tdaIndex + 1);
+        displayArea.reparent(root, 0);
+
+        final DisplayAreaInfo info2 = displayArea.getDisplayAreaInfo();
+
+        assertThat(info2.rootDisplayAreaId).isEqualTo(root.mFeatureId);
     }
 
     @Test
@@ -593,9 +625,117 @@ public class DisplayAreaTest extends WindowTestsBase {
         controller.registerOrganizer(mockDisplayAreaOrganizer, FEATURE_VENDOR_FIRST);
     }
 
+    @Test
+    public void testSetAlwaysOnTop_movesDisplayAreaToTop() {
+        final Rect bounds = new Rect(0, 0, 100, 100);
+        DisplayArea<WindowContainer> parent = new TestDisplayArea(mWm, bounds, "Parent");
+        parent.setWindowingMode(WINDOWING_MODE_MULTI_WINDOW);
+        DisplayArea<WindowContainer> child1 = new TestDisplayArea(mWm, bounds, "Child1");
+        child1.setWindowingMode(WINDOWING_MODE_MULTI_WINDOW);
+        DisplayArea<WindowContainer> child2 = new TestDisplayArea(mWm, bounds, "Child2");
+        child2.setWindowingMode(WINDOWING_MODE_MULTI_WINDOW);
+        parent.addChild(child2, 0);
+        parent.addChild(child1, 1);
+
+        child2.setAlwaysOnTop(true);
+
+        assertEquals(parent.getChildAt(1), child2);
+        assertThat(child2.isAlwaysOnTop()).isTrue();
+    }
+
+    @Test
+    public void testDisplayAreaRequestsTopPosition_alwaysOnTopSiblingExists_doesNotMoveToTop() {
+        final Rect bounds = new Rect(0, 0, 100, 100);
+        DisplayArea<WindowContainer> parent = new TestDisplayArea(mWm, bounds, "Parent");
+        parent.setWindowingMode(WINDOWING_MODE_MULTI_WINDOW);
+        DisplayArea<WindowContainer> alwaysOnTopChild = new TestDisplayArea(mWm, bounds,
+                "AlwaysOnTopChild");
+        alwaysOnTopChild.setWindowingMode(WINDOWING_MODE_MULTI_WINDOW);
+        DisplayArea<WindowContainer> child = new TestDisplayArea(mWm, bounds, "Child");
+        child.setWindowingMode(WINDOWING_MODE_MULTI_WINDOW);
+        parent.addChild(alwaysOnTopChild, 0);
+        parent.addChild(child, 1);
+        alwaysOnTopChild.setAlwaysOnTop(true);
+
+        parent.positionChildAt(POSITION_TOP, child, false /* includingParents */);
+
+        assertEquals(parent.getChildAt(1), alwaysOnTopChild);
+        assertEquals(parent.getChildAt(0), child);
+    }
+
+    @Test
+    public void testAlwaysOnTopDisplayArea_requestsNonTopLocation_doesNotMove() {
+        final Rect bounds = new Rect(0, 0, 100, 100);
+        DisplayArea<WindowContainer> parent = new TestDisplayArea(mWm, bounds, "Parent");
+        parent.setWindowingMode(WINDOWING_MODE_MULTI_WINDOW);
+        DisplayArea<WindowContainer> alwaysOnTopChild = new TestDisplayArea(mWm, bounds,
+                "AlwaysOnTopChild");
+        alwaysOnTopChild.setWindowingMode(WINDOWING_MODE_MULTI_WINDOW);
+        DisplayArea<WindowContainer> child = new TestDisplayArea(mWm, bounds, "Child");
+        child.setWindowingMode(WINDOWING_MODE_MULTI_WINDOW);
+        parent.addChild(alwaysOnTopChild, 0);
+        parent.addChild(child, 1);
+        alwaysOnTopChild.setAlwaysOnTop(true);
+
+        parent.positionChildAt(POSITION_BOTTOM, alwaysOnTopChild, false /* includingParents */);
+
+        assertEquals(parent.getChildAt(1), alwaysOnTopChild);
+        assertEquals(parent.getChildAt(0), child);
+    }
+
+    @Test
+    public void testSetOrganizer() {
+        final TaskDisplayArea displayArea = createTaskDisplayArea(
+                mDisplayContent, mWm, "NewArea", FEATURE_VENDOR_FIRST);
+
+        assertNull(displayArea.mOrganizer);
+        assertFalse(displayArea.mDisplayAreaAppearedSent);
+
+        final IDisplayAreaOrganizer organizer = mock(IDisplayAreaOrganizer.class);
+        final DisplayAreaOrganizerController controller =
+                mWm.mAtmService.mWindowOrganizerController.mDisplayAreaOrganizerController;
+        spyOn(controller);
+        doNothing().when(controller).onDisplayAreaVanished(any(), any());
+
+        displayArea.setOrganizer(organizer);
+
+        assertEquals(organizer, displayArea.mOrganizer);
+        assertTrue(displayArea.mDisplayAreaAppearedSent);
+        verify(controller).onDisplayAreaAppeared(organizer, displayArea);
+
+        // No duplicated appeared sent.
+        clearInvocations(controller);
+        displayArea.sendDisplayAreaAppeared();
+
+        verify(controller, never()).onDisplayAreaAppeared(any(), any());
+
+        // Sent info changed after appeared.
+        displayArea.sendDisplayAreaInfoChanged();
+
+        verify(controller).onDisplayAreaInfoChanged(organizer, displayArea);
+
+        // Sent info vanished after appeared.
+        displayArea.setOrganizer(null);
+
+        verify(controller).onDisplayAreaVanished(organizer, displayArea);
+        assertNull(displayArea.mOrganizer);
+        assertFalse(displayArea.mDisplayAreaAppearedSent);
+
+        // No callback until appeared sent.
+        clearInvocations(controller);
+
+        displayArea.sendDisplayAreaAppeared();
+        displayArea.sendDisplayAreaInfoChanged();
+        displayArea.sendDisplayAreaVanished(organizer);
+
+        verify(controller, never()).onDisplayAreaAppeared(any(), any());
+        verify(controller, never()).onDisplayAreaInfoChanged(any(), any());
+        verify(controller, never()).onDisplayAreaVanished(any(), any());
+    }
+
     private static class TestDisplayArea<T extends WindowContainer> extends DisplayArea<T> {
-        private TestDisplayArea(WindowManagerService wms, Rect bounds) {
-            super(wms, ANY, "half display area");
+        private TestDisplayArea(WindowManagerService wms, Rect bounds, String name) {
+            super(wms, ANY, name);
             setBounds(bounds);
         }
 
@@ -603,13 +743,6 @@ public class DisplayAreaTest extends WindowTestsBase {
         SurfaceControl.Builder makeChildSurface(WindowContainer child) {
             return new MockSurfaceControlBuilder();
         }
-    }
-
-    private WindowState createWindowState(WindowToken token) {
-        return new WindowState(mWm, mock(Session.class), new TestIWindow(), token,
-                null /* parentWindow */, 0 /* appOp */, new WindowManager.LayoutParams(),
-                View.VISIBLE, 0 /* ownerId */, 0 /* showUserId */,
-                false /* ownerCanAddInternalSystemWindow */);
     }
 
     private WindowToken createWindowToken(int type) {

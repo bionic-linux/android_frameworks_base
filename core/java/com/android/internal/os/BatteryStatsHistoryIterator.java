@@ -21,61 +21,104 @@ import android.os.BatteryManager;
 import android.os.BatteryStats;
 import android.os.Parcel;
 import android.util.Slog;
+import android.util.SparseArray;
 
-import java.util.List;
+import java.util.Iterator;
 
 /**
  * An iterator for {@link BatteryStats.HistoryItem}'s.
  */
-public class BatteryStatsHistoryIterator {
+@android.ravenwood.annotation.RavenwoodKeepWholeClass
+public class BatteryStatsHistoryIterator implements Iterator<BatteryStats.HistoryItem>,
+        AutoCloseable {
     private static final boolean DEBUG = false;
     private static final String TAG = "BatteryStatsHistoryItr";
     private final BatteryStatsHistory mBatteryStatsHistory;
+    private final long mStartTimeMs;
+    private final long mEndTimeMs;
     private final BatteryStats.HistoryStepDetails mReadHistoryStepDetails =
             new BatteryStats.HistoryStepDetails();
-    private final String[] mReadHistoryStrings;
-    private final int[] mReadHistoryUids;
+    private final SparseArray<BatteryStats.HistoryTag> mHistoryTags = new SparseArray<>();
+    private final PowerStats.DescriptorRegistry mDescriptorRegistry =
+            new PowerStats.DescriptorRegistry();
+    private BatteryStats.HistoryItem mHistoryItem = new BatteryStats.HistoryItem();
+    private boolean mNextItemReady;
+    private boolean mTimeInitialized;
+    private boolean mClosed;
 
-    public BatteryStatsHistoryIterator(@NonNull BatteryStatsHistory history,
-            @NonNull List<BatteryStats.HistoryTag> historyTagPool) {
+    public BatteryStatsHistoryIterator(@NonNull BatteryStatsHistory history, long startTimeMs,
+            long endTimeMs) {
         mBatteryStatsHistory = history;
+        mStartTimeMs = startTimeMs;
+        mEndTimeMs = (endTimeMs != MonotonicClock.UNDEFINED) ? endTimeMs : Long.MAX_VALUE;
+        mHistoryItem.clear();
+    }
 
-        mBatteryStatsHistory.startIteratingHistory();
-
-        mReadHistoryStrings = new String[historyTagPool.size()];
-        mReadHistoryUids = new int[historyTagPool.size()];
-        for (int i = historyTagPool.size() - 1; i >= 0; i--) {
-            BatteryStats.HistoryTag tag = historyTagPool.get(i);
-            final int idx = tag.poolIdx;
-            mReadHistoryStrings[idx] = tag.string;
-            mReadHistoryUids[idx] = tag.uid;
+    @Override
+    public boolean hasNext() {
+        if (!mNextItemReady) {
+            advance();
         }
+
+        return mHistoryItem != null;
     }
 
     /**
-     * Retrieves the next HistoryItem from battery history, if available. Returns false if there
+     * Retrieves the next HistoryItem from battery history, if available. Returns null if there
      * are no more items.
      */
-    public boolean next(BatteryStats.HistoryItem out) {
-        Parcel p = mBatteryStatsHistory.getNextParcel(out);
-        if (p == null) {
-            mBatteryStatsHistory.finishIteratingHistory();
-            return false;
+    @Override
+    public BatteryStats.HistoryItem next() {
+        if (!mNextItemReady) {
+            advance();
         }
-
-        final long lastRealtimeMs = out.time;
-        final long lastWalltimeMs = out.currentTime;
-        readHistoryDelta(p, out);
-        if (out.cmd != BatteryStats.HistoryItem.CMD_CURRENT_TIME
-                && out.cmd != BatteryStats.HistoryItem.CMD_RESET && lastWalltimeMs != 0) {
-            out.currentTime = lastWalltimeMs + (out.time - lastRealtimeMs);
-        }
-        return true;
+        mNextItemReady = false;
+        return mHistoryItem;
     }
 
-    void readHistoryDelta(Parcel src, BatteryStats.HistoryItem cur) {
+    private void advance() {
+        while (true) {
+            Parcel p = mBatteryStatsHistory.getNextParcel(mStartTimeMs, mEndTimeMs);
+            if (p == null) {
+                break;
+            }
+
+            if (!mTimeInitialized) {
+                mHistoryItem.time = mBatteryStatsHistory.getHistoryBufferStartTime(p);
+                mTimeInitialized = true;
+            }
+
+            final long lastMonotonicTimeMs = mHistoryItem.time;
+            final long lastWalltimeMs = mHistoryItem.currentTime;
+            try {
+                readHistoryDelta(p, mHistoryItem);
+            } catch (Throwable t) {
+                Slog.wtf(TAG, "Corrupted battery history", t);
+                break;
+            }
+            if (mHistoryItem.cmd != BatteryStats.HistoryItem.CMD_CURRENT_TIME
+                    && mHistoryItem.cmd != BatteryStats.HistoryItem.CMD_RESET
+                    && lastWalltimeMs != 0) {
+                mHistoryItem.currentTime =
+                        lastWalltimeMs + (mHistoryItem.time - lastMonotonicTimeMs);
+            }
+            if (mEndTimeMs != 0 && mHistoryItem.time >= mEndTimeMs) {
+                break;
+            }
+            if (mHistoryItem.time >= mStartTimeMs) {
+                mNextItemReady = true;
+                return;
+            }
+        }
+
+        mHistoryItem = null;
+        mNextItemReady = true;
+        close();
+    }
+
+    private void readHistoryDelta(Parcel src, BatteryStats.HistoryItem cur) {
         int firstToken = src.readInt();
-        int deltaTimeToken = firstToken & BatteryStatsImpl.DELTA_TIME_MASK;
+        int deltaTimeToken = firstToken & BatteryStatsHistory.DELTA_TIME_MASK;
         cur.cmd = BatteryStats.HistoryItem.CMD_UPDATE;
         cur.numReadInts = 1;
         if (DEBUG) {
@@ -83,13 +126,13 @@ public class BatteryStatsHistoryIterator {
                     + " deltaTimeToken=" + deltaTimeToken);
         }
 
-        if (deltaTimeToken < BatteryStatsImpl.DELTA_TIME_ABS) {
+        if (deltaTimeToken < BatteryStatsHistory.DELTA_TIME_ABS) {
             cur.time += deltaTimeToken;
-        } else if (deltaTimeToken == BatteryStatsImpl.DELTA_TIME_ABS) {
+        } else if (deltaTimeToken == BatteryStatsHistory.DELTA_TIME_ABS) {
             cur.readFromParcel(src);
             if (DEBUG) Slog.i(TAG, "READ DELTA: ABS time=" + cur.time);
             return;
-        } else if (deltaTimeToken == BatteryStatsImpl.DELTA_TIME_INT) {
+        } else if (deltaTimeToken == BatteryStatsHistory.DELTA_TIME_INT) {
             int delta = src.readInt();
             cur.time += delta;
             cur.numReadInts += 1;
@@ -102,7 +145,7 @@ public class BatteryStatsHistoryIterator {
         }
 
         final int batteryLevelInt;
-        if ((firstToken & BatteryStatsImpl.DELTA_BATTERY_LEVEL_FLAG) != 0) {
+        if ((firstToken & BatteryStatsHistory.DELTA_BATTERY_LEVEL_FLAG) != 0) {
             batteryLevelInt = src.readInt();
             readBatteryLevelInt(batteryLevelInt, cur);
             cur.numReadInts += 1;
@@ -117,16 +160,16 @@ public class BatteryStatsHistoryIterator {
             batteryLevelInt = 0;
         }
 
-        if ((firstToken & BatteryStatsImpl.DELTA_STATE_FLAG) != 0) {
+        if ((firstToken & BatteryStatsHistory.DELTA_STATE_FLAG) != 0) {
             int stateInt = src.readInt();
-            cur.states = (firstToken & BatteryStatsImpl.DELTA_STATE_MASK) | (stateInt
-                    & (~BatteryStatsImpl.STATE_BATTERY_MASK));
-            cur.batteryStatus = (byte) ((stateInt >> BatteryStatsImpl.STATE_BATTERY_STATUS_SHIFT)
-                    & BatteryStatsImpl.STATE_BATTERY_STATUS_MASK);
-            cur.batteryHealth = (byte) ((stateInt >> BatteryStatsImpl.STATE_BATTERY_HEALTH_SHIFT)
-                    & BatteryStatsImpl.STATE_BATTERY_HEALTH_MASK);
-            cur.batteryPlugType = (byte) ((stateInt >> BatteryStatsImpl.STATE_BATTERY_PLUG_SHIFT)
-                    & BatteryStatsImpl.STATE_BATTERY_PLUG_MASK);
+            cur.states = (firstToken & BatteryStatsHistory.DELTA_STATE_MASK) | (stateInt
+                    & (~BatteryStatsHistory.STATE_BATTERY_MASK));
+            cur.batteryStatus = (byte) ((stateInt >> BatteryStatsHistory.STATE_BATTERY_STATUS_SHIFT)
+                    & BatteryStatsHistory.STATE_BATTERY_STATUS_MASK);
+            cur.batteryHealth = (byte) ((stateInt >> BatteryStatsHistory.STATE_BATTERY_HEALTH_SHIFT)
+                    & BatteryStatsHistory.STATE_BATTERY_HEALTH_MASK);
+            cur.batteryPlugType = (byte) ((stateInt >> BatteryStatsHistory.STATE_BATTERY_PLUG_SHIFT)
+                    & BatteryStatsHistory.STATE_BATTERY_PLUG_MASK);
             switch (cur.batteryPlugType) {
                 case 1:
                     cur.batteryPlugType = BatteryManager.BATTERY_PLUGGED_AC;
@@ -148,11 +191,11 @@ public class BatteryStatsHistoryIterator {
                         + " states=0x" + Integer.toHexString(cur.states));
             }
         } else {
-            cur.states = (firstToken & BatteryStatsImpl.DELTA_STATE_MASK) | (cur.states
-                    & (~BatteryStatsImpl.STATE_BATTERY_MASK));
+            cur.states = (firstToken & BatteryStatsHistory.DELTA_STATE_MASK) | (cur.states
+                    & (~BatteryStatsHistory.STATE_BATTERY_MASK));
         }
 
-        if ((firstToken & BatteryStatsImpl.DELTA_STATE2_FLAG) != 0) {
+        if ((firstToken & BatteryStatsHistory.DELTA_STATE2_FLAG) != 0) {
             cur.states2 = src.readInt();
             if (DEBUG) {
                 Slog.i(TAG, "READ DELTA: states2=0x"
@@ -160,27 +203,17 @@ public class BatteryStatsHistoryIterator {
             }
         }
 
-        if ((firstToken & BatteryStatsImpl.DELTA_WAKELOCK_FLAG) != 0) {
-            int indexes = src.readInt();
-            int wakeLockIndex = indexes & 0xffff;
-            int wakeReasonIndex = (indexes >> 16) & 0xffff;
-            if (wakeLockIndex != 0xffff) {
+        if ((firstToken & BatteryStatsHistory.DELTA_WAKELOCK_FLAG) != 0) {
+            final int indexes = src.readInt();
+            final int wakeLockIndex = indexes & 0xffff;
+            final int wakeReasonIndex = (indexes >> 16) & 0xffff;
+            if (readHistoryTag(src, wakeLockIndex, cur.localWakelockTag)) {
                 cur.wakelockTag = cur.localWakelockTag;
-                readHistoryTag(wakeLockIndex, cur.wakelockTag);
-                if (DEBUG) {
-                    Slog.i(TAG, "READ DELTA: wakelockTag=#" + cur.wakelockTag.poolIdx
-                            + " " + cur.wakelockTag.uid + ":" + cur.wakelockTag.string);
-                }
             } else {
                 cur.wakelockTag = null;
             }
-            if (wakeReasonIndex != 0xffff) {
+            if (readHistoryTag(src, wakeReasonIndex, cur.localWakeReasonTag)) {
                 cur.wakeReasonTag = cur.localWakeReasonTag;
-                readHistoryTag(wakeReasonIndex, cur.wakeReasonTag);
-                if (DEBUG) {
-                    Slog.i(TAG, "READ DELTA: wakeReasonTag=#" + cur.wakeReasonTag.poolIdx
-                            + " " + cur.wakeReasonTag.uid + ":" + cur.wakeReasonTag.string);
-                }
             } else {
                 cur.wakeReasonTag = null;
             }
@@ -190,12 +223,16 @@ public class BatteryStatsHistoryIterator {
             cur.wakeReasonTag = null;
         }
 
-        if ((firstToken & BatteryStatsImpl.DELTA_EVENT_FLAG) != 0) {
+        if ((firstToken & BatteryStatsHistory.DELTA_EVENT_FLAG) != 0) {
             cur.eventTag = cur.localEventTag;
             final int codeAndIndex = src.readInt();
             cur.eventCode = (codeAndIndex & 0xffff);
             final int index = ((codeAndIndex >> 16) & 0xffff);
-            readHistoryTag(index, cur.eventTag);
+            if (readHistoryTag(src, index, cur.localEventTag)) {
+                cur.eventTag = cur.localEventTag;
+            } else {
+                cur.eventTag = null;
+            }
             cur.numReadInts += 1;
             if (DEBUG) {
                 Slog.i(TAG, "READ DELTA: event=" + cur.eventCode + " tag=#"
@@ -206,59 +243,91 @@ public class BatteryStatsHistoryIterator {
             cur.eventCode = BatteryStats.HistoryItem.EVENT_NONE;
         }
 
-        if ((batteryLevelInt & BatteryStatsImpl.BATTERY_DELTA_LEVEL_FLAG) != 0) {
+        if ((batteryLevelInt & BatteryStatsHistory.BATTERY_LEVEL_DETAILS_FLAG) != 0) {
             cur.stepDetails = mReadHistoryStepDetails;
             cur.stepDetails.readFromParcel(src);
         } else {
             cur.stepDetails = null;
         }
 
-        if ((firstToken & BatteryStatsImpl.DELTA_BATTERY_CHARGE_FLAG) != 0) {
+        if ((firstToken & BatteryStatsHistory.DELTA_BATTERY_CHARGE_FLAG) != 0) {
             cur.batteryChargeUah = src.readInt();
         }
         cur.modemRailChargeMah = src.readDouble();
         cur.wifiRailChargeMah = src.readDouble();
-    }
-
-    int getHistoryStringPoolSize() {
-        return mReadHistoryStrings.length;
-    }
-
-    int getHistoryStringPoolBytes() {
-        int totalChars = 0;
-        for (int i = mReadHistoryStrings.length - 1; i >= 0; i--) {
-            if (mReadHistoryStrings[i] != null) {
-                totalChars += mReadHistoryStrings[i].length() + 1;
+        if ((cur.states2 & BatteryStats.HistoryItem.STATE2_EXTENSIONS_FLAG) != 0) {
+            final int extensionFlags = src.readInt();
+            if ((extensionFlags & BatteryStatsHistory.EXTENSION_POWER_STATS_DESCRIPTOR_FLAG) != 0) {
+                PowerStats.Descriptor descriptor = PowerStats.Descriptor.readSummaryFromParcel(src);
+                if (descriptor != null) {
+                    mDescriptorRegistry.register(descriptor);
+                }
             }
-        }
-
-        // Each entry is a fixed 12 bytes: 4 for index, 4 for uid, 4 for string size
-        // Each string character is 2 bytes.
-        return (mReadHistoryStrings.length * 12) + (totalChars * 2);
-    }
-
-    String getHistoryTagPoolString(int index) {
-        return mReadHistoryStrings[index];
-    }
-
-    int getHistoryTagPoolUid(int index) {
-        return mReadHistoryUids[index];
-    }
-
-    private void readHistoryTag(int index, BatteryStats.HistoryTag tag) {
-        if (index < mReadHistoryStrings.length) {
-            tag.string = mReadHistoryStrings[index];
-            tag.uid = mReadHistoryUids[index];
+            if ((extensionFlags & BatteryStatsHistory.EXTENSION_POWER_STATS_FLAG) != 0) {
+                cur.powerStats = PowerStats.readFromParcel(src, mDescriptorRegistry);
+            } else {
+                cur.powerStats = null;
+            }
+            if ((extensionFlags & BatteryStatsHistory.EXTENSION_PROCESS_STATE_CHANGE_FLAG) != 0) {
+                cur.processStateChange = cur.localProcessStateChange;
+                cur.processStateChange.readFromParcel(src);
+            } else {
+                cur.processStateChange = null;
+            }
         } else {
-            tag.string = null;
-            tag.uid = 0;
+            cur.powerStats = null;
+            cur.processStateChange = null;
         }
-        tag.poolIdx = index;
+    }
+
+    private boolean readHistoryTag(Parcel src, int index, BatteryStats.HistoryTag outTag) {
+        if (index == 0xffff) {
+            return false;
+        }
+
+        if ((index & BatteryStatsHistory.TAG_FIRST_OCCURRENCE_FLAG) != 0) {
+            BatteryStats.HistoryTag tag = new BatteryStats.HistoryTag();
+            tag.readFromParcel(src);
+            tag.poolIdx = index & ~BatteryStatsHistory.TAG_FIRST_OCCURRENCE_FLAG;
+            if (tag.poolIdx < BatteryStatsHistory.HISTORY_TAG_INDEX_LIMIT) {
+                mHistoryTags.put(tag.poolIdx, tag);
+            } else {
+                tag.poolIdx = BatteryStats.HistoryTag.HISTORY_TAG_POOL_OVERFLOW;
+            }
+
+            outTag.setTo(tag);
+        } else {
+            BatteryStats.HistoryTag historyTag = mHistoryTags.get(index);
+            if (historyTag != null) {
+                outTag.setTo(historyTag);
+            } else {
+                outTag.string = null;
+                outTag.uid = 0;
+            }
+            outTag.poolIdx = index;
+        }
+        return true;
     }
 
     private static void readBatteryLevelInt(int batteryLevelInt, BatteryStats.HistoryItem out) {
         out.batteryLevel = (byte) ((batteryLevelInt & 0xfe000000) >>> 25);
         out.batteryTemperature = (short) ((batteryLevelInt & 0x01ff8000) >>> 15);
-        out.batteryVoltage = (char) ((batteryLevelInt & 0x00007ffe) >>> 1);
+        int voltage = ((batteryLevelInt & 0x00007ffe) >>> 1);
+        if (voltage == 0x3FFF) {
+            voltage = -1;
+        }
+
+        out.batteryVoltage = (short) voltage;
+    }
+
+    /**
+     * Should be called when iteration is complete.
+     */
+    @Override
+    public void close() {
+        if (!mClosed) {
+            mClosed = true;
+            mBatteryStatsHistory.iteratorFinished();
+        }
     }
 }

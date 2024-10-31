@@ -18,16 +18,20 @@ package com.android.server.location.gnss.hal;
 
 import static com.android.server.location.gnss.GnssManagerService.TAG;
 
+import android.annotation.CallbackExecutor;
 import android.annotation.IntDef;
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.location.GnssAntennaInfo;
 import android.location.GnssCapabilities;
 import android.location.GnssMeasurementCorrections;
 import android.location.GnssMeasurementsEvent;
 import android.location.GnssNavigationMessage;
+import android.location.GnssSignalType;
 import android.location.GnssStatus;
 import android.location.Location;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 
@@ -45,8 +49,13 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Entry point for most GNSS HAL commands and callbacks.
@@ -124,9 +133,12 @@ public class GnssNative {
     // IMPORTANT - must match OEM definitions, this isn't part of a hal for some reason
     public static final int AGPS_REF_LOCATION_TYPE_GSM_CELLID = 1;
     public static final int AGPS_REF_LOCATION_TYPE_UMTS_CELLID = 2;
+    public static final int AGPS_REF_LOCATION_TYPE_LTE_CELLID = 4;
+    public static final int AGPS_REF_LOCATION_TYPE_NR_CELLID = 8;
 
     @IntDef(prefix = "AGPS_REF_LOCATION_TYPE_", value = {AGPS_REF_LOCATION_TYPE_GSM_CELLID,
-            AGPS_REF_LOCATION_TYPE_UMTS_CELLID})
+            AGPS_REF_LOCATION_TYPE_UMTS_CELLID, AGPS_REF_LOCATION_TYPE_LTE_CELLID,
+            AGPS_REF_LOCATION_TYPE_NR_CELLID})
     @Retention(RetentionPolicy.SOURCE)
     public @interface AgpsReferenceLocationType {}
 
@@ -134,6 +146,8 @@ public class GnssNative {
     public static final int AGPS_SETID_TYPE_NONE = 0;
     public static final int AGPS_SETID_TYPE_IMSI = 1;
     public static final int AGPS_SETID_TYPE_MSISDN = 2;
+
+    private static final int POWER_STATS_REQUEST_TIMEOUT_MILLIS = 100;
 
     @IntDef(prefix = "AGPS_SETID_TYPE_", value = {AGPS_SETID_TYPE_NONE, AGPS_SETID_TYPE_IMSI,
             AGPS_SETID_TYPE_MSISDN})
@@ -279,12 +293,18 @@ public class GnssNative {
 
     /** Callbacks for notifications. */
     public interface NotificationCallbacks {
-        void onReportNiNotification(int notificationId, int niType, int notifyFlags,
-                int timeout, int defaultResponse, String requestorId, String text,
-                int requestorIdEncoding, int textEncoding);
         void onReportNfwNotification(String proxyAppPackageName, byte protocolStack,
                 String otherProtocolStackName, byte requestor, String requestorId,
                 byte responseType, boolean inEmergencyMode, boolean isCachedLocation);
+    }
+
+    /** Callback for reporting {@link GnssPowerStats} */
+    public interface PowerStatsCallback {
+        /**
+         * Called when power stats are reported.
+         * @param powerStats non-null value when power stats are available, {@code null} otherwise.
+         */
+        void onReportPowerStats(@Nullable GnssPowerStats powerStats);
     }
 
     // set lower than the current ITAR limit of 600m/s to allow this to trigger even if GPS HAL
@@ -308,6 +328,8 @@ public class GnssNative {
 
     @GuardedBy("GnssNative.class")
     private static GnssNative sInstance;
+
+    private final Handler mHandler;
 
     /**
      * Sets GnssHal instance to use for testing.
@@ -365,6 +387,14 @@ public class GnssNative {
     private NavigationMessageCallbacks[] mNavigationMessageCallbacks =
             new NavigationMessageCallbacks[0];
 
+    private @Nullable GnssPowerStats mLastKnownPowerStats = null;
+    private final Object mPowerStatsLock = new Object();
+    private final Runnable mPowerStatsTimeoutCallback = () -> {
+        Log.d(TAG, "Request for power stats timed out");
+        reportGnssPowerStats(null);
+    };
+    private final List<PowerStatsCallback> mPendingPowerStatsCallbacks = new ArrayList<>();
+
     // these callbacks may only have a single implementation
     private GeofenceCallbacks mGeofenceCallbacks;
     private TimeCallbacks mTimeCallbacks;
@@ -379,7 +409,6 @@ public class GnssNative {
 
     private GnssCapabilities mCapabilities = new GnssCapabilities.Builder().build();
     private @GnssCapabilities.TopHalCapabilityFlags int mTopFlags;
-    private @Nullable GnssPowerStats mPowerStats = null;
     private int mHardwareYear = 0;
     private @Nullable String mHardwareModelName = null;
     private long mStartRealtimeMs = 0;
@@ -389,6 +418,7 @@ public class GnssNative {
         mGnssHal = Objects.requireNonNull(gnssHal);
         mEmergencyHelper = injector.getEmergencyHelper();
         mConfiguration = configuration;
+        mHandler = FgThread.getHandler();
     }
 
     public void addBaseCallbacks(BaseCallbacks callbacks) {
@@ -530,8 +560,8 @@ public class GnssNative {
     /**
      * Returns the latest power stats from the GNSS HAL.
      */
-    public @Nullable GnssPowerStats getPowerStats() {
-        return mPowerStats;
+    public @Nullable GnssPowerStats getLastKnownPowerStats() {
+        return mLastKnownPowerStats;
     }
 
     /**
@@ -623,8 +653,38 @@ public class GnssNative {
     public void injectLocation(Location location) {
         Preconditions.checkState(mRegistered);
         if (location.hasAccuracy()) {
-            mGnssHal.injectLocation(location.getLatitude(), location.getLongitude(),
-                    location.getAccuracy());
+
+            int gnssLocationFlags = GNSS_LOCATION_HAS_LAT_LONG
+                    | (location.hasAltitude() ? GNSS_LOCATION_HAS_ALTITUDE : 0)
+                    | (location.hasSpeed() ? GNSS_LOCATION_HAS_SPEED : 0)
+                    | (location.hasBearing() ? GNSS_LOCATION_HAS_BEARING : 0)
+                    | (location.hasAccuracy() ? GNSS_LOCATION_HAS_HORIZONTAL_ACCURACY : 0)
+                    | (location.hasVerticalAccuracy() ? GNSS_LOCATION_HAS_VERTICAL_ACCURACY : 0)
+                    | (location.hasSpeedAccuracy() ? GNSS_LOCATION_HAS_SPEED_ACCURACY : 0)
+                    | (location.hasBearingAccuracy() ? GNSS_LOCATION_HAS_BEARING_ACCURACY : 0);
+
+            double latitudeDegrees = location.getLatitude();
+            double longitudeDegrees = location.getLongitude();
+            double altitudeMeters = location.getAltitude();
+            float speedMetersPerSec = location.getSpeed();
+            float bearingDegrees = location.getBearing();
+            float horizontalAccuracyMeters = location.getAccuracy();
+            float verticalAccuracyMeters = location.getVerticalAccuracyMeters();
+            float speedAccuracyMetersPerSecond = location.getSpeedAccuracyMetersPerSecond();
+            float bearingAccuracyDegrees = location.getBearingAccuracyDegrees();
+            long timestamp = location.getTime();
+
+            int elapsedRealtimeFlags = GNSS_REALTIME_HAS_TIMESTAMP_NS
+                    | (location.hasElapsedRealtimeUncertaintyNanos()
+                    ? GNSS_REALTIME_HAS_TIME_UNCERTAINTY_NS : 0);
+            long elapsedRealtimeNanos = location.getElapsedRealtimeNanos();
+            double elapsedRealtimeUncertaintyNanos = location.getElapsedRealtimeUncertaintyNanos();
+
+            mGnssHal.injectLocation(gnssLocationFlags, latitudeDegrees, longitudeDegrees,
+                    altitudeMeters, speedMetersPerSec, bearingDegrees, horizontalAccuracyMeters,
+                    verticalAccuracyMeters, speedAccuracyMetersPerSecond, bearingAccuracyDegrees,
+                    timestamp, elapsedRealtimeFlags, elapsedRealtimeNanos,
+                    elapsedRealtimeUncertaintyNanos);
         }
     }
 
@@ -735,9 +795,10 @@ public class GnssNative {
      * Starts measurement collection.
      */
     public boolean startMeasurementCollection(boolean enableFullTracking,
-            boolean enableCorrVecOutputs) {
+            boolean enableCorrVecOutputs, int intervalMillis) {
         Preconditions.checkState(mRegistered);
-        return mGnssHal.startMeasurementCollection(enableFullTracking, enableCorrVecOutputs);
+        return mGnssHal.startMeasurementCollection(enableFullTracking, enableCorrVecOutputs,
+                intervalMillis);
     }
 
     /**
@@ -746,6 +807,38 @@ public class GnssNative {
     public boolean stopMeasurementCollection() {
         Preconditions.checkState(mRegistered);
         return mGnssHal.stopMeasurementCollection();
+    }
+
+    /**
+     * Starts sv status collection.
+     */
+    public boolean startSvStatusCollection() {
+        Preconditions.checkState(mRegistered);
+        return mGnssHal.startSvStatusCollection();
+    }
+
+    /**
+     * Stops sv status collection.
+     */
+    public boolean stopSvStatusCollection() {
+        Preconditions.checkState(mRegistered);
+        return mGnssHal.stopSvStatusCollection();
+    }
+
+    /**
+     * Starts NMEA message collection.
+     */
+    public boolean startNmeaMessageCollection() {
+        Preconditions.checkState(mRegistered);
+        return mGnssHal.startNmeaMessageCollection();
+    }
+
+    /**
+     * Stops NMEA message collection.
+     */
+    public boolean stopNmeaMessageCollection() {
+        Preconditions.checkState(mRegistered);
+        return mGnssHal.stopNmeaMessageCollection();
     }
 
     /**
@@ -783,9 +876,10 @@ public class GnssNative {
     /**
      * Start batching.
      */
-    public boolean startBatch(long periodNanos, boolean wakeOnFifoFull) {
+    public boolean startBatch(long periodNanos, float minUpdateDistanceMeters,
+            boolean wakeOnFifoFull) {
         Preconditions.checkState(mRegistered);
-        return mGnssHal.startBatch(periodNanos, wakeOnFifoFull);
+        return mGnssHal.startBatch(periodNanos, minUpdateDistanceMeters, wakeOnFifoFull);
     }
 
     /**
@@ -864,19 +958,50 @@ public class GnssNative {
     }
 
     /**
-     * Send a network initiated respnse.
+     * Request an eventual update of GNSS power statistics.
+     *
+     * @param executor Executor that will run {@code callback}
+     * @param callback Called with non-null power stats if they were obtained in time, called with
+     *                 {@code null} if stats could not be obtained in time.
      */
-    public void sendNiResponse(int notificationId, int userResponse) {
+    public void requestPowerStats(
+            @NonNull @CallbackExecutor Executor executor,
+            @NonNull PowerStatsCallback callback) {
         Preconditions.checkState(mRegistered);
-        mGnssHal.sendNiResponse(notificationId, userResponse);
+        synchronized (mPowerStatsLock) {
+            mPendingPowerStatsCallbacks.add(powerStats -> {
+                Binder.withCleanCallingIdentity(
+                        () -> executor.execute(() -> callback.onReportPowerStats(powerStats)));
+            });
+            if (mPendingPowerStatsCallbacks.size() == 1) {
+                mGnssHal.requestPowerStats();
+                mHandler.postDelayed(mPowerStatsTimeoutCallback,
+                        POWER_STATS_REQUEST_TIMEOUT_MILLIS);
+            }
+        }
     }
 
     /**
-     * Request an eventual update of GNSS power statistics.
+     * Request GNSS power statistics and blocks for a short time waiting for the result.
+     *
+     * @return non-null power stats, or {@code null} if stats could not be obtained in time.
      */
-    public void requestPowerStats() {
-        Preconditions.checkState(mRegistered);
-        mGnssHal.requestPowerStats();
+    public @Nullable GnssPowerStats requestPowerStatsBlocking() {
+        AtomicReference<GnssPowerStats> statsWrapper = new AtomicReference<>();
+        CountDownLatch latch = new CountDownLatch(1);
+        requestPowerStats(Runnable::run, powerStats -> {
+            statsWrapper.set(powerStats);
+            latch.countDown();
+        });
+
+        try {
+            latch.await(POWER_STATS_REQUEST_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            Log.d(TAG, "Interrupted while waiting for power stats");
+            Thread.currentThread().interrupt();
+        }
+
+        return statsWrapper.get();
     }
 
     /**
@@ -899,9 +1024,9 @@ public class GnssNative {
      * Sets AGPS reference cell id location.
      */
     public void setAgpsReferenceLocationCellId(@AgpsReferenceLocationType int type, int mcc,
-            int mnc, int lac, int cid) {
+            int mnc, int lac, long cid, int tac, int pcid, int arfcn) {
         Preconditions.checkState(mRegistered);
-        mGnssHal.setAgpsReferenceLocationCellId(type, mcc, mnc, lac, cid);
+        mGnssHal.setAgpsReferenceLocationCellId(type, mcc, mnc, lac, cid, tac, pcid, arfcn);
     }
 
     /**
@@ -918,6 +1043,14 @@ public class GnssNative {
     public void injectPsdsData(byte[] data, int length, int psdsType) {
         Preconditions.checkState(mRegistered);
         mGnssHal.injectPsdsData(data, length, psdsType);
+    }
+
+    /**
+     * Injects NI SUPL message data into the GNSS HAL.
+     */
+    public void injectNiSuplMessageData(byte[] data, int length, int slotIndex) {
+        Preconditions.checkState(mRegistered);
+        mGnssHal.injectNiSuplMessageData(data, length, slotIndex);
     }
 
     @NativeEntryPoint
@@ -1050,13 +1183,14 @@ public class GnssNative {
     }
 
     @NativeEntryPoint
-    void setTopHalCapabilities(@GnssCapabilities.TopHalCapabilityFlags int capabilities) {
+    void setTopHalCapabilities(@GnssCapabilities.TopHalCapabilityFlags int capabilities,
+            boolean isAdrCapabilityKnown) {
         // Here the bits specified by 'capabilities' are turned on. It is handled differently from
         // sub hal because top hal capabilities could be set by HIDL HAL and/or AIDL HAL. Each of
         // them possesses a different set of capabilities.
         mTopFlags |= capabilities;
         GnssCapabilities oldCapabilities = mCapabilities;
-        mCapabilities = oldCapabilities.withTopHalFlags(mTopFlags);
+        mCapabilities = oldCapabilities.withTopHalFlags(mTopFlags, isAdrCapabilityKnown);
         onCapabilitiesChanged(oldCapabilities, mCapabilities);
     }
 
@@ -1073,6 +1207,13 @@ public class GnssNative {
             @GnssCapabilities.SubHalPowerCapabilityFlags int capabilities) {
         GnssCapabilities oldCapabilities = mCapabilities;
         mCapabilities = oldCapabilities.withSubHalPowerFlags(capabilities);
+        onCapabilitiesChanged(oldCapabilities, mCapabilities);
+    }
+
+    @NativeEntryPoint
+    void setSignalTypeCapabilities(List<GnssSignalType> signalTypes) {
+        GnssCapabilities oldCapabilities = mCapabilities;
+        mCapabilities = oldCapabilities.withSignalTypes(signalTypes);
         onCapabilitiesChanged(oldCapabilities, mCapabilities);
     }
 
@@ -1093,7 +1234,14 @@ public class GnssNative {
 
     @NativeEntryPoint
     void reportGnssPowerStats(GnssPowerStats powerStats) {
-        mPowerStats = powerStats;
+        synchronized (mPowerStatsLock) {
+            mHandler.removeCallbacks(mPowerStatsTimeoutCallback);
+            if (powerStats != null) {
+                mLastKnownPowerStats = powerStats;
+            }
+            mPendingPowerStatsCallbacks.forEach(cb -> cb.onReportPowerStats(powerStats));
+            mPendingPowerStatsCallbacks.clear();
+        }
     }
 
     @NativeEntryPoint
@@ -1159,16 +1307,6 @@ public class GnssNative {
     }
 
     @NativeEntryPoint
-    void reportNiNotification(int notificationId, int niType, int notifyFlags,
-            int timeout, int defaultResponse, String requestorId, String text,
-            int requestorIdEncoding, int textEncoding) {
-        Binder.withCleanCallingIdentity(
-                () -> mNotificationCallbacks.onReportNiNotification(notificationId, niType,
-                        notifyFlags, timeout, defaultResponse, requestorId, text,
-                        requestorIdEncoding, textEncoding));
-    }
-
-    @NativeEntryPoint
     void requestSetID(int flags) {
         Binder.withCleanCallingIdentity(() -> mAGpsCallbacks.onRequestSetID(flags));
     }
@@ -1202,9 +1340,10 @@ public class GnssNative {
     }
 
     @NativeEntryPoint
-    boolean isInEmergencySession() {
+    public boolean isInEmergencySession() {
         return Binder.withCleanCallingIdentity(
-                () -> mEmergencyHelper.isInEmergency(mConfiguration.getEsExtensionSec()));
+                () -> mEmergencyHelper.isInEmergency(
+                        TimeUnit.SECONDS.toMillis(mConfiguration.getEsExtensionSec())));
     }
 
     /**
@@ -1262,8 +1401,15 @@ public class GnssNative {
             return native_read_nmea(buffer, bufferSize);
         }
 
-        protected void injectLocation(double latitude, double longitude, float accuracy) {
-            native_inject_location(latitude, longitude, accuracy);
+        protected void injectLocation(@GnssLocationFlags int gnssLocationFlags, double latitude,
+                double longitude, double altitude, float speed, float bearing,
+                float horizontalAccuracy, float verticalAccuracy, float speedAccuracy,
+                float bearingAccuracy, long timestamp, @GnssRealtimeFlags int elapsedRealtimeFlags,
+                long elapsedRealtimeNanos, double elapsedRealtimeUncertaintyNanos) {
+            native_inject_location(gnssLocationFlags, latitude, longitude, altitude, speed,
+                    bearing, horizontalAccuracy, verticalAccuracy, speedAccuracy, bearingAccuracy,
+                    timestamp, elapsedRealtimeFlags, elapsedRealtimeNanos,
+                    elapsedRealtimeUncertaintyNanos);
         }
 
         protected void injectBestLocation(@GnssLocationFlags int gnssLocationFlags, double latitude,
@@ -1310,8 +1456,9 @@ public class GnssNative {
         }
 
         protected boolean startMeasurementCollection(boolean enableFullTracking,
-                boolean enableCorrVecOutputs) {
-            return native_start_measurement_collection(enableFullTracking, enableCorrVecOutputs);
+                boolean enableCorrVecOutputs, int intervalMillis) {
+            return native_start_measurement_collection(enableFullTracking, enableCorrVecOutputs,
+                    intervalMillis);
         }
 
         protected boolean stopMeasurementCollection() {
@@ -1326,6 +1473,22 @@ public class GnssNative {
             return native_inject_measurement_corrections(corrections);
         }
 
+        protected boolean startSvStatusCollection() {
+            return native_start_sv_status_collection();
+        }
+
+        protected boolean stopSvStatusCollection() {
+            return native_stop_sv_status_collection();
+        }
+
+        protected boolean startNmeaMessageCollection() {
+            return native_start_nmea_message_collection();
+        }
+
+        protected boolean stopNmeaMessageCollection() {
+            return native_stop_nmea_message_collection();
+        }
+
         protected int getBatchSize() {
             return native_get_batch_size();
         }
@@ -1338,8 +1501,9 @@ public class GnssNative {
             native_cleanup_batching();
         }
 
-        protected boolean startBatch(long periodNanos, boolean wakeOnFifoFull) {
-            return native_start_batch(periodNanos, wakeOnFifoFull);
+        protected boolean startBatch(long periodNanos, float minUpdateDistanceMeters,
+                boolean wakeOnFifoFull) {
+            return native_start_batch(periodNanos, minUpdateDistanceMeters, wakeOnFifoFull);
         }
 
         protected void flushBatch() {
@@ -1377,10 +1541,6 @@ public class GnssNative {
             return native_is_gnss_visibility_control_supported();
         }
 
-        protected void sendNiResponse(int notificationId, int userResponse) {
-            native_send_ni_response(notificationId, userResponse);
-        }
-
         protected void requestPowerStats() {
             native_request_power_stats();
         }
@@ -1394,8 +1554,8 @@ public class GnssNative {
         }
 
         protected void setAgpsReferenceLocationCellId(@AgpsReferenceLocationType int type, int mcc,
-                int mnc, int lac, int cid) {
-            native_agps_set_ref_location_cellid(type, mcc, mnc, lac, cid);
+                int mnc, int lac, long cid, int tac, int pcid, int arfcn) {
+            native_agps_set_ref_location_cellid(type, mcc, mnc, lac, cid, tac, pcid, arfcn);
         }
 
         protected boolean isPsdsSupported() {
@@ -1404,6 +1564,10 @@ public class GnssNative {
 
         protected void injectPsdsData(byte[] data, int length, int psdsType) {
             native_inject_psds_data(data, length, psdsType);
+        }
+
+        protected void injectNiSuplMessageData(byte[] data, int length, int slotIndex) {
+            native_inject_ni_supl_message_data(data, length, slotIndex);
         }
     }
 
@@ -1434,10 +1598,19 @@ public class GnssNative {
 
     private static native int native_read_nmea(byte[] buffer, int bufferSize);
 
+    private static native boolean native_start_nmea_message_collection();
+
+    private static native boolean native_stop_nmea_message_collection();
+
     // location injection APIs
 
-    private static native void native_inject_location(double latitude, double longitude,
-            float accuracy);
+    private static native void native_inject_location(
+            int gnssLocationFlags, double latitudeDegrees, double longitudeDegrees,
+            double altitudeMeters, float speedMetersPerSec, float bearingDegrees,
+            float horizontalAccuracyMeters, float verticalAccuracyMeters,
+            float speedAccuracyMetersPerSecond, float bearingAccuracyDegrees,
+            long timestamp, int elapsedRealtimeFlags, long elapsedRealtimeNanos,
+            double elapsedRealtimeUncertaintyNanos);
 
 
     private static native void native_inject_best_location(
@@ -1451,6 +1624,11 @@ public class GnssNative {
     // time injection APIs
 
     private static native void native_inject_time(long time, long timeReference, int uncertainty);
+
+    // sv status APIs
+    private static native boolean native_start_sv_status_collection();
+
+    private static native boolean native_stop_sv_status_collection();
 
     // navigation message APIs
 
@@ -1475,7 +1653,7 @@ public class GnssNative {
     private static native boolean native_is_measurement_supported();
 
     private static native boolean native_start_measurement_collection(boolean enableFullTracking,
-            boolean enableCorrVecOutputs);
+            boolean enableCorrVecOutputs, int intervalMillis);
 
     private static native boolean native_stop_measurement_collection();
 
@@ -1492,7 +1670,8 @@ public class GnssNative {
 
     private static native void native_cleanup_batching();
 
-    private static native boolean native_start_batch(long periodNanos, boolean wakeOnFifoFull);
+    private static native boolean native_start_batch(long periodNanos,
+            float minUpdateDistanceMeters, boolean wakeOnFifoFull);
 
     private static native void native_flush_batch();
 
@@ -1518,8 +1697,6 @@ public class GnssNative {
 
     private static native boolean native_is_gnss_visibility_control_supported();
 
-    private static native void native_send_ni_response(int notificationId, int userResponse);
-
     // power stats APIs
 
     private static native void native_request_power_stats();
@@ -1531,7 +1708,10 @@ public class GnssNative {
     private static native void native_agps_set_id(int type, String setid);
 
     private static native void native_agps_set_ref_location_cellid(int type, int mcc, int mnc,
-            int lac, int cid);
+            int lac, long cid, int tac, int pcid, int arfcn);
+
+    private static native void native_inject_ni_supl_message_data(byte[] data, int length,
+            int slotIndex);
 
     // PSDS APIs
 

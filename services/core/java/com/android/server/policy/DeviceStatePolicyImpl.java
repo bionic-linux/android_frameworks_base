@@ -17,22 +17,24 @@
 package com.android.server.policy;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.content.Context;
 
 import com.android.server.devicestate.DeviceStatePolicy;
 import com.android.server.devicestate.DeviceStateProvider;
+
+import java.io.PrintWriter;
 
 /**
  * Default empty implementation of {@link DeviceStatePolicy}.
  *
  * @see DeviceStateProviderImpl
  */
-public final class DeviceStatePolicyImpl implements DeviceStatePolicy {
-    private final Context mContext;
+public final class DeviceStatePolicyImpl extends DeviceStatePolicy {
     private final DeviceStateProvider mProvider;
 
-    public DeviceStatePolicyImpl(Context context) {
-        mContext = context;
+    public DeviceStatePolicyImpl(@NonNull Context context) {
+        super(context);
         mProvider = DeviceStateProviderImpl.create(mContext);
     }
 
@@ -43,5 +45,10 @@ public final class DeviceStatePolicyImpl implements DeviceStatePolicy {
     @Override
     public void configureDeviceForState(int state, @NonNull Runnable onComplete) {
         onComplete.run();
+    }
+
+    @Override
+    public void dump(@NonNull PrintWriter writer, @Nullable String[] args) {
+        mProvider.dump(writer, args);
     }
 }

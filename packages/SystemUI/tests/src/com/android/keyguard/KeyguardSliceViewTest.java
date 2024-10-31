@@ -17,7 +17,6 @@ package com.android.keyguard;
 
 import android.graphics.Color;
 import android.net.Uri;
-import android.test.suitebuilder.annotation.SmallTest;
 import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper.RunWithLooper;
 import android.view.LayoutInflater;
@@ -27,10 +26,11 @@ import androidx.slice.SliceProvider;
 import androidx.slice.SliceSpecs;
 import androidx.slice.builders.ListBuilder;
 import androidx.slice.widget.RowContent;
+import androidx.test.filters.SmallTest;
 
-import com.android.systemui.R;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.keyguard.KeyguardSliceProvider;
+import com.android.systemui.res.R;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -54,7 +54,7 @@ public class KeyguardSliceViewTest extends SysuiTestCase {
         MockitoAnnotations.initMocks(this);
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         mKeyguardSliceView = (KeyguardSliceView) layoutInflater
-                .inflate(R.layout.keyguard_status_area, null);
+                .inflate(R.layout.keyguard_slice_view, null);
         mSliceUri = Uri.parse(KeyguardSliceProvider.KEYGUARD_SLICE_URI);
         SliceProvider.setSpecs(new HashSet<>(Collections.singletonList(SliceSpecs.LIST)));
     }

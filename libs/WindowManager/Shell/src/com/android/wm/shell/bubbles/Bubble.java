@@ -19,8 +19,10 @@ import static android.app.ActivityTaskManager.INVALID_TASK_ID;
 import static android.os.AsyncTask.Status.FINISHED;
 
 import static com.android.internal.annotations.VisibleForTesting.Visibility.PRIVATE;
+import static com.android.wm.shell.protolog.ShellProtoLogGroup.WM_SHELL_BUBBLES;
 
 import android.annotation.DimenRes;
+import android.annotation.Hide;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.Notification;
@@ -46,8 +48,12 @@ import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.logging.InstanceId;
+import com.android.internal.protolog.common.ProtoLog;
+import com.android.launcher3.icons.BubbleIconFactory;
+import com.android.wm.shell.bubbles.bar.BubbleBarExpandedView;
+import com.android.wm.shell.bubbles.bar.BubbleBarLayerView;
+import com.android.wm.shell.common.bubbles.BubbleInfo;
 
-import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Objects;
@@ -56,9 +62,14 @@ import java.util.concurrent.Executor;
 /**
  * Encapsulates the data and UI elements of a bubble.
  */
-@VisibleForTesting
 public class Bubble implements BubbleViewProvider {
     private static final String TAG = "Bubble";
+
+    /** A string suffix used in app bubbles' {@link #mKey}. */
+    public static final String KEY_APP_BUBBLE = "key_app_bubble";
+
+    /** Whether the bubble is an app bubble. */
+    private final boolean mIsAppBubble;
 
     private final String mKey;
     @Nullable
@@ -72,7 +83,7 @@ public class Bubble implements BubbleViewProvider {
     private long mLastAccessed;
 
     @Nullable
-    private Bubbles.SuppressionChangedListener mSuppressionListener;
+    private Bubbles.BubbleMetadataFlagListener mBubbleMetadataFlagListener;
 
     /** Whether the bubble should show a dot for the notification indicating updated content. */
     private boolean mShowBubbleUpdateDot = true;
@@ -84,8 +95,20 @@ public class Bubble implements BubbleViewProvider {
     private String mAppName;
     private ShortcutInfo mShortcutInfo;
     private String mMetadataShortcutId;
+
+    /**
+     * If {@link BubbleController#isShowingAsBubbleBar()} is true, the only view that will be
+     * populated will be {@link #mBubbleBarExpandedView}. If it is false, {@link #mIconView}
+     * and {@link #mExpandedView} will be populated.
+     */
+    @Nullable
     private BadgedImageView mIconView;
+    @Nullable
     private BubbleExpandedView mExpandedView;
+    @Nullable
+    private BubbleBarExpandedView mBubbleBarExpandedView;
+    @Nullable
+    private BubbleTaskView mBubbleTaskView;
 
     private BubbleViewInfoTask mInflationTask;
     private boolean mInflateSynchronously;
@@ -108,6 +131,8 @@ public class Bubble implements BubbleViewProvider {
     private Bitmap mBubbleBitmap;
     // The app badge for the bubble
     private Bitmap mBadgeBitmap;
+    // App badge without any markings for important conversations
+    private Bitmap mRawBadgeBitmap;
     private int mDotColor;
     private Path mDotPath;
     private int mFlags;
@@ -121,8 +146,8 @@ public class Bubble implements BubbleViewProvider {
     @Nullable
     private Icon mIcon;
     private boolean mIsBubble;
-    private boolean mIsVisuallyInterruptive;
-    private boolean mIsClearable;
+    private boolean mIsTextChanged;
+    private boolean mIsDismissable;
     private boolean mShouldSuppressNotificationDot;
     private boolean mShouldSuppressNotificationList;
     private boolean mShouldSuppressPeek;
@@ -163,13 +188,22 @@ public class Bubble implements BubbleViewProvider {
     private PendingIntent mDeleteIntent;
 
     /**
+     * Used only for a special bubble in the stack that has {@link #mIsAppBubble} set to true.
+     * There can only be one of these bubbles in the stack and this intent will be populated for
+     * that bubble.
+     */
+    @Nullable
+    private Intent mAppIntent;
+
+    /**
      * Create a bubble with limited information based on given {@link ShortcutInfo}.
      * Note: Currently this is only being used when the bubble is persisted to disk.
      */
     @VisibleForTesting(visibility = PRIVATE)
     public Bubble(@NonNull final String key, @NonNull final ShortcutInfo shortcutInfo,
             final int desiredHeight, final int desiredHeightResId, @Nullable final String title,
-            int taskId, @Nullable final String locus, Executor mainExecutor) {
+            int taskId, @Nullable final String locus, boolean isDismissable, Executor mainExecutor,
+            final Bubbles.BubbleMetadataFlagListener listener) {
         Objects.requireNonNull(key);
         Objects.requireNonNull(shortcutInfo);
         mMetadataShortcutId = shortcutInfo.getId();
@@ -177,6 +211,7 @@ public class Bubble implements BubbleViewProvider {
         mKey = key;
         mGroupKey = null;
         mLocusId = locus != null ? new LocusId(locus) : null;
+        mIsDismissable = isDismissable;
         mFlags = 0;
         mUser = shortcutInfo.getUserHandle();
         mPackageName = shortcutInfo.getPackage();
@@ -187,17 +222,67 @@ public class Bubble implements BubbleViewProvider {
         mShowBubbleUpdateDot = false;
         mMainExecutor = mainExecutor;
         mTaskId = taskId;
+        mBubbleMetadataFlagListener = listener;
+        mIsAppBubble = false;
+    }
+
+    private Bubble(
+            Intent intent,
+            UserHandle user,
+            @Nullable Icon icon,
+            boolean isAppBubble,
+            String key,
+            Executor mainExecutor) {
+        mGroupKey = null;
+        mLocusId = null;
+        mFlags = 0;
+        mUser = user;
+        mIcon = icon;
+        mIsAppBubble = isAppBubble;
+        mKey = key;
+        mShowBubbleUpdateDot = false;
+        mMainExecutor = mainExecutor;
+        mTaskId = INVALID_TASK_ID;
+        mAppIntent = intent;
+        mDesiredHeight = Integer.MAX_VALUE;
+        mPackageName = intent.getPackage();
+
+    }
+
+    /** Creates an app bubble. */
+    public static Bubble createAppBubble(
+            Intent intent,
+            UserHandle user,
+            @Nullable Icon icon,
+            Executor mainExecutor) {
+        return new Bubble(intent,
+                user,
+                icon,
+                /* isAppBubble= */ true,
+                /* key= */ getAppBubbleKeyForApp(intent.getPackage(), user),
+                mainExecutor);
+    }
+
+    /**
+     * Returns the key for an app bubble from an app with package name, {@code packageName} on an
+     * Android user, {@code user}.
+     */
+    public static String getAppBubbleKeyForApp(String packageName, UserHandle user) {
+        Objects.requireNonNull(packageName);
+        Objects.requireNonNull(user);
+        return KEY_APP_BUBBLE + ":" + user.getIdentifier()  + ":" + packageName;
     }
 
     @VisibleForTesting(visibility = PRIVATE)
     public Bubble(@NonNull final BubbleEntry entry,
-            @Nullable final Bubbles.SuppressionChangedListener listener,
+            final Bubbles.BubbleMetadataFlagListener listener,
             final Bubbles.PendingIntentCanceledListener intentCancelListener,
             Executor mainExecutor) {
+        mIsAppBubble = false;
         mKey = entry.getKey();
         mGroupKey = entry.getGroupKey();
         mLocusId = entry.getLocusId();
-        mSuppressionListener = listener;
+        mBubbleMetadataFlagListener = listener;
         mIntentCancelListener = intent -> {
             if (mIntent != null) {
                 mIntent.unregisterCancelListener(mIntentCancelListener);
@@ -211,9 +296,27 @@ public class Bubble implements BubbleViewProvider {
         setEntry(entry);
     }
 
+    /** Converts this bubble into a {@link BubbleInfo} object to be shared with external callers. */
+    public BubbleInfo asBubbleBarBubble() {
+        return new BubbleInfo(getKey(),
+                getFlags(),
+                getShortcutId(),
+                getIcon(),
+                getUser().getIdentifier(),
+                getPackageName(),
+                getTitle(),
+                getAppName(),
+                isImportantConversation());
+    }
+
     @Override
     public String getKey() {
         return mKey;
+    }
+
+    @Hide
+    public boolean isDismissable() {
+        return mIsDismissable;
     }
 
     /**
@@ -248,6 +351,11 @@ public class Bubble implements BubbleViewProvider {
     }
 
     @Override
+    public Bitmap getRawAppBadge() {
+        return mRawBadgeBitmap;
+    }
+
+    @Override
     public int getDotColor() {
         return mDotColor;
     }
@@ -273,15 +381,32 @@ public class Bubble implements BubbleViewProvider {
         return mIconView;
     }
 
-    @Override
     @Nullable
+    @Override
     public BubbleExpandedView getExpandedView() {
         return mExpandedView;
     }
 
     @Nullable
+    @Override
+    public BubbleBarExpandedView getBubbleBarExpandedView() {
+        return mBubbleBarExpandedView;
+    }
+
+    @Nullable
     public String getTitle() {
         return mTitle;
+    }
+
+    /**
+     * Returns the existing {@link #mBubbleTaskView} if it's not {@code null}. Otherwise a new
+     * instance of {@link BubbleTaskView} is created.
+     */
+    public BubbleTaskView getOrCreateBubbleTaskView(BubbleTaskViewFactory taskViewFactory) {
+        if (mBubbleTaskView == null) {
+            mBubbleTaskView = taskViewFactory.create();
+        }
+        return mBubbleTaskView;
     }
 
     /**
@@ -306,9 +431,20 @@ public class Bubble implements BubbleViewProvider {
      * the bubble.
      */
     void cleanupExpandedView() {
+        cleanupExpandedView(true);
+    }
+
+    private void cleanupExpandedView(boolean cleanupTaskView) {
         if (mExpandedView != null) {
             mExpandedView.cleanUpExpandedState();
             mExpandedView = null;
+        }
+        if (mBubbleBarExpandedView != null) {
+            mBubbleBarExpandedView.cleanUpExpandedState();
+            mBubbleBarExpandedView = null;
+        }
+        if (cleanupTaskView) {
+            cleanupTaskView();
         }
         if (mIntent != null) {
             mIntent.unregisterCancelListener(mIntentCancelListener);
@@ -316,11 +452,29 @@ public class Bubble implements BubbleViewProvider {
         mIntentActive = false;
     }
 
+    private void cleanupTaskView() {
+        if (mBubbleTaskView != null) {
+            mBubbleTaskView.cleanup();
+            mBubbleTaskView = null;
+        }
+    }
+
     /**
      * Call when all the views should be removed/cleaned up.
      */
-    void cleanupViews() {
-        cleanupExpandedView();
+    public void cleanupViews() {
+        ProtoLog.d(WM_SHELL_BUBBLES, "Bubble#cleanupViews=%s", getKey());
+        cleanupViews(true);
+    }
+
+    /**
+     * Call when all the views should be removed/cleaned up.
+     *
+     * <p>If we're switching between bar and floating modes, pass {@code false} on
+     * {@code cleanupTaskView} to avoid recreating it in the new mode.
+     */
+    void cleanupViews(boolean cleanupTaskView) {
+        cleanupExpandedView(cleanupTaskView);
         mIconView = null;
     }
 
@@ -342,12 +496,12 @@ public class Bubble implements BubbleViewProvider {
     }
 
     /**
-     * Sets whether this bubble is considered visually interruptive. This method is purely for
+     * Sets whether this bubble is considered text changed. This method is purely for
      * testing.
      */
     @VisibleForTesting
-    void setVisuallyInterruptiveForTest(boolean visuallyInterruptive) {
-        mIsVisuallyInterruptive = visuallyInterruptive;
+    void setTextChangedForTest(boolean textChanged) {
+        mIsTextChanged = textChanged;
     }
 
     /**
@@ -355,14 +509,20 @@ public class Bubble implements BubbleViewProvider {
      *
      * @param callback the callback to notify one the bubble is ready to be displayed.
      * @param context the context for the bubble.
-     * @param controller the bubble controller.
-     * @param stackView the stackView the bubble is eventually added to.
-     * @param iconFactory the iconfactory use to create badged images for the bubble.
+     * @param expandedViewManager the bubble expanded view manager.
+     * @param taskViewFactory the task view factory used to create the task view for the bubble.
+     * @param positioner the bubble positioner.
+     * @param stackView the view the bubble is added to, iff showing as floating.
+     * @param layerView the layer the bubble is added to, iff showing in the bubble bar.
+     * @param iconFactory the icon factory used to create images for the bubble.
      */
     void inflate(BubbleViewInfoTask.Callback callback,
             Context context,
-            BubbleController controller,
-            BubbleStackView stackView,
+            BubbleExpandedViewManager expandedViewManager,
+            BubbleTaskViewFactory taskViewFactory,
+            BubblePositioner positioner,
+            @Nullable BubbleStackView stackView,
+            @Nullable BubbleBarLayerView layerView,
             BubbleIconFactory iconFactory,
             boolean skipInflation) {
         if (isBubbleLoading()) {
@@ -370,8 +530,11 @@ public class Bubble implements BubbleViewProvider {
         }
         mInflationTask = new BubbleViewInfoTask(this,
                 context,
-                controller,
+                expandedViewManager,
+                taskViewFactory,
+                positioner,
                 stackView,
+                layerView,
                 iconFactory,
                 skipInflation,
                 callback,
@@ -388,7 +551,7 @@ public class Bubble implements BubbleViewProvider {
     }
 
     boolean isInflated() {
-        return mIconView != null && mExpandedView != null;
+        return (mIconView != null && mExpandedView != null) || mBubbleBarExpandedView != null;
     }
 
     void stopInflation() {
@@ -402,13 +565,18 @@ public class Bubble implements BubbleViewProvider {
         if (!isInflated()) {
             mIconView = info.imageView;
             mExpandedView = info.expandedView;
+            mBubbleBarExpandedView = info.bubbleBarExpandedView;
         }
 
         mShortcutInfo = info.shortcutInfo;
         mAppName = info.appName;
+        if (mTitle == null) {
+            mTitle = mAppName;
+        }
         mFlyoutMessage = info.flyoutMessage;
 
         mBadgeBitmap = info.badgeBitmap;
+        mRawBadgeBitmap = info.rawBadgeBitmap;
         mBubbleBitmap = info.bubbleBitmap;
 
         mDotColor = info.dotColor;
@@ -417,26 +585,21 @@ public class Bubble implements BubbleViewProvider {
         if (mExpandedView != null) {
             mExpandedView.update(this /* bubble */);
         }
+        if (mBubbleBarExpandedView != null) {
+            mBubbleBarExpandedView.update(this /* bubble */);
+        }
         if (mIconView != null) {
             mIconView.setRenderedBubble(this /* bubble */);
-        }
-    }
-
-    @Override
-    public void setExpandedContentAlpha(float alpha) {
-        if (mExpandedView != null) {
-            mExpandedView.setAlpha(alpha);
-            mExpandedView.setTaskViewAlpha(alpha);
         }
     }
 
     /**
      * Set visibility of bubble in the expanded state.
      *
-     * @param visibility {@code true} if the expanded bubble should be visible on the screen.
-     *
-     * Note that this contents visibility doesn't affect visibility at {@link android.view.View},
+     * <p>Note that this contents visibility doesn't affect visibility at {@link android.view.View},
      * and setting {@code false} actually means rendering the expanded view in transparent.
+     *
+     * @param visibility {@code true} if the expanded bubble should be visible on the screen.
      */
     @Override
     public void setTaskViewVisibility(boolean visibility) {
@@ -450,6 +613,7 @@ public class Bubble implements BubbleViewProvider {
      */
     void setEntry(@NonNull final BubbleEntry entry) {
         Objects.requireNonNull(entry);
+        boolean showingDotPreviously = showDot();
         mLastUpdated = entry.getStatusBarNotification().getPostTime();
         mIsBubble = entry.getStatusBarNotification().getNotification().isBubbleNotification();
         mPackageName = entry.getStatusBarNotification().getPackageName();
@@ -462,7 +626,7 @@ public class Bubble implements BubbleViewProvider {
         mFlyoutMessage = extractFlyoutMessage(entry);
         if (entry.getRanking() != null) {
             mShortcutInfo = entry.getRanking().getConversationShortcutInfo();
-            mIsVisuallyInterruptive = entry.getRanking().visuallyInterruptive();
+            mIsTextChanged = entry.getRanking().isTextChanged();
             if (entry.getRanking().getChannel() != null) {
                 mIsImportantConversation =
                         entry.getRanking().getChannel().isImportantConversation();
@@ -492,19 +656,28 @@ public class Bubble implements BubbleViewProvider {
             mDeleteIntent = entry.getBubbleMetadata().getDeleteIntent();
         }
 
-        mIsClearable = entry.isClearable();
+        mIsDismissable = entry.isDismissable();
         mShouldSuppressNotificationDot = entry.shouldSuppressNotificationDot();
         mShouldSuppressNotificationList = entry.shouldSuppressNotificationList();
         mShouldSuppressPeek = entry.shouldSuppressPeek();
+        if (showingDotPreviously != showDot()) {
+            // This will update the UI if needed
+            setShowDot(showDot());
+        }
     }
 
+    /**
+     * @return the icon set on BubbleMetadata, if it exists. This is only non-null for bubbles
+     * created via a PendingIntent. This is null for bubbles created by a shortcut, as we use the
+     * icon from the shortcut.
+     */
     @Nullable
-    Icon getIcon() {
+    public Icon getIcon() {
         return mIcon;
     }
 
-    boolean isVisuallyInterruptive() {
-        return mIsVisuallyInterruptive;
+    boolean isTextChanged() {
+        return mIsTextChanged;
     }
 
     /**
@@ -544,6 +717,9 @@ public class Bubble implements BubbleViewProvider {
      */
     @Override
     public int getTaskId() {
+        if (mBubbleBarExpandedView != null) {
+            return mBubbleBarExpandedView.getTaskId();
+        }
         return mExpandedView != null ? mExpandedView.getTaskId() : mTaskId;
     }
 
@@ -567,7 +743,7 @@ public class Bubble implements BubbleViewProvider {
      * Whether this notification should be shown in the shade.
      */
     boolean showInShade() {
-        return !shouldSuppressNotification() || !mIsClearable;
+        return !shouldSuppressNotification() || !mIsDismissable;
     }
 
     /**
@@ -593,6 +769,13 @@ public class Bubble implements BubbleViewProvider {
     }
 
     /**
+     * Whether this bubble is conversation
+     */
+    public boolean isConversation() {
+        return null != mShortcutInfo;
+    }
+
+    /**
      * Sets whether this notification should be suppressed in the shade.
      */
     @VisibleForTesting
@@ -604,8 +787,8 @@ public class Bubble implements BubbleViewProvider {
             mFlags &= ~Notification.BubbleMetadata.FLAG_SUPPRESS_NOTIFICATION;
         }
 
-        if (showInShade() != prevShowInShade && mSuppressionListener != null) {
-            mSuppressionListener.onBubbleNotificationSuppressionChange(this);
+        if (showInShade() != prevShowInShade && mBubbleMetadataFlagListener != null) {
+            mBubbleMetadataFlagListener.onBubbleMetadataFlagChanged(this);
         }
     }
 
@@ -624,8 +807,8 @@ public class Bubble implements BubbleViewProvider {
         } else {
             mFlags &= ~Notification.BubbleMetadata.FLAG_SUPPRESS_BUBBLE;
         }
-        if (prevSuppressed != suppressBubble && mSuppressionListener != null) {
-            mSuppressionListener.onBubbleNotificationSuppressionChange(this);
+        if (prevSuppressed != suppressBubble && mBubbleMetadataFlagListener != null) {
+            mBubbleMetadataFlagListener.onBubbleMetadataFlagChanged(this);
         }
     }
 
@@ -710,16 +893,28 @@ public class Bubble implements BubbleViewProvider {
         return mDeleteIntent;
     }
 
-    Intent getSettingsIntent(final Context context) {
+    @Nullable
+    Intent getAppBubbleIntent() {
+        return mAppIntent;
+    }
+
+    /**
+     * Returns whether this bubble is from an app versus a notification.
+     */
+    public boolean isAppBubble() {
+        return mIsAppBubble;
+    }
+
+    /** Creates open app settings intent */
+    public Intent getSettingsIntent(final Context context) {
         final Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_BUBBLE_SETTINGS);
         intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
         final int uid = getUid(context);
         if (uid != -1) {
             intent.putExtra(Settings.EXTRA_APP_UID, uid);
         }
-        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         return intent;
     }
 
@@ -769,11 +964,16 @@ public class Bubble implements BubbleViewProvider {
         return isEnabled(Notification.BubbleMetadata.FLAG_AUTO_EXPAND_BUBBLE);
     }
 
-    void setShouldAutoExpand(boolean shouldAutoExpand) {
+    @VisibleForTesting
+    public void setShouldAutoExpand(boolean shouldAutoExpand) {
+        boolean prevAutoExpand = shouldAutoExpand();
         if (shouldAutoExpand) {
             enable(Notification.BubbleMetadata.FLAG_AUTO_EXPAND_BUBBLE);
         } else {
             disable(Notification.BubbleMetadata.FLAG_AUTO_EXPAND_BUBBLE);
+        }
+        if (prevAutoExpand != shouldAutoExpand && mBubbleMetadataFlagListener != null) {
+            mBubbleMetadataFlagListener.onBubbleMetadataFlagChanged(this);
         }
     }
 
@@ -797,6 +997,10 @@ public class Bubble implements BubbleViewProvider {
         return (mFlags & option) != 0;
     }
 
+    public int getFlags() {
+        return mFlags;
+    }
+
     @Override
     public String toString() {
         return "Bubble{" + mKey + '}';
@@ -805,8 +1009,7 @@ public class Bubble implements BubbleViewProvider {
     /**
      * Description of current bubble state.
      */
-    public void dump(
-            @NonNull FileDescriptor fd, @NonNull PrintWriter pw, @NonNull String[] args) {
+    public void dump(@NonNull PrintWriter pw) {
         pw.print("key: "); pw.println(mKey);
         pw.print("  showInShade:   "); pw.println(showInShade());
         pw.print("  showDot:       "); pw.println(showDot());
@@ -815,8 +1018,10 @@ public class Bubble implements BubbleViewProvider {
         pw.print("  desiredHeight: "); pw.println(getDesiredHeightString());
         pw.print("  suppressNotif: "); pw.println(shouldSuppressNotification());
         pw.print("  autoExpand:    "); pw.println(shouldAutoExpand());
+        pw.print("  isDismissable: "); pw.println(mIsDismissable);
+        pw.println("  bubbleMetadataFlagListener null?: " + (mBubbleMetadataFlagListener == null));
         if (mExpandedView != null) {
-            mExpandedView.dump(fd, pw, args);
+            mExpandedView.dump(pw, "  ");
         }
     }
 

@@ -15,7 +15,6 @@
 package com.android.systemui.statusbar.notification.row;
 
 import static android.provider.Settings.Global.SHOW_NEW_NOTIF_DISMISS;
-import static android.provider.Settings.Secure.SHOW_NOTIFICATION_SNOOZE;
 import static android.view.HapticFeedbackConstants.CLOCK_TICK;
 
 import static junit.framework.Assert.assertEquals;
@@ -30,13 +29,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.provider.Settings;
-import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper;
 import android.testing.TestableLooper.RunWithLooper;
 import android.testing.ViewUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
 import com.android.systemui.plugins.statusbar.NotificationMenuRowPlugin;
@@ -50,7 +49,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
-@RunWith(AndroidTestingRunner.class)
+@RunWith(AndroidJUnit4.class)
 @RunWithLooper
 @SmallTest
 public class NotificationMenuRowTest extends LeakCheckedTest {
@@ -100,7 +99,7 @@ public class NotificationMenuRowTest extends LeakCheckedTest {
 
     @Test
     public void testNoAppOpsInSlowSwipe() {
-        Settings.Secure.putInt(mContext.getContentResolver(), SHOW_NOTIFICATION_SNOOZE, 0);
+        when(mRow.getShowSnooze()).thenReturn(false);
         Settings.Global.putInt(mContext.getContentResolver(), SHOW_NEW_NOTIF_DISMISS, 0);
 
         NotificationMenuRow row = new NotificationMenuRow(mContext, mPeopleNotificationIdentifier);
@@ -113,7 +112,7 @@ public class NotificationMenuRowTest extends LeakCheckedTest {
 
     @Test
     public void testNoSnoozeInSlowSwipe() {
-        Settings.Secure.putInt(mContext.getContentResolver(), SHOW_NOTIFICATION_SNOOZE, 0);
+        when(mRow.getShowSnooze()).thenReturn(false);
         Settings.Global.putInt(mContext.getContentResolver(), SHOW_NEW_NOTIF_DISMISS, 0);
 
         NotificationMenuRow row = new NotificationMenuRow(mContext, mPeopleNotificationIdentifier);
@@ -126,7 +125,7 @@ public class NotificationMenuRowTest extends LeakCheckedTest {
 
     @Test
     public void testSnoozeInSlowSwipe() {
-        Settings.Secure.putInt(mContext.getContentResolver(), SHOW_NOTIFICATION_SNOOZE, 1);
+        when(mRow.getShowSnooze()).thenReturn(true);
         Settings.Global.putInt(mContext.getContentResolver(), SHOW_NEW_NOTIF_DISMISS, 0);
 
         NotificationMenuRow row = new NotificationMenuRow(mContext, mPeopleNotificationIdentifier);
@@ -139,7 +138,7 @@ public class NotificationMenuRowTest extends LeakCheckedTest {
 
     @Test
     public void testSlowSwipe_newDismiss() {
-        Settings.Secure.putInt(mContext.getContentResolver(), SHOW_NOTIFICATION_SNOOZE, 1);
+        when(mRow.getShowSnooze()).thenReturn(true);
         Settings.Global.putInt(mContext.getContentResolver(), SHOW_NEW_NOTIF_DISMISS, 1);
 
         NotificationMenuRow row = new NotificationMenuRow(mContext, mPeopleNotificationIdentifier);

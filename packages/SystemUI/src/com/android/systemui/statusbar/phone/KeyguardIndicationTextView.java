@@ -28,21 +28,30 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.internal.annotations.VisibleForTesting;
-import com.android.systemui.animation.Interpolators;
-import com.android.systemui.keyguard.KeyguardIndication;
+import androidx.annotation.StyleRes;
 
-import java.util.LinkedList;
+import com.android.app.animation.Interpolators;
+import com.android.internal.annotations.VisibleForTesting;
+import com.android.systemui.keyguard.KeyguardIndication;
+import com.android.systemui.res.R;
 
 /**
  * A view to show hints on Keyguard ("Swipe up to unlock", "Tap again to open").
  */
 public class KeyguardIndicationTextView extends TextView {
-    private static final long MSG_MIN_DURATION_MILLIS_DEFAULT = 1500;
-    private long mNextAnimationTime = 0;
+    public static final long Y_IN_DURATION = 600L;
+
+    @StyleRes
+    private static int sStyleId = R.style.TextAppearance_Keyguard_BottomArea;
+    @StyleRes
+    private static int sButtonStyleId = R.style.TextAppearance_Keyguard_BottomArea_Button;
+
     private boolean mAnimationsEnabled = true;
-    private LinkedList<CharSequence> mMessages = new LinkedList<>();
-    private LinkedList<KeyguardIndication> mKeyguardIndicationInfo = new LinkedList<>();
+    private CharSequence mMessage;
+    private KeyguardIndication mKeyguardIndicationInfo;
+
+    private Animator mLastAnimator;
+    private boolean mAlwaysAnnounceText;
 
     public KeyguardIndicationTextView(Context context) {
         super(context);
@@ -62,22 +71,25 @@ public class KeyguardIndicationTextView extends TextView {
     }
 
     /**
-     * Clears message queue.
+     * Clears message queue and currently shown message.
      */
     public void clearMessages() {
-        mMessages.clear();
-        mKeyguardIndicationInfo.clear();
+        if (mLastAnimator != null) {
+            mLastAnimator.cancel();
+        }
+        mMessage = "";
+        setText("");
     }
 
     /**
-     * Changes the text with an animation and makes sure a single indication is shown long enough.
+     * Changes the text with an animation.
      */
     public void switchIndication(int textResId) {
         switchIndication(getResources().getText(textResId), null);
     }
 
     /**
-     * Changes the text with an animation and makes sure a single indication is shown long enough.
+     * Changes the text with an animation.
      *
      * @param indication The text to show.
      */
@@ -86,44 +98,93 @@ public class KeyguardIndicationTextView extends TextView {
     }
 
     /**
-     * Changes the text with an animation and makes sure a single indication is shown long enough.
+     * Changes the text with an animation.
+     */
+    public void switchIndication(CharSequence text, KeyguardIndication indication) {
+        switchIndication(text, indication, true, null);
+    }
+
+    /**
+     * Controls whether the text displayed in the indication area will be announced always.
+     */
+    public void setAlwaysAnnounceEnabled(boolean enabled) {
+        this.mAlwaysAnnounceText = enabled;
+        if (mAlwaysAnnounceText) {
+            // We will announce the text programmatically anyway.
+            setAccessibilityLiveRegion(ACCESSIBILITY_LIVE_REGION_NONE);
+        } else {
+            setAccessibilityLiveRegion(ACCESSIBILITY_LIVE_REGION_POLITE);
+        }
+    }
+
+    /**
+     * Updates the text with an optional animation.
      *
      * @param text The text to show.
      * @param indication optional display information for the text
+     * @param animate whether to animate this indication in - we may not want this on AOD
+     * @param onAnimationEndCallback runnable called after this indication is animated in
      */
-    public void switchIndication(CharSequence text, KeyguardIndication indication) {
-        if (text == null) text = "";
+    public void switchIndication(CharSequence text, KeyguardIndication indication,
+            boolean animate, Runnable onAnimationEndCallback) {
+        mMessage = text;
+        mKeyguardIndicationInfo = indication;
 
-        CharSequence lastPendingMessage = mMessages.peekLast();
-        if (TextUtils.equals(lastPendingMessage, text)
-                || (lastPendingMessage == null && TextUtils.equals(text, getText()))) {
-            return;
+        if (animate) {
+            final boolean hasIcon = indication != null && indication.getIcon() != null;
+            AnimatorSet animator = new AnimatorSet();
+            // Make sure each animation is visible for a minimum amount of time, while not worrying
+            // about fading in blank text
+            if (!TextUtils.isEmpty(mMessage) || hasIcon) {
+                Animator inAnimator = getInAnimator();
+                inAnimator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        if (onAnimationEndCallback != null) {
+                            onAnimationEndCallback.run();
+                        }
+                    }
+                });
+                animator.playSequentially(getOutAnimator(), inAnimator);
+            } else {
+                Animator outAnimator = getOutAnimator();
+                outAnimator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        if (onAnimationEndCallback != null) {
+                            onAnimationEndCallback.run();
+                        }
+                    }
+                });
+                animator.play(outAnimator);
+            }
+
+            if (mLastAnimator != null) {
+                mLastAnimator.cancel();
+            }
+            mLastAnimator = animator;
+            animator.start();
+        } else {
+            setAlpha(1f);
+            setTranslationY(0f);
+            setNextIndication();
+            if (onAnimationEndCallback != null) {
+                onAnimationEndCallback.run();
+            }
+            if (mLastAnimator != null) {
+                mLastAnimator.cancel();
+                mLastAnimator = null;
+            }
         }
-        mMessages.add(text);
-        mKeyguardIndicationInfo.add(indication);
+    }
 
-        final boolean hasIcon = indication != null && indication.getIcon() != null;
-        final AnimatorSet animSet = new AnimatorSet();
-        final AnimatorSet.Builder animSetBuilder = animSet.play(getOutAnimator());
-
-        // Make sure each animation is visible for a minimum amount of time, while not worrying
-        // about fading in blank text
-        long timeInMillis = System.currentTimeMillis();
-        long delay = Math.max(0, mNextAnimationTime - timeInMillis);
-        setNextAnimationTime(timeInMillis + delay + getFadeOutDuration());
-
-        final long minDurationMillis =
-                (indication != null && indication.getMinVisibilityMillis() != null)
-                    ? indication.getMinVisibilityMillis()
-                    : MSG_MIN_DURATION_MILLIS_DEFAULT;
-
-        if (!text.equals("") || hasIcon) {
-            setNextAnimationTime(mNextAnimationTime + minDurationMillis);
-            animSetBuilder.before(getInAnimator());
-        }
-
-        animSet.setStartDelay(delay);
-        animSet.start();
+    /**
+     * Get the message that should be shown after the previous text animates out.
+     */
+    public CharSequence getMessage() {
+        return mMessage;
     }
 
     private AnimatorSet getOutAnimator() {
@@ -132,23 +193,20 @@ public class KeyguardIndicationTextView extends TextView {
         fadeOut.setDuration(getFadeOutDuration());
         fadeOut.setInterpolator(Interpolators.FAST_OUT_LINEAR_IN);
         fadeOut.addListener(new AnimatorListenerAdapter() {
+            private boolean mCancelled = false;
             @Override
             public void onAnimationEnd(Animator animator) {
-                KeyguardIndication info = mKeyguardIndicationInfo.poll();
-                if (info != null) {
-                    setTextColor(info.getTextColor());
-                    setOnClickListener(info.getClickListener());
-                    setClickable(info.getClickListener() != null);
-                    final Drawable icon = info.getIcon();
-                    if (icon != null) {
-                        icon.setTint(getCurrentTextColor());
-                        if (icon instanceof AnimatedVectorDrawable) {
-                            ((AnimatedVectorDrawable) icon).start();
-                        }
-                    }
-                    setCompoundDrawablesRelativeWithIntrinsicBounds(icon, null, null, null);
+                super.onAnimationEnd(animator);
+                if (!mCancelled) {
+                    setNextIndication();
                 }
-                setText(mMessages.poll());
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+                super.onAnimationCancel(animator);
+                mCancelled = true;
+                setAlpha(0);
             }
         });
 
@@ -158,6 +216,43 @@ public class KeyguardIndicationTextView extends TextView {
         animatorSet.playTogether(fadeOut, yTranslate);
 
         return animatorSet;
+    }
+
+    private void setNextIndication() {
+        boolean forceAssertiveAccessibilityLiveRegion = false;
+        if (mKeyguardIndicationInfo != null) {
+            // First, update the style.
+            // If a background is set on the text, we don't want shadow on the text
+            if (mKeyguardIndicationInfo.getBackground() != null) {
+                setTextAppearance(sButtonStyleId);
+            } else {
+                setTextAppearance(sStyleId);
+            }
+            setBackground(mKeyguardIndicationInfo.getBackground());
+            setTextColor(mKeyguardIndicationInfo.getTextColor());
+            setOnClickListener(mKeyguardIndicationInfo.getClickListener());
+            setClickable(mKeyguardIndicationInfo.getClickListener() != null);
+            final Drawable icon = mKeyguardIndicationInfo.getIcon();
+            if (icon != null) {
+                icon.setTint(getCurrentTextColor());
+                if (icon instanceof AnimatedVectorDrawable) {
+                    ((AnimatedVectorDrawable) icon).start();
+                }
+            }
+            setCompoundDrawablesRelativeWithIntrinsicBounds(icon, null, null, null);
+            forceAssertiveAccessibilityLiveRegion =
+                mKeyguardIndicationInfo.getForceAssertiveAccessibilityLiveRegion();
+        }
+        if (!forceAssertiveAccessibilityLiveRegion) {
+            setAccessibilityLiveRegion(ACCESSIBILITY_LIVE_REGION_NONE);
+        }
+        setText(mMessage);
+        if (forceAssertiveAccessibilityLiveRegion) {
+            setAccessibilityLiveRegion(ACCESSIBILITY_LIVE_REGION_ASSERTIVE);
+        }
+        if (mAlwaysAnnounceText) {
+            announceForAccessibility(mMessage);
+        }
     }
 
     private AnimatorSet getInAnimator() {
@@ -173,7 +268,9 @@ public class KeyguardIndicationTextView extends TextView {
         yTranslate.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationCancel(Animator animation) {
+                super.onAnimationCancel(animation);
                 setTranslationY(0);
+                setAlpha(1f);
             }
         });
         animatorSet.playTogether(yTranslate, fadeIn);
@@ -198,7 +295,7 @@ public class KeyguardIndicationTextView extends TextView {
 
     private long getYInDuration() {
         if (!mAnimationsEnabled) return 0L;
-        return 600L;
+        return Y_IN_DURATION;
     }
 
     private long getFadeOutDuration() {
@@ -206,16 +303,8 @@ public class KeyguardIndicationTextView extends TextView {
         return 167L;
     }
 
-    private void setNextAnimationTime(long time) {
-        if (mAnimationsEnabled) {
-            mNextAnimationTime = time;
-        } else {
-            mNextAnimationTime = 0L;
-        }
-    }
-
     private int getYTranslationPixels() {
         return mContext.getResources().getDimensionPixelSize(
-                com.android.systemui.R.dimen.keyguard_indication_y_translation);
+                com.android.systemui.res.R.dimen.keyguard_indication_y_translation);
     }
 }

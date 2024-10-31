@@ -32,7 +32,6 @@ import android.content.res.Configuration;
 import android.graphics.Insets;
 import android.graphics.Rect;
 import android.os.Binder;
-import android.platform.test.annotations.Presubmit;
 import android.testing.AndroidTestingRunner;
 import android.testing.TestableContext;
 import android.testing.TestableLooper;
@@ -45,10 +44,10 @@ import android.window.DisplayAreaOrganizer;
 import android.window.IWindowContainerToken;
 import android.window.WindowContainerToken;
 
-import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
+import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.android.internal.R;
+import com.android.wm.shell.ShellTestCase;
 import com.android.wm.shell.common.DisplayController;
 import com.android.wm.shell.common.DisplayLayout;
 import com.android.wm.shell.common.ShellExecutor;
@@ -62,11 +61,10 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 
-@Presubmit
 @SmallTest
 @RunWith(AndroidTestingRunner.class)
 @TestableLooper.RunWithLooper
-public class HideDisplayCutoutOrganizerTest {
+public class HideDisplayCutoutOrganizerTest extends ShellTestCase {
     private TestableContext mContext = new TestableContext(
             InstrumentationRegistry.getInstrumentation().getTargetContext(), null);
 
@@ -124,6 +122,7 @@ public class HideDisplayCutoutOrganizerTest {
 
     @Test
     public void testEnableHideDisplayCutout() {
+        doReturn(mFakeStatusBarHeightPortrait).when(mOrganizer).getStatusBarHeight();
         mOrganizer.enableHideDisplayCutout();
 
         verify(mOrganizer).registerOrganizer(DisplayAreaOrganizer.FEATURE_HIDE_DISPLAY_CUTOUT);
@@ -154,8 +153,7 @@ public class HideDisplayCutoutOrganizerTest {
         doReturn(mFakeDefaultBounds).when(mOrganizer).getDisplayBoundsOfNaturalOrientation();
         doReturn(mFakeDefaultCutoutInsets).when(mOrganizer)
                 .getDisplayCutoutInsetsOfNaturalOrientation();
-        mContext.getOrCreateTestableResources().addOverride(
-                R.dimen.status_bar_height_portrait, mFakeStatusBarHeightPortrait);
+        doReturn(mFakeStatusBarHeightPortrait).when(mOrganizer).getStatusBarHeight();
         doReturn(Surface.ROTATION_0).when(mDisplayLayout).rotation();
         mOrganizer.enableHideDisplayCutout();
 
@@ -173,8 +171,7 @@ public class HideDisplayCutoutOrganizerTest {
         doReturn(mFakeDefaultBounds).when(mOrganizer).getDisplayBoundsOfNaturalOrientation();
         doReturn(mFakeDefaultCutoutInsets).when(mOrganizer)
                 .getDisplayCutoutInsetsOfNaturalOrientation();
-        mContext.getOrCreateTestableResources().addOverride(
-                R.dimen.status_bar_height_landscape, mFakeStatusBarHeightLandscape);
+        doReturn(mFakeStatusBarHeightLandscape).when(mOrganizer).getStatusBarHeight();
         doReturn(Surface.ROTATION_90).when(mDisplayLayout).rotation();
         mOrganizer.enableHideDisplayCutout();
 
@@ -192,8 +189,7 @@ public class HideDisplayCutoutOrganizerTest {
         doReturn(mFakeDefaultBounds).when(mOrganizer).getDisplayBoundsOfNaturalOrientation();
         doReturn(mFakeDefaultCutoutInsets).when(mOrganizer)
                 .getDisplayCutoutInsetsOfNaturalOrientation();
-        mContext.getOrCreateTestableResources().addOverride(
-                R.dimen.status_bar_height_landscape, mFakeStatusBarHeightLandscape);
+        doReturn(mFakeStatusBarHeightLandscape).when(mOrganizer).getStatusBarHeight();
         doReturn(Surface.ROTATION_270).when(mDisplayLayout).rotation();
         mOrganizer.enableHideDisplayCutout();
 
@@ -211,8 +207,7 @@ public class HideDisplayCutoutOrganizerTest {
         doReturn(mFakeDefaultBounds).when(mOrganizer).getDisplayBoundsOfNaturalOrientation();
         doReturn(mFakeDefaultCutoutInsets).when(mOrganizer)
                 .getDisplayCutoutInsetsOfNaturalOrientation();
-        mContext.getOrCreateTestableResources().addOverride(
-                R.dimen.status_bar_height_portrait, mFakeStatusBarHeightPortrait);
+        doReturn(mFakeStatusBarHeightPortrait).when(mOrganizer).getStatusBarHeight();
         mOrganizer.enableHideDisplayCutout();
 
         // disable hide display cutout
@@ -230,8 +225,7 @@ public class HideDisplayCutoutOrganizerTest {
         doReturn(200).when(mDisplayLayout).height();
         doReturn(mFakeDefaultCutoutInsets).when(mOrganizer)
                 .getDisplayCutoutInsetsOfNaturalOrientation();
-        mContext.getOrCreateTestableResources().addOverride(
-                R.dimen.status_bar_height_portrait, mFakeStatusBarHeightPortrait);
+        doReturn(mFakeStatusBarHeightPortrait).when(mOrganizer).getStatusBarHeight();
         doReturn(Surface.ROTATION_0).when(mDisplayLayout).rotation();
         mOrganizer.enableHideDisplayCutout();
         assertThat(mOrganizer.mCurrentDisplayBounds).isEqualTo(new Rect(0, 15, 100, 200));

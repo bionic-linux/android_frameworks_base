@@ -16,8 +16,11 @@
 
 package com.android.systemui.statusbar.policy;
 
+import android.annotation.FlaggedApi;
 import android.hardware.SensorPrivacyManager.Sensors.Sensor;
 import android.hardware.SensorPrivacyManager.Sources.Source;
+
+import com.android.internal.camera.flags.Flags;
 
 public interface IndividualSensorPrivacyController extends
         CallbackController<IndividualSensorPrivacyController.Callback> {
@@ -27,9 +30,26 @@ public interface IndividualSensorPrivacyController extends
 
     boolean isSensorBlocked(@Sensor int sensor);
 
+    /**
+     * Returns {@code true} if the given sensor is blocked by a hardware toggle, {@code false}
+     * if the sensor is not blocked or blocked by a software toggle.
+     */
+    boolean isSensorBlockedByHardwareToggle(@Sensor int sensor);
+
     void setSensorBlocked(@Source int source, @Sensor int sensor, boolean blocked);
 
     void suppressSensorPrivacyReminders(int sensor, boolean suppress);
+
+    /**
+     * @return whether lock screen authentication is required to change the toggle state
+     */
+    boolean requiresAuthentication();
+
+    /**
+     * @return whether camera privacy is enabled for the package.
+     */
+    @FlaggedApi(Flags.FLAG_CAMERA_PRIVACY_ALLOWLIST)
+    boolean isCameraPrivacyEnabled(String packageName);
 
     interface Callback {
         void onSensorBlockedChanged(@Sensor int sensor, boolean blocked);

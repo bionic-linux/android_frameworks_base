@@ -50,7 +50,7 @@ public final class ServiceManagerNative {
 class ServiceManagerProxy implements IServiceManager {
     public ServiceManagerProxy(IBinder remote) {
         mRemote = remote;
-        mServiceManager = IServiceManager.Stub.asInterface(remote);
+        mServiceManager = IServiceManager.Stub.asInterface(this.getNativeServiceManager());
     }
 
     public IBinder asBinder() {
@@ -78,7 +78,7 @@ class ServiceManagerProxy implements IServiceManager {
 
     public void registerForNotifications(String name, IServiceCallback cb)
             throws RemoteException {
-        throw new RemoteException();
+        mServiceManager.registerForNotifications(name, cb);
     }
 
     public void unregisterForNotifications(String name, IServiceCallback cb)
@@ -96,6 +96,14 @@ class ServiceManagerProxy implements IServiceManager {
 
     public String updatableViaApex(String name) throws RemoteException {
         return mServiceManager.updatableViaApex(name);
+    }
+
+    public String[] getUpdatableNames(String apexName) throws RemoteException {
+        return mServiceManager.getUpdatableNames(apexName);
+    }
+
+    public ConnectionInfo getConnectionInfo(String name) throws RemoteException {
+        return mServiceManager.getConnectionInfo(name);
     }
 
     public void registerClientCallback(String name, IBinder service, IClientCallback cb)
@@ -120,4 +128,6 @@ class ServiceManagerProxy implements IServiceManager {
     private IBinder mRemote;
 
     private IServiceManager mServiceManager;
+
+    private native IBinder getNativeServiceManager();
 }

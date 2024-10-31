@@ -22,8 +22,13 @@
 #include <GLES2/gl2ext.h>
 #include <GLES3/gl3.h>
 #include <GrDirectContext.h>
+#include <GrTypes.h>
+#include <SkBitmap.h>
 #include <SkCanvas.h>
 #include <SkImage.h>
+#include <SkImageAndroid.h>
+#include <SkImageInfo.h>
+#include <SkRefCnt.h>
 #include <gui/TraceUtils.h>
 #include <utils/GLUtils.h>
 #include <utils/NdkUtils.h>
@@ -38,6 +43,8 @@
 #include "utils/TimeUtils.h"
 
 namespace android::uirenderer {
+
+static constexpr auto kThreadTimeout = 60000_ms;
 
 class AHBUploader;
 // This helper uploader classes allows us to upload using either EGL or Vulkan using the same
@@ -77,7 +84,7 @@ public:
     }
 
     void postIdleTimeoutCheck() {
-        mUploadThread->queue().postDelayed(5000_ms, [this](){ this->idleTimeoutCheck(); });
+        mUploadThread->queue().postDelayed(kThreadTimeout, [this]() { this->idleTimeoutCheck(); });
     }
 
 protected:
@@ -94,7 +101,7 @@ private:
 
     bool shouldTimeOutLocked() {
         nsecs_t durationSince = systemTime() - mLastUpload;
-        return durationSince > 2000_ms;
+        return durationSince > kThreadTimeout;
     }
 
     void idleTimeoutCheck() {
@@ -257,8 +264,9 @@ private:
           }
 
           sk_sp<SkImage> image =
-              SkImage::MakeFromAHardwareBufferWithData(mGrContext.get(), bitmap.pixmap(), ahb);
-          mGrContext->submit(true);
+              SkImages::TextureFromAHardwareBufferWithData(mGrContext.get(), bitmap.pixmap(),
+                                                           ahb);
+          mGrContext->submit(GrSyncCpu::kYes);
 
           uploadSucceeded = (image.get() != nullptr);
         });
@@ -287,27 +295,32 @@ private:
     std::mutex mVkLock;
 };
 
+static bool checkSupport(AHardwareBuffer_Format format) {
+    AHardwareBuffer_Desc desc = {
+            .width = 1,
+            .height = 1,
+            .layers = 1,
+            .format = format,
+            .usage = AHARDWAREBUFFER_USAGE_CPU_READ_NEVER | AHARDWAREBUFFER_USAGE_CPU_WRITE_NEVER |
+                     AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE,
+    };
+    UniqueAHardwareBuffer buffer = allocateAHardwareBuffer(desc);
+    return buffer != nullptr;
+}
+
 bool HardwareBitmapUploader::hasFP16Support() {
-    static std::once_flag sOnce;
-    static bool hasFP16Support = false;
-
-    // Gralloc shouldn't let us create a USAGE_HW_TEXTURE if GLES is unable to consume it, so
-    // we don't need to double-check the GLES version/extension.
-    std::call_once(sOnce, []() {
-        AHardwareBuffer_Desc desc = {
-                .width = 1,
-                .height = 1,
-                .layers = 1,
-                .format = AHARDWAREBUFFER_FORMAT_R16G16B16A16_FLOAT,
-                .usage = AHARDWAREBUFFER_USAGE_CPU_READ_NEVER |
-                         AHARDWAREBUFFER_USAGE_CPU_WRITE_NEVER |
-                         AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE,
-        };
-        UniqueAHardwareBuffer buffer = allocateAHardwareBuffer(desc);
-        hasFP16Support = buffer != nullptr;
-    });
-
+    static bool hasFP16Support = checkSupport(AHARDWAREBUFFER_FORMAT_R16G16B16A16_FLOAT);
     return hasFP16Support;
+}
+
+bool HardwareBitmapUploader::has1010102Support() {
+    static bool has101012Support = checkSupport(AHARDWAREBUFFER_FORMAT_R10G10B10A2_UNORM);
+    return has101012Support;
+}
+
+bool HardwareBitmapUploader::hasAlpha8Support() {
+    static bool hasAlpha8Support = checkSupport(AHARDWAREBUFFER_FORMAT_R8_UNORM);
+    return hasAlpha8Support;
 }
 
 static FormatInfo determineFormat(const SkBitmap& skBitmap, bool usingGL) {
@@ -349,6 +362,33 @@ static FormatInfo determineFormat(const SkBitmap& skBitmap, bool usingGL) {
             formatInfo.format = GL_LUMINANCE;
             formatInfo.type = GL_UNSIGNED_BYTE;
             formatInfo.vkFormat = VK_FORMAT_R8G8B8A8_UNORM;
+            break;
+        case kRGBA_1010102_SkColorType:
+            formatInfo.isSupported = HardwareBitmapUploader::has1010102Support();
+            if (formatInfo.isSupported) {
+                formatInfo.type = GL_UNSIGNED_INT_2_10_10_10_REV;
+                formatInfo.bufferFormat = AHARDWAREBUFFER_FORMAT_R10G10B10A2_UNORM;
+                formatInfo.vkFormat = VK_FORMAT_A2B10G10R10_UNORM_PACK32;
+            } else {
+                formatInfo.type = GL_UNSIGNED_BYTE;
+                formatInfo.bufferFormat = AHARDWAREBUFFER_FORMAT_R8G8B8A8_UNORM;
+                formatInfo.vkFormat = VK_FORMAT_R8G8B8A8_UNORM;
+            }
+            formatInfo.format = GL_RGBA;
+            break;
+        case kAlpha_8_SkColorType:
+            formatInfo.isSupported = HardwareBitmapUploader::hasAlpha8Support();
+            if (formatInfo.isSupported) {
+                formatInfo.bufferFormat = AHARDWAREBUFFER_FORMAT_R8_UNORM;
+                formatInfo.format = GL_RED;
+                formatInfo.type = GL_UNSIGNED_BYTE;
+                formatInfo.vkFormat = VK_FORMAT_R8_UNORM;
+            } else {
+                formatInfo.type = GL_UNSIGNED_BYTE;
+                formatInfo.bufferFormat = AHARDWAREBUFFER_FORMAT_R8G8B8A8_UNORM;
+                formatInfo.vkFormat = VK_FORMAT_R8G8B8A8_UNORM;
+                formatInfo.format = GL_RGBA;
+            }
             break;
         default:
             ALOGW("unable to create hardware bitmap of colortype: %d", skBitmap.info().colorType());

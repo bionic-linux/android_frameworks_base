@@ -16,11 +16,23 @@
 
 package com.android.keyguard;
 
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
+import static com.google.common.truth.Truth.assertThat;
 
-import android.test.suitebuilder.annotation.SmallTest;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import android.hardware.biometrics.BiometricSourceType;
 import android.testing.AndroidTestingRunner;
+import android.testing.TestableLooper;
+import android.text.Editable;
+import android.text.TextWatcher;
+
+import androidx.test.filters.SmallTest;
 
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.statusbar.policy.ConfigurationController;
@@ -34,6 +46,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @SmallTest
+@TestableLooper.RunWithLooper
 @RunWith(AndroidTestingRunner.class)
 public class KeyguardMessageAreaControllerTest extends SysuiTestCase {
     @Mock
@@ -42,14 +55,14 @@ public class KeyguardMessageAreaControllerTest extends SysuiTestCase {
     private KeyguardUpdateMonitor mKeyguardUpdateMonitor;
     @Mock
     private KeyguardMessageArea mKeyguardMessageArea;
-
     private KeyguardMessageAreaController mMessageAreaController;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         mMessageAreaController = new KeyguardMessageAreaController.Factory(
-                mKeyguardUpdateMonitor, mConfigurationController).create(mKeyguardMessageArea);
+                mKeyguardUpdateMonitor, mConfigurationController).create(
+                mKeyguardMessageArea);
     }
 
     @Test
@@ -82,6 +95,79 @@ public class KeyguardMessageAreaControllerTest extends SysuiTestCase {
     @Test
     public void testClearsTextField() {
         mMessageAreaController.setMessage("");
-        verify(mKeyguardMessageArea).setMessage("");
+        verify(mKeyguardMessageArea).setMessage("", /* animate= */ true);
+    }
+
+    @Test
+    public void textChanged_AnnounceForAccessibility() {
+        ArgumentCaptor<TextWatcher> textWatcherArgumentCaptor = ArgumentCaptor.forClass(
+                TextWatcher.class);
+        mMessageAreaController.onViewAttached();
+        verify(mKeyguardMessageArea).addTextChangedListener(textWatcherArgumentCaptor.capture());
+
+        textWatcherArgumentCaptor.getValue().afterTextChanged(
+                Editable.Factory.getInstance().newEditable("abc"));
+        verify(mKeyguardMessageArea).removeCallbacks(any(Runnable.class));
+        verify(mKeyguardMessageArea).postDelayed(any(Runnable.class), anyLong());
+    }
+
+    @Test
+    public void testSetBouncerVisible() {
+        mMessageAreaController.setIsVisible(true);
+        verify(mKeyguardMessageArea).setIsVisible(true);
+    }
+
+    @Test
+    public void testGetMessage() {
+        String msg = "abc";
+        when(mKeyguardMessageArea.getText()).thenReturn(msg);
+        assertThat(mMessageAreaController.getMessage()).isEqualTo(msg);
+    }
+
+    @Test
+    public void testFingerprintMessageUpdate() {
+        String msg = "fpMessage";
+        mMessageAreaController.setMessage(
+                msg, BiometricSourceType.FINGERPRINT
+        );
+        verify(mKeyguardMessageArea).setMessage(msg, /* animate= */ true);
+
+        String msg2 = "fpMessage2";
+        mMessageAreaController.setMessage(
+                msg2, BiometricSourceType.FINGERPRINT
+        );
+        verify(mKeyguardMessageArea).setMessage(msg2, /* animate= */ true);
+    }
+
+    @Test
+    public void testFaceMessageDroppedWhileFingerprintMessageShowing() {
+        String fpMsg = "fpMessage";
+        mMessageAreaController.setMessage(
+                fpMsg, BiometricSourceType.FINGERPRINT
+        );
+        verify(mKeyguardMessageArea).setMessage(eq(fpMsg), /* animate= */ anyBoolean());
+
+        String faceMessage = "faceMessage";
+        mMessageAreaController.setMessage(
+                faceMessage, BiometricSourceType.FACE
+        );
+        verify(mKeyguardMessageArea, never())
+                .setMessage(eq(faceMessage), /* animate= */ anyBoolean());
+    }
+
+    @Test
+    public void testGenericMessageShowsAfterFingerprintMessageShowing() {
+        String fpMsg = "fpMessage";
+        mMessageAreaController.setMessage(
+                fpMsg, BiometricSourceType.FINGERPRINT
+        );
+        verify(mKeyguardMessageArea).setMessage(eq(fpMsg), /* animate= */ anyBoolean());
+
+        String genericMessage = "genericMessage";
+        mMessageAreaController.setMessage(
+                genericMessage, null
+        );
+        verify(mKeyguardMessageArea)
+                .setMessage(eq(genericMessage), /* animate= */ anyBoolean());
     }
 }

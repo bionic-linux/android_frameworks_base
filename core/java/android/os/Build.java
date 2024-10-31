@@ -27,24 +27,34 @@ import android.app.ActivityThread;
 import android.app.Application;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
+import android.ravenwood.annotation.RavenwoodKeepWholeClass;
 import android.sysprop.DeviceProperties;
 import android.sysprop.SocProperties;
 import android.sysprop.TelephonyProperties;
 import android.text.TextUtils;
+import android.util.ArraySet;
 import android.util.Slog;
 import android.view.View;
+
+import com.android.internal.ravenwood.RavenwoodEnvironment;
 
 import dalvik.system.VMRuntime;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
  * Information about the current build, extracted from system properties.
  */
+@RavenwoodKeepWholeClass
 public class Build {
+    static {
+        // Set up the default system properties.
+        RavenwoodEnvironment.ensureRavenwoodInitialized();
+    }
     private static final String TAG = "Build";
 
     /** Value used for when a build property is unknown. */
@@ -59,8 +69,29 @@ public class Build {
     /** The name of the overall product. */
     public static final String PRODUCT = getString("ro.product.name");
 
+    /**
+     * The product name for attestation. In non-default builds (like the AOSP build) the value of
+     * the 'PRODUCT' system property may be different to the one provisioned to KeyMint,
+     * and Keymint attestation would still attest to the product name which was provisioned.
+     * @hide
+     */
+    @Nullable
+    @TestApi
+    public static final String PRODUCT_FOR_ATTESTATION = getVendorDeviceIdProperty("name");
+
     /** The name of the industrial design. */
     public static final String DEVICE = getString("ro.product.device");
+
+    /**
+     * The device name for attestation. In non-default builds (like the AOSP build) the value of
+     * the 'DEVICE' system property may be different to the one provisioned to KeyMint,
+     * and Keymint attestation would still attest to the device name which was provisioned.
+     * @hide
+     */
+    @Nullable
+    @TestApi
+    public static final String DEVICE_FOR_ATTESTATION =
+            getVendorDeviceIdProperty("device");
 
     /** The name of the underlying board, like "goldfish". */
     public static final String BOARD = getString("ro.product.board");
@@ -84,11 +115,42 @@ public class Build {
     /** The manufacturer of the product/hardware. */
     public static final String MANUFACTURER = getString("ro.product.manufacturer");
 
+    /**
+     * The manufacturer name for attestation. In non-default builds (like the AOSP build) the value
+     * of the 'MANUFACTURER' system property may be different to the one provisioned to KeyMint,
+     * and Keymint attestation would still attest to the manufacturer which was provisioned.
+     * @hide
+     */
+    @Nullable
+    @TestApi
+    public static final String MANUFACTURER_FOR_ATTESTATION =
+            getVendorDeviceIdProperty("manufacturer");
+
     /** The consumer-visible brand with which the product/hardware will be associated, if any. */
     public static final String BRAND = getString("ro.product.brand");
 
+    /**
+     * The product brand for attestation. In non-default builds (like the AOSP build) the value of
+     * the 'BRAND' system property may be different to the one provisioned to KeyMint,
+     * and Keymint attestation would still attest to the product brand which was provisioned.
+     * @hide
+     */
+    @Nullable
+    @TestApi
+    public static final String BRAND_FOR_ATTESTATION = getVendorDeviceIdProperty("brand");
+
     /** The end-user-visible name for the end product. */
     public static final String MODEL = getString("ro.product.model");
+
+    /**
+     * The product model for attestation. In non-default builds (like the AOSP build) the value of
+     * the 'MODEL' system property may be different to the one provisioned to KeyMint,
+     * and Keymint attestation would still attest to the product model which was provisioned.
+     * @hide
+     */
+    @Nullable
+    @TestApi
+    public static final String MODEL_FOR_ATTESTATION = getVendorDeviceIdProperty("model");
 
     /** The manufacturer of the device's primary system-on-chip. */
     @NonNull
@@ -163,9 +225,11 @@ public class Build {
      * Gets the hardware serial number, if available.
      *
      * <p class="note"><b>Note:</b> Root access may allow you to modify device identifiers, such as
-     * the hardware serial number. If you change these identifiers, you can use
+     * the hardware serial number. If you change these identifiers, you can not use
      * <a href="/training/articles/security-key-attestation.html">key attestation</a> to obtain
-     * proof of the device's original identifiers.
+     * proof of the device's original identifiers. KeyMint will reject an ID attestation request
+     * if the identifiers provided by the frameworks do not match the identifiers it was
+     * provisioned with.
      *
      * <p>Starting with API level 29, persistent device identifiers are guarded behind additional
      * restrictions, and apps are recommended to use resettable identifiers (see <a
@@ -250,7 +314,7 @@ public class Build {
          * compatibility.
          */
         final String[] abiList;
-        if (VMRuntime.getRuntime().is64Bit()) {
+        if (android.os.Process.is64Bit()) {
             abiList = SUPPORTED_64_BIT_ABIS;
         } else {
             abiList = SUPPORTED_32_BIT_ABIS;
@@ -283,11 +347,18 @@ public class Build {
         public static final String RELEASE = getString("ro.build.version.release");
 
         /**
-         * The version string we show to the user; may be {@link #RELEASE} or
-         * {@link #CODENAME} if not a final release build.
+         * The version string.  May be {@link #RELEASE} or {@link #CODENAME} if
+         * not a final release build.
          */
         @NonNull public static final String RELEASE_OR_CODENAME = getString(
                 "ro.build.version.release_or_codename");
+
+        /**
+         * The version string we show to the user; may be {@link #RELEASE} or
+         * a descriptive string if not a final release build.
+         */
+        @NonNull public static final String RELEASE_OR_PREVIEW_DISPLAY = getString(
+                "ro.build.version.release_or_preview_display");
 
         /**
          * The base OS build the product is based on.
@@ -395,6 +466,22 @@ public class Build {
          * a release build.
          */
         public static final String CODENAME = getString("ro.build.version.codename");
+
+        /**
+         * All known codenames that are present in {@link VERSION_CODES}.
+         *
+         * <p>This includes in development codenames as well, i.e. if {@link #CODENAME} is not "REL"
+         * then the value of that is present in this set.
+         *
+         * <p>If a particular string is not present in this set, then it is either not a codename
+         * or a codename for a future release. For example, during Android R development, "Tiramisu"
+         * was not a known codename.
+         *
+         * @hide
+         */
+        @SystemApi
+        @NonNull public static final Set<String> KNOWN_CODENAMES =
+                new ArraySet<>(getStringList("ro.build.version.known_codenames", ","));
 
         private static final String[] ALL_CODENAMES
                 = getStringList("ro.build.version.all_codenames", ",");
@@ -727,12 +814,9 @@ public class Build {
          * PackageManager.setComponentEnabledSetting} will now throw an
          * IllegalArgumentException if the given component class name does not
          * exist in the application's manifest.
-         * <li> {@link android.nfc.NfcAdapter#setNdefPushMessage
-         * NfcAdapter.setNdefPushMessage},
-         * {@link android.nfc.NfcAdapter#setNdefPushMessageCallback
-         * NfcAdapter.setNdefPushMessageCallback} and
-         * {@link android.nfc.NfcAdapter#setOnNdefPushCompleteCallback
-         * NfcAdapter.setOnNdefPushCompleteCallback} will throw
+         * <li> {@code NfcAdapter.setNdefPushMessage},
+         * {@code NfcAdapter.setNdefPushMessageCallback} and
+         * {@code NfcAdapter.setOnNdefPushCompleteCallback} will throw
          * IllegalStateException if called after the Activity has been destroyed.
          * <li> Accessibility services must require the new
          * {@link android.Manifest.permission#BIND_ACCESSIBILITY_SERVICE} permission or
@@ -1024,7 +1108,7 @@ public class Build {
          * will also enable {@link StrictMode.ThreadPolicy.Builder#detectUnbufferedIo}.</li>
          * <li>{@link android.provider.DocumentsContract}'s various methods will throw failure
          * exceptions back to the caller instead of returning null.
-         * <li>{@link View#hasFocusable View.hasFocusable} now includes auto-focusable views.</li>
+         * <li>{@link View#hasFocusable() View.hasFocusable} now includes auto-focusable views.</li>
          * <li>{@link android.view.SurfaceView} will no longer always change the underlying
          * Surface object when something about it changes; apps need to look at the current
          * state of the object to determine which things they are interested in have changed.</li>
@@ -1130,7 +1214,41 @@ public class Build {
          * S.
          */
         public static final int S = 31;
+
+        /**
+         * S V2.
+         *
+         * Once more unto the breach, dear friends, once more.
+         */
+        public static final int S_V2 = 32;
+
+        /**
+         * Tiramisu.
+         */
+        public static final int TIRAMISU = 33;
+
+        /**
+         * Upside Down Cake.
+         */
+        public static final int UPSIDE_DOWN_CAKE = 34;
+
+        /**
+         * Vanilla Ice Cream.
+         */
+        public static final int VANILLA_ICE_CREAM = 35;
     }
+
+    /**
+     * The vendor API for 2024 Q2
+     *
+     * <p>For Android 14-QPR3 and later, the vendor API level is completely decoupled from the SDK
+     * API level and the format has switched to YYYYMM (year and month)
+     *
+     * @see <a href="https://preview.source.android.com/docs/core/architecture/api-flags">Vendor API
+     *     level</a>
+     * @hide
+     */
+    public static final int VENDOR_API_2024_Q2 = 202404;
 
     /** The type of build, like "user" or "eng". */
     public static final String TYPE = getString("ro.build.type");
@@ -1215,9 +1333,7 @@ public class Build {
         if (IS_ENG) return true;
 
         if (IS_TREBLE_ENABLED) {
-            // If we can run this code, the device should already pass AVB.
-            // So, we don't need to check AVB here.
-            int result = VintfObject.verifyWithoutAvb();
+            int result = VintfObject.verifyBuildAtBoot();
 
             if (result != 0) {
                 Slog.e(TAG, "Vendor interface is incompatible, error="
@@ -1282,6 +1398,18 @@ public class Build {
     public static class Partition {
         /** The name identifying the system partition. */
         public static final String PARTITION_NAME_SYSTEM = "system";
+        /** @hide */
+        public static final String PARTITION_NAME_BOOTIMAGE = "bootimage";
+        /** @hide */
+        public static final String PARTITION_NAME_ODM = "odm";
+        /** @hide */
+        public static final String PARTITION_NAME_OEM = "oem";
+        /** @hide */
+        public static final String PARTITION_NAME_PRODUCT = "product";
+        /** @hide */
+        public static final String PARTITION_NAME_SYSTEM_EXT = "system_ext";
+        /** @hide */
+        public static final String PARTITION_NAME_VENDOR = "vendor";
 
         private final String mName;
         private final String mFingerprint;
@@ -1338,8 +1466,12 @@ public class Build {
         ArrayList<Partition> partitions = new ArrayList();
 
         String[] names = new String[] {
-            "bootimage", "odm", "product", "system_ext", Partition.PARTITION_NAME_SYSTEM,
-            "vendor"
+                Partition.PARTITION_NAME_BOOTIMAGE,
+                Partition.PARTITION_NAME_ODM,
+                Partition.PARTITION_NAME_PRODUCT,
+                Partition.PARTITION_NAME_SYSTEM_EXT,
+                Partition.PARTITION_NAME_SYSTEM,
+                Partition.PARTITION_NAME_VENDOR
         };
         for (String name : names) {
             String fingerprint = SystemProperties.get("ro." + name + ".build.fingerprint");
@@ -1394,7 +1526,11 @@ public class Build {
     public static final boolean IS_USER = "user".equals(TYPE);
 
     /**
-     * Whether this build is running inside a container.
+     * Whether this build is running on ARC, the Android Runtime for Chrome
+     * (https://chromium.googlesource.com/chromiumos/docs/+/master/containers_and_vms.md).
+     * Prior to R this was implemented as a container but from R this will be
+     * a VM. The name of the property remains ro.boot.conntainer as it is
+     * referenced in other projects.
      *
      * We should try to avoid checking this flag if possible to minimize
      * unnecessarily diverging from non-container Android behavior.
@@ -1405,7 +1541,7 @@ public class Build {
      * For higher-level behavior differences, other checks should be preferred.
      * @hide
      */
-    public static final boolean IS_CONTAINER =
+    public static final boolean IS_ARC =
             SystemProperties.getBoolean("ro.boot.container", false);
 
     /**
@@ -1432,6 +1568,17 @@ public class Build {
     @UnsupportedAppUsage
     private static String getString(String property) {
         return SystemProperties.get(property, UNKNOWN);
+    }
+    /**
+     * Return attestation specific proerties.
+     * @param property model, name, brand, device or manufacturer.
+     * @return property value or UNKNOWN
+     */
+    private static String getVendorDeviceIdProperty(String property) {
+        String attestProp = getString(
+                TextUtils.formatSimple("ro.product.%s_for_attestation", property));
+        return attestProp.equals(UNKNOWN)
+                ? getString(TextUtils.formatSimple("ro.product.vendor.%s", property)) : attestProp;
     }
 
     private static String[] getStringList(String property, String separator) {

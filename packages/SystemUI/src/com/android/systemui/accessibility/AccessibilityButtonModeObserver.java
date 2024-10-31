@@ -17,6 +17,7 @@
 package com.android.systemui.accessibility;
 
 import static android.provider.Settings.Secure.ACCESSIBILITY_BUTTON_MODE_FLOATING_MENU;
+import static android.provider.Settings.Secure.ACCESSIBILITY_BUTTON_MODE_GESTURE;
 import static android.provider.Settings.Secure.ACCESSIBILITY_BUTTON_MODE_NAVIGATION_BAR;
 
 import android.annotation.IntDef;
@@ -26,6 +27,7 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.android.systemui.dagger.SysUISingleton;
+import com.android.systemui.settings.UserTracker;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -49,7 +51,8 @@ public class AccessibilityButtonModeObserver extends
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
             ACCESSIBILITY_BUTTON_MODE_NAVIGATION_BAR,
-            ACCESSIBILITY_BUTTON_MODE_FLOATING_MENU
+            ACCESSIBILITY_BUTTON_MODE_FLOATING_MENU,
+            ACCESSIBILITY_BUTTON_MODE_GESTURE
     })
     public @interface AccessibilityButtonMode {}
 
@@ -65,8 +68,8 @@ public class AccessibilityButtonModeObserver extends
     }
 
     @Inject
-    public AccessibilityButtonModeObserver(Context context) {
-        super(context, Settings.Secure.ACCESSIBILITY_BUTTON_MODE);
+    public AccessibilityButtonModeObserver(Context context, UserTracker userTracker) {
+        super(context, userTracker, Settings.Secure.ACCESSIBILITY_BUTTON_MODE);
     }
 
     @Override

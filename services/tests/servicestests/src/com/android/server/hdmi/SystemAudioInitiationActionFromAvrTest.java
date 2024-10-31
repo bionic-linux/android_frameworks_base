@@ -15,16 +15,19 @@
  */
 package com.android.server.hdmi;
 
+import static com.android.server.hdmi.HdmiConfig.TIMEOUT_MS;
+
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.tv.cec.V1_0.SendMessageResult;
-import android.media.AudioManager;
 import android.os.Looper;
 import android.os.test.TestLooper;
 import android.platform.test.annotations.Presubmit;
@@ -38,6 +41,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.Collections;
+
 /** Tests for {@link SystemAudioInitiationActionFromAvr} */
 @SmallTest
 @Presubmit
@@ -45,6 +50,7 @@ import org.junit.runners.JUnit4;
 public class SystemAudioInitiationActionFromAvrTest {
 
     private HdmiCecLocalDeviceAudioSystem mHdmiCecLocalDeviceAudioSystem;
+    private FakePowerManagerWrapper mPowerManager;
     private TestLooper mTestLooper = new TestLooper();
 
     private boolean mShouldDispatchActiveSource;
@@ -58,14 +64,19 @@ public class SystemAudioInitiationActionFromAvrTest {
     private boolean mArcEnabled;
     private boolean mIsPlaybackDevice;
     private boolean mBroadcastActiveSource;
+    private boolean mStandbyMessageReceived;
 
     @Before
     public void SetUp() {
-        mDeviceInfoForTests = new HdmiDeviceInfo(1001, 1234);
+        mDeviceInfoForTests = HdmiDeviceInfo.hardwarePort(1001, 1234);
 
         Context context = InstrumentationRegistry.getTargetContext();
 
-        HdmiControlService hdmiControlService = new HdmiControlService(context) {
+        FakeAudioFramework audioFramework = new FakeAudioFramework();
+
+        HdmiControlService hdmiControlService = new HdmiControlService(context,
+                Collections.emptyList(), audioFramework.getAudioManager(),
+                audioFramework.getAudioDeviceVolumeManager()) {
                     @Override
                     void sendCecCommand(
                             HdmiCecMessage command, @Nullable SendMessageCallback callback) {
@@ -96,36 +107,6 @@ public class SystemAudioInitiationActionFromAvrTest {
                     }
 
                     @Override
-                    AudioManager getAudioManager() {
-                        return new AudioManager() {
-
-                            @Override
-                            public int setHdmiSystemAudioSupported(boolean on) {
-                                return 0;
-                            }
-
-                            @Override
-                            public int getStreamVolume(int streamType) {
-                                return 0;
-                            }
-
-                            @Override
-                            public boolean isStreamMute(int streamType) {
-                                return false;
-                            }
-
-                            @Override
-                            public int getStreamMaxVolume(int streamType) {
-                                return 100;
-                            }
-
-                            @Override
-                            public void adjustStreamVolume(
-                                    int streamType, int direction, int flags) {}
-                        };
-                    }
-
-                    @Override
                     boolean isPowerStandby() {
                         return false;
                     }
@@ -138,9 +119,6 @@ public class SystemAudioInitiationActionFromAvrTest {
                     @Override
                     protected void writeStringSystemProperty(String key, String value) {
                     }
-
-                    @Override
-                    void wakeUp() {}
 
                     @Override
                     int getPhysicalAddress() {
@@ -162,16 +140,29 @@ public class SystemAudioInitiationActionFromAvrTest {
                     int pathToPortId(int path) {
                         return -1;
                     }
+
+                    @Override
+                    protected boolean isStandbyMessageReceived() {
+                        return mStandbyMessageReceived;
+                    }
+
+                    @Override
+                    protected void sendBroadcastAsUser(@RequiresPermission Intent intent) {
+                        // do nothing
+                    }
                 };
 
         Looper looper = mTestLooper.getLooper();
         hdmiControlService.setIoLooper(looper);
         hdmiControlService.setHdmiCecConfig(new FakeHdmiCecConfig(context));
+        hdmiControlService.setDeviceConfig(new FakeDeviceConfigWrapper());
         HdmiCecController.NativeWrapper nativeWrapper = new FakeNativeWrapper();
         HdmiCecController hdmiCecController = HdmiCecController.createWithNativeWrapper(
                 hdmiControlService, nativeWrapper, hdmiControlService.getAtomWriter());
         hdmiControlService.setCecController(hdmiCecController);
         hdmiControlService.initService();
+        mPowerManager = new FakePowerManagerWrapper(context);
+        hdmiControlService.setPowerManager(mPowerManager);
         mHdmiCecLocalDeviceAudioSystem =
                 new HdmiCecLocalDeviceAudioSystem(hdmiControlService) {
                     @Override
@@ -194,6 +185,7 @@ public class SystemAudioInitiationActionFromAvrTest {
                     }
                 };
         mHdmiCecLocalDeviceAudioSystem.init();
+        mHdmiCecLocalDeviceAudioSystem.setDeviceInfo(mDeviceInfoForTests);
     }
 
     @Test
@@ -309,6 +301,22 @@ public class SystemAudioInitiationActionFromAvrTest {
         assertThat(mHdmiCecLocalDeviceAudioSystem.isSystemAudioActivated()).isTrue();
     }
 
+    @Test
+    public void onActionStarted_deviceGoesToSleep_noActiveSourceAfterTimeout() {
+        resetTestVariables();
+
+        mStandbyMessageReceived = true;
+        mHdmiCecLocalDeviceAudioSystem.addAndStartAction(
+                new SystemAudioInitiationActionFromAvr(
+                mHdmiCecLocalDeviceAudioSystem));
+        mTestLooper.dispatchAll();
+
+        mTestLooper.moveTimeForward(TIMEOUT_MS);
+        mTestLooper.dispatchAll();
+
+        assertThat(mBroadcastActiveSource).isFalse();
+    }
+
     private void resetTestVariables() {
         mMsgRequestActiveSourceCount = 0;
         mMsgSetSystemAudioModeCount = 0;
@@ -318,5 +326,6 @@ public class SystemAudioInitiationActionFromAvrTest {
         mBroadcastActiveSource = false;
         mHdmiCecLocalDeviceAudioSystem.getActiveSource().physicalAddress =
                 Constants.INVALID_PHYSICAL_ADDRESS;
+        mStandbyMessageReceived = false;
     }
 }

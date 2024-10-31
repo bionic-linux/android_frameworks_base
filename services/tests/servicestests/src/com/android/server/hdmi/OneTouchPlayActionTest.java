@@ -16,27 +16,27 @@
 
 package com.android.server.hdmi;
 
+import static com.android.server.SystemService.PHASE_SYSTEM_SERVICES_READY;
 import static com.android.server.hdmi.Constants.ADDR_TV;
 import static com.android.server.hdmi.HdmiControlService.INITIATED_BY_ENABLE_CEC;
+import static com.android.server.hdmi.HdmiControlService.WAKE_UP_SCREEN_ON;
 import static com.android.server.hdmi.OneTouchPlayAction.STATE_WAITING_FOR_REPORT_POWER_STATUS;
 
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
 
+import android.annotation.RequiresPermission;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.IHdmiControlCallback;
-import android.media.AudioManager;
-import android.os.Handler;
-import android.os.IPowerManager;
-import android.os.IThermalService;
+import android.hardware.tv.cec.V1_0.SendMessageResult;
 import android.os.Looper;
-import android.os.PowerManager;
 import android.os.test.TestLooper;
+import android.platform.test.annotations.Presubmit;
 
 import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
@@ -46,14 +46,14 @@ import com.android.server.hdmi.HdmiCecFeatureAction.ActionTimer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 
 /** Tests for {@link OneTouchPlayAction} */
 @SmallTest
+@Presubmit
 @RunWith(JUnit4.class)
 public class OneTouchPlayActionTest {
     private static final byte[] POWER_ON = new byte[]{HdmiControlManager.POWER_STATUS_ON};
@@ -61,24 +61,27 @@ public class OneTouchPlayActionTest {
             new byte[]{HdmiControlManager.POWER_STATUS_TRANSIENT_TO_ON};
 
     private static final int PORT_1 = 1;
-    private static final HdmiDeviceInfo INFO_TV = new HdmiDeviceInfo(
-            ADDR_TV, 0x0000, PORT_1, HdmiDeviceInfo.DEVICE_TV,
-            0x1234, "TV",
-            HdmiControlManager.POWER_STATUS_ON, HdmiControlManager.HDMI_CEC_VERSION_1_4_B);
+    private static final HdmiDeviceInfo INFO_TV = HdmiDeviceInfo.cecDeviceBuilder()
+            .setLogicalAddress(ADDR_TV)
+            .setPhysicalAddress(0x0000)
+            .setPortId(PORT_1)
+            .setDeviceType(HdmiDeviceInfo.DEVICE_TV)
+            .setVendorId(0x1234)
+            .setDisplayName("TV")
+            .setDevicePowerStatus(HdmiControlManager.POWER_STATUS_ON)
+            .setCecVersion(HdmiControlManager.HDMI_CEC_VERSION_1_4_B)
+            .build();
 
     private Context mContextSpy;
     private HdmiControlService mHdmiControlService;
+    private HdmiCecController mHdmiCecController;
     private FakeNativeWrapper mNativeWrapper;
+    private FakePowerManagerWrapper mPowerManager;
     private FakeHdmiCecConfig mHdmiCecConfig;
 
     private TestLooper mTestLooper = new TestLooper();
     private ArrayList<HdmiCecLocalDevice> mLocalDevices = new ArrayList<>();
     private int mPhysicalAddress;
-
-    @Mock
-    private IPowerManager mIPowerManagerMock;
-    @Mock
-    private IThermalService mIThermalServiceMock;
 
     /**
      * Manually called before tests, because some tests require HDMI control to be disabled.
@@ -86,50 +89,26 @@ public class OneTouchPlayActionTest {
      * @throws Exception
      */
     public void setUp(boolean hdmiControlEnabled) throws Exception {
-        MockitoAnnotations.initMocks(this);
-
         mContextSpy = spy(new ContextWrapper(InstrumentationRegistry.getTargetContext()));
         mHdmiCecConfig = new FakeHdmiCecConfig(mContextSpy);
 
-        setHdmiControlEnabled(hdmiControlEnabled);
+        FakeAudioFramework audioFramework = new FakeAudioFramework();
 
-        when(mContextSpy.getSystemService(Context.POWER_SERVICE)).thenAnswer(i ->
-                new PowerManager(mContextSpy, mIPowerManagerMock,
-                mIThermalServiceMock, new Handler(mTestLooper.getLooper())));
-        when(mContextSpy.getSystemService(PowerManager.class)).thenAnswer(i ->
-                new PowerManager(mContextSpy, mIPowerManagerMock,
-                mIThermalServiceMock, new Handler(mTestLooper.getLooper())));
-        when(mIPowerManagerMock.isInteractive()).thenReturn(true);
-
-        mHdmiControlService = new HdmiControlService(mContextSpy, Collections.emptyList()) {
-            @Override
-            AudioManager getAudioManager() {
-                return new AudioManager() {
-                    @Override
-                    public void setWiredDeviceConnectionState(
-                            int type, int state, String address, String name) {
-                        // Do nothing.
-                    }
-                };
-            }
-
-            @Override
-            void wakeUp() {
-            }
-
+        mHdmiControlService = new HdmiControlService(mContextSpy,
+                Collections.singletonList(HdmiDeviceInfo.DEVICE_PLAYBACK),
+                audioFramework.getAudioManager(), audioFramework.getAudioDeviceVolumeManager()) {
             @Override
             boolean isPowerStandby() {
                 return false;
             }
 
             @Override
-            protected PowerManager getPowerManager() {
-                return new PowerManager(mContextSpy, mIPowerManagerMock,
-                        mIThermalServiceMock, new Handler(mTestLooper.getLooper()));
+            protected void writeStringSystemProperty(String key, String value) {
+                // do nothing
             }
 
             @Override
-            protected void writeStringSystemProperty(String key, String value) {
+            protected void sendBroadcastAsUser(@RequiresPermission Intent intent) {
                 // do nothing
             }
         };
@@ -137,15 +116,19 @@ public class OneTouchPlayActionTest {
         Looper looper = mTestLooper.getLooper();
         mHdmiControlService.setIoLooper(looper);
         mHdmiControlService.setHdmiCecConfig(mHdmiCecConfig);
+        setHdmiControlEnabled(hdmiControlEnabled);
         mNativeWrapper = new FakeNativeWrapper();
-        HdmiCecController hdmiCecController = HdmiCecController.createWithNativeWrapper(
-                this.mHdmiControlService, mNativeWrapper, mHdmiControlService.getAtomWriter());
-        mHdmiControlService.setCecController(hdmiCecController);
-        mHdmiControlService.setHdmiMhlController(HdmiMhlControllerStub.create(mHdmiControlService));
-        mHdmiControlService.setMessageValidator(new HdmiCecMessageValidator(mHdmiControlService));
-        mHdmiControlService.initService();
         mPhysicalAddress = 0x2000;
         mNativeWrapper.setPhysicalAddress(mPhysicalAddress);
+        mHdmiCecController = HdmiCecController.createWithNativeWrapper(
+                this.mHdmiControlService, mNativeWrapper, mHdmiControlService.getAtomWriter());
+        mHdmiControlService.setDeviceConfig(new FakeDeviceConfigWrapper());
+        mHdmiControlService.setCecController(mHdmiCecController);
+        mHdmiControlService.setHdmiMhlController(HdmiMhlControllerStub.create(mHdmiControlService));
+        mHdmiControlService.initService();
+        mHdmiControlService.onBootPhase(PHASE_SYSTEM_SERVICES_READY);
+        mPowerManager = new FakePowerManagerWrapper(mContextSpy);
+        mHdmiControlService.setPowerManager(mPowerManager);
         mTestLooper.dispatchAll();
         mNativeWrapper.clearResultMessages();
     }
@@ -161,11 +144,7 @@ public class OneTouchPlayActionTest {
     public void succeedWithUnknownTvDevice() throws Exception {
         setUp(true);
 
-        HdmiCecLocalDevicePlayback playbackDevice = new HdmiCecLocalDevicePlayback(
-                mHdmiControlService);
-        playbackDevice.init();
-        mLocalDevices.add(playbackDevice);
-        mHdmiControlService.allocateLogicalAddress(mLocalDevices, INITIATED_BY_ENABLE_CEC);
+        HdmiCecLocalDevicePlayback playbackDevice = mHdmiControlService.playback();
         mTestLooper.dispatchAll();
         mNativeWrapper.clearResultMessages();
 
@@ -176,20 +155,27 @@ public class OneTouchPlayActionTest {
         playbackDevice.addAndStartAction(action);
         mTestLooper.dispatchAll();
 
-        HdmiCecMessage activeSource = HdmiCecMessageBuilder.buildActiveSource(
-                playbackDevice.mAddress, mPhysicalAddress);
-        HdmiCecMessage textViewOn = HdmiCecMessageBuilder.buildTextViewOn(playbackDevice.mAddress,
-                ADDR_TV);
-        HdmiCecMessage giveDevicePowerStatus = HdmiCecMessageBuilder
-                .buildGiveDevicePowerStatus(playbackDevice.mAddress, ADDR_TV);
+        HdmiCecMessage activeSource =
+                HdmiCecMessageBuilder.buildActiveSource(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), mPhysicalAddress);
+        HdmiCecMessage textViewOn =
+                HdmiCecMessageBuilder.buildTextViewOn(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
+        HdmiCecMessage giveDevicePowerStatus =
+                HdmiCecMessageBuilder.buildGiveDevicePowerStatus(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
 
         assertThat(mNativeWrapper.getResultMessages()).contains(textViewOn);
         assertThat(mNativeWrapper.getResultMessages()).contains(activeSource);
         assertThat(mNativeWrapper.getResultMessages()).contains(giveDevicePowerStatus);
         mNativeWrapper.clearResultMessages();
         assertThat(actionTimer.getState()).isEqualTo(STATE_WAITING_FOR_REPORT_POWER_STATUS);
-        HdmiCecMessage reportPowerStatusOn = new HdmiCecMessage(
-                ADDR_TV, playbackDevice.mAddress, Constants.MESSAGE_REPORT_POWER_STATUS, POWER_ON);
+        HdmiCecMessage reportPowerStatusOn =
+                HdmiCecMessage.build(
+                        ADDR_TV,
+                        playbackDevice.getDeviceInfo().getLogicalAddress(),
+                        Constants.MESSAGE_REPORT_POWER_STATUS,
+                        POWER_ON);
         action.processCommand(reportPowerStatusOn);
         mTestLooper.dispatchAll();
 
@@ -203,12 +189,11 @@ public class OneTouchPlayActionTest {
     public void succeedAfterGettingPowerStatusOn_Cec14b() throws Exception {
         setUp(true);
 
+        HdmiCecLocalDevicePlayback playbackDevice = mHdmiControlService.playback();
+        mTestLooper.dispatchAll();
+
+        mNativeWrapper.setPollAddressResponse(ADDR_TV, SendMessageResult.SUCCESS);
         mHdmiControlService.getHdmiCecNetwork().addCecDevice(INFO_TV);
-        HdmiCecLocalDevicePlayback playbackDevice = new HdmiCecLocalDevicePlayback(
-                mHdmiControlService);
-        playbackDevice.init();
-        mLocalDevices.add(playbackDevice);
-        mHdmiControlService.allocateLogicalAddress(mLocalDevices, INITIATED_BY_ENABLE_CEC);
         mTestLooper.dispatchAll();
         mNativeWrapper.clearResultMessages();
 
@@ -219,20 +204,27 @@ public class OneTouchPlayActionTest {
         playbackDevice.addAndStartAction(action);
         mTestLooper.dispatchAll();
 
-        HdmiCecMessage activeSource = HdmiCecMessageBuilder.buildActiveSource(
-                playbackDevice.mAddress, mPhysicalAddress);
-        HdmiCecMessage textViewOn = HdmiCecMessageBuilder.buildTextViewOn(playbackDevice.mAddress,
-                ADDR_TV);
-        HdmiCecMessage giveDevicePowerStatus = HdmiCecMessageBuilder
-                .buildGiveDevicePowerStatus(playbackDevice.mAddress, ADDR_TV);
+        HdmiCecMessage activeSource =
+                HdmiCecMessageBuilder.buildActiveSource(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), mPhysicalAddress);
+        HdmiCecMessage textViewOn =
+                HdmiCecMessageBuilder.buildTextViewOn(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
+        HdmiCecMessage giveDevicePowerStatus =
+                HdmiCecMessageBuilder.buildGiveDevicePowerStatus(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
 
         assertThat(mNativeWrapper.getResultMessages()).contains(textViewOn);
         assertThat(mNativeWrapper.getResultMessages()).contains(activeSource);
         assertThat(mNativeWrapper.getResultMessages()).contains(giveDevicePowerStatus);
         mNativeWrapper.clearResultMessages();
         assertThat(actionTimer.getState()).isEqualTo(STATE_WAITING_FOR_REPORT_POWER_STATUS);
-        HdmiCecMessage reportPowerStatusOn = new HdmiCecMessage(
-                ADDR_TV, playbackDevice.mAddress, Constants.MESSAGE_REPORT_POWER_STATUS, POWER_ON);
+        HdmiCecMessage reportPowerStatusOn =
+                HdmiCecMessage.build(
+                        ADDR_TV,
+                        playbackDevice.getDeviceInfo().getLogicalAddress(),
+                        Constants.MESSAGE_REPORT_POWER_STATUS,
+                        POWER_ON);
         action.processCommand(reportPowerStatusOn);
         mTestLooper.dispatchAll();
 
@@ -246,12 +238,11 @@ public class OneTouchPlayActionTest {
     public void succeedAfterGettingTransientPowerStatus_Cec14b() throws Exception {
         setUp(true);
 
+        HdmiCecLocalDevicePlayback playbackDevice = mHdmiControlService.playback();
+        mTestLooper.dispatchAll();
+
+        mNativeWrapper.setPollAddressResponse(ADDR_TV, SendMessageResult.SUCCESS);
         mHdmiControlService.getHdmiCecNetwork().addCecDevice(INFO_TV);
-        HdmiCecLocalDevicePlayback playbackDevice = new HdmiCecLocalDevicePlayback(
-                mHdmiControlService);
-        playbackDevice.init();
-        mLocalDevices.add(playbackDevice);
-        mHdmiControlService.allocateLogicalAddress(mLocalDevices, INITIATED_BY_ENABLE_CEC);
         mTestLooper.dispatchAll();
         mNativeWrapper.clearResultMessages();
 
@@ -262,21 +253,27 @@ public class OneTouchPlayActionTest {
         playbackDevice.addAndStartAction(action);
         mTestLooper.dispatchAll();
 
-        HdmiCecMessage activeSource = HdmiCecMessageBuilder.buildActiveSource(
-                playbackDevice.mAddress, mPhysicalAddress);
-        HdmiCecMessage textViewOn = HdmiCecMessageBuilder.buildTextViewOn(playbackDevice.mAddress,
-                ADDR_TV);
-        HdmiCecMessage giveDevicePowerStatus = HdmiCecMessageBuilder
-                .buildGiveDevicePowerStatus(playbackDevice.mAddress, ADDR_TV);
+        HdmiCecMessage activeSource =
+                HdmiCecMessageBuilder.buildActiveSource(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), mPhysicalAddress);
+        HdmiCecMessage textViewOn =
+                HdmiCecMessageBuilder.buildTextViewOn(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
+        HdmiCecMessage giveDevicePowerStatus =
+                HdmiCecMessageBuilder.buildGiveDevicePowerStatus(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
 
         assertThat(mNativeWrapper.getResultMessages()).contains(textViewOn);
         assertThat(mNativeWrapper.getResultMessages()).contains(activeSource);
         assertThat(mNativeWrapper.getResultMessages()).contains(giveDevicePowerStatus);
         mNativeWrapper.clearResultMessages();
         assertThat(actionTimer.getState()).isEqualTo(STATE_WAITING_FOR_REPORT_POWER_STATUS);
-        HdmiCecMessage reportPowerStatusTransientToOn = new HdmiCecMessage(
-                ADDR_TV, playbackDevice.mAddress, Constants.MESSAGE_REPORT_POWER_STATUS,
-                POWER_TRANSIENT_TO_ON);
+        HdmiCecMessage reportPowerStatusTransientToOn =
+                HdmiCecMessage.build(
+                        ADDR_TV,
+                        playbackDevice.getDeviceInfo().getLogicalAddress(),
+                        Constants.MESSAGE_REPORT_POWER_STATUS,
+                        POWER_TRANSIENT_TO_ON);
         action.processCommand(reportPowerStatusTransientToOn);
         action.handleTimerEvent(STATE_WAITING_FOR_REPORT_POWER_STATUS);
         mTestLooper.dispatchAll();
@@ -284,8 +281,12 @@ public class OneTouchPlayActionTest {
         assertThat(mNativeWrapper.getResultMessages()).contains(giveDevicePowerStatus);
         mNativeWrapper.clearResultMessages();
 
-        HdmiCecMessage reportPowerStatusOn = new HdmiCecMessage(
-                ADDR_TV, playbackDevice.mAddress, Constants.MESSAGE_REPORT_POWER_STATUS, POWER_ON);
+        HdmiCecMessage reportPowerStatusOn =
+                HdmiCecMessage.build(
+                        ADDR_TV,
+                        playbackDevice.getDeviceInfo().getLogicalAddress(),
+                        Constants.MESSAGE_REPORT_POWER_STATUS,
+                        POWER_ON);
         action.processCommand(reportPowerStatusOn);
         mTestLooper.dispatchAll();
 
@@ -299,12 +300,11 @@ public class OneTouchPlayActionTest {
     public void timeOut_Cec14b() throws Exception {
         setUp(true);
 
+        HdmiCecLocalDevicePlayback playbackDevice = mHdmiControlService.playback();
+        mTestLooper.dispatchAll();
+
+        mNativeWrapper.setPollAddressResponse(ADDR_TV, SendMessageResult.SUCCESS);
         mHdmiControlService.getHdmiCecNetwork().addCecDevice(INFO_TV);
-        HdmiCecLocalDevicePlayback playbackDevice = new HdmiCecLocalDevicePlayback(
-                mHdmiControlService);
-        playbackDevice.init();
-        mLocalDevices.add(playbackDevice);
-        mHdmiControlService.allocateLogicalAddress(mLocalDevices, INITIATED_BY_ENABLE_CEC);
         mTestLooper.dispatchAll();
         mNativeWrapper.clearResultMessages();
 
@@ -315,12 +315,15 @@ public class OneTouchPlayActionTest {
         playbackDevice.addAndStartAction(action);
         mTestLooper.dispatchAll();
 
-        HdmiCecMessage activeSource = HdmiCecMessageBuilder.buildActiveSource(
-                playbackDevice.mAddress, mPhysicalAddress);
-        HdmiCecMessage textViewOn = HdmiCecMessageBuilder.buildTextViewOn(playbackDevice.mAddress,
-                ADDR_TV);
-        HdmiCecMessage giveDevicePowerStatus = HdmiCecMessageBuilder
-                .buildGiveDevicePowerStatus(playbackDevice.mAddress, ADDR_TV);
+        HdmiCecMessage activeSource =
+                HdmiCecMessageBuilder.buildActiveSource(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), mPhysicalAddress);
+        HdmiCecMessage textViewOn =
+                HdmiCecMessageBuilder.buildTextViewOn(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
+        HdmiCecMessage giveDevicePowerStatus =
+                HdmiCecMessageBuilder.buildGiveDevicePowerStatus(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
 
         assertThat(mNativeWrapper.getResultMessages()).contains(textViewOn);
         assertThat(mNativeWrapper.getResultMessages()).contains(activeSource);
@@ -342,13 +345,11 @@ public class OneTouchPlayActionTest {
     @Test
     public void succeedIfPowerStatusOn_Cec20() throws Exception {
         setUp(true);
+        HdmiCecLocalDevicePlayback playbackDevice = mHdmiControlService.playback();
+        mTestLooper.dispatchAll();
 
+        mNativeWrapper.setPollAddressResponse(ADDR_TV, SendMessageResult.SUCCESS);
         mHdmiControlService.getHdmiCecNetwork().addCecDevice(INFO_TV);
-        HdmiCecLocalDevicePlayback playbackDevice = new HdmiCecLocalDevicePlayback(
-                mHdmiControlService);
-        playbackDevice.init();
-        mLocalDevices.add(playbackDevice);
-        mHdmiControlService.allocateLogicalAddress(mLocalDevices, INITIATED_BY_ENABLE_CEC);
         mHdmiControlService.getHdmiCecNetwork().updateDevicePowerStatus(ADDR_TV,
                 HdmiControlManager.POWER_STATUS_ON);
         mTestLooper.dispatchAll();
@@ -361,12 +362,15 @@ public class OneTouchPlayActionTest {
         playbackDevice.addAndStartAction(action);
         mTestLooper.dispatchAll();
 
-        HdmiCecMessage activeSource = HdmiCecMessageBuilder.buildActiveSource(
-                playbackDevice.mAddress, mPhysicalAddress);
-        HdmiCecMessage textViewOn = HdmiCecMessageBuilder.buildTextViewOn(playbackDevice.mAddress,
-                ADDR_TV);
-        HdmiCecMessage giveDevicePowerStatus = HdmiCecMessageBuilder
-                .buildGiveDevicePowerStatus(playbackDevice.mAddress, ADDR_TV);
+        HdmiCecMessage activeSource =
+                HdmiCecMessageBuilder.buildActiveSource(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), mPhysicalAddress);
+        HdmiCecMessage textViewOn =
+                HdmiCecMessageBuilder.buildTextViewOn(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
+        HdmiCecMessage giveDevicePowerStatus =
+                HdmiCecMessageBuilder.buildGiveDevicePowerStatus(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
 
         assertThat(mNativeWrapper.getResultMessages()).contains(textViewOn);
         assertThat(mNativeWrapper.getResultMessages()).contains(activeSource);
@@ -378,12 +382,11 @@ public class OneTouchPlayActionTest {
     public void succeedIfPowerStatusUnknown_Cec20() throws Exception {
         setUp(true);
 
+        HdmiCecLocalDevicePlayback playbackDevice = mHdmiControlService.playback();
+        mTestLooper.dispatchAll();
+
+        mNativeWrapper.setPollAddressResponse(ADDR_TV, SendMessageResult.SUCCESS);
         mHdmiControlService.getHdmiCecNetwork().addCecDevice(INFO_TV);
-        HdmiCecLocalDevicePlayback playbackDevice = new HdmiCecLocalDevicePlayback(
-                mHdmiControlService);
-        playbackDevice.init();
-        mLocalDevices.add(playbackDevice);
-        mHdmiControlService.allocateLogicalAddress(mLocalDevices, INITIATED_BY_ENABLE_CEC);
         mHdmiControlService.getHdmiCecNetwork().updateDevicePowerStatus(ADDR_TV,
                 HdmiControlManager.POWER_STATUS_UNKNOWN);
         mTestLooper.dispatchAll();
@@ -396,20 +399,27 @@ public class OneTouchPlayActionTest {
         playbackDevice.addAndStartAction(action);
         mTestLooper.dispatchAll();
 
-        HdmiCecMessage activeSource = HdmiCecMessageBuilder.buildActiveSource(
-                playbackDevice.mAddress, mPhysicalAddress);
-        HdmiCecMessage textViewOn = HdmiCecMessageBuilder.buildTextViewOn(playbackDevice.mAddress,
-                ADDR_TV);
-        HdmiCecMessage giveDevicePowerStatus = HdmiCecMessageBuilder
-                .buildGiveDevicePowerStatus(playbackDevice.mAddress, ADDR_TV);
+        HdmiCecMessage activeSource =
+                HdmiCecMessageBuilder.buildActiveSource(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), mPhysicalAddress);
+        HdmiCecMessage textViewOn =
+                HdmiCecMessageBuilder.buildTextViewOn(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
+        HdmiCecMessage giveDevicePowerStatus =
+                HdmiCecMessageBuilder.buildGiveDevicePowerStatus(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
 
         assertThat(mNativeWrapper.getResultMessages()).contains(textViewOn);
         assertThat(mNativeWrapper.getResultMessages()).contains(activeSource);
         assertThat(mNativeWrapper.getResultMessages()).contains(giveDevicePowerStatus);
         mNativeWrapper.clearResultMessages();
         assertThat(actionTimer.getState()).isEqualTo(STATE_WAITING_FOR_REPORT_POWER_STATUS);
-        HdmiCecMessage reportPowerStatusOn = new HdmiCecMessage(
-                ADDR_TV, playbackDevice.mAddress, Constants.MESSAGE_REPORT_POWER_STATUS, POWER_ON);
+        HdmiCecMessage reportPowerStatusOn =
+                HdmiCecMessage.build(
+                        ADDR_TV,
+                        playbackDevice.getDeviceInfo().getLogicalAddress(),
+                        Constants.MESSAGE_REPORT_POWER_STATUS,
+                        POWER_ON);
         action.processCommand(reportPowerStatusOn);
         mTestLooper.dispatchAll();
 
@@ -422,13 +432,11 @@ public class OneTouchPlayActionTest {
     @Test
     public void succeedIfPowerStatusStandby_Cec20() throws Exception {
         setUp(true);
+        HdmiCecLocalDevicePlayback playbackDevice = mHdmiControlService.playback();
+        mTestLooper.dispatchAll();
 
+        mNativeWrapper.setPollAddressResponse(ADDR_TV, SendMessageResult.SUCCESS);
         mHdmiControlService.getHdmiCecNetwork().addCecDevice(INFO_TV);
-        HdmiCecLocalDevicePlayback playbackDevice = new HdmiCecLocalDevicePlayback(
-                mHdmiControlService);
-        playbackDevice.init();
-        mLocalDevices.add(playbackDevice);
-        mHdmiControlService.allocateLogicalAddress(mLocalDevices, INITIATED_BY_ENABLE_CEC);
         mHdmiControlService.getHdmiCecNetwork().updateDevicePowerStatus(ADDR_TV,
                 HdmiControlManager.POWER_STATUS_STANDBY);
         mTestLooper.dispatchAll();
@@ -441,20 +449,27 @@ public class OneTouchPlayActionTest {
         playbackDevice.addAndStartAction(action);
         mTestLooper.dispatchAll();
 
-        HdmiCecMessage activeSource = HdmiCecMessageBuilder.buildActiveSource(
-                playbackDevice.mAddress, mPhysicalAddress);
-        HdmiCecMessage textViewOn = HdmiCecMessageBuilder.buildTextViewOn(playbackDevice.mAddress,
-                ADDR_TV);
-        HdmiCecMessage giveDevicePowerStatus = HdmiCecMessageBuilder
-                .buildGiveDevicePowerStatus(playbackDevice.mAddress, ADDR_TV);
+        HdmiCecMessage activeSource =
+                HdmiCecMessageBuilder.buildActiveSource(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), mPhysicalAddress);
+        HdmiCecMessage textViewOn =
+                HdmiCecMessageBuilder.buildTextViewOn(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
+        HdmiCecMessage giveDevicePowerStatus =
+                HdmiCecMessageBuilder.buildGiveDevicePowerStatus(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
 
         assertThat(mNativeWrapper.getResultMessages()).contains(textViewOn);
         assertThat(mNativeWrapper.getResultMessages()).contains(activeSource);
         assertThat(mNativeWrapper.getResultMessages()).doesNotContain(giveDevicePowerStatus);
         mNativeWrapper.clearResultMessages();
         assertThat(actionTimer.getState()).isEqualTo(STATE_WAITING_FOR_REPORT_POWER_STATUS);
-        HdmiCecMessage reportPowerStatusOn = new HdmiCecMessage(
-                ADDR_TV, playbackDevice.mAddress, Constants.MESSAGE_REPORT_POWER_STATUS, POWER_ON);
+        HdmiCecMessage reportPowerStatusOn =
+                HdmiCecMessage.build(
+                        ADDR_TV,
+                        playbackDevice.getDeviceInfo().getLogicalAddress(),
+                        Constants.MESSAGE_REPORT_POWER_STATUS,
+                        POWER_ON);
         action.processCommand(reportPowerStatusOn);
         mTestLooper.dispatchAll();
 
@@ -470,11 +485,6 @@ public class OneTouchPlayActionTest {
 
         assertThat(mHdmiControlService.isAddressAllocated()).isFalse();
 
-        HdmiCecLocalDevicePlayback playbackDevice = new HdmiCecLocalDevicePlayback(
-                mHdmiControlService);
-        playbackDevice.init();
-        mLocalDevices.add(playbackDevice);
-
         TestCallback callback = new TestCallback();
 
         mHdmiControlService.oneTouchPlay(callback);
@@ -484,15 +494,14 @@ public class OneTouchPlayActionTest {
         mNativeWrapper.clearResultMessages();
 
         setHdmiControlEnabled(true);
-        mHdmiControlService.allocateLogicalAddress(mLocalDevices, INITIATED_BY_ENABLE_CEC);
-
         mTestLooper.dispatchAll();
+        HdmiCecLocalDevicePlayback playbackDevice = mHdmiControlService.playback();
 
-        HdmiCecMessage reportPowerStatusMessage = HdmiCecMessageBuilder.buildReportPowerStatus(
-                Constants.ADDR_TV,
-                playbackDevice.mAddress,
-                HdmiControlManager.POWER_STATUS_ON
-        );
+        HdmiCecMessage reportPowerStatusMessage =
+                HdmiCecMessageBuilder.buildReportPowerStatus(
+                        Constants.ADDR_TV,
+                        playbackDevice.getDeviceInfo().getLogicalAddress(),
+                        HdmiControlManager.POWER_STATUS_ON);
         mNativeWrapper.onCecMessage(reportPowerStatusMessage);
 
         mTestLooper.dispatchAll();
@@ -500,10 +509,12 @@ public class OneTouchPlayActionTest {
         assertThat(mHdmiControlService.isAddressAllocated()).isTrue();
         assertThat(callback.getResult()).isEqualTo(HdmiControlManager.RESULT_SUCCESS);
         assertThat(playbackDevice.isActiveSource()).isTrue();
-        HdmiCecMessage activeSource = HdmiCecMessageBuilder.buildActiveSource(
-                playbackDevice.mAddress, mPhysicalAddress);
-        HdmiCecMessage textViewOn = HdmiCecMessageBuilder.buildTextViewOn(playbackDevice.mAddress,
-                ADDR_TV);
+        HdmiCecMessage activeSource =
+                HdmiCecMessageBuilder.buildActiveSource(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), mPhysicalAddress);
+        HdmiCecMessage textViewOn =
+                HdmiCecMessageBuilder.buildTextViewOn(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
         assertThat(mNativeWrapper.getResultMessages()).contains(activeSource);
         assertThat(mNativeWrapper.getResultMessages()).contains(textViewOn);
     }
@@ -512,33 +523,30 @@ public class OneTouchPlayActionTest {
     public void succeedWithAddressAllocated_Cec14b() throws Exception {
         setUp(true);
 
-        HdmiCecLocalDevicePlayback playbackDevice = new HdmiCecLocalDevicePlayback(
-                mHdmiControlService);
-        playbackDevice.init();
-        mLocalDevices.add(playbackDevice);
-
-        mHdmiControlService.allocateLogicalAddress(mLocalDevices, INITIATED_BY_ENABLE_CEC);
+        HdmiCecLocalDevicePlayback playbackDevice = mHdmiControlService.playback();
         mTestLooper.dispatchAll();
         assertThat(mHdmiControlService.isAddressAllocated()).isTrue();
 
         TestCallback callback = new TestCallback();
         mHdmiControlService.oneTouchPlay(callback);
 
-        HdmiCecMessage reportPowerStatusMessage = HdmiCecMessageBuilder.buildReportPowerStatus(
-                Constants.ADDR_TV,
-                playbackDevice.mAddress,
-                HdmiControlManager.POWER_STATUS_ON
-        );
+        HdmiCecMessage reportPowerStatusMessage =
+                HdmiCecMessageBuilder.buildReportPowerStatus(
+                        Constants.ADDR_TV,
+                        playbackDevice.getDeviceInfo().getLogicalAddress(),
+                        HdmiControlManager.POWER_STATUS_ON);
         mNativeWrapper.onCecMessage(reportPowerStatusMessage);
 
         mTestLooper.dispatchAll();
 
         assertThat(callback.getResult()).isEqualTo(HdmiControlManager.RESULT_SUCCESS);
         assertThat(playbackDevice.isActiveSource()).isTrue();
-        HdmiCecMessage activeSource = HdmiCecMessageBuilder.buildActiveSource(
-                playbackDevice.mAddress, mPhysicalAddress);
-        HdmiCecMessage textViewOn = HdmiCecMessageBuilder.buildTextViewOn(playbackDevice.mAddress,
-                ADDR_TV);
+        HdmiCecMessage activeSource =
+                HdmiCecMessageBuilder.buildActiveSource(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), mPhysicalAddress);
+        HdmiCecMessage textViewOn =
+                HdmiCecMessageBuilder.buildTextViewOn(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
         assertThat(mNativeWrapper.getResultMessages()).contains(activeSource);
         assertThat(mNativeWrapper.getResultMessages()).contains(textViewOn);
     }
@@ -547,7 +555,6 @@ public class OneTouchPlayActionTest {
     public void pendingActionDoesNotBlockSendingStandby_Cec14b() throws Exception {
         setUp(true);
 
-        mHdmiControlService.getHdmiCecNetwork().addCecDevice(INFO_TV);
         HdmiCecLocalDevicePlayback playbackDevice = new HdmiCecLocalDevicePlayback(
                 mHdmiControlService);
         playbackDevice.init();
@@ -556,6 +563,10 @@ public class OneTouchPlayActionTest {
                 HdmiControlManager.CEC_SETTING_NAME_POWER_CONTROL_MODE,
                 HdmiControlManager.POWER_CONTROL_MODE_TV);
         mHdmiControlService.allocateLogicalAddress(mLocalDevices, INITIATED_BY_ENABLE_CEC);
+        mTestLooper.dispatchAll();
+
+        mNativeWrapper.setPollAddressResponse(ADDR_TV, SendMessageResult.SUCCESS);
+        mHdmiControlService.getHdmiCecNetwork().addCecDevice(INFO_TV);
         mTestLooper.dispatchAll();
         mNativeWrapper.clearResultMessages();
 
@@ -575,9 +586,93 @@ public class OneTouchPlayActionTest {
 
         mHdmiControlService.onStandby(HdmiControlService.STANDBY_SCREEN_OFF);
         mTestLooper.dispatchAll();
-        HdmiCecMessage standbyMessage = HdmiCecMessageBuilder.buildStandby(
-                playbackDevice.mAddress, ADDR_TV);
+        HdmiCecMessage standbyMessage =
+                HdmiCecMessageBuilder.buildStandby(
+                        playbackDevice.getDeviceInfo().getLogicalAddress(), ADDR_TV);
         assertThat(mNativeWrapper.getResultMessages()).contains(standbyMessage);
+    }
+
+    @Test
+    public void noWakeUpOnReportPowerStatus() throws Exception {
+        setUp(true);
+
+        HdmiCecLocalDevicePlayback playbackDevice = mHdmiControlService.playback();
+        mTestLooper.dispatchAll();
+
+        mNativeWrapper.setPollAddressResponse(ADDR_TV, SendMessageResult.SUCCESS);
+        mHdmiControlService.getHdmiCecNetwork().addCecDevice(INFO_TV);
+        mTestLooper.dispatchAll();
+        mNativeWrapper.clearResultMessages();
+
+        TestActionTimer actionTimer = new TestActionTimer();
+        TestCallback callback = new TestCallback();
+        OneTouchPlayAction action = createOneTouchPlayAction(playbackDevice, actionTimer, callback,
+                false);
+        playbackDevice.addAndStartAction(action);
+        mTestLooper.dispatchAll();
+
+        assertThat(mPowerManager.isInteractive()).isTrue();
+        mPowerManager.setInteractive(false);
+        mTestLooper.dispatchAll();
+
+        HdmiCecMessage reportPowerStatusOn =
+                HdmiCecMessage.build(
+                        ADDR_TV,
+                        playbackDevice.getDeviceInfo().getLogicalAddress(),
+                        Constants.MESSAGE_REPORT_POWER_STATUS,
+                        POWER_ON);
+        action.processCommand(reportPowerStatusOn);
+        mTestLooper.dispatchAll();
+
+        assertThat(mPowerManager.isInteractive()).isFalse();
+        assertThat(callback.getResult()).isEqualTo(HdmiControlManager.RESULT_SUCCESS);
+    }
+
+    @Test
+    public void onWakeUp_notInteractive_startOneTouchPlay() throws Exception {
+        setUp(true);
+
+        mHdmiControlService.onWakeUp(WAKE_UP_SCREEN_ON);
+        mPowerManager.setInteractive(false);
+        mTestLooper.dispatchAll();
+
+        assertThat(mPowerManager.isInteractive()).isFalse();
+        mNativeWrapper.clearResultMessages();
+        mTestLooper.moveTimeForward(HdmiConfig.TIMEOUT_MS);
+        mTestLooper.dispatchAll();
+
+        HdmiCecMessage textViewOn =
+                HdmiCecMessageBuilder.buildTextViewOn(
+                        mHdmiControlService.playback().getDeviceInfo().getLogicalAddress(),
+                        ADDR_TV);
+        assertThat(mNativeWrapper.getResultMessages()).contains(textViewOn);
+    }
+
+
+    @Test
+    public void onWakeUp_interruptedByOnStandby_notInteractive_OneTouchPlayNotStarted()
+            throws Exception {
+        setUp(true);
+        long allocationDelay = TimeUnit.SECONDS.toMillis(1);
+        mHdmiCecController.setLogicalAddressAllocationDelay(allocationDelay);
+        mTestLooper.dispatchAll();
+
+        mHdmiControlService.onWakeUp(WAKE_UP_SCREEN_ON);
+        mHdmiControlService.onStandby(HdmiControlService.STANDBY_SCREEN_OFF);
+        mPowerManager.setInteractive(false);
+        mTestLooper.dispatchAll();
+
+        assertThat(mPowerManager.isInteractive()).isFalse();
+        mNativeWrapper.clearResultMessages();
+        mTestLooper.moveTimeForward(HdmiConfig.TIMEOUT_MS);
+        mTestLooper.dispatchAll();
+
+        HdmiCecMessage textViewOn =
+                HdmiCecMessageBuilder.buildTextViewOn(
+                        mHdmiControlService.playback().getDeviceInfo().getLogicalAddress(),
+                        ADDR_TV);
+        assertThat(mNativeWrapper.getResultMessages()).doesNotContain(textViewOn);
+
     }
 
     private static class TestActionTimer implements ActionTimer {

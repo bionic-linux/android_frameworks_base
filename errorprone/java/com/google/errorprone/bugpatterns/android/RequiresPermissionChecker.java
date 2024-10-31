@@ -16,6 +16,7 @@
 
 package com.google.errorprone.bugpatterns.android;
 
+import static com.google.errorprone.BugPattern.LinkType.NONE;
 import static com.google.errorprone.BugPattern.SeverityLevel.WARNING;
 import static com.google.errorprone.matchers.Matchers.allOf;
 import static com.google.errorprone.matchers.Matchers.anyOf;
@@ -26,6 +27,7 @@ import static com.google.errorprone.matchers.Matchers.methodInvocation;
 import static com.google.errorprone.matchers.Matchers.methodIsNamed;
 import static com.google.errorprone.matchers.Matchers.staticMethod;
 
+import android.annotation.EnforcePermission;
 import android.annotation.RequiresPermission;
 import android.annotation.SuppressLint;
 
@@ -79,6 +81,7 @@ import javax.lang.model.element.Name;
 @BugPattern(
     name = "AndroidFrameworkRequiresPermission",
     summary = "Verifies that @RequiresPermission annotations are consistent across AIDL",
+    linkType = NONE,
     severity = WARNING)
 public final class RequiresPermissionChecker extends BugChecker
         implements MethodTreeMatcher, MethodInvocationTreeMatcher {
@@ -187,7 +190,10 @@ public final class RequiresPermissionChecker extends BugChecker
         if (!actualPerm.containsAll(expectedPerm)) {
             return buildDescription(tree)
                     .setMessage("Method " + method.name.toString() + "() annotated " + expectedPerm
-                            + " but too wide; only invokes methods requiring " + actualPerm)
+                            + " but too wide; only invokes methods requiring " + actualPerm
+                            + "\n  If calling an AIDL interface, it can be annotated by adding:"
+                            + "\n  @JavaPassthrough(annotation=\""
+                            + "@android.annotation.RequiresPermission(...)\")")
                     .build();
         }
 
@@ -279,6 +285,13 @@ public final class RequiresPermissionChecker extends BugChecker
         }
 
         public void addAll(RequiresPermission perm) {
+            if (perm == null) return;
+            if (!perm.value().isEmpty()) this.allOf.add(perm.value());
+            if (perm.allOf() != null) this.allOf.addAll(Arrays.asList(perm.allOf()));
+            if (perm.anyOf() != null) this.anyOf.addAll(Arrays.asList(perm.anyOf()));
+        }
+
+        public void addAll(EnforcePermission perm) {
             if (perm == null) return;
             if (!perm.value().isEmpty()) this.allOf.add(perm.value());
             if (perm.allOf() != null) this.allOf.addAll(Arrays.asList(perm.allOf()));
@@ -407,18 +420,24 @@ public final class RequiresPermissionChecker extends BugChecker
 
     private static ParsedRequiresPermission parseRequiresPermissionRecursively(
             MethodInvocationTree tree, VisitorState state) {
-        if (ENFORCE_VIA_CONTEXT.matches(tree, state)) {
+        if (ENFORCE_VIA_CONTEXT.matches(tree, state) && tree.getArguments().size() > 0) {
             final ParsedRequiresPermission res = new ParsedRequiresPermission();
             res.allOf.add(String.valueOf(ASTHelpers.constValue(tree.getArguments().get(0))));
             return res;
-        } else if (ENFORCE_VIA_CHECKER.matches(tree, state)) {
+        }
+        if (ENFORCE_VIA_CHECKER.matches(tree, state) && tree.getArguments().size() > 1) {
             final ParsedRequiresPermission res = new ParsedRequiresPermission();
             res.allOf.add(String.valueOf(ASTHelpers.constValue(tree.getArguments().get(1))));
             return res;
-        } else {
-            final MethodSymbol method = ASTHelpers.getSymbol(tree);
-            return parseRequiresPermissionRecursively(method, state);
         }
+        final MethodSymbol method = ASTHelpers.getSymbol(tree);
+        final EnforcePermission enforced = method.getAnnotation(EnforcePermission.class);
+        if (enforced != null) {
+            final ParsedRequiresPermission res = new ParsedRequiresPermission();
+            res.addAll(enforced);
+            return res;
+        }
+        return parseRequiresPermissionRecursively(method, state);
     }
 
     /**

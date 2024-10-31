@@ -61,34 +61,6 @@ public class OomAdjusterTests {
     private static final long USAGE_STATS_INTERACTION = 10 * 60 * 1000L;
     private static final long SERVICE_USAGE_INTERACTION = 60 * 1000;
 
-    static class MyOomAdjuster extends OomAdjuster {
-
-        private final PlatformCompatCache mPlatformCompatCache;
-
-        MyOomAdjuster(ActivityManagerService service, ProcessList processList,
-                ActiveUids activeUids) {
-            super(service, processList, activeUids);
-            mPlatformCompatCache = new MyPlatformCompatCache(new long[]{});
-        }
-
-        static class MyPlatformCompatCache extends PlatformCompatCache {
-
-            MyPlatformCompatCache(long[] compatChanges) {
-                super(compatChanges);
-            }
-
-            @Override
-            boolean isChangeEnabled(long changeId, ApplicationInfo app, boolean defaultValue) {
-                return true;
-            }
-        }
-
-        @Override
-        protected OomAdjuster.PlatformCompatCache getPlatformCompatCache() {
-            return mPlatformCompatCache;
-        }
-    }
-
     @BeforeClass
     public static void setUpOnce() {
         sContext = getInstrumentation().getTargetContext();
@@ -113,7 +85,15 @@ public class OomAdjusterTests {
             final AppProfiler profiler = mock(AppProfiler.class);
             setFieldValue(AppProfiler.class, profiler, "mProfilerLock", new Object());
             setFieldValue(ActivityManagerService.class, sService, "mAppProfiler", profiler);
-            sService.mOomAdjuster = new MyOomAdjuster(sService, sService.mProcessList, null);
+            final OomAdjuster.Injector injector = new OomAdjuster.Injector(){
+                @Override
+                boolean isChangeEnabled(int changeId, ApplicationInfo app,
+                        boolean defaultValue) {
+                    return true;
+                }
+            };
+            sService.mOomAdjuster = new OomAdjuster(sService, sService.mProcessList, null,
+                    injector);
             LocalServices.addService(UsageStatsManagerInternal.class,
                     mock(UsageStatsManagerInternal.class));
             sService.mUsageStatsService = LocalServices.getService(UsageStatsManagerInternal.class);

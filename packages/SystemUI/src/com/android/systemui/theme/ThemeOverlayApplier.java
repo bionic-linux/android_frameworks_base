@@ -15,6 +15,7 @@
  */
 package com.android.systemui.theme;
 
+
 import android.annotation.AnyThread;
 import android.content.om.FabricatedOverlay;
 import android.content.om.OverlayIdentifier;
@@ -31,12 +32,13 @@ import androidx.annotation.VisibleForTesting;
 
 import com.android.systemui.Dumpable;
 import com.android.systemui.dagger.SysUISingleton;
+import com.android.systemui.dagger.qualifiers.Background;
+import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.dump.DumpManager;
 
 import com.google.android.collect.Lists;
 import com.google.android.collect.Sets;
 
-import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -45,6 +47,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * Responsible for orchestrating overlays, based on user preferences and other inputs from
@@ -62,10 +67,14 @@ public class ThemeOverlayApplier implements Dumpable {
     @VisibleForTesting
     static final String SYSUI_PACKAGE = "com.android.systemui";
 
+    static final String OVERLAY_CATEGORY_DYNAMIC_COLOR =
+            "android.theme.customization.dynamic_color";
     static final String OVERLAY_CATEGORY_ACCENT_COLOR =
             "android.theme.customization.accent_color";
     static final String OVERLAY_CATEGORY_SYSTEM_PALETTE =
             "android.theme.customization.system_palette";
+    static final String OVERLAY_CATEGORY_THEME_STYLE =
+            "android.theme.customization.theme_style";
 
     static final String OVERLAY_COLOR_SOURCE = "android.theme.customization.color_source";
 
@@ -112,6 +121,7 @@ public class ThemeOverlayApplier implements Dumpable {
             OVERLAY_CATEGORY_SHAPE,
             OVERLAY_CATEGORY_FONT,
             OVERLAY_CATEGORY_ACCENT_COLOR,
+            OVERLAY_CATEGORY_DYNAMIC_COLOR,
             OVERLAY_CATEGORY_ICON_ANDROID,
             OVERLAY_CATEGORY_ICON_SYSUI,
             OVERLAY_CATEGORY_ICON_SETTINGS,
@@ -122,6 +132,7 @@ public class ThemeOverlayApplier implements Dumpable {
     static final Set<String> SYSTEM_USER_CATEGORIES = Sets.newHashSet(
             OVERLAY_CATEGORY_SYSTEM_PALETTE,
             OVERLAY_CATEGORY_ACCENT_COLOR,
+            OVERLAY_CATEGORY_DYNAMIC_COLOR,
             OVERLAY_CATEGORY_FONT,
             OVERLAY_CATEGORY_SHAPE,
             OVERLAY_CATEGORY_ICON_ANDROID,
@@ -132,18 +143,26 @@ public class ThemeOverlayApplier implements Dumpable {
     /* Target package for each overlay category. */
     private final Map<String, String> mCategoryToTargetPackage = new ArrayMap<>();
     private final OverlayManager mOverlayManager;
-    private final Executor mExecutor;
+    private final Executor mBgExecutor;
+    private final Executor mMainExecutor;
     private final String mLauncherPackage;
     private final String mThemePickerPackage;
 
-    public ThemeOverlayApplier(OverlayManager overlayManager, Executor executor,
-            String launcherPackage, String themePickerPackage, DumpManager dumpManager) {
+    @Inject
+    public ThemeOverlayApplier(OverlayManager overlayManager,
+            @Background Executor bgExecutor,
+            @Named(ThemeModule.LAUNCHER_PACKAGE) String launcherPackage,
+            @Named(ThemeModule.THEME_PICKER_PACKAGE) String themePickerPackage,
+            DumpManager dumpManager,
+            @Main Executor mainExecutor) {
         mOverlayManager = overlayManager;
-        mExecutor = executor;
+        mBgExecutor = bgExecutor;
+        mMainExecutor = mainExecutor;
         mLauncherPackage = launcherPackage;
         mThemePickerPackage = themePickerPackage;
         mTargetPackageToCategories.put(ANDROID_PACKAGE, Sets.newHashSet(
                 OVERLAY_CATEGORY_SYSTEM_PALETTE, OVERLAY_CATEGORY_ACCENT_COLOR,
+                OVERLAY_CATEGORY_DYNAMIC_COLOR,
                 OVERLAY_CATEGORY_FONT, OVERLAY_CATEGORY_SHAPE,
                 OVERLAY_CATEGORY_ICON_ANDROID));
         mTargetPackageToCategories.put(SYSUI_PACKAGE,
@@ -155,6 +174,7 @@ public class ThemeOverlayApplier implements Dumpable {
         mTargetPackageToCategories.put(mThemePickerPackage,
                 Sets.newHashSet(OVERLAY_CATEGORY_ICON_THEME_PICKER));
         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ACCENT_COLOR, ANDROID_PACKAGE);
+        mCategoryToTargetPackage.put(OVERLAY_CATEGORY_DYNAMIC_COLOR, ANDROID_PACKAGE);
         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_FONT, ANDROID_PACKAGE);
         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_SHAPE, ANDROID_PACKAGE);
         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_ANDROID, ANDROID_PACKAGE);
@@ -169,13 +189,22 @@ public class ThemeOverlayApplier implements Dumpable {
     /**
      * Apply the set of overlay packages to the set of {@code UserHandle}s provided. Overlays that
      * affect sysui will also be applied to the system user.
+     *
+     * @param categoryToPackage Overlay packages to be applied
+     * @param pendingCreation Overlays yet to be created
+     * @param currentUser Current User ID
+     * @param managedProfiles Profiles get overlays
+     * @param onComplete Callback for when resources are ready. Runs in the main thread.
      */
-    void applyCurrentUserOverlays(
+    public void applyCurrentUserOverlays(
             Map<String, OverlayIdentifier> categoryToPackage,
             FabricatedOverlay[] pendingCreation,
             int currentUser,
-            Set<UserHandle> managedProfiles) {
-        mExecutor.execute(() -> {
+            Set<UserHandle> managedProfiles,
+            Runnable onComplete
+    ) {
+
+        mBgExecutor.execute(() -> {
 
             // Disable all overlays that have not been specified in the user setting.
             final Set<String> overlayCategoriesToDisable = new HashSet<>(THEME_CATEGORIES);
@@ -221,6 +250,10 @@ public class ThemeOverlayApplier implements Dumpable {
 
             try {
                 mOverlayManager.commit(transaction.build());
+                if (onComplete != null) {
+                    Log.d(TAG, "Executing onComplete runnable");
+                    mMainExecutor.execute(onComplete);
+                }
             } catch (SecurityException | IllegalStateException e) {
                 Log.e(TAG, "setEnabled failed", e);
             }
@@ -272,7 +305,7 @@ public class ThemeOverlayApplier implements Dumpable {
      * @inherit
      */
     @Override
-    public void dump(@NonNull FileDescriptor fd, @NonNull PrintWriter pw, @NonNull String[] args) {
+    public void dump(@NonNull PrintWriter pw, @NonNull String[] args) {
         pw.println("mTargetPackageToCategories=" + mTargetPackageToCategories);
         pw.println("mCategoryToTargetPackage=" + mCategoryToTargetPackage);
     }

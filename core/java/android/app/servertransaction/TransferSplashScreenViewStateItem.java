@@ -16,16 +16,16 @@
 
 package android.app.servertransaction;
 
-import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.ActivityThread;
 import android.app.ClientTransactionHandler;
+import android.os.IBinder;
 import android.os.Parcel;
+import android.view.SurfaceControl;
 import android.window.SplashScreenView.SplashScreenViewParcelable;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import java.util.Objects;
 
 /**
  * Transfer a splash screen view to an Activity.
@@ -34,67 +34,58 @@ import java.lang.annotation.RetentionPolicy;
 public class TransferSplashScreenViewStateItem extends ActivityTransactionItem {
 
     private SplashScreenViewParcelable mSplashScreenViewParcelable;
-    private @TransferRequest int mRequest;
-
-    @IntDef(value = {
-            ATTACH_TO,
-            HANDOVER_TO
-    })
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface TransferRequest {}
-    // request client to attach the view on it.
-    public static final int ATTACH_TO = 0;
-    // tell client that you can handle the splash screen view.
-    public static final int HANDOVER_TO = 1;
+    private SurfaceControl mStartingWindowLeash;
 
     @Override
     public void execute(@NonNull ClientTransactionHandler client,
             @NonNull ActivityThread.ActivityClientRecord r,
-            PendingTransactionActions pendingActions) {
-        switch (mRequest) {
-            case ATTACH_TO:
-                client.handleAttachSplashScreenView(r, mSplashScreenViewParcelable);
-                break;
-            case HANDOVER_TO:
-                client.handOverSplashScreenView(r);
-                break;
-        }
+            @NonNull PendingTransactionActions pendingActions) {
+        client.handleAttachSplashScreenView(r, mSplashScreenViewParcelable, mStartingWindowLeash);
     }
 
     @Override
     public void recycle() {
+        super.recycle();
+        mSplashScreenViewParcelable = null;
+        mStartingWindowLeash = null;
         ObjectPool.recycle(this);
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(mRequest);
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
         dest.writeTypedObject(mSplashScreenViewParcelable, flags);
+        dest.writeTypedObject(mStartingWindowLeash, flags);
     }
 
     private TransferSplashScreenViewStateItem() {}
-    private TransferSplashScreenViewStateItem(Parcel in) {
-        mRequest = in.readInt();
+
+    private TransferSplashScreenViewStateItem(@NonNull Parcel in) {
+        super(in);
         mSplashScreenViewParcelable = in.readTypedObject(SplashScreenViewParcelable.CREATOR);
+        mStartingWindowLeash = in.readTypedObject(SurfaceControl.CREATOR);
     }
 
     /** Obtain an instance initialized with provided params. */
-    public static TransferSplashScreenViewStateItem obtain(@TransferRequest int state,
-            @Nullable SplashScreenViewParcelable parcelable) {
+    @NonNull
+    public static TransferSplashScreenViewStateItem obtain(
+            @NonNull IBinder activityToken, @Nullable SplashScreenViewParcelable parcelable,
+            @Nullable SurfaceControl startingWindowLeash) {
         TransferSplashScreenViewStateItem instance =
                 ObjectPool.obtain(TransferSplashScreenViewStateItem.class);
         if (instance == null) {
             instance = new TransferSplashScreenViewStateItem();
         }
-        instance.mRequest = state;
+        instance.setActivityToken(activityToken);
         instance.mSplashScreenViewParcelable = parcelable;
+        instance.mStartingWindowLeash = startingWindowLeash;
 
         return instance;
     }
 
     public static final @NonNull Creator<TransferSplashScreenViewStateItem> CREATOR =
-            new Creator<TransferSplashScreenViewStateItem>() {
-                public TransferSplashScreenViewStateItem createFromParcel(Parcel in) {
+            new Creator<>() {
+                public TransferSplashScreenViewStateItem createFromParcel(@NonNull Parcel in) {
                     return new TransferSplashScreenViewStateItem(in);
                 }
 
@@ -102,4 +93,33 @@ public class TransferSplashScreenViewStateItem extends ActivityTransactionItem {
                     return new TransferSplashScreenViewStateItem[size];
                 }
             };
+
+    @Override
+    public boolean equals(@Nullable Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        final TransferSplashScreenViewStateItem other = (TransferSplashScreenViewStateItem) o;
+        return Objects.equals(mSplashScreenViewParcelable, other.mSplashScreenViewParcelable)
+                && Objects.equals(mStartingWindowLeash, other.mStartingWindowLeash);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + super.hashCode();
+        result = 31 * result + Objects.hashCode(mSplashScreenViewParcelable);
+        result = 31 * result + Objects.hashCode(mStartingWindowLeash);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "TransferSplashScreenViewStateItem{" + super.toString()
+                + ",splashScreenViewParcelable=" + mSplashScreenViewParcelable
+                + ",startingWindowLeash=" + mStartingWindowLeash + "}";
+    }
 }

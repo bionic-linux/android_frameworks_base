@@ -24,6 +24,7 @@ import android.os.Parcelable;
 /**
  * Point holds two integer coordinates
  */
+@android.ravenwood.annotation.RavenwoodKeepWholeClass
 public class Point implements Parcelable {
     public int x;
     public int y;
@@ -36,8 +37,7 @@ public class Point implements Parcelable {
     }
 
     public Point(@NonNull Point src) {
-        this.x = src.x;
-        this.y = src.y;
+        set(src);
     }
 
     /**
@@ -46,6 +46,15 @@ public class Point implements Parcelable {
     public void set(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    /**
+     * Sets the point's from {@code src}'s coordinates
+     * @hide
+     */
+    public void set(@NonNull Point src) {
+        this.x = src.x;
+        this.y = src.y;
     }
 
     /**

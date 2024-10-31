@@ -48,6 +48,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
+import android.content.Intent;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.tv.cec.V1_0.SendMessageResult;
 import android.os.Binder;
@@ -69,6 +70,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 
 /** Tests for {@link com.android.server.hdmi.HdmiCecController} class. */
@@ -84,6 +86,7 @@ public class HdmiCecControllerTest {
     private HdmiCecController mHdmiCecController;
     private int mCecVersion = HdmiControlManager.HDMI_CEC_VERSION_1_4_B;
     private int mLogicalAddress = 16;
+    private int mPlaybackLogicalAddress;
     private AllocateAddressCallback mCallback =
             new AllocateAddressCallback() {
                 @Override
@@ -98,13 +101,19 @@ public class HdmiCecControllerTest {
     public void SetUp() {
         mMyLooper = mTestLooper.getLooper();
 
+        FakeAudioFramework audioFramework = new FakeAudioFramework();
+
         mHdmiControlServiceSpy = spy(new HdmiControlService(
-                InstrumentationRegistry.getTargetContext()));
+                InstrumentationRegistry.getTargetContext(), Collections.emptyList(),
+                audioFramework.getAudioManager(), audioFramework.getAudioDeviceVolumeManager()));
         doReturn(mMyLooper).when(mHdmiControlServiceSpy).getIoLooper();
         doReturn(mMyLooper).when(mHdmiControlServiceSpy).getServiceLooper();
         doAnswer(__ -> mCecVersion).when(mHdmiControlServiceSpy).getCecVersion();
         doNothing().when(mHdmiControlServiceSpy)
                 .writeStringSystemProperty(anyString(), anyString());
+        doNothing().when(mHdmiControlServiceSpy)
+                .sendBroadcastAsUser(any(Intent.class));
+        mHdmiControlServiceSpy.setDeviceConfig(new FakeDeviceConfigWrapper());
 
         mNativeWrapper = new FakeNativeWrapper();
         mHdmiCecController = HdmiCecController.createWithNativeWrapper(
@@ -120,7 +129,6 @@ public class HdmiCecControllerTest {
         HdmiCecLocalDevicePlayback playbackDevice =
                 new HdmiCecLocalDevicePlayback(mHdmiControlServiceSpy);
         playbackDevice.init();
-
         ArrayList<HdmiCecLocalDevice> localDevices = new ArrayList<>();
         localDevices.add(playbackDevice);
 
@@ -128,7 +136,9 @@ public class HdmiCecControllerTest {
         mHdmiControlServiceSpy.allocateLogicalAddress(localDevices,
                 HdmiControlService.INITIATED_BY_ENABLE_CEC);
         mHdmiControlServiceSpy.onBootPhase(SystemService.PHASE_SYSTEM_SERVICES_READY);
+        mTestLooper.dispatchAll();
 
+        mPlaybackLogicalAddress = playbackDevice.getDeviceInfo().getLogicalAddress();
         mTestLooper.dispatchAll();
     }
 
@@ -373,7 +383,7 @@ public class HdmiCecControllerTest {
         doReturn(HANDLED).when(mHdmiControlServiceSpy).handleCecCommand(any());
 
         HdmiCecMessage receivedMessage = HdmiCecMessageBuilder.buildStandby(
-                ADDR_TV, ADDR_PLAYBACK_1);
+                ADDR_TV, mPlaybackLogicalAddress);
         mNativeWrapper.onCecMessage(receivedMessage);
 
         mTestLooper.dispatchAll();
@@ -390,13 +400,13 @@ public class HdmiCecControllerTest {
         doReturn(NOT_HANDLED).when(mHdmiControlServiceSpy).handleCecCommand(any());
 
         HdmiCecMessage receivedMessage = HdmiCecMessageBuilder.buildStandby(
-                ADDR_TV, ADDR_PLAYBACK_1);
+                ADDR_TV, mPlaybackLogicalAddress);
         mNativeWrapper.onCecMessage(receivedMessage);
 
         mTestLooper.dispatchAll();
 
         HdmiCecMessage featureAbort = HdmiCecMessageBuilder.buildFeatureAbortCommand(
-                DEVICE_PLAYBACK, DEVICE_TV, MESSAGE_STANDBY, ABORT_UNRECOGNIZED_OPCODE);
+                mPlaybackLogicalAddress, DEVICE_TV, MESSAGE_STANDBY, ABORT_UNRECOGNIZED_OPCODE);
         assertThat(mNativeWrapper.getResultMessages()).contains(featureAbort);
     }
 
@@ -407,13 +417,13 @@ public class HdmiCecControllerTest {
         doReturn(ABORT_REFUSED).when(mHdmiControlServiceSpy).handleCecCommand(any());
 
         HdmiCecMessage receivedMessage = HdmiCecMessageBuilder.buildStandby(
-                ADDR_TV, ADDR_PLAYBACK_1);
+                ADDR_TV, mPlaybackLogicalAddress);
         mNativeWrapper.onCecMessage(receivedMessage);
 
         mTestLooper.dispatchAll();
 
         HdmiCecMessage featureAbort = HdmiCecMessageBuilder.buildFeatureAbortCommand(
-                DEVICE_PLAYBACK, DEVICE_TV, MESSAGE_STANDBY, ABORT_REFUSED);
+                mPlaybackLogicalAddress, DEVICE_TV, MESSAGE_STANDBY, ABORT_REFUSED);
         assertThat(mNativeWrapper.getResultMessages()).contains(featureAbort);
     }
 }

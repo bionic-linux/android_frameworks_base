@@ -16,6 +16,7 @@
 
 package android.telecom;
 
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -24,12 +25,14 @@ import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.pm.ServiceInfo;
 import android.net.Uri;
+import android.os.BadParcelableException;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ParcelFileDescriptor;
 
 import com.android.internal.telecom.IVideoProvider;
+import com.android.server.telecom.flags.Flags;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -168,6 +171,18 @@ public final class Call {
     public static final String AVAILABLE_PHONE_ACCOUNTS = "selectPhoneAccountAccounts";
 
     /**
+     * Extra key intended for {@link InCallService}s that notify the user of an incoming call. When
+     * EXTRA_IS_SUPPRESSED_BY_DO_NOT_DISTURB returns true, the {@link InCallService} should not
+     * interrupt the user of the incoming call because the call is being suppressed by Do Not
+     * Disturb settings.
+     *
+     * This extra will be removed from the {@link Call} object for {@link InCallService}s that do
+     * not hold the {@link android.Manifest.permission#READ_CONTACTS} permission.
+     */
+    public static final String EXTRA_IS_SUPPRESSED_BY_DO_NOT_DISTURB =
+            "android.telecom.extra.IS_SUPPRESSED_BY_DO_NOT_DISTURB";
+
+    /**
      * Key for extra used to pass along a list of {@link PhoneAccountSuggestion}s to the in-call
      * UI when a call enters the {@link #STATE_SELECT_PHONE_ACCOUNT} state. The list included here
      * will have the same length and be in the same order as the list passed with
@@ -193,100 +208,6 @@ public final class Call {
      */
     public static final String EXTRA_SILENT_RINGING_REQUESTED =
             "android.telecom.extra.SILENT_RINGING_REQUESTED";
-
-    /**
-     * Call event sent from a {@link Call} via {@link #sendCallEvent(String, Bundle)} to inform
-     * Telecom that the user has requested that the current {@link Call} should be handed over
-     * to another {@link ConnectionService}.
-     * <p>
-     * The caller must specify the {@link #EXTRA_HANDOVER_PHONE_ACCOUNT_HANDLE} to indicate to
-     * Telecom which {@link PhoneAccountHandle} the {@link Call} should be handed over to.
-     * @hide
-     * @deprecated Use {@link Call#handoverTo(PhoneAccountHandle, int, Bundle)} and its associated
-     * APIs instead.
-     */
-    public static final String EVENT_REQUEST_HANDOVER =
-            "android.telecom.event.REQUEST_HANDOVER";
-
-    /**
-     * Extra key used with the {@link #EVENT_REQUEST_HANDOVER} call event.  Specifies the
-     * {@link PhoneAccountHandle} to which a call should be handed over to.
-     * @hide
-     * @deprecated Use {@link Call#handoverTo(PhoneAccountHandle, int, Bundle)} and its associated
-     * APIs instead.
-     */
-    public static final String EXTRA_HANDOVER_PHONE_ACCOUNT_HANDLE =
-            "android.telecom.extra.HANDOVER_PHONE_ACCOUNT_HANDLE";
-
-    /**
-     * Integer extra key used with the {@link #EVENT_REQUEST_HANDOVER} call event.  Specifies the
-     * video state of the call when it is handed over to the new {@link PhoneAccount}.
-     * <p>
-     * Valid values: {@link VideoProfile#STATE_AUDIO_ONLY},
-     * {@link VideoProfile#STATE_BIDIRECTIONAL}, {@link VideoProfile#STATE_RX_ENABLED}, and
-     * {@link VideoProfile#STATE_TX_ENABLED}.
-     * @hide
-     * @deprecated Use {@link Call#handoverTo(PhoneAccountHandle, int, Bundle)} and its associated
-     * APIs instead.
-     */
-    public static final String EXTRA_HANDOVER_VIDEO_STATE =
-            "android.telecom.extra.HANDOVER_VIDEO_STATE";
-
-    /**
-     * Extra key used with the {@link #EVENT_REQUEST_HANDOVER} call event.  Used by the
-     * {@link InCallService} initiating a handover to provide a {@link Bundle} with extra
-     * information to the handover {@link ConnectionService} specified by
-     * {@link #EXTRA_HANDOVER_PHONE_ACCOUNT_HANDLE}.
-     * <p>
-     * This {@link Bundle} is not interpreted by Telecom, but passed as-is to the
-     * {@link ConnectionService} via the request extras when
-     * {@link ConnectionService#onCreateOutgoingConnection(PhoneAccountHandle, ConnectionRequest)}
-     * is called to initate the handover.
-     * @hide
-     * @deprecated Use {@link Call#handoverTo(PhoneAccountHandle, int, Bundle)} and its associated
-     * APIs instead.
-     */
-    public static final String EXTRA_HANDOVER_EXTRAS = "android.telecom.extra.HANDOVER_EXTRAS";
-
-    /**
-     * Call event sent from Telecom to the handover {@link ConnectionService} via
-     * {@link Connection#onCallEvent(String, Bundle)} to inform a {@link Connection} that a handover
-     * to the {@link ConnectionService} has completed successfully.
-     * <p>
-     * A handover is initiated with the {@link #EVENT_REQUEST_HANDOVER} call event.
-     * @hide
-     * @deprecated Use {@link Call#handoverTo(PhoneAccountHandle, int, Bundle)} and its associated
-     * APIs instead.
-     */
-    public static final String EVENT_HANDOVER_COMPLETE =
-            "android.telecom.event.HANDOVER_COMPLETE";
-
-    /**
-     * Call event sent from Telecom to the handover destination {@link ConnectionService} via
-     * {@link Connection#onCallEvent(String, Bundle)} to inform the handover destination that the
-     * source connection has disconnected.  The {@link Bundle} parameter for the call event will be
-     * {@code null}.
-     * <p>
-     * A handover is initiated with the {@link #EVENT_REQUEST_HANDOVER} call event.
-     * @hide
-     * @deprecated Use {@link Call#handoverTo(PhoneAccountHandle, int, Bundle)} and its associated
-     * APIs instead.
-     */
-    public static final String EVENT_HANDOVER_SOURCE_DISCONNECTED =
-            "android.telecom.event.HANDOVER_SOURCE_DISCONNECTED";
-
-    /**
-     * Call event sent from Telecom to the handover {@link ConnectionService} via
-     * {@link Connection#onCallEvent(String, Bundle)} to inform a {@link Connection} that a handover
-     * to the {@link ConnectionService} has failed.
-     * <p>
-     * A handover is initiated with the {@link #EVENT_REQUEST_HANDOVER} call event.
-     * @hide
-     * @deprecated Use {@link Call#handoverTo(PhoneAccountHandle, int, Bundle)} and its associated
-     * APIs instead.
-     */
-    public static final String EVENT_HANDOVER_FAILED =
-            "android.telecom.event.HANDOVER_FAILED";
 
     /**
      * Event reported from the Telecom stack to report an in-call diagnostic message which the
@@ -346,6 +267,27 @@ public final class Call {
      */
     public static final String EXTRA_DIAGNOSTIC_MESSAGE =
             "android.telecom.extra.DIAGNOSTIC_MESSAGE";
+
+    /**
+     * Boolean indicating that the call is a verified business call.
+     *
+     * {@link Connection#setExtras(Bundle)} or {@link Connection#putExtras(Bundle)}
+     * should be used to notify Telecom this extra has been set.
+     */
+    @FlaggedApi(Flags.FLAG_BUSINESS_CALL_COMPOSER)
+    public static final String EXTRA_IS_BUSINESS_CALL =
+            "android.telecom.extra.IS_BUSINESS_CALL";
+
+    /**
+     * String value indicating the asserted display name reported via
+     * ImsCallProfile#EXTRA_ASSERTED_DISPLAY_NAME.
+     *
+     * {@link Connection#setExtras(Bundle)} or {@link Connection#putExtras(Bundle)}
+     * should be used to notify Telecom this extra has been set.
+     */
+    @FlaggedApi(Flags.FLAG_BUSINESS_CALL_COMPOSER)
+    public static final String EXTRA_ASSERTED_DISPLAY_NAME =
+            "android.telecom.extra.ASSERTED_DISPLAY_NAME";
 
     /**
      * Reject reason used with {@link #reject(int)} to indicate that the user is rejecting this
@@ -564,8 +506,14 @@ public final class Call {
          */
         public static final int CAPABILITY_TRANSFER_CONSULTATIVE = 0x08000000;
 
+        /**
+         * Indicates whether the remote party supports RTT or not to the UI.
+         */
+
+        public static final int CAPABILITY_REMOTE_PARTY_SUPPORTS_RTT = 0x10000000;
+
         //******************************************************************************************
-        // Next CAPABILITY value: 0x10000000
+        // Next CAPABILITY value: 0x20000000
         //******************************************************************************************
 
         /**
@@ -695,8 +643,17 @@ public final class Call {
          */
         public static final int PROPERTY_CROSS_SIM = 0x00004000;
 
+        /**
+         * The connection is using transactional call APIs.
+         * <p>
+         * The underlying connection was added as a transactional call via the
+         * {@link TelecomManager#addCall} API.
+         */
+        @FlaggedApi(Flags.FLAG_VOIP_APP_ACTIONS_SUPPORT)
+        public static final int PROPERTY_IS_TRANSACTIONAL = 0x00008000;
+
         //******************************************************************************************
-        // Next PROPERTY value: 0x00004000
+        // Next PROPERTY value: 0x00010000
         //******************************************************************************************
 
         private final @CallState int mState;
@@ -720,6 +677,7 @@ public final class Call {
         private final String mContactDisplayName;
         private final @CallDirection int mCallDirection;
         private final @Connection.VerificationStatus int mCallerNumberVerificationStatus;
+        private final Uri mContactPhotoUri;
 
         /**
          * Whether the supplied capabilities  supports the specified capability.
@@ -817,6 +775,9 @@ public final class Call {
             if (can(capabilities, CAPABILITY_TRANSFER_CONSULTATIVE)) {
                 builder.append(" CAPABILITY_TRANSFER_CONSULTATIVE");
             }
+            if (can(capabilities, CAPABILITY_REMOTE_PARTY_SUPPORTS_RTT)) {
+                builder.append(" CAPABILITY_REMOTE_PARTY_SUPPORTS_RTT");
+            }
             builder.append("]");
             return builder.toString();
         }
@@ -890,6 +851,9 @@ public final class Call {
             if (hasProperty(properties, PROPERTY_CROSS_SIM)) {
                 builder.append(" PROPERTY_CROSS_SIM");
             }
+            if (hasProperty(properties, PROPERTY_IS_TRANSACTIONAL)) {
+                builder.append(" PROPERTY_IS_TRANSACTIONAL");
+            }
             builder.append("]");
             return builder.toString();
         }
@@ -900,6 +864,13 @@ public final class Call {
         public final @CallState int getState() {
             return mState;
         }
+
+        /**
+         * @return the Telecom identifier associated with this {@link Call} . This is not a stable
+         * identifier and is not guaranteed to be unique across device reboots.
+         */
+        @FlaggedApi(Flags.FLAG_CALL_DETAILS_ID_CHANGES)
+        public @NonNull String getId() { return mTelecomCallId; }
 
         /** {@hide} */
         @TestApi
@@ -921,6 +892,17 @@ public final class Call {
          */
         public int getHandlePresentation() {
             return mHandlePresentation;
+        }
+
+        /**
+         * @return The contact photo URI which corresponds to
+         * {@link android.provider.ContactsContract.PhoneLookup#PHOTO_URI}, or {@code null} if the
+         * lookup is not yet complete, if there's no contacts entry for the caller,
+         * or if the {@link InCallService} does not hold the
+         * {@link android.Manifest.permission#READ_CONTACTS} permission.
+         */
+        public @Nullable Uri getContactPhotoUri() {
+            return mContactPhotoUri;
         }
 
         /**
@@ -1122,7 +1104,8 @@ public final class Call {
                         Objects.equals(mContactDisplayName, d.mContactDisplayName) &&
                         Objects.equals(mCallDirection, d.mCallDirection) &&
                         Objects.equals(mCallerNumberVerificationStatus,
-                                d.mCallerNumberVerificationStatus);
+                                d.mCallerNumberVerificationStatus) &&
+                        Objects.equals(mContactPhotoUri, d.mContactPhotoUri);
             }
             return false;
         }
@@ -1147,7 +1130,8 @@ public final class Call {
                             mCreationTimeMillis,
                             mContactDisplayName,
                             mCallDirection,
-                            mCallerNumberVerificationStatus);
+                            mCallerNumberVerificationStatus,
+                    mContactPhotoUri);
         }
 
         /** {@hide} */
@@ -1171,7 +1155,8 @@ public final class Call {
                 long creationTimeMillis,
                 String contactDisplayName,
                 int callDirection,
-                int callerNumberVerificationStatus) {
+                int callerNumberVerificationStatus,
+                Uri contactPhotoUri) {
             mState = state;
             mTelecomCallId = telecomCallId;
             mHandle = handle;
@@ -1192,6 +1177,7 @@ public final class Call {
             mContactDisplayName = contactDisplayName;
             mCallDirection = callDirection;
             mCallerNumberVerificationStatus = callerNumberVerificationStatus;
+            mContactPhotoUri = contactPhotoUri;
         }
 
         /** {@hide} */
@@ -1216,7 +1202,9 @@ public final class Call {
                     parcelableCall.getCreationTimeMillis(),
                     parcelableCall.getContactDisplayName(),
                     parcelableCall.getCallDirection(),
-                    parcelableCall.getCallerNumberVerificationStatus());
+                    parcelableCall.getCallerNumberVerificationStatus(),
+                    parcelableCall.getContactPhotoUri()
+            );
         }
 
         @Override
@@ -1467,12 +1455,21 @@ public final class Call {
         /**
          * Invoked when the RTT session failed to initiate for some reason, including rejection
          * by the remote party.
+         * <p>
+         * This callback will ONLY be invoked to report a failure related to a user initiated
+         * session modification request (i.e. {@link Call#sendRttRequest()}).
+         * <p>
+         * If a call is initiated with {@link TelecomManager#EXTRA_START_CALL_WITH_RTT} specified,
+         * the availability of RTT can be determined by checking {@link Details#PROPERTY_RTT}
+         * once the call enters state {@link Details#STATE_ACTIVE}.
+         *
          * @param call The call which the RTT initiation failure occurred on.
          * @param reason One of the status codes defined in
-         *               {@link android.telecom.Connection.RttModifyStatus}, with the exception of
-         *               {@link android.telecom.Connection.RttModifyStatus#SESSION_MODIFY_REQUEST_SUCCESS}.
+         *      {@link android.telecom.Connection.RttModifyStatus}, with the exception of
+         *      {@link android.telecom.Connection.RttModifyStatus#SESSION_MODIFY_REQUEST_SUCCESS}.
          */
-        public void onRttInitiationFailure(Call call, int reason) {}
+        public void onRttInitiationFailure(Call call,
+                @android.telecom.Connection.RttModifyStatus.RttSessionModifyStatus int reason) {}
 
         /**
          * Invoked when Call handover from one {@link PhoneAccount} to other {@link PhoneAccount}
@@ -1821,8 +1818,15 @@ public final class Call {
 
     /**
      * Instructs this {@code Call} to play a dual-tone multi-frequency signaling (DTMF) tone.
-     *
-     * Any other currently playing DTMF tone in the specified call is immediately stopped.
+     * <p>
+     * Tones are both played locally for the user to hear and sent to the network to be relayed
+     * to the remote device.
+     * <p>
+     * You must ensure that any call to {@link #playDtmfTone(char)} is followed by a matching
+     * call to {@link #stopDtmfTone()} and that each tone is stopped before a new one is started.
+     * The play and stop commands are relayed to the underlying
+     * {@link android.telecom.ConnectionService} as executed; implementations may not correctly
+     * handle out of order commands.
      *
      * @param digit A character representing the DTMF digit for which to play the tone. This
      *         value must be one of {@code '0'} through {@code '9'}, {@code '*'} or {@code '#'}.
@@ -2075,6 +2079,14 @@ public final class Call {
      * <p>
      * No assumptions should be made as to how an In-Call UI or service will handle these
      * extras.  Keys should be fully qualified (e.g., com.example.MY_EXTRA) to avoid conflicts.
+     * <p>
+     * Extras added using this method will be made available to the {@link ConnectionService}
+     * associated with this {@link Call} and notified via
+     * {@link Connection#onExtrasChanged(Bundle)}.
+     * <p>
+     * Extras added using this method will also be available to other running {@link InCallService}s
+     * and notified via {@link Call.Callback#onDetailsChanged(Call, Details)}.  The extras can be
+     * accessed via {@link Details#getExtras()}.
      *
      * @param extras The extras to add.
      */
@@ -2579,7 +2591,9 @@ public final class Call {
         // remove ourselves from the Phone. Note that we do this after completing all state updates
         // so a client can cleanly transition all their UI to the state appropriate for a
         // DISCONNECTED Call while still relying on the existence of that Call in the Phone's list.
-        if (mState == STATE_DISCONNECTED) {
+        // Check if the original state is already disconnected, otherwise onCallRemoved will be
+        // triggered before onCallAdded.
+        if (mState == STATE_DISCONNECTED && stateChanged) {
             fireCallDestroyed();
         }
     }
@@ -2614,7 +2628,8 @@ public final class Call {
                         mDetails.getCreationTimeMillis(),
                         mDetails.getContactDisplayName(),
                         mDetails.getCallDirection(),
-                        mDetails.getCallerNumberVerificationStatus()
+                        mDetails.getCallerNumberVerificationStatus(),
+                        mDetails.getContactPhotoUri()
                         );
                 fireDetailsChanged(mDetails);
             }
@@ -2875,9 +2890,27 @@ public final class Call {
 
         for(String key : bundle.keySet()) {
             if (key != null) {
-                final Object value = bundle.get(key);
-                final Object newValue = newBundle.get(key);
-                if (!Objects.equals(value, newValue)) {
+                if (!newBundle.containsKey(key)) {
+                    return false;
+                }
+                // In case new call extra contains non-framework class objects, return false to
+                // force update the call extra
+                try {
+                    final Object value = bundle.get(key);
+                    final Object newValue = newBundle.get(key);
+                    if (value instanceof Bundle && newValue instanceof Bundle) {
+                        if (!areBundlesEqual((Bundle) value, (Bundle) newValue)) {
+                            return false;
+                        }
+                    }
+                    if (value instanceof byte[] && newValue instanceof byte[]) {
+                        if (!Arrays.equals((byte[]) value, (byte[]) newValue)) {
+                            return false;
+                        }
+                    } else if (!Objects.equals(value, newValue)) {
+                        return false;
+                    }
+                } catch (BadParcelableException e) {
                     return false;
                 }
             }

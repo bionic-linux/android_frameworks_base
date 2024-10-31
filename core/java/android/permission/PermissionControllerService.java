@@ -30,6 +30,7 @@ import static com.android.internal.util.Preconditions.checkStringNotEmpty;
 
 import android.Manifest;
 import android.annotation.BinderThread;
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
@@ -37,14 +38,17 @@ import android.app.Service;
 import android.app.admin.DevicePolicyManager.PermissionGrantState;
 import android.compat.annotation.ChangeId;
 import android.compat.annotation.Disabled;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.UserHandle;
 import android.permission.PermissionControllerManager.CountPermissionAppsFlag;
+import android.permission.flags.Flags;
 import android.util.ArrayMap;
 import android.util.Log;
 
@@ -291,14 +295,33 @@ public abstract class PermissionControllerService extends Service {
 
     /**
      * Called when a package is considered inactive based on the criteria given by
-     * {@link PermissionManager#startOneTimePermissionSession(String, long, int, int)}.
+     * {@link PermissionManager#startOneTimePermissionSession(String, long, long, int, int)}.
      * This method is called at the end of a one-time permission session
      *
      * @param packageName The package that has been inactive
+     *
+     * @deprecated Implement {@link #onOneTimePermissionSessionTimeout(String, int)} instead.
      */
+    @Deprecated
     @BinderThread
     public void onOneTimePermissionSessionTimeout(@NonNull String packageName) {
         throw new AbstractMethodError("Must be overridden in implementing class");
+    }
+
+    /**
+     * Called when a package is considered inactive based on the criteria given by
+     * {@link PermissionManager#startOneTimePermissionSession(String, long, long, int, int)}.
+     * This method is called at the end of a one-time permission session
+     *
+     * @param packageName The package that has been inactive
+     * @param deviceId The device ID refers either the primary device i.e. the phone or
+     *                 a virtual device. See {@link Context#DEVICE_ID_DEFAULT}
+     */
+    @BinderThread
+    @FlaggedApi(Flags.FLAG_DEVICE_AWARE_PERMISSION_APIS_ENABLED)
+    public void onOneTimePermissionSessionTimeout(@NonNull String packageName,
+            int deviceId) {
+        onOneTimePermissionSessionTimeout(packageName);
     }
 
     /**
@@ -324,6 +347,60 @@ public abstract class PermissionControllerService extends Service {
             @NonNull Consumer<String> callback) {
         throw new AbstractMethodError("Must be overridden in implementing class");
     }
+
+    /**
+     * Triggers the revocation of one or more permissions for a package. This should only be called
+     * at the request of {@code packageName}.
+     * <p>
+     * Background permissions which have no corresponding foreground permission still granted once
+     * the revocation is effective will also be revoked.
+     * <p>
+     * This revocation happens asynchronously and kills all processes running in the same UID as
+     * {@code packageName}. It will be triggered once it is safe to do so.
+     *
+     * @param packageName The name of the package for which the permissions will be revoked.
+     * @param permissions List of permissions to be revoked.
+     * @param callback Callback waiting for operation to be complete.
+     *
+     * @see android.content.Context#revokeSelfPermissionsOnKill(java.util.Collection)
+     *
+     * @deprecated Implement {@link #onRevokeSelfPermissionsOnKill(String, List, int, Runnable)}
+     * instead.
+     */
+    @Deprecated
+    @BinderThread
+    public void onRevokeSelfPermissionsOnKill(@NonNull String packageName,
+            @NonNull List<String> permissions, @NonNull Runnable callback) {
+        throw new AbstractMethodError("Must be overridden in implementing class");
+    }
+
+    /**
+     * Triggers the revocation of one or more permissions for a package and device.
+     * This should only be called at the request of {@code packageName}.
+     * <p>
+     * Background permissions which have no corresponding foreground permission still granted once
+     * the revocation is effective will also be revoked.
+     * <p>
+     * This revocation happens asynchronously and kills all processes running in the same UID as
+     * {@code packageName}. It will be triggered once it is safe to do so.
+     *
+     * @param packageName The name of the package for which the permissions will be revoked.
+     * @param permissions List of permissions to be revoked.
+     * @param deviceId The device ID refers either the primary device i.e. the phone or
+     *                 a virtual device. See {@link Context#DEVICE_ID_DEFAULT}
+     * @param callback Callback waiting for operation to be complete.
+     *
+     * @see android.content.Context#revokeSelfPermissionsOnKill(java.util.Collection)
+     */
+    @BinderThread
+    @FlaggedApi(Flags.FLAG_DEVICE_AWARE_PERMISSION_APIS_ENABLED)
+    public void onRevokeSelfPermissionsOnKill(@NonNull String packageName,
+            @NonNull List<String> permissions, int deviceId, @NonNull Runnable callback) {
+        onRevokeSelfPermissionsOnKill(packageName, permissions, callback);
+    }
+
+    // TODO(b/272129940): Remove this API and device profile role description when we drop T
+    //  support.
     /**
      * Get a user-readable sentence, describing the set of privileges that are to be granted to a
      * companion app managing a device of the given profile.
@@ -331,12 +408,45 @@ public abstract class PermissionControllerService extends Service {
      * @param deviceProfileName the
      *      {@link android.companion.AssociationRequest.DeviceProfile device profile} name
      *
+     * @deprecated Device profile privilege descriptions have been bundled in CDM APK since T.
+     *
      * @hide
      */
+    @Deprecated
     @SystemApi
     @RequiresPermission(Manifest.permission.MANAGE_COMPANION_DEVICES)
     @NonNull
     public String getPrivilegesDescriptionStringForProfile(@NonNull String deviceProfileName) {
+        throw new AbstractMethodError("Must be overridden in implementing class");
+    }
+
+    /**
+     * Get the count of unused, hibernating apps on the device.
+     *
+     * @param callback callback after count is retrieved
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.MANAGE_APP_HIBERNATION)
+    @NonNull
+    public void onGetUnusedAppCount(@NonNull IntConsumer callback) {
+        throw new AbstractMethodError("Must be overridden in implementing class");
+    }
+
+    /**
+     * Get the hibernation eligibility of the app. See
+     * {@link android.permission.PermissionControllerManager.HibernationEligibilityFlag}.
+     *
+     * @param packageName package to check eligibility
+     * @param callback callback after eligibility is returned
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.MANAGE_APP_HIBERNATION)
+    public void onGetHibernationEligibility(@NonNull String packageName,
+            @NonNull IntConsumer callback) {
         throw new AbstractMethodError("Must be overridden in implementing class");
     }
 
@@ -554,12 +664,12 @@ public abstract class PermissionControllerService extends Service {
             }
 
             @Override
-            public void notifyOneTimePermissionSessionTimeout(String packageName) {
+            public void notifyOneTimePermissionSessionTimeout(String packageName, int deviceId) {
                 enforceSomePermissionsGrantedToCaller(
                         Manifest.permission.REVOKE_RUNTIME_PERMISSIONS);
                 packageName = Preconditions.checkNotNull(packageName,
                         "packageName cannot be null");
-                onOneTimePermissionSessionTimeout(packageName);
+                onOneTimePermissionSessionTimeout(packageName, deviceId);
             }
 
             @Override
@@ -614,6 +724,57 @@ public abstract class PermissionControllerService extends Service {
                     Objects.requireNonNull(callback);
                     PermissionControllerService.this.onGetGroupOfPlatformPermission(
                             permissionGroupName, callback::complete);
+                } catch (Throwable t) {
+                    callback.completeExceptionally(t);
+                }
+            }
+
+            @Override
+            public void getUnusedAppCount(@NonNull AndroidFuture callback) {
+                try {
+                    Objects.requireNonNull(callback);
+
+                    enforceSomePermissionsGrantedToCaller(
+                            Manifest.permission.MANAGE_APP_HIBERNATION);
+
+                    PermissionControllerService.this.onGetUnusedAppCount(callback::complete);
+                } catch (Throwable t) {
+                    callback.completeExceptionally(t);
+                }
+            }
+
+            @Override
+            public void getHibernationEligibility(@NonNull String packageName,
+                    @NonNull AndroidFuture callback) {
+                try {
+                    Objects.requireNonNull(callback);
+
+                    enforceSomePermissionsGrantedToCaller(
+                            Manifest.permission.MANAGE_APP_HIBERNATION);
+
+                    PermissionControllerService.this.onGetHibernationEligibility(packageName,
+                            callback::complete);
+                } catch (Throwable t) {
+                    callback.completeExceptionally(t);
+                }
+            }
+
+            @Override
+            public void revokeSelfPermissionsOnKill(@NonNull String packageName,
+                    @NonNull List<String> permissions, int deviceId,
+                    @NonNull AndroidFuture callback) {
+                try {
+                    Objects.requireNonNull(callback);
+
+                    final int callingUid = Binder.getCallingUid();
+                    int targetPackageUid = getPackageManager().getPackageUid(packageName,
+                            PackageManager.PackageInfoFlags.of(0));
+                    if (targetPackageUid != callingUid) {
+                        enforceSomePermissionsGrantedToCaller(
+                                Manifest.permission.REVOKE_RUNTIME_PERMISSIONS);
+                    }
+                    onRevokeSelfPermissionsOnKill(packageName, permissions, deviceId,
+                            () -> callback.complete(null));
                 } catch (Throwable t) {
                     callback.completeExceptionally(t);
                 }

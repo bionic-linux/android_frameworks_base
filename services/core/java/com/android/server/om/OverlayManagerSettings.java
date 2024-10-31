@@ -28,14 +28,14 @@ import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.Pair;
 import android.util.Slog;
-import android.util.TypedXmlPullParser;
-import android.util.TypedXmlSerializer;
 import android.util.Xml;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.CollectionUtils;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.XmlUtils;
+import com.android.modules.utils.TypedXmlPullParser;
+import com.android.modules.utils.TypedXmlSerializer;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -178,18 +179,29 @@ final class OverlayManagerSettings {
 
     List<OverlayInfo> getOverlaysForTarget(@NonNull final String targetPackageName,
             final int userId) {
-        // Immutable RROs targeting "android" are loaded from AssetManager, and so they should be
-        // ignored in OverlayManagerService.
         final List<SettingsItem> items = selectWhereTarget(targetPackageName, userId);
-        items.removeIf(OverlayManagerSettings::isImmutableFrameworkOverlay);
         return CollectionUtils.map(items, SettingsItem::getOverlayInfo);
     }
 
+    void forEachMatching(int userId, String overlayName, String targetPackageName,
+            @NonNull Consumer<OverlayInfo> consumer) {
+        for (int i = 0, n = mItems.size(); i < n; i++) {
+            final SettingsItem item = mItems.get(i);
+            if (item.getUserId() != userId) {
+                continue;
+            }
+            if (overlayName != null && !item.mOverlay.getPackageName().equals(overlayName)) {
+                continue;
+            }
+            if (targetPackageName != null && !item.mTargetPackageName.equals(targetPackageName)) {
+                continue;
+            }
+            consumer.accept(item.getOverlayInfo());
+        }
+    }
+
     ArrayMap<String, List<OverlayInfo>> getOverlaysForUser(final int userId) {
-        // Immutable RROs targeting "android" are loaded from AssetManager, and so they should be
-        // ignored in OverlayManagerService.
         final List<SettingsItem> items = selectWhereUser(userId);
-        items.removeIf(OverlayManagerSettings::isImmutableFrameworkOverlay);
 
         final ArrayMap<String, List<OverlayInfo>> targetInfos = new ArrayMap<>();
         for (int i = 0, n = items.size(); i < n; i++) {
@@ -232,10 +244,6 @@ final class OverlayManagerSettings {
 
     int[] getUsers() {
         return mItems.stream().mapToInt(SettingsItem::getUserId).distinct().toArray();
-    }
-
-    private static boolean isImmutableFrameworkOverlay(@NonNull SettingsItem item) {
-        return !item.isMutable() && "android".equals(item.getTargetPackageName());
     }
 
     /**

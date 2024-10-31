@@ -27,12 +27,12 @@ import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
 import android.media.ImageReader;
 import android.os.SystemClock;
-import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper.RunWithLooper;
 import android.util.Log;
 import android.view.Display;
 import android.view.DisplayInfo;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
 import com.android.systemui.SysuiTestCase;
@@ -40,6 +40,7 @@ import com.android.systemui.SysuiTestableContext;
 import com.android.systemui.assist.AssistManager;
 import com.android.systemui.navigationbar.gestural.EdgeBackGestureHandler;
 import com.android.systemui.recents.OverviewProxyService;
+import com.android.systemui.settings.FakeDisplayTracker;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 
 import org.junit.After;
@@ -52,7 +53,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.function.Predicate;
 
 /** atest NavigationBarButtonTest */
-@RunWith(AndroidTestingRunner.class)
+@RunWith(AndroidJUnit4.class)
 @RunWithLooper
 @SmallTest
 public class NavigationBarButtonTest extends SysuiTestCase {
@@ -65,6 +66,7 @@ public class NavigationBarButtonTest extends SysuiTestCase {
     private ImageReader mReader;
     private NavigationBarView mNavBar;
     private VirtualDisplay mVirtualDisplay;
+    private FakeDisplayTracker mDisplayTracker = new FakeDisplayTracker(mContext);
 
     @Before
     public void setup() {
@@ -83,6 +85,7 @@ public class NavigationBarButtonTest extends SysuiTestCase {
         mDependency.injectTestDependency(EdgeBackGestureHandler.Factory.class,
                 mEdgeBackGestureHandlerFactory);
         mNavBar = new NavigationBarView(context, null);
+        mNavBar.setDisplayTracker(mDisplayTracker);
     }
 
     private Display createVirtualDisplay() {

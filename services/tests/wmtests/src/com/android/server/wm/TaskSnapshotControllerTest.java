@@ -31,7 +31,9 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -75,7 +77,7 @@ public class TaskSnapshotControllerTest extends WindowTestsBase {
         final ArraySet<ActivityRecord> closingApps = new ArraySet<>();
         closingApps.add(closingWindow.mActivityRecord);
         final ArraySet<Task> closingTasks = new ArraySet<>();
-        mWm.mTaskSnapshotController.getClosingTasks(closingApps, closingTasks);
+        getClosingTasks(closingApps, closingTasks);
         assertEquals(1, closingTasks.size());
         assertEquals(closingWindow.mActivityRecord.getTask(), closingTasks.valueAt(0));
     }
@@ -93,7 +95,7 @@ public class TaskSnapshotControllerTest extends WindowTestsBase {
         final ArraySet<ActivityRecord> closingApps = new ArraySet<>();
         closingApps.add(closingWindow.mActivityRecord);
         final ArraySet<Task> closingTasks = new ArraySet<>();
-        mWm.mTaskSnapshotController.getClosingTasks(closingApps, closingTasks);
+        getClosingTasks(closingApps, closingTasks);
         assertEquals(0, closingTasks.size());
     }
 
@@ -108,15 +110,28 @@ public class TaskSnapshotControllerTest extends WindowTestsBase {
         final ArraySet<Task> closingTasks = new ArraySet<>();
         mWm.mTaskSnapshotController.addSkipClosingAppSnapshotTasks(
                 Sets.newArraySet(closingWindow.mActivityRecord.getTask()));
-        mWm.mTaskSnapshotController.getClosingTasks(closingApps, closingTasks);
+        getClosingTasks(closingApps, closingTasks);
         assertEquals(0, closingTasks.size());
+    }
+
+    /** Retrieves all closing tasks based on the list of closing apps during an app transition. */
+    private void getClosingTasks(ArraySet<ActivityRecord> closingApps,
+            ArraySet<Task> outClosingTasks) {
+        outClosingTasks.clear();
+        for (int i = closingApps.size() - 1; i >= 0; i--) {
+            final ActivityRecord activity = closingApps.valueAt(i);
+            final Task task = activity.getTask();
+            if (task == null) continue;
+
+            mWm.mTaskSnapshotController.getClosingTasksInner(task, outClosingTasks);
+        }
     }
 
     @Test
     public void testGetSnapshotMode() {
         final WindowState disabledWindow = createWindow(null,
                 FIRST_APPLICATION_WINDOW, mDisplayContent, "disabledWindow");
-        disabledWindow.mActivityRecord.setDisablePreviewScreenshots(true);
+        disabledWindow.mActivityRecord.setRecentsScreenshotEnabled(false);
         assertEquals(SNAPSHOT_MODE_APP_THEME,
                 mWm.mTaskSnapshotController.getSnapshotMode(disabledWindow.getTask()));
 
@@ -130,6 +145,15 @@ public class TaskSnapshotControllerTest extends WindowTestsBase {
         secureWindow.mAttrs.flags |= FLAG_SECURE;
         assertEquals(SNAPSHOT_MODE_APP_THEME,
                 mWm.mTaskSnapshotController.getSnapshotMode(secureWindow.getTask()));
+
+        // Verifies that if the snapshot can be cached, then getSnapshotMode should be respected.
+        // Otherwise a real snapshot can be taken even if the activity disables recents screenshot.
+        spyOn(mWm.mTaskSnapshotController);
+        final int disabledInRecentsTaskId = disabledWindow.getTask().mTaskId;
+        mAtm.takeTaskSnapshot(disabledInRecentsTaskId, true /* updateCache */);
+        verify(mWm.mTaskSnapshotController, never()).prepareTaskSnapshot(any(), any());
+        mAtm.takeTaskSnapshot(disabledInRecentsTaskId, false /* updateCache */);
+        verify(mWm.mTaskSnapshotController).prepareTaskSnapshot(any(), any());
     }
 
     @Test
@@ -144,7 +168,8 @@ public class TaskSnapshotControllerTest extends WindowTestsBase {
         final int orientation = Configuration.ORIENTATION_PORTRAIT;
         final float scaleFraction = 0.25f;
         final Rect contentInsets = new Rect(1, 2, 3, 4);
-        final Point taskSize = new Point(5, 6);
+        final Rect letterboxInsets = new Rect(5, 6, 7, 8);
+        final Point taskSize = new Point(9, 10);
 
         try {
             TaskSnapshot.Builder builder =
@@ -156,6 +181,7 @@ public class TaskSnapshotControllerTest extends WindowTestsBase {
             builder.setColorSpace(sRGB);
             builder.setOrientation(orientation);
             builder.setContentInsets(contentInsets);
+            builder.setLetterboxInsets(letterboxInsets);
             builder.setIsTranslucent(true);
             builder.setSnapshot(buffer);
             builder.setIsRealSnapshot(true);
@@ -176,6 +202,7 @@ public class TaskSnapshotControllerTest extends WindowTestsBase {
             assertFalse(snapshot.isLowResolution());
             assertEquals(orientation, snapshot.getOrientation());
             assertEquals(contentInsets, snapshot.getContentInsets());
+            assertEquals(letterboxInsets, snapshot.getLetterboxInsets());
             assertTrue(snapshot.isTranslucent());
             assertSame(buffer, snapshot.getHardwareBuffer());
             assertTrue(snapshot.isRealSnapshot());
@@ -187,7 +214,7 @@ public class TaskSnapshotControllerTest extends WindowTestsBase {
         }
     }
 
-    @UseTestDisplay(addWindows = {W_ACTIVITY, W_INPUT_METHOD})
+    @SetupWindows(addWindows = { W_ACTIVITY, W_INPUT_METHOD })
     @Test
     public void testCreateTaskSnapshotWithExcludingIme() {
         Task task = mAppWindow.mActivityRecord.getTask();
@@ -199,14 +226,14 @@ public class TaskSnapshotControllerTest extends WindowTestsBase {
         // Verify no NPE happens when calling createTaskSnapshot.
         try {
             final TaskSnapshot.Builder builder = new TaskSnapshot.Builder();
-            mWm.mTaskSnapshotController.createTaskSnapshot(mAppWindow.mActivityRecord.getTask(),
-                    1f /* scaleFraction */, PixelFormat.UNKNOWN, null /* outTaskSize */, builder);
+            mWm.mTaskSnapshotController.createSnapshot(mAppWindow.mActivityRecord.getTask(),
+                    1f /* scaleFraction */, new Rect() /* crop */, builder);
         } catch (NullPointerException e) {
             fail("There should be no exception when calling createTaskSnapshot");
         }
     }
 
-    @UseTestDisplay(addWindows = {W_ACTIVITY, W_INPUT_METHOD})
+    @SetupWindows(addWindows = { W_ACTIVITY, W_INPUT_METHOD })
     @Test
     public void testCreateTaskSnapshotWithIncludingIme() {
         Task task = mAppWindow.mActivityRecord.getTask();
@@ -220,9 +247,9 @@ public class TaskSnapshotControllerTest extends WindowTestsBase {
         try {
             final TaskSnapshot.Builder builder = new TaskSnapshot.Builder();
             spyOn(builder);
-            mWm.mTaskSnapshotController.createTaskSnapshot(
+            mWm.mTaskSnapshotController.createSnapshot(
                     mAppWindow.mActivityRecord.getTask(), 1f /* scaleFraction */,
-                    PixelFormat.UNKNOWN, null /* outTaskSize */, builder);
+                    new Rect() /* crop */, builder);
             // Verify the builder should includes IME surface.
             verify(builder).setHasImeSurface(eq(true));
             builder.setColorSpace(ColorSpace.get(ColorSpace.Named.SRGB));
@@ -234,7 +261,7 @@ public class TaskSnapshotControllerTest extends WindowTestsBase {
         }
     }
 
-    @UseTestDisplay(addWindows = W_ACTIVITY)
+    @SetupWindows(addWindows = W_ACTIVITY)
     @Test
     public void testPrepareTaskSnapshot() {
         mAppWindow.mWinAnimator.mLastAlpha = 1f;
@@ -245,7 +272,7 @@ public class TaskSnapshotControllerTest extends WindowTestsBase {
         final TaskSnapshot.Builder builder =
                 new TaskSnapshot.Builder();
         boolean success = mWm.mTaskSnapshotController.prepareTaskSnapshot(
-                mAppWindow.mActivityRecord.getTask(), PixelFormat.UNKNOWN, builder);
+                mAppWindow.mActivityRecord.getTask(), builder) != null;
 
         assertTrue(success);
         // The pixel format should be selected automatically.
@@ -254,7 +281,7 @@ public class TaskSnapshotControllerTest extends WindowTestsBase {
         // Snapshot should not be taken while the rotation of activity and task are different.
         doReturn(true).when(mAppWindow.mActivityRecord).hasFixedRotationTransform();
         success = mWm.mTaskSnapshotController.prepareTaskSnapshot(
-                mAppWindow.mActivityRecord.getTask(), PixelFormat.UNKNOWN, builder);
+                mAppWindow.mActivityRecord.getTask(), builder) != null;
 
         assertFalse(success);
     }

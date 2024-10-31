@@ -54,6 +54,7 @@ public abstract class InputEventReceiver {
             InputChannel inputChannel, MessageQueue messageQueue);
     private static native void nativeDispose(long receiverPtr);
     private static native void nativeFinishInputEvent(long receiverPtr, int seq, boolean handled);
+    private static native boolean nativeProbablyHasInput(long receiverPtr);
     private static native void nativeReportTimeline(long receiverPtr, int inputEventId,
             long gpuCompletedTime, long presentTime);
     private static native boolean nativeConsumeBatchedInputEvents(long receiverPtr,
@@ -77,9 +78,9 @@ public abstract class InputEventReceiver {
         mInputChannel = inputChannel;
         mMessageQueue = looper.getQueue();
         mReceiverPtr = nativeInit(new WeakReference<InputEventReceiver>(this),
-                inputChannel, mMessageQueue);
+                mInputChannel, mMessageQueue);
 
-        mCloseGuard.open("dispose");
+        mCloseGuard.open("InputEventReceiver.dispose");
     }
 
     @Override
@@ -89,6 +90,17 @@ public abstract class InputEventReceiver {
         } finally {
             super.finalize();
         }
+    }
+
+    /**
+     * Checks the receiver for input availability.
+     * May return false negatives.
+     */
+    public boolean probablyHasInput() {
+        if (mReceiverPtr == 0) {
+            return false;
+        }
+        return nativeProbablyHasInput(mReceiverPtr);
     }
 
     /**
@@ -139,11 +151,9 @@ public abstract class InputEventReceiver {
      * @param hasFocus if true, the window associated with this input channel has just received
      *                 focus
      *                 if false, the window associated with this input channel has just lost focus
-     * @param inTouchMode if true, the device is in touch mode
-     *                    if false, the device is not in touch mode
      */
     // Called from native code.
-    public void onFocusEvent(boolean hasFocus, boolean inTouchMode) {
+    public void onFocusEvent(boolean hasFocus) {
     }
 
     /**
@@ -168,6 +178,16 @@ public abstract class InputEventReceiver {
      *                 if true, the window associated with this input channel has just lost drag
      */
     public void onDragEvent(boolean isExiting, float x, float y) {
+    }
+
+    /**
+     * Called when the display for the window associated with the input channel has entered or
+     * exited touch mode.
+     *
+     * @param inTouchMode {@code true} if the display showing the window associated with the
+     *                    input channel entered touch mode or {@code false} if left touch mode
+     */
+    public void onTouchModeChanged(boolean inTouchMode) {
     }
 
     /**
@@ -251,12 +271,29 @@ public abstract class InputEventReceiver {
         return mInputChannel.getToken();
     }
 
+    private String getShortDescription(InputEvent event) {
+        if (event instanceof MotionEvent motion) {
+            return "MotionEvent " + MotionEvent.actionToString(motion.getAction()) + " deviceId="
+                    + motion.getDeviceId() + " source=0x"
+                    + Integer.toHexString(motion.getSource()) +  " historySize="
+                    + motion.getHistorySize();
+        } else if (event instanceof KeyEvent key) {
+            return "KeyEvent " + KeyEvent.actionToString(key.getAction())
+                    + " deviceId=" + key.getDeviceId();
+        } else {
+            Log.wtf(TAG, "Illegal InputEvent type: " + event);
+            return "InputEvent";
+        }
+    }
+
     // Called from native code.
     @SuppressWarnings("unused")
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     private void dispatchInputEvent(int seq, InputEvent event) {
+        Trace.traceBegin(Trace.TRACE_TAG_INPUT, "dispatchInputEvent " + getShortDescription(event));
         mSeqMap.put(event.getSequenceNumber(), seq);
         onInputEvent(event);
+        Trace.traceEnd(Trace.TRACE_TAG_INPUT);
     }
 
     /**
@@ -269,15 +306,5 @@ public abstract class InputEventReceiver {
         writer.println(prefix + " mInputChannel: " + mInputChannel);
         writer.println(prefix + " mSeqMap: " + mSeqMap);
         writer.println(prefix + " mReceiverPtr:\n" + nativeDump(mReceiverPtr, prefix + "  "));
-    }
-
-    /**
-     * Factory for InputEventReceiver
-     */
-    public interface Factory {
-        /**
-         * Create a new InputReceiver for a given inputChannel
-         */
-        InputEventReceiver createInputEventReceiver(InputChannel inputChannel, Looper looper);
     }
 }

@@ -21,35 +21,60 @@ import static com.android.systemui.dock.DockManager.DockEventListener;
 import android.hardware.SensorManager;
 import android.hardware.biometrics.BiometricSourceType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
+
+import androidx.annotation.VisibleForTesting;
 
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
+import com.android.systemui.communal.domain.interactor.CommunalInteractor;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.dagger.qualifiers.Main;
+import com.android.systemui.deviceentry.domain.interactor.DeviceEntryInteractor;
 import com.android.systemui.dock.DockManager;
 import com.android.systemui.plugins.FalsingManager;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
+import com.android.systemui.scene.domain.interactor.SceneContainerOcclusionInteractor;
+import com.android.systemui.scene.shared.flag.SceneContainerFlag;
+import com.android.systemui.shade.domain.interactor.ShadeInteractor;
 import com.android.systemui.statusbar.StatusBarState;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.BatteryController.BatteryStateChangeCallback;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
+import com.android.systemui.user.domain.interactor.SelectedUserInteractor;
 import com.android.systemui.util.concurrency.DelayableExecutor;
+import com.android.systemui.util.kotlin.BooleanFlowOperators;
+import com.android.systemui.util.kotlin.JavaAdapter;
 import com.android.systemui.util.sensors.ProximitySensor;
 import com.android.systemui.util.sensors.ThresholdSensor;
+import com.android.systemui.util.sensors.ThresholdSensorEvent;
 import com.android.systemui.util.time.SystemClock;
 
+import dagger.Lazy;
+
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.inject.Inject;
 
 @SysUISingleton
 class FalsingCollectorImpl implements FalsingCollector {
 
-    private static final boolean DEBUG = false;
-    private static final String TAG = "FalsingManager";
-    private static final String PROXIMITY_SENSOR_TAG = "FalsingManager";
+    private static final String TAG = "FalsingCollector";
+    private static final String PROXIMITY_SENSOR_TAG = "FalsingCollector";
+    private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
     private static final long GESTURE_PROCESSING_DELAY_MS = 100;
+
+    private final Set<Integer> mAcceptedKeycodes = new HashSet<>(Arrays.asList(
+        KeyEvent.KEYCODE_ENTER,
+        KeyEvent.KEYCODE_ESCAPE,
+        KeyEvent.KEYCODE_SHIFT_LEFT,
+        KeyEvent.KEYCODE_SHIFT_RIGHT,
+        KeyEvent.KEYCODE_SPACE
+    ));
 
     private final FalsingDataProvider mFalsingDataProvider;
     private final FalsingManager mFalsingManager;
@@ -58,13 +83,20 @@ class FalsingCollectorImpl implements FalsingCollector {
     private final ProximitySensor mProximitySensor;
     private final StatusBarStateController mStatusBarStateController;
     private final KeyguardStateController mKeyguardStateController;
+    private final Lazy<ShadeInteractor> mShadeInteractorLazy;
+    private final Lazy<CommunalInteractor> mCommunalInteractorLazy;
     private final BatteryController mBatteryController;
     private final DockManager mDockManager;
     private final DelayableExecutor mMainExecutor;
+    private final JavaAdapter mJavaAdapter;
     private final SystemClock mSystemClock;
+    private final Lazy<SelectedUserInteractor> mUserInteractor;
+    private final Lazy<DeviceEntryInteractor> mDeviceEntryInteractor;
+    private final Lazy<SceneContainerOcclusionInteractor> mSceneContainerOcclusionInteractor;
 
     private int mState;
     private boolean mShowingAod;
+    private boolean mShowingCommunalHub;
     private boolean mScreenOn;
     private boolean mSessionStarted;
     private MotionEvent mPendingDownEvent;
@@ -76,9 +108,17 @@ class FalsingCollectorImpl implements FalsingCollector {
             new StatusBarStateController.StateListener() {
                 @Override
                 public void onStateChanged(int newState) {
-                    logDebug("StatusBarState=" + StatusBarState.toShortString(newState));
+                    logDebug("StatusBarState=" + StatusBarState.toString(newState));
                     mState = newState;
                     updateSessionActive();
+                }
+            };
+
+    private final KeyguardStateController.Callback mKeyguardStateControllerCallback =
+            new KeyguardStateController.Callback() {
+                @Override
+                public void onKeyguardShowingChanged() {
+                    updateSensorRegistration();
                 }
             };
 
@@ -89,7 +129,7 @@ class FalsingCollectorImpl implements FalsingCollector {
                 public void onBiometricAuthenticated(int userId,
                         BiometricSourceType biometricSourceType,
                         boolean isStrongBiometric) {
-                    if (userId == KeyguardUpdateMonitor.getCurrentUser()
+                    if (userId == mUserInteractor.get().getSelectedUserId()
                             && biometricSourceType == BiometricSourceType.FACE) {
                         mFalsingDataProvider.setJustUnlockedWithFace(true);
                     }
@@ -98,10 +138,6 @@ class FalsingCollectorImpl implements FalsingCollector {
 
 
     private final BatteryStateChangeCallback mBatteryListener = new BatteryStateChangeCallback() {
-        @Override
-        public void onBatteryLevelChanged(int level, boolean pluggedIn, boolean charging) {
-        }
-
         @Override
         public void onWirelessChargingChanged(boolean isWirelessCharging) {
             if (isWirelessCharging || mDockManager.isDocked()) {
@@ -132,10 +168,16 @@ class FalsingCollectorImpl implements FalsingCollector {
             ProximitySensor proximitySensor,
             StatusBarStateController statusBarStateController,
             KeyguardStateController keyguardStateController,
+            Lazy<ShadeInteractor> shadeInteractorLazy,
             BatteryController batteryController,
             DockManager dockManager,
             @Main DelayableExecutor mainExecutor,
-            SystemClock systemClock) {
+            JavaAdapter javaAdapter,
+            SystemClock systemClock,
+            Lazy<SelectedUserInteractor> userInteractor,
+            Lazy<CommunalInteractor> communalInteractorLazy,
+            Lazy<DeviceEntryInteractor> deviceEntryInteractor,
+            Lazy<SceneContainerOcclusionInteractor> sceneContainerOcclusionInteractor) {
         mFalsingDataProvider = falsingDataProvider;
         mFalsingManager = falsingManager;
         mKeyguardUpdateMonitor = keyguardUpdateMonitor;
@@ -143,62 +185,93 @@ class FalsingCollectorImpl implements FalsingCollector {
         mProximitySensor = proximitySensor;
         mStatusBarStateController = statusBarStateController;
         mKeyguardStateController = keyguardStateController;
+        mShadeInteractorLazy = shadeInteractorLazy;
         mBatteryController = batteryController;
         mDockManager = dockManager;
         mMainExecutor = mainExecutor;
+        mJavaAdapter = javaAdapter;
         mSystemClock = systemClock;
+        mUserInteractor = userInteractor;
+        mCommunalInteractorLazy = communalInteractorLazy;
+        mDeviceEntryInteractor = deviceEntryInteractor;
+        mSceneContainerOcclusionInteractor = sceneContainerOcclusionInteractor;
+    }
 
+    @Override
+    public void init() {
         mProximitySensor.setTag(PROXIMITY_SENSOR_TAG);
         mProximitySensor.setDelay(SensorManager.SENSOR_DELAY_GAME);
 
         mStatusBarStateController.addCallback(mStatusBarStateListener);
         mState = mStatusBarStateController.getState();
 
+        if (SceneContainerFlag.isEnabled()) {
+            mJavaAdapter.alwaysCollectFlow(
+                    mDeviceEntryInteractor.get().isDeviceEntered(),
+                    this::isDeviceEnteredChanged
+            );
+            mJavaAdapter.alwaysCollectFlow(
+                    mSceneContainerOcclusionInteractor.get().getInvisibleDueToOcclusion(),
+                    this::isInvisibleDueToOcclusionChanged
+            );
+        } else {
+            mKeyguardStateController.addCallback(mKeyguardStateControllerCallback);
+        }
+
         mKeyguardUpdateMonitor.registerCallback(mKeyguardUpdateCallback);
+
+        mJavaAdapter.alwaysCollectFlow(
+                mShadeInteractorLazy.get().isQsExpanded(),
+                this::onQsExpansionChanged
+        );
+        final CommunalInteractor communalInteractor = mCommunalInteractorLazy.get();
+        mJavaAdapter.alwaysCollectFlow(
+                BooleanFlowOperators.INSTANCE.allOf(
+                        communalInteractor.isCommunalEnabled(),
+                        communalInteractor.isCommunalShowing()),
+                this::onShowingCommunalHubChanged
+        );
 
         mBatteryController.addCallback(mBatteryListener);
         mDockManager.addListener(mDockEventListener);
     }
 
+    public void isDeviceEnteredChanged(boolean unused) {
+        updateSensorRegistration();
+    }
+
+    public void isInvisibleDueToOcclusionChanged(boolean unused) {
+        updateSensorRegistration();
+    }
+
     @Override
     public void onSuccessfulUnlock() {
+        logDebug("REAL: onSuccessfulUnlock");
         mFalsingManager.onSuccessfulUnlock();
         sessionEnd();
     }
 
     @Override
-    public void onNotificationActive() {
-    }
-
-    @Override
     public void setShowingAod(boolean showingAod) {
+        logDebug("REAL: setShowingAod(" + showingAod + ")");
         mShowingAod = showingAod;
         updateSessionActive();
     }
 
-    @Override
-    public void onNotificationStartDraggingDown() {
-    }
-
-    @Override
-    public void onNotificationStopDraggingDown() {
-    }
-
-    @Override
-    public void setNotificationExpanded() {
-    }
-
-    @Override
-    public void onQsDown() {
-    }
-
-    @Override
-    public void setQsExpanded(boolean expanded) {
+    @VisibleForTesting
+    void onQsExpansionChanged(Boolean expanded) {
+        logDebug("REAL: onQsExpansionChanged(" + expanded + ")");
         if (expanded) {
             unregisterSensors();
         } else if (mSessionStarted) {
             registerSensors();
         }
+    }
+
+    private void onShowingCommunalHubChanged(boolean isShowing) {
+        logDebug("REAL: onShowingCommunalHubChanged(" + isShowing + ")");
+        mShowingCommunalHub = isShowing;
+        updateSessionActive();
     }
 
     @Override
@@ -207,39 +280,8 @@ class FalsingCollectorImpl implements FalsingCollector {
     }
 
     @Override
-    public void onTrackingStarted(boolean secure) {
-    }
-
-    @Override
-    public void onTrackingStopped() {
-    }
-
-    @Override
-    public void onLeftAffordanceOn() {
-    }
-
-    @Override
-    public void onCameraOn() {
-    }
-
-    @Override
-    public void onAffordanceSwipingStarted(boolean rightCorner) {
-    }
-
-    @Override
-    public void onAffordanceSwipingAborted() {
-    }
-
-    @Override
-    public void onStartExpandingFromPulse() {
-    }
-
-    @Override
-    public void onExpansionFromPulseStopped() {
-    }
-
-    @Override
     public void onScreenOnFromTouch() {
+        logDebug("REAL: onScreenOnFromTouch");
         onScreenTurningOn();
     }
 
@@ -249,65 +291,53 @@ class FalsingCollectorImpl implements FalsingCollector {
     }
 
     @Override
-    public void onUnlockHintStarted() {
-    }
-
-    @Override
-    public void onCameraHintStarted() {
-    }
-
-    @Override
-    public void onLeftAffordanceHintStarted() {
-    }
-
-    @Override
     public void onScreenTurningOn() {
+        logDebug("REAL: onScreenTurningOn");
         mScreenOn = true;
         updateSessionActive();
     }
 
     @Override
     public void onScreenOff() {
+        logDebug("REAL: onScreenOff");
         mScreenOn = false;
         updateSessionActive();
     }
 
     @Override
-    public void onNotificationStopDismissing() {
-    }
-
-    @Override
-    public void onNotificationDismissed() {
-    }
-
-    @Override
-    public void onNotificationStartDismissing() {
-    }
-
-    @Override
-    public void onNotificationDoubleTap(boolean accepted, float dx, float dy) {
-    }
-
-    @Override
     public void onBouncerShown() {
+        logDebug("REAL: onBouncerShown");
         unregisterSensors();
     }
 
     @Override
     public void onBouncerHidden() {
+        logDebug("REAL: onBouncerHidden");
         if (mSessionStarted) {
             registerSensors();
         }
     }
 
     @Override
+    public void onKeyEvent(KeyEvent ev) {
+        logDebug("REAL: onKeyEvent(" + KeyEvent.actionToString(ev.getAction()) + ")");
+        // Only collect if it is an ACTION_UP action and is allow-listed
+        if (ev.getAction() == KeyEvent.ACTION_UP && mAcceptedKeycodes.contains(ev.getKeyCode())) {
+            mFalsingDataProvider.onKeyEvent(ev);
+        }
+    }
+
+    @Override
     public void onTouchEvent(MotionEvent ev) {
-        if (!mKeyguardStateController.isShowing()
-                || (mStatusBarStateController.isDozing()
-                    && !mStatusBarStateController.isPulsing())) {
+        logDebug("REAL: onTouchEvent(" + MotionEvent.actionToString(ev.getActionMasked()) + ")");
+        if (!isKeyguardShowing()) {
             avoidGesture();
             return;
         }
+        if (ev.getActionMasked() == MotionEvent.ACTION_OUTSIDE) {
+            return;
+        }
+
         // We delay processing down events to see if another component wants to process them.
         // If #avoidGesture is called after a MotionEvent.ACTION_DOWN, all following motion events
         // will be ignored by the collector until another MotionEvent.ACTION_DOWN is passed in.
@@ -329,6 +359,7 @@ class FalsingCollectorImpl implements FalsingCollector {
 
     @Override
     public void onMotionEventComplete() {
+        logDebug("REAL: onMotionEventComplete");
         // We must delay processing the completion because of the way Android handles click events.
         // It generally delays executing them immediately, instead choosing to give the UI a chance
         // to respond to touch events before acknowledging the click. As such, we must also delay,
@@ -345,6 +376,7 @@ class FalsingCollectorImpl implements FalsingCollector {
 
     @Override
     public void avoidGesture() {
+        logDebug("REAL: avoidGesture");
         mAvoidGesture = true;
         if (mPendingDownEvent != null) {
             mPendingDownEvent.recycle();
@@ -354,6 +386,7 @@ class FalsingCollectorImpl implements FalsingCollector {
 
     @Override
     public void cleanup() {
+        logDebug("REAL: cleanup");
         unregisterSensors();
         mKeyguardUpdateMonitor.removeCallback(mKeyguardUpdateCallback);
         mStatusBarStateController.removeCallback(mStatusBarStateListener);
@@ -363,11 +396,25 @@ class FalsingCollectorImpl implements FalsingCollector {
 
     @Override
     public void updateFalseConfidence(FalsingClassifier.Result result) {
+        logDebug("REAL: updateFalseConfidence(" + result.isFalse() + ")");
         mHistoryTracker.addResults(Collections.singleton(result), mSystemClock.uptimeMillis());
     }
 
+    @Override
+    public void onA11yAction() {
+        logDebug("REAL: onA11yAction");
+        if (mPendingDownEvent != null) {
+            mPendingDownEvent.recycle();
+            mPendingDownEvent = null;
+        }
+        mFalsingDataProvider.onA11yAction();
+    }
+
     private boolean shouldSessionBeActive() {
-        return mScreenOn && (mState == StatusBarState.KEYGUARD) && !mShowingAod;
+        return mScreenOn
+                && (mState == StatusBarState.KEYGUARD)
+                && !mShowingAod
+                && !mShowingCommunalHub;
     }
 
     private void updateSessionActive() {
@@ -376,6 +423,25 @@ class FalsingCollectorImpl implements FalsingCollector {
         } else {
             sessionEnd();
         }
+        updateSensorRegistration();
+    }
+
+    private boolean shouldBeRegisteredToSensors() {
+        final boolean isKeyguard = mState == StatusBarState.KEYGUARD;
+
+        final boolean isShadeOverOccludedKeyguard = mState == StatusBarState.SHADE
+                && isKeyguardShowing()
+                && isKeyguardOccluded();
+
+        return mScreenOn && !mShowingAod && (isKeyguard || isShadeOverOccludedKeyguard);
+    }
+
+    private void updateSensorRegistration() {
+        if (shouldBeRegisteredToSensors()) {
+            registerSensors();
+        } else {
+            unregisterSensors();
+        }
     }
 
     private void sessionStart() {
@@ -383,7 +449,6 @@ class FalsingCollectorImpl implements FalsingCollector {
             logDebug("Starting Session");
             mSessionStarted = true;
             mFalsingDataProvider.setJustUnlockedWithFace(false);
-            registerSensors();
             mFalsingDataProvider.onSessionStarted();
         }
     }
@@ -392,7 +457,6 @@ class FalsingCollectorImpl implements FalsingCollector {
         if (mSessionStarted) {
             logDebug("Ending Session");
             mSessionStarted = false;
-            unregisterSensors();
             mFalsingDataProvider.onSessionEnd();
         }
     }
@@ -405,27 +469,49 @@ class FalsingCollectorImpl implements FalsingCollector {
         mProximitySensor.unregister(mSensorEventListener);
     }
 
-    private void onProximityEvent(ThresholdSensor.ThresholdSensorEvent proximityEvent) {
+    private void onProximityEvent(ThresholdSensorEvent proximityEvent) {
         // TODO: some of these classifiers might allow us to abort early, meaning we don't have to
         // make these calls.
         mFalsingManager.onProximityEvent(new ProximityEventImpl(proximityEvent));
     }
 
-
-    static void logDebug(String msg) {
-        logDebug(msg, null);
+    /**
+     * Returns {@code true} if the keyguard is showing (whether or not the screen is on, whether or
+     * not an activity is occluding the keyguard, and whether or not the shade is open on top of the
+     * keyguard), or {@code false} if the user has dismissed the keyguard by authenticating or
+     * swiping up.
+     */
+    private boolean isKeyguardShowing() {
+        if (SceneContainerFlag.isEnabled()) {
+            return !mDeviceEntryInteractor.get().isDeviceEntered().getValue();
+        } else {
+            return mKeyguardStateController.isShowing();
+        }
     }
 
-    static void logDebug(String msg, Throwable throwable) {
+    /**
+     * Returns {@code true} if there is an activity display on top of ("occluding") the keyguard, or
+     * {@code false} if an activity is not occluding the keyguard (including if the keyguard is not
+     * showing at all).
+     */
+    private boolean isKeyguardOccluded() {
+        if (SceneContainerFlag.isEnabled()) {
+            return mSceneContainerOcclusionInteractor.get().getInvisibleDueToOcclusion().getValue();
+        } else {
+            return mKeyguardStateController.isOccluded();
+        }
+    }
+
+    static void logDebug(String msg) {
         if (DEBUG) {
-            Log.d(TAG, msg, throwable);
+            Log.d(TAG, msg);
         }
     }
 
     private static class ProximityEventImpl implements FalsingManager.ProximityEvent {
-        private ThresholdSensor.ThresholdSensorEvent mThresholdSensorEvent;
+        private final ThresholdSensorEvent mThresholdSensorEvent;
 
-        ProximityEventImpl(ThresholdSensor.ThresholdSensorEvent thresholdSensorEvent) {
+        ProximityEventImpl(ThresholdSensorEvent thresholdSensorEvent) {
             mThresholdSensorEvent = thresholdSensorEvent;
         }
         @Override

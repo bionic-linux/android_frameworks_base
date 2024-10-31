@@ -18,6 +18,8 @@ package com.android.internal.protolog;
 
 import com.android.internal.protolog.common.IProtoLogGroup;
 
+import java.util.UUID;
+
 /**
  * Defines logging groups for ProtoLog.
  *
@@ -60,6 +62,7 @@ public enum ProtoLogGroup implements IProtoLogGroup {
             Consts.TAG_WM),
     WM_DEBUG_APP_TRANSITIONS(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, false,
             Consts.TAG_WM),
+    WM_DEBUG_ANIM(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, false, Consts.TAG_WM),
     WM_DEBUG_APP_TRANSITIONS_ANIM(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, false,
             Consts.TAG_WM),
     WM_DEBUG_RECENTS_ANIMATIONS(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, false,
@@ -78,7 +81,22 @@ public enum ProtoLogGroup implements IProtoLogGroup {
             Consts.TAG_WM),
     WM_DEBUG_SYNC_ENGINE(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, false,
             Consts.TAG_WM),
-    WM_DEBUG_WINDOW_TRANSITIONS(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, true,
+    WM_DEBUG_WINDOW_TRANSITIONS(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, false,
+            Consts.TAG_WM),
+    WM_DEBUG_WINDOW_TRANSITIONS_MIN(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, true,
+            Consts.TAG_WM),
+    WM_DEBUG_WINDOW_INSETS(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, false,
+            Consts.TAG_WM),
+    WM_DEBUG_CONTENT_RECORDING(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, true,
+            Consts.TAG_WM),
+    WM_DEBUG_WALLPAPER(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, false, Consts.TAG_WM),
+    WM_DEBUG_BACK_PREVIEW(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, true,
+            "CoreBackPreview"),
+    WM_DEBUG_DREAM(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, true, Consts.TAG_WM),
+
+    WM_DEBUG_DIMMER(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, false, Consts.TAG_WM),
+    WM_DEBUG_TPL(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, false, Consts.TAG_WM),
+    WM_DEBUG_EMBEDDED_WINDOWS(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, false,
             Consts.TAG_WM),
     TEST_GROUP(true, true, false, "WindowManagerProtoLogTest");
 
@@ -137,10 +155,18 @@ public enum ProtoLogGroup implements IProtoLogGroup {
         this.mLogToLogcat = logToLogcat;
     }
 
+    @Override
+    public int getId() {
+        return Consts.START_ID + this.ordinal();
+    }
+
     private static class Consts {
         private static final String TAG_WM = "WindowManager";
 
         private static final boolean ENABLE_DEBUG = true;
         private static final boolean ENABLE_LOG_TO_PROTO_DEBUG = true;
+        private static final int START_ID = (int) (
+                UUID.nameUUIDFromBytes(ProtoLogGroup.class.getName().getBytes())
+                        .getMostSignificantBits() % Integer.MAX_VALUE);
     }
 }

@@ -16,6 +16,7 @@
 
 package android.window;
 
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.ComponentName;
@@ -28,8 +29,14 @@ import android.hardware.HardwareBuffer;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.SystemClock;
 import android.view.Surface;
 import android.view.WindowInsetsController;
+
+import com.android.window.flags.Flags;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * Represents a task snapshot.
@@ -38,6 +45,9 @@ import android.view.WindowInsetsController;
 public class TaskSnapshot implements Parcelable {
     // Identifier of this snapshot
     private final long mId;
+    // The elapsed real time (in nanoseconds) when this snapshot was captured, not intended for use outside the
+    // process in which the snapshot was taken (ie. this is not parceled)
+    private final long mCaptureTime;
     // Top activity in task when snapshot was taken
     private final ComponentName mTopActivityComponent;
     private final HardwareBuffer mSnapshot;
@@ -50,6 +60,7 @@ public class TaskSnapshot implements Parcelable {
     /** The size of the snapshot before scaling */
     private final Point mTaskSize;
     private final Rect mContentInsets;
+    private final Rect mLetterboxInsets;
     // Whether this snapshot is a down-sampled version of the high resolution snapshot, used
     // mainly for loading snapshots quickly from disk when user is flinging fast
     private final boolean mIsLowResolution;
@@ -63,14 +74,31 @@ public class TaskSnapshot implements Parcelable {
     private final boolean mHasImeSurface;
     // Must be one of the named color spaces, otherwise, always use SRGB color space.
     private final ColorSpace mColorSpace;
+    private int mInternalReferences;
 
-    public TaskSnapshot(long id,
+    /** This snapshot object is being broadcast. */
+    public static final int REFERENCE_BROADCAST = 1;
+    /** This snapshot object is in the cache. */
+    public static final int REFERENCE_CACHE = 1 << 1;
+    /** This snapshot object is being persistent. */
+    public static final int REFERENCE_PERSIST = 1 << 2;
+    @IntDef(flag = true, prefix = { "REFERENCE_" }, value = {
+            REFERENCE_BROADCAST,
+            REFERENCE_CACHE,
+            REFERENCE_PERSIST
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    @interface ReferenceFlags {}
+
+    public TaskSnapshot(long id, long captureTime,
             @NonNull ComponentName topActivityComponent, HardwareBuffer snapshot,
             @NonNull ColorSpace colorSpace, int orientation, int rotation, Point taskSize,
-            Rect contentInsets, boolean isLowResolution, boolean isRealSnapshot,
-            int windowingMode, @WindowInsetsController.Appearance int appearance,
-            boolean isTranslucent, boolean hasImeSurface) {
+            Rect contentInsets, Rect letterboxInsets, boolean isLowResolution,
+            boolean isRealSnapshot, int windowingMode,
+            @WindowInsetsController.Appearance int appearance, boolean isTranslucent,
+            boolean hasImeSurface) {
         mId = id;
+        mCaptureTime = captureTime;
         mTopActivityComponent = topActivityComponent;
         mSnapshot = snapshot;
         mColorSpace = colorSpace.getId() < 0
@@ -79,6 +107,7 @@ public class TaskSnapshot implements Parcelable {
         mRotation = rotation;
         mTaskSize = new Point(taskSize);
         mContentInsets = new Rect(contentInsets);
+        mLetterboxInsets = new Rect(letterboxInsets);
         mIsLowResolution = isLowResolution;
         mIsRealSnapshot = isRealSnapshot;
         mWindowingMode = windowingMode;
@@ -89,6 +118,7 @@ public class TaskSnapshot implements Parcelable {
 
     private TaskSnapshot(Parcel source) {
         mId = source.readLong();
+        mCaptureTime = SystemClock.elapsedRealtimeNanos();
         mTopActivityComponent = ComponentName.readFromParcel(source);
         mSnapshot = source.readTypedObject(HardwareBuffer.CREATOR);
         int colorSpaceId = source.readInt();
@@ -99,6 +129,7 @@ public class TaskSnapshot implements Parcelable {
         mRotation = source.readInt();
         mTaskSize = source.readTypedObject(Point.CREATOR);
         mContentInsets = source.readTypedObject(Rect.CREATOR);
+        mLetterboxInsets = source.readTypedObject(Rect.CREATOR);
         mIsLowResolution = source.readBoolean();
         mIsRealSnapshot = source.readBoolean();
         mWindowingMode = source.readInt();
@@ -112,6 +143,14 @@ public class TaskSnapshot implements Parcelable {
      */
     public long getId() {
         return mId;
+    }
+
+    /**
+     * @return The elapsed real time (in nanoseconds) when this snapshot was captured. This time is
+     * only valid in the process where this snapshot was taken.
+     */
+    public long getCaptureTime() {
+        return mCaptureTime;
     }
 
     /**
@@ -179,6 +218,14 @@ public class TaskSnapshot implements Parcelable {
     }
 
     /**
+     * @return The letterbox insets on the snapshot. These can be clipped off in order to
+     *         remove any letterbox areas in the snapshot.
+     */
+    public Rect getLetterboxInsets() {
+        return mLetterboxInsets;
+    }
+
+    /**
      * @return Whether this snapshot is a down-sampled version of the full resolution.
      */
     @UnsupportedAppUsage
@@ -241,6 +288,7 @@ public class TaskSnapshot implements Parcelable {
         dest.writeInt(mRotation);
         dest.writeTypedObject(mTaskSize, 0);
         dest.writeTypedObject(mContentInsets, 0);
+        dest.writeTypedObject(mLetterboxInsets, 0);
         dest.writeBoolean(mIsLowResolution);
         dest.writeBoolean(mIsRealSnapshot);
         dest.writeInt(mWindowingMode);
@@ -255,6 +303,7 @@ public class TaskSnapshot implements Parcelable {
         final int height = mSnapshot != null ? mSnapshot.getHeight() : 0;
         return "TaskSnapshot{"
                 + " mId=" + mId
+                + " mCaptureTime=" + mCaptureTime
                 + " mTopActivityComponent=" + mTopActivityComponent.flattenToShortString()
                 + " mSnapshot=" + mSnapshot + " (" + width + "x" + height + ")"
                 + " mColorSpace=" + mColorSpace.toString()
@@ -262,12 +311,35 @@ public class TaskSnapshot implements Parcelable {
                 + " mRotation=" + mRotation
                 + " mTaskSize=" + mTaskSize.toString()
                 + " mContentInsets=" + mContentInsets.toShortString()
+                + " mLetterboxInsets=" + mLetterboxInsets.toShortString()
                 + " mIsLowResolution=" + mIsLowResolution
                 + " mIsRealSnapshot=" + mIsRealSnapshot
                 + " mWindowingMode=" + mWindowingMode
                 + " mAppearance=" + mAppearance
                 + " mIsTranslucent=" + mIsTranslucent
-                + " mHasImeSurface=" + mHasImeSurface;
+                + " mHasImeSurface=" + mHasImeSurface
+                + " mInternalReferences=" + mInternalReferences;
+    }
+
+    /**
+     * Adds a reference when the object is held somewhere.
+     * Only used in core.
+     */
+    public synchronized void addReference(@ReferenceFlags int usage) {
+        mInternalReferences |= usage;
+    }
+
+    /**
+     * Removes a reference when the object is not held from somewhere. The snapshot will be closed
+     * once the reference becomes zero.
+     * Only used in core.
+     */
+    public synchronized void removeReference(@ReferenceFlags int usage) {
+        mInternalReferences &= ~usage;
+        if (Flags.releaseSnapshotAggressively() && mInternalReferences == 0 && mSnapshot != null
+                && !mSnapshot.isClosed()) {
+            mSnapshot.close();
+        }
     }
 
     public static final @NonNull Creator<TaskSnapshot> CREATOR = new Creator<TaskSnapshot>() {
@@ -282,6 +354,7 @@ public class TaskSnapshot implements Parcelable {
     /** Builder for a {@link TaskSnapshot} object */
     public static final class Builder {
         private long mId;
+        private long mCaptureTime;
         private ComponentName mTopActivity;
         private HardwareBuffer mSnapshot;
         private ColorSpace mColorSpace;
@@ -289,6 +362,7 @@ public class TaskSnapshot implements Parcelable {
         private int mRotation;
         private Point mTaskSize;
         private Rect mContentInsets;
+        private Rect mLetterboxInsets;
         private boolean mIsRealSnapshot;
         private int mWindowingMode;
         private @WindowInsetsController.Appearance
@@ -299,6 +373,11 @@ public class TaskSnapshot implements Parcelable {
 
         public Builder setId(long id) {
             mId = id;
+            return this;
+        }
+
+        public Builder setCaptureTime(long captureTime) {
+            mCaptureTime = captureTime;
             return this;
         }
 
@@ -337,6 +416,11 @@ public class TaskSnapshot implements Parcelable {
 
         public Builder setContentInsets(Rect contentInsets) {
             mContentInsets = contentInsets;
+            return this;
+        }
+
+        public Builder setLetterboxInsets(Rect letterboxInsets) {
+            mLetterboxInsets = letterboxInsets;
             return this;
         }
 
@@ -380,6 +464,7 @@ public class TaskSnapshot implements Parcelable {
         public TaskSnapshot build() {
             return new TaskSnapshot(
                     mId,
+                    mCaptureTime,
                     mTopActivity,
                     mSnapshot,
                     mColorSpace,
@@ -387,6 +472,7 @@ public class TaskSnapshot implements Parcelable {
                     mRotation,
                     mTaskSize,
                     mContentInsets,
+                    mLetterboxInsets,
                     // When building a TaskSnapshot with the Builder class, isLowResolution
                     // is always false. Low-res snapshots are only created when loading from
                     // disk.

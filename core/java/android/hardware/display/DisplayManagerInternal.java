@@ -18,22 +18,26 @@ package android.hardware.display;
 
 import android.annotation.IntDef;
 import android.annotation.Nullable;
+import android.companion.virtual.IVirtualDevice;
 import android.graphics.Point;
 import android.hardware.SensorManager;
+import android.hardware.input.HostUsiVersion;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.util.IntArray;
-import android.util.Slog;
 import android.util.SparseArray;
 import android.view.Display;
 import android.view.DisplayInfo;
 import android.view.SurfaceControl;
+import android.view.SurfaceControl.RefreshRateRange;
 import android.view.SurfaceControl.Transaction;
+import android.window.DisplayWindowPolicyController;
+import android.window.ScreenCapture;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 
 /**
  * Display manager local system service interface.
@@ -56,6 +60,14 @@ public abstract class DisplayManagerInternal {
      */
     public abstract void initPowerManagement(DisplayPowerCallbacks callbacks,
             Handler handler, SensorManager sensorManager);
+
+    /**
+     * Called by the VirtualDeviceManagerService to create a VirtualDisplay owned by a
+     * VirtualDevice.
+     */
+    public abstract int createVirtualDisplay(VirtualDisplayConfig config,
+            IVirtualDisplayCallback callback, IVirtualDevice virtualDevice,
+            DisplayWindowPolicyController dwpc, String packageName);
 
     /**
      * Called by the power manager to request a new power state.
@@ -107,7 +119,7 @@ public abstract class DisplayManagerInternal {
      * @param displayId The display id to take the screenshot of.
      * @return The buffer or null if we have failed.
      */
-    public abstract SurfaceControl.ScreenshotHardwareBuffer systemScreenshot(int displayId);
+    public abstract ScreenCapture.ScreenshotHardwareBuffer systemScreenshot(int displayId);
 
     /**
      * General screenshot functionality that excludes secure layers and applies appropriate
@@ -116,7 +128,7 @@ public abstract class DisplayManagerInternal {
      * @param displayId The display id to take the screenshot of.
      * @return The buffer or null if we have failed.
      */
-    public abstract SurfaceControl.ScreenshotHardwareBuffer userScreenshot(int displayId);
+    public abstract ScreenCapture.ScreenshotHardwareBuffer userScreenshot(int displayId);
 
     /**
      * Returns information about the specified logical display.
@@ -126,6 +138,14 @@ public abstract class DisplayManagerInternal {
      * returned object must be treated as immutable.
      */
     public abstract DisplayInfo getDisplayInfo(int displayId);
+
+    /**
+     * Returns a set of DisplayInfo, for the states that may be assumed by either the given display,
+     * or any other display within that display's group.
+     *
+     * @param displayId The logical display id to fetch DisplayInfo for.
+     */
+    public abstract Set<DisplayInfo> getPossibleDisplayInfo(int displayId);
 
     /**
      * Returns the position of the display's projection.
@@ -182,8 +202,11 @@ public abstract class DisplayManagerInternal {
     /**
      * Called by the window manager to perform traversals while holding a
      * surface flinger transaction.
+     * @param t The default transaction.
+     * @param displayTransactions The transactions mapped by display id.
      */
-    public abstract void performTraversal(Transaction t);
+    public abstract void performTraversal(Transaction t,
+            SparseArray<SurfaceControl.Transaction> displayTransactions);
 
     /**
      * Tells the display manager about properties of the display that depend on the windows on it.
@@ -214,13 +237,14 @@ public abstract class DisplayManagerInternal {
      * @param requestedMinimalPostProcessing The preferred minimal post processing setting for the
      * display. This is true when there is at least one visible window that wants minimal post
      * processng on.
+     * @param disableHdrConversion The preferred HDR conversion setting for the window.
      * @param inTraversal True if called from WindowManagerService during a window traversal
      * prior to call to performTraversalInTransactionFromWindowManager.
      */
     public abstract void setDisplayProperties(int displayId, boolean hasContent,
             float requestedRefreshRate, int requestedModeId, float requestedMinRefreshRate,
             float requestedMaxRefreshRate, boolean requestedMinimalPostProcessing,
-            boolean inTraversal);
+            boolean disableHdrConversion, boolean inTraversal);
 
     /**
      * Applies an offset to the contents of a display, for example to avoid burn-in.
@@ -340,6 +364,80 @@ public abstract class DisplayManagerInternal {
     public abstract List<RefreshRateLimitation> getRefreshRateLimitations(int displayId);
 
     /**
+     * For the given displayId, updates if WindowManager is responsible for mirroring on that
+     * display. If {@code false}, then SurfaceFlinger performs no layer mirroring to the
+     * given display.
+     * Only used for mirroring started from MediaProjection.
+     */
+    public abstract void setWindowManagerMirroring(int displayId, boolean isMirroring);
+
+    /**
+     * Returns the default size of the surface associated with the display, or null if the surface
+     * is not provided for layer mirroring by SurfaceFlinger. Size is rotated to reflect the current
+     * display device orientation.
+     * Used for mirroring from MediaProjection, or a physical display based on display flags.
+     */
+    public abstract Point getDisplaySurfaceDefaultSize(int displayId);
+
+    /**
+     * Get a new displayId which represents the display you want to mirror. If mirroring is not
+     * enabled on the display, {@link Display#INVALID_DISPLAY} will be returned.
+     *
+     * @param displayId The id of the display.
+     * @return The displayId that should be mirrored or INVALID_DISPLAY if mirroring is not enabled.
+     */
+    public abstract int getDisplayIdToMirror(int displayId);
+
+    /**
+     * Receives early interactivity changes from power manager.
+     *
+     * @param interactive The interactive state that the device is moving into.
+     */
+    public abstract void onEarlyInteractivityChange(boolean interactive);
+
+    /**
+     * Get {@link DisplayWindowPolicyController} associated to the {@link DisplayInfo#displayId}
+     *
+     * @param displayId The id of the display.
+     * @return The associated {@link DisplayWindowPolicyController}.
+     */
+    public abstract DisplayWindowPolicyController getDisplayWindowPolicyController(int displayId);
+
+    /**
+     * Get DisplayPrimaries from SF for a particular display.
+     */
+    public abstract SurfaceControl.DisplayPrimaries getDisplayNativePrimaries(int displayId);
+
+    /**
+     * Get the version of the Universal Stylus Initiative (USI) Protocol supported by the display.
+     * @param displayId The id of the display.
+     * @return The USI version, or null if not supported
+     */
+    @Nullable
+    public abstract HostUsiVersion getHostUsiVersion(int displayId);
+
+    /**
+     * Get the ALS data for a particular display.
+     *
+     * @param displayId The id of the display.
+     * @return {@link AmbientLightSensorData}
+     */
+    @Nullable
+    public abstract AmbientLightSensorData getAmbientLightSensorData(int displayId);
+
+    /**
+     * Get all available DisplayGroupIds.
+     */
+    public abstract IntArray getDisplayGroupIds();
+
+    /**
+     * Called upon presentation started/ended on the display.
+     * @param displayId the id of the display where presentation started.
+     * @param isShown whether presentation is shown.
+     */
+    public abstract void onPresentation(int displayId, boolean isShown);
+
+    /**
      * Describes the requested power state of the display.
      *
      * This object is intended to describe the general characteristics of the
@@ -349,7 +447,7 @@ public abstract class DisplayManagerInternal {
      * the PowerManagerService to focus on the global power state and not
      * have to micro-manage screen off animations, auto-brightness and other effects.
      */
-    public static final class DisplayPowerRequest {
+    public static class DisplayPowerRequest {
         // Policy: Turn screen off as if the user pressed the power button
         // including playing a screen off animation if applicable.
         public static final int POLICY_OFF = 0;
@@ -360,8 +458,6 @@ public abstract class DisplayManagerInternal {
         public static final int POLICY_DIM = 2;
         // Policy: Make the screen bright as usual.
         public static final int POLICY_BRIGHT = 3;
-        // Policy: Keep the screen and display optimized for VR mode.
-        public static final int POLICY_VR = 4;
 
         // The basic overall policy to apply: off, doze, dim or bright.
         public int policy;
@@ -377,9 +473,6 @@ public abstract class DisplayManagerInternal {
         // An override of the screen auto-brightness adjustment factor in the range -1 (dimmer) to
         // 1 (brighter). Set to Float.NaN if there's no override.
         public float screenAutoBrightnessAdjustmentOverride;
-
-        // If true, enables automatic brightness control.
-        public boolean useAutoBrightness;
 
         // If true, scales the brightness to a fraction of desired (as defined by
         // screenLowPowerBrightnessFactor).
@@ -405,17 +498,18 @@ public abstract class DisplayManagerInternal {
         // Overrides the policy for adjusting screen brightness and state while dozing.
         public int dozeScreenState;
         public float dozeScreenBrightness;
+        public int dozeScreenStateReason;
 
         public DisplayPowerRequest() {
             policy = POLICY_BRIGHT;
             useProximitySensor = false;
             screenBrightnessOverride = PowerManager.BRIGHTNESS_INVALID_FLOAT;
-            useAutoBrightness = false;
             screenAutoBrightnessAdjustmentOverride = Float.NaN;
             screenLowPowerBrightnessFactor = 0.5f;
             blockScreenOn = false;
             dozeScreenBrightness = PowerManager.BRIGHTNESS_INVALID_FLOAT;
             dozeScreenState = Display.STATE_UNKNOWN;
+            dozeScreenStateReason = Display.STATE_REASON_UNKNOWN;
         }
 
         public DisplayPowerRequest(DisplayPowerRequest other) {
@@ -426,15 +520,10 @@ public abstract class DisplayManagerInternal {
             return policy == POLICY_BRIGHT || policy == POLICY_DIM;
         }
 
-        public boolean isVr() {
-            return policy == POLICY_VR;
-        }
-
         public void copyFrom(DisplayPowerRequest other) {
             policy = other.policy;
             useProximitySensor = other.useProximitySensor;
             screenBrightnessOverride = other.screenBrightnessOverride;
-            useAutoBrightness = other.useAutoBrightness;
             screenAutoBrightnessAdjustmentOverride = other.screenAutoBrightnessAdjustmentOverride;
             screenLowPowerBrightnessFactor = other.screenLowPowerBrightnessFactor;
             blockScreenOn = other.blockScreenOn;
@@ -442,6 +531,7 @@ public abstract class DisplayManagerInternal {
             boostScreenBrightness = other.boostScreenBrightness;
             dozeScreenBrightness = other.dozeScreenBrightness;
             dozeScreenState = other.dozeScreenState;
+            dozeScreenStateReason = other.dozeScreenStateReason;
         }
 
         @Override
@@ -456,7 +546,6 @@ public abstract class DisplayManagerInternal {
                     && useProximitySensor == other.useProximitySensor
                     && floatEquals(screenBrightnessOverride,
                             other.screenBrightnessOverride)
-                    && useAutoBrightness == other.useAutoBrightness
                     && floatEquals(screenAutoBrightnessAdjustmentOverride,
                             other.screenAutoBrightnessAdjustmentOverride)
                     && screenLowPowerBrightnessFactor
@@ -465,7 +554,8 @@ public abstract class DisplayManagerInternal {
                     && lowPowerMode == other.lowPowerMode
                     && boostScreenBrightness == other.boostScreenBrightness
                     && floatEquals(dozeScreenBrightness, other.dozeScreenBrightness)
-                    && dozeScreenState == other.dozeScreenState;
+                    && dozeScreenState == other.dozeScreenState
+                    && dozeScreenStateReason == other.dozeScreenStateReason;
         }
 
         private boolean floatEquals(float f1, float f2) {
@@ -482,7 +572,6 @@ public abstract class DisplayManagerInternal {
             return "policy=" + policyToString(policy)
                     + ", useProximitySensor=" + useProximitySensor
                     + ", screenBrightnessOverride=" + screenBrightnessOverride
-                    + ", useAutoBrightness=" + useAutoBrightness
                     + ", screenAutoBrightnessAdjustmentOverride="
                     + screenAutoBrightnessAdjustmentOverride
                     + ", screenLowPowerBrightnessFactor=" + screenLowPowerBrightnessFactor
@@ -490,7 +579,9 @@ public abstract class DisplayManagerInternal {
                     + ", lowPowerMode=" + lowPowerMode
                     + ", boostScreenBrightness=" + boostScreenBrightness
                     + ", dozeScreenBrightness=" + dozeScreenBrightness
-                    + ", dozeScreenState=" + Display.stateToString(dozeScreenState);
+                    + ", dozeScreenState=" + Display.stateToString(dozeScreenState)
+                    + ", dozeScreenStateReason="
+                            + Display.stateReasonToString(dozeScreenStateReason);
         }
 
         public static String policyToString(int policy) {
@@ -503,8 +594,6 @@ public abstract class DisplayManagerInternal {
                     return "DIM";
                 case POLICY_BRIGHT:
                     return "BRIGHT";
-                case POLICY_VR:
-                    return "VR";
                 default:
                     return Integer.toString(policy);
             }
@@ -520,8 +609,19 @@ public abstract class DisplayManagerInternal {
         void onProximityNegative();
         void onDisplayStateChange(boolean allInactive, boolean allOff);
 
-        void acquireSuspendBlocker();
-        void releaseSuspendBlocker();
+        /**
+         * Acquires a suspend blocker with a specified label.
+         *
+         * @param id A logging label for the acquisition.
+         */
+        void acquireSuspendBlocker(String id);
+
+        /**
+         * Releases a suspend blocker with a specified label.
+         *
+         * @param id A logging label for the release.
+         */
+        void releaseSuspendBlocker(String id);
     }
 
     /**
@@ -576,72 +676,6 @@ public abstract class DisplayManagerInternal {
     }
 
     /**
-     * Information about the min and max refresh rate DM would like to set the display to.
-     */
-    public static final class RefreshRateRange {
-        public static final String TAG = "RefreshRateRange";
-
-        // The tolerance within which we consider something approximately equals.
-        public static final float FLOAT_TOLERANCE = 0.01f;
-
-        /**
-         * The lowest desired refresh rate.
-         */
-        public float min;
-
-        /**
-         * The highest desired refresh rate.
-         */
-        public float max;
-
-        public RefreshRateRange() {}
-
-        public RefreshRateRange(float min, float max) {
-            if (min < 0 || max < 0 || min > max + FLOAT_TOLERANCE) {
-                Slog.e(TAG, "Wrong values for min and max when initializing RefreshRateRange : "
-                        + min + " " + max);
-                this.min = this.max = 0;
-                return;
-            }
-            if (min > max) {
-                // Min and max are within epsilon of each other, but in the wrong order.
-                float t = min;
-                min = max;
-                max = t;
-            }
-            this.min = min;
-            this.max = max;
-        }
-
-        /**
-         * Checks whether the two objects have the same values.
-         */
-        @Override
-        public boolean equals(Object other) {
-            if (other == this) {
-                return true;
-            }
-
-            if (!(other instanceof RefreshRateRange)) {
-                return false;
-            }
-
-            RefreshRateRange refreshRateRange = (RefreshRateRange) other;
-            return (min == refreshRateRange.min && max == refreshRateRange.max);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(min, max);
-        }
-
-        @Override
-        public String toString() {
-            return "(" + min + " " + max + ")";
-        }
-    }
-
-    /**
      * Describes a limitation on a display's refresh rate. Includes the allowed refresh rate
      * range as well as information about when it applies, such as high-brightness-mode.
      */
@@ -659,6 +693,116 @@ public abstract class DisplayManagerInternal {
         @Override
         public String toString() {
             return "RefreshRateLimitation(" + type + ": " + range + ")";
+        }
+    }
+
+    /**
+     * Class to provide Ambient sensor data using the API
+     * {@link DisplayManagerInternal#getAmbientLightSensorData(int)}
+     */
+    public static final class AmbientLightSensorData {
+        public String sensorName;
+        public String sensorType;
+
+        public AmbientLightSensorData(String name, String type) {
+            sensorName = name;
+            sensorType = type;
+        }
+
+        @Override
+        public String toString() {
+            return "AmbientLightSensorData(" + sensorName + ", " + sensorType + ")";
+        }
+    }
+
+    /**
+     * Associate a internal display to a {@link DisplayOffloader}.
+     *
+     * @param displayId the id of the internal display.
+     * @param displayOffloader the {@link DisplayOffloader} that controls offloading ops of internal
+     *                         display whose id is displayId.
+     * @return a {@link DisplayOffloadSession} associated with given displayId and displayOffloader.
+     */
+    public abstract DisplayOffloadSession registerDisplayOffloader(
+            int displayId, DisplayOffloader displayOffloader);
+
+    /** The callbacks that controls the entry & exit of display offloading. */
+    public interface DisplayOffloader {
+        boolean startOffload();
+
+        void stopOffload();
+
+        /**
+         * Called when {@link DisplayOffloadSession} tries to block screen turning on.
+         *
+         * @param unblocker a {@link Runnable} executed upon all work required before screen turning
+         *                  on is done.
+         */
+        void onBlockingScreenOn(Runnable unblocker);
+
+        /** Whether auto brightness update in doze is allowed */
+        boolean allowAutoBrightnessInDoze();
+    }
+
+    /** A session token that associates a internal display with a {@link DisplayOffloader}. */
+    public interface DisplayOffloadSession {
+        /** Provide the display state to use in place of state DOZE. */
+        void setDozeStateOverride(int displayState);
+
+        /** Whether the session is active. */
+        boolean isActive();
+
+        /** Whether auto brightness update in doze is allowed */
+        boolean allowAutoBrightnessInDoze();
+
+        /**
+         * Update the brightness from the offload chip.
+         * @param brightness The brightness value between {@link PowerManager.BRIGHTNESS_MIN} and
+         *                   {@link PowerManager.BRIGHTNESS_MAX}, or
+         *                   {@link PowerManager.BRIGHTNESS_INVALID_FLOAT} which removes
+         *                   the brightness from offload. Other values will be ignored.
+         */
+        void updateBrightness(float brightness);
+
+        /**
+         * Called while display is turning to state ON to leave a small period for displayoffload
+         * session to finish some work.
+         *
+         * @param unblocker a {@link Runnable} used by displayoffload session to notify
+         *                  {@link DisplayManager} that it can continue turning screen on.
+         */
+        boolean blockScreenOn(Runnable unblocker);
+
+        /**
+         * Get the brightness levels used to determine automatic brightness based on lux levels.
+         * @param mode The auto-brightness mode
+         *             (AutomaticBrightnessController.AutomaticBrightnessMode)
+         * @return The brightness levels for the specified mode. The values are between
+         * {@link PowerManager.BRIGHTNESS_MIN} and {@link PowerManager.BRIGHTNESS_MAX}.
+         */
+        float[] getAutoBrightnessLevels(int mode);
+
+        /**
+         * Get the lux levels used to determine automatic brightness.
+         * @param mode The auto-brightness mode
+         *             (AutomaticBrightnessController.AutomaticBrightnessMode)
+         * @return The lux levels for the specified mode
+         */
+        float[] getAutoBrightnessLuxLevels(int mode);
+
+        /**
+         * @return The current brightness setting
+         */
+        float getBrightness();
+
+        /**
+         * @return The brightness value that is used when the device is in doze
+         */
+        float getDozeBrightness();
+
+        /** Returns whether displayoffload supports the given display state. */
+        static boolean isSupportedOffloadState(int displayState) {
+            return Display.isSuspendedState(displayState);
         }
     }
 }

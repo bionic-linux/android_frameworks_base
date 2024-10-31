@@ -465,7 +465,7 @@ import com.android.internal.os.IResultReceiver;
  * <p>Prior to Android {@link android.os.Build.VERSION_CODES#P}, the metrics covered just the
  * scenarios where the service knew how to autofill an activity, but Android
  * {@link android.os.Build.VERSION_CODES#P} introduced a new mechanism called field classification,
- * which allows the service to dinamically classify the meaning of fields based on the existing user
+ * which allows the service to dynamically classify the meaning of fields based on the existing user
  * data known by the service.
  *
  * <p>Typically, field classification can be used to detect fields that can be autofilled with
@@ -578,6 +578,14 @@ public abstract class AutofillService extends Service {
     public static final String SERVICE_META_DATA = "android.autofill";
 
     /**
+     * Name of the {@link FillResponse} extra used to return a delayed fill response.
+     *
+     * <p>Please see {@link FillRequest#getDelayedFillIntentSender()} on how to send a delayed
+     * fill response to framework.</p>
+     */
+    public static final String EXTRA_FILL_RESPONSE = "android.service.autofill.extra.FILL_RESPONSE";
+
+    /**
      * Name of the {@link IResultReceiver} extra used to return the primary result of a request.
      *
      * @hide
@@ -590,6 +598,14 @@ public abstract class AutofillService extends Service {
      * @hide
      */
     public static final String EXTRA_ERROR = "error";
+
+    /**
+     * Name of the key used to mark whether the fill response is for a webview.
+     *
+     * @hide
+     */
+    public static final String WEBVIEW_REQUESTED_CREDENTIAL_KEY = "webview_requested_credential";
+
 
     private final IAutoFillService mInterface = new IAutoFillService.Stub() {
         @Override
@@ -611,6 +627,32 @@ public abstract class AutofillService extends Service {
                     AutofillService::onFillRequest,
                     AutofillService.this, request, CancellationSignal.fromTransport(transport),
                     new FillCallback(callback, request.getId())));
+        }
+
+        @Override
+        public void onConvertCredentialRequest(
+                @NonNull ConvertCredentialRequest convertCredentialRequest,
+                @NonNull IConvertCredentialCallback convertCredentialCallback) {
+            mHandler.sendMessage(obtainMessage(
+                    AutofillService::onConvertCredentialRequest,
+                    AutofillService.this, convertCredentialRequest,
+                    new ConvertCredentialCallback(convertCredentialCallback)));
+        }
+
+        @Override
+        public void onFillCredentialRequest(FillRequest request, IFillCallback callback,
+                IBinder autofillClientCallback) {
+            ICancellationSignal transport = CancellationSignal.createTransport();
+            try {
+                callback.onCancellable(transport);
+            } catch (RemoteException e) {
+                e.rethrowFromSystemServer();
+            }
+            mHandler.sendMessage(obtainMessage(
+                    AutofillService::onFillCredentialRequest,
+                    AutofillService.this, request, CancellationSignal.fromTransport(transport),
+                    new FillCallback(callback, request.getId()),
+                    autofillClientCallback));
         }
 
         @Override
@@ -673,6 +715,27 @@ public abstract class AutofillService extends Service {
      */
     public abstract void onFillRequest(@NonNull FillRequest request,
             @NonNull CancellationSignal cancellationSignal, @NonNull FillCallback callback);
+
+    /**
+     * Variant of onFillRequest for internal credential manager proxy autofill service only.
+     *
+     * @hide
+     */
+    public void onFillCredentialRequest(@NonNull FillRequest request,
+            @NonNull CancellationSignal cancellationSignal, @NonNull FillCallback callback,
+            @NonNull IBinder autofillClientCallback) {}
+
+    /**
+     * Called by the Android system to convert a credential manager response to a dataset
+     *
+     * @param convertCredentialRequest the request that has the original credential manager response
+     * @param convertCredentialCallback callback used to notify the result of the request.
+     *
+     * @hide
+     */
+    public void onConvertCredentialRequest(
+            @NonNull ConvertCredentialRequest convertCredentialRequest,
+            @NonNull ConvertCredentialCallback convertCredentialCallback){}
 
     /**
      * Called when the user requests the service to save the contents of a screen.

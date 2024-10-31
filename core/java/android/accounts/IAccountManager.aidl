@@ -38,7 +38,7 @@ interface IAccountManager {
     Account[] getAccountsByTypeForPackage(String type, String packageName, String opPackageName);
     Account[] getAccountsAsUser(String accountType, int userId, String opPackageName);
     void hasFeatures(in IAccountManagerResponse response, in Account account, in String[] features,
-        String opPackageName);
+        int userId, String opPackageName);
     void getAccountByTypeAndFeatures(in IAccountManagerResponse response, String accountType,
         in String[] features, String opPackageName);
     void getAccountsByFeatures(in IAccountManagerResponse response, String accountType,
@@ -105,12 +105,15 @@ interface IAccountManager {
         String statusToken);
 
     /* Returns Map<String, Integer> from package name to visibility with all values stored for given account */
+    @SuppressWarnings(value = {"untyped-collection"})
     Map getPackagesAndVisibilityForAccount(in Account account);
+    @SuppressWarnings(value = {"untyped-collection"})
     boolean addAccountExplicitlyWithVisibility(in Account account, String password, in Bundle extras,
             in Map visibility, in String opPackageName);
     boolean setAccountVisibility(in Account a, in String packageName, int newVisibility);
     int getAccountVisibility(in Account a, in String packageName);
     /* Type may be null returns Map <Account, Integer>*/
+    @SuppressWarnings(value = {"untyped-collection"})
     Map getAccountsAndVisibilityForPackage(in String packageName, in String accountType);
 
     void registerAccountListener(in String[] accountTypes, String opPackageName);

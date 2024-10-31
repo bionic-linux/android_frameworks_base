@@ -17,37 +17,54 @@
 package com.android.internal.accessibility.util;
 
 import static android.provider.Settings.Secure.ACCESSIBILITY_BUTTON_MODE_FLOATING_MENU;
+import static android.provider.Settings.Secure.ACCESSIBILITY_BUTTON_MODE_GESTURE;
 import static android.provider.Settings.Secure.ACCESSIBILITY_MAGNIFICATION_MODE_ALL;
 import static android.provider.Settings.Secure.ACCESSIBILITY_MAGNIFICATION_MODE_FULLSCREEN;
 import static android.provider.Settings.Secure.ACCESSIBILITY_MAGNIFICATION_MODE_WINDOW;
-import static android.view.accessibility.AccessibilityManager.ACCESSIBILITY_BUTTON;
-import static android.view.accessibility.AccessibilityManager.ACCESSIBILITY_SHORTCUT_KEY;
 
 import static com.android.internal.accessibility.AccessibilityShortcutController.MAGNIFICATION_COMPONENT_NAME;
+import static com.android.internal.accessibility.common.ShortcutConstants.UserShortcutType.HARDWARE;
+import static com.android.internal.accessibility.common.ShortcutConstants.UserShortcutType.QUICK_SETTINGS;
+import static com.android.internal.accessibility.common.ShortcutConstants.UserShortcutType.SOFTWARE;
 import static com.android.internal.util.FrameworkStatsLog.ACCESSIBILITY_SHORTCUT_REPORTED__SERVICE_STATUS__DISABLED;
 import static com.android.internal.util.FrameworkStatsLog.ACCESSIBILITY_SHORTCUT_REPORTED__SERVICE_STATUS__ENABLED;
 import static com.android.internal.util.FrameworkStatsLog.ACCESSIBILITY_SHORTCUT_REPORTED__SERVICE_STATUS__UNKNOWN;
 import static com.android.internal.util.FrameworkStatsLog.ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__A11Y_BUTTON;
 import static com.android.internal.util.FrameworkStatsLog.ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__A11Y_BUTTON_LONG_PRESS;
 import static com.android.internal.util.FrameworkStatsLog.ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__A11Y_FLOATING_MENU;
+import static com.android.internal.util.FrameworkStatsLog.ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__A11Y_GESTURE;
+import static com.android.internal.util.FrameworkStatsLog.ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__QUICK_SETTINGS;
 import static com.android.internal.util.FrameworkStatsLog.ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__TRIPLE_TAP;
+import static com.android.internal.util.FrameworkStatsLog.ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__TWO_FINGER_TRIPLE_TAP;
 import static com.android.internal.util.FrameworkStatsLog.ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__UNKNOWN_TYPE;
 import static com.android.internal.util.FrameworkStatsLog.ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__VOLUME_KEY;
 import static com.android.internal.util.FrameworkStatsLog.MAGNIFICATION_USAGE_REPORTED__ACTIVATED_MODE__MAGNIFICATION_ALL;
 import static com.android.internal.util.FrameworkStatsLog.MAGNIFICATION_USAGE_REPORTED__ACTIVATED_MODE__MAGNIFICATION_FULL_SCREEN;
 import static com.android.internal.util.FrameworkStatsLog.MAGNIFICATION_USAGE_REPORTED__ACTIVATED_MODE__MAGNIFICATION_UNKNOWN_MODE;
 import static com.android.internal.util.FrameworkStatsLog.MAGNIFICATION_USAGE_REPORTED__ACTIVATED_MODE__MAGNIFICATION_WINDOW;
+import static com.android.internal.util.FrameworkStatsLog.NON_A11Y_TOOL_SERVICE_WARNING_REPORTED__STATUS__WARNING_CLICKED;
+import static com.android.internal.util.FrameworkStatsLog.NON_A11Y_TOOL_SERVICE_WARNING_REPORTED__STATUS__WARNING_SERVICE_DISABLED;
+import static com.android.internal.util.FrameworkStatsLog.NON_A11Y_TOOL_SERVICE_WARNING_REPORTED__STATUS__WARNING_SHOWN;
 
 import android.content.ComponentName;
 import android.content.Context;
 import android.provider.Settings;
-import android.view.accessibility.AccessibilityManager;
-import android.view.accessibility.AccessibilityManager.ShortcutType;
 
+import com.android.internal.accessibility.common.ShortcutConstants.UserShortcutType;
 import com.android.internal.util.FrameworkStatsLog;
 
 /** Methods for logging accessibility states. */
 public final class AccessibilityStatsLogUtils {
+    /** The status represents an accessibility privacy warning has been shown. */
+    public static int ACCESSIBILITY_PRIVACY_WARNING_STATUS_SHOWN =
+            NON_A11Y_TOOL_SERVICE_WARNING_REPORTED__STATUS__WARNING_SHOWN;
+    /** The status represents an accessibility privacy warning has been clicked to review. */
+    public static int ACCESSIBILITY_PRIVACY_WARNING_STATUS_CLICKED =
+            NON_A11Y_TOOL_SERVICE_WARNING_REPORTED__STATUS__WARNING_CLICKED;
+    /** The status represents an accessibility privacy warning service has been disabled. */
+    public static int ACCESSIBILITY_PRIVACY_WARNING_STATUS_SERVICE_DISABLED =
+            NON_A11Y_TOOL_SERVICE_WARNING_REPORTED__STATUS__WARNING_SERVICE_DISABLED;
+
     private static final int UNKNOWN_STATUS =
             ACCESSIBILITY_SHORTCUT_REPORTED__SERVICE_STATUS__UNKNOWN;
 
@@ -55,15 +72,15 @@ public final class AccessibilityStatsLogUtils {
 
     /**
      * Logs accessibility feature name that is assigned to the given {@code shortcutType}.
-     * Calls this when clicking the shortcut {@link AccessibilityManager#ACCESSIBILITY_BUTTON} or
-     * {@link AccessibilityManager#ACCESSIBILITY_SHORTCUT_KEY}.
+     * Calls this when clicking the shortcut {@link ShortcutConstants.UserShortcutType#SOFTWARE} or
+     * {@link ShortcutConstants.UserShortcutType#HARDWARE}.
      *
      * @param context context used to retrieve the {@link Settings} provider
      * @param componentName component name of the accessibility feature
      * @param shortcutType  accessibility shortcut type
      */
     public static void logAccessibilityShortcutActivated(Context context,
-            ComponentName componentName, @ShortcutType int shortcutType) {
+            ComponentName componentName, @UserShortcutType int shortcutType) {
         logAccessibilityShortcutActivatedInternal(componentName,
                 convertToLoggingShortcutType(context, shortcutType), UNKNOWN_STATUS);
     }
@@ -71,16 +88,17 @@ public final class AccessibilityStatsLogUtils {
     /**
      * Logs accessibility feature name that is assigned to the given {@code shortcutType} and the
      * {@code serviceEnabled} status.
-     * Calls this when clicking the shortcut {@link AccessibilityManager#ACCESSIBILITY_BUTTON}
-     * or {@link AccessibilityManager#ACCESSIBILITY_SHORTCUT_KEY}.
+     * Calls this when clicking the shortcut {@link ShortcutConstants.UserShortcutType#SOFTWARE}
+     * or {@link ShortcutConstants.UserShortcutType#HARDWARE}.
      *
      * @param context context used to retrieve the {@link Settings} provider
      * @param componentName  component name of the accessibility feature
      * @param shortcutType   accessibility shortcut type
      * @param serviceEnabled {@code true} if the service is enabled
      */
-    public static void logAccessibilityShortcutActivated(Context context,
-            ComponentName componentName, @ShortcutType int shortcutType, boolean serviceEnabled) {
+    public static void logAccessibilityShortcutActivated(
+            Context context, ComponentName componentName,
+            @UserShortcutType int shortcutType, boolean serviceEnabled) {
         logAccessibilityShortcutActivatedInternal(componentName,
                 convertToLoggingShortcutType(context, shortcutType),
                 convertToLoggingServiceStatus(serviceEnabled));
@@ -116,6 +134,18 @@ public final class AccessibilityStatsLogUtils {
     }
 
     /**
+     * Logs magnification that is assigned to the two finger triple tap shortcut. Calls this when
+     * triggering the magnification two finger triple tap shortcut.
+     */
+    public static void logMagnificationTwoFingerTripleTap(boolean enabled) {
+        FrameworkStatsLog.write(FrameworkStatsLog.ACCESSIBILITY_SHORTCUT_REPORTED,
+                MAGNIFICATION_COMPONENT_NAME.flattenToString(),
+                // jean update
+                ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__TWO_FINGER_TRIPLE_TAP,
+                convertToLoggingServiceStatus(enabled));
+    }
+
+    /**
      * Logs accessibility feature name that is assigned to the long pressed accessibility button
      * shortcut. Calls this when clicking the long pressed accessibility button shortcut.
      *
@@ -134,11 +164,13 @@ public final class AccessibilityStatsLogUtils {
      *
      * @param mode The activated magnification mode.
      * @param duration The duration in milliseconds during the magnification is activated.
+     * @param scale The last magnification scale for the activation
      */
-    public static void logMagnificationUsageState(int mode, long duration) {
+    public static void logMagnificationUsageState(int mode, long duration, float scale) {
         FrameworkStatsLog.write(FrameworkStatsLog.MAGNIFICATION_USAGE_REPORTED,
                 convertToLoggingMagnificationMode(mode),
-                duration);
+                duration,
+                convertToLoggingMagnificationScale(scale));
     }
 
     /**
@@ -152,21 +184,73 @@ public final class AccessibilityStatsLogUtils {
                 convertToLoggingMagnificationMode(mode));
     }
 
-    private static boolean isFloatingMenuEnabled(Context context) {
+    /**
+     * Logs the duration for the window magnifier's following typing focus session.
+     *
+     * @param duration The duration of a triple-tap-and-hold activation session.
+     */
+    public static void logMagnificationFollowTypingFocusSession(long duration) {
+        FrameworkStatsLog.write(
+                FrameworkStatsLog.MAGNIFICATION_FOLLOW_TYPING_FOCUS_ACTIVATED_SESSION_REPORTED,
+                duration);
+    }
+
+    /**
+     * Logs the duration for the magnification session which is activated by the triple tap and
+     * hold gesture.
+     *
+     * @param duration The duration of a triple-tap-and-hold activation session.
+     */
+    public static void logMagnificationTripleTapAndHoldSession(long duration) {
+        FrameworkStatsLog.write(
+                FrameworkStatsLog.MAGNIFICATION_TRIPLE_TAP_AND_HOLD_ACTIVATED_SESSION_REPORTED,
+                duration);
+    }
+
+    /**
+     * Logs the warning status of the non-a11yTool service. Calls this when the warning status is
+     * changed.
+     *
+     * @param packageName    The package name of the non-a11yTool service
+     * @param status         The warning status of the non-a11yTool service, it should be one of
+     *                       {@code ACCESSIBILITY_PRIVACY_WARNING_STATUS_SHOWN},{@code
+     *                       ACCESSIBILITY_PRIVACY_WARNING_STATUS_CLICKED} and {@code
+     *                       ACCESSIBILITY_PRIVACY_WARNING_STATUS_SERVICE_DISABLED}
+     * @param durationMillis The duration in milliseconds between current and previous status
+     */
+    public static void logNonA11yToolServiceWarningReported(String packageName, int status,
+            long durationMillis) {
+        FrameworkStatsLog.write(FrameworkStatsLog.NON_A11Y_TOOL_SERVICE_WARNING_REPORT,
+                packageName, status, durationMillis);
+    }
+
+    private static boolean isAccessibilityFloatingMenuEnabled(Context context) {
         return Settings.Secure.getInt(context.getContentResolver(),
                 Settings.Secure.ACCESSIBILITY_BUTTON_MODE, /* def= */ -1)
                 == ACCESSIBILITY_BUTTON_MODE_FLOATING_MENU;
     }
 
+    private static boolean isAccessibilityGestureEnabled(Context context) {
+        return Settings.Secure.getInt(context.getContentResolver(),
+                Settings.Secure.ACCESSIBILITY_BUTTON_MODE, /* def= */ -1)
+                == ACCESSIBILITY_BUTTON_MODE_GESTURE;
+    }
+
     private static int convertToLoggingShortcutType(Context context,
-            @ShortcutType int shortcutType) {
+            @UserShortcutType int shortcutType) {
         switch (shortcutType) {
-            case ACCESSIBILITY_BUTTON:
-                return isFloatingMenuEnabled(context)
-                        ? ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__A11Y_FLOATING_MENU
-                        : ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__A11Y_BUTTON;
-            case ACCESSIBILITY_SHORTCUT_KEY:
+            case SOFTWARE:
+                if (isAccessibilityFloatingMenuEnabled(context)) {
+                    return ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__A11Y_FLOATING_MENU;
+                } else if (isAccessibilityGestureEnabled(context)) {
+                    return ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__A11Y_GESTURE;
+                } else {
+                    return ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__A11Y_BUTTON;
+                }
+            case HARDWARE:
                 return ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__VOLUME_KEY;
+            case QUICK_SETTINGS:
+                return ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__QUICK_SETTINGS;
         }
         return ACCESSIBILITY_SHORTCUT_REPORTED__SHORTCUT_TYPE__UNKNOWN_TYPE;
     }
@@ -188,5 +272,13 @@ public final class AccessibilityStatsLogUtils {
             default:
                 return MAGNIFICATION_USAGE_REPORTED__ACTIVATED_MODE__MAGNIFICATION_UNKNOWN_MODE;
         }
+    }
+
+    private static int convertToLoggingMagnificationScale(float scale) {
+        // per b/269366674, we make every 10% a bucket for both privacy and readability concern.
+        // For example
+        // 1. both 2.30f(230%) and 2.36f(236%) would return 230 as bucket id.
+        // 2. bucket id 370 means scale range in [370%, 379%]
+        return ((int) (scale * 10)) * 10;
     }
 }

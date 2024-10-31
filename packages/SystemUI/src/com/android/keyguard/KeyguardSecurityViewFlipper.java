@@ -30,7 +30,7 @@ import android.view.ViewHierarchyEncoder;
 import android.widget.FrameLayout;
 import android.widget.ViewFlipper;
 
-import com.android.systemui.R;
+import com.android.systemui.res.R;
 
 /**
  * Subclass of the current view flipper that allows us to overload dispatchTouchEvent() so
@@ -83,14 +83,14 @@ public class KeyguardSecurityViewFlipper extends ViewFlipper {
         return "";
     }
 
-    /**
-      * Translate the entire view, and optionally inform the wrapped view of the progress
-      * so it can animate with the parent.
-      */
-    public void animateForIme(int translationY, float interpolatedFraction, boolean appearingAnim) {
-        super.setTranslationY(translationY);
-        KeyguardInputView v = getSecurityView();
-        if (v != null) v.animateForIme(interpolatedFraction, appearingAnim);
+    /** Updates the keyguard view's constraints (single or split constraints).
+     *  Split constraints are only used for small landscape screens.
+     *  Only called when flag LANDSCAPE_ENABLE_LOCKSCREEN is enabled. */
+    public void updateConstraints(boolean useSplitBouncer) {
+        KeyguardInputView securityView = getSecurityView();
+        if (securityView != null) {
+            securityView.updateConstraints(useSplitBouncer);
+        }
     }
 
     @Override

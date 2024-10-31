@@ -16,28 +16,35 @@
 
 package com.android.systemui.shared.recents.model;
 
+import static android.app.WindowConfiguration.ACTIVITY_TYPE_UNDEFINED;
 import static android.view.Display.DEFAULT_DISPLAY;
+
+import static com.android.wm.shell.common.split.SplitScreenConstants.CONTROLLED_ACTIVITY_TYPES;
+import static com.android.wm.shell.common.split.SplitScreenConstants.CONTROLLED_WINDOWING_MODES_WHEN_ACTIVE;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.TaskDescription;
 import android.app.TaskInfo;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.ViewDebug;
 
-import com.android.systemui.shared.recents.utilities.Utilities;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.android.internal.util.ArrayUtils;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
  * A task in the recent tasks list.
+ * TODO: Move this into Launcher or see if we can remove now
  */
 public class Task {
 
@@ -52,6 +59,7 @@ public class Task {
         @ViewDebug.ExportedProperty(category="recents")
         public int windowingMode;
         @ViewDebug.ExportedProperty(category="recents")
+        @NonNull
         public final Intent baseIntent;
         @ViewDebug.ExportedProperty(category="recents")
         public final int userId;
@@ -85,7 +93,7 @@ public class Task {
             updateHashCode();
         }
 
-        public TaskKey(int id, int windowingMode, Intent intent,
+        public TaskKey(int id, int windowingMode, @NonNull Intent intent,
                 ComponentName sourceComponent, int userId, long lastActiveTime) {
             this.id = id;
             this.windowingMode = windowingMode;
@@ -97,7 +105,7 @@ public class Task {
             updateHashCode();
         }
 
-        public TaskKey(int id, int windowingMode, Intent intent,
+        public TaskKey(int id, int windowingMode, @NonNull Intent intent,
                 ComponentName sourceComponent, int userId, long lastActiveTime, int displayId) {
             this.id = id;
             this.windowingMode = windowingMode;
@@ -123,6 +131,10 @@ public class Task {
                 return this.baseIntent.getComponent().getPackageName();
             }
             return this.baseIntent.getPackage();
+        }
+
+        public int getId() {
+            return id;
         }
 
         @Override
@@ -201,10 +213,9 @@ public class Task {
      * The icon is the task description icon (if provided), which falls back to the activity icon,
      * which can then fall back to the application icon.
      */
-    public Drawable icon;
-    public ThumbnailData thumbnail;
+    @Nullable public Drawable icon;
+    @Nullable public ThumbnailData thumbnail;
     @ViewDebug.ExportedProperty(category="recents")
-    @Deprecated
     public String title;
     @ViewDebug.ExportedProperty(category="recents")
     public String titleDescription;
@@ -227,6 +238,10 @@ public class Task {
     @ViewDebug.ExportedProperty(category="recents")
     public boolean isLocked;
 
+    public Point positionInParent;
+
+    public Rect appBounds;
+
     // Last snapshot data, only used for recent tasks
     public ActivityManager.RecentTaskInfo.PersistedTaskSnapshotData lastSnapshotData =
             new ActivityManager.RecentTaskInfo.PersistedTaskSnapshotData();
@@ -240,10 +255,17 @@ public class Task {
      */
     public static Task from(TaskKey taskKey, TaskInfo taskInfo, boolean isLocked) {
         ActivityManager.TaskDescription td = taskInfo.taskDescription;
+        // Also consider undefined activity type to include tasks in overview right after rebooting
+        // the device.
+        final boolean isDockable = taskInfo.supportsMultiWindow
+                && ArrayUtils.contains(
+                        CONTROLLED_WINDOWING_MODES_WHEN_ACTIVE, taskInfo.getWindowingMode())
+                && (taskInfo.getActivityType() == ACTIVITY_TYPE_UNDEFINED
+                || ArrayUtils.contains(CONTROLLED_ACTIVITY_TYPES, taskInfo.getActivityType()));
         return new Task(taskKey,
                 td != null ? td.getPrimaryColor() : 0,
-                td != null ? td.getBackgroundColor() : 0,
-                taskInfo.supportsSplitScreenMultiWindow, isLocked, td, taskInfo.topActivity);
+                td != null ? td.getBackgroundColor() : 0, isDockable , isLocked, td,
+                taskInfo.topActivity);
     }
 
     public Task(TaskKey key) {
@@ -255,6 +277,8 @@ public class Task {
         this(other.key, other.colorPrimary, other.colorBackground, other.isDockable,
                 other.isLocked, other.taskDescription, other.topActivity);
         lastSnapshotData.set(other.lastSnapshotData);
+        positionInParent = other.positionInParent;
+        appBounds = other.appBounds;
     }
 
     /**
@@ -286,6 +310,10 @@ public class Task {
         lastSnapshotData.set(rawTask.lastSnapshotData);
     }
 
+    public TaskKey getKey() {
+        return key;
+    }
+
     /**
      * Returns the visible width to height ratio. Returns 0f if snapshot data is not available.
      */
@@ -307,6 +335,14 @@ public class Task {
 
     @Override
     public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Task)) {
+            return false;
+        }
+
         // Check that the id matches
         Task t = (Task) o;
         return key.equals(t.key);

@@ -19,15 +19,13 @@ package android.app.time;
 import android.annotation.CurrentTimeMillisLong;
 import android.annotation.ElapsedRealtimeLong;
 import android.annotation.NonNull;
-import android.annotation.Nullable;
 import android.annotation.SystemApi;
+import android.app.timedetector.TimeSuggestionHelper;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.TimestampedValue;
+import android.os.ShellCommand;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,17 +47,18 @@ import java.util.Objects;
  *
  * <p>The creator of an external suggestion is expected to be separate Android process, e.g. a
  * process integrating with the external time source via a HAL or local network. The creator must
- * capture the elapsed realtime reference clock, e.g. via {@link SystemClock#elapsedRealtime()},
- * when the UTC time is first obtained (usually under a wakelock). This enables Android to adjust
+ * capture the elapsed realtime clock value, e.g. via {@link SystemClock#elapsedRealtime()}, when
+ * the Unix epoch time is first obtained (usually under a wakelock). This enables Android to adjust
  * for latency introduced between suggestion creation and eventual use. Adjustments for other
  * sources of latency, i.e. those before the external time suggestion is created, must be handled by
  * the creator.
  *
  * <p>{@code elapsedRealtimeMillis} and {@code suggestionMillis} represent the suggested time.
- * {@code suggestionMillis} is the number of milliseconds elapsed since 1/1/1970 00:00:00 UTC.
- * {@code elapsedRealtimeMillis} is the value of the elapsed realtime clock when {@code
- * suggestionMillis} was established. Note that the elapsed realtime clock is considered accurate
- * but it is volatile, so time suggestions cannot be persisted across device resets.
+ * {@code suggestionMillis} is the number of milliseconds elapsed since 1/1/1970 00:00:00 UTC
+ * according to the Unix time scale. {@code elapsedRealtimeMillis} is the value of the elapsed
+ * realtime clock when {@code suggestionMillis} was established. Note that the elapsed realtime
+ * clock is considered accurate but it is volatile, so time suggestions cannot be persisted across
+ * device resets.
  *
  * <p>{@code debugInfo} contains debugging metadata associated with the suggestion. This is used to
  * record why the suggestion exists and how it was entered. This information exists only to aid in
@@ -74,7 +73,9 @@ public final class ExternalTimeSuggestion implements Parcelable {
     public static final @NonNull Creator<ExternalTimeSuggestion> CREATOR =
             new Creator<ExternalTimeSuggestion>() {
                 public ExternalTimeSuggestion createFromParcel(Parcel in) {
-                    return ExternalTimeSuggestion.createFromParcel(in);
+                    TimeSuggestionHelper helper = TimeSuggestionHelper.handleCreateFromParcel(
+                            ExternalTimeSuggestion.class, in);
+                    return new ExternalTimeSuggestion(helper);
                 }
 
                 public ExternalTimeSuggestion[] newArray(int size) {
@@ -82,32 +83,24 @@ public final class ExternalTimeSuggestion implements Parcelable {
                 }
             };
 
-    @NonNull
-    private final TimestampedValue<Long> mUtcTime;
-    @Nullable
-    private ArrayList<String> mDebugInfo;
+    @NonNull private final TimeSuggestionHelper mTimeSuggestionHelper;
 
     /**
      * Creates a time suggestion cross-referenced to the elapsed realtime clock. See {@link
      * ExternalTimeSuggestion} for more details.
      *
      * @param elapsedRealtimeMillis the elapsed realtime clock reference for the suggestion
-     * @param suggestionMillis      the suggested UTC time in milliseconds since the start of the
+     * @param suggestionMillis      the suggested time in milliseconds since the start of the
      *                              Unix epoch
      */
     public ExternalTimeSuggestion(@ElapsedRealtimeLong long elapsedRealtimeMillis,
             @CurrentTimeMillisLong long suggestionMillis) {
-        mUtcTime = new TimestampedValue(elapsedRealtimeMillis, suggestionMillis);
+        mTimeSuggestionHelper = new TimeSuggestionHelper(ExternalTimeSuggestion.class,
+                new UnixEpochTime(elapsedRealtimeMillis, suggestionMillis));
     }
 
-    private static ExternalTimeSuggestion createFromParcel(Parcel in) {
-        TimestampedValue<Long> utcTime = in.readParcelable(null /* classLoader */);
-        ExternalTimeSuggestion suggestion =
-                new ExternalTimeSuggestion(utcTime.getReferenceTimeMillis(), utcTime.getValue());
-        @SuppressWarnings("unchecked")
-        ArrayList<String> debugInfo = (ArrayList<String>) in.readArrayList(null /* classLoader */);
-        suggestion.mDebugInfo = debugInfo;
-        return suggestion;
+    private ExternalTimeSuggestion(@NonNull TimeSuggestionHelper helper) {
+        mTimeSuggestionHelper = Objects.requireNonNull(helper);
     }
 
     @Override
@@ -117,16 +110,15 @@ public final class ExternalTimeSuggestion implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeParcelable(mUtcTime, 0);
-        dest.writeList(mDebugInfo);
+        mTimeSuggestionHelper.handleWriteToParcel(dest, flags);
     }
 
     /**
      * {@hide}
      */
     @NonNull
-    public TimestampedValue<Long> getUtcTime() {
-        return mUtcTime;
+    public UnixEpochTime getUnixEpochTime() {
+        return mTimeSuggestionHelper.getUnixEpochTime();
     }
 
     /**
@@ -134,9 +126,7 @@ public final class ExternalTimeSuggestion implements Parcelable {
      */
     @NonNull
     public List<String> getDebugInfo() {
-        return mDebugInfo == null
-                ? Collections.emptyList()
-                : Collections.unmodifiableList(mDebugInfo);
+        return mTimeSuggestionHelper.getDebugInfo();
     }
 
     /**
@@ -145,10 +135,7 @@ public final class ExternalTimeSuggestion implements Parcelable {
      * #equals(Object)} and {@link #hashCode()}.
      */
     public void addDebugInfo(@NonNull String... debugInfos) {
-        if (mDebugInfo == null) {
-            mDebugInfo = new ArrayList<>();
-        }
-        mDebugInfo.addAll(Arrays.asList(debugInfos));
+        mTimeSuggestionHelper.addDebugInfo(debugInfos);
     }
 
     @Override
@@ -160,17 +147,29 @@ public final class ExternalTimeSuggestion implements Parcelable {
             return false;
         }
         ExternalTimeSuggestion that = (ExternalTimeSuggestion) o;
-        return Objects.equals(mUtcTime, that.mUtcTime);
+        return mTimeSuggestionHelper.handleEquals(that.mTimeSuggestionHelper);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mUtcTime);
+        return mTimeSuggestionHelper.hashCode();
     }
 
     @Override
     public String toString() {
-        return "ExternalTimeSuggestion{" + "mUtcTime=" + mUtcTime + ", mDebugInfo=" + mDebugInfo
-                + '}';
+        return mTimeSuggestionHelper.handleToString();
+    }
+
+    /** @hide */
+    public static ExternalTimeSuggestion parseCommandLineArg(@NonNull ShellCommand cmd)
+            throws IllegalArgumentException {
+        return new ExternalTimeSuggestion(
+                TimeSuggestionHelper.handleParseCommandLineArg(ExternalTimeSuggestion.class, cmd));
+    }
+
+    /** @hide */
+    public static void printCommandLineOpts(PrintWriter pw) {
+        TimeSuggestionHelper.handlePrintCommandLineOpts(
+                pw, "External", ExternalTimeSuggestion.class);
     }
 }

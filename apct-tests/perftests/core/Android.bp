@@ -15,6 +15,7 @@
 //
 
 package {
+    default_team: "trendy_team_framework_accessibility",
     // See: http://go/android-license-faq
     // A large-scale-change added 'default_applicable_licenses' to import
     // all of the 'license_kinds' from "frameworks_base_license"
@@ -43,12 +44,17 @@ android_test {
         "apct-perftests-resources-manager-apps",
         "apct-perftests-utils",
         "collector-device-lib",
+        "conscrypt-test-support",
+        "compatibility-device-util-axt",
+        "junit",
+        "junit-params",
+        "core-tests-support",
         "guava",
     ],
 
     libs: ["android.test.base"],
 
-    java_resources: [ ":GoogleFontDancingScript", ],
+    java_resources: [":GoogleFontDancingScript"],
 
     data: [":perfetto_artifacts"],
 
@@ -58,4 +64,11 @@ android_test {
 
     test_suites: ["device-tests"],
     certificate: "platform",
+
+    errorprone: {
+        javacflags: [
+            "-Xep:ReturnValueIgnored:WARN",
+            "-Xep:UnnecessaryStringBuilder:OFF",
+        ],
+    },
 }

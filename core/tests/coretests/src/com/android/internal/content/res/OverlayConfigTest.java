@@ -19,9 +19,13 @@ package com.android.internal.content.res;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import android.content.pm.PackagePartitions;
 import android.os.FileUtils;
+import android.os.SystemProperties;
+import android.platform.test.annotations.Presubmit;
 
 import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
@@ -29,6 +33,7 @@ import androidx.test.runner.AndroidJUnit4;
 import com.android.frameworks.coretests.R;
 import com.android.internal.content.om.OverlayConfig;
 import com.android.internal.content.om.OverlayConfig.IdmapInvocation;
+import com.android.internal.content.om.OverlayConfigParser.OverlayPartition;
 import com.android.internal.content.om.OverlayScanner;
 
 import org.junit.Rule;
@@ -43,7 +48,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+@Presubmit
 @RunWith(AndroidJUnit4.class)
 public class OverlayConfigTest {
     private static final String TEST_APK_PACKAGE_NAME =
@@ -82,6 +91,36 @@ public class OverlayConfigTest {
         assertEquals(mutable, config.parsedConfig.mutable);
         assertEquals(enabled, config.parsedConfig.enabled);
         assertEquals(configIndex, config.configIndex);
+    }
+
+    private String generatePartitionOrderString(List<OverlayPartition> partitions) {
+        StringBuilder partitionOrder = new StringBuilder();
+        for (int i = 0; i < partitions.size(); i++) {
+            partitionOrder.append(partitions.get(i).getName());
+            if (i < partitions.size() - 1) {
+                partitionOrder.append(", ");
+            }
+        }
+        return partitionOrder.toString();
+    }
+
+    // configIndex should come from real time partition order cause partitions could get
+    // reordered by /product/overlay/partition_order.xml
+    private Map<String, Integer> createConfigIndexes(OverlayConfig overlayConfig,
+            String... configPartitions) {
+        Map<String, Integer> configIndexes = new HashMap<>();
+        for (int i = 0; i < configPartitions.length; i++) {
+            configIndexes.put(configPartitions[i], -1);
+        }
+
+        String[] partitions = overlayConfig.getPartitionOrder().split(", ");
+        int index = 0;
+        for (int i = 0; i < partitions.length; i++) {
+            if (configIndexes.containsKey(partitions[i])) {
+                configIndexes.put(partitions[i], index++);
+            }
+        }
+        return configIndexes;
     }
 
     @Test
@@ -274,11 +313,50 @@ public class OverlayConfigTest {
         mScannerRule.addOverlay(createFile("/system_ext/overlay/five.apk"), "five");
 
         final OverlayConfig overlayConfig = createConfigImpl();
-        assertConfig(overlayConfig, "one", true, true, 0);
-        assertConfig(overlayConfig, "two", true, true, 1);
-        assertConfig(overlayConfig, "three", true, true, 2);
-        assertConfig(overlayConfig, "four", true, true, 3);
-        assertConfig(overlayConfig, "five", true, true, 4);
+        Map<String, Integer> configIndexes = createConfigIndexes(overlayConfig,
+                "vendor", "odm", "oem", "product", "system_ext");
+        assertConfig(overlayConfig, "one", true, true, configIndexes.get("vendor"));
+        assertConfig(overlayConfig, "two", true, true, configIndexes.get("odm"));
+        assertConfig(overlayConfig, "three", true, true, configIndexes.get("oem"));
+        assertConfig(overlayConfig, "four", true, true, configIndexes.get("product"));
+        assertConfig(overlayConfig, "five", true, true, configIndexes.get("system_ext"));
+    }
+
+    @Test
+    public void testPartialConfigPartitionPrecedence() throws IOException {
+        createFile("/odm/overlay/config/config.xml",
+                "<config>"
+                        + "  <overlay package=\"two\" enabled=\"true\" />"
+                        + "</config>");
+
+        mScannerRule.addOverlay(createFile("/vendor/overlay/one.apk"), "one", "android", 0, true,
+                1);
+        mScannerRule.addOverlay(createFile("/odm/overlay/two.apk"), "two");
+        mScannerRule.addOverlay(createFile("/product/overlay/three.apk"), "three", "android", 0,
+                true, 0);
+
+        final OverlayConfig overlayConfig = createConfigImpl();
+        Map<String, Integer> configIndexes = createConfigIndexes(overlayConfig,
+                "vendor", "odm", "product");
+        assertConfig(overlayConfig, "one", false, true, configIndexes.get("vendor"));
+        assertConfig(overlayConfig, "two", true, true, configIndexes.get("odm"));
+        assertConfig(overlayConfig, "three", false, true, configIndexes.get("product"));
+    }
+
+    @Test
+    public void testNoConfigPartitionPrecedence() throws IOException {
+        mScannerRule.addOverlay(createFile("/vendor/overlay/one.apk"), "one", "android", 0, true,
+                1);
+        mScannerRule.addOverlay(createFile("/odm/overlay/two.apk"), "two", "android", 0, true, 2);
+        mScannerRule.addOverlay(createFile("/product/overlay/three.apk"), "three", "android", 0,
+                true, 0);
+
+        final OverlayConfig overlayConfig = createConfigImpl();
+        Map<String, Integer> configIndexes = createConfigIndexes(overlayConfig,
+                "vendor", "odm", "product");
+        assertConfig(overlayConfig, "one", false, true, configIndexes.get("vendor"));
+        assertConfig(overlayConfig, "two", false, true, configIndexes.get("odm"));
+        assertConfig(overlayConfig, "three", false, true, configIndexes.get("product"));
     }
 
     @Test
@@ -503,37 +581,6 @@ public class OverlayConfigTest {
     }
 
     @Test
-    public void testNoConfigsAllowPartitionReordering() throws IOException {
-        mScannerRule.addOverlay(createFile("/vendor/overlay/one.apk"), "one", "android", 0, true,
-                1);
-        mScannerRule.addOverlay(createFile("/product/overlay/two.apk"), "two", "android", 0, true,
-                0);
-
-        final OverlayConfig overlayConfig = createConfigImpl();
-        assertConfig(overlayConfig, "one", false, true, 1);
-        assertConfig(overlayConfig, "two", false, true, 0);
-    }
-
-    @Test
-    public void testConfigDisablesPartitionReordering() throws IOException {
-        createFile("/odm/overlay/config/config.xml",
-                "<config>"
-                        + "  <overlay package=\"two\" enabled=\"true\" />"
-                        + "</config>");
-
-        mScannerRule.addOverlay(createFile("/vendor/overlay/one.apk"), "one", "android", 0, true,
-                1);
-        mScannerRule.addOverlay(createFile("/odm/overlay/two.apk"), "two");
-        mScannerRule.addOverlay(createFile("/product/overlay/three.apk"), "three", "android", 0,
-                true, 0);
-
-        final OverlayConfig overlayConfig = createConfigImpl();
-        assertConfig(overlayConfig, "one", false, true, 0);
-        assertConfig(overlayConfig, "two", true, true, 1);
-        assertConfig(overlayConfig, "three", false, true, 2);
-    }
-
-    @Test
     public void testStaticOverlayOutsideOverlayDir() throws IOException {
         mScannerRule.addOverlay(createFile("/product/app/one.apk"), "one", "android", 0, true, 0);
 
@@ -546,7 +593,7 @@ public class OverlayConfigTest {
     @Test
     public void testSortStaticOverlaysDifferentTargets() throws IOException {
         mScannerRule.addOverlay(createFile("/vendor/overlay/one.apk"), "one", "other", 0, true, 0);
-        mScannerRule.addOverlay(createFile("/product/overlay/two.apk"), "two", "android", 0, true,
+        mScannerRule.addOverlay(createFile("/vendor/overlay/two.apk"), "two", "android", 0, true,
                 0);
 
         final OverlayConfig overlayConfig = createConfigImpl();
@@ -555,15 +602,33 @@ public class OverlayConfigTest {
     }
 
     @Test
+    public void testSortStaticOverlaysDifferentPartitions() throws IOException {
+        mScannerRule.addOverlay(createFile("/vendor/overlay/one.apk"), "one", "android", 0, true,
+                2);
+        mScannerRule.addOverlay(createFile("/vendor/overlay/two.apk"), "two", "android", 0, true,
+                3);
+        mScannerRule.addOverlay(createFile("/product/overlay/three.apk"), "three", "android", 0,
+                true, 0);
+        mScannerRule.addOverlay(createFile("/product/overlay/four.apk"), "four", "android", 0,
+                true, 1);
+
+        final OverlayConfig overlayConfig = createConfigImpl();
+        assertConfig(overlayConfig, "one", false, true, 0);
+        assertConfig(overlayConfig, "two", false, true, 1);
+        assertConfig(overlayConfig, "three", false, true, 2);
+        assertConfig(overlayConfig, "four", false, true, 3);
+    }
+
+    @Test
     public void testSortStaticOverlaysSamePriority() throws IOException {
         mScannerRule.addOverlay(createFile("/vendor/overlay/one.apk"), "one", "android", 0, true,
                 0);
-        mScannerRule.addOverlay(createFile("/product/overlay/two.apk"), "two", "android", 0, true,
+        mScannerRule.addOverlay(createFile("/vendor/overlay/two.apk"), "two", "android", 0, true,
                 0);
 
         final OverlayConfig overlayConfig = createConfigImpl();
-        assertConfig(overlayConfig, "one", false, true, 1);
-        assertConfig(overlayConfig, "two", false, true, 0);
+        assertConfig(overlayConfig, "one", false, true, 0);
+        assertConfig(overlayConfig, "two", false, true, 1);
     }
 
     @Test
@@ -599,5 +664,184 @@ public class OverlayConfigTest {
         assertEquals("android", info.targetPackageName);
         assertEquals(testApk.getPath(), info.path.getPath());
         assertEquals(21, info.targetSdkVersion);
+    }
+
+    @Test
+    public void testOverlayManifest_withRequiredSystemPropertyAndValueNotMatched()
+            throws IOException {
+        final String systemPropertyName = "foo.name";
+        final String systemPropertyValue = "foo.value";
+
+        createFile("/product/overlay/config/config.xml",
+                "<config>"
+                        + "  <overlay package=\"one\" />"
+                        + "  <overlay package=\"two\" />"
+                        + "  <overlay package=\"three\" />"
+                        + "</config>");
+
+        mScannerRule.addOverlay(createFile("/product/overlay/one.apk"), "one", "android", 0,
+                true, 1, systemPropertyName, systemPropertyValue);
+        mScannerRule.addOverlay(createFile("/product/overlay/two.apk"), "two", "android", 0,
+                true, 1, systemPropertyName, systemPropertyValue);
+        mScannerRule.addOverlay(createFile("/product/overlay/three.apk"), "three");
+
+        final OverlayConfig overlayConfig = createConfigImpl();
+        OverlayConfig.Configuration o1 = overlayConfig.getConfiguration("one");
+        assertNull(o1);
+
+        OverlayConfig.Configuration o2 = overlayConfig.getConfiguration("two");
+        assertNull(o2);
+
+        OverlayConfig.Configuration o3 = overlayConfig.getConfiguration("three");
+        assertNotNull(o3);
+    }
+
+    @Test
+    public void testOverlayManifest_withRequiredSystemPropertyAndValueMatched()
+            throws IOException {
+        final String systemPropertyName = "ro.build.version.sdk";
+        final String systemPropertyValue = SystemProperties.get(systemPropertyName, null);
+        assertNotNull(systemPropertyValue);
+
+        createFile("/product/overlay/config/config.xml",
+                "<config>"
+                        + "  <overlay package=\"one\" />"
+                        + "  <overlay package=\"two\" />"
+                        + "  <overlay package=\"three\" />"
+                        + "</config>");
+
+        mScannerRule.addOverlay(createFile("/product/overlay/one.apk"), "one", "android", 0,
+                true, 1, systemPropertyName, systemPropertyValue);
+        mScannerRule.addOverlay(createFile("/product/overlay/two.apk"), "two", "android", 0,
+                true, 1, systemPropertyName, systemPropertyValue);
+        mScannerRule.addOverlay(createFile("/product/overlay/three.apk"), "three");
+
+        final OverlayConfig overlayConfig = createConfigImpl();
+        OverlayConfig.Configuration o1 = overlayConfig.getConfiguration("one");
+        assertNotNull(o1);
+
+        OverlayConfig.Configuration o2 = overlayConfig.getConfiguration("two");
+        assertNotNull(o2);
+
+        OverlayConfig.Configuration o3 = overlayConfig.getConfiguration("three");
+        assertNotNull(o3);
+    }
+
+    @Test
+    public void testSortPartitionsWithoutXml() throws IOException {
+        ArrayList<OverlayPartition> partitions = new ArrayList<>(
+                PackagePartitions.getOrderedPartitions(OverlayPartition::new));
+
+        final OverlayConfig overlayConfig = createConfigImpl();
+        String partitionOrderFilePath = String.format("%s/%s", mTestFolder.getRoot(),
+                "/product/overlay/partition_order.xml");
+        assertEquals(false, overlayConfig.sortPartitions(partitionOrderFilePath, partitions));
+        assertEquals("system, vendor, odm, oem, product, system_ext",
+                generatePartitionOrderString(partitions));
+    }
+
+    @Test
+    public void testSortPartitionsWithInvalidXmlRootElement() throws IOException {
+        ArrayList<OverlayPartition> partitions = new ArrayList<>(
+                PackagePartitions.getOrderedPartitions(OverlayPartition::new));
+        createFile("/product/overlay/partition_order.xml",
+                "<partition-list>\n"
+                        + "  <partition name=\"system_ext\"/>\n"
+                        + "  <partition name=\"vendor\"/>\n"
+                        + "  <partition name=\"oem\"/>\n"
+                        + "  <partition name=\"odm\"/>\n"
+                        + "  <partition name=\"product\"/>\n"
+                        + "  <partition name=\"system\"/>\n"
+                        + "</partition-list>\n");
+        final OverlayConfig overlayConfig = createConfigImpl();
+        String partitionOrderFilePath = String.format("%s/%s", mTestFolder.getRoot(),
+                "/product/overlay/partition_order.xml");
+        assertEquals(false, overlayConfig.sortPartitions(partitionOrderFilePath, partitions));
+        assertEquals("system, vendor, odm, oem, product, system_ext",
+                generatePartitionOrderString(partitions));
+    }
+
+    @Test
+    public void testSortPartitionsWithInvalidPartition() throws IOException {
+        ArrayList<OverlayPartition> partitions = new ArrayList<>(
+                PackagePartitions.getOrderedPartitions(OverlayPartition::new));
+        createFile("/product/overlay/partition_order.xml",
+                "<partition-order>\n"
+                        + "  <partition name=\"INVALID\"/>\n"
+                        + "  <partition name=\"vendor\"/>\n"
+                        + "  <partition name=\"oem\"/>\n"
+                        + "  <partition name=\"odm\"/>\n"
+                        + "  <partition name=\"product\"/>\n"
+                        + "  <partition name=\"system\"/>\n"
+                        + "</partition-order>\n");
+        final OverlayConfig overlayConfig = createConfigImpl();
+        String partitionOrderFilePath = String.format("%s/%s", mTestFolder.getRoot(),
+                "/product/overlay/partition_order.xml");
+        assertEquals(false, overlayConfig.sortPartitions(partitionOrderFilePath, partitions));
+        assertEquals("system, vendor, odm, oem, product, system_ext",
+                generatePartitionOrderString(partitions));
+    }
+
+    @Test
+    public void testSortPartitionsWithDuplicatePartition() throws IOException {
+        ArrayList<OverlayPartition> partitions = new ArrayList<>(
+                PackagePartitions.getOrderedPartitions(OverlayPartition::new));
+        createFile("/product/overlay/partition_order.xml",
+                "<partition-order>\n"
+                        + "  <partition name=\"system_ext\"/>\n"
+                        + "  <partition name=\"system\"/>\n"
+                        + "  <partition name=\"vendor\"/>\n"
+                        + "  <partition name=\"oem\"/>\n"
+                        + "  <partition name=\"odm\"/>\n"
+                        + "  <partition name=\"product\"/>\n"
+                        + "  <partition name=\"system\"/>\n"
+                        + "</partition-order>\n");
+        final OverlayConfig overlayConfig = createConfigImpl();
+        String partitionOrderFilePath = String.format("%s/%s", mTestFolder.getRoot(),
+                "/product/overlay/partition_order.xml");
+        assertEquals(false, overlayConfig.sortPartitions(partitionOrderFilePath, partitions));
+        assertEquals("system, vendor, odm, oem, product, system_ext",
+                generatePartitionOrderString(partitions));
+    }
+
+    @Test
+    public void testSortPartitionsWithMissingPartition() throws IOException {
+        ArrayList<OverlayPartition> partitions = new ArrayList<>(
+                PackagePartitions.getOrderedPartitions(OverlayPartition::new));
+        createFile("/product/overlay/partition_order.xml",
+                "<partition-order>\n"
+                        + "  <partition name=\"vendor\"/>\n"
+                        + "  <partition name=\"oem\"/>\n"
+                        + "  <partition name=\"odm\"/>\n"
+                        + "  <partition name=\"product\"/>\n"
+                        + "  <partition name=\"system\"/>\n"
+                        + "</partition-order>\n");
+        final OverlayConfig overlayConfig = createConfigImpl();
+        String partitionOrderFilePath = String.format("%s/%s", mTestFolder.getRoot(),
+                "/product/overlay/partition_order.xml");
+        assertEquals(false, overlayConfig.sortPartitions(partitionOrderFilePath, partitions));
+        assertEquals("system, vendor, odm, oem, product, system_ext",
+                generatePartitionOrderString(partitions));
+    }
+
+    @Test
+    public void testSortPartitionsWithCorrectPartitionOrderXml() throws IOException {
+        ArrayList<OverlayPartition> partitions = new ArrayList<>(
+                PackagePartitions.getOrderedPartitions(OverlayPartition::new));
+        createFile("/product/overlay/partition_order.xml",
+                "<partition-order>\n"
+                        + "  <partition name=\"system_ext\"/>\n"
+                        + "  <partition name=\"vendor\"/>\n"
+                        + "  <partition name=\"oem\"/>\n"
+                        + "  <partition name=\"odm\"/>\n"
+                        + "  <partition name=\"product\"/>\n"
+                        + "  <partition name=\"system\"/>\n"
+                        + "</partition-order>\n");
+        final OverlayConfig overlayConfig = createConfigImpl();
+        String partitionOrderFilePath = String.format("%s/%s", mTestFolder.getRoot(),
+                "/product/overlay/partition_order.xml");
+        assertEquals(true, overlayConfig.sortPartitions(partitionOrderFilePath, partitions));
+        assertEquals("system_ext, vendor, oem, odm, product, system",
+                generatePartitionOrderString(partitions));
     }
 }

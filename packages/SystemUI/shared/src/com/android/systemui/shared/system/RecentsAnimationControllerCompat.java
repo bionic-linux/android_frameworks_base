@@ -23,6 +23,7 @@ import android.view.SurfaceControl;
 import android.window.PictureInPictureSurfaceTransaction;
 import android.window.TaskSnapshot;
 
+import com.android.internal.os.IResultReceiver;
 import com.android.systemui.shared.recents.model.ThumbnailData;
 
 public class RecentsAnimationControllerCompat {
@@ -39,12 +40,14 @@ public class RecentsAnimationControllerCompat {
 
     public ThumbnailData screenshotTask(int taskId) {
         try {
-            TaskSnapshot snapshot = mAnimationController.screenshotTask(taskId);
-            return snapshot != null ? new ThumbnailData(snapshot) : new ThumbnailData();
+            final TaskSnapshot snapshot = mAnimationController.screenshotTask(taskId);
+            if (snapshot != null) {
+                return ThumbnailData.fromSnapshot(snapshot);
+            }
         } catch (RemoteException e) {
             Log.e(TAG, "Failed to screenshot task", e);
-            return new ThumbnailData();
         }
+        return new ThumbnailData();
     }
 
     public void setInputConsumerEnabled(boolean enabled) {
@@ -60,14 +63,6 @@ public class RecentsAnimationControllerCompat {
             mAnimationController.setAnimationTargetsBehindSystemBars(behindSystemBars);
         } catch (RemoteException e) {
             Log.e(TAG, "Failed to set whether animation targets are behind system bars", e);
-        }
-    }
-
-    public void hideCurrentInputMethod() {
-        try {
-            mAnimationController.hideCurrentInputMethod();
-        } catch (RemoteException e) {
-            Log.e(TAG, "Failed to set hide input method", e);
         }
     }
 
@@ -95,11 +90,16 @@ public class RecentsAnimationControllerCompat {
      * @param sendUserLeaveHint determines whether userLeaveHint will be set true to the previous
      *                          app.
      */
-    public void finish(boolean toHome, boolean sendUserLeaveHint) {
+    public void finish(boolean toHome, boolean sendUserLeaveHint, IResultReceiver finishCb) {
         try {
-            mAnimationController.finish(toHome, sendUserLeaveHint);
+            mAnimationController.finish(toHome, sendUserLeaveHint, finishCb);
         } catch (RemoteException e) {
             Log.e(TAG, "Failed to finish recents animation", e);
+            try {
+                finishCb.send(0, null);
+            } catch (Exception ex) {
+                // Local call, can ignore
+            }
         }
     }
 

@@ -16,7 +16,6 @@
 
 package com.android.internal.statusbar;
 
-import android.annotation.NonNull;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -39,14 +38,16 @@ public final class RegisterStatusBarResult implements Parcelable {
     public final IBinder mImeToken;
     public final boolean mNavbarColorManagedByIme;
     public final int mBehavior;
-    public final boolean mAppFullscreen;
-    public final int[] mTransientBarTypes;
+    public final int mRequestedVisibleTypes;
+    public final String mPackageName;
+    public final int mTransientBarTypes;
+    public final LetterboxDetails[] mLetterboxDetails;
 
     public RegisterStatusBarResult(ArrayMap<String, StatusBarIcon> icons, int disabledFlags1,
             int appearance, AppearanceRegion[] appearanceRegions, int imeWindowVis,
             int imeBackDisposition, boolean showImeSwitcher, int disabledFlags2, IBinder imeToken,
-            boolean navbarColorManagedByIme, int behavior, boolean appFullscreen,
-            @NonNull int[] transientBarTypes) {
+            boolean navbarColorManagedByIme, int behavior, int requestedVisibleTypes,
+            String packageName, int transientBarTypes, LetterboxDetails[] letterboxDetails) {
         mIcons = new ArrayMap<>(icons);
         mDisabledFlags1 = disabledFlags1;
         mAppearance = appearance;
@@ -58,8 +59,10 @@ public final class RegisterStatusBarResult implements Parcelable {
         mImeToken = imeToken;
         mNavbarColorManagedByIme = navbarColorManagedByIme;
         mBehavior = behavior;
-        mAppFullscreen = appFullscreen;
+        mRequestedVisibleTypes = requestedVisibleTypes;
+        mPackageName = packageName;
         mTransientBarTypes = transientBarTypes;
+        mLetterboxDetails = letterboxDetails;
     }
 
     @Override
@@ -80,8 +83,10 @@ public final class RegisterStatusBarResult implements Parcelable {
         dest.writeStrongBinder(mImeToken);
         dest.writeBoolean(mNavbarColorManagedByIme);
         dest.writeInt(mBehavior);
-        dest.writeBoolean(mAppFullscreen);
-        dest.writeIntArray(mTransientBarTypes);
+        dest.writeInt(mRequestedVisibleTypes);
+        dest.writeString(mPackageName);
+        dest.writeInt(mTransientBarTypes);
+        dest.writeParcelableArray(mLetterboxDetails, flags);
     }
 
     /**
@@ -104,12 +109,16 @@ public final class RegisterStatusBarResult implements Parcelable {
                     final IBinder imeToken = source.readStrongBinder();
                     final boolean navbarColorManagedByIme = source.readBoolean();
                     final int behavior = source.readInt();
-                    final boolean appFullscreen = source.readBoolean();
-                    final int[] transientBarTypes = source.createIntArray();
+                    final int requestedVisibleTypes = source.readInt();
+                    final String packageName = source.readString();
+                    final int transientBarTypes = source.readInt();
+                    final LetterboxDetails[] letterboxDetails =
+                            source.readParcelableArray(null, LetterboxDetails.class);
                     return new RegisterStatusBarResult(icons, disabledFlags1, appearance,
                             appearanceRegions, imeWindowVis, imeBackDisposition, showImeSwitcher,
                             disabledFlags2, imeToken, navbarColorManagedByIme, behavior,
-                            appFullscreen, transientBarTypes);
+                            requestedVisibleTypes, packageName, transientBarTypes,
+                            letterboxDetails);
                 }
 
                 @Override

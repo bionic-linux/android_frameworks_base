@@ -54,6 +54,8 @@ final class RemoteInlineSuggestionViewConnector {
     @NonNull
     private final Runnable mOnErrorCallback;
     @NonNull
+    private final Runnable mOnInflateCallback;
+    @NonNull
     private final Consumer<IntentSender> mStartIntentSenderFromClientApp;
 
     RemoteInlineSuggestionViewConnector(
@@ -70,6 +72,7 @@ final class RemoteInlineSuggestionViewConnector {
 
         mOnAutofillCallback = onAutofillCallback;
         mOnErrorCallback = uiCallback::onError;
+        mOnInflateCallback = uiCallback::onInflate;
         mStartIntentSenderFromClientApp = uiCallback::startIntentSender;
     }
 
@@ -103,6 +106,10 @@ final class RemoteInlineSuggestionViewConnector {
         mOnErrorCallback.run();
     }
 
+    public void onRender() {
+        mOnInflateCallback.run();
+    }
+
     /**
      * Handles the callback for transferring the touch event on the remote view to the IME
      * process.
@@ -111,7 +118,7 @@ final class RemoteInlineSuggestionViewConnector {
         final InputMethodManagerInternal inputMethodManagerInternal =
                 LocalServices.getService(InputMethodManagerInternal.class);
         if (!inputMethodManagerInternal.transferTouchFocusToImeWindow(sourceInputToken,
-                displayId)) {
+                displayId, mUserId)) {
             Slog.e(TAG, "Cannot transfer touch focus from suggestion to IME");
             mOnErrorCallback.run();
         }

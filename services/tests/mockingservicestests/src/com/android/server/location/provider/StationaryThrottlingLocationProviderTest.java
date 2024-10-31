@@ -29,6 +29,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import android.content.Context;
 import android.location.Location;
+import android.location.LocationRequest;
 import android.location.LocationResult;
 import android.location.provider.ProviderRequest;
 import android.platform.test.annotations.Presubmit;
@@ -90,7 +91,20 @@ public class StationaryThrottlingLocationProviderTest {
     }
 
     @Test
-    public void testThrottle() {
+    public void testThrottle_lowInterval() {
+        ProviderRequest request = new ProviderRequest.Builder().setIntervalMillis(0).build();
+
+        mProvider.getController().setRequest(request);
+        mDelegateProvider.reportLocation(createLocationResult("test_provider", mRandom));
+        verify(mListener, times(1)).onReportLocation(any(LocationResult.class));
+
+        mInjector.getDeviceStationaryHelper().setStationary(true);
+        mInjector.getDeviceIdleHelper().setIdle(true);
+        verify(mListener, after(1500).times(2)).onReportLocation(any(LocationResult.class));
+    }
+
+    @Test
+    public void testThrottle_stationaryExit() {
         ProviderRequest request = new ProviderRequest.Builder().setIntervalMillis(50).build();
 
         mProvider.getController().setRequest(request);
@@ -104,17 +118,38 @@ public class StationaryThrottlingLocationProviderTest {
 
         mInjector.getDeviceIdleHelper().setIdle(true);
         verify(mDelegate).onSetRequest(ProviderRequest.EMPTY_REQUEST);
-        verify(mListener, timeout(75).times(2)).onReportLocation(any(LocationResult.class));
-        verify(mListener, timeout(75).times(3)).onReportLocation(any(LocationResult.class));
+        verify(mListener, timeout(1100).times(2)).onReportLocation(any(LocationResult.class));
 
         mInjector.getDeviceStationaryHelper().setStationary(false);
         verify(mDelegate, times(2)).onSetRequest(request);
-        verify(mListener, after(75).times(3)).onReportLocation(any(LocationResult.class));
+        verify(mListener, after(1000).times(2)).onReportLocation(any(LocationResult.class));
+    }
+
+    @Test
+    public void testThrottle_idleExit() {
+        ProviderRequest request = new ProviderRequest.Builder().setIntervalMillis(1000).build();
+
+        mProvider.getController().setRequest(request);
+        verify(mDelegate).onSetRequest(request);
+
+        mDelegateProvider.reportLocation(createLocationResult("test_provider", mRandom));
+        verify(mListener, times(1)).onReportLocation(any(LocationResult.class));
+
+        mInjector.getDeviceIdleHelper().setIdle(true);
+        verify(mDelegate, never()).onSetRequest(ProviderRequest.EMPTY_REQUEST);
+
+        mInjector.getDeviceStationaryHelper().setStationary(true);
+        verify(mDelegate).onSetRequest(ProviderRequest.EMPTY_REQUEST);
+        verify(mListener, timeout(1100).times(2)).onReportLocation(any(LocationResult.class));
+
+        mInjector.getDeviceIdleHelper().setIdle(false);
+        verify(mDelegate, times(2)).onSetRequest(request);
+        verify(mListener, after(1000).times(2)).onReportLocation(any(LocationResult.class));
     }
 
     @Test
     public void testThrottle_NoInitialLocation() {
-        ProviderRequest request = new ProviderRequest.Builder().setIntervalMillis(50).build();
+        ProviderRequest request = new ProviderRequest.Builder().setIntervalMillis(1000).build();
 
         mProvider.getController().setRequest(request);
         verify(mDelegate).onSetRequest(request);
@@ -126,11 +161,11 @@ public class StationaryThrottlingLocationProviderTest {
         mDelegateProvider.reportLocation(createLocationResult("test_provider", mRandom));
         verify(mListener, times(1)).onReportLocation(any(LocationResult.class));
         verify(mDelegate, times(1)).onSetRequest(ProviderRequest.EMPTY_REQUEST);
-        verify(mListener, timeout(75).times(2)).onReportLocation(any(LocationResult.class));
+        verify(mListener, timeout(1100).times(2)).onReportLocation(any(LocationResult.class));
 
         mInjector.getDeviceStationaryHelper().setStationary(false);
         verify(mDelegate, times(2)).onSetRequest(request);
-        verify(mListener, after(75).times(2)).onReportLocation(any(LocationResult.class));
+        verify(mListener, after(1000).times(2)).onReportLocation(any(LocationResult.class));
     }
 
     @Test
@@ -171,6 +206,24 @@ public class StationaryThrottlingLocationProviderTest {
     public void testNoThrottle_locationSettingsIgnored() {
         ProviderRequest request = new ProviderRequest.Builder().setIntervalMillis(
                 50).setLocationSettingsIgnored(true).build();
+
+        mProvider.getController().setRequest(request);
+        verify(mDelegate).onSetRequest(request);
+
+        LocationResult loc = createLocationResult("test_provider", mRandom);
+        mDelegateProvider.reportLocation(loc);
+        verify(mListener, times(1)).onReportLocation(loc);
+
+        mInjector.getDeviceStationaryHelper().setStationary(true);
+        mInjector.getDeviceIdleHelper().setIdle(true);
+        verify(mDelegate, never()).onSetRequest(ProviderRequest.EMPTY_REQUEST);
+        verify(mListener, after(75).times(1)).onReportLocation(any(LocationResult.class));
+    }
+
+    @Test
+    public void testNoThrottle_highAccuracy() {
+        ProviderRequest request = new ProviderRequest.Builder().setIntervalMillis(
+                50).setQuality(LocationRequest.QUALITY_HIGH_ACCURACY).build();
 
         mProvider.getController().setRequest(request);
         verify(mDelegate).onSetRequest(request);

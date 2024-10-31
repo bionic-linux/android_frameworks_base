@@ -16,16 +16,17 @@
 
 package android.app;
 
+import static android.app.WindowConfiguration.ACTIVITY_TYPE_HOME;
+import static android.view.Display.DEFAULT_DISPLAY;
+
 import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
-import android.content.ComponentName;
 import android.content.Context;
 import android.os.Binder;
+import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.Executor;
 
 /**
@@ -39,20 +40,23 @@ import java.util.concurrent.Executor;
 @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
 @TestApi
 public abstract class HomeVisibilityListener {
-    private Context mContext;
-    private ActivityManager mActivityManager;
+    private static final String TAG = HomeVisibilityListener.class.getSimpleName();
+    private static final boolean DBG = Log.isLoggable(TAG, Log.DEBUG);
+    private ActivityTaskManager mActivityTaskManager;
     private Executor mExecutor;
+    private int mMaxScanTasksForHomeVisibility;
     /** @hide */
     android.app.IProcessObserver.Stub mObserver;
     /** @hide */
     boolean mIsHomeActivityVisible;
 
     /** @hide */
-    void init(Context context, Executor executor, ActivityManager activityManager) {
-        mContext = context;
-        mActivityManager = activityManager;
-        mIsHomeActivityVisible = isHomeActivityVisible();
+    void init(Context context, Executor executor) {
+        mActivityTaskManager = ActivityTaskManager.getInstance();
         mExecutor = executor;
+        mMaxScanTasksForHomeVisibility = context.getResources().getInteger(
+                com.android.internal.R.integer.config_maxScanTasksForHomeVisibility);
+        mIsHomeActivityVisible = isHomeActivityVisible();
     }
 
     /**
@@ -64,6 +68,11 @@ public abstract class HomeVisibilityListener {
 
     public HomeVisibilityListener() {
         mObserver = new android.app.IProcessObserver.Stub() {
+            @Override
+            public void onProcessStarted(int pid, int processUid, int packageUid,
+                    String packageName, String processName) {
+            }
+
             @Override
             public void onForegroundActivitiesChanged(int pid, int uid, boolean fg) {
                 refreshHomeVisibility();
@@ -91,22 +100,25 @@ public abstract class HomeVisibilityListener {
     }
 
     private boolean isHomeActivityVisible() {
-        List<ActivityManager.RunningTaskInfo> tasks = mActivityManager.getRunningTasks(1);
-        if (tasks == null || tasks.isEmpty()) {
+        List<ActivityManager.RunningTaskInfo> tasksTopToBottom = mActivityTaskManager.getTasks(
+                mMaxScanTasksForHomeVisibility, /* filterOnlyVisibleRecents= */ true,
+                /* keepIntentExtra= */ false, DEFAULT_DISPLAY);
+        if (tasksTopToBottom == null || tasksTopToBottom.isEmpty()) {
             return false;
         }
 
-        String top = tasks.get(0).topActivity.getPackageName();
-        if (top == null) {
-            return false;
+        for (int i = 0, taskSize = tasksTopToBottom.size(); i < taskSize; ++i) {
+            ActivityManager.RunningTaskInfo task = tasksTopToBottom.get(i);
+            if (DBG) {
+                Log.d(TAG, "Task#" + i + ": activity=" + task.topActivity
+                        + ", visible=" + task.isVisible()
+                        + ", flg=" + Integer.toHexString(task.baseIntent.getFlags())
+                        + ", type=" + task.getActivityType());
+            }
+            if (task.isVisible() && (task.getActivityType() == ACTIVITY_TYPE_HOME)) {
+                return true;
+            }
         }
-
-        // We can assume that the screen is idle if the home application is in the foreground.
-        ComponentName defaultHomeComponent = mContext.getPackageManager()
-                .getHomeActivities(new ArrayList<>());
-        if (defaultHomeComponent == null) return false;
-
-        String defaultHomePackage = defaultHomeComponent.getPackageName();
-        return Objects.equals(top, defaultHomePackage);
+        return false;
     }
 }

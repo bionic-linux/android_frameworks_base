@@ -19,6 +19,8 @@
 #include "RenderNode.h"
 #include "SkiaDisplayList.h"
 
+class SkRRect;
+
 namespace android {
 namespace uirenderer {
 namespace skiapipeline {
@@ -52,6 +54,8 @@ protected:
         mOutput << mIdent << "clipRegion" << std::endl;
     }
 
+    void onResetClip() override { mOutput << mIdent << "resetClip" << std::endl; }
+
     void onDrawPaint(const SkPaint&) override { mOutput << mIdent << "drawPaint" << std::endl; }
 
     void onDrawPath(const SkPath&, const SkPaint&) override {
@@ -84,11 +88,6 @@ protected:
 
     void onDrawTextBlob(const SkTextBlob*, SkScalar, SkScalar, const SkPaint&) override {
         mOutput << mIdent << "drawTextBlob" << std::endl;
-    }
-
-    void onDrawImage2(const SkImage*, SkScalar dx, SkScalar dy, const SkSamplingOptions&,
-                      const SkPaint*) override {
-        mOutput << mIdent << "drawImage" << std::endl;
     }
 
     void onDrawImageRect2(const SkImage*, const SkRect&, const SkRect&, const SkSamplingOptions&,

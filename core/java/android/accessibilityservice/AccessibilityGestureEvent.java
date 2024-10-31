@@ -150,7 +150,13 @@ public final class AccessibilityGestureEvent implements Parcelable {
     private final int mDisplayId;
     private List<MotionEvent> mMotionEvents = new ArrayList<>();
 
-    /** @hide */
+    /**
+     * Constructs an AccessibilityGestureEvent to be dispatched to an accessibility service.
+     *
+     * @param gestureId    the id number of the gesture.
+     * @param displayId    the display on which this gesture was performed.
+     * @param motionEvents the motion events that lead to this gesture.
+     */
     public AccessibilityGestureEvent(
             int gestureId, int displayId, @NonNull List<MotionEvent> motionEvents) {
         mGestureId = gestureId;
@@ -167,7 +173,7 @@ public final class AccessibilityGestureEvent implements Parcelable {
     private AccessibilityGestureEvent(@NonNull Parcel parcel) {
         mGestureId = parcel.readInt();
         mDisplayId = parcel.readInt();
-        ParceledListSlice<MotionEvent> slice = parcel.readParcelable(getClass().getClassLoader());
+        ParceledListSlice<MotionEvent> slice = parcel.readParcelable(getClass().getClassLoader(), android.content.pm.ParceledListSlice.class);
         mMotionEvents = slice.getList();
     }
 
@@ -198,6 +204,29 @@ public final class AccessibilityGestureEvent implements Parcelable {
     @NonNull
     public List<MotionEvent> getMotionEvents() {
         return mMotionEvents;
+    }
+
+    /**
+     * When we asynchronously use {@link AccessibilityGestureEvent}, we should make a copy,
+     * because motionEvent may be recycled before we use async.
+     *
+     * @hide
+     */
+    @NonNull
+    public AccessibilityGestureEvent copyForAsync() {
+        return new AccessibilityGestureEvent(mGestureId, mDisplayId,
+                mMotionEvents.stream().map(MotionEvent::copy).toList());
+    }
+
+    /**
+     * After we use {@link AccessibilityGestureEvent} asynchronously, we should recycle the
+     * MotionEvent, avoid memory leaks.
+     *
+     * @hide
+     */
+    public void recycle() {
+        mMotionEvents.forEach(MotionEvent::recycle);
+        mMotionEvents.clear();
     }
 
     @NonNull

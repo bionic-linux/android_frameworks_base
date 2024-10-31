@@ -43,7 +43,7 @@ oneway interface IPermissionController {
     void setRuntimePermissionGrantStateByDeviceAdminFromParams(String callerPackageName,
             in AdminPermissionControlParams params, in AndroidFuture callback);
     void grantOrUpgradeDefaultRuntimePermissions(in AndroidFuture callback);
-    void notifyOneTimePermissionSessionTimeout(String packageName);
+    void notifyOneTimePermissionSessionTimeout(String packageName, int deviceId);
     void updateUserSensitiveForApp(int uid, in AndroidFuture callback);
     void getPrivilegesDescriptionStringForProfile(
             in String deviceProfileName,
@@ -54,4 +54,11 @@ oneway interface IPermissionController {
     void getGroupOfPlatformPermission(
             in String permissionName,
             in AndroidFuture<String> callback);
+    void getUnusedAppCount(
+            in AndroidFuture callback);
+    void getHibernationEligibility(
+                in String packageName,
+                in AndroidFuture callback);
+    void revokeSelfPermissionsOnKill(in String packageName, in List<String> permissions,
+        int deviceId, in AndroidFuture callback);
 }

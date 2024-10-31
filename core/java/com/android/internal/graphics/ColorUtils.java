@@ -62,7 +62,10 @@ public final class ColorUtils {
         return Color.argb(a, r, g, b);
     }
 
-    private static int compositeAlpha(int foregroundAlpha, int backgroundAlpha) {
+    /**
+     * Returns the composite alpha of the given foreground and background alpha.
+     */
+    public static int compositeAlpha(int foregroundAlpha, int backgroundAlpha) {
         return 0xFF - (((0xFF - backgroundAlpha) * (0xFF - foregroundAlpha)) / 0xFF);
     }
 
@@ -389,7 +392,7 @@ public final class ColorUtils {
      * Convert RGB components to its CIE Lab representative components.
      *
      * <ul>
-     * <li>outLab[0] is L [0 ...1)</li>
+     * <li>outLab[0] is L [0 ...100)</li>
      * <li>outLab[1] is a [-128...127)</li>
      * <li>outLab[2] is b [-128...127)</li>
      * </ul>
@@ -471,7 +474,7 @@ public final class ColorUtils {
      * 2° Standard Observer (1931).</p>
      *
      * <ul>
-     * <li>outLab[0] is L [0 ...1)</li>
+     * <li>outLab[0] is L [0 ...100)</li>
      * <li>outLab[1] is a [-128...127)</li>
      * <li>outLab[2] is b [-128...127)</li>
      * </ul>

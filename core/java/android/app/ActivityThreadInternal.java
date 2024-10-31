@@ -28,15 +28,11 @@ import java.util.ArrayList;
 interface ActivityThreadInternal {
     ContextImpl getSystemContext();
 
-    ContextImpl getSystemUiContext();
+    ContextImpl getSystemUiContextNoCreate();
 
     boolean isInDensityCompatMode();
 
-    boolean hasImeComponent();
-
-    boolean isCachedProcessState();
-
     Application getApplication();
 
-    ArrayList<ComponentCallbacks2> collectComponentCallbacks(boolean includeActivities);
+    ArrayList<ComponentCallbacks2> collectComponentCallbacks(boolean includeUiContexts);
 }

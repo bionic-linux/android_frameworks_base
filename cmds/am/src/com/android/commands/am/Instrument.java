@@ -16,9 +16,12 @@
 
 package com.android.commands.am;
 
+import static android.app.ActivityManager.INSTR_FLAG_ALWAYS_CHECK_SIGNATURE;
 import static android.app.ActivityManager.INSTR_FLAG_DISABLE_HIDDEN_API_CHECKS;
 import static android.app.ActivityManager.INSTR_FLAG_DISABLE_ISOLATED_STORAGE;
 import static android.app.ActivityManager.INSTR_FLAG_DISABLE_TEST_API_CHECKS;
+import static android.app.ActivityManager.INSTR_FLAG_INSTRUMENT_SDK_IN_SANDBOX;
+import static android.app.ActivityManager.INSTR_FLAG_INSTRUMENT_SDK_SANDBOX;
 import static android.app.ActivityManager.INSTR_FLAG_NO_RESTART;
 
 import android.app.IActivityManager;
@@ -82,6 +85,7 @@ public class Instrument {
     public String profileFile = null;
     public boolean wait = false;
     public boolean rawMode = false;
+    public boolean captureLogcat = true;
     boolean protoStd = false;  // write proto to stdout
     boolean protoFile = false;  // write proto to a file
     String logPath = null;
@@ -95,6 +99,9 @@ public class Instrument {
     public Bundle args = new Bundle();
     // Required
     public String componentNameArg;
+    public boolean alwaysCheckSignature = false;
+    public boolean instrumentSdkSandbox = false;
+    public boolean instrumentSdkInSandbox = false;
 
     /**
      * Construct the instrument command runner.
@@ -260,16 +267,18 @@ public class Instrument {
             proto.write(InstrumentationData.TestStatus.RESULT_CODE, resultCode);
             writeBundle(proto, InstrumentationData.TestStatus.RESULTS, results);
 
-            if (resultCode == STATUS_TEST_STARTED) {
-                // Logcat -T takes wall clock time (!?)
-                mTestStartMs = System.currentTimeMillis();
-            } else {
-                if (mTestStartMs > 0) {
-                    proto.write(InstrumentationData.TestStatus.LOGCAT, readLogcat(mTestStartMs));
+            if (captureLogcat) {
+                if (resultCode == STATUS_TEST_STARTED) {
+                    // Logcat -T takes wall clock time (!?)
+                    mTestStartMs = System.currentTimeMillis();
+                } else {
+                    if (mTestStartMs > 0) {
+                        proto.write(InstrumentationData.TestStatus.LOGCAT,
+                                readLogcat(mTestStartMs));
+                    }
+                    mTestStartMs = 0;
                 }
-                mTestStartMs = 0;
             }
-
             proto.end(testStatusToken);
 
             outputProto(proto);
@@ -421,7 +430,8 @@ public class Instrument {
             if (cn == null) throw new IllegalArgumentException("Bad component name: " + cnArg);
             return cn;
         } else {
-            List<InstrumentationInfo> infos = mPm.queryInstrumentation(null, 0).getList();
+            List<InstrumentationInfo> infos = mPm.queryInstrumentationAsUser(
+                    null, 0, userId).getList();
 
             final int numInfos = infos == null ? 0: infos.size();
             ArrayList<ComponentName> cns = new ArrayList<>();
@@ -519,6 +529,15 @@ public class Instrument {
             if (noRestart) {
                 flags |= INSTR_FLAG_NO_RESTART;
             }
+            if (alwaysCheckSignature) {
+                flags |= INSTR_FLAG_ALWAYS_CHECK_SIGNATURE;
+            }
+            if (instrumentSdkSandbox) {
+                flags |= INSTR_FLAG_INSTRUMENT_SDK_SANDBOX;
+            }
+            if (instrumentSdkInSandbox) {
+                flags |= INSTR_FLAG_INSTRUMENT_SDK_IN_SANDBOX;
+            }
             if (!mAm.startInstrumentation(cn, profileFile, flags, args, watcher, connection, userId,
                         abi)) {
                 throw new AndroidException("INSTRUMENTATION_FAILED: " + cn.flattenToString());
@@ -545,6 +564,8 @@ public class Instrument {
                 mWm.setAnimationScales(oldAnims);
             }
         }
+        // Exit from here instead of going down the path of normal shutdown which is slow.
+        System.exit(0);
     }
 
     private static String readLogcat(long startTimeMs) {

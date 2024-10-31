@@ -23,6 +23,9 @@ import android.annotation.Nullable;
 import android.os.Parcel;
 import android.telephony.cdma.CdmaCellLocation;
 
+import com.android.internal.telephony.util.TelephonyUtils;
+import com.android.telephony.Rlog;
+
 import java.util.Objects;
 
 /**
@@ -110,17 +113,6 @@ public final class CellIdentityCdma extends CellIdentity {
             mLongitude = mLatitude = CellInfo.UNAVAILABLE;
         }
         updateGlobalCellId();
-    }
-
-    /** @hide */
-    public CellIdentityCdma(@NonNull android.hardware.radio.V1_0.CellIdentityCdma cid) {
-        this(cid.networkId, cid.systemId, cid.baseStationId, cid.longitude, cid.latitude, "", "");
-    }
-
-    /** @hide */
-    public CellIdentityCdma(@NonNull android.hardware.radio.V1_2.CellIdentityCdma cid) {
-        this(cid.base.networkId, cid.base.systemId, cid.base.baseStationId, cid.base.longitude,
-                cid.base.latitude, cid.operatorNames.alphaLong, cid.operatorNames.alphaShort);
     }
 
     private CellIdentityCdma(@NonNull CellIdentityCdma cid) {
@@ -253,8 +245,8 @@ public final class CellIdentityCdma extends CellIdentity {
         .append(":{ mNetworkId=").append(mNetworkId)
         .append(" mSystemId=").append(mSystemId)
         .append(" mBasestationId=").append(mBasestationId)
-        .append(" mLongitude=").append(mLongitude)
-        .append(" mLatitude=").append(mLatitude)
+        .append(" mLongitude=").append(Rlog.pii(TelephonyUtils.IS_DEBUGGABLE, mLongitude))
+        .append(" mLatitude=").append(Rlog.pii(TelephonyUtils.IS_DEBUGGABLE, mLatitude))
         .append(" mAlphaLong=").append(mAlphaLong)
         .append(" mAlphaShort=").append(mAlphaShort)
         .append("}").toString();

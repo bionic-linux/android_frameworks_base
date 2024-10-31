@@ -40,7 +40,8 @@ interface ITaskOrganizerController {
     void unregisterTaskOrganizer(ITaskOrganizer organizer);
 
     /** Creates a persistent root task in WM for a particular windowing-mode. */
-    void createRootTask(int displayId, int windowingMode, IBinder launchCookie);
+    void createRootTask(int displayId, int windowingMode, IBinder launchCookie,
+            boolean removeWithTaskOrganizer);
 
     /** Deletes a persistent root task in WM */
     boolean deleteRootTask(in WindowContainerToken task);
@@ -52,7 +53,7 @@ interface ITaskOrganizerController {
     /** Gets all root tasks on a display (ordered from top-to-bottom) */
     List<ActivityManager.RunningTaskInfo> getRootTasks(int displayId, in int[] activityTypes);
 
-    /** Get the root task which contains the current ime target */
+    /** Get the {@link WindowContainerToken} of the task which contains the current ime target */
     WindowContainerToken getImeTarget(int display);
 
     /**
@@ -66,4 +67,7 @@ interface ITaskOrganizerController {
      * Restarts the top activity in the given task by killing its process if it is visible.
      */
     void restartTaskTopActivityProcessIfVisible(in WindowContainerToken task);
+
+    /** Updates a state of camera compat control for stretched issues in the viewfinder. */
+    void updateCameraCompatControlState(in WindowContainerToken task, int state);
 }

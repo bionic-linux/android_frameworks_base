@@ -31,19 +31,20 @@ import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
 import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSET;
 import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
-import static android.util.DisplayMetrics.DENSITY_DEFAULT;
 import static android.view.IWindowManager.FIXED_TO_USER_ROTATION_ENABLED;
 import static android.view.Surface.ROTATION_0;
 import static android.view.Surface.ROTATION_90;
 import static android.window.DisplayAreaOrganizer.FEATURE_VENDOR_FIRST;
 
-import static com.android.dx.mockito.inline.extended.ExtendedMockito.doAnswer;
+import static com.android.dx.mockito.inline.extended.ExtendedMockito.doNothing;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.doReturn;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.spyOn;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.times;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.verify;
 import static com.android.server.policy.WindowManagerPolicy.USER_ROTATION_FREE;
 import static com.android.server.wm.Task.FLAG_FORCE_HIDDEN_FOR_TASK_ORG;
+import static com.android.server.wm.TaskFragment.EMBEDDED_DIM_AREA_PARENT_TASK;
+import static com.android.server.wm.TaskFragment.TASK_FRAGMENT_VISIBILITY_VISIBLE_BEHIND_TRANSLUCENT;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -57,14 +58,18 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.clearInvocations;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 
 import android.app.ActivityManager;
+import android.app.ActivityOptions;
+import android.app.CameraCompatTaskInfo;
 import android.app.TaskInfo;
 import android.app.WindowConfiguration;
 import android.content.ComponentName;
@@ -77,13 +82,16 @@ import android.graphics.Rect;
 import android.os.IBinder;
 import android.platform.test.annotations.Presubmit;
 import android.util.DisplayMetrics;
-import android.util.TypedXmlPullParser;
-import android.util.TypedXmlSerializer;
 import android.util.Xml;
 import android.view.Display;
 import android.view.DisplayInfo;
+import android.view.SurfaceControl;
+import android.window.TaskFragmentOrganizer;
 
 import androidx.test.filters.MediumTest;
+
+import com.android.modules.utils.TypedXmlPullParser;
+import com.android.modules.utils.TypedXmlSerializer;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -126,13 +134,41 @@ public class TaskTests extends WindowTestsBase {
         final Task task = createTaskInRootTask(rootTask, 0 /* userId */);
         final ActivityRecord activity = createActivityRecord(mDisplayContent, task);
 
-        task.removeIfPossible();
-        // Assert that the container was removed.
+        task.remove(false /* withTransition */, "testRemoveContainer");
+        // There is still an activity to be destroyed, so the task is not removed immediately.
+        assertNotNull(task.getParent());
+        assertTrue(rootTask.hasChild());
+        assertTrue(task.hasChild());
+        assertTrue(activity.finishing);
+
+        activity.destroyed("testRemoveContainer");
+        // Assert that the container was removed after the activity is destroyed.
         assertNull(task.getParent());
         assertEquals(0, task.getChildCount());
         assertNull(activity.getParent());
         verify(mAtm.getLockTaskController(), atLeast(1)).clearLockedTask(task);
         verify(mAtm.getLockTaskController(), atLeast(1)).clearLockedTask(rootTask);
+    }
+
+    @Test
+    public void testRemoveContainer_multipleNestedTasks() {
+        final Task rootTask = createTask(mDisplayContent);
+        rootTask.mCreatedByOrganizer = true;
+        final Task task1 = new TaskBuilder(mSupervisor).setParentTask(rootTask).build();
+        final Task task2 = new TaskBuilder(mSupervisor).setParentTask(rootTask).build();
+        final ActivityRecord activity1 = createActivityRecord(task1);
+        final ActivityRecord activity2 = createActivityRecord(task2);
+        activity1.setVisible(false);
+
+        // All activities under the root task should be finishing.
+        rootTask.remove(true /* withTransition */, "test");
+        assertTrue(activity1.finishing);
+        assertTrue(activity2.finishing);
+
+        // After all activities activities are destroyed, the root task should also be removed.
+        activity1.removeImmediately();
+        activity2.removeImmediately();
+        assertFalse(rootTask.isAttached());
     }
 
     @Test
@@ -228,6 +264,35 @@ public class TaskTests extends WindowTestsBase {
     }
 
     @Test
+    public void testPerformClearTop() {
+        final Task task = createTask(mDisplayContent);
+        final ActivityRecord activity1 = new ActivityBuilder(mAtm).setTask(task).build();
+        final ActivityRecord activity2 = new ActivityBuilder(mAtm).setTask(task).build();
+        // Detach from process so the activities can be removed from hierarchy when finishing.
+        activity1.detachFromProcess();
+        activity2.detachFromProcess();
+        int[] finishCount = new int[1];
+        assertTrue(task.performClearTop(activity1, 0 /* launchFlags */, finishCount).finishing);
+        assertFalse(task.hasChild());
+        // In real case, the task should be preserved for adding new activity.
+        assertTrue(task.isAttached());
+
+        final ActivityRecord activityA = new ActivityBuilder(mAtm).setTask(task).build();
+        final ActivityRecord activityB = new ActivityBuilder(mAtm).setTask(task).build();
+        final ActivityRecord activityC = new ActivityBuilder(mAtm).setTask(task).build();
+        activityA.setState(ActivityRecord.State.STOPPED, "test");
+        activityB.setState(ActivityRecord.State.PAUSED, "test");
+        activityC.setState(ActivityRecord.State.RESUMED, "test");
+        doReturn(true).when(activityB).shouldBeVisibleUnchecked();
+        doReturn(true).when(activityC).shouldBeVisibleUnchecked();
+        activityA.getConfiguration().densityDpi += 100;
+        assertTrue(task.performClearTop(activityA, 0 /* launchFlags */, finishCount).finishing);
+        // The bottom activity should destroy directly without relaunch for config change.
+        assertEquals(ActivityRecord.State.DESTROYING, activityA.getState());
+        verify(activityA, never()).startRelaunching();
+    }
+
+    @Test
     public void testRemoveChildForOverlayTask() {
         final Task task = createTask(mDisplayContent);
         final int taskId = task.mTaskId;
@@ -248,6 +313,23 @@ public class TaskTests extends WindowTestsBase {
         task.forAllActivities((r) -> {
             assertTrue(r.finishing);
         });
+    }
+
+    @Test
+    public void testUserLeaving() {
+        final ActivityRecord activity = new ActivityBuilder(mAtm).setCreateTask(true).build();
+        final Task task = activity.getTask();
+        mSupervisor.mUserLeaving = true;
+        activity.setState(ActivityRecord.State.RESUMED, "test");
+        task.sleepIfPossible(false /* shuttingDown */);
+        verify(task).startPausing(eq(true) /* userLeaving */, anyBoolean(), any(), any());
+
+        clearInvocations(task);
+        activity.setState(ActivityRecord.State.RESUMED, "test");
+        task.setPausingActivity(null);
+        doReturn(false).when(task).canBeResumed(any());
+        task.pauseActivityIfNeeded(null /* resuming */, "test");
+        verify(task).startPausing(eq(true) /* userLeaving */, anyBoolean(), any(), any());
     }
 
     @Test
@@ -276,16 +358,14 @@ public class TaskTests extends WindowTestsBase {
         // Check visibility of occluded tasks
         doReturn(false).when(leafTask1).shouldBeVisible(any());
         doReturn(true).when(leafTask2).shouldBeVisible(any());
-        rootTask.ensureActivitiesVisible(
-                null /* starting */ , 0 /* configChanges */, false /* preserveWindows */);
+        rootTask.ensureActivitiesVisible(null /* starting */);
         assertFalse(activity1.isVisible());
         assertTrue(activity2.isVisible());
 
         // Check visibility of not occluded tasks
         doReturn(true).when(leafTask1).shouldBeVisible(any());
         doReturn(true).when(leafTask2).shouldBeVisible(any());
-        rootTask.ensureActivitiesVisible(
-                null /* starting */ , 0 /* configChanges */, false /* preserveWindows */);
+        rootTask.ensureActivitiesVisible(null /* starting */);
         assertTrue(activity1.isVisible());
         assertTrue(activity2.isVisible());
     }
@@ -333,12 +413,16 @@ public class TaskTests extends WindowTestsBase {
         leafTask1.getWindowConfiguration().setActivityType(ACTIVITY_TYPE_HOME);
         leafTask2.getWindowConfiguration().setActivityType(ACTIVITY_TYPE_STANDARD);
 
+        // We need to use an orientation that is not an exception for the
+        // ignoreOrientationRequest flag.
+        final int orientation = SCREEN_ORIENTATION_PORTRAIT;
+
         assertEquals(leafTask2, rootTask.getTopChild());
-        assertTrue(rootTask.handlesOrientationChangeFromDescendant());
+        assertTrue(rootTask.handlesOrientationChangeFromDescendant(orientation));
         // Treat orientation request from home as handled.
-        assertTrue(leafTask1.handlesOrientationChangeFromDescendant());
+        assertTrue(leafTask1.handlesOrientationChangeFromDescendant(orientation));
         // Orientation request from standard activity in multi window will not be handled.
-        assertFalse(leafTask2.handlesOrientationChangeFromDescendant());
+        assertFalse(leafTask2.handlesOrientationChangeFromDescendant(orientation));
     }
 
     @Test
@@ -372,6 +456,24 @@ public class TaskTests extends WindowTestsBase {
 
         // The intent of info should be a copy so assert that they are different instances.
         Assert.assertThat(info.baseIntent, not(sameInstance(task.getBaseIntent())));
+    }
+
+    @Test
+    public void testPropagateFocusedStateToRootTask() {
+        final Task rootTask = createTask(mDefaultDisplay);
+        final Task leafTask = createTaskInRootTask(rootTask, 0 /* userId */);
+
+        final ActivityRecord activity = createActivityRecord(leafTask);
+
+        leafTask.getDisplayContent().setFocusedApp(activity);
+
+        assertTrue(leafTask.getTaskInfo().isFocused);
+        assertTrue(rootTask.getTaskInfo().isFocused);
+
+        leafTask.getDisplayContent().setFocusedApp(null);
+
+        assertFalse(leafTask.getTaskInfo().isFocused);
+        assertFalse(rootTask.getTaskInfo().isFocused);
     }
 
     @Test
@@ -480,6 +582,65 @@ public class TaskTests extends WindowTestsBase {
         assertEquals(freeformBounds, task.getBounds());
     }
 
+    @Test
+    public void testTopActivityEligibleForUserAspectRatioButton() {
+        DisplayContent display = mAtm.mRootWindowContainer.getDefaultDisplay();
+        final Task rootTask = new TaskBuilder(mSupervisor).setCreateActivity(true)
+                .setWindowingMode(WINDOWING_MODE_FULLSCREEN).setDisplay(display).build();
+        final Task task = rootTask.getBottomMostTask();
+        final ActivityRecord root = task.getTopNonFinishingActivity();
+        spyOn(mWm.mLetterboxConfiguration);
+        spyOn(root);
+        spyOn(root.mLetterboxUiController);
+
+        doReturn(true).when(root).fillsParent();
+        doReturn(true).when(root.mLetterboxUiController)
+                .shouldEnableUserAspectRatioSettings();
+        doReturn(false).when(root).inSizeCompatMode();
+        doReturn(task).when(root).getOrganizedTask();
+
+        // The button should be eligible to be displayed
+        assertTrue(task.getTaskInfo()
+                .appCompatTaskInfo.topActivityEligibleForUserAspectRatioButton);
+
+        // When shouldApplyUserMinAspectRatioOverride is disable the button is not enabled
+        doReturn(false).when(root.mLetterboxUiController)
+                .shouldEnableUserAspectRatioSettings();
+        assertFalse(task.getTaskInfo()
+                .appCompatTaskInfo.topActivityEligibleForUserAspectRatioButton);
+        doReturn(true).when(root.mLetterboxUiController)
+                .shouldEnableUserAspectRatioSettings();
+
+        // When in size compat mode the button is not enabled
+        doReturn(true).when(root).inSizeCompatMode();
+        assertFalse(task.getTaskInfo()
+                .appCompatTaskInfo.topActivityEligibleForUserAspectRatioButton);
+        doReturn(false).when(root).inSizeCompatMode();
+
+        // When the top activity is transparent, the button is not enabled
+        doReturn(false).when(root).fillsParent();
+        assertFalse(task.getTaskInfo()
+                .appCompatTaskInfo.topActivityEligibleForUserAspectRatioButton);
+        doReturn(true).when(root).fillsParent();
+    }
+
+    @Test
+    public void testIsTopActivityTranslucent() {
+        DisplayContent display = mAtm.mRootWindowContainer.getDefaultDisplay();
+        final Task rootTask = new TaskBuilder(mSupervisor).setCreateActivity(true)
+                .setWindowingMode(WINDOWING_MODE_FULLSCREEN).setDisplay(display).build();
+        final Task task = rootTask.getBottomMostTask();
+        final ActivityRecord root = task.getTopNonFinishingActivity();
+        spyOn(mWm.mLetterboxConfiguration);
+        spyOn(root);
+
+        doReturn(false).when(root).fillsParent();
+        assertTrue(task.getTaskInfo().isTopActivityTransparent);
+
+        doReturn(true).when(root).fillsParent();
+        assertFalse(task.getTaskInfo().isTopActivityTransparent);
+    }
+
     /**
      * Tests that a task with forced orientation has orientation-consistent bounds within the
      * parent.
@@ -495,7 +656,7 @@ public class TaskTests extends WindowTestsBase {
         // display.
         final DisplayRotation dr = display.mDisplayContent.getDisplayRotation();
         dr.setFixedToUserRotation(FIXED_TO_USER_ROTATION_ENABLED);
-        dr.setUserRotation(USER_ROTATION_FREE, ROTATION_0);
+        dr.setUserRotation(USER_ROTATION_FREE, ROTATION_0, /* caller= */ "TaskTests");
 
         final Task rootTask = new TaskBuilder(mSupervisor).setCreateActivity(true)
                 .setWindowingMode(WINDOWING_MODE_FULLSCREEN).setDisplay(display).build();
@@ -527,7 +688,7 @@ public class TaskTests extends WindowTestsBase {
         // Setting app to fixed landscape and changing display
         top.setRequestedOrientation(SCREEN_ORIENTATION_LANDSCAPE);
         // Fix the display orientation to portrait which is 90 degrees for the test display.
-        dr.setUserRotation(USER_ROTATION_FREE, ROTATION_90);
+        dr.setUserRotation(USER_ROTATION_FREE, ROTATION_90, /* caller= */ "TaskTests");
 
         // Fixed orientation request should be resolved on activity level. Task fills display
         // bounds.
@@ -545,6 +706,7 @@ public class TaskTests extends WindowTestsBase {
 
         // FULLSCREEN letterboxes bounds on activity level, no constraint on task level.
         rootTask.setWindowingMode(WINDOWING_MODE_FULLSCREEN);
+        rootTask.setBounds(null);
         assertThat(task.getBounds().height()).isGreaterThan(task.getBounds().width());
         assertThat(top.getBounds().width()).isGreaterThan(top.getBounds().height());
         assertEquals(fullScreenBoundsPort, task.getBounds());
@@ -565,7 +727,7 @@ public class TaskTests extends WindowTestsBase {
         // display.
         final DisplayRotation dr = display.mDisplayContent.getDisplayRotation();
         dr.setFixedToUserRotation(FIXED_TO_USER_ROTATION_ENABLED);
-        dr.setUserRotation(USER_ROTATION_FREE, ROTATION_0);
+        dr.setUserRotation(USER_ROTATION_FREE, ROTATION_0, /* caller= */ "TaskTests");
 
         final Task rootTask = new TaskBuilder(mSupervisor).setCreateActivity(true)
                 .setWindowingMode(WINDOWING_MODE_FULLSCREEN).setDisplay(display).build();
@@ -604,7 +766,8 @@ public class TaskTests extends WindowTestsBase {
         doReturn(parentWindowContainer).when(task).getParent();
         doReturn(display.getDefaultTaskDisplayArea()).when(task).getDisplayArea();
         doReturn(rootTask).when(task).getRootTask();
-        doReturn(true).when(parentWindowContainer).handlesOrientationChangeFromDescendant();
+        doReturn(true).when(parentWindowContainer)
+                .handlesOrientationChangeFromDescendant(anyInt());
 
         // Setting app to fixed portrait fits within parent, but Task shouldn't adjust the
         // bounds because its parent says it will handle it at a later time.
@@ -622,8 +785,6 @@ public class TaskTests extends WindowTestsBase {
         final Task task = new TaskBuilder(mSupervisor).setDisplay(display).build();
         final Configuration inOutConfig = new Configuration();
         final Configuration parentConfig = new Configuration();
-        final int longSide = 1200;
-        final int shortSide = 600;
         final Rect parentBounds = new Rect(0, 0, 250, 500);
         final Rect parentAppBounds = new Rect(0, 0, 250, 480);
         parentConfig.windowConfiguration.setBounds(parentBounds);
@@ -644,14 +805,17 @@ public class TaskTests extends WindowTestsBase {
         // If bounds are overridden, config properties should be made to match. Surface hierarchy
         // will crop for policy.
         inOutConfig.setToDefaults();
+        final int longSide = 960;
+        final int shortSide = 540;
+        parentConfig.densityDpi = 192;
         final Rect largerPortraitBounds = new Rect(0, 0, shortSide, longSide);
         inOutConfig.windowConfiguration.setBounds(largerPortraitBounds);
         task.computeConfigResourceOverrides(inOutConfig, parentConfig);
         // The override bounds are beyond the parent, the out appBounds should not be intersected
         // by parent appBounds.
         assertEquals(largerPortraitBounds, inOutConfig.windowConfiguration.getAppBounds());
-        assertEquals(longSide, inOutConfig.screenHeightDp * parentConfig.densityDpi / 160);
-        assertEquals(shortSide, inOutConfig.screenWidthDp * parentConfig.densityDpi / 160);
+        assertEquals(800, inOutConfig.screenHeightDp); // 960/(192/160) = 800
+        assertEquals(450, inOutConfig.screenWidthDp); // 540/(192/160) = 450
 
         inOutConfig.setToDefaults();
         // Landscape bounds.
@@ -661,26 +825,27 @@ public class TaskTests extends WindowTestsBase {
         // Setup the display with a top stable inset. The later assertion will ensure the inset is
         // excluded from screenHeightDp.
         final int statusBarHeight = 100;
-        final DisplayPolicy policy = display.getDisplayPolicy();
-        doAnswer(invocationOnMock -> {
-            final Rect insets = invocationOnMock.<Rect>getArgument(0);
-            insets.top = statusBarHeight;
-            return null;
-        }).when(policy).convertNonDecorInsetsToStableInsets(any(), eq(ROTATION_0));
+        final DisplayInfo di = display.getDisplayInfo();
+        display.getDisplayPolicy().getDecorInsetsInfo(di.rotation,
+                di.logicalWidth, di.logicalHeight).mConfigInsets.top = statusBarHeight;
 
         // Without limiting to be inside the parent bounds, the out screen size should keep relative
         // to the input bounds.
         final ActivityRecord activity = new ActivityBuilder(mAtm).setTask(task).build();
-        final ActivityRecord.CompatDisplayInsets compatIntsets =
+        final ActivityRecord.CompatDisplayInsets compatInsets =
                 new ActivityRecord.CompatDisplayInsets(
-                        display, activity, /* fixedOrientationBounds= */ null);
-        task.computeConfigResourceOverrides(inOutConfig, parentConfig, compatIntsets);
+                        display, activity, /* letterboxedContainerBounds */ null,
+                        /* useOverrideInsets */ false);
+        final TaskFragment.ConfigOverrideHint overrideHint = new TaskFragment.ConfigOverrideHint();
+        overrideHint.mTmpCompatInsets = compatInsets;
+        task.computeConfigResourceOverrides(inOutConfig, parentConfig, overrideHint);
 
         assertEquals(largerLandscapeBounds, inOutConfig.windowConfiguration.getAppBounds());
-        assertEquals((shortSide - statusBarHeight) * DENSITY_DEFAULT / parentConfig.densityDpi,
-                inOutConfig.screenHeightDp);
-        assertEquals(longSide * DENSITY_DEFAULT / parentConfig.densityDpi,
-                inOutConfig.screenWidthDp);
+        final float density = parentConfig.densityDpi * DisplayMetrics.DENSITY_DEFAULT_SCALE;
+        final int expectedHeightDp = (int) ((shortSide - statusBarHeight) / density + 0.5f);
+        assertEquals(expectedHeightDp, inOutConfig.screenHeightDp);
+        final int expectedWidthDp = (int) (longSide / density + 0.5f);
+        assertEquals(expectedWidthDp, inOutConfig.screenWidthDp);
         assertEquals(Configuration.ORIENTATION_LANDSCAPE, inOutConfig.orientation);
     }
 
@@ -814,6 +979,7 @@ public class TaskTests extends WindowTestsBase {
                 new ComponentName(DEFAULT_COMPONENT_PACKAGE_NAME, targetClassName);
 
         final Intent intent = new Intent();
+        intent.setPackage(DEFAULT_COMPONENT_PACKAGE_NAME);
         intent.setComponent(aliasComponent);
         final ActivityInfo info = new ActivityInfo();
         info.applicationInfo = new ApplicationInfo();
@@ -895,10 +1061,10 @@ public class TaskTests extends WindowTestsBase {
      */
     @Test
     public void testFindRootIndex_effectiveRoot_finishingAndRelinquishing() {
-        final Task task = getTestTask();
+        final ActivityRecord activity0 = new ActivityBuilder(mAtm).setCreateTask(true).build();
+        final Task task = activity0.getTask();
         // Add extra two activities. Mark the one on the bottom with "relinquishTaskIdentity" and
         // one above as finishing.
-        final ActivityRecord activity0 = task.getBottomMostActivity();
         activity0.info.flags |= FLAG_RELINQUISH_TASK_IDENTITY;
         final ActivityRecord activity1 = new ActivityBuilder(mAtm).setTask(task).build();
         activity1.finishing = true;
@@ -930,9 +1096,9 @@ public class TaskTests extends WindowTestsBase {
      */
     @Test
     public void testFindRootIndex_effectiveRoot_relinquishingMultipleActivities() {
-        final Task task = getTestTask();
+        final ActivityRecord activity0 = new ActivityBuilder(mAtm).setCreateTask(true).build();
+        final Task task = activity0.getTask();
         // Set relinquishTaskIdentity for all activities in the task
-        final ActivityRecord activity0 = task.getBottomMostActivity();
         activity0.info.flags |= FLAG_RELINQUISH_TASK_IDENTITY;
         final ActivityRecord activity1 = new ActivityBuilder(mAtm).setTask(task).build();
         activity1.info.flags |= FLAG_RELINQUISH_TASK_IDENTITY;
@@ -978,10 +1144,16 @@ public class TaskTests extends WindowTestsBase {
         final ActivityRecord activity0 = task.getBottomMostActivity();
         activity0.info.flags |= FLAG_RELINQUISH_TASK_IDENTITY;
         // Add an extra activity on top of the root one.
-        new ActivityBuilder(mAtm).setTask(task).build();
+        final ActivityRecord activity1 = new ActivityBuilder(mAtm).setTask(task).build();
 
         assertEquals("The root activity in the task must be reported.",
                 task.getBottomMostActivity(), task.getRootActivity());
+        assertEquals("The task id of root activity must be reported.",
+                task.mTaskId, mAtm.mActivityClientController.getTaskForActivity(
+                        activity0.token, true /* onlyRoot */));
+        assertEquals("No task must be reported for non root activity if onlyRoot.",
+                INVALID_TASK_ID, mAtm.mActivityClientController.getTaskForActivity(
+                        activity1.token, true /* onlyRoot */));
     }
 
     /**
@@ -1048,9 +1220,9 @@ public class TaskTests extends WindowTestsBase {
         final ActivityRecord activity1 = task1.getBottomMostActivity();
 
         assertEquals(task0.mTaskId,
-                ActivityRecord.getTaskForActivityLocked(activity0.appToken, false /* onlyRoot */));
+                ActivityRecord.getTaskForActivityLocked(activity0.token, false /* onlyRoot */));
         assertEquals(task1.mTaskId,
-                ActivityRecord.getTaskForActivityLocked(activity1.appToken,  false /* onlyRoot */));
+                ActivityRecord.getTaskForActivityLocked(activity1.token,  false /* onlyRoot */));
     }
 
     /**
@@ -1069,11 +1241,11 @@ public class TaskTests extends WindowTestsBase {
         final ActivityRecord activity2 = new ActivityBuilder(mAtm).setTask(task).build();
 
         assertEquals(task.mTaskId,
-                ActivityRecord.getTaskForActivityLocked(activity0.appToken, true /* onlyRoot */));
+                ActivityRecord.getTaskForActivityLocked(activity0.token, true /* onlyRoot */));
         assertEquals(task.mTaskId,
-                ActivityRecord.getTaskForActivityLocked(activity1.appToken, true /* onlyRoot */));
+                ActivityRecord.getTaskForActivityLocked(activity1.token, true /* onlyRoot */));
         assertEquals("No task must be reported for activity that is above root", INVALID_TASK_ID,
-                ActivityRecord.getTaskForActivityLocked(activity2.appToken, true /* onlyRoot */));
+                ActivityRecord.getTaskForActivityLocked(activity2.token, true /* onlyRoot */));
     }
 
     /**
@@ -1082,9 +1254,9 @@ public class TaskTests extends WindowTestsBase {
      */
     @Test
     public void testGetTaskForActivity_onlyRoot_relinquishTaskIdentity() {
-        final Task task = getTestTask();
+        final ActivityRecord activity0 = new ActivityBuilder(mAtm).setCreateTask(true).build();
+        final Task task = activity0.getTask();
         // Make the current root activity relinquish task identity
-        final ActivityRecord activity0 = task.getBottomMostActivity();
         activity0.info.flags |= FLAG_RELINQUISH_TASK_IDENTITY;
         // Add an extra activity on top - this will be the new root
         final ActivityRecord activity1 = new ActivityBuilder(mAtm).setTask(task).build();
@@ -1092,11 +1264,11 @@ public class TaskTests extends WindowTestsBase {
         final ActivityRecord activity2 = new ActivityBuilder(mAtm).setTask(task).build();
 
         assertEquals(task.mTaskId,
-                ActivityRecord.getTaskForActivityLocked(activity0.appToken, true /* onlyRoot */));
+                ActivityRecord.getTaskForActivityLocked(activity0.token, true /* onlyRoot */));
         assertEquals(task.mTaskId,
-                ActivityRecord.getTaskForActivityLocked(activity1.appToken, true /* onlyRoot */));
+                ActivityRecord.getTaskForActivityLocked(activity1.token, true /* onlyRoot */));
         assertEquals("No task must be reported for activity that is above root", INVALID_TASK_ID,
-                ActivityRecord.getTaskForActivityLocked(activity2.appToken, true /* onlyRoot */));
+                ActivityRecord.getTaskForActivityLocked(activity2.token, true /* onlyRoot */));
     }
 
     /**
@@ -1118,11 +1290,11 @@ public class TaskTests extends WindowTestsBase {
         final ActivityRecord activity2 = new ActivityBuilder(mAtm).setTask(task).build();
 
         assertEquals(task.mTaskId,
-                ActivityRecord.getTaskForActivityLocked(activity0.appToken, false /* onlyRoot */));
+                ActivityRecord.getTaskForActivityLocked(activity0.token, false /* onlyRoot */));
         assertEquals(task.mTaskId,
-                ActivityRecord.getTaskForActivityLocked(activity1.appToken, false /* onlyRoot */));
+                ActivityRecord.getTaskForActivityLocked(activity1.token, false /* onlyRoot */));
         assertEquals(task.mTaskId,
-                ActivityRecord.getTaskForActivityLocked(activity2.appToken, false /* onlyRoot */));
+                ActivityRecord.getTaskForActivityLocked(activity2.token, false /* onlyRoot */));
     }
 
     /**
@@ -1180,6 +1352,46 @@ public class TaskTests extends WindowTestsBase {
         verify(task).setIntent(eq(activity0));
     }
 
+    /**
+     * Test {@link Task#updateEffectiveIntent()} when activity with relinquishTaskIdentity but
+     * another with different uid. This should make the task use the root activity when updating the
+     * intent.
+     */
+    @Test
+    public void testUpdateEffectiveIntent_relinquishingWithDifferentUid() {
+        final ActivityRecord activity0 = new ActivityBuilder(mAtm)
+                .setActivityFlags(FLAG_RELINQUISH_TASK_IDENTITY).setCreateTask(true).build();
+        final Task task = activity0.getTask();
+
+        // Add an extra activity on top
+        new ActivityBuilder(mAtm).setUid(11).setTask(task).build();
+
+        spyOn(task);
+        task.updateEffectiveIntent();
+        verify(task).setIntent(eq(activity0));
+    }
+
+    /**
+     * Test {@link Task#updateEffectiveIntent()} with activities set as relinquishTaskIdentity.
+     * This should make the task use the topmost activity when updating the intent.
+     */
+    @Test
+    public void testUpdateEffectiveIntent_relinquishingMultipleActivities() {
+        final ActivityRecord activity0 = new ActivityBuilder(mAtm)
+                .setActivityFlags(FLAG_RELINQUISH_TASK_IDENTITY).setCreateTask(true).build();
+        final Task task = activity0.getTask();
+        // Add an extra activity on top
+        final ActivityRecord activity1 = new ActivityBuilder(mAtm).setTask(task).build();
+        activity1.info.flags |= FLAG_RELINQUISH_TASK_IDENTITY;
+
+        // Add an extra activity on top
+        final ActivityRecord activity2 = new ActivityBuilder(mAtm).setTask(task).build();
+
+        spyOn(task);
+        task.updateEffectiveIntent();
+        verify(task).setIntent(eq(activity2));
+    }
+
     @Test
     public void testSaveLaunchingStateWhenConfigurationChanged() {
         LaunchParamsPersister persister = mAtm.mTaskSupervisor.mLaunchParamsPersister;
@@ -1187,7 +1399,8 @@ public class TaskTests extends WindowTestsBase {
 
         final Task task = getTestTask();
         task.setHasBeenVisible(false);
-        task.getDisplayContent().setDisplayWindowingMode(WINDOWING_MODE_FREEFORM);
+        task.getDisplayContent().getDefaultTaskDisplayArea()
+                .setWindowingMode(WINDOWING_MODE_FREEFORM);
         task.getRootTask().setWindowingMode(WINDOWING_MODE_FULLSCREEN);
 
         task.setHasBeenVisible(true);
@@ -1202,15 +1415,16 @@ public class TaskTests extends WindowTestsBase {
         spyOn(persister);
 
         final Task task = getTestTask();
-        task.setHasBeenVisible(false);
-        task.getDisplayContent().setWindowingMode(WindowConfiguration.WINDOWING_MODE_FREEFORM);
-        task.getRootTask().setWindowingMode(WINDOWING_MODE_FULLSCREEN);
+        task.setHasBeenVisible(true);
+        task.getDisplayContent()
+                .getDefaultTaskDisplayArea()
+                .setWindowingMode(WINDOWING_MODE_FREEFORM);
+        task.getRootTask().setWindowingMode(WINDOWING_MODE_FREEFORM);
         final DisplayContent oldDisplay = task.getDisplayContent();
 
         LaunchParamsController.LaunchParams params = new LaunchParamsController.LaunchParams();
-        params.mWindowingMode = WINDOWING_MODE_UNDEFINED;
         persister.getLaunchParams(task, null, params);
-        assertEquals(WINDOWING_MODE_UNDEFINED, params.mWindowingMode);
+        assertEquals(WINDOWING_MODE_FREEFORM, params.mWindowingMode);
 
         task.setHasBeenVisible(true);
         task.removeImmediately();
@@ -1218,7 +1432,7 @@ public class TaskTests extends WindowTestsBase {
         verify(persister).saveTask(task, oldDisplay);
 
         persister.getLaunchParams(task, null, params);
-        assertEquals(WINDOWING_MODE_FULLSCREEN, params.mWindowingMode);
+        assertEquals(WINDOWING_MODE_FREEFORM, params.mWindowingMode);
     }
 
     @Test
@@ -1243,7 +1457,8 @@ public class TaskTests extends WindowTestsBase {
 
         final Task task = getTestTask();
         task.setHasBeenVisible(false);
-        task.getDisplayContent().setDisplayWindowingMode(WINDOWING_MODE_FREEFORM);
+        task.getDisplayContent().getDefaultTaskDisplayArea()
+                .setWindowingMode(WINDOWING_MODE_FREEFORM);
         task.getRootTask().setWindowingMode(WINDOWING_MODE_PINNED);
 
         task.setHasBeenVisible(true);
@@ -1257,9 +1472,11 @@ public class TaskTests extends WindowTestsBase {
         LaunchParamsPersister persister = mAtm.mTaskSupervisor.mLaunchParamsPersister;
         spyOn(persister);
 
-        final Task task = getTestTask();
+        final Task task = new TaskBuilder(mSupervisor).setCreateActivity(true)
+                .setCreateParentTask(true).build().getRootTask();
         task.setHasBeenVisible(false);
-        task.getDisplayContent().setDisplayWindowingMode(WINDOWING_MODE_FREEFORM);
+        task.getDisplayContent().getDefaultTaskDisplayArea()
+                .setWindowingMode(WINDOWING_MODE_FREEFORM);
         task.getRootTask().setWindowingMode(WINDOWING_MODE_FULLSCREEN);
 
         final Task leafTask = createTaskInRootTask(task, 0 /* userId */);
@@ -1356,9 +1573,433 @@ public class TaskTests extends WindowTestsBase {
         assertNotNull(activity.getTask().getDimmer());
     }
 
-    private Task getTestTask() {
+    @Test
+    public void testResumeTask_doNotResumeTaskFragmentBehindTranslucent() {
+        final Task task = createTask(mDisplayContent);
+        final TaskFragment tfBehind = createTaskFragmentWithActivity(task);
+        final TaskFragment tfFront = createTaskFragmentWithActivity(task);
+        spyOn(tfFront);
+        doReturn(true).when(tfFront).isTranslucent(any());
+
+        // TaskFragment behind another translucent TaskFragment should not be resumed.
+        assertEquals(TASK_FRAGMENT_VISIBILITY_VISIBLE_BEHIND_TRANSLUCENT,
+                tfBehind.getVisibility(null /* starting */));
+        assertTrue(tfBehind.isFocusable());
+        assertFalse(tfBehind.canBeResumed(null /* starting */));
+
+        spyOn(tfBehind);
+        task.resumeTopActivityUncheckedLocked(null /* prev */, ActivityOptions.makeBasic(),
+                false /* deferPause */);
+
+        verify(tfBehind, never()).resumeTopActivity(any(), any(), anyBoolean());
+    }
+
+    @Test
+    public void testGetTaskFragment() {
+        final Task parentTask = createTask(mDisplayContent);
+        final TaskFragment tf0 = createTaskFragmentWithActivity(parentTask);
+        final TaskFragment tf1 = createTaskFragmentWithActivity(parentTask);
+
+        assertNull("Could not find it because there's no organized TaskFragment",
+                parentTask.getTaskFragment(TaskFragment::isOrganizedTaskFragment));
+
+        doReturn(true).when(tf0).isOrganizedTaskFragment();
+
+        assertEquals("tf0 must be return because it's the organized TaskFragment.",
+                tf0, parentTask.getTaskFragment(TaskFragment::isOrganizedTaskFragment));
+    }
+
+    @Test
+    public void testReorderActivityToFront() {
+        final TaskFragmentOrganizer organizer = new TaskFragmentOrganizer(Runnable::run);
+        final Task task =  new TaskBuilder(mSupervisor).setCreateActivity(true).build();
+        final ActivityRecord activity = task.getTopMostActivity();
+
+        final TaskFragment fragment = createTaskFragmentWithEmbeddedActivity(task, organizer);
+        final ActivityRecord embeddedActivity = fragment.getTopMostActivity();
+        doNothing().when(task).sendTaskFragmentParentInfoChangedIfNeeded();
+        task.moveActivityToFront(activity);
+        assertEquals("Activity must be moved to front", activity, task.getTopMostActivity());
+
+        doNothing().when(fragment).sendTaskFragmentInfoChanged();
+        task.moveActivityToFront(embeddedActivity);
+        assertEquals("Activity must be moved to front", embeddedActivity,
+                task.getTopMostActivity());
+        assertEquals("Activity must not be embedded", embeddedActivity,
+                task.getTopChild());
+    }
+
+    @Test
+    public void testSetDragResizing() {
+        final Task task = createTask(mDisplayContent);
+
+        // Allowed for freeform.
+        task.setWindowingMode(WINDOWING_MODE_FREEFORM);
+
+        task.setDragResizing(true);
+        assertTrue(task.isDragResizing());
+        task.setDragResizing(false);
+        assertFalse(task.isDragResizing());
+
+        // Allowed for multi-window.
+        task.setWindowingMode(WINDOWING_MODE_MULTI_WINDOW);
+
+        task.setDragResizing(true);
+        assertTrue(task.isDragResizing());
+        task.setDragResizing(false);
+        assertFalse(task.isDragResizing());
+
+        // Disallowed for fullscreen.
+        task.setWindowingMode(WINDOWING_MODE_FULLSCREEN);
+
+        task.setDragResizing(true);
+        assertFalse(task.isDragResizing());
+        task.setDragResizing(false);
+        assertFalse(task.isDragResizing());
+    }
+
+    @Test
+    public void testBoostDimmingTaskFragmentOnTask() {
+        final TaskFragmentOrganizer organizer = new TaskFragmentOrganizer(Runnable::run);
+        final Task task = createTask(mDisplayContent);
+        final TaskFragment primary = createTaskFragmentWithEmbeddedActivity(task, organizer);
+        final TaskFragment secondary = createTaskFragmentWithEmbeddedActivity(task, organizer);
+        final SurfaceControl.Transaction t = mock(SurfaceControl.Transaction.class);
+
+        primary.mVisibleRequested = true;
+        secondary.mVisibleRequested = true;
+        primary.setAdjacentTaskFragment(secondary);
+        secondary.setAdjacentTaskFragment(primary);
+        primary.setEmbeddedDimArea(EMBEDDED_DIM_AREA_PARENT_TASK);
+        doReturn(true).when(primary).shouldBoostDimmer();
+        task.assignChildLayers(t);
+
+        // The layers are initially assigned via the hierarchy, but the primary will be boosted and
+        // assigned again to above of the secondary.
+        verify(primary).assignLayer(t, 0);
+        verify(secondary).assignLayer(t, 1);
+        verify(primary).assignLayer(t, 2);
+    }
+
+    @Test
+    public void testMoveOrCreateDecorSurface() {
+        final TaskFragmentOrganizer organizer = new TaskFragmentOrganizer(Runnable::run);
+        final Task task =  new TaskBuilder(mSupervisor).setCreateActivity(true).build();
+        final ActivityRecord activity = task.getTopMostActivity();
+        final TaskFragment fragment = createTaskFragmentWithEmbeddedActivity(task, organizer);
+        doNothing().when(task).sendTaskFragmentParentInfoChangedIfNeeded();
+
+        // Decor surface should not be present initially.
+        assertNull(task.mDecorSurfaceContainer);
+        assertNull(task.getDecorSurface());
+        assertNull(task.getTaskFragmentParentInfo().getDecorSurface());
+
+        // Decor surface should be created.
+        clearInvocations(task);
+        task.moveOrCreateDecorSurfaceFor(fragment, true /* visible */);
+
+        assertNotNull(task.mDecorSurfaceContainer);
+        assertNotNull(task.getDecorSurface());
+        verify(task).sendTaskFragmentParentInfoChangedIfNeeded();
+        assertNotNull(task.getTaskFragmentParentInfo().getDecorSurface());
+        assertEquals(fragment, task.mDecorSurfaceContainer.mOwnerTaskFragment);
+
+        // Decor surface should be removed.
+        clearInvocations(task);
+        task.removeDecorSurface();
+
+        assertNull(task.mDecorSurfaceContainer);
+        assertNull(task.getDecorSurface());
+        verify(task).sendTaskFragmentParentInfoChangedIfNeeded();
+        assertNull(task.getTaskFragmentParentInfo().getDecorSurface());
+    }
+
+    @Test
+    public void testMoveOrCreateDecorSurface_whenOwnerTaskFragmentRemoved() {
+        final TaskFragmentOrganizer organizer = new TaskFragmentOrganizer(Runnable::run);
+        final Task task =  new TaskBuilder(mSupervisor).setCreateActivity(true).build();
+        final ActivityRecord activity = task.getTopMostActivity();
+        final TaskFragment fragment1 = createTaskFragmentWithEmbeddedActivity(task, organizer);
+        final TaskFragment fragment2 = createTaskFragmentWithEmbeddedActivity(task, organizer);
+        doNothing().when(task).sendTaskFragmentParentInfoChangedIfNeeded();
+
+        task.moveOrCreateDecorSurfaceFor(fragment1, true /* visible */);
+
+        assertNotNull(task.mDecorSurfaceContainer);
+        assertNotNull(task.getDecorSurface());
+        assertEquals(fragment1, task.mDecorSurfaceContainer.mOwnerTaskFragment);
+
+        // Transfer ownership
+        task.moveOrCreateDecorSurfaceFor(fragment2, true /* visible */);
+
+        assertNotNull(task.mDecorSurfaceContainer);
+        assertNotNull(task.getDecorSurface());
+        assertEquals(fragment2, task.mDecorSurfaceContainer.mOwnerTaskFragment);
+
+        // Safe surface should be removed when the owner TaskFragment is removed.
+        task.removeChild(fragment2);
+
+        verify(task).removeDecorSurface();
+        assertNull(task.mDecorSurfaceContainer);
+        assertNull(task.getDecorSurface());
+    }
+
+    @Test
+    public void testAssignChildLayers_decorSurfacePlacement() {
+        final TaskFragmentOrganizer organizer = new TaskFragmentOrganizer(Runnable::run);
+        final Task task =  new TaskBuilder(mSupervisor).setCreateActivity(true).build();
+        final ActivityRecord unembeddedActivity = task.getTopMostActivity();
+
+        final TaskFragment fragment1 = createTaskFragmentWithEmbeddedActivity(task, organizer);
+        final TaskFragment fragment2 = createTaskFragmentWithEmbeddedActivity(task, organizer);
+        final SurfaceControl.Transaction t = mock(SurfaceControl.Transaction.class);
+
+        doNothing().when(task).sendTaskFragmentParentInfoChangedIfNeeded();
+        spyOn(unembeddedActivity);
+        spyOn(fragment1);
+        spyOn(fragment2);
+
+        // Initially, the decor surface should not be placed.
+        task.assignChildLayers(t);
+        verify(unembeddedActivity).assignLayer(t, 0);
+        verify(fragment1).assignLayer(t, 1);
+        verify(fragment2).assignLayer(t, 2);
+
+        clearInvocations(t);
+        clearInvocations(unembeddedActivity);
+        clearInvocations(fragment1);
+        clearInvocations(fragment2);
+
+        // The decor surface should be placed just above the owner TaskFragment.
+        doReturn(true).when(unembeddedActivity).isUid(task.effectiveUid);
+        doReturn(true).when(fragment1).isAllowedToBeEmbeddedInTrustedMode();
+        doReturn(true).when(fragment2).isAllowedToBeEmbeddedInTrustedMode();
+        doReturn(true).when(fragment1).isVisible();
+
+        task.moveOrCreateDecorSurfaceFor(fragment1, true /* visible */);
+        task.assignChildLayers(t);
+
+        verify(unembeddedActivity).assignLayer(t, 0);
+        verify(fragment1).assignLayer(t, 1);
+        verify(t).setLayer(task.mDecorSurfaceContainer.mContainerSurface, 2);
+        verify(fragment2).assignLayer(t, 3);
+        verify(t).setVisibility(task.mDecorSurfaceContainer.mContainerSurface, true);
+        verify(t, never()).setLayer(eq(task.getDecorSurface()), anyInt());
+
+        clearInvocations(t);
+        clearInvocations(unembeddedActivity);
+        clearInvocations(fragment1);
+        clearInvocations(fragment2);
+
+        // The decor surface should be invisible if the owner TaskFragment is invisible.
+        doReturn(true).when(unembeddedActivity).isUid(task.effectiveUid);
+        doReturn(true).when(fragment1).isAllowedToBeEmbeddedInTrustedMode();
+        doReturn(true).when(fragment2).isAllowedToBeEmbeddedInTrustedMode();
+        doReturn(false).when(fragment1).isVisible();
+
+        task.assignChildLayers(t);
+
+        verify(unembeddedActivity).assignLayer(t, 0);
+        verify(fragment1).assignLayer(t, 1);
+        verify(t).setLayer(task.mDecorSurfaceContainer.mContainerSurface, 2);
+        verify(fragment2).assignLayer(t, 3);
+        verify(t).setVisibility(task.mDecorSurfaceContainer.mContainerSurface, false);
+        verify(t, never()).setLayer(eq(task.getDecorSurface()), anyInt());
+
+        clearInvocations(t);
+        clearInvocations(unembeddedActivity);
+        clearInvocations(fragment1);
+        clearInvocations(fragment2);
+
+        // The decor surface should be placed on below activity from a different UID.
+        doReturn(false).when(unembeddedActivity).isUid(task.effectiveUid);
+        doReturn(true).when(fragment1).isAllowedToBeEmbeddedInTrustedMode();
+        doReturn(true).when(fragment2).isAllowedToBeEmbeddedInTrustedMode();
+        doReturn(true).when(fragment1).isVisible();
+
+        task.assignChildLayers(t);
+
+        verify(t).setLayer(task.mDecorSurfaceContainer.mContainerSurface, 0);
+        verify(unembeddedActivity).assignLayer(t, 1);
+        verify(fragment1).assignLayer(t, 2);
+        verify(fragment2).assignLayer(t, 3);
+        verify(t).setVisibility(task.mDecorSurfaceContainer.mContainerSurface, true);
+        verify(t, never()).setLayer(eq(task.getDecorSurface()), anyInt());
+
+        clearInvocations(t);
+        clearInvocations(unembeddedActivity);
+        clearInvocations(fragment1);
+        clearInvocations(fragment2);
+
+        // The decor surface should be placed below untrusted embedded TaskFragment.
+        doReturn(true).when(unembeddedActivity).isUid(task.effectiveUid);
+        doReturn(true).when(fragment1).isAllowedToBeEmbeddedInTrustedMode();
+        doReturn(false).when(fragment2).isAllowedToBeEmbeddedInTrustedMode();
+        doReturn(true).when(fragment1).isVisible();
+
+        task.assignChildLayers(t);
+
+        verify(unembeddedActivity).assignLayer(t, 0);
+        verify(fragment1).assignLayer(t, 1);
+        verify(t).setLayer(task.mDecorSurfaceContainer.mContainerSurface, 2);
+        verify(fragment2).assignLayer(t, 3);
+        verify(t).setVisibility(task.mDecorSurfaceContainer.mContainerSurface, true);
+        verify(t, never()).setLayer(eq(task.getDecorSurface()), anyInt());
+
+        clearInvocations(t);
+        clearInvocations(unembeddedActivity);
+        clearInvocations(fragment1);
+        clearInvocations(fragment2);
+
+        // The decor surface should not be placed after removal.
+        task.removeDecorSurface();
+        task.assignChildLayers(t);
+
+        verify(unembeddedActivity).assignLayer(t, 0);
+        verify(fragment1).assignLayer(t, 1);
+        verify(fragment2).assignLayer(t, 2);
+    }
+
+    @Test
+    public void testAssignChildLayers_boostedDecorSurfacePlacement() {
+        final TaskFragmentOrganizer organizer = new TaskFragmentOrganizer(Runnable::run);
+        final Task task =  new TaskBuilder(mSupervisor).setCreateActivity(true).build();
+        final ActivityRecord unembeddedActivity = task.getTopMostActivity();
+
+        final TaskFragment fragment1 = createTaskFragmentWithEmbeddedActivity(task, organizer);
+        final TaskFragment fragment2 = createTaskFragmentWithEmbeddedActivity(task, organizer);
+        final SurfaceControl.Transaction t = task.getSyncTransaction();
+        final SurfaceControl.Transaction clientTransaction = mock(SurfaceControl.Transaction.class);
+
+        doNothing().when(task).sendTaskFragmentParentInfoChangedIfNeeded();
+        spyOn(unembeddedActivity);
+        spyOn(fragment1);
+        spyOn(fragment2);
+
+        doReturn(true).when(unembeddedActivity).isUid(task.effectiveUid);
+        doReturn(true).when(fragment1).isAllowedToBeEmbeddedInTrustedMode();
+        doReturn(false).when(fragment2).isAllowedToBeEmbeddedInTrustedMode();
+        doReturn(true).when(fragment1).isVisible();
+
+        task.moveOrCreateDecorSurfaceFor(fragment1, true /* visible */);
+
+        clearInvocations(t);
+        clearInvocations(unembeddedActivity);
+        clearInvocations(fragment1);
+        clearInvocations(fragment2);
+
+        // The decor surface should be placed above all the windows when boosted and the cover
+        // surface should show.
+        task.requestDecorSurfaceBoosted(fragment1, true /* isBoosted */, clientTransaction);
+        task.commitDecorSurfaceBoostedState();
+
+        verify(unembeddedActivity).assignLayer(t, 0);
+        verify(fragment1).assignLayer(t, 1);
+        verify(fragment2).assignLayer(t, 2);
+        verify(t).setLayer(task.mDecorSurfaceContainer.mContainerSurface, 3);
+
+        verify(t).setVisibility(task.mDecorSurfaceContainer.mContainerSurface, true);
+        verify(t).merge(clientTransaction);
+
+        clearInvocations(t);
+        clearInvocations(unembeddedActivity);
+        clearInvocations(fragment1);
+        clearInvocations(fragment2);
+
+        // The decor surface should be placed just above the owner TaskFragment and the cover
+        // surface should hide.
+        task.moveOrCreateDecorSurfaceFor(fragment1, true /* visible */);
+        task.requestDecorSurfaceBoosted(fragment1, false /* isBoosted */, clientTransaction);
+        task.commitDecorSurfaceBoostedState();
+
+        verify(unembeddedActivity).assignLayer(t, 0);
+        verify(fragment1).assignLayer(t, 1);
+        verify(t).setLayer(task.mDecorSurfaceContainer.mContainerSurface, 2);
+        verify(fragment2).assignLayer(t, 3);
+
+        verify(t).setVisibility(task.mDecorSurfaceContainer.mContainerSurface, true);
+        verify(t).merge(clientTransaction);
+
+    }
+
+    @Test
+    public void testMoveTaskFragmentsToBottomIfNeeded() {
+        final TaskFragmentOrganizer organizer = new TaskFragmentOrganizer(Runnable::run);
         final Task task = new TaskBuilder(mSupervisor).setCreateActivity(true).build();
-        return task.getBottomMostTask();
+        final ActivityRecord unembeddedActivity = task.getTopMostActivity();
+
+        final TaskFragment fragment1 = createTaskFragmentWithEmbeddedActivity(task, organizer);
+        final TaskFragment fragment2 = createTaskFragmentWithEmbeddedActivity(task, organizer);
+        final TaskFragment fragment3 = createTaskFragmentWithEmbeddedActivity(task, organizer);
+        doReturn(true).when(fragment1).isMoveToBottomIfClearWhenLaunch();
+        doReturn(false).when(fragment2).isMoveToBottomIfClearWhenLaunch();
+        doReturn(true).when(fragment3).isMoveToBottomIfClearWhenLaunch();
+
+        assertEquals(unembeddedActivity, task.mChildren.get(0));
+        assertEquals(fragment1, task.mChildren.get(1));
+        assertEquals(fragment2, task.mChildren.get(2));
+        assertEquals(fragment3, task.mChildren.get(3));
+
+        final int[] finishCount = {0};
+        task.moveTaskFragmentsToBottomIfNeeded(unembeddedActivity, finishCount);
+
+        // fragment1 and fragment3 should be moved to the bottom of the task
+        assertEquals(fragment1, task.mChildren.get(0));
+        assertEquals(fragment3, task.mChildren.get(1));
+        assertEquals(unembeddedActivity, task.mChildren.get(2));
+        assertEquals(fragment2, task.mChildren.get(3));
+        assertEquals(2, finishCount[0]);
+    }
+
+    @Test
+    public void testPauseActivityWhenHasEmptyLeafTaskFragment() {
+        // Creating a task that has a RESUMED activity and an empty TaskFragment.
+        final Task task = new TaskBuilder(mSupervisor).setCreateActivity(true).build();
+        final ActivityRecord activity = task.getTopMostActivity();
+        new TaskFragmentBuilder(mAtm).setParentTask(task).build();
+        activity.setState(ActivityRecord.State.RESUMED, "test");
+
+        // Ensure the activity is paused if cannot be resumed.
+        doReturn(false).when(task).canBeResumed(any());
+        mSupervisor.mUserLeaving = true;
+        task.pauseActivityIfNeeded(null /* resuming */, "test");
+        verify(task).startPausing(eq(true) /* userLeaving */, anyBoolean(), any(), any());
+    }
+
+    @Test
+    public void testGetBottomMostActivityInSamePackage() {
+        final String packageName = "homePackage";
+        final TaskFragmentOrganizer organizer = new TaskFragmentOrganizer(Runnable::run);
+        final Task task = new TaskBuilder(mSupervisor).setCreateActivity(false).build();
+        task.realActivity = new ComponentName(packageName, packageName + ".root_activity");
+        doNothing().when(task).sendTaskFragmentParentInfoChangedIfNeeded();
+
+        final TaskFragment fragment1 = createTaskFragmentWithEmbeddedActivity(task, organizer);
+        final ActivityRecord activityDifferentPackage =
+                new ActivityBuilder(mAtm).setTask(task).build();
+        final ActivityRecord activitySamePackage =
+                new ActivityBuilder(mAtm)
+                        .setComponent(new ComponentName(packageName, packageName + ".activity2"))
+                        .setTask(task).build();
+
+        assertEquals(fragment1.getChildAt(0), task.getBottomMostActivity());
+        assertEquals(activitySamePackage, task.getBottomMostActivityInSamePackage());
+        assertNotEquals(activityDifferentPackage, task.getBottomMostActivityInSamePackage());
+    }
+
+    @Test
+    public void getTaskInfoPropagatesCameraCompatMode() {
+        final Task task = new TaskBuilder(mSupervisor).setCreateActivity(true).build();
+        final ActivityRecord activity = task.getTopMostActivity();
+        activity.mLetterboxUiController
+                .setFreeformCameraCompatMode(CameraCompatTaskInfo.CAMERA_COMPAT_FREEFORM_PORTRAIT);
+
+        assertEquals(CameraCompatTaskInfo.CAMERA_COMPAT_FREEFORM_PORTRAIT,
+                task.getTaskInfo().appCompatTaskInfo.cameraCompatTaskInfo.freeformCameraCompatMode);
+    }
+
+    private Task getTestTask() {
+        return new TaskBuilder(mSupervisor).setCreateActivity(true).build();
     }
 
     private void testRootTaskBoundsConfiguration(int windowingMode, Rect parentBounds, Rect bounds,

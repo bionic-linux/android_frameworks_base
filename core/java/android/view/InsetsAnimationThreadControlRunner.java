@@ -34,6 +34,7 @@ import android.view.SyncRtSurfaceTransactionApplier.SurfaceParams;
 import android.view.WindowInsets.Type.InsetsType;
 import android.view.WindowInsetsAnimation.Bounds;
 import android.view.animation.Interpolator;
+import android.view.inputmethod.ImeTracker;
 
 /**
  * Insets animation runner that uses {@link InsetsAnimationThread} to run the animation off from the
@@ -54,8 +55,8 @@ public class InsetsAnimationThreadControlRunner implements InsetsAnimationContro
 
         @Override
         @UiThread
-        public void startAnimation(InsetsAnimationControlImpl controller,
-                WindowInsetsAnimationControlListener listener, int types,
+        public <T extends InsetsAnimationControlRunner & InternalInsetsAnimationController>
+        void startAnimation(T runner, WindowInsetsAnimationControlListener listener, int types,
                 WindowInsetsAnimation animation, Bounds bounds) {
             // Animation will be started in constructor already.
         }
@@ -75,7 +76,7 @@ public class InsetsAnimationThreadControlRunner implements InsetsAnimationContro
             Trace.asyncTraceEnd(Trace.TRACE_TAG_VIEW,
                     "InsetsAsyncAnimation: " + WindowInsets.Type.toString(runner.getTypes()),
                     runner.getTypes());
-            releaseControls(mControl.getControls());
+            InsetsController.releaseControls(mControl.getControls());
             mMainThreadHandler.post(() ->
                     mOuterCallbacks.notifyFinished(InsetsAnimationThreadControlRunner.this, shown));
         }
@@ -112,12 +113,13 @@ public class InsetsAnimationThreadControlRunner implements InsetsAnimationContro
             @InsetsType int types, InsetsAnimationControlCallbacks controller, long durationMs,
             Interpolator interpolator, @AnimationType int animationType,
             @LayoutInsetsDuringAnimation int layoutInsetsDuringAnimation,
-            CompatibilityInfo.Translator translator, Handler mainThreadHandler) {
+            CompatibilityInfo.Translator translator, Handler mainThreadHandler,
+            @Nullable ImeTracker.Token statsToken) {
         mMainThreadHandler = mainThreadHandler;
         mOuterCallbacks = controller;
         mControl = new InsetsAnimationControlImpl(controls, frame, state, listener, types,
                 mCallbacks, durationMs, interpolator, animationType, layoutInsetsDuringAnimation,
-                translator);
+                translator, statsToken);
         InsetsAnimationThread.getHandler().post(() -> {
             if (mControl.isCancelled()) {
                 return;
@@ -128,16 +130,16 @@ public class InsetsAnimationThreadControlRunner implements InsetsAnimationContro
         });
     }
 
-    private void releaseControls(SparseArray<InsetsSourceControl> controls) {
-        for (int i = controls.size() - 1; i >= 0; i--) {
-            controls.valueAt(i).release(SurfaceControl::release);
-        }
-    }
-
     @Override
     @UiThread
     public void dumpDebug(ProtoOutputStream proto, long fieldId) {
         mControl.dumpDebug(proto, fieldId);
+    }
+
+    @Override
+    @Nullable
+    public ImeTracker.Token getStatsToken() {
+        return mControl.getStatsToken();
     }
 
     @Override
@@ -183,5 +185,12 @@ public class InsetsAnimationThreadControlRunner implements InsetsAnimationContro
     @Override
     public int getAnimationType() {
         return mControl.getAnimationType();
+    }
+
+    @Override
+    public void updateLayoutInsetsDuringAnimation(
+            @LayoutInsetsDuringAnimation int layoutInsetsDuringAnimation) {
+        InsetsAnimationThread.getHandler().post(
+                () -> mControl.updateLayoutInsetsDuringAnimation(layoutInsetsDuringAnimation));
     }
 }

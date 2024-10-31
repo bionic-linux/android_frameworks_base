@@ -16,6 +16,10 @@
 
 package com.android.keyguard;
 
+import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+
+import static com.android.systemui.util.PluralMessageFormaterKt.icuMessageFormat;
+
 import android.annotation.NonNull;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -29,6 +33,7 @@ import android.telephony.PinResult;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -37,8 +42,11 @@ import android.widget.ImageView;
 import com.android.internal.util.LatencyTracker;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.keyguard.KeyguardSecurityModel.SecurityMode;
-import com.android.systemui.R;
+import com.android.keyguard.domain.interactor.KeyguardKeyboardInteractor;
 import com.android.systemui.classifier.FalsingCollector;
+import com.android.systemui.flags.FeatureFlags;
+import com.android.systemui.res.R;
+import com.android.systemui.user.domain.interactor.SelectedUserInteractor;
 
 public class KeyguardSimPinViewController
         extends KeyguardPinBasedInputViewController<KeyguardSimPinView> {
@@ -50,12 +58,12 @@ public class KeyguardSimPinViewController
 
     private ProgressDialog mSimUnlockProgressDialog;
     private CheckSimPin mCheckSimPinThread;
-    private int mRemainingAttempts;
+    private int mRemainingAttempts = -1;
     // Below flag is set to true during power-up or when a new SIM card inserted on device.
     // When this is true and when SIM card is PIN locked state, on PIN lock screen, message would
     // be displayed to inform user about the number of remaining PIN attempts left.
     private boolean mShowDefaultMessage;
-    private int mSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+    private int mSubId = INVALID_SUBSCRIPTION_ID;
     private AlertDialog mRemainingAttemptsDialog;
     private ImageView mSimImageView;
 
@@ -63,6 +71,12 @@ public class KeyguardSimPinViewController
         @Override
         public void onSimStateChanged(int subId, int slotId, int simState) {
             if (DEBUG) Log.v(TAG, "onSimStateChanged(subId=" + subId + ",state=" + simState + ")");
+            // If subId has gone to PUK required then we need to go to the PUK screen.
+            if (subId == mSubId && simState == TelephonyManager.SIM_STATE_PUK_REQUIRED) {
+                getKeyguardSecurityCallback().showCurrentSecurityScreen();
+                return;
+            }
+
             if (simState == TelephonyManager.SIM_STATE_READY) {
                 mRemainingAttempts = -1;
                 resetState();
@@ -79,10 +93,13 @@ public class KeyguardSimPinViewController
             KeyguardMessageAreaController.Factory messageAreaControllerFactory,
             LatencyTracker latencyTracker, LiftToActivateListener liftToActivateListener,
             TelephonyManager telephonyManager, FalsingCollector falsingCollector,
-            EmergencyButtonController emergencyButtonController) {
+            EmergencyButtonController emergencyButtonController, FeatureFlags featureFlags,
+            SelectedUserInteractor selectedUserInteractor,
+            KeyguardKeyboardInteractor keyguardKeyboardInteractor) {
         super(view, keyguardUpdateMonitor, securityMode, lockPatternUtils, keyguardSecurityCallback,
                 messageAreaControllerFactory, latencyTracker, liftToActivateListener,
-                emergencyButtonController, falsingCollector);
+                emergencyButtonController, falsingCollector, featureFlags, selectedUserInteractor,
+                keyguardKeyboardInteractor);
         mKeyguardUpdateMonitor = keyguardUpdateMonitor;
         mTelephonyManager = telephonyManager;
         mSimImageView = mView.findViewById(R.id.keyguard_sim);
@@ -91,6 +108,19 @@ public class KeyguardSimPinViewController
     @Override
     protected void onViewAttached() {
         super.onViewAttached();
+        mKeyguardUpdateMonitor.registerCallback(mUpdateMonitorCallback);
+    }
+
+    @Override
+    protected void onViewDetached() {
+        super.onViewDetached();
+        mKeyguardUpdateMonitor.removeCallback(mUpdateMonitorCallback);
+    }
+
+    @Override
+    public void updateMessageAreaVisibility() {
+        if (mMessageAreaController == null) return;
+        mMessageAreaController.setIsVisible(true);
     }
 
     @Override
@@ -103,7 +133,7 @@ public class KeyguardSimPinViewController
             showDefaultMessage();
         }
 
-        mView.setEsimLocked(KeyguardEsimArea.isEsimLocked(mView.getContext(), mSubId));
+        mView.setESimLocked(KeyguardEsimArea.isEsimLocked(mView.getContext(), mSubId), mSubId);
     }
 
     @Override
@@ -114,14 +144,12 @@ public class KeyguardSimPinViewController
     @Override
     public void onResume(int reason) {
         super.onResume(reason);
-        mKeyguardUpdateMonitor.registerCallback(mUpdateMonitorCallback);
         mView.resetState();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mKeyguardUpdateMonitor.removeCallback(mUpdateMonitorCallback);
 
         // dismiss the dialog.
         if (mSimUnlockProgressDialog != null) {
@@ -134,12 +162,14 @@ public class KeyguardSimPinViewController
     protected void verifyPasswordAndUnlock() {
         String entry = mPasswordEntry.getText();
 
-        if (entry.length() < 4) {
+        // A SIM PIN is 4 to 8 decimal digits according to 
+        // GSM 02.17 version 5.0.1, Section 5.6 PIN Management
+        if ((entry.length() < 4) || (entry.length() > 8)) {
             // otherwise, display a message to the user, and don't submit.
-            mMessageAreaController.setMessage(
-                    com.android.systemui.R.string.kg_invalid_sim_pin_hint);
             mView.resetPasswordText(true /* animate */, true /* announce */);
             getKeyguardSecurityCallback().userActivity();
+            mMessageAreaController.setMessage(
+                    com.android.systemui.res.R.string.kg_invalid_sim_pin_hint);
             return;
         }
 
@@ -162,7 +192,8 @@ public class KeyguardSimPinViewController
                             mRemainingAttempts = -1;
                             mShowDefaultMessage = true;
                             getKeyguardSecurityCallback().dismiss(
-                                    true, KeyguardUpdateMonitor.getCurrentUser());
+                                    true, mSelectedUserInteractor.getSelectedUserId(),
+                                    SecurityMode.SimPin);
                         } else {
                             mShowDefaultMessage = false;
                             if (result.getResult() == PinResult.PIN_RESULT_TYPE_INCORRECT) {
@@ -235,10 +266,9 @@ public class KeyguardSimPinViewController
             displayMessage = mView.getResources().getString(
                     R.string.kg_password_wrong_pin_code_pukked);
         } else if (attemptsRemaining > 0) {
-            msgId = isDefault ? R.plurals.kg_password_default_pin_message :
-                    R.plurals.kg_password_wrong_pin_code;
-            displayMessage = mView.getResources()
-                    .getQuantityString(msgId, attemptsRemaining, attemptsRemaining);
+            msgId = isDefault ? R.string.kg_password_default_pin_message :
+                    R.string.kg_password_wrong_pin_code;
+            displayMessage = icuMessageFormat(mView.getResources(), msgId, attemptsRemaining);
         } else {
             msgId = isDefault ? R.string.kg_sim_pin_instructions : R.string.kg_password_pin_failed;
             displayMessage = mView.getResources().getString(msgId);
@@ -319,7 +349,11 @@ public class KeyguardSimPinViewController
         } else {
             SubscriptionInfo info = mKeyguardUpdateMonitor.getSubscriptionInfoForSubId(mSubId);
             CharSequence displayName = info != null ? info.getDisplayName() : ""; // don't crash
-            msg = rez.getString(R.string.kg_sim_pin_instructions_multi, displayName);
+            if (!TextUtils.isEmpty(displayName)) {
+                msg = rez.getString(R.string.kg_sim_pin_instructions_multi, displayName);
+            } else {
+                msg = rez.getString(R.string.kg_sim_pin_instructions);
+            }
             if (info != null) {
                 color = info.getIconTint();
             }

@@ -16,23 +16,17 @@
 
 package com.android.systemui.recents;
 
-import android.annotation.Nullable;
-import android.app.trust.TrustManager;
 import android.content.Context;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.android.systemui.Dependency;
 import com.android.systemui.dagger.SysUISingleton;
+import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.shared.recents.IOverviewProxy;
-import com.android.systemui.statusbar.phone.StatusBar;
-
-import java.util.Optional;
+import com.android.systemui.statusbar.policy.KeyguardStateController;
 
 import javax.inject.Inject;
-
-import dagger.Lazy;
 
 /**
  * An implementation of the Recents interface which proxies to the OverviewProxyService.
@@ -41,26 +35,25 @@ import dagger.Lazy;
 public class OverviewProxyRecentsImpl implements RecentsImplementation {
 
     private final static String TAG = "OverviewProxyRecentsImpl";
-    @Nullable
-    private final Lazy<StatusBar> mStatusBarLazy;
-
-    private Context mContext;
     private Handler mHandler;
-    private TrustManager mTrustManager;
-    private OverviewProxyService mOverviewProxyService;
+    private final OverviewProxyService mOverviewProxyService;
+    private final ActivityStarter mActivityStarter;
+    private final KeyguardStateController mKeyguardStateController;
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     @Inject
-    public OverviewProxyRecentsImpl(Optional<Lazy<StatusBar>> statusBarLazy) {
-        mStatusBarLazy = statusBarLazy.orElse(null);
+    public OverviewProxyRecentsImpl(
+            OverviewProxyService overviewProxyService,
+            ActivityStarter activityStarter,
+            KeyguardStateController keyguardStateController) {
+        mOverviewProxyService = overviewProxyService;
+        mActivityStarter = activityStarter;
+        mKeyguardStateController = keyguardStateController;
     }
 
     @Override
     public void onStart(Context context) {
-        mContext = context;
         mHandler = new Handler();
-        mTrustManager = (TrustManager) context.getSystemService(Context.TRUST_SERVICE);
-        mOverviewProxyService = Dependency.get(OverviewProxyService.class);
     }
 
     @Override
@@ -69,12 +62,9 @@ public class OverviewProxyRecentsImpl implements RecentsImplementation {
         if (overviewProxy != null) {
             try {
                 overviewProxy.onOverviewShown(triggeredFromAltTab);
-                return;
             } catch (RemoteException e) {
                 Log.e(TAG, "Failed to send overview show event to launcher.", e);
             }
-        } else {
-            // Do nothing
         }
     }
 
@@ -84,12 +74,9 @@ public class OverviewProxyRecentsImpl implements RecentsImplementation {
         if (overviewProxy != null) {
             try {
                 overviewProxy.onOverviewHidden(triggeredFromAltTab, triggeredFromHomeKey);
-                return;
             } catch (RemoteException e) {
                 Log.e(TAG, "Failed to send overview hide event to launcher.", e);
             }
-        } else {
-            // Do nothing
         }
     }
 
@@ -109,19 +96,14 @@ public class OverviewProxyRecentsImpl implements RecentsImplementation {
                 }
             };
             // Preload only if device for current user is unlocked
-            if (mStatusBarLazy != null && mStatusBarLazy.get().isKeyguardShowing()) {
-                mStatusBarLazy.get().executeRunnableDismissingKeyguard(() -> {
-                        // Flush trustmanager before checking device locked per user
-                        mTrustManager.reportKeyguardShowingChanged();
-                        mHandler.post(toggleRecents);
-                    }, null,  true /* dismissShade */, false /* afterKeyguardGone */,
-                    true /* deferred */);
+            if (mKeyguardStateController.isShowing()) {
+                mActivityStarter.executeRunnableDismissingKeyguard(
+                        () -> mHandler.post(toggleRecents), null, true /* dismissShade */,
+                        false /* afterKeyguardGone */,
+                        true /* deferred */);
             } else {
                 toggleRecents.run();
             }
-            return;
-        } else {
-            // Do nothing
         }
     }
 }

@@ -137,12 +137,17 @@ oneway interface ITaskStackListener {
      * activities inside it belong to a managed profile user, and that user has just
      * been locked.
      */
-    void onTaskProfileLocked(int taskId, int userId);
+    void onTaskProfileLocked(in ActivityManager.RunningTaskInfo taskInfo, int userId);
 
     /**
      * Called when a task snapshot got updated.
      */
     void onTaskSnapshotChanged(int taskId, in TaskSnapshot snapshot);
+
+    /**
+     * Called when a task snapshot become invalidated.
+     */
+    void onTaskSnapshotInvalidated(int taskId);
 
     /**
      * Reports that an Activity received a back key press when there were no additional activities

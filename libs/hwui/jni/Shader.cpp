@@ -1,22 +1,31 @@
-#undef LOG_TAG
-#define LOG_TAG "ShaderJNI"
+#include <vector>
 
+#include "Gainmap.h"
 #include "GraphicsJNI.h"
+#include "SkBitmap.h"
+#include "SkBlendMode.h"
+#include "SkColor.h"
 #include "SkColorFilter.h"
 #include "SkGradientShader.h"
+#include "SkImage.h"
 #include "SkImagePriv.h"
+#include "SkMatrix.h"
+#include "SkPoint.h"
+#include "SkRefCnt.h"
+#include "SkSamplingOptions.h"
+#include "SkScalar.h"
 #include "SkShader.h"
-#include "SkBlendMode.h"
+#include "SkString.h"
+#include "SkTileMode.h"
+#include "effects/GainmapRenderer.h"
 #include "include/effects/SkRuntimeEffect.h"
-
-#include <vector>
 
 using namespace android::uirenderer;
 
 /**
  * By default Skia gradients will interpolate their colors in unpremul space
  * and then premultiply each of the results. We must set this flag to preserve
- * backwards compatiblity by premultiplying the colors of the gradient first,
+ * backwards compatibility by premultiplying the colors of the gradient first,
  * and then interpolating between them.
  */
 static const uint32_t sGradientShaderFlags = SkGradientShader::kInterpolateColorsInPremul_Flag;
@@ -26,30 +35,6 @@ static const uint32_t sGradientShaderFlags = SkGradientShader::kInterpolateColor
         doThrowIAE(env);            \
         return 0;                   \
     }
-
-static void Color_RGBToHSV(JNIEnv* env, jobject, jint red, jint green, jint blue, jfloatArray hsvArray)
-{
-    SkScalar hsv[3];
-    SkRGBToHSV(red, green, blue, hsv);
-
-    AutoJavaFloatArray  autoHSV(env, hsvArray, 3);
-    float* values = autoHSV.ptr();
-    for (int i = 0; i < 3; i++) {
-        values[i] = SkScalarToFloat(hsv[i]);
-    }
-}
-
-static jint Color_HSVToColor(JNIEnv* env, jobject, jint alpha, jfloatArray hsvArray)
-{
-    AutoJavaFloatArray  autoHSV(env, hsvArray, 3);
-#ifdef SK_SCALAR_IS_FLOAT
-    SkScalar*   hsv = autoHSV.ptr();
-#else
-    #error Need to convert float array to SkScalar array before calling the following function.
-#endif
-
-    return static_cast<jint>(SkHSVToColor(alpha, hsv));
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -63,24 +48,59 @@ static jlong Shader_getNativeFinalizer(JNIEnv*, jobject) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
+static SkGainmapInfo sNoOpGainmap = {
+        .fGainmapRatioMin = {1.f, 1.f, 1.f, 1.0},
+        .fGainmapRatioMax = {1.f, 1.f, 1.f, 1.0},
+        .fGainmapGamma = {1.f, 1.f, 1.f, 1.f},
+        .fEpsilonSdr = {0.f, 0.f, 0.f, 1.0},
+        .fEpsilonHdr = {0.f, 0.f, 0.f, 1.0},
+        .fDisplayRatioSdr = 1.f,
+        .fDisplayRatioHdr = 1.f,
+};
+
 static jlong BitmapShader_constructor(JNIEnv* env, jobject o, jlong matrixPtr, jlong bitmapHandle,
-        jint tileModeX, jint tileModeY, bool filter) {
+                                      jint tileModeX, jint tileModeY, jint maxAniso, bool filter,
+                                      bool isDirectSampled, jlong overrideGainmapPtr) {
+    SkSamplingOptions sampling = maxAniso > 0 ? SkSamplingOptions::Aniso(static_cast<int>(maxAniso))
+                                              : SkSamplingOptions(filter ? SkFilterMode::kLinear
+                                                                         : SkFilterMode::kNearest,
+                                                                  SkMipmapMode::kNone);
     const SkMatrix* matrix = reinterpret_cast<const SkMatrix*>(matrixPtr);
+    const Gainmap* gainmap = reinterpret_cast<Gainmap*>(overrideGainmapPtr);
     sk_sp<SkImage> image;
     if (bitmapHandle) {
         // Only pass a valid SkBitmap object to the constructor if the Bitmap exists. Otherwise,
         // we'll pass an empty SkBitmap to avoid crashing/excepting for compatibility.
-        image = android::bitmap::toBitmap(bitmapHandle).makeImage();
+        auto& bitmap = android::bitmap::toBitmap(bitmapHandle);
+        image = bitmap.makeImage();
+        if (!gainmap && bitmap.hasGainmap()) {
+            gainmap = bitmap.gainmap().get();
+        }
+
+        if (!isDirectSampled && gainmap && gainmap->info != sNoOpGainmap) {
+            sk_sp<SkShader> gainmapShader =
+                    MakeGainmapShader(image, gainmap->bitmap->makeImage(), gainmap->info,
+                                      (SkTileMode)tileModeX, (SkTileMode)tileModeY, sampling);
+            if (gainmapShader) {
+                if (matrix) {
+                    gainmapShader = gainmapShader->makeWithLocalMatrix(*matrix);
+                }
+                return reinterpret_cast<jlong>(gainmapShader.release());
+            }
+        }
     }
 
     if (!image.get()) {
         SkBitmap bitmap;
         image = SkMakeImageFromRasterBitmap(bitmap, kNever_SkCopyPixelsMode);
     }
-    SkSamplingOptions sampling(filter ? SkFilterMode::kLinear : SkFilterMode::kNearest,
-                               SkMipmapMode::kNone);
-    sk_sp<SkShader> shader = image->makeShader(
-            (SkTileMode)tileModeX, (SkTileMode)tileModeY, sampling);
+
+    sk_sp<SkShader> shader;
+    if (isDirectSampled) {
+        shader = image->makeRawShader((SkTileMode)tileModeX, (SkTileMode)tileModeY, sampling);
+    } else {
+        shader = image->makeShader((SkTileMode)tileModeX, (SkTileMode)tileModeY, sampling);
+    }
     ThrowIAE_IfNull(env, shader.get());
 
     if (matrix) {
@@ -117,11 +137,7 @@ static jlong LinearGradient_create(JNIEnv* env, jobject, jlong matrixPtr,
     std::vector<SkColor4f> colors = convertColorLongs(env, colorArray);
 
     AutoJavaFloatArray autoPos(env, posArray, colors.size());
-#ifdef SK_SCALAR_IS_FLOAT
     SkScalar* pos = autoPos.ptr();
-#else
-    #error Need to convert float array to SkScalar array before calling the following function.
-#endif
 
     sk_sp<SkShader> shader(SkGradientShader::MakeLinear(pts, &colors[0],
                 GraphicsJNI::getNativeColorSpace(colorSpaceHandle), pos, colors.size(),
@@ -161,11 +177,7 @@ static jlong RadialGradient_create(JNIEnv* env,
     std::vector<SkColor4f> colors = convertColorLongs(env, colorArray);
 
     AutoJavaFloatArray autoPos(env, posArray, colors.size());
-#ifdef SK_SCALAR_IS_FLOAT
     SkScalar* pos = autoPos.ptr();
-#else
-    #error Need to convert float array to SkScalar array before calling the following function.
-#endif
 
     auto colorSpace = GraphicsJNI::getNativeColorSpace(colorSpaceHandle);
     auto skTileMode = static_cast<SkTileMode>(tileMode);
@@ -193,11 +205,7 @@ static jlong SweepGradient_create(JNIEnv* env, jobject, jlong matrixPtr, jfloat 
     std::vector<SkColor4f> colors = convertColorLongs(env, colorArray);
 
     AutoJavaFloatArray autoPos(env, jpositions, colors.size());
-#ifdef SK_SCALAR_IS_FLOAT
     SkScalar* pos = autoPos.ptr();
-#else
-    #error Need to convert float array to SkScalar array before calling the following function.
-#endif
 
     sk_sp<SkShader> shader = SkGradientShader::MakeSweep(x, y, &colors[0],
             GraphicsJNI::getNativeColorSpace(colorSpaceHandle), pos, colors.size(),
@@ -256,11 +264,10 @@ static jlong RuntimeShader_getNativeFinalizer(JNIEnv*, jobject) {
     return static_cast<jlong>(reinterpret_cast<uintptr_t>(&SkRuntimeShaderBuilder_delete));
 }
 
-static jlong RuntimeShader_create(JNIEnv* env, jobject, jlong shaderBuilder, jlong matrixPtr,
-                                  jboolean isOpaque) {
+static jlong RuntimeShader_create(JNIEnv* env, jobject, jlong shaderBuilder, jlong matrixPtr) {
     SkRuntimeShaderBuilder* builder = reinterpret_cast<SkRuntimeShaderBuilder*>(shaderBuilder);
     const SkMatrix* matrix = reinterpret_cast<const SkMatrix*>(matrixPtr);
-    sk_sp<SkShader> shader = builder->makeShader(matrix, isOpaque == JNI_TRUE);
+    sk_sp<SkShader> shader = builder->makeShader(matrix);
     ThrowIAE_IfNull(env, shader);
     return reinterpret_cast<jlong>(shader.release());
 }
@@ -273,19 +280,97 @@ static inline int ThrowIAEFmt(JNIEnv* env, const char* fmt, ...) {
     return ret;
 }
 
-static void RuntimeShader_updateUniforms(JNIEnv* env, jobject, jlong shaderBuilder,
-                                         jstring jUniformName, jfloatArray jvalues) {
+static bool isIntUniformType(const SkRuntimeEffect::Uniform::Type& type) {
+    switch (type) {
+        case SkRuntimeEffect::Uniform::Type::kFloat:
+        case SkRuntimeEffect::Uniform::Type::kFloat2:
+        case SkRuntimeEffect::Uniform::Type::kFloat3:
+        case SkRuntimeEffect::Uniform::Type::kFloat4:
+        case SkRuntimeEffect::Uniform::Type::kFloat2x2:
+        case SkRuntimeEffect::Uniform::Type::kFloat3x3:
+        case SkRuntimeEffect::Uniform::Type::kFloat4x4:
+            return false;
+        case SkRuntimeEffect::Uniform::Type::kInt:
+        case SkRuntimeEffect::Uniform::Type::kInt2:
+        case SkRuntimeEffect::Uniform::Type::kInt3:
+        case SkRuntimeEffect::Uniform::Type::kInt4:
+            return true;
+    }
+}
+
+static void UpdateFloatUniforms(JNIEnv* env, SkRuntimeShaderBuilder* builder,
+                                const char* uniformName, const float values[], int count,
+                                bool isColor) {
+    SkRuntimeShaderBuilder::BuilderUniform uniform = builder->uniform(uniformName);
+    if (uniform.fVar == nullptr) {
+        ThrowIAEFmt(env, "unable to find uniform named %s", uniformName);
+    } else if (isColor != ((uniform.fVar->flags & SkRuntimeEffect::Uniform::kColor_Flag) != 0)) {
+        if (isColor) {
+            jniThrowExceptionFmt(
+                    env, "java/lang/IllegalArgumentException",
+                    "attempting to set a color uniform using the non-color specific APIs: %s %x",
+                    uniformName, uniform.fVar->flags);
+        } else {
+            ThrowIAEFmt(env,
+                        "attempting to set a non-color uniform using the setColorUniform APIs: %s",
+                        uniformName);
+        }
+    } else if (isIntUniformType(uniform.fVar->type)) {
+        ThrowIAEFmt(env, "attempting to set a int uniform using the setUniform APIs: %s",
+                    uniformName);
+    } else if (!uniform.set<float>(values, count)) {
+        ThrowIAEFmt(env, "mismatch in byte size for uniform [expected: %zu actual: %zu]",
+                    uniform.fVar->sizeInBytes(), sizeof(float) * count);
+    }
+}
+
+static void RuntimeShader_updateFloatUniforms(JNIEnv* env, jobject, jlong shaderBuilder,
+                                              jstring jUniformName, jfloat value1, jfloat value2,
+                                              jfloat value3, jfloat value4, jint count) {
+    SkRuntimeShaderBuilder* builder = reinterpret_cast<SkRuntimeShaderBuilder*>(shaderBuilder);
+    ScopedUtfChars name(env, jUniformName);
+    const float values[4] = {value1, value2, value3, value4};
+    UpdateFloatUniforms(env, builder, name.c_str(), values, count, false);
+}
+
+static void RuntimeShader_updateFloatArrayUniforms(JNIEnv* env, jobject, jlong shaderBuilder,
+                                                   jstring jUniformName, jfloatArray jvalues,
+                                                   jboolean isColor) {
     SkRuntimeShaderBuilder* builder = reinterpret_cast<SkRuntimeShaderBuilder*>(shaderBuilder);
     ScopedUtfChars name(env, jUniformName);
     AutoJavaFloatArray autoValues(env, jvalues, 0, kRO_JNIAccess);
+    UpdateFloatUniforms(env, builder, name.c_str(), autoValues.ptr(), autoValues.length(), isColor);
+}
 
-    SkRuntimeShaderBuilder::BuilderUniform uniform = builder->uniform(name.c_str());
+static void UpdateIntUniforms(JNIEnv* env, SkRuntimeShaderBuilder* builder, const char* uniformName,
+                              const int values[], int count) {
+    SkRuntimeShaderBuilder::BuilderUniform uniform = builder->uniform(uniformName);
     if (uniform.fVar == nullptr) {
-        ThrowIAEFmt(env, "unable to find uniform named %s", name.c_str());
-    } else if (!uniform.set<float>(autoValues.ptr(), autoValues.length())) {
+        ThrowIAEFmt(env, "unable to find uniform named %s", uniformName);
+    } else if (!isIntUniformType(uniform.fVar->type)) {
+        ThrowIAEFmt(env, "attempting to set a non-int uniform using the setIntUniform APIs: %s",
+                    uniformName);
+    } else if (!uniform.set<int>(values, count)) {
         ThrowIAEFmt(env, "mismatch in byte size for uniform [expected: %zu actual: %zu]",
-              uniform.fVar->sizeInBytes(), sizeof(float) * autoValues.length());
+                    uniform.fVar->sizeInBytes(), sizeof(float) * count);
     }
+}
+
+static void RuntimeShader_updateIntUniforms(JNIEnv* env, jobject, jlong shaderBuilder,
+                                            jstring jUniformName, jint value1, jint value2,
+                                            jint value3, jint value4, jint count) {
+    SkRuntimeShaderBuilder* builder = reinterpret_cast<SkRuntimeShaderBuilder*>(shaderBuilder);
+    ScopedUtfChars name(env, jUniformName);
+    const int values[4] = {value1, value2, value3, value4};
+    UpdateIntUniforms(env, builder, name.c_str(), values, count);
+}
+
+static void RuntimeShader_updateIntArrayUniforms(JNIEnv* env, jobject, jlong shaderBuilder,
+                                                 jstring jUniformName, jintArray jvalues) {
+    SkRuntimeShaderBuilder* builder = reinterpret_cast<SkRuntimeShaderBuilder*>(shaderBuilder);
+    ScopedUtfChars name(env, jUniformName);
+    AutoJavaIntArray autoValues(env, jvalues, 0);
+    UpdateIntUniforms(env, builder, name.c_str(), autoValues.ptr(), autoValues.length());
 }
 
 static void RuntimeShader_updateShader(JNIEnv* env, jobject, jlong shaderBuilder,
@@ -295,7 +380,7 @@ static void RuntimeShader_updateShader(JNIEnv* env, jobject, jlong shaderBuilder
     SkShader* shader = reinterpret_cast<SkShader*>(shaderHandle);
 
     SkRuntimeShaderBuilder::BuilderChild child = builder->child(name.c_str());
-    if (child.fIndex == -1) {
+    if (child.fChild == nullptr) {
         ThrowIAEFmt(env, "unable to find shader named %s", name.c_str());
         return;
     }
@@ -305,17 +390,13 @@ static void RuntimeShader_updateShader(JNIEnv* env, jobject, jlong shaderBuilder
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-static const JNINativeMethod gColorMethods[] = {
-    { "nativeRGBToHSV",    "(III[F)V", (void*)Color_RGBToHSV   },
-    { "nativeHSVToColor",  "(I[F)I",   (void*)Color_HSVToColor }
-};
-
 static const JNINativeMethod gShaderMethods[] = {
     { "nativeGetFinalizer",   "()J",    (void*)Shader_getNativeFinalizer },
 };
 
 static const JNINativeMethod gBitmapShaderMethods[] = {
-    { "nativeCreate",      "(JJIIZ)J",  (void*)BitmapShader_constructor },
+        {"nativeCreate", "(JJIIIZZJ)J", (void*)BitmapShader_constructor},
+
 };
 
 static const JNINativeMethod gLinearGradientMethods[] = {
@@ -336,16 +417,21 @@ static const JNINativeMethod gComposeShaderMethods[] = {
 
 static const JNINativeMethod gRuntimeShaderMethods[] = {
         {"nativeGetFinalizer", "()J", (void*)RuntimeShader_getNativeFinalizer},
-        {"nativeCreateShader", "(JJZ)J", (void*)RuntimeShader_create},
+        {"nativeCreateShader", "(JJ)J", (void*)RuntimeShader_create},
         {"nativeCreateBuilder", "(Ljava/lang/String;)J", (void*)RuntimeShader_createShaderBuilder},
-        {"nativeUpdateUniforms", "(JLjava/lang/String;[F)V", (void*)RuntimeShader_updateUniforms},
+        {"nativeUpdateUniforms", "(JLjava/lang/String;[FZ)V",
+         (void*)RuntimeShader_updateFloatArrayUniforms},
+        {"nativeUpdateUniforms", "(JLjava/lang/String;FFFFI)V",
+         (void*)RuntimeShader_updateFloatUniforms},
+        {"nativeUpdateUniforms", "(JLjava/lang/String;[I)V",
+         (void*)RuntimeShader_updateIntArrayUniforms},
+        {"nativeUpdateUniforms", "(JLjava/lang/String;IIIII)V",
+         (void*)RuntimeShader_updateIntUniforms},
         {"nativeUpdateShader", "(JLjava/lang/String;J)V", (void*)RuntimeShader_updateShader},
 };
 
 int register_android_graphics_Shader(JNIEnv* env)
 {
-    android::RegisterMethodsOrDie(env, "android/graphics/Color", gColorMethods,
-                                  NELEM(gColorMethods));
     android::RegisterMethodsOrDie(env, "android/graphics/Shader", gShaderMethods,
                                   NELEM(gShaderMethods));
     android::RegisterMethodsOrDie(env, "android/graphics/BitmapShader", gBitmapShaderMethods,

@@ -20,6 +20,8 @@ import static com.android.systemui.wallet.ui.WalletCardCarousel.CARD_ANIM_ALPHA_
 import static com.android.systemui.wallet.ui.WalletCardCarousel.CARD_ANIM_ALPHA_DURATION;
 
 import android.annotation.Nullable;
+import android.app.ActivityOptions;
+import android.app.BroadcastOptions;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -39,8 +41,8 @@ import android.widget.TextView;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.settingslib.Utils;
-import com.android.systemui.R;
 import com.android.systemui.classifier.FalsingCollector;
+import com.android.systemui.res.R;
 
 import java.util.List;
 
@@ -99,17 +101,13 @@ public class WalletView extends FrameLayout implements WalletCardCarousel.OnCard
         mCardCarousel.setExpectedViewWidth(getWidth());
     }
 
-    @Override
-    protected void onConfigurationChanged(Configuration newConfig) {
-        updateViewForOrientation(newConfig.orientation);
-    }
-
     private void updateViewForOrientation(@Configuration.Orientation int orientation) {
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             renderViewPortrait();
         } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             renderViewLandscape();
         }
+        mCardCarousel.resetAdapter(); // necessary to update cards width
         ViewGroup.LayoutParams params = mCardCarouselContainer.getLayoutParams();
         if (params instanceof MarginLayoutParams) {
             ((MarginLayoutParams) params).topMargin =
@@ -219,6 +217,7 @@ public class WalletView extends FrameLayout implements WalletCardCarousel.OnCard
         logoView.setImageDrawable(mContext.getDrawable(R.drawable.ic_qs_plus));
         mEmptyStateView.<TextView>requireViewById(R.id.empty_state_title).setText(label);
         mEmptyStateView.setOnClickListener(clickListener);
+        mAppButton.setOnClickListener(clickListener);
     }
 
     void showErrorMessage(@Nullable CharSequence message) {
@@ -257,6 +256,11 @@ public class WalletView extends FrameLayout implements WalletCardCarousel.OnCard
 
     Button getActionButton() {
         return mActionButton;
+    }
+
+    @VisibleForTesting
+    Button getAppButton() {
+        return mAppButton;
     }
 
     @VisibleForTesting
@@ -301,7 +305,12 @@ public class WalletView extends FrameLayout implements WalletCardCarousel.OnCard
                             ? mDeviceLockedActionOnClickListener
                             : v -> {
                         try {
-                            walletCard.getPendingIntent().send();
+
+                            BroadcastOptions options = BroadcastOptions.makeBasic();
+                            options.setInteractive(true);
+                            options.setPendingIntentBackgroundActivityStartMode(
+                                    ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED);
+                            walletCard.getPendingIntent().send(options.toBundle());
                         } catch (PendingIntent.CanceledException e) {
                             Log.w(TAG, "Error sending pending intent for wallet card.");
                         }

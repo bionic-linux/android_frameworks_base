@@ -16,24 +16,19 @@
 
 package com.android.server.inputmethod;
 
-import static com.android.internal.annotations.VisibleForTesting.Visibility.PACKAGE;
 import static com.android.server.inputmethod.InputMethodManagerService.DEBUG;
-import static com.android.server.inputmethod.InputMethodManagerService.MSG_HARD_KEYBOARD_SWITCH_CHANGED;
 import static com.android.server.inputmethod.InputMethodUtils.NOT_A_SUBTYPE_ID;
 
-import android.app.ActivityThread;
+import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.app.AlertDialog;
-import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.os.IBinder;
+import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.ArrayMap;
 import android.util.Slog;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +41,7 @@ import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.annotations.GuardedBy;
 import com.android.server.LocalServices;
 import com.android.server.inputmethod.InputMethodSubtypeSwitchingController.ImeSubtypeListItem;
 import com.android.server.wm.WindowManagerInternal;
@@ -54,192 +49,166 @@ import com.android.server.wm.WindowManagerInternal;
 import java.util.List;
 
 /** A controller to show/hide the input method menu */
-@VisibleForTesting(visibility = PACKAGE)
-public class InputMethodMenuController {
+final class InputMethodMenuController {
     private static final String TAG = InputMethodMenuController.class.getSimpleName();
 
     private final InputMethodManagerService mService;
-    private final InputMethodUtils.InputMethodSettings mSettings;
-    private final InputMethodSubtypeSwitchingController mSwitchingController;
-    private final Handler mHandler;
-    private final ArrayMap<String, InputMethodInfo> mMethodMap;
-    private final KeyguardManager mKeyguardManager;
-    private final HardKeyboardListener mHardKeyboardListener;
     private final WindowManagerInternal mWindowManagerInternal;
 
-    private Context mSettingsContext;
     private AlertDialog.Builder mDialogBuilder;
     private AlertDialog mSwitchingDialog;
-    private IBinder mSwitchingDialogToken;
     private View mSwitchingDialogTitleView;
     private InputMethodInfo[] mIms;
     private int[] mSubtypeIds;
 
     private boolean mShowImeWithHardKeyboard;
 
-    @VisibleForTesting(visibility = PACKAGE)
-    public InputMethodMenuController(InputMethodManagerService service) {
+    @GuardedBy("ImfLock.class")
+    @Nullable
+    private InputMethodDialogWindowContext mDialogWindowContext;
+
+    InputMethodMenuController(InputMethodManagerService service) {
         mService = service;
-        mSettings = mService.mSettings;
-        mSwitchingController = mService.mSwitchingController;
-        mHandler = mService.mHandler;
-        mMethodMap = mService.mMethodMap;
-        mKeyguardManager = mService.mKeyguardManager;
-        mHardKeyboardListener = new HardKeyboardListener();
         mWindowManagerInternal = LocalServices.getService(WindowManagerInternal.class);
     }
 
-    void showInputMethodMenu(boolean showAuxSubtypes, int displayId) {
+    @GuardedBy("ImfLock.class")
+    void showInputMethodMenuLocked(boolean showAuxSubtypes, int displayId,
+            String preferredInputMethodId, int preferredInputMethodSubtypeId,
+            @NonNull List<ImeSubtypeListItem> imList) {
         if (DEBUG) Slog.v(TAG, "Show switching menu. showAuxSubtypes=" + showAuxSubtypes);
 
-        final boolean isScreenLocked = isScreenLocked();
+        final int userId = mService.getCurrentImeUserIdLocked();
 
-        final String lastInputMethodId = mSettings.getSelectedInputMethod();
-        int lastInputMethodSubtypeId = mSettings.getSelectedInputMethodSubtypeId(lastInputMethodId);
-        if (DEBUG) Slog.v(TAG, "Current IME: " + lastInputMethodId);
+        hideInputMethodMenuLocked();
 
-        synchronized (mMethodMap) {
-            final List<ImeSubtypeListItem> imList = mSwitchingController
-                    .getSortedInputMethodAndSubtypeListForImeMenuLocked(
-                            showAuxSubtypes, isScreenLocked);
-            if (imList.isEmpty()) {
-                return;
+        if (preferredInputMethodSubtypeId == NOT_A_SUBTYPE_ID) {
+            final InputMethodSubtype currentSubtype =
+                    mService.getCurrentInputMethodSubtypeLocked();
+            if (currentSubtype != null) {
+                final String curMethodId = mService.getSelectedMethodIdLocked();
+                final InputMethodInfo currentImi =
+                        mService.queryInputMethodForCurrentUserLocked(curMethodId);
+                preferredInputMethodSubtypeId = SubtypeUtils.getSubtypeIdFromHashCode(
+                        currentImi, currentSubtype.hashCode());
             }
-
-            hideInputMethodMenuLocked();
-
-            if (lastInputMethodSubtypeId == NOT_A_SUBTYPE_ID) {
-                final InputMethodSubtype currentSubtype =
-                        mService.getCurrentInputMethodSubtypeLocked();
-                if (currentSubtype != null) {
-                    final String curMethodId = mService.getCurrentMethodId();
-                    final InputMethodInfo currentImi = mMethodMap.get(curMethodId);
-                    lastInputMethodSubtypeId = InputMethodUtils.getSubtypeIdFromHashCode(
-                            currentImi, currentSubtype.hashCode());
-                }
-            }
-
-            final int size = imList.size();
-            mIms = new InputMethodInfo[size];
-            mSubtypeIds = new int[size];
-            int checkedItem = 0;
-            for (int i = 0; i < size; ++i) {
-                final ImeSubtypeListItem item = imList.get(i);
-                mIms[i] = item.mImi;
-                mSubtypeIds[i] = item.mSubtypeId;
-                if (mIms[i].getId().equals(lastInputMethodId)) {
-                    int subtypeId = mSubtypeIds[i];
-                    if ((subtypeId == NOT_A_SUBTYPE_ID)
-                            || (lastInputMethodSubtypeId == NOT_A_SUBTYPE_ID && subtypeId == 0)
-                            || (subtypeId == lastInputMethodSubtypeId)) {
-                        checkedItem = i;
-                    }
-                }
-            }
-
-            final Context settingsContext = getSettingsContext(displayId);
-            mDialogBuilder = new AlertDialog.Builder(settingsContext);
-            mDialogBuilder.setOnCancelListener(dialog -> hideInputMethodMenu());
-
-            final Context dialogContext = mDialogBuilder.getContext();
-            final TypedArray a = dialogContext.obtainStyledAttributes(null,
-                    com.android.internal.R.styleable.DialogPreference,
-                    com.android.internal.R.attr.alertDialogStyle, 0);
-            final Drawable dialogIcon = a.getDrawable(
-                    com.android.internal.R.styleable.DialogPreference_dialogIcon);
-            a.recycle();
-
-            mDialogBuilder.setIcon(dialogIcon);
-
-            final LayoutInflater inflater = dialogContext.getSystemService(LayoutInflater.class);
-            final View tv = inflater.inflate(
-                    com.android.internal.R.layout.input_method_switch_dialog_title, null);
-            mDialogBuilder.setCustomTitle(tv);
-
-            // Setup layout for a toggle switch of the hardware keyboard
-            mSwitchingDialogTitleView = tv;
-            mSwitchingDialogTitleView
-                    .findViewById(com.android.internal.R.id.hard_keyboard_section)
-                    .setVisibility(mWindowManagerInternal.isHardKeyboardAvailable()
-                            ? View.VISIBLE : View.GONE);
-            final Switch hardKeySwitch = mSwitchingDialogTitleView.findViewById(
-                    com.android.internal.R.id.hard_keyboard_switch);
-            hardKeySwitch.setChecked(mShowImeWithHardKeyboard);
-            hardKeySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                mSettings.setShowImeWithHardKeyboard(isChecked);
-                // Ensure that the input method dialog is dismissed when changing
-                // the hardware keyboard state.
-                hideInputMethodMenu();
-            });
-
-            final ImeSubtypeListAdapter adapter = new ImeSubtypeListAdapter(dialogContext,
-                    com.android.internal.R.layout.input_method_switch_item, imList, checkedItem);
-            final DialogInterface.OnClickListener choiceListener = (dialog, which) -> {
-                synchronized (mMethodMap) {
-                    if (mIms == null || mIms.length <= which || mSubtypeIds == null
-                            || mSubtypeIds.length <= which) {
-                        return;
-                    }
-                    final InputMethodInfo im = mIms[which];
-                    int subtypeId = mSubtypeIds[which];
-                    adapter.mCheckedItem = which;
-                    adapter.notifyDataSetChanged();
-                    hideInputMethodMenu();
-                    if (im != null) {
-                        if (subtypeId < 0 || subtypeId >= im.getSubtypeCount()) {
-                            subtypeId = NOT_A_SUBTYPE_ID;
-                        }
-                        mService.setInputMethodLocked(im.getId(), subtypeId);
-                    }
-                }
-            };
-            mDialogBuilder.setSingleChoiceItems(adapter, checkedItem, choiceListener);
-
-            mSwitchingDialog = mDialogBuilder.create();
-            mSwitchingDialog.setCanceledOnTouchOutside(true);
-            final Window w = mSwitchingDialog.getWindow();
-            final WindowManager.LayoutParams attrs = w.getAttributes();
-            w.setType(WindowManager.LayoutParams.TYPE_INPUT_METHOD_DIALOG);
-            // Use an alternate token for the dialog for that window manager can group the token
-            // with other IME windows based on type vs. grouping based on whichever token happens
-            // to get selected by the system later on.
-            attrs.token = mSwitchingDialogToken;
-            attrs.privateFlags |= WindowManager.LayoutParams.SYSTEM_FLAG_SHOW_FOR_ALL_USERS;
-            attrs.setTitle("Select input method");
-            w.setAttributes(attrs);
-            mService.updateSystemUiLocked();
-            mSwitchingDialog.show();
         }
-    }
 
-    /**
-     * Returns the window context for IME switch dialogs to receive configuration changes.
-     *
-     * This method initializes the window context if it was not initialized. This method also moves
-     * the context to the targeted display if the current display of context is different than
-     * the display specified by {@code displayId}.
-     */
-    @VisibleForTesting
-    public Context getSettingsContext(int displayId) {
-        if (mSettingsContext == null || mSettingsContext.getDisplayId() != displayId) {
-            final Context systemUiContext = ActivityThread.currentActivityThread()
-                    .createSystemUiContext(displayId);
-            final Context windowContext = systemUiContext.createWindowContext(
-                    WindowManager.LayoutParams.TYPE_INPUT_METHOD_DIALOG, null /* options */);
-            mSettingsContext = new ContextThemeWrapper(
-                    windowContext, com.android.internal.R.style.Theme_DeviceDefault_Settings);
-            mSwitchingDialogToken = mSettingsContext.getWindowContextToken();
+        // Find out which item should be checked by default.
+        final int size = imList.size();
+        mIms = new InputMethodInfo[size];
+        mSubtypeIds = new int[size];
+        // No items are checked by default. When we have a list of explicitly enabled subtypes,
+        // the implicit subtype is no longer listed, but if it is still the selected one,
+        // no items will be shown as checked.
+        int checkedItem = -1;
+        for (int i = 0; i < size; ++i) {
+            final ImeSubtypeListItem item = imList.get(i);
+            mIms[i] = item.mImi;
+            mSubtypeIds[i] = item.mSubtypeId;
+            if (mIms[i].getId().equals(preferredInputMethodId)) {
+                int subtypeId = mSubtypeIds[i];
+                if ((subtypeId == NOT_A_SUBTYPE_ID)
+                        || (preferredInputMethodSubtypeId == NOT_A_SUBTYPE_ID && subtypeId == 0)
+                        || (subtypeId == preferredInputMethodSubtypeId)) {
+                    checkedItem = i;
+                }
+            }
         }
-        return mSettingsContext;
-    }
 
-    private boolean isScreenLocked() {
-        return mKeyguardManager != null && mKeyguardManager.isKeyguardLocked()
-                && mKeyguardManager.isKeyguardSecure();
+        if (checkedItem == -1) {
+            Slog.w(TAG, "Switching menu shown with no item selected"
+                    + ", IME id: " + preferredInputMethodId
+                    + ", subtype index: " + preferredInputMethodSubtypeId);
+        }
+
+        if (mDialogWindowContext == null) {
+            mDialogWindowContext = new InputMethodDialogWindowContext();
+        }
+        final Context dialogWindowContext = mDialogWindowContext.get(displayId);
+        mDialogBuilder = new AlertDialog.Builder(dialogWindowContext);
+        mDialogBuilder.setOnCancelListener(dialog -> hideInputMethodMenu());
+
+        final Context dialogContext = mDialogBuilder.getContext();
+        final TypedArray a = dialogContext.obtainStyledAttributes(null,
+                com.android.internal.R.styleable.DialogPreference,
+                com.android.internal.R.attr.alertDialogStyle, 0);
+        final Drawable dialogIcon = a.getDrawable(
+                com.android.internal.R.styleable.DialogPreference_dialogIcon);
+        a.recycle();
+
+        mDialogBuilder.setIcon(dialogIcon);
+
+        final LayoutInflater inflater = dialogContext.getSystemService(LayoutInflater.class);
+        final View tv = inflater.inflate(
+                com.android.internal.R.layout.input_method_switch_dialog_title, null);
+        mDialogBuilder.setCustomTitle(tv);
+
+        // Setup layout for a toggle switch of the hardware keyboard
+        mSwitchingDialogTitleView = tv;
+        mSwitchingDialogTitleView
+                .findViewById(com.android.internal.R.id.hard_keyboard_section)
+                .setVisibility(mWindowManagerInternal.isHardKeyboardAvailable()
+                        ? View.VISIBLE : View.GONE);
+        final Switch hardKeySwitch = mSwitchingDialogTitleView.findViewById(
+                com.android.internal.R.id.hard_keyboard_switch);
+        hardKeySwitch.setChecked(mShowImeWithHardKeyboard);
+        hardKeySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SecureSettingsWrapper.putBoolean(Settings.Secure.SHOW_IME_WITH_HARD_KEYBOARD,
+                    isChecked, userId);
+            // Ensure that the input method dialog is dismissed when changing
+            // the hardware keyboard state.
+            hideInputMethodMenu();
+        });
+
+        // Fill the list items with onClick listener, which takes care of IME (and subtype)
+        // switching when clicked.
+        final ImeSubtypeListAdapter adapter = new ImeSubtypeListAdapter(dialogContext,
+                com.android.internal.R.layout.input_method_switch_item, imList, checkedItem);
+        final DialogInterface.OnClickListener choiceListener = (dialog, which) -> {
+            synchronized (ImfLock.class) {
+                if (mIms == null || mIms.length <= which || mSubtypeIds == null
+                        || mSubtypeIds.length <= which) {
+                    return;
+                }
+                final InputMethodInfo im = mIms[which];
+                int subtypeId = mSubtypeIds[which];
+                adapter.mCheckedItem = which;
+                adapter.notifyDataSetChanged();
+                if (im != null) {
+                    if (subtypeId < 0 || subtypeId >= im.getSubtypeCount()) {
+                        subtypeId = NOT_A_SUBTYPE_ID;
+                    }
+                    mService.setInputMethodLocked(im.getId(), subtypeId);
+                }
+                hideInputMethodMenuLocked();
+            }
+        };
+        mDialogBuilder.setSingleChoiceItems(adapter, checkedItem, choiceListener);
+
+        // Final steps to instantiate a dialog to show it up.
+        mSwitchingDialog = mDialogBuilder.create();
+        mSwitchingDialog.setCanceledOnTouchOutside(true);
+        final Window w = mSwitchingDialog.getWindow();
+        final WindowManager.LayoutParams attrs = w.getAttributes();
+        w.setType(WindowManager.LayoutParams.TYPE_INPUT_METHOD_DIALOG);
+        w.setHideOverlayWindows(true);
+        // Use an alternate token for the dialog for that window manager can group the token
+        // with other IME windows based on type vs. grouping based on whichever token happens
+        // to get selected by the system later on.
+        attrs.token = dialogWindowContext.getWindowContextToken();
+        attrs.privateFlags |= WindowManager.LayoutParams.SYSTEM_FLAG_SHOW_FOR_ALL_USERS;
+        attrs.setTitle("Select input method");
+        w.setAttributes(attrs);
+        mService.updateSystemUiLocked();
+        mService.sendOnNavButtonFlagsChangedLocked();
+        mSwitchingDialog.show();
     }
 
     void updateKeyboardFromSettingsLocked() {
-        mShowImeWithHardKeyboard = mSettings.isShowImeWithHardKeyboardEnabled();
+        mShowImeWithHardKeyboard =
+                SecureSettingsWrapper.getBoolean(Settings.Secure.SHOW_IME_WITH_HARD_KEYBOARD,
+                        false, mService.getCurrentImeUserIdLocked());
         if (mSwitchingDialog != null && mSwitchingDialogTitleView != null
                 && mSwitchingDialog.isShowing()) {
             final Switch hardKeySwitch = mSwitchingDialogTitleView.findViewById(
@@ -248,12 +217,19 @@ public class InputMethodMenuController {
         }
     }
 
+    /**
+     * Hides the input method switcher menu.
+     */
     void hideInputMethodMenu() {
-        synchronized (mMethodMap) {
+        synchronized (ImfLock.class) {
             hideInputMethodMenuLocked();
         }
     }
 
+    /**
+     * Hides the input method switcher menu, synchronised version of {@link #hideInputMethodMenu}.
+     */
+    @GuardedBy("ImfLock.class")
     void hideInputMethodMenuLocked() {
         if (DEBUG) Slog.v(TAG, "Hide switching menu");
 
@@ -263,13 +239,10 @@ public class InputMethodMenuController {
             mSwitchingDialogTitleView = null;
 
             mService.updateSystemUiLocked();
+            mService.sendOnNavButtonFlagsChangedLocked();
             mDialogBuilder = null;
             mIms = null;
         }
-    }
-
-    HardKeyboardListener getHardKeyboardListener() {
-        return mHardKeyboardListener;
     }
 
     AlertDialog getSwitchingDialogLocked() {
@@ -287,24 +260,16 @@ public class InputMethodMenuController {
         return mSwitchingDialog.isShowing();
     }
 
-    class HardKeyboardListener implements WindowManagerInternal.OnHardKeyboardStatusChangeListener {
-        @Override
-        public void onHardKeyboardStatusChange(boolean available) {
-            mHandler.sendMessage(mHandler.obtainMessage(MSG_HARD_KEYBOARD_SWITCH_CHANGED,
-                    available ? 1 : 0));
+    void handleHardKeyboardStatusChange(boolean available) {
+        if (DEBUG) {
+            Slog.w(TAG, "HardKeyboardStatusChanged: available=" + available);
         }
-
-        public void handleHardKeyboardStatusChange(boolean available) {
-            if (DEBUG) {
-                Slog.w(TAG, "HardKeyboardStatusChanged: available=" + available);
-            }
-            synchronized (mMethodMap) {
-                if (mSwitchingDialog != null && mSwitchingDialogTitleView != null
-                        && mSwitchingDialog.isShowing()) {
-                    mSwitchingDialogTitleView.findViewById(
-                            com.android.internal.R.id.hard_keyboard_section).setVisibility(
-                            available ? View.VISIBLE : View.GONE);
-                }
+        synchronized (ImfLock.class) {
+            if (mSwitchingDialog != null && mSwitchingDialogTitleView != null
+                    && mSwitchingDialog.isShowing()) {
+                mSwitchingDialogTitleView.findViewById(
+                        com.android.internal.R.id.hard_keyboard_section).setVisibility(
+                        available ? View.VISIBLE : View.GONE);
             }
         }
     }

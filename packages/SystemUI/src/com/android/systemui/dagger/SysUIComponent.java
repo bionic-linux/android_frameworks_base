@@ -16,44 +16,57 @@
 
 package com.android.systemui.dagger;
 
-import com.android.keyguard.clock.ClockOptionsProvider;
 import com.android.systemui.BootCompleteCacheImpl;
+import com.android.systemui.CoreStartable;
 import com.android.systemui.Dependency;
 import com.android.systemui.InitController;
-import com.android.systemui.SystemUIAppComponentFactory;
+import com.android.systemui.SystemUIAppComponentFactoryBase;
+import com.android.systemui.dagger.qualifiers.PerUser;
 import com.android.systemui.dump.DumpManager;
 import com.android.systemui.keyguard.KeyguardSliceProvider;
 import com.android.systemui.people.PeopleProvider;
+import com.android.systemui.startable.Dependencies;
+import com.android.systemui.statusbar.NotificationInsetsModule;
+import com.android.systemui.statusbar.QsFrameTranslateModule;
 import com.android.systemui.statusbar.policy.ConfigurationController;
-import com.android.systemui.util.InjectionInflationController;
-import com.android.wm.shell.ShellCommandHandler;
-import com.android.wm.shell.TaskViewFactory;
-import com.android.wm.shell.apppairs.AppPairs;
+import com.android.wm.shell.back.BackAnimation;
 import com.android.wm.shell.bubbles.Bubbles;
-import com.android.wm.shell.hidedisplaycutout.HideDisplayCutout;
-import com.android.wm.shell.legacysplitscreen.LegacySplitScreen;
+import com.android.wm.shell.desktopmode.DesktopMode;
+import com.android.wm.shell.displayareahelper.DisplayAreaHelper;
+import com.android.wm.shell.keyguard.KeyguardTransitions;
 import com.android.wm.shell.onehanded.OneHanded;
 import com.android.wm.shell.pip.Pip;
+import com.android.wm.shell.recents.RecentTasks;
+import com.android.wm.shell.shared.ShellTransitions;
 import com.android.wm.shell.splitscreen.SplitScreen;
 import com.android.wm.shell.startingsurface.StartingSurface;
-import com.android.wm.shell.tasksurfacehelper.TaskSurfaceHelper;
-import com.android.wm.shell.transition.ShellTransitions;
-
-import java.util.Optional;
+import com.android.wm.shell.sysui.ShellInterface;
+import com.android.wm.shell.taskview.TaskViewFactory;
 
 import dagger.BindsInstance;
 import dagger.Subcomponent;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
+import javax.inject.Provider;
+
 /**
- * Dagger Subcomponent for Core SysUI.
+ * An example Dagger Subcomponent for Core SysUI.
+ * <p>
+ * See {@link ReferenceSysUIComponent} for the one actually used by AOSP.
  */
 @SysUISingleton
 @Subcomponent(modules = {
         DefaultComponentBinder.class,
         DependencyProvider.class,
+        NotificationInsetsModule.class,
+        QsFrameTranslateModule.class,
         SystemUIBinder.class,
         SystemUIModule.class,
-        SystemUIDefaultModule.class})
+        SystemUICoreStartableModule.class,
+        ReferenceSystemUIModule.class})
 public interface SysUIComponent {
 
     /**
@@ -63,16 +76,13 @@ public interface SysUIComponent {
     @Subcomponent.Builder
     interface Builder {
         @BindsInstance
+        Builder setShell(ShellInterface s);
+
+        @BindsInstance
         Builder setPip(Optional<Pip> p);
 
         @BindsInstance
-        Builder setLegacySplitScreen(Optional<LegacySplitScreen> s);
-
-        @BindsInstance
         Builder setSplitScreen(Optional<SplitScreen> s);
-
-        @BindsInstance
-        Builder setAppPairs(Optional<AppPairs> s);
 
         @BindsInstance
         Builder setOneHanded(Optional<OneHanded> o);
@@ -84,28 +94,27 @@ public interface SysUIComponent {
         Builder setTaskViewFactory(Optional<TaskViewFactory> t);
 
         @BindsInstance
-        Builder setHideDisplayCutout(Optional<HideDisplayCutout> h);
+        Builder setShellTransitions(ShellTransitions t);
 
         @BindsInstance
-        Builder setShellCommandHandler(Optional<ShellCommandHandler> shellDump);
-
-        @BindsInstance
-        Builder setTransitions(ShellTransitions t);
+        Builder setKeyguardTransitions(KeyguardTransitions k);
 
         @BindsInstance
         Builder setStartingSurface(Optional<StartingSurface> s);
 
         @BindsInstance
-        Builder setTaskSurfaceHelper(Optional<TaskSurfaceHelper> t);
+        Builder setDisplayAreaHelper(Optional<DisplayAreaHelper> h);
+
+        @BindsInstance
+        Builder setRecentTasks(Optional<RecentTasks> r);
+
+        @BindsInstance
+        Builder setBackAnimation(Optional<BackAnimation> b);
+
+        @BindsInstance
+        Builder setDesktopMode(Optional<DesktopMode> d);
 
         SysUIComponent build();
-    }
-
-    /**
-     * Initializes all the SysUI components.
-     */
-    default void init() {
-        // Do nothing
     }
 
     /**
@@ -143,24 +152,29 @@ public interface SysUIComponent {
     InitController getInitController();
 
     /**
-     * ViewInstanceCreator generates all Views that need injection.
+     * Returns {@link CoreStartable}s that should be started with the application.
      */
-    InjectionInflationController.ViewInstanceCreator.Factory createViewInstanceCreatorFactory();
+    Map<Class<?>, Provider<CoreStartable>> getStartables();
+
+    /**
+     * Returns {@link CoreStartable}s that should be started for every user.
+     */
+    @PerUser Map<Class<?>, Provider<CoreStartable>> getPerUserStartables();
+
+    /**
+     * Returns {@link CoreStartable} dependencies if there are any.
+     */
+    @Dependencies Map<Class<?>, Set<Class<? extends CoreStartable>>> getStartableDependencies();
 
     /**
      * Member injection into the supplied argument.
      */
-    void inject(SystemUIAppComponentFactory factory);
+    void inject(SystemUIAppComponentFactoryBase factory);
 
     /**
      * Member injection into the supplied argument.
      */
     void inject(KeyguardSliceProvider keyguardSliceProvider);
-
-    /**
-     * Member injection into the supplied argument.
-     */
-    void inject(ClockOptionsProvider clockOptionsProvider);
 
     /**
      * Member injection into the supplied argument.

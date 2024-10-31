@@ -18,6 +18,17 @@
           "exclude-filter": "com.android.server.usage.StorageStatsServiceTest"
         }
       ]
+    },
+    {
+      "name": "CtsBRSTestCases",
+      "options": [
+        {
+          "exclude-annotation": "androidx.test.filters.FlakyTest"
+        },
+        {
+          "exclude-annotation": "org.junit.Ignore"
+        }
+      ]
     }
   ],
   "postsubmit": [

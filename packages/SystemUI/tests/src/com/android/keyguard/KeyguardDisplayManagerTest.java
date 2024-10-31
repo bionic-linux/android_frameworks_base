@@ -27,7 +27,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import android.hardware.display.DisplayManager;
 import android.hardware.display.DisplayManagerGlobal;
 import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper;
@@ -36,9 +35,10 @@ import android.view.DisplayInfo;
 
 import androidx.test.filters.SmallTest;
 
-import com.android.keyguard.dagger.KeyguardStatusViewComponent;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.navigationbar.NavigationBarController;
+import com.android.systemui.settings.FakeDisplayTracker;
+import com.android.systemui.statusbar.policy.KeyguardStateController;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -56,74 +56,97 @@ public class KeyguardDisplayManagerTest extends SysuiTestCase {
     @Mock
     private NavigationBarController mNavigationBarController;
     @Mock
-    private KeyguardStatusViewComponent.Factory mKeyguardStatusViewComponentFactory;
+    private ConnectedDisplayKeyguardPresentation.Factory
+            mConnectedDisplayKeyguardPresentationFactory;
     @Mock
-    private DisplayManager mDisplayManager;
+    private ConnectedDisplayKeyguardPresentation mConnectedDisplayKeyguardPresentation;
     @Mock
-    private KeyguardDisplayManager.KeyguardPresentation mKeyguardPresentation;
+    private KeyguardDisplayManager.DeviceStateHelper mDeviceStateHelper;
+    @Mock
+    private KeyguardStateController mKeyguardStateController;
 
+    private Executor mMainExecutor = Runnable::run;
     private Executor mBackgroundExecutor = Runnable::run;
     private KeyguardDisplayManager mManager;
-
+    private FakeDisplayTracker mDisplayTracker = new FakeDisplayTracker(mContext);
     // The default and secondary displays are both in the default group
     private Display mDefaultDisplay;
     private Display mSecondaryDisplay;
 
     // This display is in a different group from the default and secondary displays.
-    private Display mDifferentGroupDisplay;
+    private Display mAlwaysUnlockedDisplay;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mContext.addMockSystemService(DisplayManager.class, mDisplayManager);
         mManager = spy(new KeyguardDisplayManager(mContext, () -> mNavigationBarController,
-                mKeyguardStatusViewComponentFactory, mBackgroundExecutor));
-        doReturn(mKeyguardPresentation).when(mManager).createPresentation(any());
-
+                mDisplayTracker, mMainExecutor, mBackgroundExecutor, mDeviceStateHelper,
+                mKeyguardStateController, mConnectedDisplayKeyguardPresentationFactory));
+        doReturn(mConnectedDisplayKeyguardPresentation).when(
+                mConnectedDisplayKeyguardPresentationFactory).create(any());
+        doReturn(mConnectedDisplayKeyguardPresentation).when(mManager)
+                .createPresentation(any());
         mDefaultDisplay = new Display(DisplayManagerGlobal.getInstance(), Display.DEFAULT_DISPLAY,
                 new DisplayInfo(), DEFAULT_DISPLAY_ADJUSTMENTS);
         mSecondaryDisplay = new Display(DisplayManagerGlobal.getInstance(),
                 Display.DEFAULT_DISPLAY + 1,
                 new DisplayInfo(), DEFAULT_DISPLAY_ADJUSTMENTS);
 
-        DisplayInfo differentGroupInfo = new DisplayInfo();
-        differentGroupInfo.displayId = Display.DEFAULT_DISPLAY + 2;
-        differentGroupInfo.displayGroupId = Display.DEFAULT_DISPLAY_GROUP + 1;
-        mDifferentGroupDisplay = new Display(DisplayManagerGlobal.getInstance(),
+        DisplayInfo alwaysUnlockedDisplayInfo = new DisplayInfo();
+        alwaysUnlockedDisplayInfo.displayId = Display.DEFAULT_DISPLAY + 2;
+        alwaysUnlockedDisplayInfo.flags = Display.FLAG_ALWAYS_UNLOCKED;
+        mAlwaysUnlockedDisplay = new Display(DisplayManagerGlobal.getInstance(),
                 Display.DEFAULT_DISPLAY,
-                differentGroupInfo, DEFAULT_DISPLAY_ADJUSTMENTS);
+                alwaysUnlockedDisplayInfo, DEFAULT_DISPLAY_ADJUSTMENTS);
     }
 
     @Test
     public void testShow_defaultDisplayOnly() {
-        when(mDisplayManager.getDisplays()).thenReturn(new Display[]{mDefaultDisplay});
+        mDisplayTracker.setAllDisplays(new Display[]{mDefaultDisplay});
         mManager.show();
         verify(mManager, never()).createPresentation(any());
     }
 
     @Test
     public void testShow_includeSecondaryDisplay() {
-        when(mDisplayManager.getDisplays()).thenReturn(
-                new Display[]{mDefaultDisplay, mSecondaryDisplay});
+        mDisplayTracker.setAllDisplays(new Display[]{mDefaultDisplay, mSecondaryDisplay});
         mManager.show();
         verify(mManager, times(1)).createPresentation(eq(mSecondaryDisplay));
     }
 
     @Test
-    public void testShow_includeNonDefaultGroupDisplay() {
-        when(mDisplayManager.getDisplays()).thenReturn(
-                new Display[]{mDefaultDisplay, mDifferentGroupDisplay});
+    public void testShow_includeAlwaysUnlockedDisplay() {
+        mDisplayTracker.setAllDisplays(new Display[]{mDefaultDisplay, mAlwaysUnlockedDisplay});
 
         mManager.show();
         verify(mManager, never()).createPresentation(any());
     }
 
     @Test
-    public void testShow_includeSecondaryAndNonDefaultGroupDisplays() {
-        when(mDisplayManager.getDisplays()).thenReturn(
-                new Display[]{mDefaultDisplay, mSecondaryDisplay, mDifferentGroupDisplay});
+    public void testShow_includeSecondaryAndAlwaysUnlockedDisplays() {
+        mDisplayTracker.setAllDisplays(
+                new Display[]{mDefaultDisplay, mSecondaryDisplay, mAlwaysUnlockedDisplay});
 
         mManager.show();
         verify(mManager, times(1)).createPresentation(eq(mSecondaryDisplay));
+    }
+
+    @Test
+    public void testShow_concurrentDisplayActive_occluded() {
+        mDisplayTracker.setAllDisplays(new Display[]{mDefaultDisplay, mSecondaryDisplay});
+
+        when(mDeviceStateHelper.isConcurrentDisplayActive(mSecondaryDisplay)).thenReturn(true);
+        when(mKeyguardStateController.isOccluded()).thenReturn(true);
+        verify(mManager, never()).createPresentation(eq(mSecondaryDisplay));
+    }
+
+    @Test
+    public void testShow_presentationCreated() {
+        when(mManager.createPresentation(any())).thenCallRealMethod();
+        mDisplayTracker.setAllDisplays(new Display[]{mDefaultDisplay, mSecondaryDisplay});
+
+        mManager.show();
+
+        verify(mConnectedDisplayKeyguardPresentationFactory).create(eq(mSecondaryDisplay));
     }
 }

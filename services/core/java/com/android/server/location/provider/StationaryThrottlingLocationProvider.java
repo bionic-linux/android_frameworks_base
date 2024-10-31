@@ -23,8 +23,11 @@ import static com.android.server.location.LocationManagerService.D;
 import static com.android.server.location.LocationManagerService.TAG;
 import static com.android.server.location.eventlog.LocationEventLog.EVENT_LOG;
 
+import static java.lang.Math.max;
+
 import android.annotation.Nullable;
 import android.location.Location;
+import android.location.LocationRequest;
 import android.location.LocationResult;
 import android.location.provider.ProviderRequest;
 import android.os.SystemClock;
@@ -53,6 +56,7 @@ public final class StationaryThrottlingLocationProvider extends DelegateLocation
         implements DeviceIdleHelper.DeviceIdleListener, DeviceIdleInternal.StationaryListener {
 
     private static final long MAX_STATIONARY_LOCATION_AGE_MS = 30000;
+    private static final long MIN_INTERVAL_MS = 1000;
 
     final Object mLock = new Object();
 
@@ -105,20 +109,15 @@ public final class StationaryThrottlingLocationProvider extends DelegateLocation
 
         synchronized (mLock) {
             mDeviceIdleHelper.addListener(this);
-            mDeviceIdle = mDeviceIdleHelper.isDeviceIdle();
-            mDeviceStationaryHelper.addListener(this);
-            mDeviceStationary = false;
-            mDeviceStationaryRealtimeMs = Long.MIN_VALUE;
-
-            onThrottlingChangedLocked(false);
+            onDeviceIdleChanged(mDeviceIdleHelper.isDeviceIdle());
         }
     }
 
     @Override
     protected void onStop() {
         synchronized (mLock) {
-            mDeviceStationaryHelper.removeListener(this);
             mDeviceIdleHelper.removeListener(this);
+            onDeviceIdleChanged(false);
 
             mIncomingRequest = ProviderRequest.EMPTY_REQUEST;
             mOutgoingRequest = ProviderRequest.EMPTY_REQUEST;
@@ -151,13 +150,26 @@ public final class StationaryThrottlingLocationProvider extends DelegateLocation
             }
 
             mDeviceIdle = deviceIdle;
-            onThrottlingChangedLocked(false);
+            if (deviceIdle) {
+                // device stationary helper will deliver an immediate listener update
+                mDeviceStationaryHelper.addListener(this);
+            } else {
+                mDeviceStationaryHelper.removeListener(this);
+                mDeviceStationary = false;
+                mDeviceStationaryRealtimeMs = Long.MIN_VALUE;
+                onThrottlingChangedLocked(false);
+            }
         }
     }
 
     @Override
     public void onDeviceStationaryChanged(boolean deviceStationary) {
         synchronized (mLock) {
+            if (!mDeviceIdle) {
+                // stationary detection is only registered while idle - ignore late notifications
+                return;
+            }
+
             if (mDeviceStationary == deviceStationary) {
                 return;
             }
@@ -176,10 +188,11 @@ public final class StationaryThrottlingLocationProvider extends DelegateLocation
     private void onThrottlingChangedLocked(boolean deliverImmediate) {
         long throttlingIntervalMs = INTERVAL_DISABLED;
         if (mDeviceStationary && mDeviceIdle && !mIncomingRequest.isLocationSettingsIgnored()
+                && mIncomingRequest.getQuality() != LocationRequest.QUALITY_HIGH_ACCURACY
                 && mLastLocation != null
                 && mLastLocation.getElapsedRealtimeAgeMillis(mDeviceStationaryRealtimeMs)
                 <= MAX_STATIONARY_LOCATION_AGE_MS) {
-            throttlingIntervalMs = mIncomingRequest.getIntervalMillis();
+            throttlingIntervalMs = max(mIncomingRequest.getIntervalMillis(), MIN_INTERVAL_MS);
         }
 
         ProviderRequest newRequest;

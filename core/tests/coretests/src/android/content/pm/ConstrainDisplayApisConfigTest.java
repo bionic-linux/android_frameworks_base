@@ -18,8 +18,7 @@ package android.content.pm;
 
 import static android.provider.DeviceConfig.NAMESPACE_CONSTRAIN_DISPLAY_APIS;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import android.annotation.Nullable;
 import android.platform.test.annotations.Presubmit;
@@ -30,10 +29,11 @@ import androidx.test.filters.SmallTest;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Test class for {@link ConstrainDisplayApisConfig}.
+ * Test for {@link ConstrainDisplayApisConfig}.
  *
  * Build/Install/Run:
  * atest FrameworksCoreTests:ConstrainDisplayApisConfigTest
@@ -73,6 +73,7 @@ public final class ConstrainDisplayApisConfigTest {
         testNeverConstrainDisplayApis("com.android.test", /* version= */ 1, /* expected= */ false);
     }
 
+    @Ignore("b/257375674")
     @Test
     public void neverConstrainDisplayApis_flagsHasSingleEntry_returnsTrueForPackageWithinRange() {
         setNeverConstrainDisplayApisFlag("com.android.test:1:1");
@@ -108,6 +109,7 @@ public final class ConstrainDisplayApisConfigTest {
         testNeverConstrainDisplayApis("com.android.test4", /* version= */ 9, /* expected= */ false);
     }
 
+    @Ignore("b/257375674")
     @Test
     public void neverConstrainDisplayApis_flagHasInvalidEntries_ignoresInvalidEntries() {
         // We add a valid entry before and after the invalid ones to make sure they are applied.
@@ -146,24 +148,17 @@ public final class ConstrainDisplayApisConfigTest {
 
     private static void testNeverConstrainDisplayApis(String packageName, long version,
             boolean expected) {
-        boolean result = ConstrainDisplayApisConfig.neverConstrainDisplayApis(
-                buildApplicationInfo(packageName, version));
-        if (expected) {
-            assertTrue(result);
-        } else {
-            assertFalse(result);
-        }
+        ConstrainDisplayApisConfig config = new ConstrainDisplayApisConfig();
+        assertEquals(expected,
+                config.getNeverConstrainDisplayApis(buildApplicationInfo(packageName, version)));
     }
 
     private static void testAlwaysConstrainDisplayApis(String packageName, long version,
             boolean expected) {
-        boolean result = ConstrainDisplayApisConfig.alwaysConstrainDisplayApis(
-                buildApplicationInfo(packageName, version));
-        if (expected) {
-            assertTrue(result);
-        } else {
-            assertFalse(result);
-        }
+        ConstrainDisplayApisConfig config = new ConstrainDisplayApisConfig();
+
+        assertEquals(expected,
+                config.getAlwaysConstrainDisplayApis(buildApplicationInfo(packageName, version)));
     }
 
     private static ApplicationInfo buildApplicationInfo(String packageName, long version) {

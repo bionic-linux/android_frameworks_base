@@ -24,6 +24,8 @@ import static android.view.WindowManager.LayoutParams.SYSTEM_FLAG_HIDE_NON_SYSTE
 
 import android.annotation.ColorInt;
 import android.annotation.DrawableRes;
+import android.annotation.FlaggedApi;
+import android.annotation.FloatRange;
 import android.annotation.IdRes;
 import android.annotation.LayoutRes;
 import android.annotation.NonNull;
@@ -56,6 +58,7 @@ import android.transition.TransitionManager;
 import android.util.Pair;
 import android.view.View.OnApplyWindowInsetsListener;
 import android.view.accessibility.AccessibilityEvent;
+import android.window.OnBackInvokedDispatcher;
 
 import java.util.Collections;
 import java.util.List;
@@ -66,9 +69,7 @@ import java.util.List;
  * window manager. It provides standard UI policies such as a background, title
  * area, default key processing, etc.
  *
- * <p>The only existing implementation of this abstract class is
- * android.view.PhoneWindow, which you should instantiate when needing a
- * Window.
+ * <p>The framework will instantiate an implementation of this class on behalf of the application.
  */
 public abstract class Window {
     /** Flag for the "options panel" feature.  This is enabled by default. */
@@ -295,6 +296,9 @@ public abstract class Window {
     private OnWindowDismissedCallback mOnWindowDismissedCallback;
     private OnWindowSwipeDismissedCallback mOnWindowSwipeDismissedCallback;
     private WindowControllerCallback mWindowControllerCallback;
+    @WindowInsetsController.Appearance
+    private int mSystemBarAppearance;
+    private DecorCallback mDecorCallback;
     private OnRestrictedCaptionAreaChangedListener mOnRestrictedCaptionAreaChangedListener;
     private Rect mRestrictedCaptionAreaRect;
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
@@ -329,6 +333,14 @@ public abstract class Window {
 
     private boolean mOverlayWithDecorCaptionEnabled = true;
     private boolean mCloseOnSwipeEnabled = false;
+
+    /**
+     * To check if toolkitSetFrameRateReadOnly flag is enabled
+     *
+     * @hide
+     */
+    protected static boolean sToolkitSetFrameRateReadOnlyFlagValue =
+                android.view.flags.Flags.toolkitSetFrameRateReadOnly();
 
     // The current window attributes.
     @UnsupportedAppUsage
@@ -656,9 +668,44 @@ public abstract class Window {
         void updateStatusBarColor(int color);
 
         /**
+         * Update the status bar appearance.
+         */
+
+        void updateSystemBarsAppearance(int appearance);
+
+        /**
          * Update the navigation bar color to a forced one.
          */
         void updateNavigationBarColor(int color);
+    }
+
+    /** @hide */
+    public interface DecorCallback {
+        /**
+         * Called from
+         * {@link com.android.internal.policy.DecorView#onSystemBarAppearanceChanged(int)}.
+         *
+         * @param appearance The newly applied appearance.
+         */
+        void onSystemBarAppearanceChanged(@WindowInsetsController.Appearance int appearance);
+
+        /**
+         * Called from
+         * {@link com.android.internal.policy.DecorView#updateColorViews(WindowInsets, boolean)}
+         * when {@link com.android.internal.policy.DecorView#mDrawLegacyNavigationBarBackground} is
+         * being updated.
+         *
+         * @param drawLegacyNavigationBarBackground the new value that is being set to
+         *        {@link com.android.internal.policy.DecorView#mDrawLegacyNavigationBarBackground}.
+         * @return The value to be set to
+         *   {@link com.android.internal.policy.DecorView#mDrawLegacyNavigationBarBackgroundHandled}
+         *         on behalf of the {@link com.android.internal.policy.DecorView}.
+         *         {@code true} to tell that the Window can render the legacy navigation bar
+         *         background on behalf of the {@link com.android.internal.policy.DecorView}.
+         *         {@code false} to let {@link com.android.internal.policy.DecorView} handle it.
+         */
+        boolean onDrawLegacyNavigationBarBackgroundChanged(
+                boolean drawLegacyNavigationBarBackground);
     }
 
     /**
@@ -792,6 +839,11 @@ public abstract class Window {
     /** @hide */
     public final void destroy() {
         mDestroyed = true;
+        onDestroy();
+    }
+
+    /** @hide */
+    protected void onDestroy() {
     }
 
     /** @hide */
@@ -983,6 +1035,44 @@ public abstract class Window {
     /** @hide */
     public final WindowControllerCallback getWindowControllerCallback() {
         return mWindowControllerCallback;
+    }
+
+    /** @hide */
+    public final void setDecorCallback(DecorCallback decorCallback) {
+        mDecorCallback = decorCallback;
+    }
+
+    /** @hide */
+    public final void setSystemBarAppearance(@WindowInsetsController.Appearance int appearance) {
+        mSystemBarAppearance = appearance;
+    }
+
+    /** @hide */
+    @WindowInsetsController.Appearance
+    public final int getSystemBarAppearance() {
+        return mSystemBarAppearance;
+    }
+
+    /** @hide */
+    public final void dispatchOnSystemBarAppearanceChanged(
+            @WindowInsetsController.Appearance int appearance) {
+        setSystemBarAppearance(appearance);
+        if (mDecorCallback != null) {
+            mDecorCallback.onSystemBarAppearanceChanged(appearance);
+        }
+        if (mWindowControllerCallback != null) {
+            mWindowControllerCallback.updateSystemBarsAppearance(appearance);
+        }
+    }
+
+    /** @hide */
+    public final boolean onDrawLegacyNavigationBarBackgroundChanged(
+            boolean drawLegacyNavigationBarBackground) {
+        if (mDecorCallback == null) {
+            return false;
+        }
+        return mDecorCallback.onDrawLegacyNavigationBarBackgroundChanged(
+                drawLegacyNavigationBarBackground);
     }
 
     /**
@@ -1255,6 +1345,116 @@ public abstract class Window {
     }
 
     /**
+     * <p>Sets the desired about of HDR headroom to be used when rendering as a ratio of
+     * targetHdrPeakBrightnessInNits / targetSdrWhitePointInNits. Only applies when
+     * {@link #setColorMode(int)} is {@link ActivityInfo#COLOR_MODE_HDR}</p>
+     *
+     * <p>By default the system will choose an amount of HDR headroom that is appropriate
+     * for the underlying device capabilities & bit-depth of the panel. However, for some types
+     * of content this can end up being more headroom than necessary or desired. An example
+     * would be a messaging app or gallery thumbnail view where some amount of HDR pop is desired
+     * without overly influencing the perceived brightness of the majority SDR content. This can
+     * also be used to animate in/out of an HDR range for smoother transitions.</p>
+     *
+     * <p>Note: The actual amount of HDR headroom that will be given is subject to a variety
+     * of factors such as ambient conditions, display capabilities, or bit-depth limitations.
+     * See {@link Display#getHdrSdrRatio()} for more information as well as how to query the
+     * current value.</p>
+     *
+     * @param desiredHeadroom The amount of HDR headroom that is desired. Must be >= 1.0 (no HDR)
+     *                        and <= 10,000.0. Passing 0.0 will reset to the default, automatically
+     *                        chosen value.
+     * @see #getDesiredHdrHeadroom()
+     * @see Display#getHdrSdrRatio()
+     */
+    @FlaggedApi(com.android.graphics.hwui.flags.Flags.FLAG_LIMITED_HDR)
+    public void setDesiredHdrHeadroom(
+            @FloatRange(from = 0.0f, to = 10000.0) float desiredHeadroom) {
+        final WindowManager.LayoutParams attrs = getAttributes();
+        attrs.setDesiredHdrHeadroom(desiredHeadroom);
+        dispatchWindowAttributesChanged(attrs);
+    }
+
+    /**
+     * Get the desired amount of HDR headroom as set by {@link #setDesiredHdrHeadroom(float)}
+     * @return The amount of HDR headroom set, or 0 for automatic/default behavior.
+     * @see #setDesiredHdrHeadroom(float)
+     */
+    @FlaggedApi(com.android.graphics.hwui.flags.Flags.FLAG_LIMITED_HDR)
+    public float getDesiredHdrHeadroom() {
+        return getAttributes().getDesiredHdrHeadroom();
+    }
+
+    /**
+     * Sets whether the frame rate touch boost is enabled for this Window.
+     * When enabled, the frame rate will be boosted when a user touches the Window.
+     *
+     * @param enabled whether the frame rate touch boost is enabled.
+     * @see #getFrameRateBoostOnTouchEnabled()
+     * @see WindowManager.LayoutParams#setFrameRateBoostOnTouchEnabled(boolean)
+     */
+    @FlaggedApi(android.view.flags.Flags.FLAG_TOOLKIT_SET_FRAME_RATE_READ_ONLY)
+    public void setFrameRateBoostOnTouchEnabled(boolean enabled) {
+        if (sToolkitSetFrameRateReadOnlyFlagValue) {
+            final WindowManager.LayoutParams attrs = getAttributes();
+            attrs.setFrameRateBoostOnTouchEnabled(enabled);
+            dispatchWindowAttributesChanged(attrs);
+        }
+    }
+
+    /**
+     * Get whether frame rate touch boost is enabled
+     * {@link #setFrameRateBoostOnTouchEnabled(boolean)}
+     *
+     * @return whether the frame rate touch boost is enabled.
+     * @see #setFrameRateBoostOnTouchEnabled(boolean)
+     * @see WindowManager.LayoutParams#getFrameRateBoostOnTouchEnabled()
+     */
+    @FlaggedApi(android.view.flags.Flags.FLAG_TOOLKIT_SET_FRAME_RATE_READ_ONLY)
+    public boolean getFrameRateBoostOnTouchEnabled() {
+        if (sToolkitSetFrameRateReadOnlyFlagValue) {
+            return getAttributes().getFrameRateBoostOnTouchEnabled();
+        }
+        return true;
+    }
+
+    /**
+     * Set whether frameratepowersavingsbalance is enabled for this Window.
+     * This allows device to adjust refresh rate
+     * as needed and can be useful for power saving.
+     *
+     * @param enabled whether the frameratepowersavingsbalance is enabled.
+     * @see #isFrameRatePowerSavingsBalanced()
+     * @see WindowManager.LayoutParams#setFrameRatePowerSavingsBalanced(boolean)
+     */
+    @FlaggedApi(android.view.flags.Flags.FLAG_TOOLKIT_SET_FRAME_RATE_READ_ONLY)
+    public void setFrameRatePowerSavingsBalanced(boolean enabled) {
+        if (sToolkitSetFrameRateReadOnlyFlagValue) {
+            final WindowManager.LayoutParams attrs = getAttributes();
+            attrs.setFrameRatePowerSavingsBalanced(enabled);
+            dispatchWindowAttributesChanged(attrs);
+        }
+    }
+
+    /**
+     * Get whether frameratepowersavingsbalance is enabled for this Window.
+     * This allows device to adjust refresh rate
+     * as needed and can be useful for power saving.
+     * {@link #setFrameRateBoostOnTouchEnabled(boolean)}
+     *
+     * @return whether the frameratepowersavingsbalance is enabled.
+     * @see #setFrameRatePowerSavingsBalanced(boolean)
+     * @see WindowManager.LayoutParams#isFrameRatePowerSavingsBalanced()
+     */
+    @FlaggedApi(android.view.flags.Flags.FLAG_TOOLKIT_SET_FRAME_RATE_READ_ONLY)
+    public boolean isFrameRatePowerSavingsBalanced() {
+        if (sToolkitSetFrameRateReadOnlyFlagValue) {
+            return getAttributes().isFrameRatePowerSavingsBalanced();
+        }
+        return false;
+    }
+
+    /**
      * If {@code isPreferred} is true, this method requests that the connected display does minimal
      * post processing when this window is visible on the screen. Otherwise, it requests that the
      * display switches back to standard image processing.
@@ -1343,13 +1543,21 @@ public abstract class Window {
      * {@link View#SYSTEM_UI_LAYOUT_FLAGS} as well the
      * {@link WindowManager.LayoutParams#SOFT_INPUT_ADJUST_RESIZE} flag and fits content according
      * to these flags.
-     * </p>
+     *
      * <p>
      * If set to {@code false}, the framework will not fit the content view to the insets and will
      * just pass through the {@link WindowInsets} to the content view.
-     * </p>
+     *
+     * <p>
+     * If the app targets
+     * {@link android.os.Build.VERSION_CODES#VANILLA_ICE_CREAM VANILLA_ICE_CREAM} or above,
+     * the behavior will be like setting this to {@code false}, and cannot be changed.
+     *
      * @param decorFitsSystemWindows Whether the decor view should fit root-level content views for
      *                               insets.
+     * @deprecated Make space in the container views to prevent the critical elements from getting
+     *             obscured by {@link WindowInsets.Type#systemBars()} or
+     *             {@link WindowInsets.Type#displayCutout()} instead.
      */
     public void setDecorFitsSystemWindows(boolean decorFitsSystemWindows) {
     }
@@ -1413,6 +1621,11 @@ public abstract class Window {
             mCloseOnTouchOutside = close;
             mSetCloseOnTouchOutside = true;
         }
+    }
+
+    /** @hide */
+    public boolean shouldCloseOnTouchOutside() {
+        return mCloseOnTouchOutside;
     }
 
     /** @hide */
@@ -1509,7 +1722,9 @@ public abstract class Window {
      * @see View#findViewById(int)
      * @see Window#requireViewById(int)
      */
-    @Nullable
+    // Strictly speaking this should be marked as @Nullable but the nullability of the return value
+    // is deliberately left unspecified as idiomatically correct code can make assumptions either
+    // way based on local context, e.g. layout specification.
     public <T extends View> T findViewById(@IdRes int id) {
         return getDecorView().findViewById(id);
     }
@@ -2438,7 +2653,9 @@ public abstract class Window {
 
     /**
      * @return the color of the status bar.
+     * @deprecated This is no longer needed since the setter is deprecated.
      */
+    @Deprecated
     @ColorInt
     public abstract int getStatusBarColor();
 
@@ -2455,13 +2672,29 @@ public abstract class Window {
      * {@link android.view.View#SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN}.
      * <p>
      * The transitionName for the view background will be "android:status:background".
-     * </p>
+     *
+     * <p>
+     * If the color is transparent and the window enforces the status bar contrast, the system
+     * will determine whether a scrim is necessary and draw one on behalf of the app to ensure
+     * that the status bar has enough contrast with the contents of this app, and set an appropriate
+     * effective bar background accordingly.
+     *
+     * <p>
+     * If the app targets
+     * {@link android.os.Build.VERSION_CODES#VANILLA_ICE_CREAM VANILLA_ICE_CREAM} or above,
+     * the color will be transparent and cannot be changed.
+     *
+     * @see #setNavigationBarContrastEnforced
+     * @deprecated Draw proper background behind {@link WindowInsets.Type#statusBars()}} instead.
      */
+    @Deprecated
     public abstract void setStatusBarColor(@ColorInt int color);
 
     /**
      * @return the color of the navigation bar.
+     * @deprecated This is no longer needed since the setter is deprecated.
      */
+    @Deprecated
     @ColorInt
     public abstract int getNavigationBarColor();
 
@@ -2478,9 +2711,24 @@ public abstract class Window {
      * {@link android.view.View#SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION}.
      * <p>
      * The transitionName for the view background will be "android:navigation:background".
-     * </p>
+     *
+     * <p>
+     * If the color is transparent and the window enforces the navigation bar contrast, the system
+     * will determine whether a scrim is necessary and draw one on behalf of the app to ensure that
+     * the navigation bar has enough contrast with the contents of this app, and set an appropriate
+     * effective bar background accordingly.
+     *
+     * <p>
+     * If the app targets
+     * {@link android.os.Build.VERSION_CODES#VANILLA_ICE_CREAM VANILLA_ICE_CREAM} or above,
+     * the color will be transparent and cannot be changed.
+     *
      * @attr ref android.R.styleable#Window_navigationBarColor
+     * @see #setNavigationBarContrastEnforced
+     * @deprecated Draw proper background behind {@link WindowInsets.Type#navigationBars()} or
+     *             {@link WindowInsets.Type#tappableElement()} instead.
      */
+    @Deprecated
     public abstract void setNavigationBarColor(@ColorInt int color);
 
     /**
@@ -2492,9 +2740,17 @@ public abstract class Window {
      * {@link android.view.WindowManager.LayoutParams#FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS} and
      * {@link android.view.WindowManager.LayoutParams#FLAG_TRANSLUCENT_NAVIGATION} must not be set.
      *
+     * <p>
+     * If the app targets
+     * {@link android.os.Build.VERSION_CODES#VANILLA_ICE_CREAM VANILLA_ICE_CREAM} or above,
+     * the color will be transparent and cannot be changed.
+     *
      * @param dividerColor The color of the thin line.
      * @attr ref android.R.styleable#Window_navigationBarDividerColor
+     * @deprecated Draw proper background behind {@link WindowInsets.Type#navigationBars()} or
+     *             {@link WindowInsets.Type#tappableElement()} instead.
      */
+    @Deprecated
     public void setNavigationBarDividerColor(@ColorInt int dividerColor) {
     }
 
@@ -2504,7 +2760,9 @@ public abstract class Window {
      * @return The color of the navigation bar divider color.
      * @see #setNavigationBarColor(int)
      * @attr ref android.R.styleable#Window_navigationBarDividerColor
+     * @deprecated This is no longer needed since the setter is deprecated.
      */
+    @Deprecated
     public @ColorInt int getNavigationBarDividerColor() {
         return 0;
     }
@@ -2523,7 +2781,9 @@ public abstract class Window {
      * @see android.R.attr#enforceStatusBarContrast
      * @see #isStatusBarContrastEnforced
      * @see #setStatusBarColor
+     * @deprecated Draw proper background behind {@link WindowInsets.Type#statusBars()}} instead.
      */
+    @Deprecated
     public void setStatusBarContrastEnforced(boolean ensureContrast) {
     }
 
@@ -2538,7 +2798,9 @@ public abstract class Window {
      * @see android.R.attr#enforceStatusBarContrast
      * @see #setStatusBarContrastEnforced
      * @see #setStatusBarColor
+     * @deprecated This is not needed since the setter is deprecated.
      */
+    @Deprecated
     public boolean isStatusBarContrastEnforced() {
         return false;
     }
@@ -2694,6 +2956,15 @@ public abstract class Window {
      * There is a second caption drawn underneath it that will be fast enough. By default the
      * caption is constructed from the theme. You can provide a drawable, that will be drawn instead
      * to better match your application.
+     *
+     * Starting in Android 15, this API is a no-op. New window decorations introduced in Android 14
+     * are drawn in SystemUI process, and OEMs are responsible to make them responsive to resizing.
+     * There is no need to set a background drawable to improve UX anymore since then. Additionally,
+     * the foremost activity can draw in caption areas starting in Android 15. Check
+     * {@link WindowInsetsController#APPEARANCE_TRANSPARENT_CAPTION_BAR_BACKGROUND},
+     * {@link WindowInsetsController#APPEARANCE_LIGHT_CAPTION_BARS},
+     * {@link WindowInsetsController#setSystemBarsAppearance(int, int)} and
+     * {@link WindowInsets#getBoundingRects(int)}.
      */
     public abstract void setResizingCaptionDrawable(Drawable drawable);
 
@@ -2712,13 +2983,6 @@ public abstract class Window {
     public abstract void onPictureInPictureModeChanged(boolean isInPictureInPictureMode);
 
     /**
-     * Called when the activity just relaunched.
-     * @hide
-     */
-    @SuppressWarnings("HiddenAbstractMethod")
-    public abstract void reportActivityRelaunched();
-
-    /**
      * @return The {@link WindowInsetsController} associated with this window
      * @see View#getWindowInsetsController()
      */
@@ -2735,5 +2999,13 @@ public abstract class Window {
      */
     public @Nullable AttachedSurfaceControl getRootSurfaceControl() {
         return null;
+    }
+
+    /**
+     * Returns the {@link OnBackInvokedDispatcher} instance associated with this window.
+     */
+    @NonNull
+    public OnBackInvokedDispatcher getOnBackInvokedDispatcher() {
+        throw new RuntimeException("Not implemented. Must override in a subclass.");
     }
 }

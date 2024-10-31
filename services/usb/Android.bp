@@ -22,6 +22,10 @@ java_library_static {
     libs: [
         "services.core",
         "android.hidl.manager-V1.0-java",
+        "android.hardware.usb.gadget-V1.0-java",
+        "android.hardware.usb.gadget-V1.1-java",
+        "android.hardware.usb.gadget-V1.2-java",
+        "android.hardware.usb.gadget-V1-java",
     ],
 
     static_libs: [
@@ -29,8 +33,22 @@ java_library_static {
         "android.hardware.usb-V1.1-java",
         "android.hardware.usb-V1.2-java",
         "android.hardware.usb-V1.3-java",
-        "android.hardware.usb.gadget-V1.0-java",
-        "android.hardware.usb.gadget-V1.1-java",
-        "android.hardware.usb.gadget-V1.2-java",
+        "android.hardware.usb-V3-java",
+        "usb_flags_lib",
     ],
+    lint: {
+        baseline_filename: "lint-baseline.xml",
+    },
+}
+
+aconfig_declarations {
+    name: "usb_flags",
+    package: "com.android.server.usb.flags",
+    container: "system",
+    srcs: ["**/usb_flags.aconfig"],
+}
+
+java_aconfig_library {
+    name: "usb_flags_lib",
+    aconfig_declarations: "usb_flags",
 }

@@ -15,27 +15,28 @@
  */
 package com.android.wm.shell.bubbles;
 
-import static android.graphics.Paint.ANTI_ALIAS_FLAG;
-import static android.graphics.Paint.DITHER_FLAG;
-import static android.graphics.Paint.FILTER_BITMAP_FLAG;
-
+import android.annotation.DrawableRes;
 import android.annotation.Nullable;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Outline;
-import android.graphics.Paint;
-import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Path;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.PathParser;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.android.launcher3.icons.DotRenderer;
 import com.android.launcher3.icons.IconNormalizer;
+import com.android.wm.shell.R;
 import com.android.wm.shell.animation.Interpolators;
 
 import java.util.EnumSet;
@@ -47,14 +48,12 @@ import java.util.EnumSet;
  * Badge = the icon associated with the app that created this bubble, this will show work profile
  * badge if appropriate.
  */
-public class BadgedImageView extends ImageView {
+public class BadgedImageView extends ConstraintLayout {
 
     /** Same value as Launcher3 dot code */
     public static final float WHITE_SCRIM_ALPHA = 0.54f;
     /** Same as value in Launcher3 IconShape */
     public static final int DEFAULT_PATH_SIZE = 100;
-    /** Same as value in Launcher3 BaseIconFactory */
-    private static final float ICON_BADGE_SCALE = 0.444f;
 
     /**
      * Flags that suppress the visibility of the 'new' dot, for one reason or another. If any of
@@ -74,19 +73,21 @@ public class BadgedImageView extends ImageView {
     private final EnumSet<SuppressionFlag> mDotSuppressionFlags =
             EnumSet.of(SuppressionFlag.FLYOUT_VISIBLE);
 
+    private final ImageView mBubbleIcon;
+    private final ImageView mAppIcon;
+
     private float mDotScale = 0f;
     private float mAnimatingToDotScale = 0f;
     private boolean mDotIsAnimating = false;
 
     private BubbleViewProvider mBubble;
     private BubblePositioner mPositioner;
-    private boolean mOnLeft;
-
+    private boolean mBadgeOnLeft;
+    private boolean mDotOnLeft;
     private DotRenderer mDotRenderer;
     private DotRenderer.DrawParams mDrawParams;
     private int mDotColor;
 
-    private Paint mPaint = new Paint(ANTI_ALIAS_FLAG);
     private Rect mTempBounds = new Rect();
 
     public BadgedImageView(Context context) {
@@ -104,6 +105,19 @@ public class BadgedImageView extends ImageView {
     public BadgedImageView(Context context, AttributeSet attrs, int defStyleAttr,
             int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        // We manage positioning the badge ourselves
+        setLayoutDirection(LAYOUT_DIRECTION_LTR);
+
+        LayoutInflater.from(context).inflate(R.layout.badged_image_view, this);
+
+        mBubbleIcon = findViewById(R.id.icon_view);
+        mAppIcon = findViewById(R.id.app_icon_view);
+
+        final TypedArray ta = mContext.obtainStyledAttributes(attrs, new int[]{android.R.attr.src},
+                defStyleAttr, defStyleRes);
+        mBubbleIcon.setImageResource(ta.getResourceId(0, 0));
+        ta.recycle();
+
         mDrawParams = new DotRenderer.DrawParams();
 
         setFocusable(true);
@@ -135,12 +149,12 @@ public class BadgedImageView extends ImageView {
     public void showDotAndBadge(boolean onLeft) {
         removeDotSuppressionFlag(BadgedImageView.SuppressionFlag.BEHIND_STACK);
         animateDotBadgePositions(onLeft);
-
     }
 
     public void hideDotAndBadge(boolean onLeft) {
         addDotSuppressionFlag(BadgedImageView.SuppressionFlag.BEHIND_STACK);
-        mOnLeft = onLeft;
+        mBadgeOnLeft = onLeft;
+        mDotOnLeft = onLeft;
         hideBadge();
     }
 
@@ -149,6 +163,8 @@ public class BadgedImageView extends ImageView {
      */
     public void setRenderedBubble(BubbleViewProvider bubble) {
         mBubble = bubble;
+        mBubbleIcon.setImageBitmap(bubble.getBubbleIcon());
+        mAppIcon.setImageBitmap(bubble.getAppBadge());
         if (mDotSuppressionFlags.contains(SuppressionFlag.BEHIND_STACK)) {
             hideBadge();
         } else {
@@ -159,8 +175,8 @@ public class BadgedImageView extends ImageView {
     }
 
     @Override
-    public void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    public void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
 
         if (!shouldDrawDot()) {
             return;
@@ -168,12 +184,26 @@ public class BadgedImageView extends ImageView {
 
         getDrawingRect(mTempBounds);
 
-        mDrawParams.color = mDotColor;
+        mDrawParams.dotColor = mDotColor;
         mDrawParams.iconBounds = mTempBounds;
-        mDrawParams.leftAlign = mOnLeft;
+        mDrawParams.leftAlign = mDotOnLeft;
         mDrawParams.scale = mDotScale;
 
         mDotRenderer.draw(canvas, mDrawParams);
+    }
+
+    /**
+     * Set drawable resource shown as the icon
+     */
+    public void setIconImageResource(@DrawableRes int drawable) {
+        mBubbleIcon.setImageResource(drawable);
+    }
+
+    /**
+     * Get icon drawable
+     */
+    public Drawable getIconDrawable() {
+        return mBubbleIcon.getDrawable();
     }
 
     /** Adds a dot suppression flag, updating dot visibility if needed. */
@@ -226,7 +256,7 @@ public class BadgedImageView extends ImageView {
      * Whether decorations (badges or dots) are on the left.
      */
     boolean getDotOnLeft() {
-        return mOnLeft;
+        return mDotOnLeft;
     }
 
     /**
@@ -234,7 +264,7 @@ public class BadgedImageView extends ImageView {
      */
     float[] getDotCenter() {
         float[] dotPosition;
-        if (mOnLeft) {
+        if (mDotOnLeft) {
             dotPosition = mDotRenderer.getLeftDotPosition();
         } else {
             dotPosition = mDotRenderer.getRightDotPosition();
@@ -259,26 +289,29 @@ public class BadgedImageView extends ImageView {
 
     /** Sets the position of the dot and badge, animating them out and back in if requested. */
     void animateDotBadgePositions(boolean onLeft) {
-        mOnLeft = onLeft;
-
-        if (onLeft != getDotOnLeft() && shouldDrawDot()) {
-            animateDotScale(0f /* showDot */, () -> {
-                invalidate();
-                animateDotScale(1.0f, null /* after */);
-            });
+        if (onLeft != getDotOnLeft()) {
+            if (shouldDrawDot()) {
+                animateDotScale(0f /* showDot */, () -> {
+                    mDotOnLeft = onLeft;
+                    invalidate();
+                    animateDotScale(1.0f, null /* after */);
+                });
+            } else {
+                mDotOnLeft = onLeft;
+            }
         }
+        mBadgeOnLeft = onLeft;
         // TODO animate badge
         showBadge();
-
     }
 
     /** Sets the position of the dot and badge. */
     void setDotBadgeOnLeft(boolean onLeft) {
-        mOnLeft = onLeft;
+        mBadgeOnLeft = onLeft;
+        mDotOnLeft = onLeft;
         invalidate();
         showBadge();
     }
-
 
     /** Whether to draw the dot in onDraw(). */
     private boolean shouldDrawDot() {
@@ -290,7 +323,7 @@ public class BadgedImageView extends ImageView {
     /**
      * Animates the dot to the given scale, running the optional callback when the animation ends.
      */
-    private void animateDotScale(float toScale, @Nullable Runnable after) {
+    public void animateDotScale(float toScale, @Nullable Runnable after) {
         mDotIsAnimating = true;
 
         // Don't restart the animation if we're already animating to the given value.
@@ -323,31 +356,29 @@ public class BadgedImageView extends ImageView {
     }
 
     void showBadge() {
-        Bitmap badge = mBubble.getAppBadge();
-        if (badge == null) {
-            setImageBitmap(mBubble.getBubbleIcon());
+        Bitmap appBadgeBitmap = mBubble.getAppBadge();
+        if (appBadgeBitmap == null) {
+            mAppIcon.setVisibility(GONE);
             return;
         }
-        Canvas bubbleCanvas = new Canvas();
-        Bitmap noBadgeBubble = mBubble.getBubbleIcon();
-        Bitmap bubble = noBadgeBubble.copy(noBadgeBubble.getConfig(), /* isMutable */ true);
 
-        bubbleCanvas.setDrawFilter(new PaintFlagsDrawFilter(DITHER_FLAG, FILTER_BITMAP_FLAG));
-        bubbleCanvas.setBitmap(bubble);
-        final int bubbleSize = bubble.getWidth();
-        final int badgeSize = (int) (ICON_BADGE_SCALE * bubbleSize);
-        Rect dest = new Rect();
-        if (mOnLeft) {
-            dest.set(0, bubbleSize - badgeSize, badgeSize, bubbleSize);
+        int translationX;
+        if (mBadgeOnLeft) {
+            translationX = -(mBubble.getBubbleIcon().getWidth() - appBadgeBitmap.getWidth());
         } else {
-            dest.set(bubbleSize - badgeSize, bubbleSize - badgeSize, bubbleSize, bubbleSize);
+            translationX = 0;
         }
-        bubbleCanvas.drawBitmap(badge, null /* src */, dest, mPaint);
-        bubbleCanvas.setBitmap(null);
-        setImageBitmap(bubble);
+
+        mAppIcon.setTranslationX(translationX);
+        mAppIcon.setVisibility(VISIBLE);
     }
 
     void hideBadge() {
-        setImageBitmap(mBubble.getBubbleIcon());
+        mAppIcon.setVisibility(GONE);
+    }
+
+    @Override
+    public String toString() {
+        return "BadgedImageView{" + mBubble + "}";
     }
 }

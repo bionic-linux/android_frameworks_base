@@ -16,34 +16,48 @@
 
 package android.view;
 
-import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
-import static android.view.View.SYSTEM_UI_FLAG_VISIBLE;
-import static android.view.WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR;
-import static android.view.WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
-import static android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING;
+import static android.view.WindowManager.LayoutParams.FIRST_SUB_WINDOW;
+import static android.view.WindowManager.LayoutParams.LAST_SUB_WINDOW;
+import static android.window.WindowProviderService.isWindowProviderService;
+
+import static com.android.window.flags.Flags.screenRecordingCallbacks;
 
 import android.annotation.CallbackExecutor;
+import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.UiContext;
-import android.app.ResourcesManager;
 import android.compat.annotation.UnsupportedAppUsage;
+import android.content.ComponentName;
 import android.content.Context;
-import android.content.res.Configuration;
-import android.graphics.Rect;
+import android.graphics.Bitmap;
 import android.graphics.Region;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.RemoteException;
+import android.os.StrictMode;
+import android.util.Log;
+import android.window.ITaskFpsCallback;
+import android.window.InputTransferToken;
+import android.window.TaskFpsCallback;
+import android.window.TrustedPresentationThresholds;
 import android.window.WindowContext;
+import android.window.WindowMetricsController;
+import android.window.WindowProvider;
 
+import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.os.IResultReceiver;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
+import java.util.function.IntConsumer;
 
 /**
  * Provides low-level communication with the system window manager for
@@ -72,6 +86,8 @@ import java.util.function.Consumer;
  * @hide
  */
 public final class WindowManagerImpl implements WindowManager {
+    private static final String TAG = "WindowManager";
+
     @UnsupportedAppUsage
     private final WindowManagerGlobal mGlobal = WindowManagerGlobal.getInstance();
     @UiContext
@@ -92,6 +108,14 @@ public final class WindowManagerImpl implements WindowManager {
     @Nullable
     private final IBinder mWindowContextToken;
 
+    @GuardedBy("mOnFpsCallbackListenerProxies")
+    private final ArrayList<OnFpsCallbackListenerProxy> mOnFpsCallbackListenerProxies =
+            new ArrayList<>();
+
+    /** A controller to handle {@link WindowMetrics} related APIs */
+    @NonNull
+    private final WindowMetricsController mWindowMetricsController;
+
     public WindowManagerImpl(Context context) {
         this(context, null /* parentWindow */, null /* clientToken */);
     }
@@ -101,6 +125,7 @@ public final class WindowManagerImpl implements WindowManager {
         mContext = context;
         mParentWindow = parentWindow;
         mWindowContextToken = windowContextToken;
+        mWindowMetricsController = new WindowMetricsController(mContext);
     }
 
     public WindowManagerImpl createLocalWindowManager(Window parentWindow) {
@@ -145,11 +170,40 @@ public final class WindowManagerImpl implements WindowManager {
             throw new IllegalArgumentException("Params must be WindowManager.LayoutParams");
         }
         final WindowManager.LayoutParams wparams = (WindowManager.LayoutParams) params;
+        assertWindowContextTypeMatches(wparams.type);
         // Only use the default token if we don't have a parent window and a token.
         if (mDefaultToken != null && mParentWindow == null && wparams.token == null) {
             wparams.token = mDefaultToken;
         }
         wparams.mWindowContextToken = mWindowContextToken;
+    }
+
+    private void assertWindowContextTypeMatches(@LayoutParams.WindowType int windowType) {
+        if (!(mContext instanceof WindowProvider)) {
+            return;
+        }
+        // Don't need to check sub-window type because sub window should be allowed to be attached
+        // to the parent window.
+        if (windowType >= FIRST_SUB_WINDOW && windowType <= LAST_SUB_WINDOW) {
+            return;
+        }
+        final WindowProvider windowProvider = (WindowProvider) mContext;
+        if (windowProvider.getWindowType() == windowType) {
+            return;
+        }
+        IllegalArgumentException exception = new IllegalArgumentException("Window type mismatch."
+                + " Window Context's window type is " + windowProvider.getWindowType()
+                + ", while LayoutParams' type is set to " + windowType + "."
+                + " Please create another Window Context via"
+                + " createWindowContext(getDisplay(), " + windowType + ", null)"
+                + " to add window with type:" + windowType);
+        if (!isWindowProviderService(windowProvider.getWindowContextOptions())) {
+            throw exception;
+        }
+        // Throw IncorrectCorrectViolation if the Window Context is allowed to provide multiple
+        // window types. Usually it's because the Window Context is a WindowProviderService.
+        StrictMode.onIncorrectContextUsed("WindowContext's window type must"
+                + " match type in WindowManager.LayoutParams", exception);
     }
 
     @Override
@@ -169,14 +223,36 @@ public final class WindowManagerImpl implements WindowManager {
             @Override
             public void send(int resultCode, Bundle resultData) throws RemoteException {
                 List<KeyboardShortcutGroup> result =
-                        resultData.getParcelableArrayList(PARCEL_KEY_SHORTCUTS_ARRAY);
+                        resultData.getParcelableArrayList(PARCEL_KEY_SHORTCUTS_ARRAY,
+                                android.view.KeyboardShortcutGroup.class);
                 receiver.onKeyboardShortcutsReceived(result);
             }
         };
         try {
             WindowManagerGlobal.getWindowManagerService()
-                .requestAppKeyboardShortcuts(resultReceiver, deviceId);
+                    .requestAppKeyboardShortcuts(resultReceiver, deviceId);
         } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    @Override
+    public void requestImeKeyboardShortcuts(
+            final KeyboardShortcutsReceiver receiver, int deviceId) {
+        IResultReceiver resultReceiver = new IResultReceiver.Stub() {
+            @Override
+            public void send(int resultCode, Bundle resultData) throws RemoteException {
+                List<KeyboardShortcutGroup> result =
+                        resultData.getParcelableArrayList(PARCEL_KEY_SHORTCUTS_ARRAY,
+                                android.view.KeyboardShortcutGroup.class);
+                receiver.onKeyboardShortcutsReceived(result);
+            }
+        };
+        try {
+            WindowManagerGlobal.getWindowManagerService()
+                    .requestImeKeyboardShortcuts(resultReceiver, deviceId);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
         }
     }
 
@@ -239,62 +315,28 @@ public final class WindowManagerImpl implements WindowManager {
     }
 
     @Override
-    public WindowMetrics getCurrentWindowMetrics() {
-        final Context context = mParentWindow != null ? mParentWindow.getContext() : mContext;
-        final Rect bounds = getCurrentBounds(context);
-
-        return new WindowMetrics(bounds, computeWindowInsets(bounds));
+    public boolean isGlobalKey(int keyCode) {
+        try {
+            return WindowManagerGlobal.getWindowManagerService().isGlobalKey(keyCode);
+        } catch (RemoteException e) {
+        }
+        return false;
     }
 
-    private static Rect getCurrentBounds(Context context) {
-        synchronized (ResourcesManager.getInstance()) {
-            return context.getResources().getConfiguration().windowConfiguration.getBounds();
-        }
+    @Override
+    public WindowMetrics getCurrentWindowMetrics() {
+        return mWindowMetricsController.getCurrentWindowMetrics();
     }
 
     @Override
     public WindowMetrics getMaximumWindowMetrics() {
-        final Context context = mParentWindow != null ? mParentWindow.getContext() : mContext;
-        final Rect maxBounds = getMaximumBounds(context);
-
-        return new WindowMetrics(maxBounds, computeWindowInsets(maxBounds));
+        return mWindowMetricsController.getMaximumWindowMetrics();
     }
 
-    private static Rect getMaximumBounds(Context context) {
-        synchronized (ResourcesManager.getInstance()) {
-            return context.getResources().getConfiguration().windowConfiguration.getMaxBounds();
-        }
-    }
-
-    // TODO(b/150095967): Set window type to LayoutParams
-    private WindowInsets computeWindowInsets(Rect bounds) {
-        // Initialize params which used for obtaining all system insets.
-        final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-        params.flags = FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR;
-        final Context context = (mParentWindow != null) ? mParentWindow.getContext() : mContext;
-        params.token = Context.getToken(context);
-        params.systemUiVisibility = SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
-        params.setFitInsetsTypes(0);
-        params.setFitInsetsSides(0);
-
-        return getWindowInsetsFromServer(params, bounds);
-    }
-
-    private WindowInsets getWindowInsetsFromServer(WindowManager.LayoutParams attrs, Rect bounds) {
-        try {
-            final InsetsState insetsState = new InsetsState();
-            final boolean alwaysConsumeSystemBars = WindowManagerGlobal.getWindowManagerService()
-                    .getWindowInsets(attrs, mContext.getDisplayId(), insetsState);
-            final Configuration config = mContext.getResources().getConfiguration();
-            final boolean isScreenRound = config.isScreenRound();
-            final int windowingMode = config.windowConfiguration.getWindowingMode();
-            return insetsState.calculateInsets(bounds, null /* ignoringVisibilityState*/,
-                    isScreenRound, alwaysConsumeSystemBars, SOFT_INPUT_ADJUST_NOTHING, attrs.flags,
-                    SYSTEM_UI_FLAG_VISIBLE, attrs.type, windowingMode, null /* typeSideMap */);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+    @Override
+    @NonNull
+    public Set<WindowMetrics> getPossibleMaximumWindowMetrics(int displayId) {
+        return mWindowMetricsController.getPossibleMaximumWindowMetrics(displayId);
     }
 
     @Override
@@ -328,11 +370,236 @@ public final class WindowManagerImpl implements WindowManager {
     }
 
     @Override
+    public void addProposedRotationListener(@NonNull @CallbackExecutor Executor executor,
+            @NonNull IntConsumer listener) {
+        Objects.requireNonNull(executor, "executor must not be null");
+        Objects.requireNonNull(listener, "listener must not be null");
+        final IBinder contextToken = Context.getToken(mContext);
+        if (contextToken == null) {
+            throw new UnsupportedOperationException("The context of this window manager instance "
+                    + "must be a UI context, e.g. an Activity or a Context created by "
+                    + "Context#createWindowContext()");
+        }
+        mGlobal.registerProposedRotationListener(contextToken, executor, listener);
+    }
+
+    @Override
+    public void removeProposedRotationListener(@NonNull IntConsumer listener) {
+        mGlobal.unregisterProposedRotationListener(Context.getToken(mContext), listener);
+    }
+
+    @Override
     public boolean isTaskSnapshotSupported() {
         try {
             return WindowManagerGlobal.getWindowManagerService().isTaskSnapshotSupported();
         } catch (RemoteException e) {
         }
         return false;
+    }
+
+    @Override
+    public void registerTaskFpsCallback(@IntRange(from = 0) int taskId, @NonNull Executor executor,
+            TaskFpsCallback callback) {
+        final OnFpsCallbackListenerProxy onFpsCallbackListenerProxy =
+                new OnFpsCallbackListenerProxy(executor, callback);
+        try {
+            WindowManagerGlobal.getWindowManagerService().registerTaskFpsCallback(
+                    taskId, onFpsCallbackListenerProxy);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+        synchronized (mOnFpsCallbackListenerProxies) {
+            mOnFpsCallbackListenerProxies.add(onFpsCallbackListenerProxy);
+        }
+    }
+
+    @Override
+    public void unregisterTaskFpsCallback(TaskFpsCallback callback) {
+        synchronized (mOnFpsCallbackListenerProxies) {
+            final Iterator<OnFpsCallbackListenerProxy> iterator =
+                    mOnFpsCallbackListenerProxies.iterator();
+            while (iterator.hasNext()) {
+                final OnFpsCallbackListenerProxy proxy = iterator.next();
+                if (proxy.mCallback == callback) {
+                    try {
+                        WindowManagerGlobal.getWindowManagerService()
+                                .unregisterTaskFpsCallback(proxy);
+                    } catch (RemoteException e) {
+                        throw e.rethrowFromSystemServer();
+                    }
+                    iterator.remove();
+                }
+            }
+        }
+    }
+
+    private static class OnFpsCallbackListenerProxy
+            extends ITaskFpsCallback.Stub {
+        private final Executor mExecutor;
+        private final TaskFpsCallback mCallback;
+
+        private OnFpsCallbackListenerProxy(Executor executor, TaskFpsCallback callback) {
+            mExecutor = executor;
+            mCallback = callback;
+        }
+
+        @Override
+        public void onFpsReported(float fps) {
+            mExecutor.execute(() -> {
+                mCallback.onFpsReported(fps);
+            });
+        }
+    }
+
+    @Override
+    public Bitmap snapshotTaskForRecents(int taskId) {
+        try {
+            return WindowManagerGlobal.getWindowManagerService().snapshotTaskForRecents(taskId);
+        } catch (RemoteException e) {
+            e.rethrowAsRuntimeException();
+        }
+        return null;
+    }
+
+    @Override
+    @NonNull
+    public IBinder getDefaultToken() {
+        return mDefaultToken;
+    }
+
+    @Override
+    @NonNull
+    public List<ComponentName> notifyScreenshotListeners(int displayId) {
+        try {
+            return List.copyOf(WindowManagerGlobal.getWindowManagerService()
+                    .notifyScreenshotListeners(displayId));
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    @Override
+    public boolean replaceContentOnDisplayWithMirror(int displayId, @NonNull Window window) {
+        View decorView = window.peekDecorView();
+        if (decorView == null) {
+            Log.e(TAG, "replaceContentOnDisplayWithMirror: Window's decorView was null.");
+            return false;
+        }
+
+        ViewRootImpl viewRoot = decorView.getViewRootImpl();
+        if (viewRoot == null) {
+            Log.e(TAG, "replaceContentOnDisplayWithMirror: Window's viewRootImpl was null.");
+            return false;
+        }
+
+        SurfaceControl sc = viewRoot.getSurfaceControl();
+        if (!sc.isValid()) {
+            Log.e(TAG, "replaceContentOnDisplayWithMirror: Window's SC is invalid.");
+            return false;
+        }
+        return replaceContentOnDisplayWithSc(displayId, SurfaceControl.mirrorSurface(sc));
+    }
+
+    @Override
+    public boolean replaceContentOnDisplayWithSc(int displayId, @NonNull SurfaceControl sc) {
+        if (!sc.isValid()) {
+            Log.e(TAG, "replaceContentOnDisplayWithSc: Invalid SC.");
+            return false;
+        }
+
+        try {
+            return WindowManagerGlobal.getWindowManagerService()
+                    .replaceContentOnDisplay(displayId, sc);
+        } catch (RemoteException e) {
+            e.rethrowAsRuntimeException();
+        }
+        return false;
+    }
+
+    @Override
+    public void registerTrustedPresentationListener(@NonNull IBinder window,
+            @NonNull TrustedPresentationThresholds thresholds, @NonNull Executor executor,
+            @NonNull Consumer<Boolean> listener) {
+        Objects.requireNonNull(window, "window must not be null");
+        Objects.requireNonNull(thresholds, "thresholds must not be null");
+        Objects.requireNonNull(executor, "executor must not be null");
+        Objects.requireNonNull(listener, "listener must not be null");
+        mGlobal.registerTrustedPresentationListener(window, thresholds, executor, listener);
+    }
+
+    @Override
+    public void unregisterTrustedPresentationListener(@NonNull Consumer<Boolean> listener) {
+        Objects.requireNonNull(listener, "listener must not be null");
+        mGlobal.unregisterTrustedPresentationListener(listener);
+    }
+
+    @NonNull
+    @Override
+    public InputTransferToken registerBatchedSurfaceControlInputReceiver(
+            @NonNull InputTransferToken hostInputTransferToken,
+            @NonNull SurfaceControl surfaceControl, @NonNull Choreographer choreographer,
+            @NonNull SurfaceControlInputReceiver receiver) {
+        Objects.requireNonNull(hostInputTransferToken);
+        Objects.requireNonNull(surfaceControl);
+        Objects.requireNonNull(choreographer);
+        Objects.requireNonNull(receiver);
+        return mGlobal.registerBatchedSurfaceControlInputReceiver(hostInputTransferToken,
+                surfaceControl, choreographer, receiver);
+    }
+
+    @NonNull
+    @Override
+    public InputTransferToken registerUnbatchedSurfaceControlInputReceiver(
+            @NonNull InputTransferToken hostInputTransferToken,
+            @NonNull SurfaceControl surfaceControl, @NonNull Looper looper,
+            @NonNull SurfaceControlInputReceiver receiver) {
+        Objects.requireNonNull(hostInputTransferToken);
+        Objects.requireNonNull(surfaceControl);
+        Objects.requireNonNull(looper);
+        Objects.requireNonNull(receiver);
+        return mGlobal.registerUnbatchedSurfaceControlInputReceiver(
+                hostInputTransferToken, surfaceControl, looper, receiver);
+    }
+
+    @Override
+    public void unregisterSurfaceControlInputReceiver(@NonNull SurfaceControl surfaceControl) {
+        Objects.requireNonNull(surfaceControl);
+        mGlobal.unregisterSurfaceControlInputReceiver(surfaceControl);
+    }
+
+    @Override
+    @Nullable
+    public IBinder getSurfaceControlInputClientToken(@NonNull SurfaceControl surfaceControl) {
+        Objects.requireNonNull(surfaceControl);
+        return mGlobal.getSurfaceControlInputClientToken(surfaceControl);
+    }
+
+    @Override
+    public boolean transferTouchGesture(@NonNull InputTransferToken transferFromToken,
+            @NonNull InputTransferToken transferToToken) {
+        Objects.requireNonNull(transferFromToken);
+        Objects.requireNonNull(transferToToken);
+        return mGlobal.transferTouchGesture(transferFromToken, transferToToken);
+    }
+
+    @Override
+    public @ScreenRecordingState int addScreenRecordingCallback(
+            @NonNull @CallbackExecutor Executor executor,
+            @NonNull Consumer<@ScreenRecordingState Integer> callback) {
+        if (screenRecordingCallbacks()) {
+            Objects.requireNonNull(executor, "executor must not be null");
+            Objects.requireNonNull(callback, "callback must not be null");
+            return ScreenRecordingCallbacks.getInstance().addCallback(executor, callback);
+        }
+        return SCREEN_RECORDING_STATE_NOT_VISIBLE;
+    }
+
+    @Override
+    public void removeScreenRecordingCallback(
+            @NonNull Consumer<@ScreenRecordingState Integer> callback) {
+        if (screenRecordingCallbacks()) {
+            Objects.requireNonNull(callback, "callback must not be null");
+            ScreenRecordingCallbacks.getInstance().removeCallback(callback);
+        }
     }
 }

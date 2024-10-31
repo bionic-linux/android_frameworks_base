@@ -17,6 +17,7 @@
 package com.android.server.biometrics.sensors;
 
 import android.annotation.IntDef;
+import android.hardware.biometrics.BiometricConstants;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -25,13 +26,16 @@ import java.lang.annotation.RetentionPolicy;
  * Interface for retrieval of current user's lockout state.
  */
 public interface LockoutTracker {
-    int LOCKOUT_NONE = 0;
-    int LOCKOUT_TIMED = 1;
-    int LOCKOUT_PERMANENT = 2;
+    int LOCKOUT_NONE = BiometricConstants.BIOMETRIC_LOCKOUT_NONE;
+    int LOCKOUT_TIMED = BiometricConstants.BIOMETRIC_LOCKOUT_TIMED;
+    int LOCKOUT_PERMANENT = BiometricConstants.BIOMETRIC_LOCKOUT_PERMANENT;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({LOCKOUT_NONE, LOCKOUT_TIMED, LOCKOUT_PERMANENT})
     @interface LockoutMode {}
 
     @LockoutMode int getLockoutModeForUser(int userId);
+    void setLockoutModeForUser(int userId, @LockoutMode int mode);
+    default void resetFailedAttemptsForUser(boolean clearAttemptCounter, int userId) {}
+    default void addFailedAttemptForUser(int userId) {}
 }

@@ -21,13 +21,15 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import android.database.ContentObserver;
+import android.os.UserHandle;
 import android.provider.Settings;
-import android.testing.AndroidTestingRunner;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
 import com.android.systemui.SysuiTestCase;
@@ -42,7 +44,7 @@ import java.util.Collection;
 import java.util.Map;
 
 @SmallTest
-@RunWith(AndroidTestingRunner.class)
+@RunWith(AndroidJUnit4.class)
 public class FakeSettingsTest extends SysuiTestCase {
     @Mock
     ContentObserver mContentObserver;
@@ -81,21 +83,57 @@ public class FakeSettingsTest extends SysuiTestCase {
 
     @Test
     public void testRegisterContentObserver() {
-        mFakeSettings.registerContentObserver("cat", mContentObserver);
+        mFakeSettings.registerContentObserverSync("cat", mContentObserver);
 
         mFakeSettings.putString("cat", "hat");
 
-        verify(mContentObserver).dispatchChange(anyBoolean(), any(Collection.class), anyInt());
+        verify(mContentObserver).dispatchChange(anyBoolean(), any(Collection.class), anyInt(),
+                anyInt());
+    }
+
+    @Test
+    public void testRegisterContentObserverAllUsers() {
+        mFakeSettings.registerContentObserverForUserSync(
+                mFakeSettings.getUriFor("cat"), false, mContentObserver, UserHandle.USER_ALL);
+
+        mFakeSettings.putString("cat", "hat");
+
+        verify(mContentObserver).dispatchChange(anyBoolean(), any(Collection.class), anyInt(),
+                anyInt());
     }
 
     @Test
     public void testUnregisterContentObserver() {
-        mFakeSettings.registerContentObserver("cat", mContentObserver);
-        mFakeSettings.unregisterContentObserver(mContentObserver);
+        mFakeSettings.registerContentObserverSync("cat", mContentObserver);
+        mFakeSettings.unregisterContentObserverSync(mContentObserver);
 
         mFakeSettings.putString("cat", "hat");
 
         verify(mContentObserver, never()).dispatchChange(
                 anyBoolean(), any(Collection.class), anyInt());
+    }
+
+    @Test
+    public void testUnregisterContentObserverAllUsers() {
+        mFakeSettings.registerContentObserverForUserSync(
+                mFakeSettings.getUriFor("cat"), false, mContentObserver, UserHandle.USER_ALL);
+        mFakeSettings.unregisterContentObserverSync(mContentObserver);
+
+        mFakeSettings.putString("cat", "hat");
+
+        verify(mContentObserver, never()).dispatchChange(
+                anyBoolean(), any(Collection.class), anyInt(), anyInt());
+    }
+
+    @Test
+    public void testContentObserverDispatchCorrectUser() {
+        int user = 10;
+        mFakeSettings.registerContentObserverForUserSync(
+                mFakeSettings.getUriFor("cat"), false, mContentObserver, UserHandle.USER_ALL
+        );
+
+        mFakeSettings.putStringForUser("cat", "hat", user);
+        verify(mContentObserver).dispatchChange(anyBoolean(), any(Collection.class), anyInt(),
+                eq(user));
     }
 }

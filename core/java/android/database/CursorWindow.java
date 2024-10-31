@@ -22,14 +22,8 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteClosable;
 import android.database.sqlite.SQLiteException;
-import android.os.Binder;
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Process;
-import android.util.Log;
-import android.util.LongSparseArray;
-import android.util.SparseIntArray;
 
 import dalvik.annotation.optimization.FastNative;
 import dalvik.system.CloseGuard;
@@ -44,6 +38,9 @@ import dalvik.system.CloseGuard;
  * consumer for reading.
  * </p>
  */
+@android.ravenwood.annotation.RavenwoodKeepWholeClass
+@android.ravenwood.annotation.RavenwoodNativeSubstitutionClass(
+        "com.android.platform.test.ravenwood.nativesubstitution.CursorWindow_host")
 public class CursorWindow extends SQLiteClosable implements Parcelable {
     private static final String STATS_TAG = "CursorWindowStats";
 
@@ -61,7 +58,7 @@ public class CursorWindow extends SQLiteClosable implements Parcelable {
     private int mStartPos;
     private final String mName;
 
-    private final CloseGuard mCloseGuard = CloseGuard.get();
+    private final CloseGuard mCloseGuard;
 
     // May throw CursorWindowAllocationException
     private static native long nativeCreate(String name, int cursorWindowSize);
@@ -131,19 +128,23 @@ public class CursorWindow extends SQLiteClosable implements Parcelable {
      *
      * @param name The name of the cursor window, or null if none.
      * @param windowSizeBytes Size of cursor window in bytes.
+     * @throws IllegalArgumentException if {@code windowSizeBytes} is less than 0
+     * @throws AssertionError if created window pointer is 0
      * <p><strong>Note:</strong> Memory is dynamically allocated as data rows are added to the
      * window. Depending on the amount of data stored, the actual amount of memory allocated can be
      * lower than specified size, but cannot exceed it.
      */
     public CursorWindow(String name, @BytesLong long windowSizeBytes) {
+        if (windowSizeBytes < 0) {
+            throw new IllegalArgumentException("Window size cannot be less than 0");
+        }
         mStartPos = 0;
         mName = name != null && name.length() != 0 ? name : "<unnamed>";
         mWindowPtr = nativeCreate(mName, (int) windowSizeBytes);
         if (mWindowPtr == 0) {
             throw new AssertionError(); // Not possible, the native code won't return it.
         }
-        mCloseGuard.open("close");
-        recordNewWindow(Binder.getCallingPid(), mWindowPtr);
+        mCloseGuard = createCloseGuard();
     }
 
     /**
@@ -171,7 +172,18 @@ public class CursorWindow extends SQLiteClosable implements Parcelable {
             throw new AssertionError(); // Not possible, the native code won't return it.
         }
         mName = nativeGetName(mWindowPtr);
-        mCloseGuard.open("close");
+        mCloseGuard = createCloseGuard();
+    }
+
+    @android.ravenwood.annotation.RavenwoodReplace
+    private CloseGuard createCloseGuard() {
+        final CloseGuard closeGuard = CloseGuard.get();
+        closeGuard.open("CursorWindow.close");
+        return closeGuard;
+    }
+
+    private CloseGuard createCloseGuard$ravenwood() {
+        return null;
     }
 
     @Override
@@ -191,7 +203,6 @@ public class CursorWindow extends SQLiteClosable implements Parcelable {
             mCloseGuard.close();
         }
         if (mWindowPtr != 0) {
-            recordClosingOfWindow(mWindowPtr);
             nativeDispose(mWindowPtr);
             mWindowPtr = 0;
         }
@@ -746,64 +757,7 @@ public class CursorWindow extends SQLiteClosable implements Parcelable {
         dispose();
     }
 
-    @UnsupportedAppUsage
-    private static final LongSparseArray<Integer> sWindowToPidMap = new LongSparseArray<Integer>();
-
-    private void recordNewWindow(int pid, long window) {
-        synchronized (sWindowToPidMap) {
-            sWindowToPidMap.put(window, pid);
-            if (Log.isLoggable(STATS_TAG, Log.VERBOSE)) {
-                Log.i(STATS_TAG, "Created a new Cursor. " + printStats());
-            }
-        }
-    }
-
-    private void recordClosingOfWindow(long window) {
-        synchronized (sWindowToPidMap) {
-            if (sWindowToPidMap.size() == 0) {
-                // this means we are not in the ContentProvider.
-                return;
-            }
-            sWindowToPidMap.delete(window);
-        }
-    }
-
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
-    private String printStats() {
-        StringBuilder buff = new StringBuilder();
-        int myPid = Process.myPid();
-        int total = 0;
-        SparseIntArray pidCounts = new SparseIntArray();
-        synchronized (sWindowToPidMap) {
-            int size = sWindowToPidMap.size();
-            if (size == 0) {
-                // this means we are not in the ContentProvider.
-                return "";
-            }
-            for (int indx = 0; indx < size; indx++) {
-                int pid = sWindowToPidMap.valueAt(indx);
-                int value = pidCounts.get(pid);
-                pidCounts.put(pid, ++value);
-            }
-        }
-        int numPids = pidCounts.size();
-        for (int i = 0; i < numPids;i++) {
-            buff.append(" (# cursors opened by ");
-            int pid = pidCounts.keyAt(i);
-            if (pid == myPid) {
-                buff.append("this proc=");
-            } else {
-                buff.append("pid ").append(pid).append('=');
-            }
-            int num = pidCounts.get(pid);
-            buff.append(num).append(')');
-            total += num;
-        }
-        // limit the returned string size to 1000
-        String s = (buff.length() > 980) ? buff.substring(0, 980) : buff.toString();
-        return "# Open Cursors=" + total + s;
-    }
-
+    @android.ravenwood.annotation.RavenwoodReplace
     private static int getCursorWindowSize() {
         if (sCursorWindowSize < 0) {
             // The cursor window size. resource xml file specifies the value in kB.
@@ -812,6 +766,10 @@ public class CursorWindow extends SQLiteClosable implements Parcelable {
                     com.android.internal.R.integer.config_cursorWindowSize) * 1024;
         }
         return sCursorWindowSize;
+    }
+
+    private static int getCursorWindowSize$ravenwood() {
+        return 1024;
     }
 
     @Override

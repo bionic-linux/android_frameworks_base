@@ -25,8 +25,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import android.hardware.Sensor;
-import android.test.suitebuilder.annotation.SmallTest;
 import android.testing.AndroidTestingRunner;
+
+import androidx.test.filters.SmallTest;
 
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.util.concurrency.FakeExecution;
@@ -380,7 +381,7 @@ public class ThresholdSensorImplTest extends SysuiTestCase {
         int mCallCount;
 
         @Override
-        public void onThresholdCrossed(ThresholdSensor.ThresholdSensorEvent event) {
+        public void onThresholdCrossed(ThresholdSensorEvent event) {
             mBelow = event.getBelow();
             mTimestampNs = event.getTimestampNs();
             mCallCount++;

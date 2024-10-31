@@ -32,6 +32,8 @@ import static com.android.systemui.statusbar.notification.AssistantFeedbackContr
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import android.app.Notification;
@@ -40,10 +42,10 @@ import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.DeviceConfig;
 import android.service.notification.StatusBarNotification;
-import android.test.suitebuilder.annotation.SmallTest;
-import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper;
-import android.util.Pair;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.SmallTest;
 
 import com.android.internal.config.sysui.SystemUiDeviceConfigFlags;
 import com.android.systemui.SysuiTestCase;
@@ -51,14 +53,12 @@ import com.android.systemui.statusbar.notification.collection.NotificationEntry;
 import com.android.systemui.statusbar.notification.collection.NotificationEntryBuilder;
 import com.android.systemui.util.DeviceConfigProxyFake;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @SmallTest
-@RunWith(AndroidTestingRunner.class)
+@RunWith(AndroidJUnit4.class)
 @TestableLooper.RunWithLooper
 public class AssistantFeedbackControllerTest extends SysuiTestCase {
     private static final String TEST_PACKAGE_NAME = "test_package";
@@ -97,9 +97,24 @@ public class AssistantFeedbackControllerTest extends SysuiTestCase {
     @Test
     public void testFeedback_flagDisabled() {
         switchFlag("false");
+        // test flag disables logic with default values
         assertEquals(STATUS_UNCHANGED, mAssistantFeedbackController.getFeedbackStatus(
                 getEntry(IMPORTANCE_DEFAULT, IMPORTANCE_DEFAULT, RANKING_UNCHANGED)));
-        assertFalse(mAssistantFeedbackController.showFeedbackIndicator(
+        assertNull(mAssistantFeedbackController.getFeedbackIcon(
+                getEntry(IMPORTANCE_DEFAULT, IMPORTANCE_DEFAULT, RANKING_UNCHANGED)));
+        // test that the flag disables logic with values that otherwise would return a value
+        assertEquals(STATUS_UNCHANGED, mAssistantFeedbackController.getFeedbackStatus(
+                getEntry(IMPORTANCE_DEFAULT, IMPORTANCE_HIGH, RANKING_PROMOTED)));
+        assertNull(mAssistantFeedbackController.getFeedbackIcon(
+                getEntry(IMPORTANCE_DEFAULT, IMPORTANCE_HIGH, RANKING_PROMOTED)));
+    }
+
+    @Test
+    public void testFeedback_noChange() {
+        switchFlag("true");
+        assertEquals(STATUS_UNCHANGED, mAssistantFeedbackController.getFeedbackStatus(
+                getEntry(IMPORTANCE_DEFAULT, IMPORTANCE_DEFAULT, RANKING_UNCHANGED)));
+        assertNull(mAssistantFeedbackController.getFeedbackIcon(
                 getEntry(IMPORTANCE_DEFAULT, IMPORTANCE_DEFAULT, RANKING_UNCHANGED)));
     }
 
@@ -108,15 +123,15 @@ public class AssistantFeedbackControllerTest extends SysuiTestCase {
         switchFlag("true");
         NotificationEntry entry = getEntry(IMPORTANCE_DEFAULT, IMPORTANCE_HIGH, RANKING_UNCHANGED);
         assertEquals(STATUS_PROMOTED, mAssistantFeedbackController.getFeedbackStatus(entry));
-        assertTrue(mAssistantFeedbackController.showFeedbackIndicator(entry));
+        assertNotNull(mAssistantFeedbackController.getFeedbackIcon(entry));
 
         entry = getEntry(IMPORTANCE_DEFAULT, IMPORTANCE_LOW, RANKING_UNCHANGED);
         assertEquals(STATUS_SILENCED, mAssistantFeedbackController.getFeedbackStatus(entry));
-        assertTrue(mAssistantFeedbackController.showFeedbackIndicator(entry));
+        assertNotNull(mAssistantFeedbackController.getFeedbackIcon(entry));
 
         entry = getEntry(IMPORTANCE_LOW, IMPORTANCE_MIN, RANKING_UNCHANGED);
         assertEquals(STATUS_DEMOTED, mAssistantFeedbackController.getFeedbackStatus(entry));
-        assertTrue(mAssistantFeedbackController.showFeedbackIndicator(entry));
+        assertNotNull(mAssistantFeedbackController.getFeedbackIcon(entry));
     }
 
     @Test
@@ -125,18 +140,20 @@ public class AssistantFeedbackControllerTest extends SysuiTestCase {
         NotificationEntry entry =
                 getEntry(IMPORTANCE_DEFAULT, IMPORTANCE_DEFAULT, RANKING_PROMOTED);
         assertEquals(STATUS_PROMOTED, mAssistantFeedbackController.getFeedbackStatus(entry));
-        assertTrue(mAssistantFeedbackController.showFeedbackIndicator(entry));
+        assertNotNull(mAssistantFeedbackController.getFeedbackIcon(entry));
 
         entry = getEntry(IMPORTANCE_DEFAULT, IMPORTANCE_DEFAULT, RANKING_DEMOTED);
         assertEquals(STATUS_DEMOTED, mAssistantFeedbackController.getFeedbackStatus(entry));
-        assertTrue(mAssistantFeedbackController.showFeedbackIndicator(entry));
+        assertNotNull(mAssistantFeedbackController.getFeedbackIcon(entry));
     }
 
     @Test
-    public void testGetFeedbackResources_flagDisabled() {
-        switchFlag("false");
-        Assert.assertEquals(new Pair(0, 0), mAssistantFeedbackController.getFeedbackResources(
-                getEntry(IMPORTANCE_DEFAULT, IMPORTANCE_DEFAULT, RANKING_UNCHANGED)));
+    public void testGetFeedbackIcon_whenPromoted() {
+        switchFlag("true");
+        FeedbackIcon expected = new FeedbackIcon(com.android.internal.R.drawable.ic_feedback_uprank,
+                com.android.internal.R.string.notification_feedback_indicator_promoted);
+        assertEquals(expected, mAssistantFeedbackController.getFeedbackIcon(
+                getEntry(IMPORTANCE_DEFAULT, IMPORTANCE_HIGH, RANKING_PROMOTED)));
     }
 
     private NotificationEntry getEntry(int oldImportance, int newImportance,

@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-#include <input/Input.h>
+#include "android_view_InputDevice.h"
 
 #include <android_runtime/AndroidRuntime.h>
+#include <com_android_input_flags.h>
+#include <input/Input.h>
 #include <jni.h>
 #include <nativehelper/JNIHelp.h>
-
 #include <nativehelper/ScopedLocalRef.h>
 
-#include "android_view_InputDevice.h"
 #include "android_view_KeyCharacterMap.h"
-
 #include "core_jni_helpers.h"
 
 namespace android {
@@ -34,6 +33,7 @@ static struct {
 
     jmethodID ctor;
     jmethodID addMotionRange;
+    jmethodID setShouldSmoothScroll;
 } gInputDeviceClassInfo;
 
 jobject android_view_InputDevice_create(JNIEnv* env, const InputDeviceInfo& deviceInfo) {
@@ -48,17 +48,32 @@ jobject android_view_InputDevice_create(JNIEnv* env, const InputDeviceInfo& devi
         return NULL;
     }
 
+    std::optional<KeyboardLayoutInfo> layoutInfo = deviceInfo.getKeyboardLayoutInfo();
+    ScopedLocalRef<jstring> keyboardLanguageTagObj(env,
+                                                   env->NewStringUTF(
+                                                           layoutInfo
+                                                                   ? layoutInfo->languageTag.c_str()
+                                                                   : NULL));
+    ScopedLocalRef<jstring> keyboardLayoutTypeObj(env,
+                                                  env->NewStringUTF(
+                                                          layoutInfo
+                                                                  ? layoutInfo->layoutType.c_str()
+                                                                  : NULL));
+
+    std::shared_ptr<KeyCharacterMap> map = deviceInfo.getKeyCharacterMap();
+    std::unique_ptr<KeyCharacterMap> mapCopy;
+    if (map != nullptr) {
+        mapCopy = std::make_unique<KeyCharacterMap>(*map);
+    }
     ScopedLocalRef<jobject> kcmObj(env,
-            android_view_KeyCharacterMap_create(env, deviceInfo.getId(),
-            deviceInfo.getKeyCharacterMap()));
+                                   android_view_KeyCharacterMap_create(env, deviceInfo.getId(),
+                                                                       std::move(mapCopy)));
     if (!kcmObj.get()) {
         return NULL;
     }
 
     const InputDeviceIdentifier& ident = deviceInfo.getIdentifier();
-
-    // Not sure why, but JNI is complaining when I pass this through directly.
-    jboolean hasMic = deviceInfo.hasMic() ? JNI_TRUE : JNI_FALSE;
+    const auto usiVersion = deviceInfo.getUsiVersion().value_or(InputDeviceUsiVersion{-1, -1});
 
     ScopedLocalRef<jobject>
             inputDeviceObj(env,
@@ -66,12 +81,19 @@ jobject android_view_InputDevice_create(JNIEnv* env, const InputDeviceInfo& devi
                                           deviceInfo.getId(), deviceInfo.getGeneration(),
                                           deviceInfo.getControllerNumber(), nameObj.get(),
                                           static_cast<int32_t>(ident.vendor),
-                                          static_cast<int32_t>(ident.product), descriptorObj.get(),
+                                          static_cast<int32_t>(ident.product),
+                                          static_cast<int32_t>(ident.bus), descriptorObj.get(),
                                           deviceInfo.isExternal(), deviceInfo.getSources(),
                                           deviceInfo.getKeyboardType(), kcmObj.get(),
-                                          deviceInfo.hasVibrator(), hasMic,
+                                          keyboardLanguageTagObj.get(), keyboardLayoutTypeObj.get(),
+                                          deviceInfo.hasVibrator(), deviceInfo.hasMic(),
                                           deviceInfo.hasButtonUnderPad(), deviceInfo.hasSensor(),
-                                          deviceInfo.hasBattery()));
+                                          deviceInfo.hasBattery(), usiVersion.majorVersion,
+                                          usiVersion.minorVersion,
+                                          deviceInfo.getAssociatedDisplayId(),
+                                          deviceInfo.isEnabled()));
+    // Note: We do not populate the Bluetooth address into the InputDevice object to avoid leaking
+    // it to apps that do not have the Bluetooth permission.
 
     const std::vector<InputDeviceInfo::MotionRange>& ranges = deviceInfo.getMotionRanges();
     for (const InputDeviceInfo::MotionRange& range: ranges) {
@@ -82,23 +104,35 @@ jobject android_view_InputDevice_create(JNIEnv* env, const InputDeviceInfo& devi
         }
     }
 
+    if (com::android::input::flags::input_device_view_behavior_api()) {
+        const InputDeviceViewBehavior& viewBehavior = deviceInfo.getViewBehavior();
+        std::optional<bool> defaultSmoothScroll = viewBehavior.shouldSmoothScroll;
+        if (defaultSmoothScroll.has_value()) {
+            env->CallVoidMethod(inputDeviceObj.get(), gInputDeviceClassInfo.setShouldSmoothScroll,
+                                *defaultSmoothScroll);
+            if (env->ExceptionCheck()) {
+                return NULL;
+            }
+        }
+    }
+
     return env->NewLocalRef(inputDeviceObj.get());
 }
-
 
 int register_android_view_InputDevice(JNIEnv* env)
 {
     gInputDeviceClassInfo.clazz = FindClassOrDie(env, "android/view/InputDevice");
     gInputDeviceClassInfo.clazz = MakeGlobalRefOrDie(env, gInputDeviceClassInfo.clazz);
 
-    gInputDeviceClassInfo.ctor =
-            GetMethodIDOrDie(env, gInputDeviceClassInfo.clazz, "<init>",
-                             "(IIILjava/lang/String;IILjava/lang/"
-                             "String;ZIILandroid/view/KeyCharacterMap;ZZZZZ)V");
+    gInputDeviceClassInfo.ctor = GetMethodIDOrDie(env, gInputDeviceClassInfo.clazz, "<init>",
+                                                  "(IIILjava/lang/String;IIILjava/lang/"
+                                                  "String;ZIILandroid/view/KeyCharacterMap;Ljava/"
+                                                  "lang/String;Ljava/lang/String;ZZZZZIIIZ)V");
 
-    gInputDeviceClassInfo.addMotionRange = GetMethodIDOrDie(env, gInputDeviceClassInfo.clazz,
-            "addMotionRange", "(IIFFFFF)V");
-
+    gInputDeviceClassInfo.addMotionRange =
+            GetMethodIDOrDie(env, gInputDeviceClassInfo.clazz, "addMotionRange", "(IIFFFFF)V");
+    gInputDeviceClassInfo.setShouldSmoothScroll =
+            GetMethodIDOrDie(env, gInputDeviceClassInfo.clazz, "setShouldSmoothScroll", "(Z)V");
     return 0;
 }
 

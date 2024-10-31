@@ -16,11 +16,10 @@
 
 package com.android.systemui.accessibility;
 
-import static android.view.WindowInsets.Type.systemGestures;
-
-import android.graphics.Insets;
+import android.annotation.NonNull;
 import android.graphics.Rect;
 import android.graphics.Region;
+import android.os.IBinder;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,20 +78,22 @@ public class TestableWindowManager implements WindowManager {
 
     @Override
     public WindowMetrics getCurrentWindowMetrics() {
-        final Insets systemGesturesInsets = Insets.of(0, 0, 0, 10);
-        final WindowInsets insets = new WindowInsets.Builder()
-                .setInsets(systemGestures(), systemGesturesInsets)
-                .build();
+        final WindowMetrics realMetrics = mWindowManager.getCurrentWindowMetrics();
         final WindowMetrics windowMetrics = new WindowMetrics(
-                mWindowBounds == null ? mWindowManager.getCurrentWindowMetrics().getBounds()
+                mWindowBounds == null ? realMetrics.getBounds()
                         : mWindowBounds,
-                mWindowInsets == null ? insets : mWindowInsets);
+                mWindowInsets == null ?  realMetrics.getWindowInsets() : mWindowInsets);
         return windowMetrics;
     }
 
     @Override
     public WindowMetrics getMaximumWindowMetrics() {
         return mWindowManager.getMaximumWindowMetrics();
+    }
+
+    @Override
+    public @NonNull IBinder getDefaultToken() {
+        return mWindowManager.getDefaultToken();
     }
 
     public View getAttachedView() {
@@ -106,10 +107,20 @@ public class TestableWindowManager implements WindowManager {
         return (WindowManager.LayoutParams) mView.getLayoutParams();
     }
 
+    /**
+     * Sets the given window bounds to current window metrics.
+     *
+     * @param bounds the window bounds
+     */
     public void setWindowBounds(Rect bounds) {
         mWindowBounds = bounds;
     }
 
+    /**
+     * Sets the given window insets to the current window metrics.
+     *
+     * @param insets the window insets.
+     */
     public void setWindowInsets(WindowInsets insets) {
         mWindowInsets = insets;
     }

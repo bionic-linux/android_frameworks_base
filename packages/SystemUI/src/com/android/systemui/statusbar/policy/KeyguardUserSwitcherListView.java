@@ -21,11 +21,11 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.android.app.animation.Interpolators;
 import com.android.keyguard.AlphaOptimizedLinearLayout;
 import com.android.keyguard.KeyguardConstants;
 import com.android.settingslib.animation.AppearAnimationUtils;
 import com.android.settingslib.animation.DisappearAnimationUtils;
-import com.android.systemui.animation.Interpolators;
 
 /**
  * The container for the user switcher on Keyguard.
@@ -97,13 +97,16 @@ public class KeyguardUserSwitcherListView extends AlphaOptimizedLinearLayout {
             } else {
                 // Update clickable state immediately so that the menu feels more responsive
                 userItemViews[i].setClickable(open);
-                // Before running the animation, ensure visibility is set correctly
-                userItemViews[i].updateVisibilities(animate || open /* showItem */,
-                        true /* showTextName */, false /* animate */);
+                // when opening we need to make views visible beforehand so they can be animated
+                if (open) {
+                    userItemViews[i].updateVisibilities(true /* showItem */,
+                            true /* showTextName */, false /* animate */);
+                }
+
             }
         }
 
-        if (animate) {
+        if (animate && userItemViews.length > 1) {
             // AnimationUtils will immediately hide/show the first item in the array. Since the
             // first view is the current user, we want to manage its visibility separately.
             // Set first item to null so AnimationUtils ignores it.
@@ -117,6 +120,13 @@ public class KeyguardUserSwitcherListView extends AlphaOptimizedLinearLayout {
                         setClipChildren(true);
                         setClipToPadding(true);
                         mAnimating = false;
+                        if (!open) {
+                            // after closing we hide children so that height of this view is correct
+                            for (int i = 1; i < userItemViews.length; i++) {
+                                userItemViews[i].updateVisibilities(false /* showItem */,
+                                        true /* showTextName */, false /* animate */);
+                            }
+                        }
                     });
         }
     }

@@ -16,6 +16,7 @@
 
 package android.graphics;
 
+import android.animation.Animator;
 import android.annotation.BytesLong;
 import android.annotation.ColorInt;
 import android.annotation.FloatRange;
@@ -35,6 +36,7 @@ import libcore.util.NativeAllocationRegistry;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.ref.WeakReference;
 
 /**
  * <p>RenderNode is used to build hardware accelerated rendering hierarchies. Each RenderNode
@@ -263,13 +265,55 @@ public final class RenderNode {
      * @hide
      */
     public interface PositionUpdateListener {
-
         /**
          * Called by native by a Rendering Worker thread to update window position
          *
          * @hide
          */
         void positionChanged(long frameNumber, int left, int top, int right, int bottom);
+
+        /**
+         * Called by native by a Rendering Worker thread to update window position; includes
+         * the local rect that represents the clipped area of the RenderNode's bounds.
+         *
+         * @hide
+         */
+        default void positionChanged(long frameNumber, int left, int top, int right, int bottom,
+                int clipLeft, int clipTop, int clipRight, int clipBottom) {
+            positionChanged(frameNumber, left, top, right, bottom);
+        }
+
+        /**
+         * Called by JNI
+         *
+         * @hide */
+        static boolean callPositionChanged(WeakReference<PositionUpdateListener> weakListener,
+                long frameNumber, int left, int top, int right, int bottom) {
+            final PositionUpdateListener listener = weakListener.get();
+            if (listener != null) {
+                listener.positionChanged(frameNumber, left, top, right, bottom);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        /**
+         * Called by JNI
+         *
+         * @hide */
+        static boolean callPositionChanged2(WeakReference<PositionUpdateListener> weakListener,
+                long frameNumber, int left, int top, int right, int bottom,
+                int clipLeft, int clipTop, int clipRight, int clipBottom) {
+            final PositionUpdateListener listener = weakListener.get();
+            if (listener != null) {
+                listener.positionChanged(frameNumber, left, top, right, bottom, clipLeft,
+                        clipTop, clipRight, clipBottom);
+                return true;
+            } else {
+                return false;
+            }
+        }
 
         /**
          * Call to apply a stretch effect to any child SurfaceControl layers
@@ -286,12 +330,47 @@ public final class RenderNode {
                 float childRelativeTop, float childRelativeRight, float childRelativeBottom) { }
 
         /**
+         * Called by JNI
+         *
+         * @hide */
+        static boolean callApplyStretch(WeakReference<PositionUpdateListener> weakListener,
+                long frameNumber, float width, float height,
+                float vecX, float vecY,
+                float maxStretchX, float maxStretchY, float childRelativeLeft,
+                float childRelativeTop, float childRelativeRight, float childRelativeBottom) {
+            final PositionUpdateListener listener = weakListener.get();
+            if (listener != null) {
+                listener.applyStretch(frameNumber, width, height, vecX, vecY, maxStretchX,
+                        maxStretchY, childRelativeLeft, childRelativeTop, childRelativeRight,
+                        childRelativeBottom);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        /**
          * Called by native on RenderThread to notify that the view is no longer in the
          * draw tree. UI thread is blocked at this point.
          *
          * @hide
          */
         void positionLost(long frameNumber);
+
+        /**
+         * Called by JNI
+         *
+         * @hide */
+        static boolean callPositionLost(WeakReference<PositionUpdateListener> weakListener,
+                long frameNumber) {
+            final PositionUpdateListener listener = weakListener.get();
+            if (listener != null) {
+                listener.positionLost(frameNumber);
+                return true;
+            } else {
+                return false;
+            }
+        }
 
     }
 
@@ -317,6 +396,15 @@ public final class RenderNode {
         public void positionChanged(long frameNumber, int left, int top, int right, int bottom) {
             for (PositionUpdateListener pul : mListeners) {
                 pul.positionChanged(frameNumber, left, top, right, bottom);
+            }
+        }
+
+        @Override
+        public void positionChanged(long frameNumber, int left, int top, int right, int bottom,
+                int clipLeft, int clipTop, int clipRight, int clipBottom) {
+            for (PositionUpdateListener pul : mListeners) {
+                pul.positionChanged(frameNumber, left, top, right, bottom, clipLeft, clipTop,
+                        clipRight, clipBottom);
             }
         }
 
@@ -353,7 +441,7 @@ public final class RenderNode {
             comp = comp.with(listener);
         }
         mCompositePositionUpdateListener = comp;
-        nRequestPositionUpdates(mNativeRenderNode, comp);
+        nRequestPositionUpdates(mNativeRenderNode, new WeakReference<>(comp));
     }
 
     /**
@@ -368,7 +456,7 @@ public final class RenderNode {
         if (comp != null) {
             comp = comp.without(listener);
             mCompositePositionUpdateListener = comp;
-            nRequestPositionUpdates(mNativeRenderNode, comp);
+            nRequestPositionUpdates(mNativeRenderNode, new WeakReference<>(comp));
         }
     }
 
@@ -678,12 +766,12 @@ public final class RenderNode {
      * Default value is false. See
      * {@link #setProjectBackwards(boolean)} for a description of what this entails.
      *
-     * @param shouldRecieve True if this RenderNode is a projection receiver, false otherwise.
+     * @param shouldReceive True if this RenderNode is a projection receiver, false otherwise.
      *                      Default is false.
      * @return True if the value changed, false if the new value was the same as the previous value.
      */
-    public boolean setProjectionReceiver(boolean shouldRecieve) {
-        return nSetProjectionReceiver(mNativeRenderNode, shouldRecieve);
+    public boolean setProjectionReceiver(boolean shouldReceive) {
+        return nSetProjectionReceiver(mNativeRenderNode, shouldReceive);
     }
 
     /**
@@ -917,6 +1005,23 @@ public final class RenderNode {
      */
     public boolean setRenderEffect(@Nullable RenderEffect renderEffect) {
         return nSetRenderEffect(mNativeRenderNode,
+                renderEffect != null ? renderEffect.getNativeInstance() : 0);
+    }
+
+    /**
+     * Configure the {@link android.graphics.RenderEffect} to apply to the backdrop contents of
+     * this RenderNode. This will apply a visual effect to the result of the backdrop contents
+     * of this RenderNode before the RenderNode is drawn into the destination. For example if
+     * {@link RenderEffect#createBlurEffect(float, float, RenderEffect, Shader.TileMode)}
+     * is provided, the previous content behind this RenderNode will be blurred before the
+     * RenderNode is drawn in to the destination.
+     * @param renderEffect to be applied to the backdrop contents of this RenderNode. Passing
+     *          null clears all previously configured RenderEffects
+     * @return True if the value changed, false if the new value was the same as the previous value.
+     * @hide
+     */
+    public boolean setBackdropRenderEffect(@Nullable RenderEffect renderEffect) {
+        return nSetBackdropRenderEffect(mNativeRenderNode,
                 renderEffect != null ? renderEffect.getNativeInstance() : 0);
     }
 
@@ -1511,6 +1616,16 @@ public final class RenderNode {
         return nGetUniqueId(mNativeRenderNode);
     }
 
+    /**
+     * Captures whether this RenderNote represents a TextureView
+     * TODO(b/281695725): Clean this up once TextureView use setFrameRate API
+     *
+     * @hide
+     */
+    public void setIsTextureView() {
+        nSetIsTextureView(mNativeRenderNode);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // Animations
     ///////////////////////////////////////////////////////////////////////////
@@ -1525,7 +1640,7 @@ public final class RenderNode {
      */
     public interface AnimationHost {
         /** @hide */
-        void registerAnimatingRenderNode(RenderNode animator);
+        void registerAnimatingRenderNode(RenderNode renderNode, Animator animator);
 
         /** @hide */
         void registerVectorDrawableAnimator(NativeVectorDrawableAnimator animator);
@@ -1540,7 +1655,7 @@ public final class RenderNode {
             throw new IllegalStateException("Cannot start this animator on a detached view!");
         }
         nAddAnimator(mNativeRenderNode, animator.getNativeAnimator());
-        mAnimationHost.registerAnimatingRenderNode(this);
+        mAnimationHost.registerAnimatingRenderNode(this, animator);
     }
 
     /** @hide */
@@ -1561,6 +1676,11 @@ public final class RenderNode {
         nEndAllAnimators(mNativeRenderNode);
     }
 
+    /** @hide */
+    public void forceEndAnimators() {
+        nForceEndAnimators(mNativeRenderNode);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // Regular JNI methods
     ///////////////////////////////////////////////////////////////////////////
@@ -1575,13 +1695,15 @@ public final class RenderNode {
     private static native int nGetAllocatedSize(long renderNode);
 
     private static native void nRequestPositionUpdates(long renderNode,
-            PositionUpdateListener callback);
+            WeakReference<PositionUpdateListener> callback);
 
     // Animations
 
     private static native void nAddAnimator(long renderNode, long animatorPtr);
 
     private static native void nEndAllAnimators(long renderNode);
+
+    private static native void nForceEndAnimators(long renderNode);
 
     ///////////////////////////////////////////////////////////////////////////
     // @CriticalNative methods
@@ -1678,7 +1800,7 @@ public final class RenderNode {
     private static native boolean nSetProjectBackwards(long renderNode, boolean shouldProject);
 
     @CriticalNative
-    private static native boolean nSetProjectionReceiver(long renderNode, boolean shouldRecieve);
+    private static native boolean nSetProjectionReceiver(long renderNode, boolean shouldReceive);
 
     @CriticalNative
     private static native boolean nSetOutlineRoundRect(long renderNode, int left, int top,
@@ -1728,6 +1850,9 @@ public final class RenderNode {
 
     @CriticalNative
     private static native boolean nSetRenderEffect(long renderNode, long renderEffect);
+
+    @CriticalNative
+    private static native boolean nSetBackdropRenderEffect(long renderNode, long renderEffect);
 
     @CriticalNative
     private static native boolean nSetHasOverlappingRendering(long renderNode,
@@ -1834,4 +1959,7 @@ public final class RenderNode {
 
     @CriticalNative
     private static native long nGetUniqueId(long renderNode);
+
+    @CriticalNative
+    private static native void nSetIsTextureView(long renderNode);
 }

@@ -17,14 +17,18 @@
 package com.android.systemui.keyguard;
 
 
+import static com.android.systemui.flags.Flags.KEYGUARD_TALKBACK_FIX;
 import static com.android.systemui.keyguard.KeyguardIndicationRotateTextViewController.INDICATION_TYPE_BATTERY;
+import static com.android.systemui.keyguard.KeyguardIndicationRotateTextViewController.INDICATION_TYPE_BIOMETRIC_MESSAGE;
 import static com.android.systemui.keyguard.KeyguardIndicationRotateTextViewController.INDICATION_TYPE_DISCLOSURE;
 import static com.android.systemui.keyguard.KeyguardIndicationRotateTextViewController.INDICATION_TYPE_OWNER_INFO;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
@@ -32,12 +36,14 @@ import static org.mockito.Mockito.when;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper.RunWithLooper;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
+import com.android.keyguard.logging.KeyguardLogger;
 import com.android.systemui.SysuiTestCase;
+import com.android.systemui.flags.FakeFeatureFlags;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.statusbar.phone.KeyguardIndicationTextView;
 import com.android.systemui.util.concurrency.DelayableExecutor;
@@ -50,13 +56,14 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-@RunWith(AndroidTestingRunner.class)
+@RunWith(AndroidJUnit4.class)
 @RunWithLooper
 @SmallTest
 public class KeyguardIndicationRotateTextViewControllerTest extends SysuiTestCase {
 
     private static final String TEST_MESSAGE = "test message";
-    private static final String TEST_MESSAGE_2 = "test message 2";
+    private static final String TEST_MESSAGE_2 = "test message two";
+    private int mMsgId = 0;
 
     @Mock
     private DelayableExecutor mExecutor;
@@ -64,6 +71,8 @@ public class KeyguardIndicationRotateTextViewControllerTest extends SysuiTestCas
     private KeyguardIndicationTextView mView;
     @Mock
     private StatusBarStateController mStatusBarStateController;
+    @Mock
+    private KeyguardLogger mLogger;
     @Captor
     private ArgumentCaptor<StatusBarStateController.StateListener> mStatusBarStateListenerCaptor;
 
@@ -74,12 +83,62 @@ public class KeyguardIndicationRotateTextViewControllerTest extends SysuiTestCas
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         when(mView.getTextColors()).thenReturn(ColorStateList.valueOf(Color.WHITE));
+        FakeFeatureFlags flags = new FakeFeatureFlags();
+        flags.set(KEYGUARD_TALKBACK_FIX, true);
         mController = new KeyguardIndicationRotateTextViewController(mView, mExecutor,
-                mStatusBarStateController);
+                mStatusBarStateController, mLogger, flags);
         mController.onViewAttached();
 
         verify(mStatusBarStateController).addCallback(mStatusBarStateListenerCaptor.capture());
         mStatusBarStateListener = mStatusBarStateListenerCaptor.getValue();
+    }
+
+    @Test
+    public void onViewDetached_removesStatusBarStateListener() {
+        mController.onViewDetached();
+        verify(mStatusBarStateController).removeCallback(mStatusBarStateListener);
+    }
+
+    @Test
+    public void onViewDetached_removesAllScheduledIndications() {
+        // GIVEN show next indication runnable is set
+        final KeyguardIndicationRotateTextViewController.ShowNextIndication mockShowNextIndication =
+                mock(KeyguardIndicationRotateTextViewController.ShowNextIndication.class);
+        mController.mShowNextIndicationRunnable = mockShowNextIndication;
+
+        // WHEN the view is detached
+        mController.onViewDetached();
+
+        // THEN delayed execution is cancelled & runnable set to null
+        verify(mockShowNextIndication).cancelDelayedExecution();
+        assertNull(mController.mShowNextIndicationRunnable);
+    }
+
+    @Test
+    public void destroy_removesStatusBarStateListener() {
+        mController.destroy();
+        verify(mStatusBarStateController).removeCallback(mStatusBarStateListener);
+    }
+
+    @Test
+    public void destroy_removesOnAttachStateChangeListener() {
+        mController.destroy();
+        verify(mView).removeOnAttachStateChangeListener(any());
+    }
+
+    @Test
+    public void destroy_removesAllScheduledIndications() {
+        // GIVEN show next indication runnable is set
+        final KeyguardIndicationRotateTextViewController.ShowNextIndication mockShowNextIndication =
+                mock(KeyguardIndicationRotateTextViewController.ShowNextIndication.class);
+        mController.mShowNextIndicationRunnable = mockShowNextIndication;
+
+        // WHEN the controller is destroyed
+        mController.destroy();
+
+        // THEN delayed execution is cancelled & runnable set to null
+        verify(mockShowNextIndication).cancelDelayedExecution();
+        assertNull(mController.mShowNextIndicationRunnable);
     }
 
     @Test
@@ -201,6 +260,24 @@ public class KeyguardIndicationRotateTextViewControllerTest extends SysuiTestCas
     }
 
     @Test
+    public void testSameMessage_noIndicationUpdate() {
+        // GIVEN we are showing and indication with a test message
+        mController.updateIndication(
+                INDICATION_TYPE_OWNER_INFO, createIndication(TEST_MESSAGE), true);
+        reset(mView);
+        reset(mExecutor);
+
+        // WHEN the same type tries to show the same exact message
+        final KeyguardIndication sameIndication = createIndication(TEST_MESSAGE);
+        mController.updateIndication(
+                INDICATION_TYPE_OWNER_INFO, sameIndication, true);
+
+        // THEN
+        // - we don't update the indication b/c there's no reason the animate the same text
+        verify(mView, never()).switchIndication(sameIndication);
+    }
+
+    @Test
     public void testTransientIndication() {
         // GIVEN we already have two indication messages
         mController.updateIndication(
@@ -223,8 +300,11 @@ public class KeyguardIndicationRotateTextViewControllerTest extends SysuiTestCas
     @Test
     public void testHideIndicationOneMessage() {
         // GIVEN we have one indication message
+        KeyguardIndication indication = createIndication();
         mController.updateIndication(
-                INDICATION_TYPE_OWNER_INFO, createIndication(), false);
+                INDICATION_TYPE_OWNER_INFO, indication, false);
+        verify(mView).switchIndication(indication);
+        reset(mView);
 
         // WHEN we hide the current indication type
         mController.hideIndication(INDICATION_TYPE_OWNER_INFO);
@@ -254,8 +334,30 @@ public class KeyguardIndicationRotateTextViewControllerTest extends SysuiTestCas
 
     @Test
     public void testStartDozing() {
+        // GIVEN a biometric message is showing
+        mController.updateIndication(INDICATION_TYPE_BIOMETRIC_MESSAGE,
+                createIndication(), true);
+
         // WHEN the device is dozing
         mStatusBarStateListener.onDozingChanged(true);
+
+        // THEN switch to INDICATION_TYPE_NONE
+        verify(mView).switchIndication(null);
+    }
+
+    @Test
+    public void testStartDozing_withMinShowTime() {
+        // GIVEN a biometric message is showing
+        mController.updateIndication(INDICATION_TYPE_BIOMETRIC_MESSAGE,
+                new KeyguardIndication.Builder()
+                        .setMessage("test_message")
+                        .setMinVisibilityMillis(5000L)
+                        .setTextColor(ColorStateList.valueOf(Color.WHITE))
+                        .build(),
+                true);
+
+        // WHEN the device wants to hide the biometric message
+        mController.hideIndication(INDICATION_TYPE_BIOMETRIC_MESSAGE);
 
         // THEN switch to INDICATION_TYPE_NONE
         verify(mView).switchIndication(null);
@@ -293,9 +395,19 @@ public class KeyguardIndicationRotateTextViewControllerTest extends SysuiTestCas
         verify(mView, never()).switchIndication(any());
     }
 
+    /**
+     * Create an indication with a unique message.
+     */
     private KeyguardIndication createIndication() {
+        return createIndication(TEST_MESSAGE + " " + mMsgId++);
+    }
+
+    /**
+     * Create an indication with the given message.
+     */
+    private KeyguardIndication createIndication(String msg) {
         return new KeyguardIndication.Builder()
-                .setMessage(TEST_MESSAGE)
+                .setMessage(msg)
                 .setTextColor(ColorStateList.valueOf(Color.WHITE))
                 .build();
     }

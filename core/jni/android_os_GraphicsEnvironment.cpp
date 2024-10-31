@@ -16,11 +16,12 @@
 
 #define LOG_TAG "GraphicsEnvironment"
 
-#include <vector>
-
 #include <graphicsenv/GraphicsEnv.h>
 #include <nativehelper/ScopedUtfChars.h>
 #include <nativeloader/native_loader.h>
+
+#include <vector>
+
 #include "core_jni_helpers.h"
 
 namespace {
@@ -49,12 +50,10 @@ void setGpuStats_native(JNIEnv* env, jobject clazz, jstring driverPackageName,
                                                     appPackageNameChars.c_str(), vulkanVersion);
 }
 
-void setAngleInfo_native(JNIEnv* env, jobject clazz, jstring path, jstring appName,
-                         jstring devOptIn, jobjectArray featuresObj, jobject rulesFd,
-                         jlong rulesOffset, jlong rulesLength) {
+void setAngleInfo_native(JNIEnv* env, jobject clazz, jstring path, jboolean useNativeDriver,
+                         jstring packageName, jobjectArray featuresObj) {
     ScopedUtfChars pathChars(env, path);
-    ScopedUtfChars appNameChars(env, appName);
-    ScopedUtfChars devOptInChars(env, devOptIn);
+    ScopedUtfChars packageNameChars(env, packageName);
 
     std::vector<std::string> features;
     if (featuresObj != nullptr) {
@@ -74,16 +73,8 @@ void setAngleInfo_native(JNIEnv* env, jobject clazz, jstring path, jstring appNa
         }
     }
 
-    int rulesFd_native = jniGetFDFromFileDescriptor(env, rulesFd);
-
-    android::GraphicsEnv::getInstance().setAngleInfo(pathChars.c_str(), appNameChars.c_str(),
-                                                     devOptInChars.c_str(), features,
-                                                     rulesFd_native, rulesOffset, rulesLength);
-}
-
-bool shouldUseAngle_native(JNIEnv* env, jobject clazz, jstring appName) {
-    ScopedUtfChars appNameChars(env, appName);
-    return android::GraphicsEnv::getInstance().shouldUseAngle(appNameChars.c_str());
+    android::GraphicsEnv::getInstance().setAngleInfo(pathChars.c_str(), useNativeDriver,
+                                                     packageNameChars.c_str(), features);
 }
 
 void setLayerPaths_native(JNIEnv* env, jobject clazz, jobject classLoader, jstring layerPaths) {
@@ -115,6 +106,10 @@ void hintActivityLaunch_native(JNIEnv* env, jobject clazz) {
     android::GraphicsEnv::getInstance().hintActivityLaunch();
 }
 
+void nativeToggleAngleAsSystemDriver_native(JNIEnv* env, jobject clazz, jboolean enabled) {
+    android::GraphicsEnv::getInstance().nativeToggleAngleAsSystemDriver(enabled);
+}
+
 const JNINativeMethod g_methods[] = {
         {"isDebuggable", "()Z", reinterpret_cast<void*>(isDebuggable_native)},
         {"setDriverPathAndSphalLibraries", "(Ljava/lang/String;Ljava/lang/String;)V",
@@ -123,18 +118,16 @@ const JNINativeMethod g_methods[] = {
          reinterpret_cast<void*>(setGpuStats_native)},
         {"setInjectLayersPrSetDumpable", "()Z",
          reinterpret_cast<void*>(setInjectLayersPrSetDumpable_native)},
-        {"setAngleInfo",
-         "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/io/"
-         "FileDescriptor;JJ)V",
+        {"nativeSetAngleInfo", "(Ljava/lang/String;ZLjava/lang/String;[Ljava/lang/String;)V",
          reinterpret_cast<void*>(setAngleInfo_native)},
-        {"getShouldUseAngle", "(Ljava/lang/String;)Z",
-         reinterpret_cast<void*>(shouldUseAngle_native)},
         {"setLayerPaths", "(Ljava/lang/ClassLoader;Ljava/lang/String;)V",
          reinterpret_cast<void*>(setLayerPaths_native)},
         {"setDebugLayers", "(Ljava/lang/String;)V", reinterpret_cast<void*>(setDebugLayers_native)},
         {"setDebugLayersGLES", "(Ljava/lang/String;)V",
          reinterpret_cast<void*>(setDebugLayersGLES_native)},
         {"hintActivityLaunch", "()V", reinterpret_cast<void*>(hintActivityLaunch_native)},
+        {"nativeToggleAngleAsSystemDriver", "(Z)V",
+         reinterpret_cast<void*>(nativeToggleAngleAsSystemDriver_native)},
 };
 
 const char* const kGraphicsEnvironmentName = "android/os/GraphicsEnvironment";

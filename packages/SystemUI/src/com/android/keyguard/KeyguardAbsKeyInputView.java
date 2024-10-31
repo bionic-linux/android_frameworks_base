@@ -22,17 +22,18 @@ import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.View;
 
+import androidx.annotation.CallSuper;
+
 import com.android.internal.widget.LockscreenCredential;
-import com.android.systemui.R;
+import com.android.systemui.res.R;
 
 /**
  * Base class for PIN and password unlock screens.
  */
 public abstract class KeyguardAbsKeyInputView extends KeyguardInputView {
     protected View mEcaView;
-    protected boolean mEnableHaptics;
 
-    // To avoid accidental lockout due to events while the device in in the pocket, ignore
+    // To avoid accidental lockout due to events while the device in the pocket, ignore
     // any passwords with length less than or equal to this length.
     protected static final int MINIMUM_PASSWORD_LENGTH_BEFORE_REPORT = 3;
     private KeyDownListener mKeyDownListener;
@@ -45,15 +46,13 @@ public abstract class KeyguardAbsKeyInputView extends KeyguardInputView {
         super(context, attrs);
     }
 
-    void setEnableHaptics(boolean enableHaptics) {
-        mEnableHaptics = enableHaptics;
-    }
-
     protected abstract int getPasswordTextViewId();
     protected abstract void resetState();
 
     @Override
+    @CallSuper
     protected void onFinishInflate() {
+        super.onFinishInflate();
         mEcaView = findViewById(R.id.keyguard_selector_fade_container);
     }
 
@@ -80,11 +79,8 @@ public abstract class KeyguardAbsKeyInputView extends KeyguardInputView {
 
     // Cause a VIRTUAL_KEY vibration
     public void doHapticKeyClick() {
-        if (mEnableHaptics) {
-            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
-                    HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING
-                    | HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
-        }
+        performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
+                HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
     }
 
     public void setKeyDownListener(KeyDownListener keyDownListener) {

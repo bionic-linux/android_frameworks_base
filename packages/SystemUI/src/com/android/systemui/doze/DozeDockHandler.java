@@ -17,12 +17,12 @@
 package com.android.systemui.doze;
 
 import android.hardware.display.AmbientDisplayConfiguration;
-import android.os.UserHandle;
 import android.util.Log;
 
 import com.android.systemui.dock.DockManager;
 import com.android.systemui.doze.DozeMachine.State;
 import com.android.systemui.doze.dagger.DozeScope;
+import com.android.systemui.settings.UserTracker;
 
 import java.io.PrintWriter;
 
@@ -40,14 +40,17 @@ public class DozeDockHandler implements DozeMachine.Part {
     private final AmbientDisplayConfiguration mConfig;
     private DozeMachine mMachine;
     private final DockManager mDockManager;
+    private final UserTracker mUserTracker;
     private final DockEventListener mDockEventListener;
 
     private int mDockState = DockManager.STATE_NONE;
 
     @Inject
-    DozeDockHandler(AmbientDisplayConfiguration config, DockManager dockManager) {
+    DozeDockHandler(AmbientDisplayConfiguration config, DockManager dockManager,
+            UserTracker userTracker) {
         mConfig = config;
         mDockManager = dockManager;
+        mUserTracker = userTracker;
         mDockEventListener = new DockEventListener();
     }
 
@@ -90,7 +93,11 @@ public class DozeDockHandler implements DozeMachine.Part {
             }
 
             mDockState = dockState;
-            if (isPulsing()) {
+            if (mMachine.isExecutingTransition() || isPulsing()) {
+                // If the device is in the middle of executing a transition or is pulsing,
+                // exit early instead of requesting a new state. DozeMachine
+                // will check the docked state and resolveIntermediateState in the next
+                // transition after pulse done.
                 return;
             }
 
@@ -100,7 +107,7 @@ public class DozeDockHandler implements DozeMachine.Part {
                     nextState = State.DOZE_AOD_DOCKED;
                     break;
                 case DockManager.STATE_NONE:
-                    nextState = mConfig.alwaysOnEnabled(UserHandle.USER_CURRENT) ? State.DOZE_AOD
+                    nextState = mConfig.alwaysOnEnabled(mUserTracker.getUserId()) ? State.DOZE_AOD
                             : State.DOZE;
                     break;
                 case DockManager.STATE_DOCKED_HIDE:

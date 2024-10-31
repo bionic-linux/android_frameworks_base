@@ -33,7 +33,9 @@ import static android.view.RemoteAnimationTargetProto.TASK_ID;
 import static android.view.RemoteAnimationTargetProto.WINDOW_CONFIGURATION;
 import static android.view.WindowManager.LayoutParams.INVALID_WINDOW_TYPE;
 
+import android.annotation.ColorInt;
 import android.annotation.IntDef;
+import android.annotation.Nullable;
 import android.app.ActivityManager;
 import android.app.TaskInfo;
 import android.app.WindowConfiguration;
@@ -44,6 +46,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.proto.ProtoOutputStream;
+import android.window.TaskSnapshot;
 
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
@@ -129,7 +132,11 @@ public class RemoteAnimationTarget implements Parcelable {
      * The index of the element in the tree in prefix order. This should be used for z-layering
      * to preserve original z-layer order in the hierarchy tree assuming no "boosting" needs to
      * happen.
+     * @deprecated WindowManager may set a z-order different from the prefix order, and has set the
+     *             correct layer for the animation leash already, so this should not be used for
+     *             layer any more.
      */
+    @Deprecated
     @UnsupportedAppUsage
     public final int prefixOrderIndex;
 
@@ -169,10 +176,16 @@ public class RemoteAnimationTarget implements Parcelable {
     public final Rect screenSpaceBounds;
 
     /**
-     * The starting bounds of the source container in screen space coordinates. This is {@code null}
-     * if the animation target isn't MODE_CHANGING. Since this is the starting bounds, it's size
-     * should be equivalent to the size of the starting thumbnail. Note that sourceContainerBounds
-     * is the end bounds of a change transition.
+     * The starting bounds of the source container in screen space coordinates.
+     * For {@link #MODE_OPENING}, this will be equivalent to {@link #screenSpaceBounds}.
+     * For {@link #MODE_CLOSING}, this will be equivalent to {@link #screenSpaceBounds} unless the
+     * closing container is also resizing. For example, when ActivityEmbedding split pair becomes
+     * stacked, the container on the back will be resized to fullscreen, but will also be covered
+     * (closing) by the container in the front.
+     * For {@link #MODE_CHANGING}, since this is the starting bounds, its size should be equivalent
+     * to the bounds of the starting thumbnail.
+     *
+     * Note that {@link #screenSpaceBounds} is the end bounds of a transition.
      */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public final Rect startBounds;
@@ -197,27 +210,64 @@ public class RemoteAnimationTarget implements Parcelable {
     public ActivityManager.RunningTaskInfo taskInfo;
 
     /**
+     * {@code true} if picture-in-picture permission is granted in {@link android.app.AppOpsManager}
+     */
+    @UnsupportedAppUsage
+    public boolean allowEnterPip;
+
+    /**
      * The {@link android.view.WindowManager.LayoutParams.WindowType} of this window. It's only used
      * for non-app window.
      */
     public final @WindowManager.LayoutParams.WindowType int windowType;
 
+    /**
+     * {@code true} if its parent is also a {@link RemoteAnimationTarget} in the same transition.
+     *
+     * For example, when a TaskFragment is resizing while one of its children is open/close, both
+     * windows will be animation targets. This value will be {@code true} for the child, so that
+     * the handler can choose to handle it differently.
+     */
+    public boolean hasAnimatingParent;
+
+    /**
+     * Whether an activity has enabled {@link android.R.styleable#Animation_showBackdrop} for
+     * transition.
+     */
+    public boolean showBackdrop;
+
+    /**
+     * The background color of animation in case the task info is not available if the transition
+     * is activity level.
+     */
+    public @ColorInt int backgroundColor;
+
+    /**
+     * Whether the activity is going to show IME on the target window after the app transition.
+     * @see TaskSnapshot#hasImeSurface() that used the task snapshot during animating task.
+     */
+    public boolean willShowImeOnTarget;
+
+    public int rotationChange;
+
     public RemoteAnimationTarget(int taskId, int mode, SurfaceControl leash, boolean isTranslucent,
             Rect clipRect, Rect contentInsets, int prefixOrderIndex, Point position,
             Rect localBounds, Rect screenSpaceBounds,
             WindowConfiguration windowConfig, boolean isNotInRecents,
-            SurfaceControl startLeash, Rect startBounds, ActivityManager.RunningTaskInfo taskInfo) {
+            SurfaceControl startLeash, @Nullable Rect startBounds,
+            ActivityManager.RunningTaskInfo taskInfo,
+            boolean allowEnterPip) {
         this(taskId, mode, leash, isTranslucent, clipRect, contentInsets, prefixOrderIndex,
                 position, localBounds, screenSpaceBounds, windowConfig, isNotInRecents, startLeash,
-                startBounds, taskInfo, INVALID_WINDOW_TYPE);
+                startBounds, taskInfo, allowEnterPip, INVALID_WINDOW_TYPE);
     }
 
     public RemoteAnimationTarget(int taskId, int mode, SurfaceControl leash, boolean isTranslucent,
             Rect clipRect, Rect contentInsets, int prefixOrderIndex, Point position,
             Rect localBounds, Rect screenSpaceBounds,
             WindowConfiguration windowConfig, boolean isNotInRecents,
-            SurfaceControl startLeash, Rect startBounds,
-            ActivityManager.RunningTaskInfo taskInfo,
+            SurfaceControl startLeash, @Nullable Rect startBounds,
+            ActivityManager.RunningTaskInfo taskInfo, boolean allowEnterPip,
             @WindowManager.LayoutParams.WindowType int windowType) {
         this.mode = mode;
         this.taskId = taskId;
@@ -226,22 +276,29 @@ public class RemoteAnimationTarget implements Parcelable {
         this.clipRect = new Rect(clipRect);
         this.contentInsets = new Rect(contentInsets);
         this.prefixOrderIndex = prefixOrderIndex;
-        this.position = new Point(position);
+        this.position = position == null ? new Point() : new Point(position);
         this.localBounds = new Rect(localBounds);
         this.sourceContainerBounds = new Rect(screenSpaceBounds);
         this.screenSpaceBounds = new Rect(screenSpaceBounds);
         this.windowConfiguration = windowConfig;
         this.isNotInRecents = isNotInRecents;
         this.startLeash = startLeash;
-        this.startBounds = startBounds == null ? null : new Rect(startBounds);
         this.taskInfo = taskInfo;
+        this.allowEnterPip = allowEnterPip;
         this.windowType = windowType;
+        // Same as screenSpaceBounds if the window is not resizing.
+        this.startBounds = startBounds == null
+                ? new Rect(screenSpaceBounds)
+                : new Rect(startBounds);
     }
 
     public RemoteAnimationTarget(Parcel in) {
         taskId = in.readInt();
         mode = in.readInt();
         leash = in.readTypedObject(SurfaceControl.CREATOR);
+        if (leash != null) {
+            leash.setUnreleasedWarningCallSite("RemoteAnimationTarget[leash]");
+        }
         isTranslucent = in.readBoolean();
         clipRect = in.readTypedObject(Rect.CREATOR);
         contentInsets = in.readTypedObject(Rect.CREATOR);
@@ -253,9 +310,38 @@ public class RemoteAnimationTarget implements Parcelable {
         windowConfiguration = in.readTypedObject(WindowConfiguration.CREATOR);
         isNotInRecents = in.readBoolean();
         startLeash = in.readTypedObject(SurfaceControl.CREATOR);
+        if (startLeash != null) {
+            startLeash.setUnreleasedWarningCallSite("RemoteAnimationTarget[startLeash]");
+        }
         startBounds = in.readTypedObject(Rect.CREATOR);
         taskInfo = in.readTypedObject(ActivityManager.RunningTaskInfo.CREATOR);
+        allowEnterPip = in.readBoolean();
         windowType = in.readInt();
+        hasAnimatingParent = in.readBoolean();
+        backgroundColor = in.readInt();
+        showBackdrop = in.readBoolean();
+        willShowImeOnTarget = in.readBoolean();
+        rotationChange = in.readInt();
+    }
+
+    public void setShowBackdrop(boolean shouldShowBackdrop) {
+        showBackdrop = shouldShowBackdrop;
+    }
+
+    public void setWillShowImeOnTarget(boolean showImeOnTarget) {
+        willShowImeOnTarget = showImeOnTarget;
+    }
+
+    public boolean willShowImeOnTarget() {
+        return willShowImeOnTarget;
+    }
+
+    public void setRotationChange(int rotationChange) {
+        this.rotationChange = rotationChange;
+    }
+
+    public int getRotationChange() {
+        return rotationChange;
     }
 
     @Override
@@ -281,7 +367,13 @@ public class RemoteAnimationTarget implements Parcelable {
         dest.writeTypedObject(startLeash, 0 /* flags */);
         dest.writeTypedObject(startBounds, 0 /* flags */);
         dest.writeTypedObject(taskInfo, 0 /* flags */);
+        dest.writeBoolean(allowEnterPip);
         dest.writeInt(windowType);
+        dest.writeBoolean(hasAnimatingParent);
+        dest.writeInt(backgroundColor);
+        dest.writeBoolean(showBackdrop);
+        dest.writeBoolean(willShowImeOnTarget);
+        dest.writeInt(rotationChange);
     }
 
     public void dump(PrintWriter pw, String prefix) {
@@ -299,7 +391,12 @@ public class RemoteAnimationTarget implements Parcelable {
         pw.print(prefix); pw.print("windowConfiguration="); pw.println(windowConfiguration);
         pw.print(prefix); pw.print("leash="); pw.println(leash);
         pw.print(prefix); pw.print("taskInfo="); pw.println(taskInfo);
-        pw.print(prefix); pw.print("windowType="); pw.print(windowType);
+        pw.print(prefix); pw.print("allowEnterPip="); pw.println(allowEnterPip);
+        pw.print(prefix); pw.print("windowType="); pw.println(windowType);
+        pw.print(prefix); pw.print("hasAnimatingParent="); pw.println(hasAnimatingParent);
+        pw.print(prefix); pw.print("backgroundColor="); pw.println(backgroundColor);
+        pw.print(prefix); pw.print("showBackdrop="); pw.println(showBackdrop);
+        pw.print(prefix); pw.print("willShowImeOnTarget="); pw.println(willShowImeOnTarget);
     }
 
     public void dumpDebug(ProtoOutputStream proto, long fieldId) {
@@ -319,9 +416,7 @@ public class RemoteAnimationTarget implements Parcelable {
         if (startLeash != null) {
             startLeash.dumpDebug(proto, START_LEASH);
         }
-        if (startBounds != null) {
-            startBounds.dumpDebug(proto, START_BOUNDS);
-        }
+        startBounds.dumpDebug(proto, START_BOUNDS);
         proto.end(token);
     }
 

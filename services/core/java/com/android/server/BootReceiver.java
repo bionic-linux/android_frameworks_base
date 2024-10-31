@@ -16,52 +16,54 @@
 
 package com.android.server;
 
+import static android.os.ParcelFileDescriptor.MODE_READ_WRITE;
 import static android.system.OsConstants.O_RDONLY;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.IPackageManager;
 import android.os.Build;
 import android.os.DropBoxManager;
 import android.os.Environment;
 import android.os.FileUtils;
 import android.os.MessageQueue.OnFileDescriptorEventListener;
+import android.os.ParcelFileDescriptor;
 import android.os.RecoverySystem;
-import android.os.RemoteException;
-import android.os.ServiceManager;
 import android.os.SystemProperties;
-import android.os.storage.StorageManager;
+import android.os.TombstoneWithHeadersProto;
 import android.provider.Downloads;
 import android.system.ErrnoException;
 import android.system.Os;
+import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.AtomicFile;
 import android.util.EventLog;
 import android.util.Slog;
-import android.util.TypedXmlPullParser;
-import android.util.TypedXmlSerializer;
 import android.util.Xml;
+import android.util.proto.ProtoOutputStream;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.XmlUtils;
+import com.android.modules.utils.TypedXmlPullParser;
+import com.android.modules.utils.TypedXmlSerializer;
+import com.android.server.am.DropboxRateLimiter;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -84,6 +86,11 @@ public class BootReceiver extends BroadcastReceiver {
 
     private static final String TAG_TOMBSTONE = "SYSTEM_TOMBSTONE";
     private static final String TAG_TOMBSTONE_PROTO = "SYSTEM_TOMBSTONE_PROTO";
+    private static final String TAG_TOMBSTONE_PROTO_WITH_HEADERS =
+            "SYSTEM_TOMBSTONE_PROTO_WITH_HEADERS";
+
+    // Directory to store temporary tombstones.
+    private static final File TOMBSTONE_TMP_DIR = new File("/data/tombstones");
 
     // The pre-froyo package and class of the system updater, which
     // ran in the system process.  We need to remove its packages here
@@ -102,11 +109,13 @@ public class BootReceiver extends BroadcastReceiver {
 
     // example: fs_stat,/dev/block/platform/soc/by-name/userdata,0x5
     private static final String FS_STAT_PATTERN = "fs_stat,[^,]*/([^/,]+),(0x[0-9a-fA-F]+)";
-    private static final int FS_STAT_FS_FIXED = 0x400; // should match with fs_mgr.cpp:FsStatFlags
+    private static final int FS_STAT_FSCK_FS_FIXED =
+            0x400; // should match with fs_mgr.cpp:FsStatFlags
     private static final String FSCK_PASS_PATTERN = "Pass ([1-9]E?):";
     private static final String FSCK_TREE_OPTIMIZATION_PATTERN =
             "Inode [0-9]+ extent tree.*could be shorter";
-    private static final String FSCK_FS_MODIFIED = "FILE SYSTEM WAS MODIFIED";
+    private static final String E2FSCK_FS_MODIFIED = "FILE SYSTEM WAS MODIFIED";
+    private static final String F2FS_FSCK_FS_MODIFIED = "[FSCK] Unreachable";
     // ro.boottime.init.mount_all. + postfix for mount_all duration
     private static final String[] MOUNT_DURATION_PROPS_POSTFIX =
             new String[] { "early", "default", "late" };
@@ -128,11 +137,13 @@ public class BootReceiver extends BroadcastReceiver {
     // Location of ftrace pipe for notifications from kernel memory tools like KFENCE and KASAN.
     private static final String ERROR_REPORT_TRACE_PIPE =
             "/sys/kernel/tracing/instances/bootreceiver/trace_pipe";
-    // Stop after sending this many reports. See http://b/182159975.
+    // Stop after sending too many reports. See http://b/182159975.
     private static final int MAX_ERROR_REPORTS = 8;
     private static int sSentReports = 0;
-    // Avoid reporing the same bug from processDmesg() twice.
-    private static String sLastReportedBug = null;
+
+    // Max tombstone file size to add to dropbox.
+    private static final long MAX_TOMBSTONE_SIZE_BYTES =
+            DropBoxManagerService.DEFAULT_QUOTA_KB * 1024;
 
     @Override
     public void onReceive(final Context context, Intent intent) {
@@ -146,15 +157,7 @@ public class BootReceiver extends BroadcastReceiver {
                     Slog.e(TAG, "Can't log boot events", e);
                 }
                 try {
-                    boolean onlyCore = false;
-                    try {
-                        onlyCore = IPackageManager.Stub.asInterface(ServiceManager.getService(
-                                "package")).isOnlyCoreApps();
-                    } catch (RemoteException e) {
-                    }
-                    if (!onlyCore) {
-                        removeOldUpdatePackages(context);
-                    }
+                    removeOldUpdatePackages(context);
                 } catch (Exception e) {
                     Slog.e(TAG, "Can't remove old update packages", e);
                 }
@@ -175,7 +178,8 @@ public class BootReceiver extends BroadcastReceiver {
          * We read from /sys/kernel/tracing/instances/bootreceiver/trace_pipe (set up by the
          * system), which will print an ftrace event when a memory corruption is detected in the
          * kernel.
-         * When an error is detected, we run the dmesg shell command and process its output.
+         * When an error is detected, we set the dmesg.start system property to notify dmesgd
+         * about a new error.
          */
         OnFileDescriptorEventListener traceCallback = new OnFileDescriptorEventListener() {
             final int mBufferSize = 1024;
@@ -191,8 +195,7 @@ public class BootReceiver extends BroadcastReceiver {
                  * line, but to be on the safe side we keep reading until the buffer
                  * contains a '\n' character. In the unlikely case of a very buggy kernel
                  * the buffer may contain multiple tracing events that cannot be attributed
-                 * to particular error reports. In that case the latest error report
-                 * residing in dmesg is picked.
+                 * to particular error reports. dmesgd will take care of all errors.
                  */
                 try {
                     int nbytes = Os.read(fd, mTraceBuffer, 0, mBufferSize);
@@ -201,10 +204,13 @@ public class BootReceiver extends BroadcastReceiver {
                         if (readStr.indexOf("\n") == -1) {
                             return OnFileDescriptorEventListener.EVENT_INPUT;
                         }
-                        processDmesg(context);
+                        if (sSentReports < MAX_ERROR_REPORTS) {
+                            SystemProperties.set("dmesgd.start", "1");
+                            sSentReports++;
+                        }
                     }
                 } catch (Exception e) {
-                    Slog.wtf(TAG, "Error processing dmesg output", e);
+                    Slog.wtf(TAG, "Error watching for trace events", e);
                     return 0;  // Unregister the handler.
                 }
                 return OnFileDescriptorEventListener.EVENT_INPUT;
@@ -214,157 +220,6 @@ public class BootReceiver extends BroadcastReceiver {
         IoThread.get().getLooper().getQueue().addOnFileDescriptorEventListener(
                 tracefd, OnFileDescriptorEventListener.EVENT_INPUT, traceCallback);
 
-    }
-
-    /**
-     * Check whether it is safe to collect this dmesg line or not.
-     *
-     * We only consider lines belonging to KASAN or KFENCE reports, but those may still contain
-     * user information, namely the process name:
-     *
-     *   [   69.547684] [ T6006]c7   6006  CPU: 7 PID: 6006 Comm: sh Tainted: G S       C O      ...
-     *
-     * hardware information:
-     *
-     *   [   69.558923] [ T6006]c7   6006  Hardware name: <REDACTED>
-     *
-     * or register dump (in KASAN reports only):
-     *
-     *   ... RIP: 0033:0x7f96443109da
-     *   ... RSP: 002b:00007ffcf0b51b08 EFLAGS: 00000202 ORIG_RAX: 00000000000000af
-     *   ... RAX: ffffffffffffffda RBX: 000055dc3ee521a0 RCX: 00007f96443109da
-     *
-     * (on x86_64)
-     *
-     *   ... pc : lpm_cpuidle_enter+0x258/0x384
-     *   ... lr : lpm_cpuidle_enter+0x1d4/0x384
-     *   ... sp : ffffff800820bea0
-     *   ... x29: ffffff800820bea0 x28: ffffffc2305f3ce0
-     *   ... ...
-     *   ... x9 : 0000000000000001 x8 : 0000000000000000
-     * (on ARM64)
-     *
-     * We therefore omit the lines that contain "Comm:", "Hardware name:", or match the general
-     * purpose register regexp.
-     *
-     * @param  line single line of `dmesg` output.
-     * @return      updated line with sensitive data removed, or null if the line must be skipped.
-     */
-    public static String stripSensitiveData(String line) {
-        /*
-         * General purpose register names begin with "R" on x86_64 and "x" on ARM64. The letter is
-         * followed by two symbols (numbers, letters or spaces) and a colon, which is followed by a
-         * 16-digit hex number. The optional "_" prefix accounts for ORIG_RAX on x86.
-         */
-        final String registerRegex = "[ _][Rx]..: [0-9a-f]{16}";
-        final Pattern registerPattern = Pattern.compile(registerRegex);
-
-        final String corruptionRegex = "Detected corrupted memory at 0x[0-9a-f]+";
-        final Pattern corruptionPattern = Pattern.compile(corruptionRegex);
-
-        if (line.contains("Comm: ") || line.contains("Hardware name: ")) return null;
-        if (registerPattern.matcher(line).find()) return null;
-
-        Matcher cm = corruptionPattern.matcher(line);
-        if (cm.find()) return cm.group(0);
-        return line;
-    }
-
-    /*
-     * Search dmesg output for the last error report from KFENCE or KASAN and copy it to Dropbox.
-     *
-     * Example report printed by the kernel (redacted to fit into 100 column limit):
-     *   [   69.236673] [ T6006]c7   6006  =========================================================
-     *   [   69.245688] [ T6006]c7   6006  BUG: KFENCE: out-of-bounds in kfence_handle_page_fault
-     *   [   69.245688] [ T6006]c7   6006
-     *   [   69.257816] [ T6006]c7   6006  Out-of-bounds access at 0xffffffca75c45000 (...)
-     *   [   69.267102] [ T6006]c7   6006   kfence_handle_page_fault+0x1bc/0x208
-     *   [   69.273536] [ T6006]c7   6006   __do_kernel_fault+0xa8/0x11c
-     *   ...
-     *   [   69.355427] [ T6006]c7   6006  kfence-#2 [0xffffffca75c46f30-0xffffffca75c46fff, ...
-     *   [   69.366938] [ T6006]c7   6006   __d_alloc+0x3c/0x1b4
-     *   [   69.371946] [ T6006]c7   6006   d_alloc_parallel+0x48/0x538
-     *   [   69.377578] [ T6006]c7   6006   __lookup_slow+0x60/0x15c
-     *   ...
-     *   [   69.547684] [ T6006]c7   6006  CPU: 7 PID: 6006 Comm: sh Tainted: G S       C O      ...
-     *   [   69.558923] [ T6006]c7   6006  Hardware name: <REDACTED>
-     *   [   69.567059] [ T6006]c7   6006  =========================================================
-     *
-     *   We rely on the kernel printing task/CPU ID for every log line (CONFIG_PRINTK_CALLER=y).
-     *   E.g. for the above report the task ID is T6006. Report lines may interleave with lines
-     *   printed by other kernel tasks, which will have different task IDs, so in order to collect
-     *   the report we:
-     *    - find the next occurrence of the "BUG: " line in the kernel log, parse it to obtain the
-     *      task ID and the tool name;
-     *    - scan the rest of dmesg output and pick every line that has the same task ID, until we
-     *      encounter a horizontal ruler, i.e.:
-     *      [   69.567059] [ T6006]c7   6006  ======================================================
-     *    - add that line to the error report, unless it contains sensitive information (see
-     *      logLinePotentiallySensitive())
-     *    - repeat the above steps till the last report is found.
-     */
-    private void processDmesg(Context ctx) throws IOException {
-        if (sSentReports == MAX_ERROR_REPORTS) return;
-        /*
-         * Only SYSTEM_KASAN_ERROR_REPORT and SYSTEM_KFENCE_ERROR_REPORT are supported at the
-         * moment.
-         */
-        final String[] bugTypes = new String[] { "KASAN", "KFENCE" };
-        final String tsRegex = "^\\[[^]]+\\] ";
-        final String bugRegex =
-                tsRegex + "\\[([^]]+)\\].*BUG: (" + String.join("|", bugTypes) + "):";
-        final Pattern bugPattern = Pattern.compile(bugRegex);
-
-        Process p = new ProcessBuilder("/system/bin/timeout", "-k", "90s", "60s",
-                                       "dmesg").redirectErrorStream(true).start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line = null;
-        String task = null;
-        String tool = null;
-        String bugTitle = null;
-        Pattern reportPattern = null;
-        ArrayList<String> currentReport = null;
-        String lastReport = null;
-
-        while ((line = reader.readLine()) != null) {
-            if (currentReport == null) {
-                Matcher bm = bugPattern.matcher(line);
-                if (!bm.find()) continue;
-                task = bm.group(1);
-                tool = bm.group(2);
-                bugTitle = line;
-                currentReport = new ArrayList<String>();
-                currentReport.add(line);
-                String reportRegex = tsRegex + "\\[" + task + "\\].*";
-                reportPattern = Pattern.compile(reportRegex);
-                continue;
-            }
-            Matcher rm = reportPattern.matcher(line);
-            if (!rm.matches()) continue;
-            if ((line = stripSensitiveData(line)) == null) continue;
-            if (line.contains("================================")) {
-                lastReport = String.join("\n", currentReport);
-                currentReport = null;
-                continue;
-            }
-            currentReport.add(line);
-        }
-        if (lastReport == null) {
-            Slog.w(TAG, "Could not find report in dmesg.");
-            return;
-        }
-
-        // Avoid sending the same bug report twice.
-        if (bugTitle.equals(sLastReportedBug)) return;
-
-        final String reportTag = "SYSTEM_" + tool + "_ERROR_REPORT";
-        final DropBoxManager db = ctx.getSystemService(DropBoxManager.class);
-        final String headers = getCurrentBootHeaders();
-        final String reportText = headers + lastReport;
-
-        addTextToDropBox(db, reportTag, reportText, "/dev/kmsg", LOG_SIZE);
-        sLastReportedBug = bugTitle;
-        sSentReports++;
     }
 
     private void removeOldUpdatePackages(Context context) {
@@ -380,16 +235,23 @@ public class BootReceiver extends BroadcastReceiver {
     }
 
     private static String getCurrentBootHeaders() throws IOException {
-        return new StringBuilder(512)
-            .append("Build: ").append(Build.FINGERPRINT).append("\n")
-            .append("Hardware: ").append(Build.BOARD).append("\n")
-            .append("Revision: ")
-            .append(SystemProperties.get("ro.revision", "")).append("\n")
-            .append("Bootloader: ").append(Build.BOOTLOADER).append("\n")
-            .append("Radio: ").append(Build.getRadioVersion()).append("\n")
-            .append("Kernel: ")
-            .append(FileUtils.readTextFile(new File("/proc/version"), 1024, "...\n"))
-            .append("\n").toString();
+        StringBuilder builder =  new StringBuilder(512)
+                .append("Build: ").append(Build.FINGERPRINT).append("\n")
+                .append("Hardware: ").append(Build.BOARD).append("\n")
+                .append("Revision: ")
+                .append(SystemProperties.get("ro.revision", "")).append("\n")
+                .append("Bootloader: ").append(Build.BOOTLOADER).append("\n")
+                .append("Radio: ").append(Build.getRadioVersion()).append("\n")
+                .append("Kernel: ")
+                .append(FileUtils.readTextFile(new File("/proc/version"), 1024, "...\n"));
+
+        // If device is not using 4KB pages, add the PageSize
+        long pageSize = Os.sysconf(OsConstants._SC_PAGESIZE);
+        if (pageSize != 4096) {
+            builder.append("PageSize: ").append(pageSize).append("\n");
+        }
+        builder.append("\n");
+        return builder.toString();
     }
 
 
@@ -434,14 +296,8 @@ public class BootReceiver extends BroadcastReceiver {
         HashMap<String, Long> timestamps = readTimestamps();
 
         if (SystemProperties.getLong("ro.runtime.firstboot", 0) == 0) {
-            if (StorageManager.inCryptKeeperBounce()) {
-                // Encrypted, first boot to get PIN/pattern/password so data is tmpfs
-                // Don't set ro.runtime.firstboot so that we will do this again
-                // when data is properly mounted
-            } else {
-                String now = Long.toString(System.currentTimeMillis());
-                SystemProperties.set("ro.runtime.firstboot", now);
-            }
+            String now = Long.toString(System.currentTimeMillis());
+            SystemProperties.set("ro.runtime.firstboot", now);
             if (db != null) db.addText("SYSTEM_BOOT", headers);
 
             // Negative sizes mean to take the *tail* of the file (see FileUtils.readTextFile())
@@ -468,28 +324,115 @@ public class BootReceiver extends BroadcastReceiver {
         writeTimestamps(timestamps);
     }
 
+    private static final DropboxRateLimiter sDropboxRateLimiter = new DropboxRateLimiter();
+
+    /** Initialize the rate limiter. */
+    public static void initDropboxRateLimiter() {
+        sDropboxRateLimiter.init();
+    }
+
+    /**
+     * Reset the dropbox rate limiter.
+     */
+    @VisibleForTesting
+    public static void resetDropboxRateLimiter() {
+        sDropboxRateLimiter.reset();
+    }
+
     /**
      * Add a tombstone to the DropBox.
      *
      * @param ctx Context
      * @param tombstone path to the tombstone
+     * @param proto whether the tombstone is stored as proto
+     * @param processName the name of the process corresponding to the tombstone
+     * @param tmpFileLock the lock for reading/writing tmp files
      */
-    public static void addTombstoneToDropBox(Context ctx, File tombstone, boolean proto) {
+    public static void addTombstoneToDropBox(
+                Context ctx, File tombstone, boolean proto, String processName,
+                ReentrantLock tmpFileLock) {
         final DropBoxManager db = ctx.getSystemService(DropBoxManager.class);
-        final String bootReason = SystemProperties.get("ro.boot.bootreason", null);
+        if (db == null) {
+            Slog.e(TAG, "Can't log tombstone: DropBoxManager not available");
+            return;
+        }
+
+        // Check if we should rate limit and abort early if needed.
+        DropboxRateLimiter.RateLimitResult rateLimitResult =
+                sDropboxRateLimiter.shouldRateLimit(
+                        proto ? TAG_TOMBSTONE_PROTO_WITH_HEADERS : TAG_TOMBSTONE, processName);
+        if (rateLimitResult.shouldRateLimit()) return;
+
         HashMap<String, Long> timestamps = readTimestamps();
         try {
             if (proto) {
-                db.addFile(TAG_TOMBSTONE_PROTO, tombstone, 0);
+                if (recordFileTimestamp(tombstone, timestamps)) {
+                    // We need to attach the count indicating the number of dropped dropbox entries
+                    // due to rate limiting. Do this by enclosing the proto tombsstone in a
+                    // container proto that has the dropped entry count and the proto tombstone as
+                    // bytes (to avoid the complexity of reading and writing nested protos).
+                    tmpFileLock.lock();
+                    try {
+                        addAugmentedProtoToDropbox(tombstone, db, rateLimitResult);
+                    } finally {
+                        tmpFileLock.unlock();
+                    }
+                }
             } else {
-                final String headers = getBootHeadersToLogAndUpdate();
+                // Add the header indicating how many events have been dropped due to rate limiting.
+                final String headers = getBootHeadersToLogAndUpdate()
+                        + rateLimitResult.createHeader();
                 addFileToDropBox(db, timestamps, headers, tombstone.getPath(), LOG_SIZE,
-                        TAG_TOMBSTONE);
+                                 TAG_TOMBSTONE);
             }
         } catch (IOException e) {
             Slog.e(TAG, "Can't log tombstone", e);
         }
         writeTimestamps(timestamps);
+    }
+
+    private static void addAugmentedProtoToDropbox(
+                File tombstone, DropBoxManager db,
+                DropboxRateLimiter.RateLimitResult rateLimitResult) throws IOException {
+        // Do not add proto files larger than 20Mb to DropBox as they can cause OOMs when
+        // processing large tombstones. The text tombstone is still added to DropBox.
+        if (tombstone.length() > MAX_TOMBSTONE_SIZE_BYTES) {
+            Slog.w(TAG, "Tombstone too large to add to DropBox: " + tombstone.toPath());
+            return;
+        }
+        // Read the proto tombstone file as bytes.
+        final byte[] tombstoneBytes = Files.readAllBytes(tombstone.toPath());
+
+        final File tombstoneProtoWithHeaders = File.createTempFile(
+                tombstone.getName(), ".tmp", TOMBSTONE_TMP_DIR);
+        Files.setPosixFilePermissions(
+                tombstoneProtoWithHeaders.toPath(),
+                PosixFilePermissions.fromString("rw-rw----"));
+
+        // Write the new proto container proto with headers.
+        try (ParcelFileDescriptor pfd = ParcelFileDescriptor.open(
+                    tombstoneProtoWithHeaders, MODE_READ_WRITE)) {
+            ProtoOutputStream protoStream =
+                    new ProtoOutputStream(pfd.getFileDescriptor());
+            protoStream.write(TombstoneWithHeadersProto.TOMBSTONE, tombstoneBytes);
+            protoStream.write(
+                    TombstoneWithHeadersProto.DROPPED_COUNT,
+                    rateLimitResult.droppedCountSinceRateLimitActivated());
+            protoStream.flush();
+
+            // Add the proto to dropbox.
+            db.addFile(TAG_TOMBSTONE_PROTO_WITH_HEADERS, tombstoneProtoWithHeaders, 0);
+        } catch (FileNotFoundException ex) {
+            Slog.e(TAG, "failed to open for write: " + tombstoneProtoWithHeaders, ex);
+            throw ex;
+        } catch (IOException ex) {
+            Slog.e(TAG, "IO exception during write: " + tombstoneProtoWithHeaders, ex);
+        } finally {
+            // Remove the temporary file and unlock the lock.
+            if (tombstoneProtoWithHeaders != null) {
+                tombstoneProtoWithHeaders.delete();
+            }
+        }
     }
 
     private static void addLastkToDropBox(
@@ -522,15 +465,9 @@ public class BootReceiver extends BroadcastReceiver {
         if (db == null || !db.isTagEnabled(tag)) return;  // Logging disabled
 
         File file = new File(filename);
-        long fileTime = file.lastModified();
-        if (fileTime <= 0) return;  // File does not exist
-
-        if (timestamps.containsKey(filename) && timestamps.get(filename) == fileTime) {
-            return;  // Already logged this particular file
+        if (!recordFileTimestamp(file, timestamps)) {
+            return;
         }
-
-        timestamps.put(filename, fileTime);
-
 
         String fileContents = FileUtils.readTextFile(file, maxSize, TAG_TRUNCATED);
         String text = headers + fileContents + footers;
@@ -542,6 +479,19 @@ public class BootReceiver extends BroadcastReceiver {
             FrameworkStatsLog.write(FrameworkStatsLog.TOMB_STONE_OCCURRED);
         }
         addTextToDropBox(db, tag, text, filename, maxSize);
+    }
+
+    private static boolean recordFileTimestamp(File file, HashMap<String, Long> timestamps) {
+        final long fileTime = file.lastModified();
+        if (fileTime <= 0) return false;  // File does not exist
+
+        final String filename = file.getPath();
+        if (timestamps.containsKey(filename) && timestamps.get(filename) == fileTime) {
+            return false;  // Already logged this particular file
+        }
+
+        timestamps.put(filename, fileTime);
+        return true;
     }
 
     private static void addTextToDropBox(DropBoxManager db, String tag, String text,
@@ -607,9 +557,9 @@ public class BootReceiver extends BroadcastReceiver {
         int lineNumber = 0;
         int lastFsStatLineNumber = 0;
         for (String line : lines) { // should check all lines
-            if (line.contains(FSCK_FS_MODIFIED)) {
+            if (line.contains(E2FSCK_FS_MODIFIED) || line.contains(F2FS_FSCK_FS_MODIFIED)) {
                 uploadNeeded = true;
-            } else if (line.contains("fs_stat")){
+            } else if (line.contains("fs_stat")) {
                 Matcher matcher = pattern.matcher(line);
                 if (matcher.find()) {
                     handleFsckFsStat(matcher, lines, lastFsStatLineNumber, lineNumber);
@@ -621,12 +571,13 @@ public class BootReceiver extends BroadcastReceiver {
             lineNumber++;
         }
 
-        if (uploadEnabled && uploadNeeded ) {
+        if (uploadEnabled && uploadNeeded) {
             addFileToDropBox(db, timestamps, headers, "/dev/fscklogs/log", maxSize, tag);
         }
 
-        // Remove the file so we don't re-upload if the runtime restarts.
-        file.delete();
+        // Rename the file so we don't re-upload if the runtime restarts.
+        File pfile = new File("/dev/fscklogs/fsck");
+        file.renameTo(pfile);
     }
 
     private static void logFsMountTime() {
@@ -820,7 +771,7 @@ public class BootReceiver extends BroadcastReceiver {
     public static int fixFsckFsStat(String partition, int statOrg, String[] lines,
             int startLineNumber, int endLineNumber) {
         int stat = statOrg;
-        if ((stat & FS_STAT_FS_FIXED) != 0) {
+        if ((stat & FS_STAT_FSCK_FS_FIXED) != 0) {
             // fs was fixed. should check if quota warning was caused by tree optimization.
             // This is not a real fix but optimization, so should not be counted as a fs fix.
             Pattern passPattern = Pattern.compile(FSCK_PASS_PATTERN);
@@ -833,7 +784,8 @@ public class BootReceiver extends BroadcastReceiver {
             String otherFixLine = null;
             for (int i = startLineNumber; i < endLineNumber; i++) {
                 String line = lines[i];
-                if (line.contains(FSCK_FS_MODIFIED)) { // no need to parse above this
+                if (line.contains(E2FSCK_FS_MODIFIED)
+                        || line.contains(F2FS_FSCK_FS_MODIFIED)) { // no need to parse above this
                     break;
                 } else if (line.startsWith("Pass ")) {
                     Matcher matcher = passPattern.matcher(line);
@@ -861,9 +813,9 @@ public class BootReceiver extends BroadcastReceiver {
                     }
                 } else if (line.startsWith("Update quota info") && currentPass.equals("5")) {
                     // follows "[QUOTA WARNING]", ignore
-                } else if (line.startsWith("Timestamp(s) on inode") &&
-                        line.contains("beyond 2310-04-04 are likely pre-1970") &&
-                        currentPass.equals("1")) {
+                } else if (line.startsWith("Timestamp(s) on inode")
+                        && line.contains("beyond 2310-04-04 are likely pre-1970")
+                        && currentPass.equals("1")) {
                     Slog.i(TAG, "fs_stat, partition:" + partition + " found timestamp adjustment:"
                             + line);
                     // followed by next line, "Fix? yes"
@@ -891,7 +843,7 @@ public class BootReceiver extends BroadcastReceiver {
             } else if ((foundTreeOptimization && foundQuotaFix) || foundTimestampAdjustment) {
                 // not a real fix, so clear it.
                 Slog.i(TAG, "fs_stat, partition:" + partition + " fix ignored");
-                stat &= ~FS_STAT_FS_FIXED;
+                stat &= ~FS_STAT_FSCK_FS_FIXED;
             }
         }
         return stat;

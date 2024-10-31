@@ -19,9 +19,9 @@ package com.android.wm.shell.common;
 import static android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.graphics.Point;
 import android.graphics.Region;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -47,7 +47,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.WindowlessWindowManager;
+import android.view.inputmethod.ImeTracker;
+import android.window.ActivityWindowInfo;
 import android.window.ClientWindowFrames;
+import android.window.InputTransferToken;
 
 import com.android.internal.os.IResultReceiver;
 
@@ -192,6 +195,19 @@ public class SystemWindows {
         return null;
     }
 
+    /**
+     * Gets a token associated with the view that can be used to grant the view focus.
+     */
+    public InputTransferToken getFocusGrantToken(View view) {
+        SurfaceControlViewHost root = mViewRoots.get(view);
+        if (root == null) {
+            Slog.e(TAG, "Couldn't get focus grant token since view does not exist in "
+                    + "SystemWindow:" + view);
+            return null;
+        }
+        return root.getInputTransferToken();
+    }
+
     private class PerDisplay {
         final int mDisplayId;
         private final SparseArray<SysUiWindowManager> mWwms = new SparseArray<>();
@@ -209,8 +225,7 @@ public class SystemWindows {
             }
             final Display display = mDisplayController.getDisplay(mDisplayId);
             SurfaceControlViewHost viewRoot =
-                    new SurfaceControlViewHost(
-                            view.getContext(), display, wwm, true /* useSfChoreographer */);
+                    new SurfaceControlViewHost(view.getContext(), display, wwm, "SystemWindows");
             attrs.flags |= FLAG_HARDWARE_ACCELERATED;
             viewRoot.setView(view, attrs);
             mViewRoots.put(view, viewRoot);
@@ -293,7 +308,9 @@ public class SystemWindows {
             }
         }
 
-        protected void attachToParentSurface(IWindow window, SurfaceControl.Builder b) {
+        @Override
+        protected SurfaceControl getParentSurface(IWindow window,
+                WindowManager.LayoutParams attrs) {
             SurfaceControl leash = new SurfaceControl.Builder(new SurfaceSession())
                   .setContainerLayer()
                   .setName("SystemWindowLeash")
@@ -303,17 +320,16 @@ public class SystemWindows {
             synchronized (this) {
                 mLeashForWindow.put(window.asBinder(), leash);
             }
-            b.setParent(leash);
+            return leash;
         }
 
         @Override
-        public void remove(android.view.IWindow window) throws RemoteException {
-            super.remove(window);
+        public void remove(IBinder clientToken) throws RemoteException {
+            super.remove(clientToken);
             synchronized(this) {
-                IBinder token = window.asBinder();
-                new SurfaceControl.Transaction().remove(mLeashForWindow.get(token))
+                new SurfaceControl.Transaction().remove(mLeashForWindow.get(clientToken))
                     .apply();
-                mLeashForWindow.remove(token);
+                mLeashForWindow.remove(clientToken);
             }
         }
 
@@ -331,24 +347,19 @@ public class SystemWindows {
 
         @Override
         public void resized(ClientWindowFrames frames, boolean reportDraw,
-                MergedConfiguration newMergedConfiguration, boolean forceLayout,
-                boolean alwaysConsumeSystemBars, int displayId) {}
-
-        @Override
-        public void locationInParentDisplayChanged(Point offset) {}
-
-        @Override
-        public void insetsChanged(InsetsState insetsState, boolean willMove, boolean willResize) {}
+                MergedConfiguration newMergedConfiguration, InsetsState insetsState,
+                boolean forceLayout, boolean alwaysConsumeSystemBars, int displayId, int syncSeqId,
+                boolean dragResizing, @Nullable ActivityWindowInfo activityWindowInfo) {}
 
         @Override
         public void insetsControlChanged(InsetsState insetsState,
-                InsetsSourceControl[] activeControls, boolean willMove, boolean willResize) {}
+                InsetsSourceControl.Array activeControls) {}
 
         @Override
-        public void showInsets(int types, boolean fromIme) {}
+        public void showInsets(int types, boolean fromIme, @Nullable ImeTracker.Token statsToken) {}
 
         @Override
-        public void hideInsets(int types, boolean fromIme) {}
+        public void hideInsets(int types, boolean fromIme, @Nullable ImeTracker.Token statsToken) {}
 
         @Override
         public void moved(int newX, int newY) {}
@@ -358,9 +369,6 @@ public class SystemWindows {
 
         @Override
         public void dispatchGetNewSurface() {}
-
-        @Override
-        public void windowFocusChanged(boolean hasFocus, boolean inTouchMode) {}
 
         @Override
         public void executeCommand(String command, String parameters, ParcelFileDescriptor out) {}
@@ -381,9 +389,6 @@ public class SystemWindows {
         public void dispatchDragEvent(DragEvent event) {}
 
         @Override
-        public void updatePointerIcon(float x, float y) {}
-
-        @Override
         public void dispatchWindowShown() {}
 
         @Override
@@ -400,6 +405,11 @@ public class SystemWindows {
             } catch (RemoteException ex) {
                 // ignore
             }
+        }
+
+        @Override
+        public void dumpWindow(ParcelFileDescriptor pfd) {
+
         }
     }
 }

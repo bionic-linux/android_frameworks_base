@@ -17,14 +17,11 @@
 package com.android.server.biometrics.sensors.fingerprint;
 
 import static android.Manifest.permission.INTERACT_ACROSS_USERS;
-import static android.Manifest.permission.MANAGE_BIOMETRIC;
 import static android.Manifest.permission.MANAGE_FINGERPRINT;
-import static android.Manifest.permission.RESET_FINGERPRINT_LOCKOUT;
 import static android.Manifest.permission.TEST_BIOMETRIC;
 import static android.Manifest.permission.USE_BIOMETRIC;
 import static android.Manifest.permission.USE_BIOMETRIC_INTERNAL;
 import static android.Manifest.permission.USE_FINGERPRINT;
-import static android.hardware.biometrics.BiometricAuthenticator.TYPE_FINGERPRINT;
 import static android.hardware.biometrics.BiometricFingerprintConstants.FINGERPRINT_ACQUIRED_VENDOR;
 import static android.hardware.biometrics.BiometricFingerprintConstants.FINGERPRINT_ERROR_USER_CANCELED;
 import static android.hardware.biometrics.BiometricFingerprintConstants.FINGERPRINT_ERROR_VENDOR;
@@ -32,67 +29,80 @@ import static android.hardware.biometrics.SensorProperties.STRENGTH_STRONG;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.app.ActivityManager;
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.hardware.biometrics.BiometricManager;
+import android.hardware.biometrics.AuthenticationStateListener;
 import android.hardware.biometrics.BiometricPrompt;
 import android.hardware.biometrics.BiometricsProtoEnums;
 import android.hardware.biometrics.IBiometricSensorReceiver;
 import android.hardware.biometrics.IBiometricService;
 import android.hardware.biometrics.IBiometricServiceLockoutResetCallback;
+import android.hardware.biometrics.IBiometricStateListener;
 import android.hardware.biometrics.IInvalidationCallback;
 import android.hardware.biometrics.ITestSession;
 import android.hardware.biometrics.ITestSessionCallback;
 import android.hardware.biometrics.fingerprint.IFingerprint;
+import android.hardware.biometrics.fingerprint.PointerContext;
 import android.hardware.biometrics.fingerprint.SensorProps;
 import android.hardware.fingerprint.Fingerprint;
+import android.hardware.fingerprint.FingerprintAuthenticateOptions;
+import android.hardware.fingerprint.FingerprintEnrollOptions;
 import android.hardware.fingerprint.FingerprintManager;
+import android.hardware.fingerprint.FingerprintSensorConfigurations;
 import android.hardware.fingerprint.FingerprintSensorPropertiesInternal;
 import android.hardware.fingerprint.FingerprintServiceReceiver;
 import android.hardware.fingerprint.IFingerprintAuthenticatorsRegisteredCallback;
 import android.hardware.fingerprint.IFingerprintClientActiveCallback;
 import android.hardware.fingerprint.IFingerprintService;
 import android.hardware.fingerprint.IFingerprintServiceReceiver;
-import android.hardware.fingerprint.IFingerprintStateListener;
-import android.hardware.fingerprint.ISidefpsController;
 import android.hardware.fingerprint.IUdfpsOverlayController;
 import android.os.Binder;
 import android.os.Build;
 import android.os.CancellationSignal;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Process;
-import android.os.RemoteCallbackList;
 import android.os.RemoteException;
+import android.os.ResultReceiver;
 import android.os.ServiceManager;
+import android.os.ShellCallback;
 import android.os.UserHandle;
-import android.provider.Settings;
+import android.os.UserManager;
 import android.util.EventLog;
 import android.util.Pair;
 import android.util.Slog;
 import android.util.proto.ProtoOutputStream;
 
 import com.android.internal.R;
-import com.android.internal.annotations.GuardedBy;
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.widget.LockPatternUtils;
-import com.android.server.ServiceThread;
 import com.android.server.SystemService;
 import com.android.server.biometrics.Utils;
+import com.android.server.biometrics.log.BiometricContext;
+import com.android.server.biometrics.sensors.AuthenticationStateListeners;
+import com.android.server.biometrics.sensors.BaseClientMonitor;
+import com.android.server.biometrics.sensors.BiometricStateCallback;
+import com.android.server.biometrics.sensors.ClientMonitorCallback;
 import com.android.server.biometrics.sensors.ClientMonitorCallbackConverter;
 import com.android.server.biometrics.sensors.LockoutResetDispatcher;
 import com.android.server.biometrics.sensors.LockoutTracker;
 import com.android.server.biometrics.sensors.fingerprint.aidl.FingerprintProvider;
-import com.android.server.biometrics.sensors.fingerprint.hidl.Fingerprint21;
-import com.android.server.biometrics.sensors.fingerprint.hidl.Fingerprint21UdfpsMock;
+import com.android.server.companion.virtual.VirtualDeviceManagerInternal;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * A service to manage multiple clients that want to access the fingerprint HAL API.
@@ -103,56 +113,59 @@ public class FingerprintService extends SystemService {
 
     protected static final String TAG = "FingerprintService";
 
-    private final Object mLock = new Object();
     private final AppOpsManager mAppOps;
     private final LockoutResetDispatcher mLockoutResetDispatcher;
     private final GestureAvailabilityDispatcher mGestureAvailabilityDispatcher;
     private final LockPatternUtils mLockPatternUtils;
-    private final FingerprintServiceWrapper mServiceWrapper;
-    @NonNull private final List<ServiceProvider> mServiceProviders;
-    @NonNull private final FingerprintStateCallback mFingerprintStateCallback;
+    @NonNull
+    private final BiometricContext mBiometricContext;
+    @NonNull
+    private final Supplier<String[]> mAidlInstanceNameSupplier;
+    @NonNull
+    private final Function<String, FingerprintProvider> mFingerprintProvider;
+    @NonNull
+    private final FingerprintProviderFunction mFingerprintProviderFunction;
+    @NonNull
+    private final BiometricStateCallback<ServiceProvider, FingerprintSensorPropertiesInternal>
+            mBiometricStateCallback;
+    @NonNull
+    private final AuthenticationStateListeners mAuthenticationStateListeners;
+    @NonNull
+    private final Handler mHandler;
+    @NonNull
+    private final FingerprintServiceRegistry mRegistry;
 
-    @GuardedBy("mLock")
-    @NonNull private final RemoteCallbackList<IFingerprintAuthenticatorsRegisteredCallback>
-            mAuthenticatorsRegisteredCallbacks;
-
-    @GuardedBy("mLock")
-    @NonNull private final List<FingerprintSensorPropertiesInternal> mSensorProps;
-
-    /**
-     * Registers FingerprintStateListener in list stored by FingerprintService
-     * @param listener new FingerprintStateListener being added
-     */
-    public void registerFingerprintStateListener(@NonNull IFingerprintStateListener listener) {
-        mFingerprintStateCallback.registerFingerprintStateListener(listener);
+    interface FingerprintProviderFunction {
+        FingerprintProvider getFingerprintProvider(Pair<String, SensorProps[]> filteredSensorProp,
+                boolean resetLockoutRequiresHardwareAuthToken);
     }
 
-    /**
-     * Receives the incoming binder calls from FingerprintManager.
-     */
-    private final class FingerprintServiceWrapper extends IFingerprintService.Stub {
+    /** Receives the incoming binder calls from FingerprintManager. */
+    @VisibleForTesting
+    final IFingerprintService.Stub mServiceWrapper = new IFingerprintService.Stub() {
+        @android.annotation.EnforcePermission(android.Manifest.permission.TEST_BIOMETRIC)
         @Override
         public ITestSession createTestSession(int sensorId, @NonNull ITestSessionCallback callback,
                 @NonNull String opPackageName) {
-            Utils.checkPermission(getContext(), TEST_BIOMETRIC);
+            super.createTestSession_enforcePermission();
 
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+            final ServiceProvider provider = mRegistry.getProviderForSensor(sensorId);
 
             if (provider == null) {
                 Slog.w(TAG, "Null provider for createTestSession, sensorId: " + sensorId);
                 return null;
             }
 
-            return provider.createTestSession(sensorId, callback, mFingerprintStateCallback,
-                    opPackageName);
+            return provider.createTestSession(sensorId, callback, opPackageName);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override
         public byte[] dumpSensorServiceStateProto(int sensorId, boolean clearSchedulerBuffer) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
+            super.dumpSensorServiceStateProto_enforcePermission();
 
             final ProtoOutputStream proto = new ProtoOutputStream();
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+            final ServiceProvider provider = mRegistry.getProviderForSensor(sensorId);
             if (provider != null) {
                 provider.dumpProtoState(sensorId, proto, clearSchedulerBuffer);
             }
@@ -167,16 +180,16 @@ public class FingerprintService extends SystemService {
                     != PackageManager.PERMISSION_GRANTED) {
                 Utils.checkPermission(getContext(), TEST_BIOMETRIC);
             }
-
-            return FingerprintService.this.getSensorProperties();
+            return mRegistry.getAllProperties();
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override
         public FingerprintSensorPropertiesInternal getSensorProperties(int sensorId,
                 @NonNull String opPackageName) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
+            super.getSensorProperties_enforcePermission();
 
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+            final ServiceProvider provider = mRegistry.getProviderForSensor(sensorId);
             if (provider == null) {
                 Slog.w(TAG, "No matching sensor for getSensorProperties, sensorId: " + sensorId
                         + ", caller: " + opPackageName);
@@ -185,12 +198,13 @@ public class FingerprintService extends SystemService {
             return provider.getSensorProperties(sensorId);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.MANAGE_FINGERPRINT)
         @Override // Binder call
         public void generateChallenge(IBinder token, int sensorId, int userId,
                 IFingerprintServiceReceiver receiver, String opPackageName) {
-            Utils.checkPermission(getContext(), MANAGE_FINGERPRINT);
+            super.generateChallenge_enforcePermission();
 
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+            final ServiceProvider provider = mRegistry.getProviderForSensor(sensorId);
             if (provider == null) {
                 Slog.w(TAG, "No matching sensor for generateChallenge, sensorId: " + sensorId);
                 return;
@@ -199,12 +213,13 @@ public class FingerprintService extends SystemService {
             provider.scheduleGenerateChallenge(sensorId, userId, token, receiver, opPackageName);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.MANAGE_FINGERPRINT)
         @Override // Binder call
         public void revokeChallenge(IBinder token, int sensorId, int userId, String opPackageName,
                 long challenge) {
-            Utils.checkPermission(getContext(), MANAGE_FINGERPRINT);
+            super.revokeChallenge_enforcePermission();
 
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+            final ServiceProvider provider = mRegistry.getProviderForSensor(sensorId);
             if (provider == null) {
                 Slog.w(TAG, "No matching sensor for revokeChallenge, sensorId: " + sensorId);
                 return;
@@ -214,48 +229,61 @@ public class FingerprintService extends SystemService {
                     challenge);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.MANAGE_FINGERPRINT)
         @Override // Binder call
-        public void enroll(final IBinder token, @NonNull final byte[] hardwareAuthToken,
+        public long enroll(final IBinder token, @NonNull final byte[] hardwareAuthToken,
                 final int userId, final IFingerprintServiceReceiver receiver,
-                final String opPackageName, @FingerprintManager.EnrollReason int enrollReason) {
-            Utils.checkPermission(getContext(), MANAGE_FINGERPRINT);
+                final String opPackageName, @FingerprintManager.EnrollReason int enrollReason,
+                FingerprintEnrollOptions options) {
+            super.enroll_enforcePermission();
 
-            final Pair<Integer, ServiceProvider> provider = getSingleProvider();
+            final Pair<Integer, ServiceProvider> provider = mRegistry.getSingleProvider();
             if (provider == null) {
                 Slog.w(TAG, "Null provider for enroll");
-                return;
+                return -1;
             }
 
-            provider.second.scheduleEnroll(provider.first, token, hardwareAuthToken, userId,
-                    receiver, opPackageName, enrollReason, mFingerprintStateCallback);
+            return provider.second.scheduleEnroll(provider.first, token, hardwareAuthToken, userId,
+                    receiver, opPackageName, enrollReason, options);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.MANAGE_FINGERPRINT)
         @Override // Binder call
-        public void cancelEnrollment(final IBinder token) {
-            Utils.checkPermission(getContext(), MANAGE_FINGERPRINT);
+        public void cancelEnrollment(final IBinder token, long requestId) {
+            super.cancelEnrollment_enforcePermission();
 
-            final Pair<Integer, ServiceProvider> provider = getSingleProvider();
+            final Pair<Integer, ServiceProvider> provider = mRegistry.getSingleProvider();
             if (provider == null) {
                 Slog.w(TAG, "Null provider for cancelEnrollment");
                 return;
             }
 
-            provider.second.cancelEnrollment(provider.first, token);
+            provider.second.cancelEnrollment(provider.first, token, requestId);
         }
 
         @SuppressWarnings("deprecation")
         @Override // Binder call
-        public void authenticate(final IBinder token, final long operationId,
-                final int sensorId, final int userId, final IFingerprintServiceReceiver receiver,
-                final String opPackageName) {
+        public long authenticate(
+                final IBinder token,
+                final long operationId,
+                final IFingerprintServiceReceiver receiver,
+                final FingerprintAuthenticateOptions options) {
             final int callingUid = Binder.getCallingUid();
             final int callingPid = Binder.getCallingPid();
             final int callingUserId = UserHandle.getCallingUserId();
+            final String opPackageName = options.getOpPackageName();
+            final String attributionTag = options.getAttributionTag();
+            final int userId = options.getUserId();
 
-            if (!canUseFingerprint(opPackageName, true /* requireForeground */, callingUid,
-                    callingPid, callingUserId)) {
+            if (!canUseFingerprint(
+                    opPackageName,
+                    attributionTag,
+                    true /* requireForeground */,
+                    callingUid,
+                    callingPid,
+                    callingUserId)) {
                 Slog.w(TAG, "Authenticate rejecting package: " + opPackageName);
-                return;
+                return -1;
             }
 
             // Keyguard check must be done on the caller's binder identity, since it also checks
@@ -263,17 +291,17 @@ public class FingerprintService extends SystemService {
             final boolean isKeyguard = Utils.isKeyguard(getContext(), opPackageName);
 
             // Clear calling identity when checking LockPatternUtils for StrongAuth flags.
-            long identity = Binder.clearCallingIdentity();
+            final long identity1 = Binder.clearCallingIdentity();
             try {
                 if (isKeyguard && Utils.isUserEncryptedOrLockdown(mLockPatternUtils, userId)) {
                     // If this happens, something in KeyguardUpdateMonitor is wrong.
                     // SafetyNet for b/79776455
                     EventLog.writeEvent(0x534e4554, "79776455");
                     Slog.e(TAG, "Authenticate invoked when user is encrypted or lockdown");
-                    return;
+                    return -1;
                 }
             } finally {
-                Binder.restoreCallingIdentity(identity);
+                Binder.restoreCallingIdentity(identity1);
             }
 
             final boolean restricted = getContext().checkCallingPermission(MANAGE_FINGERPRINT)
@@ -282,44 +310,63 @@ public class FingerprintService extends SystemService {
                     : BiometricsProtoEnums.CLIENT_FINGERPRINT_MANAGER;
 
             final Pair<Integer, ServiceProvider> provider;
-            if (sensorId == FingerprintManager.SENSOR_ID_ANY) {
-                provider = getSingleProvider();
+            if (options.getSensorId() == FingerprintManager.SENSOR_ID_ANY) {
+                provider = mRegistry.getSingleProvider();
             } else {
                 Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
-                provider = new Pair<>(sensorId, getProviderForSensor(sensorId));
+                provider = new Pair<>(options.getSensorId(),
+                        mRegistry.getProviderForSensor(options.getSensorId()));
             }
+
             if (provider == null) {
                 Slog.w(TAG, "Null provider for authenticate");
-                return;
+                return -1;
             }
+            options.setSensorId(provider.first);
 
             final FingerprintSensorPropertiesInternal sensorProps =
-                    provider.second.getSensorProperties(sensorId);
+                    provider.second.getSensorProperties(options.getSensorId());
             if (!isKeyguard && !Utils.isSettings(getContext(), opPackageName)
-                    && sensorProps != null && sensorProps.isAnyUdfpsType()) {
-                identity = Binder.clearCallingIdentity();
+                    && sensorProps != null && (sensorProps.isAnyUdfpsType()
+                    || sensorProps.isAnySidefpsType())) {
                 try {
-                    authenticateWithPrompt(operationId, sensorProps, userId, receiver);
-                } finally {
-                    Binder.restoreCallingIdentity(identity);
+                    return authenticateWithPrompt(operationId, sensorProps, callingUid,
+                            callingUserId, receiver, opPackageName,
+                            options.isIgnoreEnrollmentState());
+                } catch (PackageManager.NameNotFoundException e) {
+                    Slog.e(TAG, "Invalid package", e);
+                    return -1;
                 }
-            } else {
-                provider.second.scheduleAuthenticate(provider.first, token, operationId, userId,
-                        0 /* cookie */, new ClientMonitorCallbackConverter(receiver), opPackageName,
-                        restricted, statsClient, isKeyguard, mFingerprintStateCallback);
             }
+            final long identity2 = Binder.clearCallingIdentity();
+            try {
+                VirtualDeviceManagerInternal vdm = getLocalService(
+                        VirtualDeviceManagerInternal.class);
+                if (vdm != null) {
+                    vdm.onAuthenticationPrompt(callingUid);
+                }
+            } finally {
+                Binder.restoreCallingIdentity(identity2);
+            }
+            return provider.second.scheduleAuthenticate(token, operationId,
+                    0 /* cookie */, new ClientMonitorCallbackConverter(receiver), options,
+                    restricted, statsClient, isKeyguard);
         }
 
-        private void authenticateWithPrompt(
+        private long authenticateWithPrompt(
                 final long operationId,
                 @NonNull final FingerprintSensorPropertiesInternal props,
+                final int uId,
                 final int userId,
-                final IFingerprintServiceReceiver receiver) {
-
+                final IFingerprintServiceReceiver receiver,
+                final String opPackageName,
+                boolean ignoreEnrollmentState) throws PackageManager.NameNotFoundException {
             final Context context = getUiContext();
+            final Context promptContext = context.createPackageContextAsUser(
+                    opPackageName, 0 /* flags */, UserHandle.getUserHandleForUid(uId));
             final Executor executor = context.getMainExecutor();
 
-            final BiometricPrompt biometricPrompt = new BiometricPrompt.Builder(context)
+            final BiometricPrompt biometricPrompt = new BiometricPrompt.Builder(promptContext)
                     .setTitle(context.getString(R.string.biometric_dialog_default_title))
                     .setSubtitle(context.getString(R.string.fingerprint_dialog_default_subtitle))
                     .setNegativeButton(
@@ -333,8 +380,8 @@ public class FingerprintService extends SystemService {
                                     Slog.e(TAG, "Remote exception in negative button onClick()", e);
                                 }
                             })
-                    .setAllowedSensorIds(new ArrayList<>(
-                            Collections.singletonList(props.sensorId)))
+                    .setIsForLegacyFingerprintManager(props.sensorId)
+                    .setIgnoreEnrollmentState(ignoreEnrollmentState)
                     .build();
 
             final BiometricPrompt.AuthenticationCallback promptCallback =
@@ -385,63 +432,73 @@ public class FingerprintService extends SystemService {
                                 Slog.e(TAG, "Remote exception in onAuthenticationAcquired()", e);
                             }
                         }
+
+                        @Override
+                        public void onAuthenticationHelp(int acquireInfo, CharSequence helpString) {
+                            onAuthenticationAcquired(acquireInfo);
+                        }
                     };
 
-            biometricPrompt.authenticateUserForOperation(
-                    new CancellationSignal(), executor, promptCallback, userId, operationId);
+            return biometricPrompt.authenticateForOperation(
+                    new CancellationSignal(), executor, promptCallback, operationId);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override
-        public void detectFingerprint(final IBinder token, final int userId,
-                final IFingerprintServiceReceiver receiver, final String opPackageName) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
+        public long detectFingerprint(final IBinder token,
+                final IFingerprintServiceReceiver receiver,
+                final FingerprintAuthenticateOptions options) {
+            super.detectFingerprint_enforcePermission();
+
+            final String opPackageName = options.getOpPackageName();
             if (!Utils.isKeyguard(getContext(), opPackageName)) {
                 Slog.w(TAG, "detectFingerprint called from non-sysui package: " + opPackageName);
-                return;
+                return -1;
             }
 
-            if (!Utils.isUserEncryptedOrLockdown(mLockPatternUtils, userId)) {
-                // If this happens, something in KeyguardUpdateMonitor is wrong. This should only
-                // ever be invoked when the user is encrypted or lockdown.
-                Slog.e(TAG, "detectFingerprint invoked when user is not encrypted or lockdown");
-                return;
-            }
-
-            final Pair<Integer, ServiceProvider> provider = getSingleProvider();
+            final Pair<Integer, ServiceProvider> provider = mRegistry.getSingleProvider();
             if (provider == null) {
                 Slog.w(TAG, "Null provider for detectFingerprint");
-                return;
+                return -1;
             }
+            options.setSensorId(provider.first);
 
-            provider.second.scheduleFingerDetect(provider.first, token, userId,
-                    new ClientMonitorCallbackConverter(receiver), opPackageName,
-                    BiometricsProtoEnums.CLIENT_KEYGUARD, mFingerprintStateCallback);
+            return provider.second.scheduleFingerDetect(token,
+                    new ClientMonitorCallbackConverter(receiver), options,
+                    BiometricsProtoEnums.CLIENT_KEYGUARD);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.MANAGE_BIOMETRIC)
         @Override // Binder call
-        public void prepareForAuthentication(int sensorId, IBinder token, long operationId,
-                int userId, IBiometricSensorReceiver sensorReceiver, String opPackageName,
-                int cookie, boolean allowBackgroundAuthentication) {
-            Utils.checkPermission(getContext(), MANAGE_BIOMETRIC);
+        public void prepareForAuthentication(IBinder token, long operationId,
+                IBiometricSensorReceiver sensorReceiver,
+                @NonNull FingerprintAuthenticateOptions options,
+                long requestId, int cookie, boolean allowBackgroundAuthentication,
+                boolean isForLegacyFingerprintManager) {
+            super.prepareForAuthentication_enforcePermission();
 
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+            final ServiceProvider provider = mRegistry.getProviderForSensor(options.getSensorId());
             if (provider == null) {
                 Slog.w(TAG, "Null provider for prepareForAuthentication");
                 return;
             }
 
+            final int statsClient =
+                    isForLegacyFingerprintManager ? BiometricsProtoEnums.CLIENT_FINGERPRINT_MANAGER
+                            : BiometricsProtoEnums.CLIENT_BIOMETRIC_PROMPT;
             final boolean restricted = true; // BiometricPrompt is always restricted
-            provider.scheduleAuthenticate(sensorId, token, operationId, userId, cookie,
-                    new ClientMonitorCallbackConverter(sensorReceiver), opPackageName, restricted,
-                    BiometricsProtoEnums.CLIENT_BIOMETRIC_PROMPT, allowBackgroundAuthentication,
-                    mFingerprintStateCallback);
+            provider.scheduleAuthenticate(token, operationId, cookie,
+                    new ClientMonitorCallbackConverter(sensorReceiver), options, requestId,
+                    restricted, statsClient,
+                    allowBackgroundAuthentication);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.MANAGE_BIOMETRIC)
         @Override // Binder call
         public void startPreparedClient(int sensorId, int cookie) {
-            Utils.checkPermission(getContext(), MANAGE_BIOMETRIC);
+            super.startPreparedClient_enforcePermission();
 
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+            final ServiceProvider provider = mRegistry.getProviderForSensor(sensorId);
             if (provider == null) {
                 Slog.w(TAG, "Null provider for startPreparedClient");
                 return;
@@ -450,31 +507,42 @@ public class FingerprintService extends SystemService {
             provider.startPreparedClient(sensorId, cookie);
         }
 
-
         @Override // Binder call
-        public void cancelAuthentication(final IBinder token, final String opPackageName) {
+        public void cancelAuthentication(
+                final IBinder token,
+                final String opPackageName,
+                final String attributionTag,
+                long requestId) {
             final int callingUid = Binder.getCallingUid();
             final int callingPid = Binder.getCallingPid();
             final int callingUserId = UserHandle.getCallingUserId();
 
-            if (!canUseFingerprint(opPackageName, true /* requireForeground */, callingUid,
-                    callingPid, callingUserId)) {
+            if (!canUseFingerprint(
+                    opPackageName,
+                    attributionTag,
+                    true /* requireForeground */,
+                    callingUid,
+                    callingPid,
+                    callingUserId)) {
                 Slog.w(TAG, "cancelAuthentication rejecting package: " + opPackageName);
                 return;
             }
 
-            final Pair<Integer, ServiceProvider> provider = getSingleProvider();
+            final Pair<Integer, ServiceProvider> provider = mRegistry.getSingleProvider();
             if (provider == null) {
                 Slog.w(TAG, "Null provider for cancelAuthentication");
                 return;
             }
 
-            provider.second.cancelAuthentication(provider.first, token);
+            provider.second.cancelAuthentication(provider.first, token, requestId);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override // Binder call
-        public void cancelFingerprintDetect(final IBinder token, final String opPackageName) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
+        public void cancelFingerprintDetect(final IBinder token, final String opPackageName,
+                final long requestId) {
+            super.cancelFingerprintDetect_enforcePermission();
+
             if (!Utils.isKeyguard(getContext(), opPackageName)) {
                 Slog.w(TAG, "cancelFingerprintDetect called from non-sysui package: "
                         + opPackageName);
@@ -483,38 +551,39 @@ public class FingerprintService extends SystemService {
 
             // For IBiometricsFingerprint2.1, cancelling fingerprint detect is the same as
             // cancelling authentication.
-            final Pair<Integer, ServiceProvider> provider = getSingleProvider();
+            final Pair<Integer, ServiceProvider> provider = mRegistry.getSingleProvider();
             if (provider == null) {
                 Slog.w(TAG, "Null provider for cancelFingerprintDetect");
                 return;
             }
 
-            provider.second.cancelAuthentication(provider.first, token);
+            provider.second.cancelAuthentication(provider.first, token, requestId);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.MANAGE_BIOMETRIC)
         @Override // Binder call
         public void cancelAuthenticationFromService(final int sensorId, final IBinder token,
-                final String opPackageName) {
-
-            Utils.checkPermission(getContext(), MANAGE_BIOMETRIC);
+                final String opPackageName, final long requestId) {
+            super.cancelAuthenticationFromService_enforcePermission();
 
             Slog.d(TAG, "cancelAuthenticationFromService, sensorId: " + sensorId);
 
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+            final ServiceProvider provider = mRegistry.getProviderForSensor(sensorId);
             if (provider == null) {
                 Slog.w(TAG, "Null provider for cancelAuthenticationFromService");
                 return;
             }
 
-            provider.cancelAuthentication(sensorId, token);
+            provider.cancelAuthentication(sensorId, token, requestId);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.MANAGE_FINGERPRINT)
         @Override // Binder call
         public void remove(final IBinder token, final int fingerId, final int userId,
                 final IFingerprintServiceReceiver receiver, final String opPackageName) {
-            Utils.checkPermission(getContext(), MANAGE_FINGERPRINT);
+            super.remove_enforcePermission();
 
-            final Pair<Integer, ServiceProvider> provider = getSingleProvider();
+            final Pair<Integer, ServiceProvider> provider = mRegistry.getSingleProvider();
             if (provider == null) {
                 Slog.w(TAG, "Null provider for remove");
                 return;
@@ -523,10 +592,12 @@ public class FingerprintService extends SystemService {
                     opPackageName);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override // Binder call
         public void removeAll(final IBinder token, final int userId,
                 final IFingerprintServiceReceiver receiver, final String opPackageName) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
+
+            super.removeAll_enforcePermission();
 
             final FingerprintServiceReceiver internalReceiver = new FingerprintServiceReceiver() {
                 int sensorsFinishedRemoving = 0;
@@ -547,7 +618,7 @@ public class FingerprintService extends SystemService {
 
             // This effectively iterates through all sensors, but has to do so by finding all
             // sensors under each provider.
-            for (ServiceProvider provider : mServiceProviders) {
+            for (ServiceProvider provider : mRegistry.getProviders()) {
                 List<FingerprintSensorPropertiesInternal> props = provider.getSensorProperties();
                 for (FingerprintSensorPropertiesInternal prop : props) {
                     provider.scheduleRemoveAll(prop.sensorId, token, internalReceiver, userId,
@@ -556,11 +627,22 @@ public class FingerprintService extends SystemService {
             }
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override // Binder call
         public void addLockoutResetCallback(final IBiometricServiceLockoutResetCallback callback,
                 final String opPackageName) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
+            super.addLockoutResetCallback_enforcePermission();
+
             mLockoutResetDispatcher.addCallback(callback, opPackageName);
+        }
+
+        @Override // Binder call
+        public void onShellCommand(@Nullable FileDescriptor in, @Nullable FileDescriptor out,
+                @Nullable FileDescriptor err, @NonNull String[] args,
+                @Nullable ShellCallback callback, @NonNull ResultReceiver resultReceiver)
+                throws RemoteException {
+            (new FingerprintShellCommand(getContext(), FingerprintService.this))
+                    .exec(this, in, out, err, args, callback, resultReceiver);
         }
 
         @Override // Binder call
@@ -573,7 +655,7 @@ public class FingerprintService extends SystemService {
             try {
                 if (args.length > 1 && "--proto".equals(args[0]) && "--state".equals(args[1])) {
                     final ProtoOutputStream proto = new ProtoOutputStream(fd);
-                    for (ServiceProvider provider : mServiceProviders) {
+                    for (ServiceProvider provider : mRegistry.getProviders()) {
                         for (FingerprintSensorPropertiesInternal props
                                 : provider.getSensorProperties()) {
                             provider.dumpProtoState(props.sensorId, proto, false);
@@ -581,20 +663,20 @@ public class FingerprintService extends SystemService {
                     }
                     proto.flush();
                 } else if (args.length > 0 && "--proto".equals(args[0])) {
-                    for (ServiceProvider provider : mServiceProviders) {
+                    for (ServiceProvider provider : mRegistry.getProviders()) {
                         for (FingerprintSensorPropertiesInternal props
                                 : provider.getSensorProperties()) {
                             provider.dumpProtoMetrics(props.sensorId, fd);
                         }
                     }
                 } else {
-                    for (ServiceProvider provider : mServiceProviders) {
+                    for (ServiceProvider provider : mRegistry.getProviders()) {
                         for (FingerprintSensorPropertiesInternal props
                                 : provider.getSensorProperties()) {
                             pw.println("Dumping for sensorId: " + props.sensorId
                                     + ", provider: " + provider.getClass().getSimpleName());
                             pw.println("Fps state: "
-                                    + mFingerprintStateCallback.getFingerprintState());
+                                    + mBiometricStateCallback.getBiometricState());
                             provider.dumpInternal(props.sensorId, pw);
                             pw.println();
                         }
@@ -606,16 +688,20 @@ public class FingerprintService extends SystemService {
         }
 
         @Override // Binder call
-        public boolean isHardwareDetectedDeprecated(String opPackageName) {
-            if (!canUseFingerprint(opPackageName, false /* foregroundOnly */,
-                    Binder.getCallingUid(), Binder.getCallingPid(),
+        public boolean isHardwareDetectedDeprecated(String opPackageName, String attributionTag) {
+            if (!canUseFingerprint(
+                    opPackageName,
+                    attributionTag,
+                    false /* foregroundOnly */,
+                    Binder.getCallingUid(),
+                    Binder.getCallingPid(),
                     UserHandle.getCallingUserId())) {
                 return false;
             }
 
             final long token = Binder.clearCallingIdentity();
             try {
-                final Pair<Integer, ServiceProvider> provider = getSingleProvider();
+                final Pair<Integer, ServiceProvider> provider = mRegistry.getSingleProvider();
                 if (provider == null) {
                     Slog.w(TAG, "Null provider for isHardwareDetectedDeprecated, caller: "
                             + opPackageName);
@@ -627,11 +713,12 @@ public class FingerprintService extends SystemService {
             }
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override // Binder call
         public boolean isHardwareDetected(int sensorId, String opPackageName) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
+            super.isHardwareDetected_enforcePermission();
 
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+            final ServiceProvider provider = mRegistry.getProviderForSensor(sensorId);
             if (provider == null) {
                 Slog.w(TAG, "Null provider for isHardwareDetected, caller: " + opPackageName);
                 return false;
@@ -640,14 +727,16 @@ public class FingerprintService extends SystemService {
             return provider.isHardwareDetected(sensorId);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.MANAGE_FINGERPRINT)
         @Override // Binder call
         public void rename(final int fingerId, final int userId, final String name) {
-            Utils.checkPermission(getContext(), MANAGE_FINGERPRINT);
+            super.rename_enforcePermission();
+
             if (!Utils.isCurrentUserOrProfile(getContext(), userId)) {
                 return;
             }
 
-            final Pair<Integer, ServiceProvider> provider = getSingleProvider();
+            final Pair<Integer, ServiceProvider> provider = mRegistry.getSingleProvider();
             if (provider == null) {
                 Slog.w(TAG, "Null provider for rename");
                 return;
@@ -657,9 +746,14 @@ public class FingerprintService extends SystemService {
         }
 
         @Override // Binder call
-        public List<Fingerprint> getEnrolledFingerprints(int userId, String opPackageName) {
-            if (!canUseFingerprint(opPackageName, false /* foregroundOnly */,
-                    Binder.getCallingUid(), Binder.getCallingPid(),
+        public List<Fingerprint> getEnrolledFingerprints(
+                int userId, String opPackageName, String attributionTag) {
+            if (!canUseFingerprint(
+                    opPackageName,
+                    attributionTag,
+                    false /* foregroundOnly */,
+                    Binder.getCallingUid(),
+                    Binder.getCallingPid(),
                     UserHandle.getCallingUserId())) {
                 return Collections.emptyList();
             }
@@ -672,9 +766,14 @@ public class FingerprintService extends SystemService {
         }
 
         @Override // Binder call
-        public boolean hasEnrolledFingerprintsDeprecated(int userId, String opPackageName) {
-            if (!canUseFingerprint(opPackageName, false /* foregroundOnly */,
-                    Binder.getCallingUid(), Binder.getCallingPid(),
+        public boolean hasEnrolledFingerprintsDeprecated(
+                int userId, String opPackageName, String attributionTag) {
+            if (!canUseFingerprint(
+                    opPackageName,
+                    attributionTag,
+                    false /* foregroundOnly */,
+                    Binder.getCallingUid(),
+                    Binder.getCallingPid(),
                     UserHandle.getCallingUserId())) {
                 return false;
             }
@@ -686,31 +785,11 @@ public class FingerprintService extends SystemService {
                     .isEmpty();
         }
 
-        @Override // Binder call
-        public boolean hasEnrolledTemplatesForAnySensor(int userId,
-                @NonNull List<FingerprintSensorPropertiesInternal> sensors,
-                @NonNull String opPackageName) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
-
-            for (FingerprintSensorPropertiesInternal prop : sensors) {
-                final ServiceProvider provider = getProviderForSensor(prop.sensorId);
-                if (provider == null) {
-                    Slog.w(TAG, "Null provider for sensorId: " + prop.sensorId
-                            + ", caller: " + opPackageName);
-                    continue;
-                }
-
-                if (!provider.getEnrolledFingerprints(prop.sensorId, userId).isEmpty()) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         public boolean hasEnrolledFingerprints(int sensorId, int userId, String opPackageName) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
+            super.hasEnrolledFingerprints_enforcePermission();
 
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+            final ServiceProvider provider = mRegistry.getProviderForSensor(sensorId);
             if (provider == null) {
                 Slog.w(TAG, "Null provider for hasEnrolledFingerprints, caller: " + opPackageName);
                 return false;
@@ -719,11 +798,12 @@ public class FingerprintService extends SystemService {
             return provider.getEnrolledFingerprints(sensorId, userId).size() > 0;
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override // Binder call
         public @LockoutTracker.LockoutMode int getLockoutModeForUser(int sensorId, int userId) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
+            super.getLockoutModeForUser_enforcePermission();
 
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+            final ServiceProvider provider = mRegistry.getProviderForSensor(sensorId);
             if (provider == null) {
                 Slog.w(TAG, "Null provider for getLockoutModeForUser");
                 return LockoutTracker.LOCKOUT_NONE;
@@ -731,12 +811,13 @@ public class FingerprintService extends SystemService {
             return provider.getLockoutModeForUser(sensorId, userId);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override
         public void invalidateAuthenticatorId(int sensorId, int userId,
                 IInvalidationCallback callback) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
+            super.invalidateAuthenticatorId_enforcePermission();
 
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+            final ServiceProvider provider = mRegistry.getProviderForSensor(sensorId);
             if (provider == null) {
                 Slog.w(TAG, "Null provider for invalidateAuthenticatorId");
                 return;
@@ -744,11 +825,12 @@ public class FingerprintService extends SystemService {
             provider.scheduleInvalidateAuthenticatorId(sensorId, userId, callback);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override // Binder call
         public long getAuthenticatorId(int sensorId, int userId) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
+            super.getAuthenticatorId_enforcePermission();
 
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+            final ServiceProvider provider = mRegistry.getProviderForSensor(sensorId);
             if (provider == null) {
                 Slog.w(TAG, "Null provider for getAuthenticatorId");
                 return 0;
@@ -756,12 +838,13 @@ public class FingerprintService extends SystemService {
             return provider.getAuthenticatorId(sensorId, userId);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.RESET_FINGERPRINT_LOCKOUT)
         @Override // Binder call
         public void resetLockout(IBinder token, int sensorId, int userId,
                 @Nullable byte[] hardwareAuthToken, String opPackageName) {
-            Utils.checkPermission(getContext(), RESET_FINGERPRINT_LOCKOUT);
+            super.resetLockout_enforcePermission();
 
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+            final ServiceProvider provider = mRegistry.getProviderForSensor(sensorId);
             if (provider == null) {
                 Slog.w(TAG, "Null provider for resetLockout, caller: " + opPackageName);
                 return;
@@ -770,242 +853,262 @@ public class FingerprintService extends SystemService {
             provider.scheduleResetLockout(sensorId, userId, hardwareAuthToken);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.MANAGE_FINGERPRINT)
         @Override
         public boolean isClientActive() {
-            Utils.checkPermission(getContext(), MANAGE_FINGERPRINT);
+            super.isClientActive_enforcePermission();
+
             return mGestureAvailabilityDispatcher.isAnySensorActive();
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.MANAGE_FINGERPRINT)
         @Override
         public void addClientActiveCallback(IFingerprintClientActiveCallback callback) {
-            Utils.checkPermission(getContext(), MANAGE_FINGERPRINT);
+            super.addClientActiveCallback_enforcePermission();
+
             mGestureAvailabilityDispatcher.registerCallback(callback);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.MANAGE_FINGERPRINT)
         @Override
         public void removeClientActiveCallback(IFingerprintClientActiveCallback callback) {
-            Utils.checkPermission(getContext(), MANAGE_FINGERPRINT);
+            super.removeClientActiveCallback_enforcePermission();
+
             mGestureAvailabilityDispatcher.removeCallback(callback);
         }
 
-        private void addHidlProviders(List<FingerprintSensorPropertiesInternal> hidlSensors) {
-            for (FingerprintSensorPropertiesInternal hidlSensor : hidlSensors) {
-                final Fingerprint21 fingerprint21;
-                if ((Build.IS_USERDEBUG || Build.IS_ENG)
-                        && getContext().getResources().getBoolean(R.bool.allow_test_udfps)
-                        && Settings.Secure.getIntForUser(getContext().getContentResolver(),
-                        Fingerprint21UdfpsMock.CONFIG_ENABLE_TEST_UDFPS, 0 /* default */,
-                        UserHandle.USER_CURRENT) != 0) {
-                    fingerprint21 = Fingerprint21UdfpsMock.newInstance(getContext(), hidlSensor,
-                            mLockoutResetDispatcher, mGestureAvailabilityDispatcher);
-                } else {
-                    fingerprint21 = Fingerprint21.newInstance(getContext(), hidlSensor,
-                            mLockoutResetDispatcher, mGestureAvailabilityDispatcher);
-                }
-                mServiceProviders.add(fingerprint21);
-            }
-        }
-
-        private void addAidlProviders() {
-            final String[] instances = ServiceManager.getDeclaredInstances(IFingerprint.DESCRIPTOR);
-            if (instances == null || instances.length == 0) {
-                return;
-            }
-            for (String instance : instances) {
-                final String fqName = IFingerprint.DESCRIPTOR + "/" + instance;
-                final IFingerprint fp = IFingerprint.Stub.asInterface(
-                        Binder.allowBlocking(ServiceManager.waitForDeclaredService(fqName)));
-                if (fp == null) {
-                    Slog.e(TAG, "Unable to get declared service: " + fqName);
-                    continue;
-                }
-                try {
-                    final SensorProps[] props = fp.getSensorProps();
-                    final FingerprintProvider provider =
-                            new FingerprintProvider(getContext(), props, instance,
-                                    mLockoutResetDispatcher, mGestureAvailabilityDispatcher);
-                    mServiceProviders.add(provider);
-                } catch (RemoteException e) {
-                    Slog.e(TAG, "Remote exception in getSensorProps: " + fqName);
-                }
-            }
-        }
-
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override // Binder call
         public void registerAuthenticators(
-                @NonNull List<FingerprintSensorPropertiesInternal> hidlSensors) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
-
-            // Some HAL might not be started before the system service and will cause the code below
-            // to wait, and some of the operations below might take a significant amount of time to
-            // complete (calls to the HALs). To avoid blocking the rest of system server we put
-            // this on a background thread.
-            final ServiceThread thread = new ServiceThread(TAG, Process.THREAD_PRIORITY_BACKGROUND,
-                    true /* allowIo */);
-            thread.start();
-            final Handler handler = new Handler(thread.getLooper());
-
-            handler.post(() -> {
-                addHidlProviders(hidlSensors);
-                addAidlProviders();
-
-                final IBiometricService biometricService = IBiometricService.Stub.asInterface(
-                        ServiceManager.getService(Context.BIOMETRIC_SERVICE));
-
-                // Register each sensor individually with BiometricService
-                for (ServiceProvider provider : mServiceProviders) {
-                    final List<FingerprintSensorPropertiesInternal> props =
-                            provider.getSensorProperties();
-                    for (FingerprintSensorPropertiesInternal prop : props) {
-                        final int sensorId = prop.sensorId;
-                        final @BiometricManager.Authenticators.Types int strength =
-                                Utils.propertyStrengthToAuthenticatorStrength(prop.sensorStrength);
-                        final FingerprintAuthenticator authenticator = new FingerprintAuthenticator(
-                                mServiceWrapper, sensorId);
-                        try {
-                            biometricService.registerAuthenticator(sensorId, TYPE_FINGERPRINT,
-                                    strength, authenticator);
-                        } catch (RemoteException e) {
-                            Slog.e(TAG, "Remote exception when registering sensorId: " + sensorId);
-                        }
-                    }
-                }
-
-                synchronized (mLock) {
-                    for (ServiceProvider provider : mServiceProviders) {
-                        mSensorProps.addAll(provider.getSensorProperties());
-                    }
-                }
-
-                broadcastAllAuthenticatorsRegistered();
-            });
+                @NonNull FingerprintSensorConfigurations fingerprintSensorConfigurations) {
+            super.registerAuthenticators_enforcePermission();
+            if (!fingerprintSensorConfigurations.hasSensorConfigurations()) {
+                Slog.d(TAG, "No fingerprint sensors available.");
+                return;
+            }
+            mRegistry.registerAll(() -> getProviders(fingerprintSensorConfigurations));
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override
         public void addAuthenticatorsRegisteredCallback(
                 IFingerprintAuthenticatorsRegisteredCallback callback) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
-            if (callback == null) {
-                Slog.e(TAG, "addAuthenticatorsRegisteredCallback, callback is null");
-                return;
-            }
+            super.addAuthenticatorsRegisteredCallback_enforcePermission();
 
-            final boolean registered;
-            final boolean hasSensorProps;
-            synchronized (mLock) {
-                registered = mAuthenticatorsRegisteredCallbacks.register(callback);
-                hasSensorProps = !mSensorProps.isEmpty();
-            }
-            if (registered && hasSensorProps) {
-                broadcastAllAuthenticatorsRegistered();
-            } else if (!registered) {
-                Slog.e(TAG, "addAuthenticatorsRegisteredCallback failed to register callback");
-            }
+            mRegistry.addAllRegisteredCallback(callback);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override
-        public void onPointerDown(int sensorId, int x, int y, float minor, float major) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
+        public void registerAuthenticationStateListener(
+                @NonNull AuthenticationStateListener listener) {
+            super.registerAuthenticationStateListener_enforcePermission();
 
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+            mAuthenticationStateListeners.registerAuthenticationStateListener(listener);
+        }
+
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
+        @Override
+        public void unregisterAuthenticationStateListener(
+                @NonNull AuthenticationStateListener listener) {
+            super.unregisterAuthenticationStateListener_enforcePermission();
+
+            mAuthenticationStateListeners.unregisterAuthenticationStateListener(listener);
+        }
+
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
+        @Override
+        public void registerBiometricStateListener(@NonNull IBiometricStateListener listener) {
+            super.registerBiometricStateListener_enforcePermission();
+
+            mBiometricStateCallback.registerBiometricStateListener(listener);
+        }
+
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
+        @Override
+        public void onPointerDown(long requestId, int sensorId, PointerContext pc) {
+            super.onPointerDown_enforcePermission();
+            final ServiceProvider provider = mRegistry.getProviderForSensor(sensorId);
             if (provider == null) {
                 Slog.w(TAG, "No matching provider for onFingerDown, sensorId: " + sensorId);
                 return;
             }
-            provider.onPointerDown(sensorId, x, y, minor, major);
+            provider.onPointerDown(requestId, sensorId, pc);
         }
-
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override
-        public void onPointerUp(int sensorId) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
 
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+        public void onPointerUp(long requestId, int sensorId, PointerContext pc) {
+            super.onPointerUp_enforcePermission();
+            final ServiceProvider provider = mRegistry.getProviderForSensor(sensorId);
             if (provider == null) {
                 Slog.w(TAG, "No matching provider for onFingerUp, sensorId: " + sensorId);
                 return;
             }
-            provider.onPointerUp(sensorId);
+            provider.onPointerUp(requestId, sensorId, pc);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override
-        public void onUiReady(int sensorId) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
+        public void onUdfpsUiEvent(@FingerprintManager.UdfpsUiEvent int event, long requestId,
+                int sensorId) {
+            super.onUdfpsUiEvent_enforcePermission();
 
-            final ServiceProvider provider = getProviderForSensor(sensorId);
+            final ServiceProvider provider = mRegistry.getProviderForSensor(sensorId);
             if (provider == null) {
-                Slog.w(TAG, "No matching provider for onUiReady, sensorId: " + sensorId);
+                Slog.w(TAG, "No matching provider for onUdfpsUiEvent, sensorId: " + sensorId);
                 return;
             }
-            provider.onUiReady(sensorId);
+            provider.onUdfpsUiEvent(event, requestId, sensorId);
         }
 
+
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override
         public void setUdfpsOverlayController(@NonNull IUdfpsOverlayController controller) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
+            super.setUdfpsOverlayController_enforcePermission();
 
-            for (ServiceProvider provider : mServiceProviders) {
+            for (ServiceProvider provider : mRegistry.getProviders()) {
                 provider.setUdfpsOverlayController(controller);
             }
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override
-        public void setSidefpsController(@NonNull ISidefpsController controller) {
-            Utils.checkPermission(getContext(), USE_BIOMETRIC_INTERNAL);
+        public void onPowerPressed() {
+            super.onPowerPressed_enforcePermission();
 
-            for (ServiceProvider provider : mServiceProviders) {
-                provider.setSidefpsController(controller);
+            for (ServiceProvider provider : mRegistry.getProviders()) {
+                provider.onPowerPressed();
             }
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override
-        public void registerFingerprintStateListener(@NonNull IFingerprintStateListener listener) {
-            FingerprintService.this.registerFingerprintStateListener(listener);
+        public void scheduleWatchdog() {
+            super.scheduleWatchdog_enforcePermission();
+
+            final Pair<Integer, ServiceProvider> provider = mRegistry.getSingleProvider();
+            if (provider == null) {
+                Slog.w(TAG, "Null provider for scheduling watchdog");
+                return;
+            }
+
+            provider.second.scheduleWatchdog(provider.first);
         }
-    }
+    };
 
     public FingerprintService(Context context) {
+        this(context, BiometricContext.getInstance(context),
+                () -> IBiometricService.Stub.asInterface(
+                        ServiceManager.getService(Context.BIOMETRIC_SERVICE)),
+                () -> ServiceManager.getDeclaredInstances(IFingerprint.DESCRIPTOR),
+                null /* fingerprintProvider */,
+                null /* fingerprintProviderFunction */);
+    }
+
+    @VisibleForTesting
+    FingerprintService(Context context,
+            BiometricContext biometricContext,
+            Supplier<IBiometricService> biometricServiceSupplier,
+            Supplier<String[]> aidlInstanceNameSupplier,
+            Function<String, FingerprintProvider> fingerprintProvider,
+            FingerprintProviderFunction fingerprintProviderFunction) {
         super(context);
-        mServiceWrapper = new FingerprintServiceWrapper();
+        mBiometricContext = biometricContext;
+        mAidlInstanceNameSupplier = aidlInstanceNameSupplier;
         mAppOps = context.getSystemService(AppOpsManager.class);
         mGestureAvailabilityDispatcher = new GestureAvailabilityDispatcher();
         mLockoutResetDispatcher = new LockoutResetDispatcher(context);
         mLockPatternUtils = new LockPatternUtils(context);
-        mServiceProviders = new ArrayList<>();
-        mFingerprintStateCallback = new FingerprintStateCallback();
-        mAuthenticatorsRegisteredCallbacks = new RemoteCallbackList<>();
-        mSensorProps = new ArrayList<>();
+        mBiometricStateCallback = new BiometricStateCallback<>(UserManager.get(context));
+        mAuthenticationStateListeners = new AuthenticationStateListeners();
+        mFingerprintProvider = fingerprintProvider != null ? fingerprintProvider :
+                (name) -> {
+                    final String fqName = IFingerprint.DESCRIPTOR + "/" + name;
+                    final IFingerprint fp = IFingerprint.Stub.asInterface(
+                            Binder.allowBlocking(ServiceManager.waitForDeclaredService(fqName)));
+                    if (fp != null) {
+                        try {
+                            return new FingerprintProvider(getContext(),
+                                    mBiometricStateCallback, mAuthenticationStateListeners,
+                                    fp.getSensorProps(), name, mLockoutResetDispatcher,
+                                    mGestureAvailabilityDispatcher, mBiometricContext,
+                                    true /* resetLockoutRequiresHardwareAuthToken */);
+                        } catch (RemoteException e) {
+                            Slog.e(TAG, "Remote exception in getSensorProps: " + fqName);
+                        }
+                    } else {
+                        Slog.e(TAG, "Unable to get declared service: " + fqName);
+                    }
+
+                    return null;
+                };
+        mFingerprintProviderFunction = fingerprintProviderFunction != null
+                ? fingerprintProviderFunction :
+                        (filteredSensorProps, resetLockoutRequiresHardwareAuthToken) ->
+                                new FingerprintProvider(getContext(), mBiometricStateCallback,
+                                        mAuthenticationStateListeners, filteredSensorProps.second,
+                                        filteredSensorProps.first, mLockoutResetDispatcher,
+                                        mGestureAvailabilityDispatcher, mBiometricContext,
+                                        resetLockoutRequiresHardwareAuthToken);
+
+        mHandler = new Handler(Looper.getMainLooper());
+        mRegistry = new FingerprintServiceRegistry(mServiceWrapper, biometricServiceSupplier);
+        mRegistry.addAllRegisteredCallback(new IFingerprintAuthenticatorsRegisteredCallback.Stub() {
+            @Override
+            public void onAllAuthenticatorsRegistered(
+                    List<FingerprintSensorPropertiesInternal> sensors) {
+                mBiometricStateCallback.start(mRegistry.getProviders());
+            }
+        });
     }
 
-    // Notifies the callbacks that all of the authenticators have been registered and removes the
-    // invoked callbacks from the callback list.
-    private void broadcastAllAuthenticatorsRegistered() {
-        // Make a local copy of the data so it can be used outside of the synchronized block when
-        // making Binder calls.
-        final List<IFingerprintAuthenticatorsRegisteredCallback> callbacks = new ArrayList<>();
-        final List<FingerprintSensorPropertiesInternal> props;
-        synchronized (mLock) {
-            if (!mSensorProps.isEmpty()) {
-                props = new ArrayList<>(mSensorProps);
+    @NonNull
+    private List<ServiceProvider> getProviders(@NonNull FingerprintSensorConfigurations
+            fingerprintSensorConfigurations) {
+        final List<ServiceProvider> providers = new ArrayList<>();
+        final Pair<String, SensorProps[]> filteredSensorProps = filterAvailableHalInstances(
+                fingerprintSensorConfigurations);
+        providers.add(mFingerprintProviderFunction.getFingerprintProvider(filteredSensorProps,
+                fingerprintSensorConfigurations.getResetLockoutRequiresHardwareAuthToken()));
+
+        return providers;
+    }
+
+    @NonNull
+    private Pair<String, SensorProps[]> filterAvailableHalInstances(
+            FingerprintSensorConfigurations fingerprintSensorConfigurations) {
+        final String finalSensorInstance = fingerprintSensorConfigurations.getSensorInstance();
+        if (fingerprintSensorConfigurations.isSingleSensorConfigurationPresent()) {
+            return new Pair<>(finalSensorInstance,
+                    fingerprintSensorConfigurations.getSensorPropForInstance(finalSensorInstance));
+        }
+        final String virtualInstance = "virtual";
+        final boolean isVirtualHalPresent =
+                fingerprintSensorConfigurations.doesInstanceExist(virtualInstance);
+        if (Utils.isFingerprintVirtualEnabled(getContext())) {
+            if (isVirtualHalPresent) {
+                return new Pair<>(virtualInstance,
+                        fingerprintSensorConfigurations.getSensorPropForInstance(virtualInstance));
             } else {
-                Slog.e(TAG, "mSensorProps is empty");
-                return;
+                Slog.e(TAG, "Could not find virtual interface while it is enabled");
+                return new Pair<>(finalSensorInstance,
+                        fingerprintSensorConfigurations.getSensorPropForInstance(
+                                finalSensorInstance));
             }
-            final int n = mAuthenticatorsRegisteredCallbacks.beginBroadcast();
-            for (int i = 0; i < n; ++i) {
-                final IFingerprintAuthenticatorsRegisteredCallback cb =
-                        mAuthenticatorsRegisteredCallbacks.getBroadcastItem(i);
-                callbacks.add(cb);
-                mAuthenticatorsRegisteredCallbacks.unregister(cb);
-            }
-            mAuthenticatorsRegisteredCallbacks.finishBroadcast();
-        }
-        for (IFingerprintAuthenticatorsRegisteredCallback cb : callbacks) {
-            try {
-                cb.onAllAuthenticatorsRegistered(props);
-            } catch (RemoteException e) {
-                Slog.e(TAG, "Remote exception in onAllAuthenticatorsRegistered", e);
+        } else {
+            if (isVirtualHalPresent) {
+                final String notAVirtualInstance = fingerprintSensorConfigurations
+                        .getSensorNameNotForInstance(virtualInstance);
+                if (notAVirtualInstance != null) {
+                    return new Pair<>(notAVirtualInstance, fingerprintSensorConfigurations
+                            .getSensorPropForInstance(notAVirtualInstance));
+                }
             }
         }
+        return new Pair<>(finalSensorInstance, fingerprintSensorConfigurations
+                .getSensorPropForInstance(finalSensorInstance));
     }
 
     @Override
@@ -1013,51 +1116,9 @@ public class FingerprintService extends SystemService {
         publishBinderService(Context.FINGERPRINT_SERVICE, mServiceWrapper);
     }
 
-    @Nullable
-    private ServiceProvider getProviderForSensor(int sensorId) {
-        for (ServiceProvider provider : mServiceProviders) {
-            if (provider.containsSensor(sensorId)) {
-                return provider;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * For devices with only a single provider, returns that provider. If multiple providers,
-     * returns the first one. If no providers, returns null.
-     */
-    @Nullable
-    private Pair<Integer, ServiceProvider> getSingleProvider() {
-        final List<FingerprintSensorPropertiesInternal> properties = getSensorProperties();
-        if (properties.isEmpty()) {
-            Slog.e(TAG, "No providers found");
-            return null;
-        }
-
-        // Theoretically we can just return the first provider, but maybe this is easier to
-        // understand.
-        final int sensorId = properties.get(0).sensorId;
-        for (ServiceProvider provider : mServiceProviders) {
-            if (provider.containsSensor(sensorId)) {
-                return new Pair<>(sensorId, provider);
-            }
-        }
-
-        Slog.e(TAG, "Provider not found");
-        return null;
-    }
-
-    @NonNull
-    private List<FingerprintSensorPropertiesInternal> getSensorProperties() {
-        synchronized (mLock) {
-            return mSensorProps;
-        }
-    }
-
     @NonNull
     private List<Fingerprint> getEnrolledFingerprintsDeprecated(int userId, String opPackageName) {
-        final Pair<Integer, ServiceProvider> provider = getSingleProvider();
+        final Pair<Integer, ServiceProvider> provider = mRegistry.getSingleProvider();
         if (provider == null) {
             Slog.w(TAG, "Null provider for getEnrolledFingerprintsDeprecated, caller: "
                     + opPackageName);
@@ -1067,12 +1128,15 @@ public class FingerprintService extends SystemService {
         return provider.second.getEnrolledFingerprints(provider.first, userId);
     }
 
-    /**
-     * Checks for public API invocations to ensure that permissions, etc are granted/correct.
-     */
+    /** Checks for public API invocations to ensure that permissions, etc are granted/correct. */
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    private boolean canUseFingerprint(String opPackageName, boolean requireForeground, int uid,
-            int pid, int userId) {
+    private boolean canUseFingerprint(
+            String opPackageName,
+            String attributionTag,
+            boolean requireForeground,
+            int uid,
+            int pid,
+            int userId) {
         if (getContext().checkCallingPermission(USE_FINGERPRINT)
                 != PackageManager.PERMISSION_GRANTED) {
             Utils.checkPermission(getContext(), USE_BIOMETRIC);
@@ -1088,7 +1152,7 @@ public class FingerprintService extends SystemService {
             Slog.w(TAG, "Rejecting " + opPackageName + "; not a current user or profile");
             return false;
         }
-        if (!checkAppOps(uid, opPackageName)) {
+        if (!checkAppOps(uid, opPackageName, attributionTag)) {
             Slog.w(TAG, "Rejecting " + opPackageName + "; permission denied");
             return false;
         }
@@ -1099,15 +1163,78 @@ public class FingerprintService extends SystemService {
         return true;
     }
 
-    private boolean checkAppOps(int uid, String opPackageName) {
+    private boolean checkAppOps(int uid, String opPackageName, String attributionTag) {
         boolean appOpsOk = false;
-        if (mAppOps.noteOp(AppOpsManager.OP_USE_BIOMETRIC, uid, opPackageName)
+        if (mAppOps.noteOp(AppOpsManager.OP_USE_BIOMETRIC, uid, opPackageName, attributionTag, null)
                 == AppOpsManager.MODE_ALLOWED) {
             appOpsOk = true;
-        } else if (mAppOps.noteOp(AppOpsManager.OP_USE_FINGERPRINT, uid, opPackageName)
+        } else if (mAppOps.noteOp(
+                        AppOpsManager.OP_USE_FINGERPRINT, uid, opPackageName, attributionTag, null)
                 == AppOpsManager.MODE_ALLOWED) {
             appOpsOk = true;
         }
         return appOpsOk;
+    }
+
+    void syncEnrollmentsNow() {
+        Utils.checkPermissionOrShell(getContext(), MANAGE_FINGERPRINT);
+        if (Utils.isFingerprintVirtualEnabled(getContext())) {
+            Slog.i(TAG, "Sync virtual enrollments");
+            final int userId = ActivityManager.getCurrentUser();
+            final CountDownLatch latch = new CountDownLatch(mRegistry.getProviders().size());
+            for (ServiceProvider provider : mRegistry.getProviders()) {
+                for (FingerprintSensorPropertiesInternal props : provider.getSensorProperties()) {
+                    provider.scheduleInternalCleanup(props.sensorId, userId,
+                            new ClientMonitorCallback() {
+                                @Override
+                                public void onClientFinished(
+                                        @NonNull BaseClientMonitor clientMonitor,
+                                        boolean success) {
+                                    latch.countDown();
+                                    if (!success) {
+                                        Slog.e(TAG, "Sync virtual enrollments failed");
+                                    }
+                                }
+                            }, true /* favorHalEnrollments */);
+                }
+            }
+            try {
+                latch.await(3, TimeUnit.SECONDS);
+            } catch (Exception e) {
+                Slog.e(TAG, "Failed to wait for sync finishing", e);
+            }
+        }
+    }
+
+    void simulateVhalFingerDown() {
+        if (Utils.isFingerprintVirtualEnabled(getContext())) {
+            Slog.i(TAG, "Simulate virtual HAL finger down event");
+            final Pair<Integer, ServiceProvider> provider = mRegistry.getSingleProvider();
+            if (provider != null) {
+                provider.second.simulateVhalFingerDown(UserHandle.getCallingUserId(),
+                        provider.first);
+            }
+        }
+    }
+
+    /**
+     * This should only be called from FingerprintShellCommand
+     */
+    void sendFingerprintReEnrollNotification() {
+        Utils.checkPermissionOrShell(getContext(), MANAGE_FINGERPRINT);
+        if (Build.IS_DEBUGGABLE) {
+            final long identity = Binder.clearCallingIdentity();
+            try {
+                final Pair<Integer, ServiceProvider> provider = mRegistry.getSingleProvider();
+                if (provider != null) {
+                    FingerprintProvider fingerprintProvider = (FingerprintProvider) provider.second;
+                    fingerprintProvider.sendFingerprintReEnrollNotification();
+                } else {
+                    Slog.w(TAG, "Null provider for notification");
+                }
+            } finally {
+                Binder.restoreCallingIdentity(identity);
+            }
+        }
     }
 }

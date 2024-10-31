@@ -15,9 +15,10 @@
  */
 package android.view.contentcapture;
 
-import static com.android.compatibility.common.util.ActivitiesWatcher.ActivityLifecycle.CREATED;
 import static com.android.compatibility.common.util.ActivitiesWatcher.ActivityLifecycle.DESTROYED;
 
+import android.content.Intent;
+import android.os.RemoteCallback;
 import android.perftests.utils.BenchmarkState;
 import android.view.View;
 
@@ -79,18 +80,93 @@ public class LoginTest extends AbstractContentCapturePerfTestCase {
         testActivityLaunchTime(R.layout.test_container_activity, 500);
     }
 
+    @Test
+    public void testSendEventsLatency() throws Throwable {
+        enableService();
+
+        testSendEventLatency(R.layout.test_container_activity, 0);
+    }
+
+    @Test
+    public void testSendEventsLatency_contains100Views() throws Throwable {
+        enableService();
+
+        testSendEventLatency(R.layout.test_container_activity, 100);
+    }
+
+    @Test
+    public void testSendEventsLatency_contains300Views() throws Throwable {
+        enableService();
+
+        testSendEventLatency(R.layout.test_container_activity, 300);
+    }
+
+    @Test
+    public void testSendEventsLatency_contains500Views() throws Throwable {
+        enableService();
+
+        testSendEventLatency(R.layout.test_container_activity, 500);
+    }
+
     private void testActivityLaunchTime(int layoutId, int numViews) throws Throwable {
+        final Object drawNotifier = new Object();
+        final Intent intent = getLaunchIntent(layoutId, numViews);
+        intent.putExtra(CustomTestActivity.INTENT_EXTRA_FINISH_ON_IDLE, true);
+        intent.putExtra(CustomTestActivity.INTENT_EXTRA_DRAW_CALLBACK,
+                new RemoteCallback(result -> {
+                    synchronized (drawNotifier) {
+                        drawNotifier.notifyAll();
+                    }
+                }));
         final ActivityWatcher watcher = startWatcher();
 
         final BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            launchActivity(layoutId, numViews);
+            mEntryActivity.startActivity(intent);
+            synchronized (drawNotifier) {
+                try {
+                    drawNotifier.wait(GENERIC_TIMEOUT_MS);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
             // Ignore the time to finish the activity
             state.pauseTiming();
-            watcher.waitFor(CREATED);
-            finishActivity();
             watcher.waitFor(DESTROYED);
+            sInstrumentation.waitForIdleSync();
+            state.resumeTiming();
+        }
+    }
+
+    private void testSendEventLatency(int layoutId, int numViews) throws Throwable {
+        final Object drawNotifier = new Object();
+        final Intent intent = getLaunchIntent(layoutId, numViews);
+        intent.putExtra(CustomTestActivity.INTENT_EXTRA_FINISH_ON_IDLE, true);
+        intent.putExtra(CustomTestActivity.INTENT_EXTRA_DRAW_CALLBACK,
+                new RemoteCallback(result -> {
+                    synchronized (drawNotifier) {
+                        drawNotifier.notifyAll();
+                    }
+                }));
+        final ActivityWatcher watcher = startWatcher();
+
+        final BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
+        while (state.keepRunning()) {
+            mEntryActivity.startActivity(intent);
+            synchronized (drawNotifier) {
+                try {
+                    drawNotifier.wait(GENERIC_TIMEOUT_MS);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            waitForSessionPaused();
+
+            // Ignore the time to finish the activity
+            state.pauseTiming();
+            watcher.waitFor(DESTROYED);
+            sInstrumentation.waitForIdleSync();
             state.resumeTiming();
         }
     }
@@ -142,12 +218,12 @@ public class LoginTest extends AbstractContentCapturePerfTestCase {
         while (state.keepRunning()) {
             // Only count the time of onVisibilityAggregated()
             state.pauseTiming();
-            mActivityRule.runOnUiThread(() -> {
+            sInstrumentation.runOnMainSync(() -> {
                 state.resumeTiming();
                 view.onVisibilityAggregated(false);
                 state.pauseTiming();
             });
-            mActivityRule.runOnUiThread(() -> {
+            sInstrumentation.runOnMainSync(() -> {
                 state.resumeTiming();
                 view.onVisibilityAggregated(true);
                 state.pauseTiming();

@@ -16,6 +16,7 @@
 
 package com.android.systemui.qs.tiles;
 
+import android.annotation.NonNull;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -29,56 +30,66 @@ import android.service.quicksettings.Tile;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Switch;
 
 import androidx.annotation.Nullable;
 
+import com.android.internal.annotations.GuardedBy;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settingslib.graph.SignalDrawable;
 import com.android.settingslib.mobile.TelephonyIcons;
 import com.android.settingslib.net.DataUsageController;
-import com.android.systemui.R;
+import com.android.systemui.animation.Expandable;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.FalsingManager;
-import com.android.systemui.plugins.qs.QSIconView;
-import com.android.systemui.plugins.qs.QSTile.SignalState;
+import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
-import com.android.systemui.qs.AlphaControlledSignalTileView;
 import com.android.systemui.qs.QSHost;
+import com.android.systemui.qs.QsEventLogger;
 import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
-import com.android.systemui.statusbar.policy.NetworkController;
-import com.android.systemui.statusbar.policy.NetworkController.IconState;
-import com.android.systemui.statusbar.policy.NetworkController.MobileDataIndicators;
-import com.android.systemui.statusbar.policy.NetworkController.SignalCallback;
-import com.android.systemui.statusbar.policy.NetworkController.WifiIndicators;
-import com.android.systemui.statusbar.policy.WifiIcons;
+import com.android.systemui.qs.tiles.dialog.InternetDialogManager;
+import com.android.systemui.res.R;
+import com.android.systemui.statusbar.connectivity.AccessPointController;
+import com.android.systemui.statusbar.connectivity.IconState;
+import com.android.systemui.statusbar.connectivity.MobileDataIndicators;
+import com.android.systemui.statusbar.connectivity.NetworkController;
+import com.android.systemui.statusbar.connectivity.SignalCallback;
+import com.android.systemui.statusbar.connectivity.WifiIcons;
+import com.android.systemui.statusbar.connectivity.WifiIndicators;
 
-import java.io.FileDescriptor;
 import java.io.PrintWriter;
 
 import javax.inject.Inject;
 
 /** Quick settings tile: Internet **/
-public class InternetTile extends QSTileImpl<SignalState> {
+public class InternetTile extends QSTileImpl<QSTile.BooleanState> {
+
+    public static final String TILE_SPEC = "internet";
+
     private static final Intent WIFI_SETTINGS = new Intent(Settings.ACTION_WIFI_SETTINGS);
-    private static final Intent INTERNET_PANEL =
-            new Intent(Settings.Panel.ACTION_INTERNET_CONNECTIVITY);
+    private static final int LAST_STATE_UNKNOWN = -1;
+    private static final int LAST_STATE_CELLULAR = 0;
+    private static final int LAST_STATE_WIFI = 1;
+    private static final int LAST_STATE_ETHERNET = 2;
 
     protected final NetworkController mController;
+    private final AccessPointController mAccessPointController;
     private final DataUsageController mDataController;
     // The last updated tile state, 0: mobile, 1: wifi, 2: ethernet.
-    private int mLastTileState = -1;
+    private int mLastTileState = LAST_STATE_UNKNOWN;
 
     protected final InternetSignalCallback mSignalCallback = new InternetSignalCallback();
+    private final InternetDialogManager mInternetDialogManager;
+    final Handler mHandler;
 
     @Inject
     public InternetTile(
             QSHost host,
+            QsEventLogger uiEventLogger,
             @Background Looper backgroundLooper,
             @Main Handler mainHandler,
             FalsingManager falsingManager,
@@ -86,25 +97,25 @@ public class InternetTile extends QSTileImpl<SignalState> {
             StatusBarStateController statusBarStateController,
             ActivityStarter activityStarter,
             QSLogger qsLogger,
-            NetworkController networkController
+            NetworkController networkController,
+            AccessPointController accessPointController,
+            InternetDialogManager internetDialogManager
     ) {
-        super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
+        super(host, uiEventLogger, backgroundLooper, mainHandler, falsingManager, metricsLogger,
                 statusBarStateController, activityStarter, qsLogger);
+        mInternetDialogManager = internetDialogManager;
+        mHandler = mainHandler;
         mController = networkController;
+        mAccessPointController = accessPointController;
         mDataController = mController.getMobileDataController();
         mController.observe(getLifecycle(), mSignalCallback);
     }
 
     @Override
-    public SignalState newTileState() {
-        SignalState s = new SignalState();
+    public BooleanState newTileState() {
+        BooleanState s = new BooleanState();
         s.forceExpandIcon = true;
         return s;
-    }
-
-    @Override
-    public QSIconView createTileView(Context context) {
-        return new AlphaControlledSignalTileView(context);
     }
 
     @Override
@@ -113,8 +124,10 @@ public class InternetTile extends QSTileImpl<SignalState> {
     }
 
     @Override
-    protected void handleClick(@Nullable View view) {
-        mActivityStarter.postStartActivityDismissingKeyguard(INTERNET_PANEL, 0);
+    protected void handleClick(@Nullable Expandable expandable) {
+        mHandler.post(() -> mInternetDialogManager.create(true,
+                mAccessPointController.canConfigMobileData(),
+                mAccessPointController.canConfigWifi(), expandable));
     }
 
     @Override
@@ -134,13 +147,15 @@ public class InternetTile extends QSTileImpl<SignalState> {
                         && mHost.getUserContext().getUserId() == UserHandle.USER_SYSTEM);
     }
 
-    private CharSequence getSecondaryLabel(boolean isTransient, String statusLabel) {
+    @Nullable
+    private CharSequence getSecondaryLabel(boolean isTransient, @Nullable String statusLabel) {
         return isTransient
                 ? mContext.getString(R.string.quick_settings_wifi_secondary_label_transient)
                 : statusLabel;
     }
 
-    private static String removeDoubleQuotes(String string) {
+    @Nullable
+    private static String removeDoubleQuotes(@Nullable String string) {
         if (string == null) return null;
         final int length = string.length();
         if ((length > 1) && (string.charAt(0) == '"') && (string.charAt(length - 1) == '"')) {
@@ -152,7 +167,17 @@ public class InternetTile extends QSTileImpl<SignalState> {
     private static final class EthernetCallbackInfo {
         boolean mConnected;
         int mEthernetSignalIconId;
+        @Nullable
         String mEthernetContentDescription;
+
+        public void copyTo(EthernetCallbackInfo ethernetCallbackInfo) {
+            if (ethernetCallbackInfo == null) {
+                throw new IllegalArgumentException();
+            }
+            ethernetCallbackInfo.mConnected = this.mConnected;
+            ethernetCallbackInfo.mEthernetSignalIconId = this.mEthernetSignalIconId;
+            ethernetCallbackInfo.mEthernetContentDescription = this.mEthernetContentDescription;
+        }
 
         @Override
         public String toString() {
@@ -169,15 +194,33 @@ public class InternetTile extends QSTileImpl<SignalState> {
         boolean mEnabled;
         boolean mConnected;
         int mWifiSignalIconId;
+        @Nullable
         String mSsid;
-        boolean mActivityIn;
-        boolean mActivityOut;
+        @Nullable
         String mWifiSignalContentDescription;
         boolean mIsTransient;
+        @Nullable
         public String mStatusLabel;
         boolean mNoDefaultNetwork;
         boolean mNoValidatedNetwork;
         boolean mNoNetworksAvailable;
+
+        public void copyTo(WifiCallbackInfo wifiCallbackInfo) {
+            if (wifiCallbackInfo == null) {
+                throw new IllegalArgumentException();
+            }
+            wifiCallbackInfo.mAirplaneModeEnabled = this.mAirplaneModeEnabled;
+            wifiCallbackInfo.mEnabled = this.mEnabled;
+            wifiCallbackInfo.mConnected = this.mConnected;
+            wifiCallbackInfo.mWifiSignalIconId = this.mWifiSignalIconId;
+            wifiCallbackInfo.mSsid = this.mSsid;
+            wifiCallbackInfo.mWifiSignalContentDescription = this.mWifiSignalContentDescription;
+            wifiCallbackInfo.mIsTransient = this.mIsTransient;
+            wifiCallbackInfo.mStatusLabel = this.mStatusLabel;
+            wifiCallbackInfo.mNoDefaultNetwork = this.mNoDefaultNetwork;
+            wifiCallbackInfo.mNoValidatedNetwork = this.mNoValidatedNetwork;
+            wifiCallbackInfo.mNoNetworksAvailable = this.mNoNetworksAvailable;
+        }
 
         @Override
         public String toString() {
@@ -187,8 +230,6 @@ public class InternetTile extends QSTileImpl<SignalState> {
                     .append(",mConnected=").append(mConnected)
                     .append(",mWifiSignalIconId=").append(mWifiSignalIconId)
                     .append(",mSsid=").append(mSsid)
-                    .append(",mActivityIn=").append(mActivityIn)
-                    .append(",mActivityOut=").append(mActivityOut)
                     .append(",mWifiSignalContentDescription=").append(mWifiSignalContentDescription)
                     .append(",mIsTransient=").append(mIsTransient)
                     .append(",mNoDefaultNetwork=").append(mNoDefaultNetwork)
@@ -200,18 +241,35 @@ public class InternetTile extends QSTileImpl<SignalState> {
 
     private static final class CellularCallbackInfo {
         boolean mAirplaneModeEnabled;
+        @Nullable
         CharSequence mDataSubscriptionName;
+        @Nullable
         CharSequence mDataContentDescription;
         int mMobileSignalIconId;
         int mQsTypeIcon;
-        boolean mActivityIn;
-        boolean mActivityOut;
         boolean mNoSim;
         boolean mRoaming;
         boolean mMultipleSubs;
         boolean mNoDefaultNetwork;
         boolean mNoValidatedNetwork;
         boolean mNoNetworksAvailable;
+
+        public void copyTo(CellularCallbackInfo cellularCallbackInfo) {
+            if (cellularCallbackInfo == null) {
+                throw new IllegalArgumentException();
+            }
+            cellularCallbackInfo.mAirplaneModeEnabled = this.mAirplaneModeEnabled;
+            cellularCallbackInfo.mDataSubscriptionName = this.mDataSubscriptionName;
+            cellularCallbackInfo.mDataContentDescription = this.mDataContentDescription;
+            cellularCallbackInfo.mMobileSignalIconId = this.mMobileSignalIconId;
+            cellularCallbackInfo.mQsTypeIcon = this.mQsTypeIcon;
+            cellularCallbackInfo.mNoSim = this.mNoSim;
+            cellularCallbackInfo.mRoaming = this.mRoaming;
+            cellularCallbackInfo.mMultipleSubs = this.mMultipleSubs;
+            cellularCallbackInfo.mNoDefaultNetwork = this.mNoDefaultNetwork;
+            cellularCallbackInfo.mNoValidatedNetwork = this.mNoValidatedNetwork;
+            cellularCallbackInfo.mNoNetworksAvailable = this.mNoNetworksAvailable;
+        }
 
         @Override
         public String toString() {
@@ -221,8 +279,6 @@ public class InternetTile extends QSTileImpl<SignalState> {
                 .append(",mDataContentDescription=").append(mDataContentDescription)
                 .append(",mMobileSignalIconId=").append(mMobileSignalIconId)
                 .append(",mQsTypeIcon=").append(mQsTypeIcon)
-                .append(",mActivityIn=").append(mActivityIn)
-                .append(",mActivityOut=").append(mActivityOut)
                 .append(",mNoSim=").append(mNoSim)
                 .append(",mRoaming=").append(mRoaming)
                 .append(",mMultipleSubs=").append(mMultipleSubs)
@@ -234,34 +290,41 @@ public class InternetTile extends QSTileImpl<SignalState> {
     }
 
     protected final class InternetSignalCallback implements SignalCallback {
+        @GuardedBy("mWifiInfo")
         final WifiCallbackInfo mWifiInfo = new WifiCallbackInfo();
+        @GuardedBy("mCellularInfo")
         final CellularCallbackInfo mCellularInfo = new CellularCallbackInfo();
+        @GuardedBy("mEthernetInfo")
         final EthernetCallbackInfo mEthernetInfo = new EthernetCallbackInfo();
 
 
         @Override
-        public void setWifiIndicators(WifiIndicators indicators) {
+        public void setWifiIndicators(@NonNull WifiIndicators indicators) {
             if (DEBUG) {
                 Log.d(TAG, "setWifiIndicators: " + indicators);
             }
-            mWifiInfo.mEnabled = indicators.enabled;
-            if (indicators.qsIcon == null) {
-                return;
+            synchronized (mWifiInfo) {
+                mWifiInfo.mEnabled = indicators.enabled;
+                mWifiInfo.mSsid = indicators.description;
+                mWifiInfo.mIsTransient = indicators.isTransient;
+                mWifiInfo.mStatusLabel = indicators.statusLabel;
+                if (indicators.qsIcon != null) {
+                    mWifiInfo.mConnected = indicators.qsIcon.visible;
+                    mWifiInfo.mWifiSignalIconId = indicators.qsIcon.icon;
+                    mWifiInfo.mWifiSignalContentDescription = indicators.qsIcon.contentDescription;
+                } else {
+                    mWifiInfo.mConnected = false;
+                    mWifiInfo.mWifiSignalIconId = 0;
+                    mWifiInfo.mWifiSignalContentDescription = null;
+                }
             }
-            mWifiInfo.mConnected = indicators.qsIcon.visible;
-            mWifiInfo.mWifiSignalIconId = indicators.qsIcon.icon;
-            mWifiInfo.mWifiSignalContentDescription = indicators.qsIcon.contentDescription;
-            mWifiInfo.mEnabled = indicators.enabled;
-            mWifiInfo.mSsid = indicators.description;
-            mWifiInfo.mActivityIn = indicators.activityIn;
-            mWifiInfo.mActivityOut = indicators.activityOut;
-            mWifiInfo.mIsTransient = indicators.isTransient;
-            mWifiInfo.mStatusLabel = indicators.statusLabel;
-            refreshState(mWifiInfo);
+            if (indicators.qsIcon != null) {
+                refreshState(mWifiInfo);
+            }
         }
 
         @Override
-        public void setMobileDataIndicators(MobileDataIndicators indicators) {
+        public void setMobileDataIndicators(@NonNull MobileDataIndicators indicators) {
             if (DEBUG) {
                 Log.d(TAG, "setMobileDataIndicators: " + indicators);
             }
@@ -269,28 +332,30 @@ public class InternetTile extends QSTileImpl<SignalState> {
                 // Not data sim, don't display.
                 return;
             }
-            mCellularInfo.mDataSubscriptionName = indicators.description == null
-                    ? mController.getMobileDataNetworkName() : indicators.description;
-            mCellularInfo.mDataContentDescription = indicators.description != null
+            synchronized (mCellularInfo) {
+                mCellularInfo.mDataSubscriptionName = indicators.qsDescription == null
+                    ? mController.getMobileDataNetworkName() : indicators.qsDescription;
+                mCellularInfo.mDataContentDescription = indicators.qsDescription != null
                     ? indicators.typeContentDescriptionHtml : null;
-            mCellularInfo.mMobileSignalIconId = indicators.qsIcon.icon;
-            mCellularInfo.mQsTypeIcon = indicators.qsType;
-            mCellularInfo.mActivityIn = indicators.activityIn;
-            mCellularInfo.mActivityOut = indicators.activityOut;
-            mCellularInfo.mRoaming = indicators.roaming;
-            mCellularInfo.mMultipleSubs = mController.getNumberSubscriptions() > 1;
+                mCellularInfo.mMobileSignalIconId = indicators.qsIcon.icon;
+                mCellularInfo.mQsTypeIcon = indicators.qsType;
+                mCellularInfo.mRoaming = indicators.roaming;
+                mCellularInfo.mMultipleSubs = mController.getNumberSubscriptions() > 1;
+            }
             refreshState(mCellularInfo);
         }
 
         @Override
-        public void setEthernetIndicators(IconState icon) {
+        public void setEthernetIndicators(@NonNull IconState icon) {
             if (DEBUG) {
                 Log.d(TAG, "setEthernetIndicators: "
                         + "icon = " + (icon == null ? "" :  icon.toString()));
             }
-            mEthernetInfo.mConnected = icon.visible;
-            mEthernetInfo.mEthernetSignalIconId = icon.icon;
-            mEthernetInfo.mEthernetContentDescription = icon.contentDescription;
+            synchronized (mEthernetInfo) {
+                mEthernetInfo.mConnected = icon.visible;
+                mEthernetInfo.mEthernetSignalIconId = icon.icon;
+                mEthernetInfo.mEthernetContentDescription = icon.contentDescription;
+            }
             if (icon.visible) {
                 refreshState(mEthernetInfo);
             }
@@ -303,11 +368,13 @@ public class InternetTile extends QSTileImpl<SignalState> {
                         + "show = " + show + ","
                         + "simDetected = " + simDetected);
             }
-            mCellularInfo.mNoSim = show;
-            if (mCellularInfo.mNoSim) {
-                // Make sure signal gets cleared out when no sims.
-                mCellularInfo.mMobileSignalIconId = 0;
-                mCellularInfo.mQsTypeIcon = 0;
+            synchronized (mCellularInfo) {
+                mCellularInfo.mNoSim = show;
+                if (mCellularInfo.mNoSim) {
+                    // Make sure signal gets cleared out when no sims.
+                    mCellularInfo.mMobileSignalIconId = 0;
+                    mCellularInfo.mQsTypeIcon = 0;
+                }
             }
         }
 
@@ -320,10 +387,21 @@ public class InternetTile extends QSTileImpl<SignalState> {
             if (mCellularInfo.mAirplaneModeEnabled == icon.visible) {
                 return;
             }
-            mCellularInfo.mAirplaneModeEnabled = icon.visible;
-            mWifiInfo.mAirplaneModeEnabled = icon.visible;
+            synchronized (mCellularInfo) {
+                mCellularInfo.mAirplaneModeEnabled = icon.visible;
+            }
+            synchronized (mWifiInfo) {
+                mWifiInfo.mAirplaneModeEnabled = icon.visible;
+            }
             if (!mSignalCallback.mEthernetInfo.mConnected) {
-                if (mWifiInfo.mEnabled && (mWifiInfo.mWifiSignalIconId > 0)
+                // Always use mWifiInfo to refresh the Internet Tile if airplane mode is enabled,
+                // because Internet Tile will show different information depending on whether WiFi
+                // is enabled or not.
+                if (mWifiInfo.mAirplaneModeEnabled) {
+                    refreshState(mWifiInfo);
+                // If airplane mode is disabled, we will use mWifiInfo to refresh the Internet Tile
+                // if WiFi is currently connected to avoid any icon flickering.
+                } else if (mWifiInfo.mEnabled && (mWifiInfo.mWifiSignalIconId > 0)
                         && (mWifiInfo.mSsid != null)) {
                     refreshState(mWifiInfo);
                 } else {
@@ -341,12 +419,19 @@ public class InternetTile extends QSTileImpl<SignalState> {
                         + "noValidatedNetwork = " + noValidatedNetwork + ","
                         + "noNetworksAvailable = " + noNetworksAvailable);
             }
-            mCellularInfo.mNoDefaultNetwork = noDefaultNetwork;
-            mCellularInfo.mNoValidatedNetwork = noValidatedNetwork;
-            mCellularInfo.mNoNetworksAvailable = noNetworksAvailable;
-            mWifiInfo.mNoDefaultNetwork = noDefaultNetwork;
-            mWifiInfo.mNoValidatedNetwork = noValidatedNetwork;
-            mWifiInfo.mNoNetworksAvailable = noNetworksAvailable;
+            synchronized (mCellularInfo) {
+                mCellularInfo.mNoDefaultNetwork = noDefaultNetwork;
+                mCellularInfo.mNoValidatedNetwork = noValidatedNetwork;
+                mCellularInfo.mNoNetworksAvailable = noNetworksAvailable;
+            }
+            synchronized (mWifiInfo) {
+                mWifiInfo.mNoDefaultNetwork = noDefaultNetwork;
+                mWifiInfo.mNoValidatedNetwork = noValidatedNetwork;
+                mWifiInfo.mNoNetworksAvailable = noNetworksAvailable;
+            }
+            if (!noDefaultNetwork) {
+                return;
+            }
             refreshState(mWifiInfo);
         }
 
@@ -361,52 +446,70 @@ public class InternetTile extends QSTileImpl<SignalState> {
     }
 
     @Override
-    protected void handleUpdateState(SignalState state, Object arg) {
+    protected void handleUpdateState(BooleanState state, Object arg) {
+        mQSLogger.logInternetTileUpdate(
+                getTileSpec(), mLastTileState, arg == null ? "null" : arg.toString());
         if (arg instanceof CellularCallbackInfo) {
-            mLastTileState = 0;
-            handleUpdateCellularState(state, arg);
+            mLastTileState = LAST_STATE_CELLULAR;
+            CellularCallbackInfo cb = (CellularCallbackInfo) arg;
+            CellularCallbackInfo cellularInfo = new CellularCallbackInfo();
+            synchronized (cb) {
+                cb.copyTo(cellularInfo);
+            }
+            handleUpdateCellularState(state, cellularInfo);
         } else if (arg instanceof WifiCallbackInfo) {
-            mLastTileState = 1;
-            handleUpdateWifiState(state, arg);
+            mLastTileState = LAST_STATE_WIFI;
+            WifiCallbackInfo cb = (WifiCallbackInfo) arg;
+            WifiCallbackInfo wifiInfo = new WifiCallbackInfo();
+            synchronized (cb) {
+                cb.copyTo(wifiInfo);
+            }
+            handleUpdateWifiState(state, wifiInfo);
         } else if (arg instanceof EthernetCallbackInfo) {
-            mLastTileState = 2;
-            handleUpdateEthernetState(state, arg);
+            mLastTileState = LAST_STATE_ETHERNET;
+            EthernetCallbackInfo cb = (EthernetCallbackInfo) arg;
+            EthernetCallbackInfo ethernetInfo = new EthernetCallbackInfo();
+            synchronized (cb) {
+                cb.copyTo(ethernetInfo);
+            }
+            handleUpdateEthernetState(state, ethernetInfo);
         } else {
             // handleUpdateState will be triggered when user expands the QuickSetting panel with
             // arg = null, in this case the last updated CellularCallbackInfo or WifiCallbackInfo
             // should be used to refresh the tile.
-            if (mLastTileState == 0) {
-                handleUpdateCellularState(state, mSignalCallback.mCellularInfo);
-            } else if (mLastTileState == 1) {
-                handleUpdateWifiState(state, mSignalCallback.mWifiInfo);
-            } else if (mLastTileState == 2) {
-                handleUpdateEthernetState(state, mSignalCallback.mEthernetInfo);
+            if (mLastTileState == LAST_STATE_CELLULAR) {
+                CellularCallbackInfo cellularInfo = new CellularCallbackInfo();
+                synchronized (mSignalCallback.mCellularInfo) {
+                    mSignalCallback.mCellularInfo.copyTo(cellularInfo);
+                }
+                handleUpdateCellularState(state, cellularInfo);
+            } else if (mLastTileState == LAST_STATE_WIFI) {
+                WifiCallbackInfo wifiInfo = new WifiCallbackInfo();
+                synchronized (mSignalCallback.mWifiInfo) {
+                    mSignalCallback.mWifiInfo.copyTo(wifiInfo);
+                }
+                handleUpdateWifiState(state, wifiInfo);
+            } else if (mLastTileState == LAST_STATE_ETHERNET) {
+                EthernetCallbackInfo ethernetInfo = new EthernetCallbackInfo();
+                synchronized (mSignalCallback.mEthernetInfo) {
+                    mSignalCallback.mEthernetInfo.copyTo(ethernetInfo);
+                }
+                handleUpdateEthernetState(state, ethernetInfo);
             }
         }
     }
 
-    private void handleUpdateWifiState(SignalState state, Object arg) {
+    private void handleUpdateWifiState(BooleanState state, Object arg) {
         WifiCallbackInfo cb = (WifiCallbackInfo) arg;
         if (DEBUG) {
             Log.d(TAG, "handleUpdateWifiState: " + "WifiCallbackInfo = " + cb.toString());
         }
         boolean wifiConnected = cb.mEnabled && (cb.mWifiSignalIconId > 0) && (cb.mSsid != null);
         boolean wifiNotConnected = (cb.mWifiSignalIconId > 0) && (cb.mSsid == null);
-        boolean enabledChanging = state.value != cb.mEnabled;
-        if (enabledChanging) {
-            fireToggleStateChanged(cb.mEnabled);
-        }
-        if (state.slash == null) {
-            state.slash = new SlashState();
-            state.slash.rotation = 6;
-        }
-        state.slash.isSlashed = false;
         state.secondaryLabel = getSecondaryLabel(cb.mIsTransient, removeDoubleQuotes(cb.mSsid));
         state.state = Tile.STATE_ACTIVE;
         state.dualTarget = true;
         state.value = cb.mEnabled;
-        state.activityIn = cb.mEnabled && cb.mActivityIn;
-        state.activityOut = cb.mEnabled && cb.mActivityOut;
         final StringBuffer minimalContentDescription = new StringBuffer();
         final StringBuffer minimalStateDescription = new StringBuffer();
         final Resources r = mContext.getResources();
@@ -429,7 +532,7 @@ public class InternetTile extends QSTileImpl<SignalState> {
                 state.icon = ResourceIcon.get(cb.mWifiSignalIconId);
             }
         } else if (cb.mNoDefaultNetwork) {
-            if (cb.mNoNetworksAvailable) {
+            if (cb.mNoNetworksAvailable || !cb.mEnabled) {
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_no_internet_unavailable);
                 state.secondaryLabel = r.getString(R.string.quick_settings_networks_unavailable);
             } else {
@@ -440,7 +543,6 @@ public class InternetTile extends QSTileImpl<SignalState> {
             state.icon = ResourceIcon.get(
                 com.android.internal.R.drawable.ic_signal_wifi_transient_animation);
         } else if (!state.value) {
-            state.slash.isSlashed = true;
             state.state = Tile.STATE_INACTIVE;
             state.icon = ResourceIcon.get(WifiIcons.QS_WIFI_DISABLED);
         } else if (wifiConnected) {
@@ -465,11 +567,11 @@ public class InternetTile extends QSTileImpl<SignalState> {
                 R.string.accessibility_quick_settings_open_settings, getTileLabel());
         state.expandedAccessibilityClassName = Switch.class.getName();
         if (DEBUG) {
-            Log.d(TAG, "handleUpdateWifiState: " + "SignalState = " + state.toString());
+            Log.d(TAG, "handleUpdateWifiState: " + "BooleanState = " + state.toString());
         }
     }
 
-    private void handleUpdateCellularState(SignalState state, Object arg) {
+    private void handleUpdateCellularState(BooleanState state, Object arg) {
         CellularCallbackInfo cb = (CellularCallbackInfo) arg;
         if (DEBUG) {
             Log.d(TAG, "handleUpdateCellularState: " + "CellularCallbackInfo = " + cb.toString());
@@ -480,8 +582,6 @@ public class InternetTile extends QSTileImpl<SignalState> {
         boolean mobileDataEnabled = mDataController.isMobileDataSupported()
                 && mDataController.isMobileDataEnabled();
         state.value = mobileDataEnabled;
-        state.activityIn = mobileDataEnabled && cb.mActivityIn;
-        state.activityOut = mobileDataEnabled && cb.mActivityOut;
         state.expandedAccessibilityClassName = Switch.class.getName();
 
         if (cb.mAirplaneModeEnabled && cb.mQsTypeIcon != TelephonyIcons.ICON_CWF) {
@@ -489,7 +589,7 @@ public class InternetTile extends QSTileImpl<SignalState> {
             state.icon = ResourceIcon.get(R.drawable.ic_qs_no_internet_unavailable);
             state.secondaryLabel = r.getString(R.string.status_bar_airplane);
         } else if (cb.mNoDefaultNetwork) {
-            if (cb.mNoNetworksAvailable) {
+            if (cb.mNoNetworksAvailable || !mSignalCallback.mWifiInfo.mEnabled) {
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_no_internet_unavailable);
                 state.secondaryLabel = r.getString(R.string.quick_settings_networks_unavailable);
             } else {
@@ -510,14 +610,17 @@ public class InternetTile extends QSTileImpl<SignalState> {
             state.stateDescription = state.secondaryLabel;
         }
         if (DEBUG) {
-            Log.d(TAG, "handleUpdateCellularState: " + "SignalState = " + state.toString());
+            Log.d(TAG, "handleUpdateCellularState: " + "BooleanState = " + state.toString());
         }
     }
 
-    private void handleUpdateEthernetState(SignalState state, Object arg) {
+    private void handleUpdateEthernetState(BooleanState state, Object arg) {
         EthernetCallbackInfo cb = (EthernetCallbackInfo) arg;
         if (DEBUG) {
             Log.d(TAG, "handleUpdateEthernetState: " + "EthernetCallbackInfo = " + cb.toString());
+        }
+        if (!cb.mConnected) {
+            return;
         }
         final Resources r = mContext.getResources();
         state.label = r.getString(R.string.quick_settings_internet_label);
@@ -525,11 +628,12 @@ public class InternetTile extends QSTileImpl<SignalState> {
         state.icon = ResourceIcon.get(cb.mEthernetSignalIconId);
         state.secondaryLabel = cb.mEthernetContentDescription;
         if (DEBUG) {
-            Log.d(TAG, "handleUpdateEthernetState: " + "SignalState = " + state.toString());
+            Log.d(TAG, "handleUpdateEthernetState: " + "BooleanState = " + state.toString());
         }
     }
 
-    private CharSequence appendMobileDataType(CharSequence current, CharSequence dataType) {
+    private CharSequence appendMobileDataType(
+            @Nullable CharSequence current, @Nullable CharSequence dataType) {
         if (TextUtils.isEmpty(dataType)) {
             return Html.fromHtml((current == null ? "" : current.toString()), 0);
         }
@@ -540,6 +644,7 @@ public class InternetTile extends QSTileImpl<SignalState> {
         return Html.fromHtml(concat, 0);
     }
 
+    @Nullable
     private CharSequence getMobileDataContentName(CellularCallbackInfo cb) {
         if (cb.mRoaming && !TextUtils.isEmpty(cb.mDataContentDescription)) {
             String roaming = mContext.getString(R.string.data_connection_roaming);
@@ -564,10 +669,15 @@ public class InternetTile extends QSTileImpl<SignalState> {
         }
 
         @Override
+        @NonNull
         public Drawable getDrawable(Context context) {
             SignalDrawable d = new SignalDrawable(context);
             d.setLevel(getState());
             return d;
+        }
+        @Override
+        public String toString() {
+            return String.format("SignalIcon[mState=0x%08x]", mState);
         }
     }
 
@@ -575,10 +685,15 @@ public class InternetTile extends QSTileImpl<SignalState> {
      * Dumps the state of this tile along with its name.
      */
     @Override
-    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+    public void dump(PrintWriter pw, String[] args) {
         pw.println(this.getClass().getSimpleName() + ":");
         pw.print("    "); pw.println(getState().toString());
         pw.print("    "); pw.println("mLastTileState=" + mLastTileState);
         pw.print("    "); pw.println("mSignalCallback=" + mSignalCallback.toString());
+    }
+
+    // For testing usage only.
+    protected int getLastTileState() {
+        return mLastTileState;
     }
 }

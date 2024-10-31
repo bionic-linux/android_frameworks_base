@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The Android Open Source Project
+ * Copyright (C) 2022 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,25 +16,94 @@
 
 package com.android.systemui.screenshot.dagger;
 
-import android.app.Service;
+import static com.android.systemui.Flags.screenshotShelfUi2;
 
+import android.app.Service;
+import android.view.accessibility.AccessibilityManager;
+
+import com.android.systemui.dagger.SysUISingleton;
+import com.android.systemui.screenshot.ImageCapture;
+import com.android.systemui.screenshot.ImageCaptureImpl;
+import com.android.systemui.screenshot.LegacyScreenshotViewProxy;
+import com.android.systemui.screenshot.ScreenshotPolicy;
+import com.android.systemui.screenshot.ScreenshotPolicyImpl;
+import com.android.systemui.screenshot.ScreenshotShelfViewProxy;
+import com.android.systemui.screenshot.ScreenshotSoundController;
+import com.android.systemui.screenshot.ScreenshotSoundControllerImpl;
+import com.android.systemui.screenshot.ScreenshotSoundProvider;
+import com.android.systemui.screenshot.ScreenshotSoundProviderImpl;
+import com.android.systemui.screenshot.ScreenshotViewProxy;
+import com.android.systemui.screenshot.TakeScreenshotExecutor;
+import com.android.systemui.screenshot.TakeScreenshotExecutorImpl;
 import com.android.systemui.screenshot.TakeScreenshotService;
+import com.android.systemui.screenshot.appclips.AppClipsScreenshotHelperService;
+import com.android.systemui.screenshot.appclips.AppClipsService;
+import com.android.systemui.screenshot.message.MessageModule;
+import com.android.systemui.screenshot.policy.ScreenshotPolicyModule;
+import com.android.systemui.screenshot.proxy.SystemUiProxyModule;
+import com.android.systemui.screenshot.ui.viewmodel.ScreenshotViewModel;
 
 import dagger.Binds;
 import dagger.Module;
+import dagger.Provides;
 import dagger.multibindings.ClassKey;
 import dagger.multibindings.IntoMap;
 
 /**
  * Defines injectable resources for Screenshots
  */
-@Module
+@Module(includes = {ScreenshotPolicyModule.class, SystemUiProxyModule.class, MessageModule.class})
 public abstract class ScreenshotModule {
 
-    /** */
     @Binds
     @IntoMap
     @ClassKey(TakeScreenshotService.class)
-    public abstract Service bindTakeScreenshotService(TakeScreenshotService service);
+    abstract Service bindTakeScreenshotService(TakeScreenshotService service);
 
+    @Binds
+    @SysUISingleton
+    abstract TakeScreenshotExecutor bindTakeScreenshotExecutor(
+            TakeScreenshotExecutorImpl impl);
+
+    @Binds
+    abstract ScreenshotPolicy bindScreenshotPolicyImpl(ScreenshotPolicyImpl impl);
+
+    @Binds
+    abstract ImageCapture bindImageCaptureImpl(ImageCaptureImpl capture);
+
+    @Binds
+    @IntoMap
+    @ClassKey(AppClipsScreenshotHelperService.class)
+    abstract Service bindAppClipsScreenshotHelperService(AppClipsScreenshotHelperService service);
+
+    @Binds
+    @IntoMap
+    @ClassKey(AppClipsService.class)
+    abstract Service bindAppClipsService(AppClipsService service);
+
+    @Binds
+    abstract ScreenshotSoundProvider bindScreenshotSoundProvider(
+            ScreenshotSoundProviderImpl screenshotSoundProviderImpl);
+
+    @Binds
+    abstract ScreenshotSoundController bindScreenshotSoundController(
+            ScreenshotSoundControllerImpl screenshotSoundProviderImpl);
+
+    @Provides
+    @SysUISingleton
+    static ScreenshotViewModel providesScreenshotViewModel(
+            AccessibilityManager accessibilityManager) {
+        return new ScreenshotViewModel(accessibilityManager);
+    }
+
+    @Provides
+    static ScreenshotViewProxy.Factory providesScreenshotViewProxyFactory(
+            ScreenshotShelfViewProxy.Factory shelfScreenshotViewProxyFactory,
+            LegacyScreenshotViewProxy.Factory legacyScreenshotViewProxyFactory) {
+        if (screenshotShelfUi2()) {
+            return shelfScreenshotViewProxyFactory;
+        } else {
+            return legacyScreenshotViewProxyFactory;
+        }
+    }
 }

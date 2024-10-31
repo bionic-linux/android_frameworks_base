@@ -16,34 +16,30 @@
 
 package com.android.packageinstaller;
 
-import static android.content.pm.PackageInstaller.SessionParams.UID_UNKNOWN;
+import static com.android.packageinstaller.PackageInstallerActivity.EXTRA_APP_SNIPPET;
+import static com.android.packageinstaller.PackageInstallerActivity.EXTRA_STAGED_SESSION_ID;
 
-import android.annotation.Nullable;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
-import android.content.pm.parsing.ApkLiteParseUtils;
-import android.content.pm.parsing.PackageLite;
-import android.content.pm.parsing.result.ParseResult;
-import android.content.pm.parsing.result.ParseTypeImpl;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
-import com.android.internal.app.AlertActivity;
-import com.android.internal.content.PackageHelper;
-
+import androidx.annotation.Nullable;
+import com.android.packageinstaller.common.EventResultPersister;
+import com.android.packageinstaller.common.InstallEventReceiver;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * Send package to the package manager and handle results from package manager. Once the
@@ -51,7 +47,7 @@ import java.io.OutputStream;
  * <p>This has two phases: First send the data to the package manager, then wait until the package
  * manager processed the result.</p>
  */
-public class InstallInstalling extends AlertActivity {
+public class InstallInstalling extends Activity {
     private static final String LOG_TAG = InstallInstalling.class.getSimpleName();
 
     private static final String SESSION_ID = "com.android.packageinstaller.SESSION_ID";
@@ -75,6 +71,8 @@ public class InstallInstalling extends AlertActivity {
     /** The button that can cancel this dialog */
     private Button mCancelButton;
 
+    private AlertDialog mDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +81,7 @@ public class InstallInstalling extends AlertActivity {
                 .getParcelableExtra(PackageUtil.INTENT_ATTR_APPLICATION_INFO);
         mPackageURI = getIntent().getData();
 
-        if ("package".equals(mPackageURI.getScheme())) {
+        if (PackageInstallerActivity.SCHEME_PACKAGE.equals(mPackageURI.getScheme())) {
             try {
                 getPackageManager().installExistingPackage(appInfo.packageName);
                 launchSuccess();
@@ -92,13 +90,21 @@ public class InstallInstalling extends AlertActivity {
                         PackageManager.INSTALL_FAILED_INTERNAL_ERROR, null);
             }
         } else {
+            // ContentResolver.SCHEME_FILE
+            // STAGED_SESSION_ID extra contains an ID of a previously staged install session.
             final File sourceFile = new File(mPackageURI.getPath());
-            PackageUtil.AppSnippet as = PackageUtil.getAppSnippet(this, appInfo, sourceFile);
 
-            mAlert.setIcon(as.icon);
-            mAlert.setTitle(as.label);
-            mAlert.setView(R.layout.install_content_view);
-            mAlert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel),
+            // Dialogs displayed while changing update-owner have a blank icon. To fix this,
+            // fetch the appSnippet from the source file again
+            PackageUtil.AppSnippet as = PackageUtil.getAppSnippet(this, appInfo, sourceFile);
+            getIntent().putExtra(EXTRA_APP_SNIPPET, as);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            builder.setIcon(as.icon);
+            builder.setTitle(as.label);
+            builder.setView(R.layout.install_content_view);
+            builder.setNegativeButton(getString(R.string.cancel),
                     (ignored, ignored2) -> {
                         if (mInstallingTask != null) {
                             mInstallingTask.cancel(true);
@@ -111,9 +117,11 @@ public class InstallInstalling extends AlertActivity {
 
                         setResult(RESULT_CANCELED);
                         finish();
-                    }, null);
-            setupAlert();
-            requireViewById(R.id.installing).setVisibility(View.VISIBLE);
+                    });
+            builder.setCancelable(false);
+            mDialog = builder.create();
+            mDialog.show();
+            mDialog.requireViewById(R.id.installing).setVisibility(View.VISIBLE);
 
             if (savedInstanceState != null) {
                 mSessionId = savedInstanceState.getInt(SESSION_ID);
@@ -128,41 +136,6 @@ public class InstallInstalling extends AlertActivity {
                     // Does not happen
                 }
             } else {
-                PackageInstaller.SessionParams params = new PackageInstaller.SessionParams(
-                        PackageInstaller.SessionParams.MODE_FULL_INSTALL);
-                params.setInstallAsInstantApp(false);
-                params.setReferrerUri(getIntent().getParcelableExtra(Intent.EXTRA_REFERRER));
-                params.setOriginatingUri(getIntent()
-                        .getParcelableExtra(Intent.EXTRA_ORIGINATING_URI));
-                params.setOriginatingUid(getIntent().getIntExtra(Intent.EXTRA_ORIGINATING_UID,
-                        UID_UNKNOWN));
-                params.setInstallerPackageName(getIntent().getStringExtra(
-                        Intent.EXTRA_INSTALLER_PACKAGE_NAME));
-                params.setInstallReason(PackageManager.INSTALL_REASON_USER);
-
-                File file = new File(mPackageURI.getPath());
-                try {
-                    final ParseTypeImpl input = ParseTypeImpl.forDefaultParsing();
-                    final ParseResult<PackageLite> result = ApkLiteParseUtils.parsePackageLite(
-                            input.reset(), file, /* flags */ 0);
-                    if (result.isError()) {
-                        Log.e(LOG_TAG, "Cannot parse package " + file + ". Assuming defaults.");
-                        Log.e(LOG_TAG,
-                                "Cannot calculate installed size " + file + ". Try only apk size.");
-                        params.setSize(file.length());
-                    } else {
-                        final PackageLite pkg = result.getResult();
-                        params.setAppPackageName(pkg.getPackageName());
-                        params.setInstallLocation(pkg.getInstallLocation());
-                        params.setSize(
-                                PackageHelper.calculateInstalledSize(pkg, params.abiOverride));
-                    }
-                } catch (IOException e) {
-                    Log.e(LOG_TAG,
-                            "Cannot calculate installed size " + file + ". Try only apk size.");
-                    params.setSize(file.length());
-                }
-
                 try {
                     mInstallId = InstallEventReceiver
                             .addObserver(this, EventResultPersister.GENERATE_NEW_ID,
@@ -172,15 +145,20 @@ public class InstallInstalling extends AlertActivity {
                             PackageManager.INSTALL_FAILED_INTERNAL_ERROR, null);
                 }
 
-                try {
-                    mSessionId = getPackageManager().getPackageInstaller().createSession(params);
-                } catch (IOException e) {
+                mSessionId = getIntent().getIntExtra(EXTRA_STAGED_SESSION_ID, 0);
+                // Try to open session previously staged in InstallStaging.
+                try (PackageInstaller.Session ignored =
+                             getPackageManager().getPackageInstaller().openSession(
+                        mSessionId)) {
+                    Log.d(LOG_TAG, "Staged session is valid, proceeding with the install");
+                } catch (IOException | SecurityException e) {
+                    Log.e(LOG_TAG, "Invalid session id passed", e);
                     launchFailure(PackageInstaller.STATUS_FAILURE,
                             PackageManager.INSTALL_FAILED_INTERNAL_ERROR, null);
                 }
             }
 
-            mCancelButton = mAlert.getButton(DialogInterface.BUTTON_NEGATIVE);
+            mCancelButton = mDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
         }
     }
 
@@ -271,14 +249,25 @@ public class InstallInstalling extends AlertActivity {
         super.onDestroy();
     }
 
+    @Override
+    public void finish() {
+        if (mDialog != null) {
+            mDialog.dismiss();
+        }
+        super.finish();
+    }
+
     /**
      * Launch the appropriate finish activity (success or failed) for the installation result.
      *
      * @param statusCode    The installation result.
      * @param legacyStatus  The installation as used internally in the package manager.
      * @param statusMessage The detailed installation result.
+     * @param serviceId     Id for PowerManager.WakeLock service. Used only by Wear devices
+     *                      during an uninstall.
      */
-    private void launchFinishBasedOnResult(int statusCode, int legacyStatus, String statusMessage) {
+    private void launchFinishBasedOnResult(int statusCode, int legacyStatus, String statusMessage,
+            int serviceId /* ignore */) {
         if (statusCode == PackageInstaller.STATUS_SUCCESS) {
             launchSuccess();
         } else {
@@ -288,7 +277,7 @@ public class InstallInstalling extends AlertActivity {
 
     /**
      * Send the package to the package installer and then register a event result observer that
-     * will call {@link #launchFinishBasedOnResult(int, int, String)}
+     * will call {@link #launchFinishBasedOnResult(int, int, String, int)}
      */
     private final class InstallingAsyncTask extends AsyncTask<Void, Void,
             PackageInstaller.Session> {
@@ -296,55 +285,9 @@ public class InstallInstalling extends AlertActivity {
 
         @Override
         protected PackageInstaller.Session doInBackground(Void... params) {
-            PackageInstaller.Session session;
             try {
-                session = getPackageManager().getPackageInstaller().openSession(mSessionId);
+                return getPackageManager().getPackageInstaller().openSession(mSessionId);
             } catch (IOException e) {
-                synchronized (this) {
-                    isDone = true;
-                    notifyAll();
-                }
-                return null;
-            }
-
-            session.setStagingProgress(0);
-
-            try {
-                File file = new File(mPackageURI.getPath());
-
-                try (InputStream in = new FileInputStream(file)) {
-                    long sizeBytes = file.length();
-                    try (OutputStream out = session
-                            .openWrite("PackageInstaller", 0, sizeBytes)) {
-                        byte[] buffer = new byte[1024 * 1024];
-                        while (true) {
-                            int numRead = in.read(buffer);
-
-                            if (numRead == -1) {
-                                session.fsync(out);
-                                break;
-                            }
-
-                            if (isCancelled()) {
-                                session.close();
-                                break;
-                            }
-
-                            out.write(buffer, 0, numRead);
-                            if (sizeBytes > 0) {
-                                float fraction = ((float) numRead / (float) sizeBytes);
-                                session.addProgress(fraction);
-                            }
-                        }
-                    }
-                }
-
-                return session;
-            } catch (IOException | SecurityException e) {
-                Log.e(LOG_TAG, "Could not write package", e);
-
-                session.close();
-
                 return null;
             } finally {
                 synchronized (this) {
@@ -368,7 +311,18 @@ public class InstallInstalling extends AlertActivity {
                         broadcastIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
 
-                session.commit(pendingIntent.getIntentSender());
+                // Delay committing the session by 100ms to fix a UI glitch while displaying the
+                // Update-Owner change dialog on top of the Installing dialog
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                    try {
+                        session.commit(pendingIntent.getIntentSender());
+                    } catch (Exception e) {
+                        Log.e(LOG_TAG, "Cannot install package: ", e);
+                        launchFailure(PackageInstaller.STATUS_FAILURE,
+                            PackageManager.INSTALL_FAILED_INTERNAL_ERROR, null);
+                        return;
+                    }
+                }, 100);
                 mCancelButton.setEnabled(false);
                 setFinishOnTouchOutside(false);
             } else {

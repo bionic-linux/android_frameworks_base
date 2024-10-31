@@ -18,14 +18,16 @@ package android.view;
 
 import com.android.internal.os.IResultReceiver;
 import com.android.internal.policy.IKeyguardDismissCallback;
+import com.android.internal.policy.IKeyguardLockedStateListener;
 import com.android.internal.policy.IShortcutService;
 
+import android.app.IApplicationThread;
 import android.app.IAssistDataReceiver;
+import android.content.ComponentName;
 import android.content.res.CompatibilityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.GraphicBuffer;
-import android.graphics.Insets;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Region;
@@ -33,19 +35,20 @@ import android.os.Bundle;
 import android.os.IRemoteCallback;
 import android.os.ParcelFileDescriptor;
 import android.view.DisplayCutout;
-import android.view.IApplicationToken;
+import android.view.DisplayInfo;
 import android.view.IAppTransitionAnimationSpecsFuture;
 import android.view.ICrossWindowBlurEnabledListener;
 import android.view.IDisplayWindowInsetsController;
 import android.view.IDisplayWindowListener;
 import android.view.IDisplayFoldListener;
-import android.view.IDisplayWindowRotationController;
+import android.view.IDisplayChangeWindowController;
 import android.view.IOnKeyguardExitResult;
 import android.view.IPinnedTaskListener;
 import android.view.IScrollCaptureResponseListener;
 import android.view.RemoteAnimationAdapter;
 import android.view.IRotationWatcher;
 import android.view.ISystemGestureExclusionListener;
+import android.view.IDecorViewGestureListener;
 import android.view.IWallpaperVisibilityListener;
 import android.view.IWindow;
 import android.view.IWindowSession;
@@ -64,6 +67,16 @@ import android.view.WindowManager;
 import android.view.SurfaceControl;
 import android.view.displayhash.DisplayHash;
 import android.view.displayhash.VerifiedDisplayHash;
+import android.window.AddToSurfaceSyncGroupResult;
+import android.window.IGlobalDragListener;
+import android.window.IScreenRecordingCallback;
+import android.window.ISurfaceSyncGroupCompletedListener;
+import android.window.ITaskFpsCallback;
+import android.window.ITrustedPresentationListener;
+import android.window.InputTransferToken;
+import android.window.ScreenCapture;
+import android.window.TrustedPresentationThresholds;
+import android.window.WindowContextInfo;
 
 /**
  * System private interface to the window manager.
@@ -87,6 +100,11 @@ interface IWindowManager
      * Only use {@link DisplayRotation#mUserRotation} as the display rotation.
      */
     const int FIXED_TO_USER_ROTATION_ENABLED = 2;
+    /**
+     * If auto-rotation is not supported, {@link DisplayRotation#mUserRotation} will be used.
+     * Otherwise the behavior is same as {link #FIXED_TO_USER_ROTATION_DISABLED}.
+     */
+    const int FIXED_TO_USER_ROTATION_IF_NO_AUTO_ROTATION = 3;
 
     /**
      * ===== NOTICE =====
@@ -100,19 +118,23 @@ interface IWindowManager
 
     IWindowSession openSession(in IWindowSessionCallback callback);
 
-    boolean useBLAST();
-
     @UnsupportedAppUsage
     void getInitialDisplaySize(int displayId, out Point size);
     @UnsupportedAppUsage
     void getBaseDisplaySize(int displayId, out Point size);
+    @EnforcePermission("WRITE_SECURE_SETTINGS")
     void setForcedDisplaySize(int displayId, int width, int height);
+    @EnforcePermission("WRITE_SECURE_SETTINGS")
     void clearForcedDisplaySize(int displayId);
     @UnsupportedAppUsage
     int getInitialDisplayDensity(int displayId);
     int getBaseDisplayDensity(int displayId);
+    int getDisplayIdByUniqueId(String uniqueId);
+    @EnforcePermission("WRITE_SECURE_SETTINGS")
     void setForcedDisplayDensityForUser(int displayId, int density, int userId);
+    @EnforcePermission("WRITE_SECURE_SETTINGS")
     void clearForcedDisplayDensityForUser(int displayId, int userId);
+    @EnforcePermission("WRITE_SECURE_SETTINGS")
     void setForcedDisplayScalingMode(int displayId, int mode); // 0 = auto, 1 = disable
 
     // These can only be called when holding the MANAGE_APP_TOKENS permission.
@@ -142,7 +164,7 @@ interface IWindowManager
      * controller is called after the display has "frozen" for a rotation and display rotation will
      * only continue once the controller has finished calculating associated configurations.
      */
-    void setDisplayWindowRotationController(IDisplayWindowRotationController controller);
+    void setDisplayChangeWindowController(IDisplayChangeWindowController controller);
 
     /**
      * Adds a root container that a client shell can populate with its own windows (usually via
@@ -152,6 +174,7 @@ interface IWindowManager
      * @param shellRootLayer The container's layer. See WindowManager#ShellRootLayer.
      * @return a SurfaceControl to add things to.
      */
+    @EnforcePermission("MANAGE_APP_TOKENS")
     SurfaceControl addShellRoot(int displayId, IWindow client, int shellRootLayer);
 
     /**
@@ -160,6 +183,7 @@ interface IWindowManager
      *
      * @param target The IWindow that accessibility service interfaces with.
      */
+    @EnforcePermission("MANAGE_APP_TOKENS")
     void setShellRootAccessibilityWindow(int displayId, int shellRootLayer, IWindow target);
 
     /**
@@ -190,12 +214,21 @@ interface IWindowManager
     void disableKeyguard(IBinder token, String tag, int userId);
     /** @deprecated use Activity.setShowWhenLocked instead. */
     void reenableKeyguard(IBinder token, int userId);
+    @EnforcePermission("DISABLE_KEYGUARD")
     void exitKeyguardSecurely(IOnKeyguardExitResult callback);
     @UnsupportedAppUsage
     boolean isKeyguardLocked();
     @UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
     boolean isKeyguardSecure(int userId);
     void dismissKeyguard(IKeyguardDismissCallback callback, CharSequence message);
+
+    @JavaPassthrough(annotation = "@android.annotation.RequiresPermission(android.Manifest"
+            + ".permission.SUBSCRIBE_TO_KEYGUARD_LOCKED_STATE)")
+    void addKeyguardLockedStateListener(in IKeyguardLockedStateListener listener);
+
+    @JavaPassthrough(annotation = "@android.annotation.RequiresPermission(android.Manifest"
+            + ".permission.SUBSCRIBE_TO_KEYGUARD_LOCKED_STATE)")
+    void removeKeyguardLockedStateListener(in IKeyguardLockedStateListener listener);
 
     // Requires INTERACT_ACROSS_USERS_FULL permission
     void setSwitchingUser(boolean switching);
@@ -214,9 +247,18 @@ interface IWindowManager
 
     float getCurrentAnimatorScale();
 
-    // For testing
-    @UnsupportedAppUsage(maxTargetSdk = 28)
-    void setInTouchMode(boolean showFocus);
+    // Request to change the touch mode on the display represented by the displayId parameter.
+    //
+    // If com.android.internal.R.bool.config_perDisplayFocusEnabled is false, then it will request
+    // to change the touch mode on all displays (disregarding displayId parameter).
+    void setInTouchMode(boolean inTouch, int displayId);
+
+    // Request to change the touch mode on all displays (disregarding the value
+    // com.android.internal.R.bool.config_perDisplayFocusEnabled).
+    void setInTouchModeOnAllDisplays(boolean inTouch);
+
+    // Returns the touch mode state for the display represented by the displayId parameter.
+    boolean isInTouchMode(int displayId);
 
     // For StrictMode flashing a red border on violations from the UI
     // thread.  The uid/pid is implicit from the Binder call, and the Window
@@ -237,19 +279,7 @@ interface IWindowManager
      * Set whether screen capture is disabled for all windows of a specific user from
      * the device policy cache.
      */
-    void refreshScreenCaptureDisabled(int userId);
-
-    // These can only be called with the SET_ORIENTATION permission.
-    /**
-     * Update the current screen rotation based on the current state of
-     * the world.
-     * @param alwaysSendConfiguration Flag to force a new configuration to
-     * be evaluated.  This can be used when there are other parameters in
-     * configuration that are changing.
-     * @param forceRelayout If true, the window manager will always do a relayout
-     * of its windows even if the rotation hasn't changed.
-     */
-    void updateRotation(boolean alwaysSendConfiguration, boolean forceRelayout);
+    void refreshScreenCaptureDisabled();
 
     /**
      * Retrieve the current orientation of the primary screen.
@@ -258,6 +288,15 @@ interface IWindowManager
      * @see android.view.Display#DEFAULT_DISPLAY
      */
     int getDefaultDisplayRotation();
+
+    /**
+     * Retrieve the display user rotation.
+     * @param displayId Id of the display
+     * @return Rotation one of {@link android.view.Surface#ROTATION_0},
+     *        {@link android.view.Surface#ROTATION_90}, {@link android.view.Surface#ROTATION_180},
+     *        {@link android.view.Surface#ROTATION_270} or -1 if display is not found.
+     */
+    int getDisplayUserRotation(int displayId);
 
     /**
      * Watch the rotation of the specified screen.  Returns the current rotation,
@@ -271,6 +310,9 @@ interface IWindowManager
      */
     @UnsupportedAppUsage
     void removeRotationWatcher(IRotationWatcher watcher);
+
+    /** Registers the listener to the context token and returns the current proposed rotation. */
+    int registerProposedRotationListener(IBinder contextToken, IRotationWatcher listener);
 
     /**
      * Determine the preferred edge of the screen to pin the compact options menu against.
@@ -286,14 +328,14 @@ interface IWindowManager
      * android.view.Display#DEFAULT_DISPLAY} and given rotation.
      */
     @UnsupportedAppUsage
-    void freezeRotation(int rotation);
+    void freezeRotation(int rotation, String caller);
 
     /**
      * Equivalent to calling {@link #thawDisplayRotation(int)} with {@link
      * android.view.Display#DEFAULT_DISPLAY}.
      */
     @UnsupportedAppUsage
-    void thawRotation();
+    void thawRotation(String caller);
 
     /**
      * Equivelant to call {@link #isDisplayRotationFrozen(int)} with {@link
@@ -311,7 +353,7 @@ interface IWindowManager
      *        {@link android.view.Surface#ROTATION_270} or -1 to freeze it to current rotation.
      * @hide
      */
-    void freezeDisplayRotation(int displayId, int rotation);
+    void freezeDisplayRotation(int displayId, int rotation, String caller);
 
     /**
      * Release the orientation lock imposed by freezeRotation() on the display.
@@ -319,7 +361,7 @@ interface IWindowManager
      * @param displayId the ID of display which rotation should be thawed.
      * @hide
      */
-    void thawDisplayRotation(int displayId);
+    void thawDisplayRotation(int displayId, String caller);
 
     /**
      * Gets whether the rotation is frozen on the display.
@@ -343,6 +385,14 @@ interface IWindowManager
      * Screenshot the current wallpaper layer, including the whole screen.
      */
     Bitmap screenshotWallpaper();
+
+    /**
+     * Mirrors the wallpaper for the given display.
+     *
+     * @param displayId ID of the display for the wallpaper.
+     * @return A SurfaceControl for the parent of the mirrored wallpaper.
+     */
+    SurfaceControl mirrorWallpaperSurface(int displayId);
 
     /**
      * Registers a wallpaper visibility listener.
@@ -394,6 +444,7 @@ interface IWindowManager
     /**
      * Called by System UI to enable or disable haptic feedback on the navigation bar buttons.
      */
+    @EnforcePermission("STATUS_BAR")
     @UnsupportedAppUsage
     void setNavBarVirtualKeyHapticFeedbackEnabled(boolean enabled);
 
@@ -406,11 +457,6 @@ interface IWindowManager
     boolean hasNavigationBar(int displayId);
 
     /**
-     * Get the position of the nav bar
-     */
-    int getNavBarPosition(int displayId);
-
-    /**
      * Lock the device immediately with the specified options (can be null).
      */
     @UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
@@ -421,11 +467,6 @@ interface IWindowManager
      */
     @UnsupportedAppUsage
     boolean isSafeModeEnabled();
-
-    /**
-     * Enables the screen if all conditions are met.
-     */
-    void enableScreenIfNeeded();
 
     /**
      * Clears the frame statistics for a given window.
@@ -450,12 +491,6 @@ interface IWindowManager
     int getDockedStackSide();
 
     /**
-     * Sets the region the user can touch the divider. This region will be excluded from the region
-     * which is used to cause a focus switch when dispatching touch.
-     */
-    void setDockedTaskDividerTouchRegion(in Rect touchableRegion);
-
-    /**
      * Registers a listener that will be called when the pinned task state changes.
      */
     void registerPinnedTaskListener(int displayId, IPinnedTaskListener listener);
@@ -464,24 +499,27 @@ interface IWindowManager
      * Requests Keyboard Shortcuts from the displayed window.
      *
      * @param receiver The receiver to deliver the results to.
+     * @param deviceId The deviceId of KeyEvent by which this request is triggered, or -1 if it's
+     *                 not triggered by a KeyEvent.
+     * @see #requestImeKeyboardShortcuts(IResultReceiver, int)
      */
     void requestAppKeyboardShortcuts(IResultReceiver receiver, int deviceId);
+
+    /**
+     * Requests Keyboard Shortcuts from currently selected IME.
+     *
+     * @param receiver The receiver to deliver the results to.
+     * @param deviceId The deviceId of KeyEvent by which this request is triggered, or -1 if it's
+     *                 not triggered by a KeyEvent.
+     * @see #requestAppKeyboardShortcuts(IResultReceiver, int)
+     */
+    void requestImeKeyboardShortcuts(IResultReceiver receiver, int deviceId);
 
     /**
      * Retrieves the current stable insets from the primary display.
      */
     @UnsupportedAppUsage
     void getStableInsets(int displayId, out Rect outInsets);
-
-    /**
-     * Set the forwarded insets on the display.
-     * <p>
-     * This is only used in case a virtual display is displayed on another display that has insets,
-     * and the bounds of the virtual display is overlapping with the insets from the host display.
-     * In that case, the contents on the virtual display won't be placed over the forwarded insets.
-     * Only the owner of the display is permitted to set the forwarded insets on it.
-     */
-    void setForwardedInsets(int displayId, in Insets insets);
 
     /**
      * Register shortcut key. Shortcut code is packed as:
@@ -498,15 +536,16 @@ interface IWindowManager
         out InputChannel inputChannel);
 
     /**
-     * Destroy an input consumer by name and display id.
+     * Destroy an input consumer by token and display id.
      * This method will also dispose the input channels associated with that InputConsumer.
      */
     @UnsupportedAppUsage
-    boolean destroyInputConsumer(String name, int displayId);
+    boolean destroyInputConsumer(IBinder token, int displayId);
 
     /**
      * Return the touch region for the current IME window, or an empty region if there is none.
      */
+    @EnforcePermission("RESTRICTED_VR_ACCESS")
     Region getCurrentImeTouchRegion();
 
     /**
@@ -520,9 +559,10 @@ interface IWindowManager
     void unregisterDisplayFoldListener(IDisplayFoldListener listener);
 
     /**
-     * Registers an IDisplayContainerListener
+     * Registers an IDisplayContainerListener, and returns the set of existing display ids. The
+     * listener's onDisplayAdded() will not be called for the displays returned.
      */
-    void registerDisplayWindowListener(IDisplayWindowListener listener);
+    int[] registerDisplayWindowListener(IDisplayWindowListener listener);
 
     /**
      * Unregisters an IDisplayContainerListener.
@@ -540,19 +580,29 @@ interface IWindowManager
     void stopWindowTrace();
 
     /**
+    * If window tracing is active, saves the window trace to file, otherwise does nothing
+    */
+    void saveWindowTraceToFile();
+
+    /**
      * Returns true if window trace is enabled.
      */
     boolean isWindowTraceEnabled();
 
     /**
-     * Notify WindowManager that it should not override the info in DisplayManager for the specified
-     * display. This can disable letter- or pillar-boxing applied in DisplayManager when the metrics
-     * of the logical display reported from WindowManager do not correspond to the metrics of the
-     * physical display it is based on.
-     *
-     * @param displayId The id of the display.
+     * Starts a transition trace.
      */
-    void dontOverrideDisplayInfo(int displayId);
+    void startTransitionTrace();
+
+    /**
+     * Stops a transition trace.
+     */
+    void stopTransitionTrace();
+
+    /**
+     * Returns true if transition trace is enabled.
+     */
+    boolean isTransitionTraceEnabled();
 
     /**
      * Gets the windowing mode of the display.
@@ -671,17 +721,6 @@ interface IWindowManager
     void setDisplayImePolicy(int displayId, int imePolicy);
 
     /**
-     * Waits for transactions to get applied before injecting input, optionally waiting for
-     * animations to complete. This includes waiting for the input windows to get sent to
-     * InputManager.
-     *
-     * This is needed for testing since the system add windows and injects input
-     * quick enough that the windows don't have time to get sent to InputManager.
-     */
-    boolean injectInputAfterTransactionsApplied(in InputEvent ev, int mode,
-            boolean waitForAnimations);
-
-    /**
      * Waits until input information has been sent from WindowManager to native InputManager,
      * optionally waiting for animations to complete.
      *
@@ -716,21 +755,33 @@ interface IWindowManager
      * When in multi-window mode, the provided displayWindowInsetsController will control insets
      * animations.
      */
+    @EnforcePermission("MANAGE_APP_TOKENS")
     void setDisplayWindowInsetsController(
             int displayId, in IDisplayWindowInsetsController displayWindowInsetsController);
 
     /**
-     * Called when a remote process modifies insets on a display window container.
+     * Called when a remote process updates the requested visibilities of insets on a display window
+     * container.
      */
-    void modifyDisplayWindowInsets(int displayId, in InsetsState state);
+    @EnforcePermission("MANAGE_APP_TOKENS")
+    void updateDisplayWindowRequestedVisibleTypes(int displayId, int requestedVisibleTypes);
 
     /**
      * Called to get the expected window insets.
      *
-     * @return {@code true} if system bars are always comsumed.
+     * @return {@code true} if system bars are always consumed.
      */
-    boolean getWindowInsets(in WindowManager.LayoutParams attrs, int displayId,
-            out InsetsState outInsetsState);
+    boolean getWindowInsets(int displayId, in IBinder token, out InsetsState outInsetsState);
+
+    /**
+     * Returns a list of {@link android.view.DisplayInfo} for the logical display. This is not
+     * guaranteed to include all possible device states. The list items are unique.
+     *
+     * If invoked through a package other than a launcher app, returns an empty list.
+     *
+     * @param displayId the id of the logical display
+     */
+    List<DisplayInfo> getPossibleDisplayInfo(int displayId);
 
     /**
      * Called to show global actions.
@@ -743,6 +794,11 @@ interface IWindowManager
      * @param flags see definition in SurfaceTracing.cpp
      */
     void setLayerTracingFlags(int flags);
+
+    /**
+     * Toggle active SurfaceFlinger transaction tracing.
+     */
+    void setActiveTransactionTracing(boolean active);
 
     /**
      * Forwards a scroll capture request to the appropriate window, if available.
@@ -808,16 +864,18 @@ interface IWindowManager
      * system server. {@link #attachWindowContextToWindowToken(IBinder, IBinder)} could be used in
      * this case to attach the WindowContext to the WindowToken.</p>
      *
+     * @param appThread the process that the window context is on.
      * @param clientToken {@link android.window.WindowContext#getWindowContextToken()
      * the WindowContext's token}
      * @param type Window type of the window context
      * @param displayId The display associated with the window context
      * @param options A bundle used to pass window-related options and choose the right DisplayArea
      *
-     * @return {@code true} if the WindowContext is attached to the DisplayArea successfully.
+     * @return the {@link WindowContextInfo} of the DisplayArea if the WindowContext is attached to
+     * the DisplayArea successfully. {@code null}, otherwise.
      */
-    boolean attachWindowContextToDisplayArea(IBinder clientToken, int type, int displayId,
-            in Bundle options);
+    @nullable WindowContextInfo attachWindowContextToDisplayArea(in IApplicationThread appThread,
+            IBinder clientToken, int type, int displayId, in @nullable Bundle options);
 
     /**
      * Attaches a {@link android.window.WindowContext} to a {@code WindowToken}.
@@ -829,16 +887,39 @@ interface IWindowManager
      * {@link android.window.WindowTokenClient#attachContext(Context)}
      * </p>
      *
+     * @param appThread the process that the window context is on.
      * @param clientToken {@link android.window.WindowContext#getWindowContextToken()
      * the WindowContext's token}
      * @param token the WindowToken to attach
      *
+     * @return the {@link WindowContextInfo} of the WindowToken if the WindowContext is attached to
+     * the WindowToken successfully. {@code null}, otherwise.
      * @throws IllegalArgumentException if the {@code clientToken} have not been attached to
      * the server or the WindowContext's type doesn't match WindowToken {@code token}'s type.
      *
      * @see #attachWindowContextToDisplayArea(IBinder, int, int, Bundle)
      */
-    void attachWindowContextToWindowToken(IBinder clientToken, IBinder token);
+    @nullable WindowContextInfo  attachWindowContextToWindowToken(in IApplicationThread appThread,
+            IBinder clientToken, IBinder token);
+
+    /**
+     * Attaches a {@code clientToken} to associate with DisplayContent.
+     * <p>
+     * Note that this API should be invoked after calling
+     * {@link android.window.WindowTokenClient#attachContext(Context)}
+     * </p>
+     *
+     * @param appThread the process that the window context is on.
+     * @param clientToken {@link android.window.WindowContext#getWindowContextToken()
+     * the WindowContext's token}
+     * @param displayId The display associated with the window context
+     *
+     * @return the {@link WindowContextInfo} of the DisplayContent if the WindowContext is attached
+     * to the DisplayContent successfully. {@code null}, otherwise.
+     * @throws android.view.WindowManager.InvalidDisplayException if the display ID is invalid
+     */
+    @nullable WindowContextInfo attachWindowContextToDisplayContent(in IApplicationThread appThread,
+            IBinder clientToken, int displayId);
 
     /**
      * Detaches {@link android.window.WindowContext} from the window manager node it's currently
@@ -846,7 +927,7 @@ interface IWindowManager
      *
      * @param clientToken the window context's token
      */
-    void detachWindowContextFromWindowContainer(IBinder clientToken);
+    void detachWindowContext(IBinder clientToken);
 
     /**
      * Registers a listener, which is to be called whenever cross-window blur is enabled/disabled.
@@ -865,4 +946,153 @@ interface IWindowManager
     void unregisterCrossWindowBlurEnabledListener(ICrossWindowBlurEnabledListener listener);
 
     boolean isTaskSnapshotSupported();
+
+    /**
+     * Returns the preferred display ID to show software keyboard.
+     *
+     * @see android.window.WindowProviderService#getLaunchedDisplayId
+     */
+    int getImeDisplayId();
+
+    /**
+     * Control if we should enable task snapshot features on this device.
+     * @hide
+     */
+    void setTaskSnapshotEnabled(boolean enabled);
+
+    /**
+     * Registers the frame rate per second count callback for one given task ID.
+     * Each callback can only register for receiving FPS callback for one task id until unregister
+     * is called. If there's no task associated with the given task id,
+     * {@link IllegalArgumentException} will be thrown. If a task id destroyed after a callback is
+     * registered, the registered callback will not be unregistered until
+     * {@link unregisterTaskFpsCallback()} is called
+     * @param taskId task id of the task.
+     * @param callback callback to be registered.
+     *
+     * @hide
+     */
+    void registerTaskFpsCallback(in int taskId, in ITaskFpsCallback callback);
+
+    /**
+     * Unregisters the frame rate per second count callback which was registered with
+     * {@link #registerTaskFpsCallback(int,TaskFpsCallback)}.
+     *
+     * @param callback callback to be unregistered.
+     *
+     * @hide
+     */
+    void unregisterTaskFpsCallback(in ITaskFpsCallback listener);
+
+    /**
+     * Take a snapshot using the same path that's used for Recents. This is used for Testing only.
+     *
+     * @param taskId to take the snapshot of
+     *
+     * Returns a bitmap of the screenshot or {@code null} if it was unable to screenshot.
+     * @hide
+     */
+    Bitmap snapshotTaskForRecents(int taskId);
+
+    /**
+     * Informs the system whether the recents app is currently behind the system bars. If so,
+     * means the recents app can control the SystemUI flags, and vice-versa.
+     */
+    void setRecentsAppBehindSystemBars(boolean behindSystemBars);
+
+    /**
+     * Gets the background color of the letterbox. Considered invalid if the background has
+     * multiple colors {@link #isLetterboxBackgroundMultiColored}. Should be called by SystemUI when
+     * computing the letterbox appearance for status bar treatment.
+     */
+    int getLetterboxBackgroundColorInArgb();
+
+    /**
+     * Whether the outer area of the letterbox has multiple colors (e.g. blurred background).
+     * Should be called by SystemUI when computing the letterbox appearance for status bar
+     * treatment.
+     */
+    boolean isLetterboxBackgroundMultiColored();
+
+    /**
+     * Captures the entire display specified by the displayId using the args provided. If the args
+     * are null or if the sourceCrop is invalid or null, the entire display bounds will be captured.
+     */
+    oneway void captureDisplay(int displayId, in @nullable ScreenCapture.CaptureArgs captureArgs,
+            in ScreenCapture.ScreenCaptureListener listener);
+
+    /**
+     * Returns {@code true} if the key will be handled globally and not forwarded to all apps.
+     *
+     * @param keyCode the key code to check
+     * @return {@code true} if the key will be handled globally.
+     */
+    boolean isGlobalKey(int keyCode);
+
+    /**
+     * Create or add to a SurfaceSyncGroup in WindowManager. WindowManager maintains some
+     * SurfaceSyncGroups to ensure multiple processes can sync with each other without sharing
+     * SurfaceControls
+     */
+    boolean addToSurfaceSyncGroup(in IBinder syncGroupToken, boolean parentSyncGroupMerge,
+                in @nullable ISurfaceSyncGroupCompletedListener completedListener,
+                out AddToSurfaceSyncGroupResult addToSurfaceSyncGroupResult);
+
+    /**
+     * Mark a SurfaceSyncGroup stored in WindowManager as ready.
+     */
+    oneway void markSurfaceSyncGroupReady(in IBinder syncGroupToken);
+
+    /**
+     * Invoked when a screenshot is taken of the default display to notify registered listeners.
+     *
+     * Should be invoked only by SysUI.
+     *
+     * @param displayId id of the display screenshot.
+     * @return List of ComponentNames corresponding to the activities that were notified.
+    */
+    List<ComponentName> notifyScreenshotListeners(int displayId);
+
+    /**
+     * Replace the content of the displayId with the SurfaceControl passed in. This can be used for
+     * tests when creating a VirtualDisplay, but only want to capture specific content and not
+     * mirror the entire display.
+     */
+     @JavaPassthrough(annotation = "@android.annotation.RequiresPermission(android.Manifest"
+             + ".permission.ACCESS_SURFACE_FLINGER)")
+    boolean replaceContentOnDisplay(int displayId, in SurfaceControl sc);
+
+    /**
+     * Registers a DecorView gesture listener for a given display.
+     */
+    @JavaPassthrough(annotation = "@android.annotation.RequiresPermission(android.Manifest"
+            + ".permission.MONITOR_INPUT)")
+    void registerDecorViewGestureListener(IDecorViewGestureListener listener, int displayId);
+
+    /**
+     * Unregisters a DecorView gesture listener for a given display.
+     */
+    @JavaPassthrough(annotation = "@android.annotation.RequiresPermission(android.Manifest"
+            + ".permission.MONITOR_INPUT)")
+    void unregisterDecorViewGestureListener(IDecorViewGestureListener listener, int displayId);
+
+    void registerTrustedPresentationListener(in IBinder window, in ITrustedPresentationListener listener,
+            in TrustedPresentationThresholds thresholds, int id);
+
+
+    void unregisterTrustedPresentationListener(in ITrustedPresentationListener listener, int id);
+
+    @EnforcePermission("DETECT_SCREEN_RECORDING")
+    boolean registerScreenRecordingCallback(IScreenRecordingCallback callback);
+
+    @EnforcePermission("DETECT_SCREEN_RECORDING")
+    void unregisterScreenRecordingCallback(IScreenRecordingCallback callback);
+
+    /**
+     * Sets the listener to be called back when a cross-window drag and drop operation happens.
+     */
+    void setGlobalDragListener(IGlobalDragListener listener);
+
+    boolean transferTouchGesture(in InputTransferToken transferFromToken,
+            in InputTransferToken transferToToken);
 }

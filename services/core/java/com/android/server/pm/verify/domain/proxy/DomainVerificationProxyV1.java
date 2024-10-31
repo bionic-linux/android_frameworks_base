@@ -39,7 +39,7 @@ import android.util.Pair;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
-import com.android.server.pm.parsing.pkg.AndroidPackage;
+import com.android.server.pm.pkg.AndroidPackage;
 import com.android.server.pm.verify.domain.DomainVerificationCollector;
 import com.android.server.pm.verify.domain.DomainVerificationDebug;
 import com.android.server.pm.verify.domain.DomainVerificationManagerInternal;
@@ -253,6 +253,14 @@ public class DomainVerificationProxyV1 implements DomainVerificationProxy {
             int verificationId = verifications.keyAt(index);
             String packageName = verifications.valueAt(index).second;
             AndroidPackage pkg = mConnection.getPackage(packageName);
+
+            if (pkg == null) {
+                if (DEBUG_BROADCASTS) {
+                    Slog.d(TAG,
+                            "Skip sendBroadcasts because null AndroidPackage for " + packageName);
+                }
+                continue;
+            }
 
             String hostsString = buildHostsString(pkg);
 

@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.DeviceConfig;
 import android.provider.Settings;
+import android.text.TextFlags;
 import android.widget.WidgetFlags;
 
 import com.android.internal.R;
@@ -77,6 +78,9 @@ final class CoreSettingsObserver extends ContentObserver {
     static {
         sSecureSettingToTypeMap.put(Settings.Secure.LONG_PRESS_TIMEOUT, int.class);
         sSecureSettingToTypeMap.put(Settings.Secure.MULTI_PRESS_TIMEOUT, int.class);
+        sSecureSettingToTypeMap.put(Settings.Secure.KEY_REPEAT_TIMEOUT_MS, int.class);
+        sSecureSettingToTypeMap.put(Settings.Secure.KEY_REPEAT_DELAY_MS, int.class);
+        sSecureSettingToTypeMap.put(Settings.Secure.STYLUS_POINTER_ICON_ENABLED, int.class);
         // add other secure settings here...
 
         sSystemSettingToTypeMap.put(Settings.System.TIME_12_24, String.class);
@@ -93,8 +97,6 @@ final class CoreSettingsObserver extends ContentObserver {
                 Settings.Global.ANGLE_GL_DRIVER_SELECTION_PKGS, String.class);
         sGlobalSettingToTypeMap.put(
                 Settings.Global.ANGLE_GL_DRIVER_SELECTION_VALUES, String.class);
-        sGlobalSettingToTypeMap.put(
-                Settings.Global.ANGLE_ALLOWLIST, String.class);
         sGlobalSettingToTypeMap.put(
                 Settings.Global.ANGLE_EGL_FEATURES, String.class);
         sGlobalSettingToTypeMap.put(
@@ -160,6 +162,23 @@ final class CoreSettingsObserver extends ContentObserver {
                 DeviceConfig.NAMESPACE_WIDGET, WidgetFlags.MAGNIFIER_ASPECT_RATIO,
                 WidgetFlags.KEY_MAGNIFIER_ASPECT_RATIO, float.class,
                 WidgetFlags.MAGNIFIER_ASPECT_RATIO_DEFAULT));
+
+        sDeviceConfigEntries.add(new DeviceConfigEntry<Boolean>(
+                TextFlags.NAMESPACE, TextFlags.ENABLE_NEW_CONTEXT_MENU,
+                TextFlags.KEY_ENABLE_NEW_CONTEXT_MENU, boolean.class,
+                TextFlags.ENABLE_NEW_CONTEXT_MENU_DEFAULT));
+
+        // Register all text aconfig flags.
+        for (int i = 0; i < TextFlags.TEXT_ACONFIGS_FLAGS.length; i++) {
+            final String flag = TextFlags.TEXT_ACONFIGS_FLAGS[i];
+            final boolean defaultValue = TextFlags.TEXT_ACONFIG_DEFAULT_VALUE[i];
+            sDeviceConfigEntries.add(new DeviceConfigEntry<Boolean>(
+                    TextFlags.NAMESPACE,
+                    flag,
+                    TextFlags.getKeyForFlag(flag),
+                    boolean.class,
+                    defaultValue));
+        }
         // add other device configs here...
     }
     private static volatile boolean sDeviceConfigContextEntriesLoaded = false;

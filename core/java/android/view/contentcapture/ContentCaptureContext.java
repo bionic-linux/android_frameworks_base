@@ -27,6 +27,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.LocusId;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.Display;
@@ -81,11 +82,19 @@ public final class ContentCaptureContext implements Parcelable {
     @SystemApi
     public static final int FLAG_RECONNECTED = 0x4;
 
+    /**
+     * Flag used to disable flush when receiving a VIEW_TREE_APPEARING event.
+     *
+     * @hide
+     */
+    public static final int FLAG_DISABLED_FLUSH_FOR_VIEW_TREE_APPEARING = 1 << 3;
+
     /** @hide */
     @IntDef(flag = true, prefix = { "FLAG_" }, value = {
             FLAG_DISABLED_BY_APP,
             FLAG_DISABLED_BY_FLAG_SECURE,
-            FLAG_RECONNECTED
+            FLAG_RECONNECTED,
+            FLAG_DISABLED_FLUSH_FOR_VIEW_TREE_APPEARING
     })
     @Retention(RetentionPolicy.SOURCE)
     @interface ContextCreationFlags{}
@@ -105,6 +114,7 @@ public final class ContentCaptureContext implements Parcelable {
     private final int mFlags;
     private final int mDisplayId;
     private final ActivityId mActivityId;
+    private final IBinder mWindowToken;
 
     // Fields below are set by the service upon "delivery" and are not marshalled in the parcel
     private int mParentSessionId = NO_SESSION_ID;
@@ -112,7 +122,7 @@ public final class ContentCaptureContext implements Parcelable {
     /** @hide */
     public ContentCaptureContext(@Nullable ContentCaptureContext clientContext,
             @NonNull ActivityId activityId, @NonNull ComponentName componentName, int displayId,
-            int flags) {
+            IBinder windowToken, int flags) {
         if (clientContext != null) {
             mHasClientContext = true;
             mExtras = clientContext.mExtras;
@@ -126,6 +136,7 @@ public final class ContentCaptureContext implements Parcelable {
         mFlags = flags;
         mDisplayId = displayId;
         mActivityId = activityId;
+        mWindowToken = windowToken;
     }
 
     private ContentCaptureContext(@NonNull Builder builder) {
@@ -137,6 +148,7 @@ public final class ContentCaptureContext implements Parcelable {
         mFlags = 0;
         mDisplayId = Display.INVALID_DISPLAY;
         mActivityId = null;
+        mWindowToken = null;
     }
 
     /** @hide */
@@ -148,6 +160,7 @@ public final class ContentCaptureContext implements Parcelable {
         mFlags = original.mFlags | extraFlags;
         mDisplayId = original.mDisplayId;
         mActivityId = original.mActivityId;
+        mWindowToken = original.mWindowToken;
     }
 
     /**
@@ -230,10 +243,25 @@ public final class ContentCaptureContext implements Parcelable {
     }
 
     /**
+     * Gets the window token of the activity associated with this context.
+     *
+     * <p>The token can be used to attach relevant overlay views to the activity's window. This can
+     * be done through {@link android.view.WindowManager.LayoutParams#token}.
+     *
+     * @hide
+     */
+    @SystemApi
+    @Nullable
+    public IBinder getWindowToken() {
+        return mWindowToken;
+    }
+
+    /**
      * Gets the flags associated with this context.
      *
      * @return any combination of {@link #FLAG_DISABLED_BY_FLAG_SECURE},
-     * {@link #FLAG_DISABLED_BY_APP} and {@link #FLAG_RECONNECTED}.
+     * {@link #FLAG_DISABLED_BY_APP}, {@link #FLAG_RECONNECTED} and {@link
+     * #FLAG_DISABLED_FLUSH_FOR_VIEW_TREE_APPEARING}.
      *
      * @hide
      */
@@ -276,7 +304,7 @@ public final class ContentCaptureContext implements Parcelable {
          * @param id id associated with this context.
          */
         public Builder(@NonNull LocusId id) {
-            mId = Preconditions.checkNotNull(id);
+            mId = Objects.requireNonNull(id);
         }
 
         /**
@@ -291,7 +319,7 @@ public final class ContentCaptureContext implements Parcelable {
          */
         @NonNull
         public Builder setExtras(@NonNull Bundle extras) {
-            mExtras = Preconditions.checkNotNull(extras);
+            mExtras =  Objects.requireNonNull(extras);
             throwIfDestroyed();
             return this;
         }
@@ -328,6 +356,7 @@ public final class ContentCaptureContext implements Parcelable {
         }
         pw.print(", activityId="); pw.print(mActivityId);
         pw.print(", displayId="); pw.print(mDisplayId);
+        pw.print(", windowToken="); pw.print(mWindowToken);
         if (mParentSessionId != NO_SESSION_ID) {
             pw.print(", parentId="); pw.print(mParentSessionId);
         }
@@ -352,6 +381,7 @@ public final class ContentCaptureContext implements Parcelable {
             builder.append("act=").append(ComponentName.flattenToShortString(mComponentName))
                 .append(", activityId=").append(mActivityId)
                 .append(", displayId=").append(mDisplayId)
+                .append(", windowToken=").append(mWindowToken)
                 .append(", flags=").append(mFlags);
         } else {
             builder.append("id=").append(mId);
@@ -381,6 +411,7 @@ public final class ContentCaptureContext implements Parcelable {
         parcel.writeParcelable(mComponentName, flags);
         if (fromServer()) {
             parcel.writeInt(mDisplayId);
+            parcel.writeStrongBinder(mWindowToken);
             parcel.writeInt(mFlags);
             mActivityId.writeToParcel(parcel, flags);
         }
@@ -397,7 +428,7 @@ public final class ContentCaptureContext implements Parcelable {
             final ContentCaptureContext clientContext;
             if (hasClientContext) {
                 // Must reconstruct the client context using the Builder API
-                final LocusId id = parcel.readParcelable(null);
+                final LocusId id = parcel.readParcelable(null, android.content.LocusId.class);
                 final Bundle extras = parcel.readBundle();
                 final Builder builder = new Builder(id);
                 if (extras != null) builder.setExtras(extras);
@@ -405,17 +436,18 @@ public final class ContentCaptureContext implements Parcelable {
             } else {
                 clientContext = null;
             }
-            final ComponentName componentName = parcel.readParcelable(null);
+            final ComponentName componentName = parcel.readParcelable(null, android.content.ComponentName.class);
             if (componentName == null) {
                 // Client-state only
                 return clientContext;
             } else {
                 final int displayId = parcel.readInt();
+                final IBinder windowToken = parcel.readStrongBinder();
                 final int flags = parcel.readInt();
                 final ActivityId activityId = new ActivityId(parcel);
 
                 return new ContentCaptureContext(clientContext, activityId, componentName,
-                        displayId, flags);
+                        displayId, windowToken, flags);
             }
         }
 

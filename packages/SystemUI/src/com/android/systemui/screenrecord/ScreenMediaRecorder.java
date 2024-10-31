@@ -23,14 +23,16 @@ import static com.android.systemui.screenrecord.ScreenRecordingAudioSource.MIC;
 import static com.android.systemui.screenrecord.ScreenRecordingAudioSource.MIC_AND_INTERNAL;
 
 import android.annotation.Nullable;
+import android.app.ActivityManager;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Icon;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
+import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
-import android.media.MediaCodecList;
 import android.media.MediaFormat;
 import android.media.MediaMuxer;
 import android.media.MediaRecorder;
@@ -40,6 +42,7 @@ import android.media.projection.IMediaProjectionManager;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
 import android.net.Uri;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -50,17 +53,23 @@ import android.util.Size;
 import android.view.Surface;
 import android.view.WindowManager;
 
+import com.android.internal.R;
+import com.android.systemui.mediaprojection.MediaProjectionCaptureTarget;
+
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Recording screen and mic/internal audio
  */
-public class ScreenMediaRecorder {
+public class ScreenMediaRecorder extends MediaProjection.Callback {
     private static final int TOTAL_NUM_TRACKS = 1;
     private static final int VIDEO_FRAME_RATE = 30;
     private static final int VIDEO_FRAME_RATE_TO_RESOLUTION_RATIO = 6;
@@ -77,19 +86,24 @@ public class ScreenMediaRecorder {
     private Surface mInputSurface;
     private VirtualDisplay mVirtualDisplay;
     private MediaRecorder mMediaRecorder;
-    private int mUser;
+    private int mUid;
     private ScreenRecordingMuxer mMuxer;
     private ScreenInternalAudioRecorder mAudio;
     private ScreenRecordingAudioSource mAudioSource;
+    private final MediaProjectionCaptureTarget mCaptureRegion;
+    private final Handler mHandler;
 
     private Context mContext;
-    MediaRecorder.OnInfoListener mListener;
+    ScreenMediaRecorderListener mListener;
 
-    public ScreenMediaRecorder(Context context,
-            int user, ScreenRecordingAudioSource audioSource,
-            MediaRecorder.OnInfoListener listener) {
+    public ScreenMediaRecorder(Context context, Handler handler,
+            int uid, ScreenRecordingAudioSource audioSource,
+            MediaProjectionCaptureTarget captureRegion,
+            ScreenMediaRecorderListener listener) {
         mContext = context;
-        mUser = user;
+        mHandler = handler;
+        mUid = uid;
+        mCaptureRegion = captureRegion;
         mListener = listener;
         mAudioSource = audioSource;
     }
@@ -100,11 +114,15 @@ public class ScreenMediaRecorder {
         IMediaProjectionManager mediaService =
                 IMediaProjectionManager.Stub.asInterface(b);
         IMediaProjection proj = null;
-        proj = mediaService.createProjection(mUser, mContext.getPackageName(),
+        proj = mediaService.createProjection(mUid, mContext.getPackageName(),
                     MediaProjectionManager.TYPE_SCREEN_CAPTURE, false);
-        IBinder projection = proj.asBinder();
-        mMediaProjection = new MediaProjection(mContext,
-                IMediaProjection.Stub.asInterface(projection));
+        IMediaProjection projection = IMediaProjection.Stub.asInterface(proj.asBinder());
+        if (mCaptureRegion != null) {
+            projection.setLaunchCookie(mCaptureRegion.getLaunchCookie());
+            projection.setTaskId(mCaptureRegion.getTaskId());
+        }
+        mMediaProjection = new MediaProjection(mContext, projection);
+        mMediaProjection.registerCallback(this, mHandler);
 
         File cacheDir = mContext.getCacheDir();
         cacheDir.mkdirs();
@@ -162,10 +180,15 @@ public class ScreenMediaRecorder {
                 metrics.densityDpi,
                 DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
                 mInputSurface,
-                null,
-                null);
+                new VirtualDisplay.Callback() {
+                    @Override
+                    public void onStopped() {
+                        onStop();
+                    }
+                },
+                mHandler);
 
-        mMediaRecorder.setOnInfoListener(mListener);
+        mMediaRecorder.setOnInfoListener((mr, what, extra) -> mListener.onInfo(mr, what, extra));
         if (mAudioSource == INTERNAL ||
                 mAudioSource == MIC_AND_INTERNAL) {
             mTempAudioFile = File.createTempFile("temp", ".aac",
@@ -187,77 +210,63 @@ public class ScreenMediaRecorder {
      * @param refreshRate Desired refresh rate
      * @return array with supported width, height, and refresh rate
      */
-    private int[] getSupportedSize(final int screenWidth, final int screenHeight, int refreshRate) {
-        double maxScale = 0;
+    private int[] getSupportedSize(final int screenWidth, final int screenHeight, int refreshRate)
+            throws IOException {
+        String videoType = MediaFormat.MIMETYPE_VIDEO_AVC;
 
-        MediaCodecList codecList = new MediaCodecList(MediaCodecList.REGULAR_CODECS);
-        MediaCodecInfo.VideoCapabilities maxInfo = null;
-        for (MediaCodecInfo codec : codecList.getCodecInfos()) {
-            String videoType = MediaFormat.MIMETYPE_VIDEO_AVC;
-            String[] types = codec.getSupportedTypes();
-            for (String t : types) {
-                if (!t.equalsIgnoreCase(videoType)) {
-                    continue;
-                }
-                MediaCodecInfo.CodecCapabilities capabilities =
-                        codec.getCapabilitiesForType(videoType);
-                if (capabilities != null && capabilities.getVideoCapabilities() != null) {
-                    MediaCodecInfo.VideoCapabilities vc = capabilities.getVideoCapabilities();
+        // Get max size from the decoder, to ensure recordings will be playable on device
+        MediaCodec decoder = MediaCodec.createDecoderByType(videoType);
+        MediaCodecInfo.VideoCapabilities vc = decoder.getCodecInfo()
+                .getCapabilitiesForType(videoType).getVideoCapabilities();
+        decoder.release();
 
-                    int width = vc.getSupportedWidths().getUpper();
-                    int height = vc.getSupportedHeights().getUpper();
+        // Check if we can support screen size as-is
+        int width = vc.getSupportedWidths().getUpper();
+        int height = vc.getSupportedHeights().getUpper();
 
-                    int screenWidthAligned = screenWidth;
-                    if (screenWidthAligned % vc.getWidthAlignment() != 0) {
-                        screenWidthAligned -= (screenWidthAligned % vc.getWidthAlignment());
-                    }
-                    int screenHeightAligned = screenHeight;
-                    if (screenHeightAligned % vc.getHeightAlignment() != 0) {
-                        screenHeightAligned -= (screenHeightAligned % vc.getHeightAlignment());
-                    }
+        int screenWidthAligned = screenWidth;
+        if (screenWidthAligned % vc.getWidthAlignment() != 0) {
+            screenWidthAligned -= (screenWidthAligned % vc.getWidthAlignment());
+        }
+        int screenHeightAligned = screenHeight;
+        if (screenHeightAligned % vc.getHeightAlignment() != 0) {
+            screenHeightAligned -= (screenHeightAligned % vc.getHeightAlignment());
+        }
 
-                    if (width >= screenWidthAligned && height >= screenHeightAligned
-                            && vc.isSizeSupported(screenWidthAligned, screenHeightAligned)) {
-                        // Desired size is supported, now get the rate
-                        int maxRate = vc.getSupportedFrameRatesFor(screenWidthAligned,
-                                screenHeightAligned).getUpper().intValue();
+        if (width >= screenWidthAligned && height >= screenHeightAligned
+                && vc.isSizeSupported(screenWidthAligned, screenHeightAligned)) {
+            // Desired size is supported, now get the rate
+            int maxRate = vc.getSupportedFrameRatesFor(screenWidthAligned,
+                    screenHeightAligned).getUpper().intValue();
 
-                        if (maxRate < refreshRate) {
-                            refreshRate = maxRate;
-                        }
-                        Log.d(TAG, "Screen size supported at rate " + refreshRate);
-                        return new int[]{screenWidthAligned, screenHeightAligned, refreshRate};
-                    }
-
-                    // Otherwise, continue searching
-                    double scale = Math.min(((double) width / screenWidth),
-                            ((double) height / screenHeight));
-                    if (scale > maxScale) {
-                        maxScale = Math.min(1, scale);
-                        maxInfo = vc;
-                    }
-                }
+            if (maxRate < refreshRate) {
+                refreshRate = maxRate;
             }
+            Log.d(TAG, "Screen size supported at rate " + refreshRate);
+            return new int[]{screenWidthAligned, screenHeightAligned, refreshRate};
         }
 
-        // Resize for max supported size
-        int scaledWidth = (int) (screenWidth * maxScale);
-        int scaledHeight = (int) (screenHeight * maxScale);
-        if (scaledWidth % maxInfo.getWidthAlignment() != 0) {
-            scaledWidth -= (scaledWidth % maxInfo.getWidthAlignment());
+        // Otherwise, resize for max supported size
+        double scale = Math.min(((double) width / screenWidth),
+                ((double) height / screenHeight));
+
+        int scaledWidth = (int) (screenWidth * scale);
+        int scaledHeight = (int) (screenHeight * scale);
+        if (scaledWidth % vc.getWidthAlignment() != 0) {
+            scaledWidth -= (scaledWidth % vc.getWidthAlignment());
         }
-        if (scaledHeight % maxInfo.getHeightAlignment() != 0) {
-            scaledHeight -= (scaledHeight % maxInfo.getHeightAlignment());
+        if (scaledHeight % vc.getHeightAlignment() != 0) {
+            scaledHeight -= (scaledHeight % vc.getHeightAlignment());
         }
 
         // Find max supported rate for size
-        int maxRate = maxInfo.getSupportedFrameRatesFor(scaledWidth, scaledHeight)
+        int maxRate = vc.getSupportedFrameRatesFor(scaledWidth, scaledHeight)
                 .getUpper().intValue();
         if (maxRate < refreshRate) {
             refreshRate = maxRate;
         }
 
-        Log.d(TAG, "Resized by " + maxScale + ": " + scaledWidth + ", " + scaledHeight
+        Log.d(TAG, "Resized by " + scale + ": " + scaledWidth + ", " + scaledHeight
                 + ", " + refreshRate);
         return new int[]{scaledWidth, scaledHeight, refreshRate};
     }
@@ -273,19 +282,32 @@ public class ScreenMediaRecorder {
     }
 
     /**
-     * End screen recording
+     * End screen recording, throws an exception if stopping recording failed
      */
-    void end() {
-        mMediaRecorder.stop();
-        mMediaRecorder.release();
-        mInputSurface.release();
-        mVirtualDisplay.release();
-        mMediaProjection.stop();
+    void end() throws IOException {
+        Closer closer = new Closer();
+
+        // MediaRecorder might throw RuntimeException if stopped immediately after starting
+        // We should remove the recording in this case as it will be invalid
+        closer.register(mMediaRecorder::stop);
+        closer.register(mMediaRecorder::release);
+        closer.register(mInputSurface::release);
+        closer.register(mVirtualDisplay::release);
+        closer.register(mMediaProjection::stop);
+        closer.register(this::stopInternalAudioRecording);
+
+        closer.close();
+
         mMediaRecorder = null;
         mMediaProjection = null;
-        stopInternalAudioRecording();
 
         Log.d(TAG, "end recording");
+    }
+
+    @Override
+    public void onStop() {
+        Log.d(TAG, "The system notified about stopping the projection");
+        mListener.onStopped();
     }
 
     private void stopInternalAudioRecording() {
@@ -304,7 +326,7 @@ public class ScreenMediaRecorder {
     /**
      * Store recorded video
      */
-    protected SavedRecording save() throws IOException {
+    protected SavedRecording save() throws IOException, IllegalStateException {
         String fileName = new SimpleDateFormat("'screen-'yyyyMMdd-HHmmss'.mp4'")
                 .format(new Date());
 
@@ -343,11 +365,36 @@ public class ScreenMediaRecorder {
         Files.copy(mTempVideoFile.toPath(), os);
         os.close();
         if (mTempAudioFile != null) mTempAudioFile.delete();
-        DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
-        Size size = new Size(metrics.widthPixels, metrics.heightPixels);
-        SavedRecording recording = new SavedRecording(itemUri, mTempVideoFile, size);
+        SavedRecording recording = new SavedRecording(
+                itemUri, mTempVideoFile, getRequiredThumbnailSize());
         mTempVideoFile.delete();
         return recording;
+    }
+
+    /**
+     * Returns the required {@code Size} of the thumbnail.
+     */
+    private Size getRequiredThumbnailSize() {
+        boolean isLowRam = ActivityManager.isLowRamDeviceStatic();
+        int thumbnailIconHeight = mContext.getResources().getDimensionPixelSize(isLowRam
+                ? R.dimen.notification_big_picture_max_height_low_ram
+                : R.dimen.notification_big_picture_max_height);
+        int thumbnailIconWidth = mContext.getResources().getDimensionPixelSize(isLowRam
+                ? R.dimen.notification_big_picture_max_width_low_ram
+                : R.dimen.notification_big_picture_max_width);
+        return new Size(thumbnailIconWidth, thumbnailIconHeight);
+    }
+
+    /**
+     * Release the resources without saving the data
+     */
+    protected void release() {
+        if (mTempVideoFile != null) {
+            mTempVideoFile.delete();
+        }
+        if (mTempAudioFile != null) {
+            mTempAudioFile.delete();
+        }
     }
 
     /**
@@ -356,13 +403,14 @@ public class ScreenMediaRecorder {
     public class SavedRecording {
 
         private Uri mUri;
-        private Bitmap mThumbnailBitmap;
+        private Icon mThumbnailIcon;
 
         protected SavedRecording(Uri uri, File file, Size thumbnailSize) {
             mUri = uri;
             try {
-                mThumbnailBitmap = ThumbnailUtils.createVideoThumbnail(
+                Bitmap thumbnailBitmap = ThumbnailUtils.createVideoThumbnail(
                         file, thumbnailSize, null);
+                mThumbnailIcon = Icon.createWithBitmap(thumbnailBitmap);
             } catch (IOException e) {
                 Log.e(TAG, "Error creating thumbnail", e);
             }
@@ -372,8 +420,70 @@ public class ScreenMediaRecorder {
             return mUri;
         }
 
-        public @Nullable Bitmap getThumbnail() {
-            return mThumbnailBitmap;
+        public @Nullable Icon getThumbnail() {
+            return mThumbnailIcon;
+        }
+    }
+
+    interface ScreenMediaRecorderListener {
+        /**
+         * Called to indicate an info or a warning during recording.
+         * See {@link MediaRecorder.OnInfoListener} for the full description.
+         */
+        void onInfo(MediaRecorder mr, int what, int extra);
+
+        /**
+         * Called when the recording stopped by the system.
+         * For example, this might happen when doing partial screen sharing of an app
+         * and the app that is being captured is closed.
+         */
+        void onStopped();
+    }
+
+    /**
+     * Allows to register multiple {@link Closeable} objects and close them all by calling
+     * {@link Closer#close}. If there is an exception thrown during closing of one
+     * of the registered closeables it will continue trying closing the rest closeables.
+     * If there are one or more exceptions thrown they will be re-thrown at the end.
+     * In case of multiple exceptions only the first one will be thrown and all the rest
+     * will be printed.
+     */
+    private static class Closer implements Closeable {
+        private final List<Closeable> mCloseables = new ArrayList<>();
+
+        void register(Closeable closeable) {
+            mCloseables.add(closeable);
+        }
+
+        @Override
+        public void close() throws IOException {
+            Throwable throwable = null;
+
+            for (int i = 0; i < mCloseables.size(); i++) {
+                Closeable closeable = mCloseables.get(i);
+
+                try {
+                    closeable.close();
+                } catch (Throwable e) {
+                    if (throwable == null) {
+                        throwable = e;
+                    } else {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            if (throwable != null) {
+                if (throwable instanceof IOException) {
+                    throw (IOException) throwable;
+                }
+
+                if (throwable instanceof RuntimeException) {
+                    throw (RuntimeException) throwable;
+                }
+
+                throw (Error) throwable;
+            }
         }
     }
 }

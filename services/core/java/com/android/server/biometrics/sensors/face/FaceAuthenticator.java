@@ -23,6 +23,7 @@ import android.hardware.biometrics.IInvalidationCallback;
 import android.hardware.biometrics.ITestSession;
 import android.hardware.biometrics.ITestSessionCallback;
 import android.hardware.biometrics.SensorPropertiesInternal;
+import android.hardware.face.FaceAuthenticateOptions;
 import android.hardware.face.IFaceService;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -61,10 +62,16 @@ public final class FaceAuthenticator extends IBiometricAuthenticator.Stub {
     @Override
     public void prepareForAuthentication(boolean requireConfirmation, IBinder token,
             long operationId, int userId, IBiometricSensorReceiver sensorReceiver,
-            String opPackageName, int cookie, boolean allowBackgroundAuthentication)
+            String opPackageName, long requestId, int cookie, boolean allowBackgroundAuthentication,
+            boolean isForLegacyFingerprintManager)
             throws RemoteException {
-        mFaceService.prepareForAuthentication(mSensorId, requireConfirmation, token, operationId,
-                userId, sensorReceiver, opPackageName, cookie, allowBackgroundAuthentication);
+        mFaceService.prepareForAuthentication(requireConfirmation, token, operationId,
+                sensorReceiver, new FaceAuthenticateOptions.Builder()
+                        .setUserId(userId)
+                        .setSensorId(mSensorId)
+                        .setOpPackageName(opPackageName)
+                        .build(),
+                requestId, cookie, allowBackgroundAuthentication);
     }
 
     @Override
@@ -73,9 +80,9 @@ public final class FaceAuthenticator extends IBiometricAuthenticator.Stub {
     }
 
     @Override
-    public void cancelAuthenticationFromService(IBinder token, String opPackageName)
+    public void cancelAuthenticationFromService(IBinder token, String opPackageName, long requestId)
             throws RemoteException {
-        mFaceService.cancelAuthenticationFromService(mSensorId, token, opPackageName);
+        mFaceService.cancelAuthenticationFromService(mSensorId, token, opPackageName, requestId);
     }
 
     @Override

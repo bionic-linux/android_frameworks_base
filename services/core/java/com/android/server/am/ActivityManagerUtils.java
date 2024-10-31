@@ -16,6 +16,7 @@
 package com.android.server.am;
 
 import android.app.ActivityThread;
+import android.content.ContentResolver;
 import android.provider.Settings;
 import android.util.ArrayMap;
 
@@ -53,9 +54,12 @@ public class ActivityManagerUtils {
     static int getAndroidIdHash() {
         // No synchronization is required. Double-initialization is fine here.
         if (sAndroidIdHash == null) {
-            final String androidId = Settings.Secure.getString(
-                    ActivityThread.currentApplication().getContentResolver(),
-                    Settings.Secure.ANDROID_ID);
+            final ContentResolver resolver = ActivityThread.currentApplication()
+                                             .getContentResolver();
+            final String androidId = Settings.Secure.getStringForUser(
+                    resolver,
+                    Settings.Secure.ANDROID_ID,
+                    resolver.getUserId());
             sAndroidIdHash = getUnsignedHashUnCached(
                     sInjectedAndroidId != null ? sInjectedAndroidId : androidId);
         }
@@ -120,13 +124,5 @@ public class ActivityManagerUtils {
         final int hash = getUnsignedHashCached(packageName) ^ getAndroidIdHash();
 
         return (((double) hash) / Integer.MAX_VALUE) <= rate;
-    }
-
-    /**
-     * @param shortInstanceName {@link ServiceRecord#shortInstanceName}.
-     * @return hash of the ServiceRecord's shortInstanceName, combined with ANDROID_ID.
-     */
-    public static int hashComponentNameForAtom(String shortInstanceName) {
-        return getUnsignedHashUnCached(shortInstanceName) ^ getAndroidIdHash();
     }
 }

@@ -36,10 +36,12 @@ import android.content.IntentFilter;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
 import android.content.res.Resources;
+import android.location.flags.Flags;
 import android.os.Bundle;
+import android.os.Process;
 import android.os.UserHandle;
-import android.permission.PermissionManager;
 import android.util.Log;
+import android.util.TypedValue;
 
 import com.android.internal.util.Preconditions;
 import com.android.server.FgThread;
@@ -62,13 +64,17 @@ import java.util.Objects;
  * not require callers to hold this permission is rejected (2) a service permission - any service
  * whose package does not hold this permission is rejected.
  */
-public class CurrentUserServiceSupplier extends BroadcastReceiver implements
+public final class CurrentUserServiceSupplier extends BroadcastReceiver implements
         ServiceSupplier<CurrentUserServiceSupplier.BoundServiceInfo> {
 
     private static final String TAG = "CurrentUserServiceSupplier";
 
     private static final String EXTRA_SERVICE_VERSION = "serviceVersion";
     private static final String EXTRA_SERVICE_IS_MULTIUSER = "serviceIsMultiuser";
+
+    // a package value that will never match against any package (we can't use null since this will
+    // match against any package).
+    private static final String NO_MATCH_PACKAGE = "";
 
     private static final Comparator<BoundServiceInfo> sBoundServiceInfoComparator = (o1, o2) -> {
         if (o1 == o2) {
@@ -144,12 +150,71 @@ public class CurrentUserServiceSupplier extends BroadcastReceiver implements
         }
     }
 
+    /**
+     * Creates an instance using package details retrieved from config.
+     *
+     * @see #create(Context, String, String, String, String)
+     */
+    public static CurrentUserServiceSupplier createFromConfig(Context context, String action,
+            @BoolRes int enableOverlayResId, @StringRes int nonOverlayPackageResId) {
+        String explicitPackage = retrieveExplicitPackage(context, enableOverlayResId,
+                nonOverlayPackageResId);
+        return CurrentUserServiceSupplier.create(context, action, explicitPackage,
+                /*callerPermission=*/null, /*servicePermission=*/null);
+    }
+
+    /**
+     * Creates an instance with the specific service details and permission requirements.
+     *
+     * @param context the context the supplier is to use
+     * @param action the action the service must declare in its intent-filter
+     * @param explicitPackage the package of the service, or {@code null} if the package of the
+     *     service is not constrained
+     * @param callerPermission a permission that the service forces callers (i.e.
+     *     ServiceWatcher/system server) to hold, or {@code null} if there isn't one
+     * @param servicePermission a permission that the service package should hold, or {@code null}
+     *     if there isn't one
+     */
+    public static CurrentUserServiceSupplier create(Context context, String action,
+            @Nullable String explicitPackage, @Nullable String callerPermission,
+            @Nullable String servicePermission) {
+        boolean matchSystemAppsOnly = true;
+        return new CurrentUserServiceSupplier(context, action,
+                explicitPackage, callerPermission, servicePermission, matchSystemAppsOnly);
+    }
+
+    /**
+     * Creates an instance like {@link #create} except it allows connection to services that are not
+     * supplied by system packages. Only intended for use during tests.
+     *
+     * @see #create(Context, String, String, String, String)
+     */
+    public static CurrentUserServiceSupplier createUnsafeForTestsOnly(Context context,
+            String action, @Nullable String explicitPackage, @Nullable String callerPermission,
+            @Nullable String servicePermission) {
+        boolean matchSystemAppsOnly = false;
+        return new CurrentUserServiceSupplier(context, action,
+                explicitPackage, callerPermission, servicePermission, matchSystemAppsOnly);
+    }
+
     private static @Nullable String retrieveExplicitPackage(Context context,
             @BoolRes int enableOverlayResId, @StringRes int nonOverlayPackageResId) {
         Resources resources = context.getResources();
         boolean enableOverlay = resources.getBoolean(enableOverlayResId);
         if (!enableOverlay) {
-            return resources.getString(nonOverlayPackageResId);
+            if (Flags.fixServiceWatcher()) {
+                // we don't use getText() or similar because it won't return null values
+                TypedValue out = new TypedValue();
+                resources.getValue(nonOverlayPackageResId, out, true);
+                CharSequence explicitPackage = out.coerceToString();
+                if (explicitPackage == null) {
+                    return NO_MATCH_PACKAGE;
+                } else {
+                    return explicitPackage.toString();
+                }
+            } else {
+                return resources.getString(nonOverlayPackageResId);
+            }
         } else {
             return null;
         }
@@ -162,31 +227,14 @@ public class CurrentUserServiceSupplier extends BroadcastReceiver implements
     private final @Nullable String mCallerPermission;
     // a permission that the service package should hold
     private final @Nullable String mServicePermission;
+    // whether to use MATCH_SYSTEM_ONLY in queries
+    private final boolean mMatchSystemAppsOnly;
 
     private volatile ServiceChangedListener mListener;
 
-    public CurrentUserServiceSupplier(Context context, String action) {
-        this(context, action, null, null, null);
-    }
-
-    public CurrentUserServiceSupplier(Context context, String action,
-            @BoolRes int enableOverlayResId, @StringRes int nonOverlayPackageResId) {
-        this(context, action,
-                retrieveExplicitPackage(context, enableOverlayResId, nonOverlayPackageResId), null,
-                null);
-    }
-
-    public CurrentUserServiceSupplier(Context context, String action,
-            @BoolRes int enableOverlayResId, @StringRes int nonOverlayPackageResId,
-            @Nullable String callerPermission, @Nullable String servicePermission) {
-        this(context, action,
-                retrieveExplicitPackage(context, enableOverlayResId, nonOverlayPackageResId),
-                callerPermission, servicePermission);
-    }
-
-    public CurrentUserServiceSupplier(Context context, String action,
+    private CurrentUserServiceSupplier(Context context, String action,
             @Nullable String explicitPackage, @Nullable String callerPermission,
-            @Nullable String servicePermission) {
+            @Nullable String servicePermission, boolean matchSystemAppsOnly) {
         mContext = context;
         mActivityManager = Objects.requireNonNull(
                 LocalServices.getService(ActivityManagerInternal.class));
@@ -198,13 +246,22 @@ public class CurrentUserServiceSupplier extends BroadcastReceiver implements
 
         mCallerPermission = callerPermission;
         mServicePermission = servicePermission;
+        mMatchSystemAppsOnly = matchSystemAppsOnly;
     }
 
     @Override
     public boolean hasMatchingService() {
+        if (Flags.fixServiceWatcher() && NO_MATCH_PACKAGE.equals(mIntent.getPackage())) {
+            return false;
+        }
+
+        int intentQueryFlags = MATCH_DIRECT_BOOT_AWARE | MATCH_DIRECT_BOOT_UNAWARE;
+        if (mMatchSystemAppsOnly) {
+            intentQueryFlags |= MATCH_SYSTEM_ONLY;
+        }
         List<ResolveInfo> resolveInfos = mContext.getPackageManager()
                 .queryIntentServicesAsUser(mIntent,
-                        MATCH_DIRECT_BOOT_AWARE | MATCH_DIRECT_BOOT_UNAWARE | MATCH_SYSTEM_ONLY,
+                        intentQueryFlags,
                         UserHandle.USER_SYSTEM);
         return !resolveInfos.isEmpty();
     }
@@ -218,6 +275,7 @@ public class CurrentUserServiceSupplier extends BroadcastReceiver implements
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_USER_SWITCHED);
         intentFilter.addAction(Intent.ACTION_USER_UNLOCKED);
+        intentFilter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
         mContext.registerReceiverAsUser(this, UserHandle.ALL, intentFilter, null,
                 FgThread.getHandler());
     }
@@ -232,13 +290,21 @@ public class CurrentUserServiceSupplier extends BroadcastReceiver implements
 
     @Override
     public BoundServiceInfo getServiceInfo() {
+        if (Flags.fixServiceWatcher() && NO_MATCH_PACKAGE.equals(mIntent.getPackage())) {
+            return null;
+        }
+
         BoundServiceInfo bestServiceInfo = null;
 
-        // only allow privileged services in the correct direct boot state to match
+        // only allow services in the correct direct boot state to match
+        int intentQueryFlags = MATCH_DIRECT_BOOT_AUTO | GET_META_DATA;
+        if (mMatchSystemAppsOnly) {
+            intentQueryFlags |= MATCH_SYSTEM_ONLY;
+        }
         int currentUserId = mActivityManager.getCurrentUserId();
         List<ResolveInfo> resolveInfos = mContext.getPackageManager().queryIntentServicesAsUser(
                 mIntent,
-                GET_META_DATA | MATCH_DIRECT_BOOT_AUTO | MATCH_SYSTEM_ONLY,
+                intentQueryFlags,
                 currentUserId);
         for (ResolveInfo resolveInfo : resolveInfos) {
             ServiceInfo service = Objects.requireNonNull(resolveInfo.serviceInfo);
@@ -254,8 +320,8 @@ public class CurrentUserServiceSupplier extends BroadcastReceiver implements
             BoundServiceInfo serviceInfo = new BoundServiceInfo(mIntent.getAction(), resolveInfo);
 
             if (mServicePermission != null) {
-                if (PermissionManager.checkPackageNamePermission(mServicePermission,
-                        service.packageName, serviceInfo.getUserId()) != PERMISSION_GRANTED) {
+                if (mContext.checkPermission(mServicePermission, Process.INVALID_PID,
+                        serviceInfo.mUid) != PERMISSION_GRANTED) {
                     Log.d(TAG, serviceInfo.getComponentName().flattenToShortString()
                             + " disqualified due to not holding " + mCallerPermission);
                     continue;

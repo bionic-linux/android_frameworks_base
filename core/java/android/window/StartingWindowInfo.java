@@ -19,13 +19,18 @@ package android.window;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
-import android.annotation.TestApi;
 import android.app.ActivityManager;
 import android.app.TaskInfo;
 import android.content.pm.ActivityInfo;
+import android.graphics.Rect;
+import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.RemoteException;
 import android.view.InsetsState;
+import android.view.SurfaceControl;
+import android.view.WindowInsets;
+import android.view.WindowInsets.Type.InsetsType;
 import android.view.WindowManager;
 
 /**
@@ -33,7 +38,6 @@ import android.view.WindowManager;
  * start in the system.
  * @hide
  */
-@TestApi
 public final class StartingWindowInfo implements Parcelable {
     /**
      * Prefer nothing or not care the type of starting window.
@@ -51,13 +55,15 @@ public final class StartingWindowInfo implements Parcelable {
      */
     public static final int STARTING_WINDOW_TYPE_SNAPSHOT = 2;
     /**
-     * Prefer empty splash screen starting window.
+     * Prefer solid color splash screen starting window.
      * @hide
      */
-    public static final int STARTING_WINDOW_TYPE_EMPTY_SPLASH_SCREEN = 3;
+    public static final int STARTING_WINDOW_TYPE_SOLID_COLOR_SPLASH_SCREEN = 3;
 
     /** @hide **/
     public static final int STARTING_WINDOW_TYPE_LEGACY_SPLASH_SCREEN = 4;
+
+    public static final int STARTING_WINDOW_TYPE_WINDOWLESS = 5;
 
     /**
      * @hide
@@ -66,17 +72,24 @@ public final class StartingWindowInfo implements Parcelable {
             STARTING_WINDOW_TYPE_NONE,
             STARTING_WINDOW_TYPE_SPLASH_SCREEN,
             STARTING_WINDOW_TYPE_SNAPSHOT,
-            STARTING_WINDOW_TYPE_EMPTY_SPLASH_SCREEN,
-            STARTING_WINDOW_TYPE_LEGACY_SPLASH_SCREEN
+            STARTING_WINDOW_TYPE_SOLID_COLOR_SPLASH_SCREEN,
+            STARTING_WINDOW_TYPE_LEGACY_SPLASH_SCREEN,
+            STARTING_WINDOW_TYPE_WINDOWLESS
     })
     public @interface StartingWindowType {}
 
     /**
      * The {@link TaskInfo} from this task.
-     *  @hide
+     * <p>Note that the configuration of this taskInfo could be from the top activity of its task.
+     * Because only activity contains persisted configuration (e.g. night mode, language). Besides,
+     * it can also be used for activity level snapshot.
      */
     @NonNull
     public ActivityManager.RunningTaskInfo taskInfo;
+
+    /** The bounds of the target task. */
+    @NonNull
+    public final Rect taskBounds = new Rect();
 
     /**
      * The {@link ActivityInfo} of the target activity which to create the starting window.
@@ -116,7 +129,9 @@ public final class StartingWindowInfo implements Parcelable {
             TYPE_PARAMETER_PROCESS_RUNNING,
             TYPE_PARAMETER_ALLOW_TASK_SNAPSHOT,
             TYPE_PARAMETER_ACTIVITY_CREATED,
-            TYPE_PARAMETER_USE_EMPTY_SPLASH_SCREEN,
+            TYPE_PARAMETER_USE_SOLID_COLOR_SPLASH_SCREEN,
+            TYPE_PARAMETER_ALLOW_HANDLE_SOLID_COLOR_SCREEN,
+            TYPE_PARAMETER_WINDOWLESS,
             TYPE_PARAMETER_LEGACY_SPLASH_SCREEN
     })
     public @interface StartingTypeParams {}
@@ -135,7 +150,34 @@ public final class StartingWindowInfo implements Parcelable {
     /** @hide */
     public static final int TYPE_PARAMETER_ACTIVITY_CREATED = 0x00000010;
     /** @hide */
-    public static final int TYPE_PARAMETER_USE_EMPTY_SPLASH_SCREEN = 0x00000020;
+    public static final int TYPE_PARAMETER_USE_SOLID_COLOR_SPLASH_SCREEN = 0x00000020;
+    /**
+     * The parameter which indicates if the activity has finished drawing.
+     * @hide
+     */
+    public static final int TYPE_PARAMETER_ACTIVITY_DRAWN = 0x00000040;
+    /**
+     * Application will receive the
+     * {@link
+     * android.window.SplashScreen.OnExitAnimationListener#onSplashScreenExit(SplashScreenView)}
+     * callback, even when the splash screen only shows a solid color.
+     *
+     * @hide
+     */
+    public static final int TYPE_PARAMETER_ALLOW_HANDLE_SOLID_COLOR_SCREEN = 0x00000080;
+
+    /**
+     * Windowless surface
+     */
+    public static final int TYPE_PARAMETER_WINDOWLESS = 0x00000100;
+
+    /**
+     * Application has set Window_windowSplashScreenBehavior to
+     * SPLASH_SCREEN_BEHAVIOR_ICON_PREFERRED.
+     * @hide
+     */
+    public static final int TYPE_PARAMETER_APP_PREFERS_ICON = 0x00000200;
+
     /**
      * Application is allowed to use the legacy splash screen
      * @hide
@@ -165,7 +207,35 @@ public final class StartingWindowInfo implements Parcelable {
      * TaskSnapshot.
      * @hide
      */
-    public TaskSnapshot mTaskSnapshot;
+    public TaskSnapshot taskSnapshot;
+
+    @InsetsType public int requestedVisibleTypes = WindowInsets.Type.defaultVisible();
+
+    /**
+     * App token where the starting window should add to.
+     */
+    public IBinder appToken;
+
+    public IWindowlessStartingSurfaceCallback windowlessStartingSurfaceCallback;
+
+    /**
+     * The root surface where windowless surface should attach on.
+     */
+    public SurfaceControl rootSurface;
+
+    /**
+     * Notify windowless surface is created.
+     * @param addedSurface Created surface.
+     */
+    public void notifyAddComplete(SurfaceControl addedSurface) {
+        if (windowlessStartingSurfaceCallback != null) {
+            try {
+                windowlessStartingSurfaceCallback.onSurfaceAdded(addedSurface);
+            } catch (RemoteException e) {
+                //
+            }
+        }
+    }
 
     public StartingWindowInfo() {
 
@@ -173,6 +243,13 @@ public final class StartingWindowInfo implements Parcelable {
 
     private StartingWindowInfo(@NonNull Parcel source) {
         readFromParcel(source);
+    }
+
+    /**
+     * Return whether the application allow to handle the solid color style splash screen.
+     */
+    public boolean allowHandleSolidColorSplashScreen() {
+        return (startingWindowTypeParameter & TYPE_PARAMETER_ALLOW_HANDLE_SOLID_COLOR_SCREEN) != 0;
     }
 
     @Override
@@ -183,6 +260,7 @@ public final class StartingWindowInfo implements Parcelable {
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeTypedObject(taskInfo, flags);
+        taskBounds.writeToParcel(dest, flags);
         dest.writeTypedObject(targetActivityInfo, flags);
         dest.writeInt(startingWindowTypeParameter);
         dest.writeTypedObject(topOpaqueWindowInsetsState, flags);
@@ -190,11 +268,16 @@ public final class StartingWindowInfo implements Parcelable {
         dest.writeTypedObject(mainWindowLayoutParams, flags);
         dest.writeInt(splashScreenThemeResId);
         dest.writeBoolean(isKeyguardOccluded);
-        dest.writeTypedObject(mTaskSnapshot, flags);
+        dest.writeTypedObject(taskSnapshot, flags);
+        dest.writeInt(requestedVisibleTypes);
+        dest.writeStrongBinder(appToken);
+        dest.writeStrongInterface(windowlessStartingSurfaceCallback);
+        dest.writeTypedObject(rootSurface, flags);
     }
 
     void readFromParcel(@NonNull Parcel source) {
         taskInfo = source.readTypedObject(ActivityManager.RunningTaskInfo.CREATOR);
+        taskBounds.readFromParcel(source);
         targetActivityInfo = source.readTypedObject(ActivityInfo.CREATOR);
         startingWindowTypeParameter = source.readInt();
         topOpaqueWindowInsetsState = source.readTypedObject(InsetsState.CREATOR);
@@ -203,7 +286,12 @@ public final class StartingWindowInfo implements Parcelable {
         mainWindowLayoutParams = source.readTypedObject(WindowManager.LayoutParams.CREATOR);
         splashScreenThemeResId = source.readInt();
         isKeyguardOccluded = source.readBoolean();
-        mTaskSnapshot = source.readTypedObject(TaskSnapshot.CREATOR);
+        taskSnapshot = source.readTypedObject(TaskSnapshot.CREATOR);
+        requestedVisibleTypes = source.readInt();
+        appToken = source.readStrongBinder();
+        windowlessStartingSurfaceCallback = IWindowlessStartingSurfaceCallback.Stub
+                .asInterface(source.readStrongBinder());
+        rootSurface = source.readTypedObject(SurfaceControl.CREATOR);
     }
 
     @Override

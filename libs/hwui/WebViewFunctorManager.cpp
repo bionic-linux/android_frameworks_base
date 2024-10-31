@@ -16,14 +16,15 @@
 
 #include "WebViewFunctorManager.h"
 
+#include <log/log.h>
 #include <private/hwui/WebViewFunctor.h>
+#include <utils/Trace.h>
+
+#include <atomic>
+
 #include "Properties.h"
 #include "renderthread/CanvasContext.h"
 #include "renderthread/RenderThread.h"
-
-#include <log/log.h>
-#include <utils/Trace.h>
-#include <atomic>
 
 namespace android::uirenderer {
 
@@ -86,6 +87,10 @@ void WebViewFunctor_release(int functor) {
     WebViewFunctorManager::instance().releaseFunctor(functor);
 }
 
+void WebViewFunctor_reportRenderingThreads(int functor, const pid_t* thread_ids, size_t size) {
+    WebViewFunctorManager::instance().reportRenderingThreads(functor, thread_ids, size);
+}
+
 static std::atomic_int sNextId{1};
 
 WebViewFunctor::WebViewFunctor(void* data, const WebViewFunctorCallbacks& callbacks,
@@ -100,6 +105,9 @@ WebViewFunctor::~WebViewFunctor() {
     destroyContext();
 
     ATRACE_NAME("WebViewFunctor::onDestroy");
+    if (mSurfaceControl) {
+        removeOverlays();
+    }
     mCallbacks.onDestroyed(mFunctor, mData);
 }
 
@@ -115,6 +123,24 @@ void WebViewFunctor::onRemovedFromTree() {
     }
 }
 
+bool WebViewFunctor::prepareRootSurfaceControl() {
+    if (!Properties::enableWebViewOverlays) return false;
+
+    renderthread::CanvasContext* activeContext = renderthread::CanvasContext::getActiveContext();
+    if (!activeContext) return false;
+
+    ASurfaceControl* rootSurfaceControl = activeContext->getSurfaceControl();
+    if (!rootSurfaceControl) return false;
+
+    int32_t rgid = activeContext->getSurfaceControlGenerationId();
+    if (mParentSurfaceControlGenerationId != rgid) {
+        reparentSurfaceControl(rootSurfaceControl);
+        mParentSurfaceControlGenerationId = rgid;
+    }
+
+    return true;
+}
+
 void WebViewFunctor::drawGl(const DrawGlInfo& drawInfo) {
     ATRACE_NAME("WebViewFunctor::drawGl");
     if (!mHasContext) {
@@ -128,20 +154,8 @@ void WebViewFunctor::drawGl(const DrawGlInfo& drawInfo) {
             .mergeTransaction = currentFunctor.mergeTransaction,
     };
 
-    if (Properties::enableWebViewOverlays && !drawInfo.isLayer) {
-        renderthread::CanvasContext* activeContext =
-                renderthread::CanvasContext::getActiveContext();
-        if (activeContext != nullptr) {
-            ASurfaceControl* rootSurfaceControl = activeContext->getSurfaceControl();
-            if (rootSurfaceControl) {
-                overlayParams.overlaysMode = OverlaysMode::Enabled;
-                int32_t rgid = activeContext->getSurfaceControlGenerationId();
-                if (mParentSurfaceControlGenerationId != rgid) {
-                    reparentSurfaceControl(rootSurfaceControl);
-                    mParentSurfaceControlGenerationId = rgid;
-                }
-            }
-        }
+    if (!drawInfo.isLayer && prepareRootSurfaceControl()) {
+        overlayParams.overlaysMode = OverlaysMode::Enabled;
     }
 
     mCallbacks.gles.draw(mFunctor, mData, drawInfo, overlayParams);
@@ -167,7 +181,10 @@ void WebViewFunctor::drawVk(const VkFunctorDrawParams& params) {
             .mergeTransaction = currentFunctor.mergeTransaction,
     };
 
-    // TODO, enable surface control once offscreen mode figured out
+    if (!params.is_layer && prepareRootSurfaceControl()) {
+        overlayParams.overlaysMode = OverlaysMode::Enabled;
+    }
+
     mCallbacks.vk.draw(mFunctor, mData, params, overlayParams);
 }
 
@@ -246,6 +263,10 @@ void WebViewFunctor::reparentSurfaceControl(ASurfaceControl* parent) {
     funcs.transactionReparentFunc(transaction, mSurfaceControl, parent);
     mergeTransaction(transaction);
     funcs.transactionDeleteFunc(transaction);
+}
+
+void WebViewFunctor::reportRenderingThreads(const pid_t* thread_ids, size_t size) {
+    mRenderingThreads = std::vector<pid_t>(thread_ids, thread_ids + size);
 }
 
 WebViewFunctorManager& WebViewFunctorManager::instance() {
@@ -332,6 +353,32 @@ void WebViewFunctorManager::destroyFunctor(int functor) {
             }
         }
     }
+}
+
+void WebViewFunctorManager::reportRenderingThreads(int functor, const pid_t* thread_ids,
+                                                   size_t size) {
+    std::lock_guard _lock{mLock};
+    for (auto& iter : mFunctors) {
+        if (iter->id() == functor) {
+            iter->reportRenderingThreads(thread_ids, size);
+            break;
+        }
+    }
+}
+
+std::vector<pid_t> WebViewFunctorManager::getRenderingThreadsForActiveFunctors() {
+    std::vector<pid_t> renderingThreads;
+    std::lock_guard _lock{mLock};
+    for (const auto& iter : mActiveFunctors) {
+        const auto& functorThreads = iter->getRenderingThreads();
+        for (const auto& tid : functorThreads) {
+            if (std::find(renderingThreads.begin(), renderingThreads.end(), tid) ==
+                renderingThreads.end()) {
+                renderingThreads.push_back(tid);
+            }
+        }
+    }
+    return renderingThreads;
 }
 
 sp<WebViewFunctor::Handle> WebViewFunctorManager::handleFor(int functor) {

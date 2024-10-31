@@ -20,24 +20,25 @@ import static android.app.KeyguardManager.ACTION_CONFIRM_DEVICE_CREDENTIAL_WITH_
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_HOME;
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_RECENTS;
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_STANDARD;
+import static android.app.WindowConfiguration.WINDOWING_MODE_FREEFORM;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
+import static android.app.WindowConfiguration.WINDOWING_MODE_MULTI_WINDOW;
 import static android.app.WindowConfiguration.WINDOWING_MODE_PINNED;
-import static android.app.WindowConfiguration.WINDOWING_MODE_SPLIT_SCREEN_PRIMARY;
 import static android.content.pm.ActivityInfo.FLAG_ALWAYS_FOCUSABLE;
 import static android.view.Display.DEFAULT_DISPLAY;
-import static android.view.Display.TYPE_VIRTUAL;
 import static android.window.DisplayAreaOrganizer.FEATURE_VENDOR_FIRST;
 
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.doNothing;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.doReturn;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.spyOn;
+import static com.android.server.wm.ActivityRecord.State.FINISHING;
+import static com.android.server.wm.ActivityRecord.State.PAUSED;
+import static com.android.server.wm.ActivityRecord.State.PAUSING;
+import static com.android.server.wm.ActivityRecord.State.RESUMED;
+import static com.android.server.wm.ActivityRecord.State.STOPPED;
+import static com.android.server.wm.ActivityRecord.State.STOPPING;
 import static com.android.server.wm.ActivityTaskSupervisor.ON_TOP;
 import static com.android.server.wm.RootWindowContainer.MATCH_ATTACHED_TASK_OR_RECENT_TASKS_AND_RESTORE;
-import static com.android.server.wm.Task.ActivityState.FINISHING;
-import static com.android.server.wm.Task.ActivityState.PAUSED;
-import static com.android.server.wm.Task.ActivityState.PAUSING;
-import static com.android.server.wm.Task.ActivityState.STOPPED;
-import static com.android.server.wm.Task.ActivityState.STOPPING;
 import static com.android.server.wm.WindowContainer.POSITION_BOTTOM;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -71,9 +72,11 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Rect;
+import android.os.PowerManager;
+import android.os.RemoteException;
 import android.os.UserHandle;
 import android.platform.test.annotations.Presubmit;
-import android.util.MergedConfiguration;
 import android.util.Pair;
 
 import androidx.test.filters.MediumTest;
@@ -106,9 +109,10 @@ public class RootWindowContainerTests extends WindowTestsBase {
     }
 
     @Test
-    public void testUpdateDefaultDisplayWindowingModeOnSettingsRetrieved() {
+    public void testUpdateDefaultTaskDisplayAreaWindowingModeOnSettingsRetrieved() {
         assertEquals(WindowConfiguration.WINDOWING_MODE_FULLSCREEN,
-                mWm.getDefaultDisplayContentLocked().getWindowingMode());
+                mWm.getDefaultDisplayContentLocked().getDefaultTaskDisplayArea()
+                        .getWindowingMode());
 
         mWm.mIsPc = true;
         mWm.mAtmService.mSupportsFreeformWindowManagement = true;
@@ -116,7 +120,8 @@ public class RootWindowContainerTests extends WindowTestsBase {
         mWm.mRoot.onSettingsRetrieved();
 
         assertEquals(WindowConfiguration.WINDOWING_MODE_FREEFORM,
-                mWm.getDefaultDisplayContentLocked().getWindowingMode());
+                mWm.getDefaultDisplayContentLocked().getDefaultTaskDisplayArea()
+                        .getWindowingMode());
     }
 
     /**
@@ -139,6 +144,40 @@ public class RootWindowContainerTests extends WindowTestsBase {
 
         assertEquals(activity, mWm.mRoot.findActivity(activity.intent, activity.info,
                 false /* compareIntentFilters */));
+    }
+
+    @Test
+    public void testFindTask_includeLaunchedFromBubbled() {
+        final ComponentName component = ComponentName.createRelative(
+                DEFAULT_COMPONENT_PACKAGE_NAME, ".BubbledActivity");
+        final ActivityOptions opts = ActivityOptions.makeBasic();
+        opts.setTaskAlwaysOnTop(true);
+        opts.setLaunchedFromBubble(true);
+        final ActivityRecord activity = new ActivityBuilder(mWm.mAtmService)
+                .setComponent(component)
+                .setActivityOptions(opts)
+                .setCreateTask(true)
+                .build();
+
+        assertEquals(activity, mWm.mRoot.findTask(activity, activity.getTaskDisplayArea(),
+                true /* includeLaunchedFromBubble */));
+    }
+
+    @Test
+    public void testFindTask_ignoreLaunchedFromBubbled() {
+        final ComponentName component = ComponentName.createRelative(
+                DEFAULT_COMPONENT_PACKAGE_NAME, ".BubbledActivity");
+        final ActivityOptions opts = ActivityOptions.makeBasic();
+        opts.setTaskAlwaysOnTop(true);
+        opts.setLaunchedFromBubble(true);
+        final ActivityRecord activity = new ActivityBuilder(mWm.mAtmService)
+                .setComponent(component)
+                .setActivityOptions(opts)
+                .setCreateTask(true)
+                .build();
+
+        assertNull(mWm.mRoot.findTask(activity, activity.getTaskDisplayArea(),
+                false /* includeLaunchedFromBubble */));
     }
 
     @Test
@@ -168,7 +207,8 @@ public class RootWindowContainerTests extends WindowTestsBase {
     public void testTaskLayerRank() {
         final Task rootTask = new TaskBuilder(mSupervisor).build();
         final Task task1 = new TaskBuilder(mSupervisor).setParentTask(rootTask).build();
-        new ActivityBuilder(mAtm).setTask(task1).build().mVisibleRequested = true;
+        final ActivityRecord activity1 = new ActivityBuilder(mAtm).setTask(task1).build();
+        activity1.setVisibleRequested(true);
         mWm.mRoot.rankTaskLayers();
 
         assertEquals(1, task1.mLayerRank);
@@ -176,7 +216,8 @@ public class RootWindowContainerTests extends WindowTestsBase {
         assertEquals(Task.LAYER_RANK_INVISIBLE, rootTask.mLayerRank);
 
         final Task task2 = new TaskBuilder(mSupervisor).build();
-        new ActivityBuilder(mAtm).setTask(task2).build().mVisibleRequested = true;
+        final ActivityRecord activity2 = new ActivityBuilder(mAtm).setTask(task2).build();
+        activity2.setVisibleRequested(true);
         mWm.mRoot.rankTaskLayers();
 
         // Note that ensureActivitiesVisible is disabled in SystemServicesTestRule, so both the
@@ -191,6 +232,17 @@ public class RootWindowContainerTests extends WindowTestsBase {
 
         assertEquals(1, task1.mLayerRank);
         assertEquals(2, task2.mLayerRank);
+
+        // The rank should be updated to invisible when device went to sleep.
+        activity1.setVisibleRequested(false);
+        activity2.setVisibleRequested(false);
+        doReturn(true).when(mAtm).isSleepingOrShuttingDownLocked();
+        doReturn(true).when(mRootWindowContainer).putTasksToSleep(anyBoolean(), anyBoolean());
+        mSupervisor.mGoingToSleepWakeLock = mock(PowerManager.WakeLock.class);
+        doReturn(false).when(mSupervisor.mGoingToSleepWakeLock).isHeld();
+        mAtm.mTaskSupervisor.checkReadyForSleepLocked(false /* allowDelay */);
+        assertEquals(Task.LAYER_RANK_INVISIBLE, task1.mLayerRank);
+        assertEquals(Task.LAYER_RANK_INVISIBLE, task2.mLayerRank);
     }
 
     @Test
@@ -218,6 +270,24 @@ public class RootWindowContainerTests extends WindowTestsBase {
         // The activities with process should be removed because WindowProcessController#isRemoved.
         assertFalse(task.hasChild());
         assertFalse(wpc.hasActivities());
+    }
+
+    @Test
+    public void testAttachApplication() {
+        final ActivityRecord activity = new ActivityBuilder(mAtm).setCreateTask(true).build();
+        activity.detachFromProcess();
+        mAtm.startProcessAsync(activity, false /* knownToBeDead */,
+                true /* isTop */, "test" /* hostingType */);
+        final WindowProcessController proc = mSystemServicesTestRule.addProcess(
+                activity.packageName, activity.processName,
+                6789 /* pid */, activity.info.applicationInfo.uid);
+        try {
+            mRootWindowContainer.attachApplication(proc);
+            verify(mSupervisor).realStartActivityLocked(eq(activity), eq(proc), anyBoolean(),
+                    anyBoolean());
+        } catch (RemoteException e) {
+            e.rethrowAsRuntimeException();
+        }
     }
 
     /**
@@ -251,7 +321,8 @@ public class RootWindowContainerTests extends WindowTestsBase {
         ensureTaskPlacement(fullscreenTask, firstActivity, secondActivity);
 
         // Move first activity to pinned root task.
-        mRootWindowContainer.moveActivityToPinnedRootTask(firstActivity, "initialMove");
+        mRootWindowContainer.moveActivityToPinnedRootTask(firstActivity,
+                null /* launchIntoPipHostActivity */, "initialMove");
 
         final TaskDisplayArea taskDisplayArea = fullscreenTask.getDisplayArea();
         Task pinnedRootTask = taskDisplayArea.getRootPinnedTask();
@@ -260,7 +331,8 @@ public class RootWindowContainerTests extends WindowTestsBase {
         ensureTaskPlacement(fullscreenTask, secondActivity);
 
         // Move second activity to pinned root task.
-        mRootWindowContainer.moveActivityToPinnedRootTask(secondActivity, "secondMove");
+        mRootWindowContainer.moveActivityToPinnedRootTask(secondActivity,
+                null /* launchIntoPipHostActivity */, "secondMove");
 
         // Need to get root tasks again as a new instance might have been created.
         pinnedRootTask = taskDisplayArea.getRootPinnedTask();
@@ -291,9 +363,150 @@ public class RootWindowContainerTests extends WindowTestsBase {
 
 
         // Move first activity to pinned root task.
-        mRootWindowContainer.moveActivityToPinnedRootTask(secondActivity, "initialMove");
+        mRootWindowContainer.moveActivityToPinnedRootTask(secondActivity,
+                null /* launchIntoPipHostActivity */, "initialMove");
 
         assertTrue(firstActivity.mRequestForceTransition);
+    }
+
+    @Test
+    public void testMultipleActivitiesTaskEnterPip() {
+        // Enable shell transition because the order of setting windowing mode is different.
+        registerTestTransitionPlayer();
+        final ActivityRecord transientActivity = new ActivityBuilder(mAtm)
+                .setCreateTask(true).build();
+        final ActivityRecord activity1 = new ActivityBuilder(mAtm).setCreateTask(true).build();
+        final ActivityRecord activity2 = new ActivityBuilder(mAtm)
+                .setTask(activity1.getTask()).build();
+        activity2.setState(RESUMED, "test");
+
+        // Assume the top activity switches to a transient-launch, e.g. recents.
+        transientActivity.setState(RESUMED, "test");
+        transientActivity.getTask().moveToFront("test");
+
+        mRootWindowContainer.moveActivityToPinnedRootTask(activity2,
+                null /* launchIntoPipHostActivity */, "test");
+        assertEquals("Created PiP task must not change focus", transientActivity.getTask(),
+                mRootWindowContainer.getTopDisplayFocusedRootTask());
+        final Task newPipTask = activity2.getTask();
+        assertEquals(newPipTask, mDisplayContent.getDefaultTaskDisplayArea().getRootPinnedTask());
+        assertNotEquals(newPipTask, activity1.getTask());
+        assertFalse("Created PiP task must not be in recents", newPipTask.inRecents);
+    }
+
+    /**
+     * When there is only one activity in the Task, and the activity is requesting to enter PIP, the
+     * whole Task should enter PIP.
+     */
+    @Test
+    public void testSingleActivityTaskEnterPip() {
+        final Task fullscreenTask = mRootWindowContainer.getDefaultTaskDisplayArea().createRootTask(
+                WINDOWING_MODE_FULLSCREEN, ACTIVITY_TYPE_STANDARD, true /* onTop */);
+        final ActivityRecord activity = new ActivityBuilder(mAtm)
+                .setTask(fullscreenTask)
+                .build();
+        final Task task = activity.getTask();
+
+        // Move activity to pinned root task.
+        mRootWindowContainer.moveActivityToPinnedRootTask(activity,
+                null /* launchIntoPipHostActivity */, "test");
+
+        // Ensure a task has moved over.
+        ensureTaskPlacement(task, activity);
+        assertTrue(task.inPinnedWindowingMode());
+        assertFalse("Entering PiP activity must not affect SysUiFlags",
+                activity.canAffectSystemUiFlags());
+
+        // The activity with fixed orientation should not apply letterbox when entering PiP.
+        final int requestedOrientation = task.getConfiguration().orientation
+                == Configuration.ORIENTATION_PORTRAIT
+                ? Configuration.ORIENTATION_LANDSCAPE : Configuration.ORIENTATION_PORTRAIT;
+        doReturn(requestedOrientation).when(activity).getRequestedConfigurationOrientation();
+        doReturn(false).when(activity).handlesOrientationChangeFromDescendant(anyInt());
+        final Rect bounds = new Rect(task.getBounds());
+        bounds.scale(0.5f);
+        task.setBounds(bounds);
+        assertFalse(activity.isLetterboxedForFixedOrientationAndAspectRatio());
+    }
+
+    /**
+     * When there is only one activity in the Task, and the activity is requesting to enter PIP, the
+     * whole Task should enter PIP even if the activity is in a TaskFragment.
+     */
+    @Test
+    public void testSingleActivityInTaskFragmentEnterPip() {
+        final Task fullscreenTask = mRootWindowContainer.getDefaultTaskDisplayArea().createRootTask(
+                WINDOWING_MODE_FULLSCREEN, ACTIVITY_TYPE_STANDARD, true /* onTop */);
+        final TaskFragment taskFragment = new TaskFragmentBuilder(mAtm)
+                .setParentTask(fullscreenTask)
+                .createActivityCount(1)
+                .build();
+        final ActivityRecord activity = taskFragment.getTopMostActivity();
+        final Task task = activity.getTask();
+
+        // Move activity to pinned root task.
+        mRootWindowContainer.moveActivityToPinnedRootTask(activity,
+                null /* launchIntoPipHostActivity */, "test");
+
+        // Ensure a task has moved over.
+        ensureTaskPlacement(task, activity);
+        assertTrue(task.inPinnedWindowingMode());
+    }
+
+    /**
+     * When there is one TaskFragment with two activities in the Task, the activity requests to
+     * enter PIP, that activity will be move to PIP root task.
+     */
+    @Test
+    public void testMultipleActivitiesInTaskFragmentEnterPip() {
+        final Task fullscreenTask = mRootWindowContainer.getDefaultTaskDisplayArea().createRootTask(
+                WINDOWING_MODE_FULLSCREEN, ACTIVITY_TYPE_STANDARD, true /* onTop */);
+        final TaskFragment taskFragment = new TaskFragmentBuilder(mAtm)
+                .setParentTask(fullscreenTask)
+                .createActivityCount(2)
+                .build();
+        final ActivityRecord firstActivity = taskFragment.getTopMostActivity();
+        final ActivityRecord secondActivity = taskFragment.getBottomMostActivity();
+
+        // Move first activity to pinned root task.
+        mRootWindowContainer.moveActivityToPinnedRootTask(firstActivity,
+                null /* launchIntoPipHostActivity */, "test");
+
+        final TaskDisplayArea taskDisplayArea = fullscreenTask.getDisplayArea();
+        final Task pinnedRootTask = taskDisplayArea.getRootPinnedTask();
+
+        // Ensure a task has moved over.
+        ensureTaskPlacement(pinnedRootTask, firstActivity);
+        ensureTaskPlacement(fullscreenTask, secondActivity);
+        assertTrue(pinnedRootTask.inPinnedWindowingMode());
+        assertEquals(WINDOWING_MODE_FULLSCREEN, fullscreenTask.getWindowingMode());
+    }
+
+    @Test
+    public void testMovingEmbeddedActivityToPip() {
+        final Rect taskBounds = new Rect(0, 0, 800, 1000);
+        final Rect taskFragmentBounds = new Rect(0, 0, 400, 1000);
+        final Task task = mRootWindowContainer.getDefaultTaskDisplayArea().createRootTask(
+                WINDOWING_MODE_MULTI_WINDOW, ACTIVITY_TYPE_STANDARD, true /* onTop */);
+        task.setBounds(taskBounds);
+        assertEquals(taskBounds, task.getBounds());
+        final TaskFragment taskFragment = new TaskFragmentBuilder(mAtm)
+                .setParentTask(task)
+                .createActivityCount(2)
+                .setBounds(taskFragmentBounds)
+                .build();
+        assertEquals(taskFragmentBounds, taskFragment.getBounds());
+        final ActivityRecord topActivity = taskFragment.getTopMostActivity();
+
+        // Move the top activity to pinned root task.
+        mRootWindowContainer.moveActivityToPinnedRootTask(topActivity,
+                null /* launchIntoPipHostActivity */, "test");
+
+        final Task pinnedRootTask = task.getDisplayArea().getRootPinnedTask();
+
+        // Ensure the initial bounds of the PiP Task is the same as the TaskFragment.
+        ensureTaskPlacement(pinnedRootTask, topActivity);
+        assertEquals(taskFragmentBounds, pinnedRootTask.getBounds());
     }
 
     private static void ensureTaskPlacement(Task task, ActivityRecord... activities) {
@@ -365,7 +578,7 @@ public class RootWindowContainerTests extends WindowTestsBase {
         TaskDisplayArea defaultTaskDisplayArea = display.getDefaultTaskDisplayArea();
         doReturn(isFocusedTask ? task : null).when(defaultTaskDisplayArea).getFocusedRootTask();
         mRootWindowContainer.applySleepTokens(true);
-        verify(task, times(expectWakeFromSleep ? 1 : 0)).awakeFromSleepingLocked();
+        verify(task, times(expectWakeFromSleep ? 1 : 0)).awakeFromSleeping();
         verify(task, times(expectResumeTopActivity ? 1 : 0)).resumeTopActivityUncheckedLocked(
                 null /* target */, null /* targetOptions */);
     }
@@ -384,9 +597,8 @@ public class RootWindowContainerTests extends WindowTestsBase {
         assertNotEquals(activity.getConfiguration().orientation, rotatedConfig.orientation);
         // Assume the activity was shown in different orientation. For example, the top activity is
         // landscape and the portrait lockscreen is shown.
-        activity.setLastReportedConfiguration(
-                new MergedConfiguration(mAtm.getGlobalConfiguration(), rotatedConfig));
-        activity.setState(Task.ActivityState.STOPPED, "sleep");
+        activity.setLastReportedConfiguration(mAtm.getGlobalConfiguration(), rotatedConfig);
+        activity.setState(STOPPED, "sleep");
 
         display.setIsSleeping(true);
         doReturn(false).when(display).shouldSleep();
@@ -395,7 +607,7 @@ public class RootWindowContainerTests extends WindowTestsBase {
         mRootWindowContainer.applySleepTokens(true);
 
         // The display orientation should be changed by the activity so there is no relaunch.
-        verify(activity, never()).relaunchActivityLocked(anyBoolean());
+        verify(activity, never()).relaunchActivityLocked(anyBoolean(), anyInt());
         assertEquals(rotatedConfig.orientation, display.getConfiguration().orientation);
     }
 
@@ -415,10 +627,12 @@ public class RootWindowContainerTests extends WindowTestsBase {
 
         // Let's pretend that the app has crashed.
         firstActivity.app.setThread(null);
-        mRootWindowContainer.finishTopCrashedActivities(firstActivity.app, "test");
+        final Task finishedTask = mRootWindowContainer.finishTopCrashedActivities(
+                firstActivity.app, "test");
 
         // Verify that the root task was removed.
         assertEquals(originalRootTaskCount, defaultTaskDisplayArea.getRootTaskCount());
+        assertEquals(rootTask, finishedTask);
     }
 
     /**
@@ -457,7 +671,7 @@ public class RootWindowContainerTests extends WindowTestsBase {
         final TaskDisplayArea defaultTaskDisplayArea = mRootWindowContainer
                 .getDefaultTaskDisplayArea();
         final Task task = defaultTaskDisplayArea.createRootTask(
-                WINDOWING_MODE_SPLIT_SCREEN_PRIMARY, ACTIVITY_TYPE_STANDARD, true /* onTop */);
+                WINDOWING_MODE_MULTI_WINDOW, ACTIVITY_TYPE_STANDARD, true /* onTop */);
         final ActivityRecord activity = new ActivityBuilder(mAtm).setTask(task).build();
 
         // Created tasks are focusable by default.
@@ -522,7 +736,8 @@ public class RootWindowContainerTests extends WindowTestsBase {
         final TaskDisplayArea taskDisplayArea = mRootWindowContainer.getDefaultTaskDisplayArea();
         final Task targetRootTask = taskDisplayArea.createRootTask(WINDOWING_MODE_FULLSCREEN,
                 ACTIVITY_TYPE_STANDARD, false /* onTop */);
-        final Task targetTask = new TaskBuilder(mSupervisor).setParentTask(targetRootTask).build();
+        final Task targetTask = new TaskBuilder(mSupervisor).setParentTask(targetRootTask)
+                .build();
 
         // Create Recents on secondary display.
         final TestDisplayContent secondDisplay = addNewDisplayContentAt(
@@ -557,8 +772,8 @@ public class RootWindowContainerTests extends WindowTestsBase {
         doReturn(rootTask).when(mRootWindowContainer).getTopDisplayFocusedRootTask();
 
         // Use the task as target to resume.
-        mRootWindowContainer.resumeFocusedTasksTopActivities(
-                rootTask, activity, null /* targetOptions */);
+        mRootWindowContainer.resumeFocusedTasksTopActivities(rootTask, activity,
+                null /* targetOptions */);
 
         // Verify the target task should resume its activity.
         verify(rootTask, times(1)).resumeTopActivityUncheckedLocked(
@@ -577,7 +792,7 @@ public class RootWindowContainerTests extends WindowTestsBase {
 
         doReturn(true).when(mRootWindowContainer).resumeHomeActivity(any(), any(), any());
 
-        mAtm.setBooted(true);
+        setBooted(mAtm);
 
         // Trigger resume on all displays
         mRootWindowContainer.resumeFocusedTasksTopActivities();
@@ -605,7 +820,7 @@ public class RootWindowContainerTests extends WindowTestsBase {
 
         doReturn(true).when(mRootWindowContainer).resumeHomeActivity(any(), any(), any());
 
-        mAtm.setBooted(true);
+        setBooted(mAtm);
 
         // Trigger resume on all displays
         mRootWindowContainer.resumeFocusedTasksTopActivities();
@@ -626,7 +841,7 @@ public class RootWindowContainerTests extends WindowTestsBase {
                 ACTIVITY_TYPE_STANDARD, false /* onTop */));
         final ActivityRecord activity = new ActivityBuilder(mAtm)
                 .setTask(rootTask).setOnTop(true).build();
-        activity.setState(Task.ActivityState.RESUMED, "test");
+        activity.setState(RESUMED, "test");
 
         // Assume the task is at the topmost position
         assertTrue(rootTask.isTopRootTaskInDisplayArea());
@@ -646,12 +861,13 @@ public class RootWindowContainerTests extends WindowTestsBase {
                 ACTIVITY_TYPE_STANDARD, false /* onTop */));
         final ActivityRecord activity = new ActivityBuilder(mAtm)
                 .setTask(rootTask).setOnTop(true).build();
-        activity.setState(Task.ActivityState.RESUMED, "test");
+        activity.setState(RESUMED, "test");
         taskDisplayArea.positionChildAt(POSITION_BOTTOM, rootTask, false /*includingParents*/);
 
         // Assume the task is at the topmost position
         assertFalse(rootTask.isTopRootTaskInDisplayArea());
-        doReturn(rootTask).when(mRootWindowContainer).getTopDisplayFocusedRootTask();
+        doReturn(taskDisplayArea.getHomeActivity()).when(taskDisplayArea).topRunningActivity(
+                anyBoolean());
 
         // Use the task as target to resume.
         mRootWindowContainer.resumeFocusedTasksTopActivities();
@@ -673,8 +889,6 @@ public class RootWindowContainerTests extends WindowTestsBase {
                 new TestDisplayContent.Builder(mAtm, 1000, 1500)
                         .setSystemDecorations(true).build();
 
-        doReturn(true).when(mRootWindowContainer)
-                .ensureVisibilityAndConfig(any(), anyInt(), anyBoolean(), anyBoolean());
         doReturn(true).when(mRootWindowContainer).canStartHomeOnDisplayArea(any(), any(),
                 anyBoolean());
 
@@ -691,17 +905,10 @@ public class RootWindowContainerTests extends WindowTestsBase {
     @Test
     public void testNotStartHomeBeforeBoot() {
         final int displayId = 1;
-        final boolean isBooting = mAtm.mAmInternal.isBooting();
-        final boolean isBooted = mAtm.mAmInternal.isBooted();
-        try {
-            mAtm.mAmInternal.setBooting(false);
-            mAtm.mAmInternal.setBooted(false);
-            mRootWindowContainer.onDisplayAdded(displayId);
-            verify(mRootWindowContainer, never()).startHomeOnDisplay(anyInt(), any(), anyInt());
-        } finally {
-            mAtm.mAmInternal.setBooting(isBooting);
-            mAtm.mAmInternal.setBooted(isBooted);
-        }
+        doReturn(false).when(mAtm).isBooting();
+        doReturn(false).when(mAtm).isBooted();
+        mRootWindowContainer.onDisplayAdded(displayId);
+        verify(mRootWindowContainer, never()).startHomeOnDisplay(anyInt(), any(), anyInt());
     }
 
     /**
@@ -733,6 +940,24 @@ public class RootWindowContainerTests extends WindowTestsBase {
     }
 
     /**
+     * Tests whether home can be started if it's not allowed by policy.
+     */
+    @Test
+    public void testCanStartHome_returnsFalse_ifDisallowedByPolicy() {
+        final ActivityInfo info = new ActivityInfo();
+        info.applicationInfo = new ApplicationInfo();
+        final WindowProcessController app = mock(WindowProcessController.class);
+        doReturn(app).when(mAtm).getProcessController(any(), anyInt());
+        doReturn(false).when(app).isInstrumenting();
+        final TaskDisplayArea taskDisplayArea = mRootWindowContainer.getDefaultTaskDisplayArea();
+        doReturn(false).when(taskDisplayArea).canHostHomeTask();
+
+        assertFalse(mRootWindowContainer.canStartHomeOnDisplayArea(info, taskDisplayArea,
+                false /* allowInstrumenting*/));
+    }
+
+
+    /**
      * Tests that secondary home activity should not be resolved if device is still locked.
      */
     @Test
@@ -742,7 +967,7 @@ public class RootWindowContainerTests extends WindowTestsBase {
                 new TestDisplayContent.Builder(mAtm, 1000, 1500)
                         .setSystemDecorations(true).build();
 
-        // Use invalid user id to let StorageManager.isUserKeyUnlocked() return false.
+        // Use invalid user id to let StorageManager.isCeStorageUnlocked() return false.
         final int currentUser = mRootWindowContainer.mCurrentUser;
         mRootWindowContainer.mCurrentUser = -1;
 
@@ -774,7 +999,7 @@ public class RootWindowContainerTests extends WindowTestsBase {
     }
 
     /**
-     * Tests that when starting {@link #ResolverActivity} for home, it should use the standard
+     * Tests that when starting {@link ResolverActivity} for home, it should use the standard
      * activity type (in a new root task) so the order of back stack won't be broken.
      */
     @Test
@@ -933,41 +1158,37 @@ public class RootWindowContainerTests extends WindowTestsBase {
         assertEquals(infoFake1.activityInfo.name, resolvedInfo.first.name);
     }
 
-    /**
-     * Test that {@link RootWindowContainer#getLaunchRootTask} with the real caller id will get the
-     * expected root task when requesting the activity launch on the secondary display.
-     */
     @Test
-    public void testGetLaunchRootTaskWithRealCallerId() {
-        // Create a non-system owned virtual display.
-        final TestDisplayContent secondaryDisplay =
-                new TestDisplayContent.Builder(mAtm, 1000, 1500)
-                        .setType(TYPE_VIRTUAL).setOwnerUid(100).build();
+    public void testGetLaunchRootTaskOnSecondaryTaskDisplayArea() {
+        // Adding another TaskDisplayArea to the default display.
+        final DisplayContent display = mRootWindowContainer.getDefaultDisplay();
+        final TaskDisplayArea taskDisplayArea = new TaskDisplayArea(display,
+                mWm, "TDA", FEATURE_VENDOR_FIRST);
+        display.addChild(taskDisplayArea, POSITION_BOTTOM);
 
-        // Create an activity with specify the original launch pid / uid.
-        final ActivityRecord r = new ActivityBuilder(mAtm).setLaunchedFromPid(200)
-                .setLaunchedFromUid(200).build();
+        // Making sure getting the root task from the preferred TDA and the preferred windowing mode
+        LaunchParamsController.LaunchParams launchParams =
+                new LaunchParamsController.LaunchParams();
+        launchParams.mPreferredTaskDisplayArea = taskDisplayArea;
+        launchParams.mWindowingMode = WINDOWING_MODE_FREEFORM;
+        Task root = mRootWindowContainer.getOrCreateRootTask(null /* r */, null /* options */,
+                null /* candidateTask */, null /* sourceTask */, true /* onTop */, launchParams,
+                0 /* launchParams */);
+        assertEquals(taskDisplayArea, root.getTaskDisplayArea());
+        assertEquals(WINDOWING_MODE_FREEFORM, root.getWindowingMode());
 
-        // Simulate ActivityStarter to find a launch root task for requesting the activity to launch
-        // on the secondary display with realCallerId.
-        final ActivityOptions options = ActivityOptions.makeBasic();
-        options.setLaunchDisplayId(secondaryDisplay.mDisplayId);
-        options.setLaunchWindowingMode(WINDOWING_MODE_FULLSCREEN);
-        doReturn(true).when(mSupervisor).canPlaceEntityOnDisplay(secondaryDisplay.mDisplayId,
-                300 /* test realCallerPid */, 300 /* test realCallerUid */, r.info);
-        final Task result = mRootWindowContainer.getLaunchRootTask(r, options,
-                null /* task */, null /* sourceTask */, true /* onTop */, null /* launchParams */,
-                0 /* launchFlags */, 300 /* test realCallerPid */,
-                300 /* test realCallerUid */);
-
-        // Assert that the root task is returned as expected.
-        assertNotNull(result);
-        assertEquals("The display ID of the root task should same as secondary display ",
-                secondaryDisplay.mDisplayId, result.getDisplayId());
+        // Making sure still getting the root task from the preferred TDA when passing in a
+        // launching activity.
+        ActivityRecord r = new ActivityBuilder(mAtm).build();
+        root = mRootWindowContainer.getOrCreateRootTask(r, null /* options */,
+                null /* candidateTask */, null /* sourceTask */, true /* onTop */, launchParams,
+                0 /* launchParams */);
+        assertEquals(taskDisplayArea, root.getTaskDisplayArea());
+        assertEquals(WINDOWING_MODE_FREEFORM, root.getWindowingMode());
     }
 
     @Test
-    public void testGetValidLaunchRootTaskOnDisplayWithCandidateRootTask() {
+    public void testGetOrCreateRootTaskOnDisplayWithCandidateRootTask() {
         // Create a root task with an activity on secondary display.
         final TestDisplayContent secondaryDisplay = new TestDisplayContent.Builder(mAtm, 300,
                 600).build();
@@ -976,9 +1197,9 @@ public class RootWindowContainerTests extends WindowTestsBase {
         final ActivityRecord activity = new ActivityBuilder(mAtm).setTask(task).build();
 
         // Make sure the root task is valid and can be reused on default display.
-        final Task rootTask = mRootWindowContainer.getValidLaunchRootTaskInTaskDisplayArea(
-                mRootWindowContainer.getDefaultTaskDisplayArea(), activity, task,
-                null /* options */, null /* launchParams */);
+        final Task rootTask = mRootWindowContainer.getDefaultTaskDisplayArea().getOrCreateRootTask(
+                activity, null /* options */, task, null /* sourceTask */, null /* launchParams */,
+                0 /* launchFlags */, ACTIVITY_TYPE_STANDARD, true /* onTop */);
         assertEquals(task, rootTask);
     }
 
@@ -1006,34 +1227,32 @@ public class RootWindowContainerTests extends WindowTestsBase {
 
     @Test
     public void testLockAllProfileTasks() {
-        // Make an activity visible with the user id set to 0
-        final Task task = new TaskBuilder(mSupervisor).setCreateActivity(true).build();
-        final int taskId = task.mTaskId;
-        final ActivityRecord activity = task.getTopMostActivity();
+        final int profileUid = UserHandle.PER_USER_RANGE + UserHandle.MIN_SECONDARY_USER_ID;
+        final int profileUserId = UserHandle.getUserId(profileUid);
+        // Create an activity belonging to the profile user.
+        final ActivityRecord activity = new ActivityBuilder(mAtm).setCreateTask(true)
+                .setUid(profileUid).build();
+        final Task task = activity.getTask();
 
-        // Create another activity on top and the user id is 1
-        final ActivityRecord topActivity = new ActivityBuilder(mAtm).setTask(task)
-                .setUid(UserHandle.PER_USER_RANGE + 1).build();
-        doReturn(true).when(topActivity).okToShowLocked();
+        // Create another activity belonging to current user on top.
+        final ActivityRecord topActivity = new ActivityBuilder(mAtm).setTask(task).build();
         topActivity.intent.setAction(Intent.ACTION_MAIN);
 
         // Make sure the listeners will be notified for putting the task to locked state
         TaskChangeNotificationController controller = mAtm.getTaskChangeNotificationController();
         spyOn(controller);
-        mWm.mRoot.lockAllProfileTasks(0);
-        verify(controller).notifyTaskProfileLocked(eq(taskId), eq(0));
+        mWm.mRoot.lockAllProfileTasks(profileUserId);
+        verify(controller).notifyTaskProfileLocked(any(), eq(profileUserId));
 
         // Create the work lock activity on top of the task
-        final ActivityRecord workLockActivity = new ActivityBuilder(mAtm).setTask(task)
-                .setUid(UserHandle.PER_USER_RANGE + 1).build();
-        doReturn(true).when(workLockActivity).okToShowLocked();
+        final ActivityRecord workLockActivity = new ActivityBuilder(mAtm).setTask(task).build();
         workLockActivity.intent.setAction(ACTION_CONFIRM_DEVICE_CREDENTIAL_WITH_USER);
         doReturn(workLockActivity.mActivityComponent).when(mAtm).getSysUiServiceComponentLocked();
 
         // Make sure the listener won't be notified again.
         clearInvocations(controller);
-        mWm.mRoot.lockAllProfileTasks(0);
-        verify(controller, never()).notifyTaskProfileLocked(anyInt(), anyInt());
+        mWm.mRoot.lockAllProfileTasks(profileUserId);
+        verify(controller, never()).notifyTaskProfileLocked(any(), anyInt());
     }
 
     /**

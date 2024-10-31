@@ -15,11 +15,10 @@
  */
 package com.android.wm.shell.bubbles;
 
-import static com.android.internal.annotations.VisibleForTesting.Visibility.PACKAGE;
 import static com.android.internal.annotations.VisibleForTesting.Visibility.PRIVATE;
-import static com.android.wm.shell.bubbles.BubbleDebugConfig.DEBUG_BUBBLE_DATA;
 import static com.android.wm.shell.bubbles.BubbleDebugConfig.TAG_BUBBLES;
 import static com.android.wm.shell.bubbles.BubbleDebugConfig.TAG_WITH_CLASS_NAME;
+import static com.android.wm.shell.protolog.ShellProtoLogGroup.WM_SHELL_BUBBLES;
 
 import android.annotation.NonNull;
 import android.app.PendingIntent;
@@ -36,11 +35,13 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.protolog.common.ProtoLog;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.wm.shell.R;
 import com.android.wm.shell.bubbles.Bubbles.DismissReason;
+import com.android.wm.shell.common.bubbles.BubbleBarUpdate;
+import com.android.wm.shell.common.bubbles.RemovedBubble;
 
-import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,6 +76,8 @@ public class BubbleData {
         boolean orderChanged;
         boolean suppressedSummaryChanged;
         boolean expanded;
+        boolean shouldShowEducation;
+        boolean showOverflowChanged;
         @Nullable BubbleViewProvider selectedBubble;
         @Nullable Bubble addedBubble;
         @Nullable Bubble updatedBubble;
@@ -107,11 +110,71 @@ public class BubbleData {
                     || suppressedBubble != null
                     || unsuppressedBubble != null
                     || suppressedSummaryChanged
-                    || suppressedSummaryGroup != null;
+                    || suppressedSummaryGroup != null
+                    || showOverflowChanged;
         }
 
         void bubbleRemoved(Bubble bubbleToRemove, @DismissReason int reason) {
             removedBubbles.add(new Pair<>(bubbleToRemove, reason));
+        }
+
+        /**
+         * Converts the update to a {@link BubbleBarUpdate} which contains updates relevant
+         * to the bubble bar. Only used when {@link BubbleController#isShowingAsBubbleBar()} is
+         * true.
+         */
+        BubbleBarUpdate toBubbleBarUpdate() {
+            BubbleBarUpdate bubbleBarUpdate = new BubbleBarUpdate();
+
+            bubbleBarUpdate.expandedChanged = expandedChanged;
+            bubbleBarUpdate.expanded = expanded;
+            bubbleBarUpdate.shouldShowEducation = shouldShowEducation;
+            if (selectionChanged) {
+                bubbleBarUpdate.selectedBubbleKey = selectedBubble != null
+                        ? selectedBubble.getKey()
+                        : null;
+            }
+            bubbleBarUpdate.addedBubble = addedBubble != null
+                    ? addedBubble.asBubbleBarBubble()
+                    : null;
+            // TODO(b/269670235): We need to handle updates better, I think for the bubble bar only
+            //  certain updates need to be sent instead of any updatedBubble.
+            bubbleBarUpdate.updatedBubble = updatedBubble != null
+                    ? updatedBubble.asBubbleBarBubble()
+                    : null;
+            bubbleBarUpdate.suppressedBubbleKey = suppressedBubble != null
+                    ? suppressedBubble.getKey()
+                    : null;
+            bubbleBarUpdate.unsupressedBubbleKey = unsuppressedBubble != null
+                    ? unsuppressedBubble.getKey()
+                    : null;
+            for (int i = 0; i < removedBubbles.size(); i++) {
+                Pair<Bubble, Integer> pair = removedBubbles.get(i);
+                bubbleBarUpdate.removedBubbles.add(
+                        new RemovedBubble(pair.first.getKey(), pair.second));
+            }
+            if (orderChanged) {
+                // Include the new order
+                for (int i = 0; i < bubbles.size(); i++) {
+                    bubbleBarUpdate.bubbleKeysInOrder.add(bubbles.get(i).getKey());
+                }
+            }
+            bubbleBarUpdate.showOverflowChanged = showOverflowChanged;
+            bubbleBarUpdate.showOverflow = !overflowBubbles.isEmpty();
+            return bubbleBarUpdate;
+        }
+
+        /**
+         * Gets the current state of active bubbles and populates the update with that.  Only
+         * used when {@link BubbleController#isShowingAsBubbleBar()} is true.
+         */
+        BubbleBarUpdate getInitialState() {
+            BubbleBarUpdate bubbleBarUpdate = BubbleBarUpdate.createInitialState();
+            bubbleBarUpdate.shouldShowEducation = shouldShowEducation;
+            for (int i = 0; i < bubbles.size(); i++) {
+                bubbleBarUpdate.currentBubbleList.add(bubbles.get(i).asBubbleBarBubble());
+            }
+            return bubbleBarUpdate;
         }
     }
 
@@ -119,7 +182,7 @@ public class BubbleData {
      * This interface reports changes to the state and appearance of bubbles which should be applied
      * as necessary to the UI.
      */
-    interface Listener {
+    public interface Listener {
         /** Reports changes have have occurred as a result of the most recent operation. */
         void applyUpdate(Update update);
     }
@@ -130,6 +193,7 @@ public class BubbleData {
 
     private final Context mContext;
     private final BubblePositioner mPositioner;
+    private final BubbleEducationController mEducationController;
     private final Executor mMainExecutor;
     /** Bubbles that are actively in the stack. */
     private final List<Bubble> mBubbles;
@@ -159,8 +223,7 @@ public class BubbleData {
     @Nullable
     private Listener mListener;
 
-    @Nullable
-    private Bubbles.SuppressionChangedListener mSuppressionListener;
+    private Bubbles.BubbleMetadataFlagListener mBubbleMetadataFlagListener;
     private Bubbles.PendingIntentCanceledListener mCancelledListener;
 
     /**
@@ -177,10 +240,11 @@ public class BubbleData {
     private HashMap<String, String> mSuppressedGroupKeys = new HashMap<>();
 
     public BubbleData(Context context, BubbleLogger bubbleLogger, BubblePositioner positioner,
-            Executor mainExecutor) {
+            BubbleEducationController educationController, Executor mainExecutor) {
         mContext = context;
         mLogger = bubbleLogger;
         mPositioner = positioner;
+        mEducationController = educationController;
         mMainExecutor = mainExecutor;
         mOverflow = new BubbleOverflow(context, positioner);
         mBubbles = new ArrayList<>();
@@ -191,9 +255,21 @@ public class BubbleData {
         mMaxOverflowBubbles = mContext.getResources().getInteger(R.integer.bubbles_max_overflow);
     }
 
-    public void setSuppressionChangedListener(
-            Bubbles.SuppressionChangedListener listener) {
-        mSuppressionListener = listener;
+    /**
+     * Returns a bubble bar update populated with the current list of active bubbles, expanded,
+     * and selected state.
+     */
+    public BubbleBarUpdate getInitialStateForBubbleBar() {
+        BubbleBarUpdate initialState = mStateChange.getInitialState();
+        initialState.bubbleBarLocation = mPositioner.getBubbleBarLocation();
+        initialState.expanded = mExpanded;
+        initialState.expandedChanged = mExpanded; // only matters if we're expanded
+        initialState.selectedBubbleKey = getSelectedBubbleKey();
+        return initialState;
+    }
+
+    public void setSuppressionChangedListener(Bubbles.BubbleMetadataFlagListener listener) {
+        mBubbleMetadataFlagListener = listener;
     }
 
     public void setPendingIntentCancelledListener(
@@ -224,7 +300,8 @@ public class BubbleData {
     }
 
     public boolean hasAnyBubbleWithKey(String key) {
-        return hasBubbleInStackWithKey(key) || hasOverflowBubbleWithKey(key);
+        return hasBubbleInStackWithKey(key) || hasOverflowBubbleWithKey(key)
+                || hasSuppressedBubbleWithKey(key);
     }
 
     public boolean hasBubbleInStackWithKey(String key) {
@@ -235,32 +312,84 @@ public class BubbleData {
         return getOverflowBubbleWithKey(key) != null;
     }
 
+    /**
+     * Check if there are any bubbles suppressed with the given notification <code>key</code>
+     */
+    public boolean hasSuppressedBubbleWithKey(String key) {
+        return mSuppressedBubbles.values().stream().anyMatch(b -> b.getKey().equals(key));
+    }
+
+    /**
+     * Check if there are any bubbles suppressed with the given <code>LocusId</code>
+     */
+    public boolean isSuppressedWithLocusId(LocusId locusId) {
+        return mSuppressedBubbles.get(locusId) != null;
+    }
+
     @Nullable
     public BubbleViewProvider getSelectedBubble() {
         return mSelectedBubble;
+    }
+
+    /**
+     * Returns the key of the selected bubble, or null if no bubble is selected.
+     */
+    @Nullable
+    public String getSelectedBubbleKey() {
+        return mSelectedBubble != null ? mSelectedBubble.getKey() : null;
     }
 
     public BubbleOverflow getOverflow() {
         return mOverflow;
     }
 
-    /** Return a read-only current active bubble lists. */
-    public List<Bubble> getActiveBubbles() {
-        return Collections.unmodifiableList(mBubbles);
-    }
-
     public void setExpanded(boolean expanded) {
-        if (DEBUG_BUBBLE_DATA) {
-            Log.d(TAG, "setExpanded: " + expanded);
-        }
         setExpandedInternal(expanded);
         dispatchPendingChanges();
     }
 
-    public void setSelectedBubble(BubbleViewProvider bubble) {
-        if (DEBUG_BUBBLE_DATA) {
-            Log.d(TAG, "setSelectedBubble: " + bubble);
+    /**
+     * Sets the selected bubble and expands it, but doesn't dispatch changes
+     * to {@link BubbleData.Listener}. This is used for updates coming from launcher whose views
+     * will already be updated so we don't need to notify them again, but BubbleData should be
+     * updated to have the correct state.
+     */
+    public void setSelectedBubbleFromLauncher(BubbleViewProvider bubble) {
+        ProtoLog.d(WM_SHELL_BUBBLES, "setSelectedBubbleFromLauncher=%s",
+                (bubble != null ? bubble.getKey() : "null"));
+        mExpanded = true;
+        if (Objects.equals(bubble, mSelectedBubble)) {
+            return;
         }
+        boolean isOverflow = bubble != null && BubbleOverflow.KEY.equals(bubble.getKey());
+        if (bubble != null
+                && !mBubbles.contains(bubble)
+                && !mOverflowBubbles.contains(bubble)
+                && !isOverflow) {
+            Log.e(TAG, "Cannot select bubble which doesn't exist!"
+                    + " (" + bubble + ") bubbles=" + mBubbles);
+            return;
+        }
+        if (bubble != null && !isOverflow) {
+            ((Bubble) bubble).markAsAccessedAt(mTimeSource.currentTimeMillis());
+        }
+        mSelectedBubble = bubble;
+    }
+
+    /**
+     * Sets the selected bubble and expands it.
+     *
+     * <p>This dispatches a single state update for both changes and should be used instead of
+     * calling {@link #setSelectedBubble(BubbleViewProvider)} followed by
+     * {@link #setExpanded(boolean)} immediately after, which will generate 2 separate updates.
+     */
+    public void setSelectedBubbleAndExpandStack(BubbleViewProvider bubble) {
+        setSelectedBubbleInternal(bubble);
+        setExpandedInternal(true);
+        dispatchPendingChanges();
+    }
+
+    public void setSelectedBubble(BubbleViewProvider bubble) {
         setSelectedBubbleInternal(bubble);
         dispatchPendingChanges();
     }
@@ -270,7 +399,7 @@ public class BubbleData {
     }
 
     boolean isShowingOverflow() {
-        return mShowingOverflow && (isExpanded() || mPositioner.showingInTaskbar());
+        return mShowingOverflow && isExpanded();
     }
 
     /**
@@ -292,12 +421,15 @@ public class BubbleData {
             if (bubbleToReturn != null) {
                 // Promoting from overflow
                 mOverflowBubbles.remove(bubbleToReturn);
+                if (mOverflowBubbles.isEmpty()) {
+                    mStateChange.showOverflowChanged = true;
+                }
             } else if (mPendingBubbles.containsKey(key)) {
                 // Update while it was pending
                 bubbleToReturn = mPendingBubbles.get(key);
             } else if (entry != null) {
                 // New bubble
-                bubbleToReturn = new Bubble(entry, mSuppressionListener, mCancelledListener,
+                bubbleToReturn = new Bubble(entry, mBubbleMetadataFlagListener, mCancelledListener,
                         mMainExecutor);
             } else {
                 // Persisted bubble being promoted
@@ -314,20 +446,24 @@ public class BubbleData {
 
     /**
      * When this method is called it is expected that all info in the bubble has completed loading.
-     * @see Bubble#inflate(BubbleViewInfoTask.Callback, Context, BubbleController, BubbleStackView,
-     * BubbleIconFactory, boolean)
+     * @see Bubble#inflate(BubbleViewInfoTask.Callback, Context, BubbleExpandedViewManager,
+     * BubbleTaskViewFactory, BubblePositioner, BubbleStackView,
+     * com.android.wm.shell.bubbles.bar.BubbleBarLayerView,
+     * com.android.launcher3.icons.BubbleIconFactory, boolean)
      */
     void notificationEntryUpdated(Bubble bubble, boolean suppressFlyout, boolean showInShade) {
-        if (DEBUG_BUBBLE_DATA) {
-            Log.d(TAG, "notificationEntryUpdated: " + bubble);
-        }
         mPendingBubbles.remove(bubble.getKey()); // No longer pending once we're here
         Bubble prevBubble = getBubbleInStackWithKey(bubble.getKey());
-        suppressFlyout |= !bubble.isVisuallyInterruptive();
+        suppressFlyout |= !bubble.isTextChanged();
+        ProtoLog.d(WM_SHELL_BUBBLES,
+                "notifEntryUpdated=%s prevBubble=%b suppressFlyout=%b showInShade=%b autoExpand=%b",
+                bubble.getKey(), (prevBubble != null), suppressFlyout, showInShade,
+                bubble.shouldAutoExpand());
 
         if (prevBubble == null) {
             // Create a new bubble
             bubble.setSuppressFlyout(suppressFlyout);
+            bubble.markUpdatedAt(mTimeSource.currentTimeMillis());
             doAdd(bubble);
             trim();
         } else {
@@ -340,6 +476,7 @@ public class BubbleData {
         if (bubble.shouldAutoExpand()) {
             bubble.setShouldAutoExpand(false);
             setSelectedBubbleInternal(bubble);
+
             if (!mExpanded) {
                 setExpandedInternal(true);
             }
@@ -355,11 +492,11 @@ public class BubbleData {
             boolean isSuppressed = mSuppressedBubbles.containsKey(locusId);
             if (isSuppressed && (!bubble.isSuppressed() || !bubble.isSuppressable())) {
                 mSuppressedBubbles.remove(locusId);
-                mStateChange.unsuppressedBubble = bubble;
+                doUnsuppress(bubble);
             } else if (!isSuppressed && (bubble.isSuppressed()
                     || bubble.isSuppressable() && mVisibleLocusIds.contains(locusId))) {
                 mSuppressedBubbles.put(locusId, bubble);
-                mStateChange.suppressedBubble = bubble;
+                doSuppress(bubble);
             }
         }
         dispatchPendingChanges();
@@ -369,9 +506,6 @@ public class BubbleData {
      * Dismisses the bubble with the matching key, if it exists.
      */
     public void dismissBubbleWithKey(String key, @DismissReason int reason) {
-        if (DEBUG_BUBBLE_DATA) {
-            Log.d(TAG, "notificationEntryRemoved: key=" + key + " reason=" + reason);
-        }
         doRemove(key, reason);
         dispatchPendingChanges();
     }
@@ -451,7 +585,7 @@ public class BubbleData {
                 getOverflowBubbles(), invalidBubblesFromPackage, removeBubble);
     }
 
-    /** Dismisses all bubbles from the given package. */
+    /** Removes all bubbles from the given package. */
     public void removeBubblesWithPackageName(String packageName, int reason) {
         final Predicate<Bubble> bubbleMatchesPackage = bubble ->
                 bubble.getPackageName().equals(packageName);
@@ -463,10 +597,20 @@ public class BubbleData {
         performActionOnBubblesMatching(getOverflowBubbles(), bubbleMatchesPackage, removeBubble);
     }
 
-    private void doAdd(Bubble bubble) {
-        if (DEBUG_BUBBLE_DATA) {
-            Log.d(TAG, "doAdd: " + bubble);
+    /** Removes all bubbles for the given user. */
+    public void removeBubblesForUser(int userId) {
+        List<Bubble> removedBubbles = filterAllBubbles(bubble ->
+                userId == bubble.getUser().getIdentifier());
+        for (Bubble b : removedBubbles) {
+            doRemove(b.getKey(), Bubbles.DISMISS_USER_ACCOUNT_REMOVED);
         }
+        if (!removedBubbles.isEmpty()) {
+            dispatchPendingChanges();
+        }
+    }
+
+    private void doAdd(Bubble bubble) {
+        ProtoLog.d(WM_SHELL_BUBBLES, "doAdd=%s", bubble.getKey());
         mBubbles.add(0, bubble);
         mStateChange.addedBubble = bubble;
         // Adding the first bubble doesn't change the order
@@ -495,9 +639,7 @@ public class BubbleData {
     }
 
     private void doUpdate(Bubble bubble, boolean reorder) {
-        if (DEBUG_BUBBLE_DATA) {
-            Log.d(TAG, "doUpdate: " + bubble);
-        }
+        ProtoLog.d(WM_SHELL_BUBBLES, "BubbleData - doUpdate=%s", bubble.getKey());
         mStateChange.updatedBubble = bubble;
         if (!isExpanded() && reorder) {
             int prevPos = mBubbles.indexOf(bubble);
@@ -524,28 +666,26 @@ public class BubbleData {
     }
 
     private void doRemove(String key, @DismissReason int reason) {
-        if (DEBUG_BUBBLE_DATA) {
-            Log.d(TAG, "doRemove: " + key);
-        }
         //  If it was pending remove it
         if (mPendingBubbles.containsKey(key)) {
             mPendingBubbles.remove(key);
         }
+
+        boolean shouldRemoveHiddenBubble = reason == Bubbles.DISMISS_NOTIF_CANCEL
+                || reason == Bubbles.DISMISS_GROUP_CANCELLED
+                || reason == Bubbles.DISMISS_NO_LONGER_BUBBLE
+                || reason == Bubbles.DISMISS_BLOCKED
+                || reason == Bubbles.DISMISS_SHORTCUT_REMOVED
+                || reason == Bubbles.DISMISS_PACKAGE_REMOVED
+                || reason == Bubbles.DISMISS_USER_CHANGED
+                || reason == Bubbles.DISMISS_USER_ACCOUNT_REMOVED;
+
         int indexToRemove = indexForKey(key);
         if (indexToRemove == -1) {
             if (hasOverflowBubbleWithKey(key)
-                    && (reason == Bubbles.DISMISS_NOTIF_CANCEL
-                        || reason == Bubbles.DISMISS_GROUP_CANCELLED
-                        || reason == Bubbles.DISMISS_NO_LONGER_BUBBLE
-                        || reason == Bubbles.DISMISS_BLOCKED
-                        || reason == Bubbles.DISMISS_SHORTCUT_REMOVED
-                        || reason == Bubbles.DISMISS_PACKAGE_REMOVED
-                        || reason == Bubbles.DISMISS_USER_CHANGED)) {
-
+                    && shouldRemoveHiddenBubble) {
                 Bubble b = getOverflowBubbleWithKey(key);
-                if (DEBUG_BUBBLE_DATA) {
-                    Log.d(TAG, "Cancel overflow bubble: " + b);
-                }
+                ProtoLog.d(WM_SHELL_BUBBLES, "doRemove - cancel overflow bubble=%s", key);
                 if (b != null) {
                     b.stopInflation();
                 }
@@ -553,23 +693,29 @@ public class BubbleData {
                 mOverflowBubbles.remove(b);
                 mStateChange.bubbleRemoved(b, reason);
                 mStateChange.removedOverflowBubble = b;
+                mStateChange.showOverflowChanged = mOverflowBubbles.isEmpty();
+            }
+            if (hasSuppressedBubbleWithKey(key) && shouldRemoveHiddenBubble) {
+                Bubble b = getSuppressedBubbleWithKey(key);
+                ProtoLog.d(WM_SHELL_BUBBLES, "doRemove - cancel suppressed bubble=%s", key);
+                if (b != null) {
+                    mSuppressedBubbles.remove(b.getLocusId());
+                    b.stopInflation();
+                    mStateChange.bubbleRemoved(b, reason);
+                }
             }
             return;
         }
         Bubble bubbleToRemove = mBubbles.get(indexToRemove);
+        ProtoLog.d(WM_SHELL_BUBBLES, "doRemove=%s", bubbleToRemove.getKey());
         bubbleToRemove.stopInflation();
+        overflowBubble(reason, bubbleToRemove);
+
         if (mBubbles.size() == 1) {
-            if (hasOverflowBubbles() && (mPositioner.showingInTaskbar() || isExpanded())) {
-                // No more active bubbles but we have stuff in the overflow -- select that view
-                // if we're already expanded or always showing.
-                setShowingOverflow(true);
-                setSelectedBubbleInternal(mOverflow);
-            } else {
-                setExpandedInternal(false);
-                // Don't use setSelectedBubbleInternal because we don't want to trigger an
-                // applyUpdate
-                mSelectedBubble = null;
-            }
+            setExpandedInternal(false);
+            // Don't use setSelectedBubbleInternal because we don't want to trigger an
+            // applyUpdate
+            mSelectedBubble = null;
         }
         if (indexToRemove < mBubbles.size() - 1) {
             // Removing anything but the last bubble means positions will change.
@@ -581,29 +727,75 @@ public class BubbleData {
             mStateChange.orderChanged |= repackAll();
         }
 
-        overflowBubble(reason, bubbleToRemove);
-
         // Note: If mBubbles.isEmpty(), then mSelectedBubble is now null.
         if (Objects.equals(mSelectedBubble, bubbleToRemove)) {
-            // Move selection to the new bubble at the same position.
-            int newIndex = Math.min(indexToRemove, mBubbles.size() - 1);
-            BubbleViewProvider newSelected = mBubbles.get(newIndex);
-            setSelectedBubbleInternal(newSelected);
+            setNewSelectedIndex(indexToRemove);
         }
         maybeSendDeleteIntent(reason, bubbleToRemove);
+    }
+
+    private void setNewSelectedIndex(int indexOfSelected) {
+        if (mBubbles.isEmpty()) {
+            Log.w(TAG, "Bubbles list empty when attempting to select index: " + indexOfSelected);
+            return;
+        }
+        // Move selection to the new bubble at the same position.
+        int newIndex = Math.min(indexOfSelected, mBubbles.size() - 1);
+        BubbleViewProvider newSelected = mBubbles.get(newIndex);
+        setSelectedBubbleInternal(newSelected);
+    }
+
+    private void doSuppress(Bubble bubble) {
+        ProtoLog.d(WM_SHELL_BUBBLES, "doSuppress=%s", bubble.getKey());
+        mStateChange.suppressedBubble = bubble;
+        bubble.setSuppressBubble(true);
+
+        int indexToRemove = mBubbles.indexOf(bubble);
+        // Order changes if we are not suppressing the last bubble
+        mStateChange.orderChanged = !(mBubbles.size() - 1 == indexToRemove);
+        mBubbles.remove(indexToRemove);
+
+        // Update selection if we suppressed the selected bubble
+        if (Objects.equals(mSelectedBubble, bubble)) {
+            if (mBubbles.isEmpty()) {
+                // Don't use setSelectedBubbleInternal because we don't want to trigger an
+                // applyUpdate
+                mSelectedBubble = null;
+            } else {
+                // Mark new first bubble as selected
+                setNewSelectedIndex(0);
+            }
+        }
+    }
+
+    private void doUnsuppress(Bubble bubble) {
+        ProtoLog.d(WM_SHELL_BUBBLES, "doUnsuppress=%s", bubble.getKey());
+        bubble.setSuppressBubble(false);
+        mStateChange.unsuppressedBubble = bubble;
+        mBubbles.add(bubble);
+        if (mBubbles.size() > 1) {
+            // See where the bubble actually lands
+            repackAll();
+            mStateChange.orderChanged = true;
+        }
+        if (mBubbles.get(0) == bubble) {
+            // Unsuppressed bubble is sorted to first position. Mark it as the selected.
+            setNewSelectedIndex(0);
+        }
     }
 
     void overflowBubble(@DismissReason int reason, Bubble bubble) {
         if (bubble.getPendingIntentCanceled()
                 || !(reason == Bubbles.DISMISS_AGED
-                    || reason == Bubbles.DISMISS_USER_GESTURE
-                    || reason == Bubbles.DISMISS_RELOAD_FROM_DISK)) {
+                || reason == Bubbles.DISMISS_USER_GESTURE
+                || reason == Bubbles.DISMISS_RELOAD_FROM_DISK)) {
             return;
         }
-        if (DEBUG_BUBBLE_DATA) {
-            Log.d(TAG, "Overflowing: " + bubble);
-        }
+        ProtoLog.d(WM_SHELL_BUBBLES, "overflowBubble=%s", bubble.getKey());
         mLogger.logOverflowAdd(bubble, reason);
+        if (mOverflowBubbles.isEmpty()) {
+            mStateChange.showOverflowChanged = true;
+        }
         mOverflowBubbles.remove(bubble);
         mOverflowBubbles.add(0, bubble);
         mStateChange.addedOverflowBubble = bubble;
@@ -611,9 +803,7 @@ public class BubbleData {
         if (mOverflowBubbles.size() == mMaxOverflowBubbles + 1) {
             // Remove oldest bubble.
             Bubble oldest = mOverflowBubbles.get(mOverflowBubbles.size() - 1);
-            if (DEBUG_BUBBLE_DATA) {
-                Log.d(TAG, "Overflow full. Remove: " + oldest);
-            }
+            ProtoLog.d(WM_SHELL_BUBBLES, "overflow full, remove=%s", oldest.getKey());
             mStateChange.bubbleRemoved(oldest, Bubbles.DISMISS_OVERFLOW_MAX_REACHED);
             mLogger.log(bubble, BubbleLogger.Event.BUBBLE_OVERFLOW_REMOVE_MAX_REACHED);
             mOverflowBubbles.remove(oldest);
@@ -622,16 +812,18 @@ public class BubbleData {
     }
 
     public void dismissAll(@DismissReason int reason) {
-        if (DEBUG_BUBBLE_DATA) {
-            Log.d(TAG, "dismissAll: reason=" + reason);
-        }
-        if (mBubbles.isEmpty()) {
+        ProtoLog.d(WM_SHELL_BUBBLES, "dismissAll reason=%d", reason);
+        if (mBubbles.isEmpty() && mSuppressedBubbles.isEmpty()) {
             return;
         }
         setExpandedInternal(false);
         setSelectedBubbleInternal(null);
         while (!mBubbles.isEmpty()) {
             doRemove(mBubbles.get(0).getKey(), reason);
+        }
+        while (!mSuppressedBubbles.isEmpty()) {
+            Bubble bubble = mSuppressedBubbles.removeAt(0);
+            doRemove(bubble.getKey(), reason);
         }
         dispatchPendingChanges();
     }
@@ -641,11 +833,16 @@ public class BubbleData {
      * and if there's a matching bubble for that locusId then the bubble may be hidden or shown
      * depending on the visibility of the locusId.
      *
-     * @param taskId the taskId associated with the locusId visibility change.
+     * @param taskId  the taskId associated with the locusId visibility change.
      * @param locusId the locusId whose visibility has changed.
      * @param visible whether the task with the locusId is visible or not.
      */
     public void onLocusVisibilityChanged(int taskId, LocusId locusId, boolean visible) {
+        if (locusId == null) return;
+
+        ProtoLog.d(WM_SHELL_BUBBLES, "onLocusVisibilityChanged=%s visible=%b taskId=%d",
+                locusId.getId(), visible, taskId);
+
         Bubble matchingBubble = getBubbleInStackWithLocusId(locusId);
         // Don't add the locus if it's from a bubble'd activity, we only suppress for non-bubbled.
         if (visible && (matchingBubble == null || matchingBubble.getTaskId() != taskId)) {
@@ -654,20 +851,22 @@ public class BubbleData {
             mVisibleLocusIds.remove(locusId);
         }
         if (matchingBubble == null) {
-            return;
+            // Check if there is a suppressed bubble for this LocusId
+            matchingBubble = mSuppressedBubbles.get(locusId);
+            if (matchingBubble == null) {
+                return;
+            }
         }
         boolean isAlreadySuppressed = mSuppressedBubbles.get(locusId) != null;
         if (visible && !isAlreadySuppressed && matchingBubble.isSuppressable()
                 && taskId != matchingBubble.getTaskId()) {
             mSuppressedBubbles.put(locusId, matchingBubble);
-            matchingBubble.setSuppressBubble(true);
-            mStateChange.suppressedBubble = matchingBubble;
+            doSuppress(matchingBubble);
             dispatchPendingChanges();
         } else if (!visible) {
             Bubble unsuppressedBubble = mSuppressedBubbles.remove(locusId);
             if (unsuppressedBubble != null) {
-                unsuppressedBubble.setSuppressBubble(false);
-                mStateChange.unsuppressedBubble = unsuppressedBubble;
+                doUnsuppress(unsuppressedBubble);
             }
             dispatchPendingChanges();
         }
@@ -685,6 +884,9 @@ public class BubbleData {
 
     private void dispatchPendingChanges() {
         if (mListener != null && mStateChange.anythingChanged()) {
+            mStateChange.shouldShowEducation = mSelectedBubble != null
+                    && mEducationController.shouldShowStackEducation(mSelectedBubble)
+                    && !mExpanded;
             mListener.applyUpdate(mStateChange);
         }
         mStateChange = new Update(mBubbles, mOverflowBubbles);
@@ -696,13 +898,11 @@ public class BubbleData {
      * @param bubble the new selected bubble
      */
     private void setSelectedBubbleInternal(@Nullable BubbleViewProvider bubble) {
-        if (DEBUG_BUBBLE_DATA) {
-            Log.d(TAG, "setSelectedBubbleInternal: " + bubble);
-        }
-        if (!mShowingOverflow && Objects.equals(bubble, mSelectedBubble)) {
+        ProtoLog.d(WM_SHELL_BUBBLES, "setSelectedBubbleInternal=%s",
+                (bubble != null ? bubble.getKey() : "null"));
+        if (Objects.equals(bubble, mSelectedBubble)) {
             return;
         }
-        // Otherwise, if we are showing the overflow menu, return to the previously selected bubble.
         boolean isOverflow = bubble != null && BubbleOverflow.KEY.equals(bubble.getKey());
         if (bubble != null
                 && !mBubbles.contains(bubble)
@@ -716,6 +916,9 @@ public class BubbleData {
             ((Bubble) bubble).markAsAccessedAt(mTimeSource.currentTimeMillis());
         }
         mSelectedBubble = bubble;
+        if (isOverflow) {
+            mShowingOverflow = true;
+        }
         mStateChange.selectedBubble = bubble;
         mStateChange.selectionChanged = true;
     }
@@ -727,14 +930,14 @@ public class BubbleData {
     /**
      * Logs the bubble UI event.
      *
-     * @param provider The bubble view provider that is being interacted on. Null value indicates
-     *               that the user interaction is not specific to one bubble.
-     * @param action The user interaction enum
+     * @param provider    The bubble view provider that is being interacted on. Null value indicates
+     *                    that the user interaction is not specific to one bubble.
+     * @param action      The user interaction enum
      * @param packageName SystemUI package
      * @param bubbleCount Number of bubbles in the stack
      * @param bubbleIndex Index of bubble in the stack
-     * @param normalX Normalized x position of the stack
-     * @param normalY Normalized y position of the stack
+     * @param normalX     Normalized x position of the stack
+     * @param normalY     Normalized y position of the stack
      */
     void logBubbleEvent(@Nullable BubbleViewProvider provider, int action, String packageName,
             int bubbleCount, int bubbleIndex, float normalX, float normalY) {
@@ -756,12 +959,10 @@ public class BubbleData {
      * @param shouldExpand the new requested state
      */
     private void setExpandedInternal(boolean shouldExpand) {
-        if (DEBUG_BUBBLE_DATA) {
-            Log.d(TAG, "setExpandedInternal: shouldExpand=" + shouldExpand);
-        }
         if (mExpanded == shouldExpand) {
             return;
         }
+        ProtoLog.d(WM_SHELL_BUBBLES, "setExpandedInternal=%b", shouldExpand);
         if (shouldExpand) {
             if (mBubbles.isEmpty() && !mShowingOverflow) {
                 Log.e(TAG, "Attempt to expand stack when empty!");
@@ -771,6 +972,10 @@ public class BubbleData {
                 Log.e(TAG, "Attempt to expand stack without selected bubble!");
                 return;
             }
+            if (mSelectedBubble.getKey().equals(mOverflow.getKey()) && !mBubbles.isEmpty()) {
+                // Show previously selected bubble instead of overflow menu when expanding.
+                setSelectedBubbleInternal(mBubbles.get(0));
+            }
             if (mSelectedBubble instanceof Bubble) {
                 ((Bubble) mSelectedBubble).markAsAccessedAt(mTimeSource.currentTimeMillis());
             }
@@ -779,16 +984,6 @@ public class BubbleData {
             // Apply ordering and grouping rules from expanded -> collapsed, then save
             // the result.
             mStateChange.orderChanged |= repackAll();
-            // Save the state which should be returned to when expanded (with no other changes)
-
-            if (mShowingOverflow) {
-                // Show previously selected bubble instead of overflow menu on next expansion.
-                if (!mSelectedBubble.getKey().equals(mOverflow.getKey())) {
-                    setSelectedBubbleInternal(mSelectedBubble);
-                } else {
-                    setSelectedBubbleInternal(mBubbles.get(0));
-                }
-            }
             if (mBubbles.indexOf(mSelectedBubble) > 0) {
                 // Move the selected bubble to the top while collapsed.
                 int index = mBubbles.indexOf(mSelectedBubble);
@@ -819,9 +1014,6 @@ public class BubbleData {
      * @return true if the position of any bubbles changed as a result
      */
     private boolean repackAll() {
-        if (DEBUG_BUBBLE_DATA) {
-            Log.d(TAG, "repackAll()");
-        }
         if (mBubbles.isEmpty()) {
             return false;
         }
@@ -862,7 +1054,6 @@ public class BubbleData {
     /**
      * The set of bubbles in row.
      */
-    @VisibleForTesting(visibility = PACKAGE)
     public List<Bubble> getBubbles() {
         return Collections.unmodifiableList(mBubbles);
     }
@@ -881,6 +1072,9 @@ public class BubbleData {
         Bubble b = getBubbleInStackWithKey(key);
         if (b == null) {
             b = getOverflowBubbleWithKey(key);
+        }
+        if (b == null) {
+            b = getSuppressedBubbleWithKey(key);
         }
         return b;
     }
@@ -948,7 +1142,6 @@ public class BubbleData {
         return null;
     }
 
-    @VisibleForTesting(visibility = PRIVATE)
     public Bubble getOverflowBubbleWithKey(String key) {
         for (int i = 0; i < mOverflowBubbles.size(); i++) {
             Bubble bubble = mOverflowBubbles.get(i);
@@ -957,6 +1150,68 @@ public class BubbleData {
             }
         }
         return null;
+    }
+
+    /**
+     * Get a suppressed bubble with given notification <code>key</code>
+     *
+     * @param key notification key
+     * @return bubble that matches or null
+     */
+    @Nullable
+    @VisibleForTesting(visibility = PRIVATE)
+    public Bubble getSuppressedBubbleWithKey(String key) {
+        for (Bubble b : mSuppressedBubbles.values()) {
+            if (b.getKey().equals(key)) {
+                return b;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get a pending bubble with given notification <code>key</code>
+     *
+     * @param key notification key
+     * @return bubble that matches or null
+     */
+    @VisibleForTesting(visibility = PRIVATE)
+    public Bubble getPendingBubbleWithKey(String key) {
+        for (Bubble b : mPendingBubbles.values()) {
+            if (b.getKey().equals(key)) {
+                return b;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns a list of bubbles that match the provided predicate. This checks all types of
+     * bubbles (i.e. pending, suppressed, active, and overflowed).
+     */
+    private List<Bubble> filterAllBubbles(Predicate<Bubble> predicate) {
+        ArrayList<Bubble> matchingBubbles = new ArrayList<>();
+        for (Bubble b : mPendingBubbles.values()) {
+            if (predicate.test(b)) {
+                matchingBubbles.add(b);
+            }
+        }
+        for (Bubble b : mSuppressedBubbles.values()) {
+            if (predicate.test(b)) {
+                matchingBubbles.add(b);
+            }
+        }
+        for (Bubble b : mBubbles) {
+            if (predicate.test(b)) {
+                matchingBubbles.add(b);
+            }
+        }
+        for (Bubble b : mOverflowBubbles) {
+            if (predicate.test(b)) {
+                matchingBubbles.add(b);
+            }
+        }
+        return matchingBubbles;
     }
 
     @VisibleForTesting(visibility = PRIVATE)
@@ -980,30 +1235,29 @@ public class BubbleData {
     /**
      * Description of current bubble data state.
      */
-    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
-        pw.print("selected: ");
-        pw.println(mSelectedBubble != null
-                ? mSelectedBubble.getKey()
-                : "null");
-        pw.print("expanded: ");
+    public void dump(PrintWriter pw) {
+        pw.println("BubbleData state:");
+        pw.print("  selected: ");
+        pw.println(getSelectedBubbleKey());
+        pw.print("  expanded: ");
         pw.println(mExpanded);
 
-        pw.print("stack bubble count:    ");
+        pw.print("Stack bubble count: ");
         pw.println(mBubbles.size());
         for (Bubble bubble : mBubbles) {
-            bubble.dump(fd, pw, args);
+            bubble.dump(pw);
         }
 
-        pw.print("overflow bubble count:    ");
+        pw.print("Overflow bubble count: ");
         pw.println(mOverflowBubbles.size());
         for (Bubble bubble : mOverflowBubbles) {
-            bubble.dump(fd, pw, args);
+            bubble.dump(pw);
         }
 
-        pw.print("summaryKeys: ");
+        pw.print("SummaryKeys: ");
         pw.println(mSuppressedGroupKeys.size());
         for (String key : mSuppressedGroupKeys.keySet()) {
-            pw.println("   suppressing: " + key);
+            pw.println("     suppressing: " + key);
         }
     }
 }

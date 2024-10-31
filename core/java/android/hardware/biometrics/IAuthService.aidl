@@ -16,6 +16,7 @@
 
 package android.hardware.biometrics;
 
+import android.hardware.biometrics.AuthenticationStateListener;
 import android.hardware.biometrics.IBiometricEnabledOnKeyguardCallback;
 import android.hardware.biometrics.IBiometricServiceReceiver;
 import android.hardware.biometrics.IInvalidationCallback;
@@ -33,31 +34,44 @@ import android.hardware.biometrics.SensorPropertiesInternal;
  */
 interface IAuthService {
     // Creates a test session with the specified sensorId
+    @EnforcePermission("TEST_BIOMETRIC")
     ITestSession createTestSession(int sensorId, ITestSessionCallback callback, String opPackageName);
 
     // Retrieve static sensor properties for all biometric sensors
+    @EnforcePermission("TEST_BIOMETRIC")
     List<SensorPropertiesInternal> getSensorProperties(String opPackageName);
 
     // Retrieve the package where BIometricOrompt's UI is implemented
+    @EnforcePermission("TEST_BIOMETRIC")
     String getUiPackage();
 
-    // Requests authentication. The service choose the appropriate biometric to use, and show
-    // the corresponding BiometricDialog.
-    void authenticate(IBinder token, long sessionId, int userId,
+    // Requests authentication. The service chooses the appropriate biometric to use, and shows
+    // the corresponding BiometricDialog. A requestId is returned that can be used to cancel
+    // this operation.
+    long authenticate(IBinder token, long sessionId, int userId,
             IBiometricServiceReceiver receiver, String opPackageName, in PromptInfo promptInfo);
 
-    // Cancel authentication for the given sessionId
-    void cancelAuthentication(IBinder token, String opPackageName);
+    // Cancel authentication for the given requestId.
+    void cancelAuthentication(IBinder token, String opPackageName, long requestId);
 
     // TODO(b/141025588): Make userId the first arg to be consistent with hasEnrolledBiometrics.
     // Checks if biometrics can be used.
     int canAuthenticate(String opPackageName, int userId, int authenticators);
+
+    // Gets the time of last authentication for the given user and authenticators.
+    long getLastAuthenticationTime(int userId, int authenticators);
 
     // Checks if any biometrics are enrolled.
     boolean hasEnrolledBiometrics(int userId, String opPackageName);
 
     // Register callback for when keyguard biometric eligibility changes.
     void registerEnabledOnKeyguardCallback(IBiometricEnabledOnKeyguardCallback callback);
+
+    // Register listener for changes to authentication state.
+    void registerAuthenticationStateListener(AuthenticationStateListener listener);
+
+    // Unregister listener for changes to authentication state.
+    void unregisterAuthenticationStateListener(AuthenticationStateListener listener);
 
     // Requests all BIOMETRIC_STRONG sensors to have their authenticatorId invalidated for the
     // specified user. This happens when enrollments have been added on devices with multiple
@@ -74,6 +88,9 @@ interface IAuthService {
     // See documentation in BiometricManager.
     void resetLockoutTimeBound(IBinder token, String opPackageName, int fromSensorId, int userId,
             in byte[] hardwareAuthToken);
+
+    // See documentation in BiometricManager.
+    void resetLockout(int userId, in byte[] hardwareAuthToken);
 
     // Provides a localized string that may be used as the label for a button that invokes
     // BiometricPrompt.
