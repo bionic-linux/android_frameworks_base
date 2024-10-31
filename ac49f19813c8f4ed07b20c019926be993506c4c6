@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24fb9e84_c59eb484",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/ui/MobileUiAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2024-10-31T19:45:26Z",
+      "side": 1,
+      "message": "Would you mind adding some tests to cover this case, so we don\u0027t end up in the same scenario? Thanks!",
+      "range": {
+        "startLine": 62,
+        "startChar": 55,
+        "endLine": 62,
+        "endChar": 65
+      },
+      "revId": "ac49f19813c8f4ed07b20c019926be993506c4c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
