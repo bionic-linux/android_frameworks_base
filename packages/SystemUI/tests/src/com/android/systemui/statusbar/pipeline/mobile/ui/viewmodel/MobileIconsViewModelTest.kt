@@ -24,6 +24,7 @@ import com.android.systemui.SysuiTestCase
 import com.android.systemui.flags.FakeFeatureFlagsClassic
 import com.android.systemui.flags.Flags
 import com.android.systemui.statusbar.phone.StatusBarLocation
+import com.android.systemui.statusbar.phone.ui.StatusBarIconController
 import com.android.systemui.statusbar.pipeline.StatusBarPipelineFlags
 import com.android.systemui.statusbar.pipeline.airplane.data.repository.FakeAirplaneModeRepository
 import com.android.systemui.statusbar.pipeline.airplane.domain.interactor.AirplaneModeInteractor
@@ -67,6 +68,7 @@ class MobileIconsViewModelTest : SysuiTestCase() {
     @Mock private lateinit var constants: ConnectivityConstants
     @Mock private lateinit var logger: MobileViewLogger
     @Mock private lateinit var verboseLogger: VerboseMobileViewLogger
+    @Mock private lateinit var iconController: StatusBarIconController
 
     private val testDispatcher = UnconfinedTestDispatcher()
     private val testScope = TestScope(testDispatcher)
@@ -138,6 +140,20 @@ class MobileIconsViewModelTest : SysuiTestCase() {
 
             interactor.filteredSubscriptions.value = emptyList()
             assertThat(latest).isEmpty()
+
+            job.cancel()
+        }
+
+    @Test
+    fun subscriptionIdsFlow_setNewMobileIconSubIds() =
+        testScope.runTest {
+            var latest: List<Int>? = null
+            val job = underTest.subscriptionIdsFlow.onEach { latest = it }.launchIn(this)
+
+            interactor.filteredSubscriptions.value = listOf(SUB_1, SUB_2)
+            iconController.setNewMobileIconSubIds(latest)
+
+            assertThat(latest).isEqualTo(listOf(1,2))
 
             job.cancel()
         }
