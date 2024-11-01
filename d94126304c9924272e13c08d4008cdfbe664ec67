@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1418fa83_9d1d0528",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/statusbar/pipeline/mobile/ui/viewmodel/MobileIconsViewModelTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2024-11-01T13:43:56Z",
+      "side": 1,
+      "message": "Thank you for adding this test. One small nit: can we please add \"Regression test for b/374218167\" as a comment here?",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 50
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5e4a3368_cb7c8b8e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "packages/SystemUI/tests/src/com/android/systemui/statusbar/pipeline/mobile/ui/viewmodel/MobileIconsViewModelTest.kt",
+              "range": {
+                "startLine": 147,
+                "startChar": 0,
+                "endLine": 147,
+                "endChar": 0
+              },
+              "replacement": "    // Regression test for b/374218167\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d94126304c9924272e13c08d4008cdfbe664ec67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
