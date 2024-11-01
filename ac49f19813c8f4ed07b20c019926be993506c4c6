@@ -22,6 +22,30 @@
       },
       "revId": "ac49f19813c8f4ed07b20c019926be993506c4c6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95da2909_5a1a32b8",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/ui/MobileUiAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-11-01T09:14:01Z",
+      "side": 1,
+      "message": "Moved the copy into StatusBarIconController, so we can easily test the API.",
+      "parentUuid": "24fb9e84_c59eb484",
+      "range": {
+        "startLine": 62,
+        "startChar": 55,
+        "endLine": 62,
+        "endChar": 65
+      },
+      "revId": "ac49f19813c8f4ed07b20c019926be993506c4c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
