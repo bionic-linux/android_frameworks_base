@@ -265,9 +265,10 @@ public class StatusBarIconControllerImpl implements Tunable,
         // to support demo mode for now
         removeAllIconsForSlot(slotName, /* fromNewPipeline */ true);
 
-        Collections.reverse(subIds);
+        List<Integer> copySubIds =  new ArrayList<>(List.copyOf(subIds));
+        Collections.reverse(copySubIds);
 
-        for (Integer subId : subIds) {
+        for (Integer subId : copySubIds) {
             StatusBarIconHolder holder = mobileSlot.getHolderForTag(subId);
             if (holder == null) {
                 holder = StatusBarIconHolder.fromSubIdForModernMobileIcon(subId);
