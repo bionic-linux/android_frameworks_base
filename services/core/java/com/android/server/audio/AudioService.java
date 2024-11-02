@@ -12035,6 +12035,10 @@ public class AudioService extends IAudioService.Stub
             @Override
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
+                if (action == null) {
+                    Log.w(TAG, "Received intent with null action");
+                    return;
+                }
                 String pkgName = intent.getData().getEncodedSchemeSpecificPart();
                 int uid = intent.getIntExtra(Intent.EXTRA_UID, Process.INVALID_UID);
                 if (intent.getBooleanExtra(EXTRA_REPLACING, false) ||
