@@ -40,6 +40,30 @@
       ],
       "revId": "d94126304c9924272e13c08d4008cdfbe664ec67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5505a4ed_217b0664",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/statusbar/pipeline/mobile/ui/viewmodel/MobileIconsViewModelTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-11-04T01:53:45Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "1418fa83_9d1d0528",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 50
+      },
+      "revId": "d94126304c9924272e13c08d4008cdfbe664ec67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
