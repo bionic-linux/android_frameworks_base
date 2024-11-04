@@ -88,6 +88,30 @@
       },
       "revId": "420c82382e043692e50869be3dbaf760a2a0ce19",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e30efdfd_41e2524f",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12038,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2024-11-04T14:25:45Z",
+      "side": 1,
+      "message": "please add Bug:375569842 to the commit message",
+      "parentUuid": "31c9b384_1dcdbb27",
+      "range": {
+        "startLine": 12038,
+        "startChar": 0,
+        "endLine": 12038,
+        "endChar": 26
+      },
+      "revId": "420c82382e043692e50869be3dbaf760a2a0ce19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
