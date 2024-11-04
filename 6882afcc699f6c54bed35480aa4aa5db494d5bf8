@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85666681_1a929854",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-11-04T10:53:45Z",
+      "side": 1,
+      "message": "For future reference, you can add android-framework-input@ as a reviewer instead of adding all of us individually.",
+      "revId": "6882afcc699f6c54bed35480aa4aa5db494d5bf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
