@@ -966,8 +966,12 @@ class KeyboardLayoutManager implements InputManager.InputDeviceListener {
             @NonNull Set<String> selectedLayouts) {
         final Resources r = context.getResources();
         List<String> layoutNames = new ArrayList<>();
-        selectedLayouts.forEach(
-                (layoutDesc) -> layoutNames.add(getKeyboardLayout(layoutDesc).getLabel()));
+        selectedLayouts.forEach((layoutDesc) -> {
+            final KeyboardLayout keyboardLayout = getKeyboardLayout(layoutDesc);
+            if (keyboardLayout != null) {
+                layoutNames.add(keyboardLayout.getLabel());
+            }
+        });
         Collections.sort(layoutNames);
         switch (layoutNames.size()) {
             case 1:
