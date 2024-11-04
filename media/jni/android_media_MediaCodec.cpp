@@ -189,6 +189,11 @@ static struct {
     jmethodID setId;
 } gBufferInfo;
 
+static struct {
+    jclass clazz;
+    jmethodID ctorId;
+} gPairClassInfo;
+
 struct fields_t {
     jmethodID postEventFromNativeID;
     jmethodID lockAndGetContextID;
@@ -1127,6 +1132,30 @@ status_t JMediaCodec::unsubscribeFromVendorParameters(JNIEnv *env, jobject names
     std::vector<std::string> names;
     BuildVectorFromList(env, namesObj, &names);
     return mCodec->unsubscribeFromVendorParameters(names);
+}
+
+static jobject getJavaResources(JNIEnv *env,
+                                const std::vector<MediaCodec::ResourceInfo>& resources) {
+    jobject resourcesObj = env->NewObject(gArrayListInfo.clazz, gArrayListInfo.ctorId);
+    for (const MediaCodec::ResourceInfo& res : resources) {
+        jint id = res.mId;
+        jint count = res.mCount;
+        jobject javaPair = env->NewObject(gPairClassInfo.clazz, gPairClassInfo.ctorId, id, count);
+        (void)env->CallBooleanMethod(resourcesObj, gArrayListInfo.addId, javaPair);
+        env->DeleteLocalRef(javaPair);
+    }
+
+    return resourcesObj;
+}
+
+status_t JMediaCodec::getRequiredDeviceResources(JNIEnv *env, jobject *resourcesObj) {
+    std::vector<MediaCodec::ResourceInfo> resources;
+    status_t status = mCodec->getRequiredDeviceResources(resources);
+    if (status != OK) {
+        return status;
+    }
+    *resourcesObj = getJavaResources(env, resources);
+    return OK;
 }
 
 static jthrowable createCodecException(
@@ -3545,6 +3574,37 @@ static void android_media_MediaCodec_unsubscribeFromVendorParameters(
     return;
 }
 
+static jobject android_media_MediaCodec_getAvailableDeviceResources(
+        JNIEnv *env, jobject thiz) {
+    (void)thiz;
+    jobject ret = NULL;
+    std::vector<MediaCodec::ResourceInfo> resources;
+    status_t status = MediaCodec::getAvailableDeviceResources(resources);
+    if (status != OK) {
+        throwExceptionAsNecessary(env, status, nullptr);
+    }
+
+    return getJavaResources(env, resources);
+}
+
+static jobject android_media_MediaCodec_getRequiredDeviceResources(
+        JNIEnv *env, jobject thiz) {
+    sp<JMediaCodec> codec = getMediaCodec(env, thiz);
+
+    if (codec == NULL || codec->initCheck() != OK) {
+        throwExceptionAsNecessary(env, INVALID_OPERATION, codec);
+        return NULL;
+    }
+
+    jobject ret = NULL;
+    status_t status = codec->getRequiredDeviceResources(env, &ret);
+    if (status != OK) {
+        throwExceptionAsNecessary(env, status, codec);
+    }
+
+    return ret;
+}
+
 static void android_media_MediaCodec_native_init(JNIEnv *env, jclass) {
     ScopedLocalRef<jclass> clazz(
             env, env->FindClass("android/media/MediaCodec"));
@@ -3884,6 +3944,12 @@ static void android_media_MediaCodec_native_init(JNIEnv *env, jclass) {
 
     gBufferInfo.setId = env->GetMethodID(clazz.get(), "set", "(IIJI)V");
     CHECK(gBufferInfo.setId != NULL);
+
+    clazz.reset(env->FindClass("android/util/Pair"));
+    CHECK(clazz.get() != NULL);
+    gPairClassInfo.clazz = (jclass)env->NewGlobalRef(clazz.get());
+    gPairClassInfo.ctorId = env->GetMethodID(clazz.get(), "<init>",
+                                           "(Ljava/lang/Object;Ljava/lang/Object;)V");
 
     gFields.bufferInfoSize = env->GetFieldID(clazz.get(), "size", "I");
     gFields.bufferInfoFlags = env->GetFieldID(clazz.get(), "flags", "I");
@@ -4246,6 +4312,12 @@ static const JNINativeMethod gMethods[] = {
 
     { "native_finalize", "()V",
       (void *)android_media_MediaCodec_native_finalize },
+
+    { "native_getAvailableDeviceResources", "()Ljava/util/List;",
+      (void *)android_media_MediaCodec_getAvailableDeviceResources},
+
+    { "native_getRequiredDeviceResources", "()Ljava/util/List;",
+      (void *)android_media_MediaCodec_getRequiredDeviceResources},
 };
 
 static const JNINativeMethod gLinearBlockMethods[] = {

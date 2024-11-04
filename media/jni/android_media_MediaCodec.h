@@ -185,6 +185,8 @@ struct JMediaCodec : public AHandler {
 
     status_t unsubscribeFromVendorParameters(JNIEnv *env, jobject names);
 
+    status_t getRequiredDeviceResources(JNIEnv *env, jobject *resourcesObj);
+
     bool hasCryptoOrDescrambler() { return mHasCryptoOrDescrambler; }
 
     const sp<ICrypto> &getCrypto() { return mCrypto; }
