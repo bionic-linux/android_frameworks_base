@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8a625d2_340399de",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12038,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2024-11-04T10:09:24Z",
+      "side": 1,
+      "message": "not sure how this can happen but we should probably log a warning when it does.\nAnother way of fixing this is to change the if() statement below for if (ACTION_PACKAGE_ADDED.equals(action))",
+      "range": {
+        "startLine": 12038,
+        "startChar": 0,
+        "endLine": 12038,
+        "endChar": 26
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "e7949d79_1b4726a7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 12039,
+                "startChar": 0,
+                "endLine": 12039,
+                "endChar": 0
+              },
+              "replacement": "                    Log.w(TAG, \"Received intent with null action\");\n"
+            }
+          ]
+        }
+      ],
+      "revId": "420c82382e043692e50869be3dbaf760a2a0ce19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
