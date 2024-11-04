@@ -105,6 +105,7 @@ cc_library_shared {
         "libmedia_midiiowrapper",
         "android.companion.virtualdevice.flags-aconfig-cc",
         "android.media.playback.flags-aconfig-cc",
+        "android.media.codec-aconfig-cc",
     ],
 
     include_dirs: [
