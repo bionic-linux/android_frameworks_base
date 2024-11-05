@@ -34,6 +34,24 @@
       "parentUuid": "85666681_1a929854",
       "revId": "6882afcc699f6c54bed35480aa4aa5db494d5bf8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "383a0e1d_5cd685ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2024-11-05T09:56:54Z",
+      "side": 1,
+      "message": "Hi lijilou@, \n\nThanks for your patch. This was fixed internally, so I will cherry-pick it to AOSP:\nhttps://android-review.git.corp.google.com/c/platform/frameworks/base/+/3334453",
+      "parentUuid": "2979ecf2_9520dd29",
+      "revId": "6882afcc699f6c54bed35480aa4aa5db494d5bf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
