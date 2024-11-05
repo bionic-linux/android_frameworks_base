@@ -88,6 +88,30 @@
       },
       "revId": "4e70e583c02fa9b49a1eaa9c1a28f9fac3b91e0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0aa6acc_4806a3b2",
+        "filename": "services/core/java/com/android/server/media/MediaSessionRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1643016
+      },
+      "writtenOn": "2024-11-05T14:48:05Z",
+      "side": 1,
+      "message": "I like the distinction between \"in(active)\" states and the \"user engagement\" states. Thanks for the idea! Updated all the Javadocs accordingly.",
+      "parentUuid": "a1c197f7_cbc9124e",
+      "range": {
+        "startLine": 256,
+        "startChar": 73,
+        "endLine": 257,
+        "endChar": 13
+      },
+      "revId": "4e70e583c02fa9b49a1eaa9c1a28f9fac3b91e0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
