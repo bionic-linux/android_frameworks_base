@@ -64,6 +64,30 @@
       },
       "revId": "4e70e583c02fa9b49a1eaa9c1a28f9fac3b91e0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1c197f7_cbc9124e",
+        "filename": "services/core/java/com/android/server/media/MediaSessionRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1969406
+      },
+      "writtenOn": "2024-11-05T13:35:51Z",
+      "side": 1,
+      "message": "Yeah my confusion is around the javadoc about `PAUSED` in the below `TEMP_USER_ENGAGED_TIMEOUT_MS`, but I see your point.\n\nOptional: Then would it be better to rephrase this sentence to \"...has recently switched to one of the user-disengaged playback states\", and it\u0027s also clearer to list these playback states explicitly. Or, maybe use `active / inactive` (https://developer.android.com/reference/android/media/session/PlaybackState#isActive()) instead of `user-engaged` / `user-disengaged`?\n\nThus, the mapping between playback state to user engagement state seems to be less confusing:\n\n* active playback states -\u003e USER_PERMANENTLY_ENGAGED;\n* inactive playback states within timeout -\u003e USER_TEMPORARILY_ENGAGED;\n* inactive playback states after timeout -\u003e USER_DISENGAGED.",
+      "parentUuid": "d360b9a0_0e5ca5ef",
+      "range": {
+        "startLine": 256,
+        "startChar": 73,
+        "endLine": 257,
+        "endChar": 13
+      },
+      "revId": "4e70e583c02fa9b49a1eaa9c1a28f9fac3b91e0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
