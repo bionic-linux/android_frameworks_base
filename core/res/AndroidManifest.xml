@@ -6803,6 +6803,12 @@
     <permission android:name="android.permission.MANAGE_SUBSCRIPTION_PLANS"
         android:protectionLevel="signature|privileged" />
 
+    <!-- @FlaggedApi("com.android.internal.telephony.flags.subscription_plan_allow_status_and_end_date")
+         Allows for reading subscription plan fields for status and recurrence rule.
+    -->
+    <permission android:name="android.permission.READ_SUBSCRIPTION_PLANS"
+        android:protectionLevel="signature|privileged" />
+
     <!-- C2DM permission.
          @hide Used internally.
      -->
