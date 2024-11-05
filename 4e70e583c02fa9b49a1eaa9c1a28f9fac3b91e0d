@@ -40,6 +40,30 @@
       ],
       "revId": "4e70e583c02fa9b49a1eaa9c1a28f9fac3b91e0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d360b9a0_0e5ca5ef",
+        "filename": "services/core/java/com/android/server/media/MediaSessionRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1643016
+      },
+      "writtenOn": "2024-11-05T12:19:48Z",
+      "side": 1,
+      "message": "Erm... my interpretation of the terminology here was: there is a set of engaged states and a set of disengaged states. The definition of these sets didn\u0027t change.\n\nBut we can also be in \"temporarily engaged\" if we switched to a disengaged state and are still within the 10min timeout. This timeout previously only applied to PAUSED, but now applies to all disengaged states. As in, previously, PAUSED could either be \"temporarily engaged\" or \"disengaged\" already. And I guess the previous Javadoc was a bit misleading because it seems to claim that PAUSED is always \"temporarily engaged\". Does that make sense?",
+      "parentUuid": "6994aff9_cbd11a83",
+      "range": {
+        "startLine": 256,
+        "startChar": 73,
+        "endLine": 257,
+        "endChar": 13
+      },
+      "revId": "4e70e583c02fa9b49a1eaa9c1a28f9fac3b91e0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
