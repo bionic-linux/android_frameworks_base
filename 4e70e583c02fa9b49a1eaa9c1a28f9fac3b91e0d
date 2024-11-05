@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6994aff9_cbd11a83",
+        "filename": "services/core/java/com/android/server/media/MediaSessionRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1969406
+      },
+      "writtenOn": "2024-11-05T12:06:54Z",
+      "side": 1,
+      "message": "If I understood correctly, should this be \"one of the temporary user-engaged states\", as the temporary user-engaged states used to have one `PAUSED`, and now we are extending it to `STOPPED`, `ERROR` and `NONE`?",
+      "range": {
+        "startLine": 256,
+        "startChar": 73,
+        "endLine": 257,
+        "endChar": 13
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4f872e8c_f095871e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/media/MediaSessionRecord.java",
+              "range": {
+                "startLine": 256,
+                "startChar": 0,
+                "endLine": 258,
+                "endChar": 0
+              },
+              "replacement": "     * Indicates that the session is active and has recently switched to one of the temporary\n     * user-engaged states.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4e70e583c02fa9b49a1eaa9c1a28f9fac3b91e0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
