@@ -16,6 +16,24 @@
       "message": "For future reference, you can add android-framework-input@ as a reviewer instead of adding all of us individually.",
       "revId": "6882afcc699f6c54bed35480aa4aa5db494d5bf8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2979ecf2_9520dd29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-11-05T02:00:34Z",
+      "side": 1,
+      "message": "OK,Thanks.\n\nHello,@asmitapoddar@google.com,\nThe CL have conflict with internal branch,but no confict with main branch.please help fix this problem.\nThanks,",
+      "parentUuid": "85666681_1a929854",
+      "revId": "6882afcc699f6c54bed35480aa4aa5db494d5bf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
