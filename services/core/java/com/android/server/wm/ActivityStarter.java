@@ -57,6 +57,7 @@ import static android.view.WindowManager.TRANSIT_NONE;
 import static android.view.WindowManager.TRANSIT_OPEN;
 import static android.view.WindowManager.TRANSIT_TO_FRONT;
 import static android.window.TaskFragmentOperation.OP_TYPE_START_ACTIVITY_IN_TASK_FRAGMENT;
+import static android.window.TransitionInfo.FLAG_STARTING_WINDOW_TRANSFER_RECIPIENT;
 
 import static com.android.internal.protolog.ProtoLogGroup.WM_DEBUG_CONFIGURATION;
 import static com.android.internal.protolog.ProtoLogGroup.WM_DEBUG_TASKS;
@@ -1544,6 +1545,11 @@ class ActivityStarter {
                 result = startActivityInner(r, sourceRecord, voiceSession, voiceInteractor,
                         startFlags, options, inTask, inTaskFragment, balVerdict,
                         intentGrants, realCallingUid);
+                if ((r.mTransitionChangeFlags & FLAG_STARTING_WINDOW_TRANSFER_RECIPIENT) != 0
+                        && newTransition == null && r.mStartingData != null
+                        && r.mStartingData.mWaitForSyncTransactionCommit) {
+                    r.mStartingData.mWaitForSyncTransactionCommit = false;
+                }
             } catch (Exception ex) {
                 Slog.e(TAG, "Exception on startActivityInner", ex);
             } finally {
