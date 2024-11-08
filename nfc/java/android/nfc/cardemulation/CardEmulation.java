@@ -45,6 +45,7 @@ import android.os.RemoteException;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
+import android.telephony.SubscriptionManager;
 import android.util.ArrayMap;
 import android.util.Log;
 
@@ -994,6 +995,24 @@ public final class CardEmulation {
     @FlaggedApi(android.nfc.Flags.FLAG_ENABLE_CARD_EMULATION_EUICC)
     public boolean isEuiccSupported() {
         return callServiceReturn(() -> sService.isEuiccSupported(), false);
+    }
+
+    /**
+     * Returns the system's default NFC subscription id.
+     *
+     * <p> For devices with multiple UICC/EUICC that is configured to be NFCEE, this returns the
+     * default UICC NFCEE that will handle NFC offhost CE transactoions </p>
+     * <p> If the device has no UICC that can serve as NFCEE, this will return
+     * {@link SubscriptionManager#INVALID_SUBSCRIPTION_ID}.</p>
+     *
+     * @return the default NFC subscription Id if set,
+     * {@link SubscriptionManager#INVALID_SUBSCRIPTION_ID} otherwise.
+     */
+    @FlaggedApi(android.nfc.Flags.FLAG_ENABLE_CARD_EMULATION_EUICC)
+    public int getDefaultNfcSubscriptionId() {
+        return callServiceReturn(() ->
+                sService.getDefaultNfcSubscriptionId(),
+                SubscriptionManager.INVALID_SUBSCRIPTION_ID);
     }
 
     /**
