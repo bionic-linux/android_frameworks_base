@@ -16,6 +16,81 @@
       "message": "Adding Fiona and Santos as I no longer work in this area",
       "revId": "b26f5cdba5c0fbdfcca1033388ff62de0617454b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86bb4272_ac05b175",
+        "filename": "services/core/java/com/android/server/display/color/TintController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2024-11-08T10:49:49Z",
+      "side": 1,
+      "message": "Should we guard this object too?",
+      "fixSuggestions": [
+        {
+          "fixId": "3e0aca02_38b9a199",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/display/color/TintController.java",
+              "range": {
+                "startLine": 35,
+                "startChar": 0,
+                "endLine": 35,
+                "endChar": 0
+              },
+              "replacement": "    @GuardedBy(\"mLock\")\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/display/color/TintController.java",
+              "range": {
+                "startLine": 40,
+                "startChar": 0,
+                "endLine": 41,
+                "endChar": 0
+              },
+              "replacement": "        synchronized (mLock) {\n            return mAnimator;\n        }\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/display/color/TintController.java",
+              "range": {
+                "startLine": 44,
+                "startChar": 0,
+                "endLine": 45,
+                "endChar": 0
+              },
+              "replacement": "        synchronized (mLock) {\n            mAnimator \u003d animator;\n        }\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/display/color/TintController.java",
+              "range": {
+                "startLine": 51,
+                "startChar": 0,
+                "endLine": 53,
+                "endChar": 0
+              },
+              "replacement": "        synchronized (mLock) {\n            if (mAnimator !\u003d null) {\n                mAnimator.cancel();\n            }\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/display/color/TintController.java",
+              "range": {
+                "startLine": 60,
+                "startChar": 0,
+                "endLine": 63,
+                "endChar": 0
+              },
+              "replacement": "        synchronized (mLock) {\n            if (mAnimator !\u003d null) {\n                mAnimator.end();\n                mAnimator \u003d null;\n            }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b26f5cdba5c0fbdfcca1033388ff62de0617454b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
