@@ -8115,10 +8115,16 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                         who, MANAGE_DEVICE_POLICY_FACTORY_RESET, caller.getPackageName(),
                         UserHandle.USER_ALL)
                         .getActiveAdmin();
+
+                if (policy == null) {
+                    admin.mFactoryResetProtectionPolicies.remove(caller.getUid());
+                } else {
+                    admin.mFactoryResetProtectionPolicies.put(caller.getUid(), policy);
+                }
             } else {
                 admin = getProfileOwnerOrDeviceOwnerLocked(caller.getUserId());
+                admin.mFactoryResetProtectionPolicy = policy;
             }
-            admin.mFactoryResetProtectionPolicy = policy;
             saveSettingsLocked(caller.getUserId());
         }
 
@@ -8164,9 +8170,44 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                                 || isProfileOwnerOfOrganizationOwnedDevice(caller));
                 admin = getProfileOwnerOrDeviceOwnerLocked(caller.getUserId());
             }
+
+            if (admin == null) {
+                return null;
+            }
+
+            if (isPermissionCheckFlagEnabled()) {
+                return mergeFrpPolicies(admin.mFactoryResetProtectionPolicies.values());
+            } else {
+                return admin.mFactoryResetProtectionPolicy;
+            }
+        }
+    }
+
+    /**
+     * Combine the provided factory reset protection policies into a single policy.
+     *
+     * The merge strategy produces the "least restrictive" FRP policy, in the sense of reducing the
+     * cases in which FRP might activate and maximizing the options for clearing the FRP state. So,
+     * if any policy in the collection disables FRP, the merged policy disables FRP, and the merged
+     * policy contains a union of the FRP admin accounts in the collection.
+     */
+    @androidx.annotation.NonNull
+    private static FactoryResetProtectionPolicy mergeFrpPolicies(
+            Collection<FactoryResetProtectionPolicy> policies) {
+
+        boolean frpEnabled = true;
+        HashSet<String> adminAccounts = new HashSet<>();
+        for (FactoryResetProtectionPolicy policy : policies) {
+            if (policy != null) {
+                frpEnabled &= policy.isFactoryResetProtectionEnabled();
+                adminAccounts.addAll(policy.getFactoryResetProtectionAccounts());
+            }
         }
 
-        return admin != null ? admin.mFactoryResetProtectionPolicy : null;
+        return new FactoryResetProtectionPolicy.Builder()
+                .setFactoryResetProtectionEnabled(frpEnabled)
+                .setFactoryResetProtectionAccounts(adminAccounts.stream().toList())
+                .build();
     }
 
     private int getFrpManagementAgentUid() {
