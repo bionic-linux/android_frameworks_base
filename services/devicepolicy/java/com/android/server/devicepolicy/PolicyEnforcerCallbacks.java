@@ -19,14 +19,17 @@ package com.android.server.devicepolicy;
 import static android.content.pm.PackageManager.MATCH_DIRECT_BOOT_AWARE;
 import static android.content.pm.PackageManager.MATCH_DIRECT_BOOT_UNAWARE;
 
+import android.Manifest;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.annotation.UserIdInt;
 import android.app.AppGlobals;
 import android.app.AppOpsManager;
 import android.app.admin.DevicePolicyCache;
 import android.app.admin.DevicePolicyManager;
 import android.app.admin.DevicePolicyManagerInternal;
+import android.app.admin.FactoryResetProtectionPolicy;
 import android.app.admin.IntentFilterPolicyKey;
 import android.app.admin.LockTaskPolicy;
 import android.app.admin.PackagePermissionPolicyKey;
@@ -58,6 +61,7 @@ import android.view.IWindowManager;
 import com.android.internal.os.BackgroundThread;
 import com.android.internal.util.ArrayUtils;
 import com.android.server.LocalServices;
+import com.android.server.pdb.PersistentDataBlockManagerInternal;
 import com.android.server.pm.UserManagerInternal;
 import com.android.server.utils.Slogf;
 
@@ -197,6 +201,26 @@ final class PolicyEnforcerCallbacks {
             changeIntent.setPackage(packageName);
             changeIntent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
             context.sendBroadcastAsUser(changeIntent, UserHandle.of(userId));
+        });
+        return true;
+    }
+
+    @SuppressLint("MissingPermission")
+    public static Boolean setFactoryResetProtection(FactoryResetProtectionPolicy policy,
+            Context context, int userId, PolicyKey policyKey) {
+        final var pdb = LocalServices.getService(PersistentDataBlockManagerInternal.class);
+        if (pdb == null) {
+            throw new UnsupportedOperationException(
+                    "The persistent data block service is not supported on this device");
+        }
+        Binder.withCleanCallingIdentity(() -> {
+            final Intent intent = new Intent(
+                    DevicePolicyManager.ACTION_RESET_PROTECTION_POLICY_CHANGED).addFlags(
+                    Intent.FLAG_RECEIVER_INCLUDE_BACKGROUND | Intent.FLAG_RECEIVER_FOREGROUND);
+            context.sendBroadcastAsUser(intent,
+                    UserHandle.getUserHandleForUid(pdb.getAllowedUid()),
+                    Manifest.permission.MANAGE_FACTORY_RESET_PROTECTION);
+
         });
         return true;
     }
