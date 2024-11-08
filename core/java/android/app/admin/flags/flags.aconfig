@@ -385,3 +385,10 @@ flag {
     purpose: PURPOSE_BUGFIX
   }
 }
+
+flag {
+  name: "device_policy_factory_reset_protection"
+  namespace: "enterprise"
+  description: "Enable factory reset protection policy configuration through device policy engine"
+  bug: "372755701"
+}
