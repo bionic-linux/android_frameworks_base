@@ -24,6 +24,7 @@ import android.app.admin.AccountTypePolicyKey;
 import android.app.admin.BooleanPolicyValue;
 import android.app.admin.DevicePolicyIdentifiers;
 import android.app.admin.DevicePolicyManager;
+import android.app.admin.FactoryResetProtectionPolicy;
 import android.app.admin.IntegerPolicyValue;
 import android.app.admin.IntentFilterPolicyKey;
 import android.app.admin.LockTaskPolicy;
@@ -389,6 +390,13 @@ final class PolicyDefinition<V> {
                     new PackageSetUnion(),
                     PolicyEnforcerCallbacks::noOp,
                     new PackageSetPolicySerializer());
+
+    static final PolicyDefinition<FactoryResetProtectionPolicy> FACTORY_RESET_PROTECTION =
+            new PolicyDefinition<>(
+                    new NoArgsPolicyKey(DevicePolicyIdentifiers.FACTORY_RESET_PROTECTION_POLICY),
+                    new FactoryResetProtectionPolicyResolutionMechanism(),
+                    PolicyEnforcerCallbacks::setFactoryResetProtection,
+                    new FactoryResetProtectionPolicySerializer());
 
     private static final Map<String, PolicyDefinition<?>> POLICY_DEFINITIONS = new HashMap<>();
     private static Map<String, Integer> USER_RESTRICTION_FLAGS = new HashMap<>();

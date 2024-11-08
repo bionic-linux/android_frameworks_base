@@ -65,6 +65,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -204,6 +205,9 @@ class ActiveAdmin {
 
     @Nullable
     FactoryResetProtectionPolicy mFactoryResetProtectionPolicy = null;
+
+    HashMap</* UID */ Integer, FactoryResetProtectionPolicy> mFactoryResetProtectionPolicies =
+            new HashMap<>();
 
     static final long DEF_MAXIMUM_TIME_TO_UNLOCK = 0;
     long maximumTimeToUnlock = DEF_MAXIMUM_TIME_TO_UNLOCK;

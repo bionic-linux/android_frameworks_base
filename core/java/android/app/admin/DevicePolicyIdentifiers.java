@@ -203,6 +203,11 @@ public final class DevicePolicyIdentifiers {
     public static final String USER_RESTRICTION_PREFIX = "userRestriction_";
 
     /**
+     * @hide
+     */
+    public static final String FACTORY_RESET_PROTECTION_POLICY = "factoryResetProtection";
+
+    /**
      * Returns a string identifier for the provided user restrictions, see
      * {@link DevicePolicyManager#addUserRestriction} and {@link UserManager} for the list of
      * available restrictions.
