@@ -8092,6 +8092,22 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
     @Override
     public void setFactoryResetProtectionPolicy(ComponentName who, String callerPackageName,
             @Nullable FactoryResetProtectionPolicy policy) {
+        if (!Flags.devicePolicyFactoryResetProtection()) {
+            setFactoryResetProtectionPolicyPreCoexistence(who, callerPackageName, policy);
+        }
+
+        EnforcingAdmin enforcingAdmin = getEnforcingAdminForCaller(who, callerPackageName);
+        if (policy == null) {
+            mDevicePolicyEngine.removeGlobalPolicy(PolicyDefinition.FACTORY_RESET_PROTECTION,
+                    enforcingAdmin);
+        } else {
+            mDevicePolicyEngine.setGlobalPolicy(PolicyDefinition.FACTORY_RESET_PROTECTION,
+                    enforcingAdmin, new FactoryResetProtectionPolicyValue(policy));
+        }
+    }
+
+    private void setFactoryResetProtectionPolicyPreCoexistence(ComponentName who,
+            String callerPackageName, @Nullable FactoryResetProtectionPolicy policy) {
         if (!mHasFeature) {
             return;
         }
@@ -8144,6 +8160,16 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
     @Override
     public FactoryResetProtectionPolicy getFactoryResetProtectionPolicy(
             @Nullable ComponentName who) {
+        if (!Flags.devicePolicyFactoryResetProtection()) {
+            return getFactoryResetProtectionPolicyPreCoexistence(who);
+        }
+
+        return mDevicePolicyEngine.getResolvedPolicy(
+                PolicyDefinition.FACTORY_RESET_PROTECTION, getCallerIdentity(who).getUserId());
+    }
+
+    private FactoryResetProtectionPolicy getFactoryResetProtectionPolicyPreCoexistence(
+            @Nullable ComponentName who) {
         if (!mHasFeature) {
             return null;
         }
@@ -8164,9 +8190,9 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                                 || isProfileOwnerOfOrganizationOwnedDevice(caller));
                 admin = getProfileOwnerOrDeviceOwnerLocked(caller.getUserId());
             }
-        }
 
-        return admin != null ? admin.mFactoryResetProtectionPolicy : null;
+            return admin != null ? admin.mFactoryResetProtectionPolicy : null;
+        }
     }
 
     private int getFrpManagementAgentUid() {
