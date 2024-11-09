@@ -60,14 +60,14 @@ import java.util.concurrent.atomic.AtomicReference;
  * @hide
  */
 @RavenwoodKeepWholeClass
-@RavenwoodRedirectionClass("LongArrayMultiStateCounter_ravenwood")
+@RavenwoodRedirectionClass("LongArrayMultiStateCounter_host")
 public final class LongArrayMultiStateCounter implements Parcelable {
 
     /**
      * Container for a native equivalent of a long[].
      */
     @RavenwoodKeepWholeClass
-    @RavenwoodRedirectionClass("LongArrayMultiStateCounter_ravenwood$LongArrayContainer")
+    @RavenwoodRedirectionClass("LongArrayContainer_host")
     public static class LongArrayContainer {
         private static NativeAllocationRegistry sRegistry;
 

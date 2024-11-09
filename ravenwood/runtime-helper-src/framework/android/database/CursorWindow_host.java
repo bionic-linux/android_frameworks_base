@@ -17,7 +17,6 @@ package android.database;
 
 import android.database.sqlite.SQLiteException;
 import android.os.Parcel;
-import android.ravenwood.annotation.RavenwoodKeepWholeClass;
 import android.util.Base64;
 
 import java.text.DecimalFormat;
@@ -27,10 +26,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-@RavenwoodKeepWholeClass
-class CursorWindow_ravenwood {
+public class CursorWindow_host {
 
-    private static final HashMap<Long, CursorWindow_ravenwood> sInstances = new HashMap<>();
+    private static final HashMap<Long, CursorWindow_host> sInstances = new HashMap<>();
     private static long sNextId = 1;
 
     private String mName;
@@ -43,7 +41,7 @@ class CursorWindow_ravenwood {
     private final List<Row> mRows = new ArrayList<>();
 
     public static long nativeCreate(String name, int cursorWindowSize) {
-        CursorWindow_ravenwood instance = new CursorWindow_ravenwood();
+        CursorWindow_host instance = new CursorWindow_host();
         instance.mName = name;
         long instanceId = sNextId++;
         sInstances.put(instanceId, instance);
@@ -68,7 +66,7 @@ class CursorWindow_ravenwood {
     }
 
     public static boolean nativeAllocRow(long windowPtr) {
-        CursorWindow_ravenwood instance = sInstances.get(windowPtr);
+        CursorWindow_host instance = sInstances.get(windowPtr);
         Row row = new Row();
         row.mFields = new String[instance.mColumnNum];
         row.mTypes = new int[instance.mColumnNum];
@@ -78,7 +76,7 @@ class CursorWindow_ravenwood {
     }
 
     private static boolean put(long windowPtr, String value, int type, int row, int column) {
-        CursorWindow_ravenwood instance = sInstances.get(windowPtr);
+        CursorWindow_host instance = sInstances.get(windowPtr);
         if (row >= instance.mRows.size() || column >= instance.mColumnNum) {
             return false;
         }
@@ -89,7 +87,7 @@ class CursorWindow_ravenwood {
     }
 
     public static int nativeGetType(long windowPtr, int row, int column) {
-        CursorWindow_ravenwood instance = sInstances.get(windowPtr);
+        CursorWindow_host instance = sInstances.get(windowPtr);
         if (row >= instance.mRows.size() || column >= instance.mColumnNum) {
             return Cursor.FIELD_TYPE_NULL;
         }
@@ -103,7 +101,7 @@ class CursorWindow_ravenwood {
     }
 
     public static String nativeGetString(long windowPtr, int row, int column) {
-        CursorWindow_ravenwood instance = sInstances.get(windowPtr);
+        CursorWindow_host instance = sInstances.get(windowPtr);
         if (row >= instance.mRows.size() || column >= instance.mColumnNum) {
             return null;
         }
@@ -166,7 +164,7 @@ class CursorWindow_ravenwood {
     }
 
     public static void nativeWriteToParcel(long windowPtr, Parcel parcel) {
-        CursorWindow_ravenwood window = sInstances.get(windowPtr);
+        CursorWindow_host window = sInstances.get(windowPtr);
         parcel.writeString(window.mName);
         parcel.writeInt(window.mColumnNum);
         parcel.writeInt(window.mRows.size());
@@ -178,7 +176,7 @@ class CursorWindow_ravenwood {
 
     public static long nativeCreateFromParcel(Parcel parcel) {
         long windowPtr = nativeCreate(null, 0);
-        CursorWindow_ravenwood window = sInstances.get(windowPtr);
+        CursorWindow_host window = sInstances.get(windowPtr);
         window.mName = parcel.readString();
         window.mColumnNum = parcel.readInt();
         int rowCount = parcel.readInt();
