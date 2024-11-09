@@ -2143,15 +2143,6 @@ public final class SystemServer implements Dumpable {
             }
             t.traceEnd();
 
-            t.traceBegin("StartVcnManagementService");
-            try {
-                vcnManagement = VcnManagementService.create(context);
-                ServiceManager.addService(Context.VCN_MANAGEMENT_SERVICE, vcnManagement);
-            } catch (Throwable e) {
-                reportWtf("starting VCN Management Service", e);
-            }
-            t.traceEnd();
-
             t.traceBegin("StartSystemUpdateManagerService");
             try {
                 ServiceManager.addService(Context.SYSTEM_UPDATE_SERVICE,
@@ -3162,14 +3153,14 @@ public final class SystemServer implements Dumpable {
                 reportWtf("making VpnManagerService ready", e);
             }
             t.traceEnd();
-            t.traceBegin("MakeVcnManagementServiceReady");
-            try {
-                if (vcnManagementF != null) {
-                    vcnManagementF.systemReady();
-                }
-            } catch (Throwable e) {
-                reportWtf("making VcnManagementService ready", e);
-            }
+            // t.traceBegin("MakeVcnManagementServiceReady");
+            // try {
+            //     if (vcnManagementF != null) {
+            //         vcnManagementF.systemReady();
+            //     }
+            // } catch (Throwable e) {
+            //     reportWtf("making VcnManagementService ready", e);
+            // }
             t.traceEnd();
             t.traceBegin("MakeNetworkPolicyServiceReady");
             try {

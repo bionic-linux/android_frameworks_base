@@ -82,6 +82,7 @@ import android.util.Log;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
+import com.android.internal.annotations.Keep;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
 import com.android.net.module.util.BinderUtils;
@@ -298,6 +299,9 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     }
 
     // Package-visibility for SystemServer to create instances.
+    // This method will be used by reflection from ConnectivityServiceInitializer. This annotation
+    // prevents the method fro being removed during build time. TODO: Consider @UsedByReflection
+    @Keep
     static VcnManagementService create(@NonNull Context context) {
         return new VcnManagementService(context, new Dependencies());
     }
@@ -429,6 +433,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     }
 
     /** Notifies the VcnManagementService that external dependencies can be set up. */
+    @Keep
     public void systemReady() {
         mNetworkProvider.register();
         mContext.getSystemService(ConnectivityManager.class)
