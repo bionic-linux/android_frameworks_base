@@ -1,0 +1,62 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc7e7ae0_75a0c33e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2024-11-09T04:44:51Z",
+      "side": 1,
+      "message": "Probably should merge from internal first.",
+      "revId": "6b63a819f36b175a34295017e69adf0a76057948",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c97dbe5c_fdc58142",
+        "filename": "core/java/android/telephony/SubscriptionPlan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2024-11-09T04:44:51Z",
+      "side": 1,
+      "message": "Can this not be hardcoded?",
+      "range": {
+        "startLine": 444,
+        "startChar": 0,
+        "endLine": 444,
+        "endChar": 67
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d9f58afb_9a550958",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/telephony/SubscriptionPlan.java",
+              "range": {
+                "startLine": 444,
+                "startChar": 0,
+                "endLine": 445,
+                "endChar": 0
+              },
+              "replacement": "            if (subscriptionStatus \u003c SUBSCRIPTION_STATUS_UNKNOWN\n                    || subscriptionStatus \u003e SUBSCRIPTION_STATUS_SUSPENDED) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6b63a819f36b175a34295017e69adf0a76057948",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
