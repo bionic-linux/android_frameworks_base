@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c22af14_c2ff435d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2024-11-09T23:50:53Z",
+      "side": 1,
+      "message": "Ok, I cp\u0027d the changes and we can continue the review there. Thanks.",
+      "parentUuid": "cc7e7ae0_75a0c33e",
+      "revId": "6b63a819f36b175a34295017e69adf0a76057948",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c97dbe5c_fdc58142",
@@ -55,6 +73,30 @@
           ]
         }
       ],
+      "revId": "6b63a819f36b175a34295017e69adf0a76057948",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "579c414d_caf7536d",
+        "filename": "core/java/android/telephony/SubscriptionPlan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2024-11-09T23:50:53Z",
+      "side": 1,
+      "message": "Done, thanks for pointing this out.",
+      "parentUuid": "c97dbe5c_fdc58142",
+      "range": {
+        "startLine": 444,
+        "startChar": 0,
+        "endLine": 444,
+        "endChar": 67
+      },
       "revId": "6b63a819f36b175a34295017e69adf0a76057948",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
