@@ -109,7 +109,7 @@ flag {
 
 flag {
     name: "afl_api"
-    namespace: "platform_security"
+    namespace: "network_security"
     description: "AFL feature"
     bug: "365994454"
 }
