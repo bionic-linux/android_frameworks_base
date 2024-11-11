@@ -236,6 +236,9 @@ public class BugreportProgressService extends Service {
     /** Always keep remote bugreport files created in the last day. */
     private static final long REMOTE_MIN_KEEP_AGE = DateUtils.DAY_IN_MILLIS;
 
+    /** Minimum delay between update notifications */
+    private static final int DELAY_BETWEEN_NOTIFICATIONS_MS = 250;
+
     private final Object mLock = new Object();
 
     /** Managed bugreport info (keyed by id) */
@@ -783,6 +786,22 @@ public class BugreportProgressService extends Service {
                     + info + ")");
             return;
         }
+
+        if (info.progress.intValue() == info.lastProgress.intValue()) {
+            Log.d(TAG, "No progress observed, do not send notification ");
+            return;
+        }
+
+        final long lastUpdate = System.currentTimeMillis() - info.lastUpdate.longValue();
+        if (lastUpdate < DELAY_BETWEEN_NOTIFICATIONS_MS) {
+            Log.d(TAG, "Delaying notification for " + (DELAY_BETWEEN_NOTIFICATIONS_MS - lastUpdate)
+                    + " ms ");
+            try {
+                Thread.sleep(DELAY_BETWEEN_NOTIFICATIONS_MS - lastUpdate);
+            } catch (Exception e) {
+            }
+        }
+        info.lastUpdate.set(System.currentTimeMillis());
 
         final NumberFormat nf = NumberFormat.getPercentInstance();
         nf.setMinimumFractionDigits(2);
@@ -1388,6 +1407,7 @@ public class BugreportProgressService extends Service {
         final Notification.Builder builder = newBaseNotification(mContext)
                 .setContentTitle(title)
                 .setTicker(title)
+                .setProgress(100 /* max value of progress percentage */, 100, false)
                 .setOnlyAlertOnce(false)
                 .setContentText(content);
 
@@ -2426,7 +2446,6 @@ public class BugreportProgressService extends Service {
             }
         }
         info.progress.set(progress);
-        info.lastUpdate.set(System.currentTimeMillis());
 
         updateProgress(info);
     }
