@@ -332,6 +332,8 @@ public class VirtualDisplayAdapter extends DisplayAdapter {
             }
             if (binderAlive) {
                 mCallback.dispatchDisplayStopped();
+            } else {
+                mCallback = null;
             }
         }
 
