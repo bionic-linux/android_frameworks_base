@@ -193,7 +193,7 @@ public class BugreportReceiverTest {
         mService.mScreenshotDelaySec = SCREENSHOT_DELAY_SECONDS;
         // Dup the fds which are passing to startBugreport function.
         Mockito.doAnswer(invocation -> {
-            final boolean isScreenshotRequested = invocation.getArgument(6);
+            final boolean isScreenshotRequested = invocation.getArgument(7);
             if (isScreenshotRequested) {
                 mScreenshotFd = ParcelFileDescriptor.dup(invocation.getArgument(3));
             }
@@ -251,6 +251,21 @@ public class BugreportReceiverTest {
         assertProgressNotification(mProgressTitle, 99);
 
         Bundle extras = sendBugreportFinishedAndGetSharedIntent(mBugreportId);
+        assertActionSendMultiple(extras);
+
+        assertServiceNotRunning();
+    }
+
+    @Test
+    public void testStressProgress() throws Exception {
+        sendBugreportStarted();
+        waitForScreenshotButtonEnabled(true);
+
+        for (int i = 0; i <= 1000; i++) {
+            mIDumpstateListener.onProgress(i);
+        }
+        sendBugreportFinished();
+        Bundle extras = acceptBugreportAndGetSharedIntent(mBugreportId);
         assertActionSendMultiple(extras);
 
         assertServiceNotRunning();

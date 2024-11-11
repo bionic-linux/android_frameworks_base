@@ -236,6 +236,9 @@ public class BugreportProgressService extends Service {
     /** Always keep remote bugreport files created in the last day. */
     private static final long REMOTE_MIN_KEEP_AGE = DateUtils.DAY_IN_MILLIS;
 
+    /** Minimum delay between update notifications */
+    private static final int DELAY_BETWEEN_NOTIFICATIONS_MS = 250;
+
     private final Object mLock = new Object();
 
     /** Managed bugreport info (keyed by id) */
@@ -784,6 +787,17 @@ public class BugreportProgressService extends Service {
             return;
         }
 
+        if (info.progress.intValue() == info.lastProgress.intValue()) {
+            Log.d(TAG, "No progress observed, do not send notification ");
+            return;
+        }
+
+        final long lastUpdate = System.currentTimeMillis() - info.lastUpdate.longValue();
+        if (lastUpdate < DELAY_BETWEEN_NOTIFICATIONS_MS) {
+            Log.d(TAG, "Update came to early, drop it");
+            return;
+        }
+
         final NumberFormat nf = NumberFormat.getPercentInstance();
         nf.setMinimumFractionDigits(2);
         nf.setMaximumFractionDigits(2);
@@ -849,6 +863,7 @@ public class BugreportProgressService extends Service {
             Log.d(TAG, "Progress #" + info.id + ": " + percentageText);
         }
         info.lastProgress.set(progress);
+        info.lastUpdate.set(System.currentTimeMillis());
 
         sendForegroundabledNotification(info.id, builder.build());
     }
@@ -1368,6 +1383,16 @@ public class BugreportProgressService extends Service {
      */
     private void sendBugreportNotification(BugreportInfo info, boolean takingScreenshot) {
 
+        final long lastUpdate = System.currentTimeMillis() - info.lastUpdate.longValue();
+        if (lastUpdate < DELAY_BETWEEN_NOTIFICATIONS_MS) {
+            Log.d(TAG, "Delaying final notification for "
+                    + (DELAY_BETWEEN_NOTIFICATIONS_MS - lastUpdate) + " ms ");
+            mMainThreadHandler.postDelayed(() -> {
+                sendBugreportNotification(info, takingScreenshot);
+            }, DELAY_BETWEEN_NOTIFICATIONS_MS - lastUpdate);
+            return;
+        }
+
         // Since adding the details can take a while, do it before notifying user.
         addDetailsToZipFile(info);
 
@@ -1388,6 +1413,7 @@ public class BugreportProgressService extends Service {
         final Notification.Builder builder = newBaseNotification(mContext)
                 .setContentTitle(title)
                 .setTicker(title)
+                .setProgress(100 /* max value of progress percentage */, 100, false)
                 .setOnlyAlertOnce(false)
                 .setContentText(content);
 
@@ -2040,12 +2066,12 @@ public class BugreportProgressService extends Service {
          * Last value of progress (in percentage) of the bugreport generation for which
          * system notification was updated.
          */
-        final AtomicInteger lastProgress = new AtomicInteger(0);
+        final AtomicInteger lastProgress = new AtomicInteger(-1);
 
         /**
          * Time of the last progress update.
          */
-        final AtomicLong lastUpdate = new AtomicLong(System.currentTimeMillis());
+        final AtomicLong lastUpdate = new AtomicLong(0);
 
         /**
          * Time of the last progress update when Parcel was created.
@@ -2426,7 +2452,6 @@ public class BugreportProgressService extends Service {
             }
         }
         info.progress.set(progress);
-        info.lastUpdate.set(System.currentTimeMillis());
 
         updateProgress(info);
     }

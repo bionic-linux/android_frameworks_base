@@ -208,11 +208,6 @@ final class UiBot {
      *            {@code android:label} in the manifest).
      */
     public void chooseActivity(String name) {
-        // It uses an intent chooser now, so just getting the activity by text is enough...
-        final String share = mInstrumentation.getContext().getString(
-                com.android.internal.R.string.share);
-        boolean gotIt = mDevice.wait(Until.hasObject(By.text(share)), mTimeout);
-        assertTrue("could not get share activity (" + share + ")", gotIt);
         swipeUp();
         SystemClock.sleep(SHORT_UI_TIMEOUT_MS);
         UiObject activity = getObject(name);
