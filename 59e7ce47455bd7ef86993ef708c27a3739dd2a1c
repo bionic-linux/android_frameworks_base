@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a17fdc59_38ba6ffe",
+        "filename": "media/jni/android_media_MediaCodec.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 4012,
+      "author": {
+        "id": 1951601
+      },
+      "writtenOn": "2024-11-11T18:56:05Z",
+      "side": 1,
+      "message": "@Lajos: Since both of these new class are defined under a flag (and marked as testapi) in MediaCodec.java, I think that this block of code should be under flag as this gets executed as part of android_media_MediaCodec_native_init (MediaCodec.createXXX)",
+      "range": {
+        "startLine": 3990,
+        "startChar": 0,
+        "endLine": 4012,
+        "endChar": 57
+      },
+      "revId": "59e7ce47455bd7ef86993ef708c27a3739dd2a1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
