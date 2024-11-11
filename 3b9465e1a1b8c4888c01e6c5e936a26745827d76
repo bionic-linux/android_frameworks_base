@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac67c37e_f0539720",
+        "filename": "core/java/android/security/flags.aconfig",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1054468
+      },
+      "writtenOn": "2024-11-11T09:12:23Z",
+      "side": 1,
+      "message": "why is network security the right namespace for this?",
+      "range": {
+        "startLine": 112,
+        "startChar": 16,
+        "endLine": 112,
+        "endChar": 32
+      },
+      "revId": "3b9465e1a1b8c4888c01e6c5e936a26745827d76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
