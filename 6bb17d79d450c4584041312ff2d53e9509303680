@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f3742b7_704f7e62",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2024-11-11T16:44:07Z",
+      "side": 1,
+      "message": "+1 for OWNERS approval, assuming you get a +2 from someone on the hardware_backed_security team :)",
+      "revId": "6bb17d79d450c4584041312ff2d53e9509303680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
