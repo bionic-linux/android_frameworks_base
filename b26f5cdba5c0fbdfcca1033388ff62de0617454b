@@ -91,6 +91,24 @@
       ],
       "revId": "b26f5cdba5c0fbdfcca1033388ff62de0617454b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3337984f_09e74614",
+        "filename": "services/core/java/com/android/server/display/color/TintController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-11-11T02:17:47Z",
+      "side": 1,
+      "message": "Hello,google:\n  I think we should do this as your suggestion.Because this method is called in display thread and the anim thread,so may be reslut to the null exception.I will modify as you suggestion and please review this CL again.\n  \n  Thanks.",
+      "parentUuid": "86bb4272_ac05b175",
+      "revId": "b26f5cdba5c0fbdfcca1033388ff62de0617454b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
