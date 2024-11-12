@@ -1,0 +1,108 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5018d4a7_11b8d9ba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-12T16:13:24Z",
+      "side": 1,
+      "message": "add new tests on BugreportProgressServiceTest ?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "e185c6e6dbf9adc4dc661fc69adeb4618654c84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59f996cc_a2b9b438",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-12T16:13:24Z",
+      "side": 1,
+      "message": "I don\u0027t work on this anymore, but added a few comments...",
+      "revId": "e185c6e6dbf9adc4dc661fc69adeb4618654c84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ca78685_cb579403",
+        "filename": "packages/Shell/src/com/android/shell/BugreportProgressService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-12T16:13:24Z",
+      "side": 1,
+      "message": "log as well?",
+      "range": {
+        "startLine": 799,
+        "startChar": 0,
+        "endLine": 799,
+        "endChar": 23
+      },
+      "revId": "e185c6e6dbf9adc4dc661fc69adeb4618654c84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf6b71e3_79c45589",
+        "filename": "packages/Shell/src/com/android/shell/BugreportProgressService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-12T16:13:24Z",
+      "side": 1,
+      "message": "Use mMainThreadHandler.post() instead?",
+      "range": {
+        "startLine": 803,
+        "startChar": 7,
+        "endLine": 806,
+        "endChar": 13
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c01ed561_66a67b62",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "packages/Shell/src/com/android/shell/BugreportProgressService.java",
+              "range": {
+                "startLine": 803,
+                "startChar": 0,
+                "endLine": 807,
+                "endChar": 0
+              },
+              "replacement": "            mMainThreadHandler.postDelayed(() -\u003e {\n                updateProgress(info);\n            }, DELAY_BETWEEN_NOTIFICATIONS_MS - lastUpdate);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e185c6e6dbf9adc4dc661fc69adeb4618654c84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
