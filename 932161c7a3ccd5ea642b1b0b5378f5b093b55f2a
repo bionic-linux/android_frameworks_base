@@ -16,6 +16,24 @@
       "message": "Can you please omit this change? Changes like these can sometime lead to unnecessary merge conflicts down the line",
       "revId": "932161c7a3ccd5ea642b1b0b5378f5b093b55f2a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f185427d_2f6a6938",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-11-12T14:17:08Z",
+      "side": 1,
+      "message": "Could it be resolved internally in a good way? It feels a bit bad if presubmit trigger fails.",
+      "parentUuid": "2612c4dc_e6754654",
+      "revId": "932161c7a3ccd5ea642b1b0b5378f5b093b55f2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
