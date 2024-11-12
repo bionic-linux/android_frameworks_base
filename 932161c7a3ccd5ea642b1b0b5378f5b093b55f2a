@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2612c4dc_e6754654",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1835071
+      },
+      "writtenOn": "2024-11-12T14:11:04Z",
+      "side": 1,
+      "message": "Can you please omit this change? Changes like these can sometime lead to unnecessary merge conflicts down the line",
+      "revId": "932161c7a3ccd5ea642b1b0b5378f5b093b55f2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
