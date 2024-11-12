@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53a8b536_9c7bb6f7",
+        "filename": "packages/Shell/src/com/android/shell/BugreportProgressService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1835071
+      },
+      "writtenOn": "2024-11-12T09:38:25Z",
+      "side": 1,
+      "message": "I think it would be ok to not send the notification unless this is the last notification. So we can simply return if the progress is not 100, and only wait if this is the last progress update",
+      "range": {
+        "startLine": 800,
+        "startChar": 16,
+        "endLine": 800,
+        "endChar": 74
+      },
+      "revId": "f30713658c132b0fa97e4e7344230ff4f17f1837",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9a8e5ad_0c78a643",
+        "filename": "packages/Shell/src/com/android/shell/BugreportProgressService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1835071
+      },
+      "writtenOn": "2024-11-12T09:38:25Z",
+      "side": 1,
+      "message": "why move this? The notification hasn\u0027t yet been sent, right?",
+      "range": {
+        "startLine": 804,
+        "startChar": 8,
+        "endLine": 804,
+        "endChar": 56
+      },
+      "revId": "f30713658c132b0fa97e4e7344230ff4f17f1837",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
