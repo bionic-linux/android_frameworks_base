@@ -69,6 +69,30 @@
       },
       "revId": "f30713658c132b0fa97e4e7344230ff4f17f1837",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "376fd7d8_ee6196fe",
+        "filename": "packages/Shell/src/com/android/shell/BugreportProgressService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-11-12T11:49:44Z",
+      "side": 1,
+      "message": "right, we moved it further down just before it is sent.",
+      "parentUuid": "d9a8e5ad_0c78a643",
+      "range": {
+        "startLine": 804,
+        "startChar": 8,
+        "endLine": 804,
+        "endChar": 56
+      },
+      "revId": "f30713658c132b0fa97e4e7344230ff4f17f1837",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
