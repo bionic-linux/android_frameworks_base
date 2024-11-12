@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78227ee2_45d3eb78",
+        "filename": "media/jni/Android.bp",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1951601
+      },
+      "writtenOn": "2024-11-12T19:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a938ca0_96882692",
+      "range": {
+        "startLine": 108,
+        "startChar": 29,
+        "endLine": 108,
+        "endChar": 36
+      },
+      "revId": "c2e899c7ff2d85168d823355da5f89f29fba8d8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20a9252c_2faaab99",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "381eb95b_4142dffa",
+        "filename": "media/jni/android_media_MediaCodec.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1951601
+      },
+      "writtenOn": "2024-11-12T19:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20a9252c_2faaab99",
+      "range": {
+        "startLine": 1155,
+        "startChar": 8,
+        "endLine": 1155,
+        "endChar": 15
+      },
+      "revId": "c2e899c7ff2d85168d823355da5f89f29fba8d8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "818d0b9d_cf1790f4",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-11-12T18:30:37Z",
       "side": 1,
       "message": "same here.",
+      "range": {
+        "startLine": 3619,
+        "startChar": 8,
+        "endLine": 3619,
+        "endChar": 15
+      },
+      "revId": "c2e899c7ff2d85168d823355da5f89f29fba8d8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f6a2c98_266b60de",
+        "filename": "media/jni/android_media_MediaCodec.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 3619,
+      "author": {
+        "id": 1951601
+      },
+      "writtenOn": "2024-11-12T19:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "818d0b9d_cf1790f4",
       "range": {
         "startLine": 3619,
         "startChar": 8,
