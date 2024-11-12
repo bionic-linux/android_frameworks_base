@@ -90,9 +90,9 @@ import com.android.internal.app.ChooserActivity;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 
-import libcore.io.Streams;
-
 import com.google.android.collect.Lists;
+
+import libcore.io.Streams;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
