@@ -779,3 +779,4 @@ public class ExternalStorageProvider extends FileSystemProvider {
         return TextUtils.equals(a.toLowerCase(Locale.ROOT), b.toLowerCase(Locale.ROOT));
     }
 }
+
