@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78b5b7fa_cd15a71c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2024-11-13T20:24:51Z",
+      "side": 1,
+      "message": "I don\u0027t know what contexthub is but skimming the CLs it doesn\u0027t seem to be related to hardware - why do you want this in android.hardware?",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 37
+      },
+      "revId": "4c39060bf6a1f8e763ff097bb0137f5b1dd424cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
