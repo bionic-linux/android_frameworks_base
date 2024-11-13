@@ -22,6 +22,30 @@
       },
       "revId": "2e56f163fd7fe2a835ce8d02eaa752bfb0ec6cdc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86e5d02f_1ddd68bd",
+        "filename": "services/core/java/com/android/server/wm/Transition.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3620,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-11-13T09:45:36Z",
+      "side": 1,
+      "message": "CONFIG_ASSETS_PATHS is indeed a real change. Usually activities will be destroy/recreate by the change. And even if the activities declare to handle it (won\u0027t relaunch), e.g. android:configChanges\u003d\"assetPaths\" (target 25Q2), there could be still non-activities windows flickering without a fadeout screenshot to cover them.",
+      "parentUuid": "6e6145d6_3cc076b6",
+      "range": {
+        "startLine": 3620,
+        "startChar": 40,
+        "endLine": 3620,
+        "endChar": 67
+      },
+      "revId": "2e56f163fd7fe2a835ce8d02eaa752bfb0ec6cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
