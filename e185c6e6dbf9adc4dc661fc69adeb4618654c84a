@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1934f56_6ddb9129",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1835071
+      },
+      "writtenOn": "2024-11-13T10:59:29Z",
+      "side": 1,
+      "message": "I would say this would be tricky as this would require checks in the internal code of notification/BR. The issue was quite difficult to repro in the first place, I doubt that a test would be feasible here",
+      "parentUuid": "5018d4a7_11b8d9ba",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "e185c6e6dbf9adc4dc661fc69adeb4618654c84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "59f996cc_a2b9b438",
