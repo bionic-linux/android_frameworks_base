@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d47f0c64_6ec6cded",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1294681
+      },
+      "writtenOn": "2024-11-13T01:30:18Z",
+      "side": 1,
+      "message": "Hi Bram, when you have a moment, can you review this new flag to guard changes to limit the adb shell user to allowlisted flags? This flag also needs to be read-only since it will be used to guard a manifest change, and there are currently known issues with read-write flags for this case. Thanks!",
+      "revId": "94b8768d0901948e7660ba6c943b0e4ae59b4b58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
