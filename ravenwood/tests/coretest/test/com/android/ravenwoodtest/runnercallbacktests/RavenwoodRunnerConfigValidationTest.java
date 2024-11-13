@@ -24,6 +24,7 @@ import android.platform.test.ravenwood.RavenwoodRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -59,6 +60,7 @@ public class RavenwoodRunnerConfigValidationTest extends RavenwoodRunnerTestBase
     testRunFinished: 1,0,0,0
     """)
     // CHECKSTYLE:ON
+    @Ignore // Package name is no longer set via config.
     public static class ConfigInBaseClassTest extends ConfigInBaseClass {
         @Test
         public void test() {
@@ -83,6 +85,7 @@ public class RavenwoodRunnerConfigValidationTest extends RavenwoodRunnerTestBase
     testRunFinished: 1,0,0,0
     """)
     // CHECKSTYLE:ON
+    @Ignore // Package name is no longer set via config.
     public static class ConfigOverridingTest extends ConfigInBaseClass {
         static String PACKAGE_NAME_OVERRIDE = "com.ConfigOverridingTest";
 
@@ -376,6 +379,7 @@ public class RavenwoodRunnerConfigValidationTest extends RavenwoodRunnerTestBase
     testRunFinished: 1,0,0,0
     """)
     // CHECKSTYLE:ON
+    @Ignore // Package name is no longer set via config.
     public static class RuleInBaseClassSuccessTest extends RuleInBaseClass {
 
         @Test
@@ -437,6 +441,7 @@ public class RavenwoodRunnerConfigValidationTest extends RavenwoodRunnerTestBase
     testRunFinished: 1,1,0,0
     """)
     // CHECKSTYLE:ON
+    @Ignore // Package name is no longer set via config.
     public static class RuleWithDifferentTypeInBaseClassSuccessTest extends RuleWithDifferentTypeInBaseClass {
 
         @Test
