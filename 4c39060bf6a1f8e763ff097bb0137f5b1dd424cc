@@ -22,6 +22,30 @@
       },
       "revId": "4c39060bf6a1f8e763ff097bb0137f5b1dd424cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6843a064_abaa7a6c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1609189
+      },
+      "writtenOn": "2024-11-13T20:58:05Z",
+      "side": 1,
+      "message": "ContextHub is a HAL \"andorid.hardware.contexthub.IContextHub\" for low-power processors (for sensor algos and more).\n\nhttps://source.android.com/docs/core/interaction/contexthub\n\nHistorically, the HAL is named as andorid.hardware.contexthub. The APIs are named in the andorid.hardware.location package. For example, android.hardware.location.ContextHubManager. \n\nThe original naming reflects the original team structure but clearly this thing is more on its own. The reason I only moved it one level up is to align with the HAL package. Also, ContextHub requires special hardware (an always-on chip) to be useful, hence the hardware prefix.",
+      "parentUuid": "78b5b7fa_cd15a71c",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 37
+      },
+      "revId": "4c39060bf6a1f8e763ff097bb0137f5b1dd424cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
