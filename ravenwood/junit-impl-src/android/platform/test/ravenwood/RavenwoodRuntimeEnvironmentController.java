@@ -22,6 +22,7 @@ import static com.android.ravenwood.common.RavenwoodCommonUtils.RAVENWOOD_INST_R
 import static com.android.ravenwood.common.RavenwoodCommonUtils.RAVENWOOD_RESOURCE_APK;
 import static com.android.ravenwood.common.RavenwoodCommonUtils.RAVENWOOD_VERBOSE_LOGGING;
 import static com.android.ravenwood.common.RavenwoodCommonUtils.RAVENWOOD_VERSION_JAVA_SYSPROP;
+import static com.android.ravenwood.common.RavenwoodCommonUtils.parseNullableInt;
 
 import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -39,6 +40,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.res.Resources;
 import android.os.Binder;
 import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -154,6 +156,10 @@ public class RavenwoodRuntimeEnvironmentController {
     private static RavenwoodAwareTestRunner sRunner;
     private static RavenwoodSystemProperties sProps;
 
+    private static Integer sTargetSdkLevel;
+    private static String sTestPackageName;
+    private static String sTargetPackageName;
+
     /**
      * Initialize the global environment.
      */
@@ -235,7 +241,21 @@ public class RavenwoodRuntimeEnvironmentController {
         System.setProperty("android.junit.runner",
                 "androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner");
 
+        loadRavenwoodProperties();
+
         assertMockitoVersion();
+    }
+
+    private static void loadRavenwoodProperties() {
+        var props = RavenwoodSystemProperties.readProperties("ravenwood.properties");
+
+        sTargetSdkLevel = parseNullableInt(props.get("targetSdkVersionInt"));
+        sTestPackageName = props.get("instPackageName");
+        sTargetPackageName = props.get("packageName");
+
+        if (sTestPackageName == null && sTargetPackageName != null) {
+            sTestPackageName = sTargetPackageName;
+        }
     }
 
     /**
@@ -265,6 +285,17 @@ public class RavenwoodRuntimeEnvironmentController {
         if (ENABLE_UNCAUGHT_EXCEPTION_DETECTION) {
             maybeThrowPendingUncaughtException(false);
             Thread.setDefaultUncaughtExceptionHandler(sUncaughtExceptionHandler);
+        }
+
+        if (config.mTargetSdkLevel == null) {
+            config.mTargetSdkLevel = sTargetSdkLevel != null
+                    ? sTargetSdkLevel : VERSION_CODES.CUR_DEVELOPMENT;
+        }
+        if (config.mTargetPackageName == null) {
+            config.mTargetPackageName = sTargetPackageName;
+        }
+        if (config.mTestPackageName == null) {
+            config.mTestPackageName = sTestPackageName;
         }
 
         RavenwoodRuntimeState.sUid = config.mUid;
