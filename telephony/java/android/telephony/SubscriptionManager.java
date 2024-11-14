@@ -1402,7 +1402,6 @@ public class SubscriptionManager {
      *
      * @see TelephonyManager#isDeviceVoiceCapable()
      */
-    @FlaggedApi(Flags.FLAG_DATA_ONLY_CELLULAR_SERVICE)
     public static final int SERVICE_CAPABILITY_VOICE = 1;
 
     /**
@@ -1420,13 +1419,11 @@ public class SubscriptionManager {
      *
      * @see TelephonyManager#isDeviceSmsCapable()
      */
-    @FlaggedApi(Flags.FLAG_DATA_ONLY_CELLULAR_SERVICE)
     public static final int SERVICE_CAPABILITY_SMS = 2;
 
     /**
      * Represents a value indicating the data calling capabilities of a subscription.
      */
-    @FlaggedApi(Flags.FLAG_DATA_ONLY_CELLULAR_SERVICE)
     public static final int SERVICE_CAPABILITY_DATA = 3;
 
     /**
