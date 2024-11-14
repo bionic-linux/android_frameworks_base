@@ -205,7 +205,7 @@ final class NewDeviceAction extends HdmiCecFeatureAction {
             return;
         }
         if (mDisplayName == null) {
-            mDisplayName = "";
+            mDisplayName = HdmiUtils.getDefaultDeviceName(mDeviceLogicalAddress);
         }
         HdmiDeviceInfo deviceInfo = HdmiDeviceInfo.cecDeviceBuilder()
                 .setLogicalAddress(mDeviceLogicalAddress)

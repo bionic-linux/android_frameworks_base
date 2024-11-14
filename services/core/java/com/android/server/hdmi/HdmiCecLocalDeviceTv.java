@@ -243,10 +243,11 @@ public final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         int source = bufferedActiveSource.getSource();
         int physicalAddress = HdmiUtils.twoBytesToInt(bufferedActiveSource.getParams());
         List<Integer> deviceTypes = HdmiUtils.getTypeFromAddress(source);
+	String displayName = "";
         HdmiDeviceInfo newDevice = HdmiDeviceInfo.cecDeviceBuilder()
                 .setLogicalAddress(source)
                 .setPhysicalAddress(physicalAddress)
-                .setDisplayName(HdmiUtils.getDefaultDeviceName(source))
+                .setDisplayName(displayName)
                 .setDeviceType(deviceTypes.get(0))
                 .setVendorId(Constants.VENDOR_ID_UNKNOWN)
                 .setPortId(mService.getHdmiCecNetwork().physicalAddressToPortId(physicalAddress))

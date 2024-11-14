@@ -548,10 +548,11 @@ public class HdmiCecNetwork {
         assertRunOnServiceThread();
         // Add device by logical address if it's not already known
         int sourceAddress = message.getSource();
+        String displayName = "";
         if (getCecDeviceInfo(sourceAddress) == null) {
             HdmiDeviceInfo newDevice = HdmiDeviceInfo.cecDeviceBuilder()
                     .setLogicalAddress(sourceAddress)
-                    .setDisplayName(HdmiUtils.getDefaultDeviceName(sourceAddress))
+                    .setDisplayName(displayName)
                     .setDeviceType(logicalAddressToDeviceType(sourceAddress))
                     .build();
             addCecDevice(newDevice);
