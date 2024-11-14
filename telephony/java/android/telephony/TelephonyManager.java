@@ -6932,7 +6932,6 @@ public class TelephonyManager {
      * @see SubscriptionInfo#getServiceCapabilities()
      */
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CALLING)
-    @FlaggedApi(Flags.FLAG_DATA_ONLY_CELLULAR_SERVICE)
     public boolean isDeviceVoiceCapable() {
         return isVoiceCapable();
     }
@@ -6974,7 +6973,6 @@ public class TelephonyManager {
      * @see SubscriptionInfo#getServiceCapabilities()
      */
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_MESSAGING)
-    @FlaggedApi(Flags.FLAG_DATA_ONLY_CELLULAR_SERVICE)
     public boolean isDeviceSmsCapable() {
         return isSmsCapable();
     }
