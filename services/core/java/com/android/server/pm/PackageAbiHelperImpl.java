@@ -30,6 +30,7 @@ import static com.android.server.pm.InstructionSets.getPrimaryInstructionSet;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.pm.Flags;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
@@ -624,5 +625,19 @@ final class PackageAbiHelperImpl implements PackageAbiHelper {
             adjustedAbi = AndroidPackageUtils.getRawPrimaryCpuAbi(scannedPackage);
         }
         return adjustedAbi;
+    }
+
+    @Override
+    public int checkPackageAlignment(AndroidPackage pkg, String nativeSharedLib) {
+        NativeLibraryHelper.Handle handle = null;
+        try {
+            handle = AndroidPackageUtils.createNativeLibraryHandle(pkg);
+            File nativeDir = new File(nativeSharedLib);
+            return NativeLibraryHelper.checkAlignmentForCompatMode(handle, nativeDir);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ApplicationInfo.PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED;
     }
 }

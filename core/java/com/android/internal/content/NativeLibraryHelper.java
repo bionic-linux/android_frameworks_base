@@ -26,6 +26,7 @@ import static android.system.OsConstants.S_IXGRP;
 import static android.system.OsConstants.S_IXOTH;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.parsing.ApkLiteParseUtils;
 import android.content.pm.parsing.PackageLite;
@@ -176,6 +177,10 @@ public class NativeLibraryHelper {
 
     private native static int nativeCopyNativeBinaries(long handle, String sharedLibraryPath,
             String abiToCopy, boolean extractNativeLibs, boolean debuggable);
+
+    private native static int nativeCheckAlignment(long handle, String sharedLibraryPath,
+            String abi, boolean extractNativeLibs, boolean debuggable);
+
 
     private static long sumNativeBinaries(Handle handle, String abi) {
         long sum = 0;
@@ -430,6 +435,32 @@ public class NativeLibraryHelper {
             Slog.e(TAG, "Copying native libraries failed", e);
             return PackageManager.INSTALL_FAILED_INTERNAL_ERROR;
         }
+    }
+
+    /**
+     * Checks alignment of APK and native libarries for 16KB device
+     *
+     * @param handle APK file to scan for native libraries
+     * @param sharedLibraryDir directory for libraries to be copied to
+     * @return {@link PackageManager#INSTALL_SUCCEEDED} if successful or another
+     *         error code from that class if not
+     */
+    public static int checkAlignmentForCompatMode(Handle handle, File sharedLibraryDir) {
+        int abi = findSupportedAbi(handle, Build.SUPPORTED_64_BIT_ABIS);
+        if (abi < 0) {
+            return abi;
+        }
+
+        int mode = 0;
+        for (long apkHandle : handle.apkHandles) {
+            int res = nativeCheckAlignment(apkHandle, sharedLibraryDir.getPath(), Build.SUPPORTED_64_BIT_ABIS[abi],
+                    handle.extractNativeLibs, handle.debuggable);
+            if (res == ApplicationInfo.PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED) {
+                return res;
+            }
+            mode |= res;
+        }
+        return mode;
     }
 
     public static long sumNativeBinariesWithOverride(Handle handle, String abiOverride)

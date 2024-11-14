@@ -78,6 +78,8 @@ public interface PackageAbiHelper {
     String getAdjustedAbiForSharedUser(ArraySet<? extends PackageStateInternal> packagesForUser,
             AndroidPackage scannedPackage);
 
+    int checkPackageAlignment(AndroidPackage pkg, String cpuAbiOverride);
+
     /**
      * The native library paths and related properties that should be set on a
      * {@link ParsedPackage}.
