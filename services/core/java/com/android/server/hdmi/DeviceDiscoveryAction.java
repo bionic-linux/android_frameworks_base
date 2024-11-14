@@ -441,6 +441,10 @@ final class DeviceDiscoveryAction extends HdmiCecFeatureAction {
         Slog.v(TAG, "---------Wrap up Device Discovery:[" + mDevices.size() + "]---------");
         ArrayList<HdmiDeviceInfo> result = new ArrayList<>();
         for (DeviceInfo info : mDevices) {
+            // If failed to get display name, use the default name of device.
+            if (info.mDisplayName.isEmpty()) {
+                info.mDisplayName = HdmiUtils.getDefaultDeviceName(info.mLogicalAddress);
+            }
             HdmiDeviceInfo cecDeviceInfo = info.toHdmiDeviceInfo();
             Slog.v(TAG, " DeviceInfo: " + cecDeviceInfo);
             result.add(cecDeviceInfo);
