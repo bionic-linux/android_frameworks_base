@@ -21,6 +21,7 @@
 #include <androidfw/ApkParsing.h>
 #include <androidfw/ZipFileRO.h>
 #include <androidfw/ZipUtils.h>
+#include <elf.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <inttypes.h>
@@ -38,6 +39,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "com_android_internal_content_FileSystemUtils.h"
 #include "core_jni_helpers.h"
@@ -59,6 +61,11 @@ enum install_status_t {
     INSTALL_FAILED_NO_MATCHING_ABIS = -113,
     NO_NATIVE_LIBRARIES = -114
 };
+
+// These code should match with PageSizeAppCompatMode inside ApplicationInfo.java
+constexpr int PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED = -1;
+constexpr int PAGE_SIZE_APP_COMPAT_MODE_UNCOMPRESSED_LIBS_NOT_ALIGNED = 1 << 1;
+constexpr int PAGE_SIZE_APP_COMPAT_MODE_ELF_NOT_ALIGNED = 1 << 2;
 
 typedef install_status_t (*iterFunc)(JNIEnv*, void*, ZipFileRO*, ZipEntryRO, const char*);
 
@@ -524,11 +531,7 @@ static inline bool app_compat_16kb_enabled() {
     static const size_t kPageSize = getpagesize();
 
     // App compat is only applicable on 16kb-page-size devices.
-    if (kPageSize != 0x4000) {
-        return false;
-    }
-
-    return android::base::GetBoolProperty("bionic.linker.16kb.app_compat.enabled", false);
+    return kPageSize == 0x4000;
 }
 
 static jint
@@ -626,6 +629,121 @@ com_android_internal_content_NativeLibraryHelper_openApkFd(JNIEnv *env, jclass,
     return reinterpret_cast<jlong>(zipFile);
 }
 
+static jint checkAlignment(JNIEnv* env, void* arg, ZipFileRO* zipFile,
+                                          ZipEntryRO zipEntry, const char* fileName) {
+    int mode = 0;
+    // Need two separate install status for APK and ELF alignment
+    static const size_t kPageSize = getpagesize();
+    void** args = reinterpret_cast<void**>(arg);
+    jstring* javaNativeLibPath = (jstring*)args[0];
+    jboolean extractNativeLibs = *(jboolean*)args[1];
+    jboolean debuggable = *(jboolean*)args[2];
+    jint ret = INSTALL_SUCCEEDED;
+
+    ScopedUtfChars nativeLibPath(env, *javaNativeLibPath);
+
+    uint32_t uncompLen;
+    uint32_t when;
+    uint32_t crc;
+
+    uint16_t method;
+    off64_t offset;
+    uint16_t extraFieldLength;
+    if (!zipFile->getEntryInfo(zipEntry, &method, &uncompLen, nullptr, &offset, &when, &crc,
+                               &extraFieldLength)) {
+        ALOGE("Couldn't read zip entry info\n");
+        return PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED;
+    }
+
+    // check if library is uncompressed and page-aligned
+    if (method != ZipFileRO::kCompressStored) {
+        ALOGE("Library '%s' is compressed - will not be able to open it directly from apk.\n",
+              fileName);
+        return PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED;
+    }
+
+    if (offset % kPageSize != 0) {
+        ALOGE("Library '%s' is not PAGE(%zu)-aligned - will not be able to open it directly "
+              "from apk.\n",
+              fileName, kPageSize);
+        mode |= PAGE_SIZE_APP_COMPAT_MODE_UNCOMPRESSED_LIBS_NOT_ALIGNED;
+    }
+
+
+    std::vector<Elf64_Phdr> programHeaders;
+    if(!getLoadSegmentPhdrs(fileName, offset, programHeaders)){
+        ALOGE("Failed to read program headers from ELF file.");
+        return PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED;
+    }
+
+    for (auto programHeader : programHeaders) {
+        if (programHeader.p_type != PT_LOAD) {
+            continue;
+        }
+
+        if (programHeader.p_align !=  0x1000) {
+            return PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED;
+        }
+    }
+
+    mode |= PAGE_SIZE_APP_COMPAT_MODE_ELF_NOT_ALIGNED;
+
+    return mode;
+}
+
+static jint com_android_internal_content_NativeLibraryHelper_checkApkAlignment(JNIEnv *env, jclass clazz,
+                 jlong apkHandle, jstring javaNativeLibPath, jstring javaCpuAbi, jboolean extractNativeLibs, jboolean debuggable)
+{
+    jboolean app_compat_16kb = app_compat_16kb_enabled();
+    int mode = 0;
+
+    void* args[] = { &javaNativeLibPath, &extractNativeLibs, &debuggable, &app_compat_16kb };
+    ZipFileRO* zipFile = reinterpret_cast<ZipFileRO*>(apkHandle);
+    if (zipFile == nullptr) {
+        return PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED;
+    }
+
+    auto result = NativeLibrariesIterator::create(zipFile, debuggable);
+    if (!result.ok()) {
+        return PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED;
+    }
+    std::unique_ptr<NativeLibrariesIterator> it(std::move(result.value()));
+
+    const ScopedUtfChars cpuAbi(env, javaCpuAbi);
+    if (cpuAbi.c_str() == nullptr) {
+        // This would've thrown, so this return code isn't observable by Java.
+        return PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED;
+    }
+
+    while (true) {
+        auto next = it->next();
+        if (!next.ok()) {
+            return PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED;
+        }
+        auto entry = next.value();
+        if (entry == nullptr) {
+            break;
+        }
+
+        const char* fileName = it->currentEntry();
+        const char* lastSlash = it->lastSlash();
+
+        // Check to make sure the CPU ABI of this file is one we support.
+        const char* cpuAbiOffset = fileName + APK_LIB_LEN;
+        const size_t cpuAbiRegionSize = lastSlash - cpuAbiOffset;
+
+        if (cpuAbi.size() == cpuAbiRegionSize && !strncmp(cpuAbiOffset, cpuAbi.c_str(), cpuAbiRegionSize)) {
+            int ret = checkAlignment(env, args, zipFile, entry, lastSlash + 1);
+            if(ret == PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED) {
+                return PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED;
+            }
+            mode |= ret;
+        }
+    }
+
+    return mode;
+}
+
 static void
 com_android_internal_content_NativeLibraryHelper_close(JNIEnv *env, jclass, jlong apkHandle)
 {
@@ -653,6 +771,9 @@ static const JNINativeMethod gMethods[] = {
             (void *)com_android_internal_content_NativeLibraryHelper_findSupportedAbi},
     {"hasRenderscriptBitcode", "(J)I",
             (void *)com_android_internal_content_NativeLibraryHelper_hasRenderscriptBitcode},
+    {"nativeCheckAlignment",
+            "(JLjava/lang/String;Ljava/lang/String;ZZ)I",
+            (void *)com_android_internal_content_NativeLibraryHelper_checkApkAlignment},
 };
 
 

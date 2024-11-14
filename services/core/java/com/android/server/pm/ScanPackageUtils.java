@@ -63,6 +63,8 @@ import android.os.Process;
 import android.os.SystemProperties;
 import android.os.Trace;
 import android.os.UserHandle;
+import android.system.Os;
+import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
@@ -74,6 +76,7 @@ import android.util.jar.StrictJarFile;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.content.NativeLibraryHelper;
 import com.android.internal.pm.parsing.pkg.ParsedPackage;
 import com.android.internal.pm.pkg.component.ComponentMutateUtils;
 import com.android.internal.pm.pkg.component.ParsedActivity;
@@ -416,6 +419,13 @@ final class ScanPackageUtils {
                     + " primary=" + pkgSetting.getPrimaryCpuAbiLegacy()
                     + " secondary=" + pkgSetting.getSecondaryCpuAbiLegacy()
                     + " abiOverride=" + pkgSetting.getCpuAbiOverride());
+        }
+
+        boolean is16KbDevice = Os.sysconf(OsConstants._SC_PAGESIZE) == 16384;
+        if (is16KbDevice) {
+            String packageAbi =  pkgSetting.getCpuAbiOverride() != null ? pkgSetting.getCpuAbiOverride() :pkgSetting.getPrimaryCpuAbi();
+            int mode = packageAbiHelper.checkPackageAlignment(pkgSetting.getAndroidPackage(), pkgSetting.getCpuAbiOverride());
+            pkgSetting.setPageSizeAppCompatMode(mode);
         }
 
         if ((scanFlags & SCAN_BOOTING) == 0 && oldSharedUserSetting != null) {
