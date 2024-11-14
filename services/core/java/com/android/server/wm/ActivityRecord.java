@@ -958,6 +958,8 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
     boolean mDismissKeyguardIfInsecure;
     boolean mShareIdentity;
 
+    public boolean mForceReremoveStarting;
+
     /** True if the activity has reported stopped; False if the activity becomes visible. */
     boolean mAppStopped;
     // A hint to override the window specified rotation animation, or -1 to use the window specified
@@ -3004,8 +3006,8 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
         final boolean animate;
         final boolean hasImeSurface;
         if (mStartingData != null) {
-            if (mStartingData.mWaitForSyncTransactionCommit
-                    || mTransitionController.isCollecting(this)) {
+            if (!mForceReremoveStarting && (mStartingData.mWaitForSyncTransactionCommit
+                    || mTransitionController.isCollecting(this))) {
                 mStartingData.mRemoveAfterTransaction = AFTER_TRANSACTION_REMOVE_DIRECTLY;
                 mStartingData.mPrepareRemoveAnimation = prepareAnimation;
                 return;
@@ -6956,16 +6958,27 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
         // are drawn.
         final Task associatedTask = task.mSharedStartingData != null ? task : null;
         if (associatedTask == null) {
-            removeStartingWindow();
+            removeStartingWindowUnspecified(task);
         } else if (associatedTask.getActivity(
                 r -> r.isVisibleRequested() && !r.firstWindowDrawn) == null) {
-            // The last drawn activity may not be the one that owns the starting window.
-            final ActivityRecord r = associatedTask.getActivity(ar -> ar.mStartingData != null);
-            if (r != null) {
-                r.removeStartingWindow();
-            }
+            removeStartingWindowUnspecified(associatedTask);
         }
         updateReportedVisibilityLocked();
+    }
+
+    void removeStartingWindowUnspecified(Task task) {
+        if (task == null) return;
+        if (mStartingData != null) {
+            removeStartingWindow();
+        } else {
+            // The last drawn activity may not be the one that owns the starting window.
+            final ActivityRecord r = task.getActivity(ar -> ar.mStartingData != null);
+            if (r != null && r != this && !isTransferringSplashScreen()) {
+                r.mForceReremoveStarting = true;
+                r.removeStartingWindowAnimation(false /* prepareAnimation */);
+                r.mForceReremoveStarting = false;
+            }
+       }
     }
 
     /**
