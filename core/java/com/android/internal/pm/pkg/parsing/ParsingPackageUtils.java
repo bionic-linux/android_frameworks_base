@@ -3109,6 +3109,8 @@ public class ParsingPackageUtils {
                 final String perm = newPerms.get(in);
                 if (!requestedPermissions.contains(perm)) {
                     pkg.addImplicitPermission(perm);
+                } else if (pkg.getTargetSdkVersion() < spi.getTargetSdk()) {
+                    pkg.addImplicitPermission(perm);
                 }
             }
         }
