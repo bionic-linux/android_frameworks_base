@@ -16,6 +16,70 @@
       "message": "thanks -- ptal?",
       "revId": "32d522f2261e5065d89d411661c856536ea1cd4c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ba178cf_191d45b1",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-15T19:14:14Z",
+      "side": 1,
+      "message": "TODO(b/)?",
+      "range": {
+        "startLine": 261,
+        "startChar": 11,
+        "endLine": 261,
+        "endChar": 15
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "87a183b6_fd022bd6",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+              "range": {
+                "startLine": 261,
+                "startChar": 0,
+                "endLine": 262,
+                "endChar": 0
+              },
+              "replacement": "        // TODO(b/280661111): Read them from the manifest too?\n"
+            }
+          ]
+        }
+      ],
+      "revId": "32d522f2261e5065d89d411661c856536ea1cd4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "374aec9e_77732a03",
+        "filename": "ravenwood/runtime-common-src/com/android/ravenwood/common/RavenwoodCommonUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-15T19:14:14Z",
+      "side": 1,
+      "message": "nit / optional: Returns",
+      "range": {
+        "startLine": 298,
+        "startChar": 7,
+        "endLine": 298,
+        "endChar": 15
+      },
+      "revId": "32d522f2261e5065d89d411661c856536ea1cd4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
