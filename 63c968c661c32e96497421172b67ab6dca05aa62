@@ -1,0 +1,317 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c9873ea_1460924c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-15T17:31:36Z",
+      "side": 1,
+      "message": "added a few minor comments",
+      "revId": "63c968c661c32e96497421172b67ab6dca05aa62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad03f4b6_a4c9ceb7",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-15T17:31:36Z",
+      "side": 1,
+      "message": "nit / optional: move constants up, before non-constants?",
+      "range": {
+        "startLine": 159,
+        "startChar": 4,
+        "endLine": 161,
+        "endChar": 0
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "b7078133_add05126",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+              "range": {
+                "startLine": 92,
+                "startChar": 0,
+                "endLine": 92,
+                "endChar": 0
+              },
+              "replacement": "    private static final int DEFAULT_TARGET_SDK_LEVEL \u003d VERSION_CODES.CUR_DEVELOPMENT;\n    private static final String DEFAULT_PACKAGE_NAME \u003d \"com.android.ravenwoodtests.defaultname\";\n\n"
+            },
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+              "range": {
+                "startLine": 159,
+                "startChar": 0,
+                "endLine": 162,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "63c968c661c32e96497421172b67ab6dca05aa62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02db109c_c558b467",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-15T17:31:36Z",
+      "side": 1,
+      "message": "can\u0027t it be int? or are we using Integer so null means not set or something?",
+      "range": {
+        "startLine": 162,
+        "startChar": 19,
+        "endLine": 162,
+        "endChar": 26
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "cc9cfe9a_9d29bf00",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+              "range": {
+                "startLine": 162,
+                "startChar": 0,
+                "endLine": 163,
+                "endChar": 0
+              },
+              "replacement": "    private static int sTargetSdkLevel;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "63c968c661c32e96497421172b67ab6dca05aa62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "737b5888_c21b4dff",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-15T17:31:36Z",
+      "side": 1,
+      "message": "wouldn\u0027t it be useful to add some log statements in this method?",
+      "range": {
+        "startLine": 252,
+        "startChar": 24,
+        "endLine": 252,
+        "endChar": 47
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "80b3a704_35d33ed5",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+              "range": {
+                "startLine": 251,
+                "startChar": 0,
+                "endLine": 251,
+                "endChar": 0
+              },
+              "replacement": "\n    // TODO: use the real UiAutomation class instead of a mock\n    private static UiAutomation createMockUiAutomation() {\n        final Set[] adoptedPermission \u003d { Collections.emptySet() };\n        var mock \u003d mock(UiAutomation.class, inv -\u003e {\n            HostTestUtils.onThrowMethodCalled();\n            return null;\n        });\n        doAnswer(inv -\u003e {\n            adoptedPermission[0] \u003d UiAutomation.ALL_PERMISSIONS;\n            return null;\n        }).when(mock).adoptShellPermissionIdentity();\n        doAnswer(inv -\u003e {\n            if (inv.getArgument(0) \u003d\u003d null) {\n                adoptedPermission[0] \u003d UiAutomation.ALL_PERMISSIONS;\n            } else {\n                adoptedPermission[0] \u003d Set.of(inv.getArguments());\n            }\n            return null;\n        }).when(mock).adoptShellPermissionIdentity(any());\n        doAnswer(inv -\u003e {\n            adoptedPermission[0] \u003d Collections.emptySet();\n            return null;\n        }).when(mock).dropShellPermissionIdentity();\n        doAnswer(inv -\u003e adoptedPermission[0]).when(mock).getAdoptedShellPermissions();\n        return mock;\n    }\n"
+            },
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+              "range": {
+                "startLine": 549,
+                "startChar": 0,
+                "endLine": 576,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "63c968c661c32e96497421172b67ab6dca05aa62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0820884_ae3b86a1",
+        "filename": "ravenwood/junit-src/android/platform/test/ravenwood/RavenwoodConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-15T17:31:36Z",
+      "side": 1,
+      "message": "int here too?",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 11
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d15b0865_80370a60",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-src/android/platform/test/ravenwood/RavenwoodConfig.java",
+              "range": {
+                "startLine": 64,
+                "startChar": 0,
+                "endLine": 65,
+                "endChar": 0
+              },
+              "replacement": "    int mTargetSdkLevel;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "63c968c661c32e96497421172b67ab6dca05aa62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07877a58_c836d469",
+        "filename": "ravenwood/runtime-common-src/com/android/ravenwood/common/RavenwoodCommonUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-15T17:31:36Z",
+      "side": 1,
+      "message": "nit: missing @Nullable for return value",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 4
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "223bb39a_a8469ead",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/runtime-common-src/com/android/ravenwood/common/RavenwoodCommonUtils.java",
+              "range": {
+                "startLine": 289,
+                "startChar": 0,
+                "endLine": 289,
+                "endChar": 0
+              },
+              "replacement": "    @Nullable\n"
+            }
+          ]
+        }
+      ],
+      "revId": "63c968c661c32e96497421172b67ab6dca05aa62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54c247d5_4353aabd",
+        "filename": "ravenwood/tests/coretest/test/com/android/ravenwoodtest/runnercallbacktests/RavenwoodRunnerConfigValidationTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-15T17:31:36Z",
+      "side": 1,
+      "message": "will those be removed?\n\nAlso, add the // comment as reason\u003d instead (and included TODO(b/)?",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 56
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5c56183f_7899505a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/tests/coretest/test/com/android/ravenwoodtest/runnercallbacktests/RavenwoodRunnerConfigValidationTest.java",
+              "range": {
+                "startLine": 63,
+                "startChar": 0,
+                "endLine": 64,
+                "endChar": 0
+              },
+              "replacement": "    @Ignore // TODO(b/289251111): Remove this test when package name is no longer set via config.\n"
+            },
+            {
+              "path": "ravenwood/tests/coretest/test/com/android/ravenwoodtest/runnercallbacktests/RavenwoodRunnerConfigValidationTest.java",
+              "range": {
+                "startLine": 88,
+                "startChar": 0,
+                "endLine": 89,
+                "endChar": 0
+              },
+              "replacement": "    @Ignore // TODO(b/289251111): Remove this test when package name is no longer set via config.\n"
+            },
+            {
+              "path": "ravenwood/tests/coretest/test/com/android/ravenwoodtest/runnercallbacktests/RavenwoodRunnerConfigValidationTest.java",
+              "range": {
+                "startLine": 382,
+                "startChar": 0,
+                "endLine": 383,
+                "endChar": 0
+              },
+              "replacement": "    @Ignore // TODO(b/289251111): Remove this test when package name is no longer set via config.\n"
+            },
+            {
+              "path": "ravenwood/tests/coretest/test/com/android/ravenwoodtest/runnercallbacktests/RavenwoodRunnerConfigValidationTest.java",
+              "range": {
+                "startLine": 444,
+                "startChar": 0,
+                "endLine": 445,
+                "endChar": 0
+              },
+              "replacement": "    @Ignore // TODO(b/289251111): Remove this test when package name is no longer set via config.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "63c968c661c32e96497421172b67ab6dca05aa62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
