@@ -59,6 +59,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "25776840_d9948df4",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-11-15T21:42:57Z",
+      "side": 1,
+      "message": "What do you mean -- shouldReportFailure _is_ from runIgnoringException().",
+      "parentUuid": "327b70be_5148b72c",
+      "range": {
+        "startLine": 236,
+        "startChar": 47,
+        "endLine": 236,
+        "endChar": 66
+      },
+      "revId": "33c31628736a4c4be55340cfcbfe95f88864a055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b25f88d9_f06c9028",
@@ -100,6 +124,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "663b9933_5c406c94",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-11-15T21:42:57Z",
+      "side": 1,
+      "message": "Yeah IntelliJ suggested that too, but that\u0027d be too long, and we don\u0027t really care about allocations on ravenwood...",
+      "parentUuid": "b25f88d9_f06c9028",
+      "range": {
+        "startLine": 260,
+        "startChar": 54,
+        "endLine": 260,
+        "endChar": 66
+      },
+      "revId": "33c31628736a4c4be55340cfcbfe95f88864a055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b85fd641_d5b90bdf",
@@ -137,6 +185,30 @@
           ]
         }
       ],
+      "revId": "33c31628736a4c4be55340cfcbfe95f88864a055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19485336_bfddd1ea",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-11-15T21:42:57Z",
+      "side": 1,
+      "message": "Yeah we don\u0027t do that because our javadoc isn\u0027t meant to be read in HTML... We just read it on the editor.",
+      "parentUuid": "b85fd641_d5b90bdf",
+      "range": {
+        "startLine": 389,
+        "startChar": 0,
+        "endLine": 389,
+        "endChar": 5
+      },
       "revId": "33c31628736a4c4be55340cfcbfe95f88864a055",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -192,6 +264,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ef57dd6_7900250b",
+        "filename": "ravenwood/runtime-common-src/com/android/ravenwood/common/RavenwoodCommonUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-11-15T21:42:57Z",
+      "side": 1,
+      "message": "This method is not for 3p developers, it\u0027s for ourselves, so we don\u0027t really need scream it. :D (that\u0027d be kind of distracting.)",
+      "parentUuid": "0ba0f458_6cf9a059",
+      "range": {
+        "startLine": 284,
+        "startChar": 6,
+        "endLine": 284,
+        "endChar": 33
+      },
+      "revId": "33c31628736a4c4be55340cfcbfe95f88864a055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1db8b5e_d0a569c7",
@@ -229,6 +325,30 @@
           ]
         }
       ],
+      "revId": "33c31628736a4c4be55340cfcbfe95f88864a055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43c5e33a_b0422654",
+        "filename": "ravenwood/runtime-common-src/com/android/ravenwood/common/RavenwoodCommonUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-11-15T21:42:57Z",
+      "side": 1,
+      "message": "Good point, added it to the other one too.",
+      "parentUuid": "d1db8b5e_d0a569c7",
+      "range": {
+        "startLine": 287,
+        "startChar": 45,
+        "endLine": 287,
+        "endChar": 53
+      },
       "revId": "33c31628736a4c4be55340cfcbfe95f88864a055",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -274,6 +394,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "538124ff_a0dc6d68",
+        "filename": "ravenwood/runtime-common-src/com/android/ravenwood/common/RavenwoodCommonUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-11-15T21:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c897a0a5_d0aba0c2",
+      "range": {
+        "startLine": 303,
+        "startChar": 12,
+        "endLine": 303,
+        "endChar": 33
+      },
+      "revId": "33c31628736a4c4be55340cfcbfe95f88864a055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "37244dc5_38a6771a",
@@ -287,6 +431,30 @@
       "writtenOn": "2024-11-15T19:09:54Z",
       "side": 1,
       "message": "th is @Nullable, shouldn\u0027t we check it here? Or remove @Nullable?",
+      "range": {
+        "startLine": 311,
+        "startChar": 7,
+        "endLine": 312,
+        "endChar": 39
+      },
+      "revId": "33c31628736a4c4be55340cfcbfe95f88864a055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41201760_cda17aa3",
+        "filename": "ravenwood/runtime-common-src/com/android/ravenwood/common/RavenwoodCommonUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-11-15T21:42:57Z",
+      "side": 1,
+      "message": "Good catch, fixed the annotation.",
+      "parentUuid": "37244dc5_38a6771a",
       "range": {
         "startLine": 311,
         "startChar": 7,
