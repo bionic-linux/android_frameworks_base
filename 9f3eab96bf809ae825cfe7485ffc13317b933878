@@ -16,6 +16,23 @@
       "message": "Upstream from Meta 😊",
       "revId": "9f3eab96bf809ae825cfe7485ffc13317b933878",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86a0ce88_6263782c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-11-15T17:57:01Z",
+      "side": 1,
+      "message": "Not sure I understand your commit message and the example you gave. Can you file a bug and explain the issue there with a bugreport?",
+      "revId": "9f3eab96bf809ae825cfe7485ffc13317b933878",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
