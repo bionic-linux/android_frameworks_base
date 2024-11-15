@@ -30,6 +30,7 @@ import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import java.util.function.Supplier;
 
 public class RavenwoodCommonUtils {
     private static final String TAG = "RavenwoodCommonUtils";
@@ -275,6 +276,32 @@ public class RavenwoodCommonUtils {
                 "%s.%s expected to be public %s",
                 member.getDeclaringClass().getName(), member.getName(),
                 (isStatic ? "static" : "")));
+    }
+
+    /**
+     * Run a supplier and swallow the exception, if any.
+     *
+     * It's a dangerous function. Only use it in an exception handler where we don't want to crash.
+     */
+    @Nullable
+    public static <T> T runIgnoringException(@NonNull Supplier<T> s) {
+        try {
+            return s.get();
+        } catch (Throwable th) {
+            log(TAG, "Warning: Exception detected! " + getStackTraceString(th));
+        }
+        return null;
+    }
+
+    /**
+     * Run a runnable and swallow the exception, if any.
+     *
+     * It's a dangerous function. Only use it in an exception handler where we don't want to crash.
+     */
+    public static void runIgnoringException(Runnable r) {
+        runIgnoringException(() -> {
+            r.run(); return null;
+        });
     }
 
     @NonNull
