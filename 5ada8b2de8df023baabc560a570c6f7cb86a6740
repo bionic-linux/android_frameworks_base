@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11ce5e0f_3a2bf595",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-11-15T17:58:36Z",
+      "side": 1,
+      "message": "Are these Telephony Subscription Ids (ie. the ones from TelephonyManager or SubscriptionManager)?  \n\nIf so, you should add @RequiresFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION) for these methods and follow the convention used in Telephony where `UnsupportedOperationException` is thrown if the features is not available.  Please [see how it\u0027s done in Telephony](https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:packages/services/Telephony/src/com/android/phone/PhoneInterfaceManager.java;drc\u003d454ac2b3e6024e004f7665dc07b6c3d23d1fd4fb;l\u003d14602) as you\u0027re going to need to take into account the vendor SDK level to properly enforce this.",
+      "range": {
+        "startLine": 1060,
+        "startChar": 69,
+        "endLine": 1060,
+        "endChar": 86
+      },
+      "revId": "5ada8b2de8df023baabc560a570c6f7cb86a6740",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
