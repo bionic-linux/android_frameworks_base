@@ -455,4 +455,18 @@ public class RavenwoodRunnerCallbackTest extends RavenwoodRunnerTestBase {
         public void test2() {
         }
     }
+
+    /**
+     * The test runner throws an exception from the ctor.
+     */
+    @RunWith(AndroidJUnit4.class)
+    // CHECKSTYLE:OFF
+    @Expected("""
+    """)
+    // CHECKSTYLE:ON
+    public static class InitializationFailureTest {
+        @Test
+        public void test1() {
+        }
+    }
 }

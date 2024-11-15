@@ -17,6 +17,7 @@ package android.platform.test.ravenwood;
 
 import static com.android.ravenwood.common.RavenwoodCommonUtils.RAVENWOOD_VERBOSE_LOGGING;
 import static com.android.ravenwood.common.RavenwoodCommonUtils.ensureIsPublicVoidMethod;
+import static com.android.ravenwood.common.RavenwoodCommonUtils.runIgnoringException;
 
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeTrue;
@@ -229,7 +230,9 @@ public final class RavenwoodAwareTestRunner extends RavenwoodAwareTestRunnerBase
             s.evaluate();
             onAfter(description, scope, order, null);
         } catch (Throwable t) {
-            if (onAfter(description, scope, order, t)) {
+            var shouldReportFailure = runIgnoringException(
+                    () -> onAfter(description, scope, order, t));
+            if (shouldReportFailure == null || shouldReportFailure) {
                 throw t;
             }
         }
