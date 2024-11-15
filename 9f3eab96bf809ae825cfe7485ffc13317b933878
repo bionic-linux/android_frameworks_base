@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "b029a775_0a0c0ab1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-11-15T18:31:40Z",
+      "side": 1,
+      "message": "This is the intended behavior, apps can opt in to the new permission by explicitly adding the `\u003cuses-permission\u003e` for the new permission, without raising their target SDK version and having to deal with all the other changes that come with the new target SDK version. I don\u0027t see why apps should accidentally add it, or why we should accommodate for developer errors at the cost of removing a valid use case (manual opt-in to one new permission without raising target SDK).",
+      "revId": "9f3eab96bf809ae825cfe7485ffc13317b933878",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "05190823_859994a2",
