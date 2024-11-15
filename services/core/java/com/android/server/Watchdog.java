@@ -202,6 +202,7 @@ public class Watchdog implements Dumpable {
     /* This handler will be used to post message back onto the main thread */
     private final ArrayList<HandlerCheckerAndTimeout> mHandlerCheckers = new ArrayList<>();
     private final HandlerChecker mMonitorChecker;
+    private Context mContext;
     private ActivityManagerService mActivity;
     private IActivityController mController;
     private boolean mAllowRestart = true;
@@ -531,6 +532,7 @@ public class Watchdog implements Dumpable {
      */
     public void init(Context context, ActivityManagerService activity) {
         mActivity = activity;
+        mContext = context;
         context.registerReceiver(new RebootRequestReceiver(),
                 new IntentFilter(Intent.ACTION_REBOOT),
                 android.Manifest.permission.REBOOT, null);
@@ -809,18 +811,27 @@ public class Watchdog implements Dumpable {
         }
     }
 
-    public static ArrayList<Integer> getInterestingNativePids() {
-        HashSet<Integer> pids = new HashSet<>();
-        addInterestingAidlPids(pids);
-        addInterestingHidlPids(pids);
-
-        int[] nativePids = Process.getPidsForCommands(NATIVE_STACKS_OF_INTEREST);
+    private static void addNativePids(HashSet<Integer> pids, String[] nativeProcessNames) {
+        int[] nativePids = Process.getPidsForCommands(nativeProcessNames);
         if (nativePids != null) {
             for (int i : nativePids) {
                 pids.add(i);
             }
         }
+    }
 
+    public static ArrayList<Integer> getInterestingNativePids(@Nullable Context context) {
+        HashSet<Integer> pids = new HashSet<>();
+        addInterestingAidlPids(pids);
+        addInterestingHidlPids(pids);
+
+        addNativePids(pids, NATIVE_STACKS_OF_INTEREST);
+
+        if (context != null) {
+            int key = com.android.internal.R.array.config_interestingNativeProcessesForANR;
+            String[] vendorNativeProcesses = context.getResources().getStringArray(key);
+            addNativePids(pids, vendorNativeProcesses);
+        }
         return new ArrayList<Integer>(pids);
     }
 
@@ -998,7 +1009,7 @@ public class Watchdog implements Dumpable {
         StringWriter tracesFileException = new StringWriter();
         final File stack = StackTracesDumpHelper.dumpStackTraces(
                 pids, processCpuTracker, new SparseBooleanArray(),
-                CompletableFuture.completedFuture(getInterestingNativePids()), tracesFileException,
+                CompletableFuture.completedFuture(getInterestingNativePids(mContext)), tracesFileException,
                 subject, criticalEvents, Runnable::run, /* latencyTracker= */null);
         // Give some extra time to make sure the stack traces get written.
         // The system's been hanging for a whlie, another second or two won't hurt much.

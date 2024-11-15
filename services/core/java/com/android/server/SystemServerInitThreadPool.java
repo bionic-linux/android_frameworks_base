@@ -195,7 +195,7 @@ public final class SystemServerInitThreadPool implements Dumpable {
         pids.add(Process.myPid());
         StackTracesDumpHelper.dumpStackTraces(pids,
                 /* processCpuTracker= */null, /* lastPids= */null,
-                CompletableFuture.completedFuture(Watchdog.getInterestingNativePids()),
+                CompletableFuture.completedFuture(Watchdog.getInterestingNativePids(null)),
                 /* logExceptionCreatingFile= */null, /* subject= */null,
                 /* criticalEventSection= */null, Runnable::run,
                 /* latencyTracker= */null);

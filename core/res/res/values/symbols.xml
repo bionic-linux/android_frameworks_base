@@ -5204,6 +5204,9 @@
   <java-symbol type="integer" name="config_deviceStateConcurrentRearDisplay" />
   <java-symbol type="string" name="config_rearDisplayPhysicalAddress" />
 
+  <!-- What stacks to dump for ANR -->
+  <java-symbol type="array" name="config_interestingNativeProcessesForANR" />
+
   <!-- For app language picker -->
   <java-symbol type="string" name="system_locale_title" />
   <java-symbol type="layout" name="app_language_picker_system_default" />

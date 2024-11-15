@@ -495,7 +495,7 @@ class ProcessErrorStateRecord {
         Future<ArrayList<Integer>> nativePidsFuture =
                 auxiliaryTaskExecutor.submit(
                     () -> {
-                        ArrayList<Integer> interestingNativePids = Watchdog.getInterestingNativePids();
+                        ArrayList<Integer> interestingNativePids = Watchdog.getInterestingNativePids(mService.mContext);
                         ArrayList<Integer> nativePids = null;
                         latencyTracker.nativePidCollectionStarted();
                         // don't dump native PIDs for background ANRs unless
