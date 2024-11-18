@@ -527,7 +527,8 @@ class DragState {
                 Slog.d(TAG_WM, "Sending DRAG_STARTED to new window " + newWin);
             }
             // Only allow the extras to be dispatched to a global-intercepting drag target
-            ClipData data = interceptsGlobalDrag ? mData.copyForTransferWithActivityInfo() : null;
+            ClipData data = interceptsGlobalDrag ?
+                    (mData != null ? mData.copyForTransferWithActivityInfo() : null) : null;
             DragEvent event = obtainDragEvent(DragEvent.ACTION_DRAG_STARTED,
                     newWin.translateToWindowX(touchX), newWin.translateToWindowY(touchY),
                     data, false /* includeDragSurface */, true /* includeDragFlags */,
