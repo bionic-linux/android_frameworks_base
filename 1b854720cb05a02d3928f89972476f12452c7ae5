@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6ee9211_528f3dc3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2024-11-18T13:39:06Z",
+      "side": 1,
+      "message": "Pavel FYI Shawn to working to migrate FRP policy for some partner use cases.",
+      "revId": "1b854720cb05a02d3928f89972476f12452c7ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ec17a9f_75a429a9",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/FactoryResetProtectionPolicyResolutionMechanism.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2024-11-18T13:39:06Z",
+      "side": 1,
+      "message": "should probably debate the most appropriate resolution logic here, but yes this is generally how we write this kind of logic.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "1b854720cb05a02d3928f89972476f12452c7ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d555ceda_177bddeb",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/PolicyDefinition.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2024-11-18T13:39:06Z",
+      "side": 1,
+      "message": "I think we will need to include POLICY_FLAG_SKIP_ENFORCEMENT_IF_UNCHANGED in the policy definition considering we don\u0027t need to call PolicyEnforcerCallbacks::setFactoryResetProtection during system boot.",
+      "range": {
+        "startLine": 398,
+        "startChar": 45,
+        "endLine": 398,
+        "endChar": 70
+      },
+      "revId": "1b854720cb05a02d3928f89972476f12452c7ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
