@@ -1184,6 +1184,7 @@ public final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                 HdmiLogger.warning("Invalid <Set System Audio Mode> message:" + message);
                 return Constants.ABORT_REFUSED;
             }
+            return Constants.HANDLED;
         } else if (systemAudioStatus && !isSystemAudioControlFeatureEnabled()) {
             HdmiLogger.debug("Ignoring <Set System Audio Mode> message "
                     + "because the System Audio Control feature is disabled: %s", message);
