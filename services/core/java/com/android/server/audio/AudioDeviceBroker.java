@@ -2324,6 +2324,9 @@ public class AudioDeviceBroker {
         public boolean registerDeathRecipient() {
             boolean status = false;
             try {
+                if (mCb == null) {
+                    return false;
+                }
                 mCb.linkToDeath(this, 0);
                 status = true;
             } catch (RemoteException e) {
