@@ -322,6 +322,15 @@ public final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
             invokeCallback(callback, HdmiControlManager.RESULT_INCORRECT_MODE);
             return;
         }
+        if (hasAction(DeviceSelectActionFromTv.class)) {
+            List<DeviceSelectActionFromTv> actions = getActions(DeviceSelectActionFromTv.class);
+            if (!actions.isEmpty()) {
+                DeviceSelectActionFromTv action = actions.get(0);
+                if (action.getTargetAddress() == targetDevice.getLogicalAddress()) {
+                    return;
+                }
+            }
+        }
         removeAction(DeviceSelectActionFromTv.class);
         addAndStartAction(new DeviceSelectActionFromTv(this, targetDevice, callback));
     }
