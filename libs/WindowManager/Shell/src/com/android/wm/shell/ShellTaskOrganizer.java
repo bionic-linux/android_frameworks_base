@@ -598,10 +598,14 @@ public class ShellTaskOrganizer extends TaskOrganizer implements
 
             final int taskId = taskInfo.taskId;
             final TaskAppearedInfo appearedInfo = mTasks.get(taskId);
-            final TaskListener listener = getTaskListener(appearedInfo.getTaskInfo());
-            mTasks.remove(taskId);
-            if (listener != null) {
-                listener.onTaskVanished(taskInfo);
+            if (appearedInfo == null) {
+                Log.e(TAG, "TaskAppearedInfo not found!");
+            } else {
+                final TaskListener listener = getTaskListener(appearedInfo.getTaskInfo());
+                mTasks.remove(taskId);
+                if (listener != null) {
+                    listener.onTaskVanished(taskInfo);
+                }
             }
             notifyLocusVisibilityIfNeeded(taskInfo);
             // Pass null for listener to remove the compat UI on this task if there is any.
@@ -615,7 +619,7 @@ public class ShellTaskOrganizer extends TaskOrganizer implements
                 ProtoLog.v(WM_SHELL_TASK_ORG, "Removing overlay surface");
             }
 
-            if (!ENABLE_SHELL_TRANSITIONS && (appearedInfo.getLeash() != null)) {
+            if (!ENABLE_SHELL_TRANSITIONS && (appearedInfo != null && appearedInfo.getLeash() != null)) {
                 // Preemptively clean up the leash only if shell transitions are not enabled
                 appearedInfo.getLeash().release();
             }
