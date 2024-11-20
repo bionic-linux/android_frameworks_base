@@ -177,6 +177,7 @@ public final class BatteryService extends SystemService {
     private int mBatteryNearlyFullLevel;
     private int mShutdownBatteryTemperature;
     private boolean mShutdownIfNoPower;
+    private int mWeakChargerThresholdMicroWatts;
 
     private static String sSystemUiPackage;
 
@@ -246,6 +247,8 @@ public final class BatteryService extends SystemService {
                 com.android.internal.R.integer.config_shutdownBatteryTemperature);
         mShutdownIfNoPower = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_shutdownIfNoPower);
+        mWeakChargerThresholdMicroWatts = mContext.getResources().getInteger(
+                com.android.internal.R.integer.config_weakChargerThresholdMicroWatts);
         sSystemUiPackage = mContext.getResources().getString(
                 com.android.internal.R.string.config_systemUi);
 
@@ -403,6 +406,36 @@ public final class BatteryService extends SystemService {
                     || mHealthInfo.batteryLevel > mLastLowBatteryWarningLevel);
     }
 
+    private boolean isWeakCharger() {
+        final boolean plugged = mPlugType != BATTERY_PLUGGED_NONE;
+        if (!plugged) {
+            return false;
+        }
+        final int defaultChargingMicroVolt = 5000000;
+        final int defaultChargingMicroAmp = 100000;
+        final int maxChargingMicroAmp = mHealthInfo.maxChargingCurrentMicroamps;
+        int maxChargingMicroVolt = mHealthInfo.maxChargingVoltageMicrovolts;
+        int maxChargingMicroWatt = 0;
+
+        if (maxChargingMicroAmp > 0) {
+            // Calculating muW = muA * muV / (10^6 mu^2 / mu); splitting up the divisor
+            // to maintain precision equally on both factors.
+            maxChargingMicroWatt = (maxChargingMicroAmp / 1000) * (maxChargingMicroVolt / 1000);
+        } else {
+            // Don't flag 0mA as slow-charging since it can occur upon connection
+            return false;
+        }
+
+        if (DEBUG) Slog.d(TAG, "Connected charger voltage: " + maxChargingMicroVolt);
+        if (DEBUG) Slog.d(TAG, "Connected charger current: " + maxChargingMicroAmp);
+        if (DEBUG) Slog.d(TAG, "Connected charger power: " + maxChargingMicroWatt);
+        if (DEBUG) Slog.d(TAG, "Weak charger threshold: " + mWeakChargerThresholdMicroWatts);
+
+        return !(maxChargingMicroVolt == defaultChargingMicroVolt &&
+           maxChargingMicroAmp == defaultChargingMicroAmp) &&
+           maxChargingMicroWatt < mWeakChargerThresholdMicroWatts;
+    }
+
     private boolean shouldShutdownLocked() {
         if (mHealthInfo.batteryCapacityLevel != BatteryCapacityLevel.UNSUPPORTED) {
             return (mHealthInfo.batteryCapacityLevel == BatteryCapacityLevel.CRITICAL);
@@ -423,7 +456,8 @@ public final class BatteryService extends SystemService {
         // - If battery present and state == unknown, this is an unexpected error state.
         // - If level <= 0 and state == full, this is also an unexpected state
         // - All other states (NOT_CHARGING, DISCHARGING) means it is not charging.
-        return mHealthInfo.batteryStatus != BatteryManager.BATTERY_STATUS_CHARGING;
+        return (mHealthInfo.batteryStatus != BatteryManager.BATTERY_STATUS_CHARGING)
+                || isWeakCharger();
     }
 
     private void shutdownIfNoPowerLocked() {
@@ -1248,6 +1282,7 @@ public final class BatteryService extends SystemService {
                 pw.println("  Dock powered: " + mHealthInfo.chargerDockOnline);
                 pw.println("  Max charging current: " + mHealthInfo.maxChargingCurrentMicroamps);
                 pw.println("  Max charging voltage: " + mHealthInfo.maxChargingVoltageMicrovolts);
+                pw.println("  Weak Charger: " + Boolean.toString(isWeakCharger()));
                 pw.println("  Charge counter: " + mHealthInfo.batteryChargeCounterUah);
                 pw.println("  status: " + mHealthInfo.batteryStatus);
                 pw.println("  health: " + mHealthInfo.batteryHealth);

@@ -2082,6 +2082,7 @@
   <java-symbol type="integer" name="config_lightSensorWarmupTime" />
   <java-symbol type="integer" name="config_lowBatteryCloseWarningBump" />
   <java-symbol type="integer" name="config_lowBatteryWarningLevel" />
+  <java-symbol type="integer" name="config_weakChargerThresholdMicroWatts" />
   <java-symbol type="integer" name="config_networkPolicyDefaultWarning" />
   <java-symbol type="integer" name="config_networkNotifySwitchType" />
   <java-symbol type="array" name="config_networkNotifySwitches" />
