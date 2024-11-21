@@ -46,4 +46,11 @@ public class PackageManagerTest {
     public void testResolveInfoFlags() throws Exception {
         assertThat(PackageManager.ResolveInfoFlags.of(42L).getValue()).isEqualTo(42L);
     }
+
+    @Test
+    public void testSdkFeatureCount() throws Exception {
+        // We don't care about the exact count, just that it's not some pathologically wrong value.
+        assertThat(PackageManager.SDK_FEATURE_COUNT).isGreaterThan(150);
+        assertThat(PackageManager.SDK_FEATURE_COUNT).isLessThan(500);
+    }
 }
