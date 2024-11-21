@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b44c82d6_0a0cab3a",
+        "filename": "services/profcollect/src/com/android/server/profcollect/ProfcollectForwardingService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1978766
+      },
+      "writtenOn": "2024-11-21T17:56:23Z",
+      "side": 1,
+      "message": "do we need extra \u0027()\u0027?",
+      "fixSuggestions": [
+        {
+          "fixId": "a3e40233_1168fd42",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/profcollect/src/com/android/server/profcollect/ProfcollectForwardingService.java",
+              "range": {
+                "startLine": 123,
+                "startChar": 0,
+                "endLine": 124,
+                "endChar": 0
+              },
+              "replacement": "        sVerityEnforced \u003d verityMode.equals(\"enforcing\");\n"
+            }
+          ]
+        }
+      ],
+      "revId": "78be99cf719a8e1b194a423238cf9f3c6495bef0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
