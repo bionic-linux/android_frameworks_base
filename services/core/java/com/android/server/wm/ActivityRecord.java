@@ -6045,6 +6045,9 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
                 if (mDisplayContent != null) {
                     mDisplayContent.mUnknownAppVisibilityController.appRemovedOrHidden(this);
                 }
+                // Reset the flag indicating that an app can enter picture-in-picture once the
+                // activity is hidden
+                supportsEnterPipOnTaskSwitch = false;
                 break;
             case DESTROYED:
                 if (app != null && (mVisible || mVisibleRequested)) {
