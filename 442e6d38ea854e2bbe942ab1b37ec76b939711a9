@@ -16,6 +16,29 @@
       "message": "Could you please review and let me know your comments",
       "revId": "442e6d38ea854e2bbe942ab1b37ec76b939711a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24da7771_88774070",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6050,
+      "author": {
+        "id": 1959842
+      },
+      "writtenOn": "2024-11-22T00:18:46Z",
+      "side": 1,
+      "message": "This should always be properly set/reset when potentially entering PiP.\nBut either way, shouldn\u0027t be done as a response to lifecycle state updates. @louischang@google.com for visibility too",
+      "range": {
+        "startLine": 6050,
+        "startChar": 16,
+        "endLine": 6050,
+        "endChar": 53
+      },
+      "revId": "442e6d38ea854e2bbe942ab1b37ec76b939711a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
