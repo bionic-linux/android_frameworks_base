@@ -1,0 +1,74 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6827e26a_09247ff3",
+        "filename": "media/jni/android_media_CodecCapabilities.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-22T23:51:40Z",
+      "side": 1,
+      "message": "maybe not necessary",
+      "fixSuggestions": [
+        {
+          "fixId": "2fcf25c3_9e76609e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/jni/android_media_CodecCapabilities.cpp",
+              "range": {
+                "startLine": 159,
+                "startChar": 0,
+                "endLine": 160,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "9f1501b8ed854005bba76a11b7f3ad187fb6d425",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee974763_5b006780",
+        "filename": "media/jni/android_media_CodecCapabilities.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-22T23:51:40Z",
+      "side": 1,
+      "message": "NullPointerException",
+      "fixSuggestions": [
+        {
+          "fixId": "caa0a729_43e92fba",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/jni/android_media_CodecCapabilities.cpp",
+              "range": {
+                "startLine": 175,
+                "startChar": 0,
+                "endLine": 176,
+                "endChar": 0
+              },
+              "replacement": "        jniThrowException(env, \"java/lang/NullPointerException\", NULL);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "9f1501b8ed854005bba76a11b7f3ad187fb6d425",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
