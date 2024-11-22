@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5915478c_274246ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-11-22T05:13:44Z",
+      "side": 1,
+      "message": "Hi, can we cherry pick this fix to AOSP? Without this fix my CL aosp/3368825 will throw following error\n\n```\nAn annotation processor threw an uncaught exception.\nConsult the following stack trace for details.\n...pository root: no parent of /mnt/disks/build-disk/src/googleplex-android/aosp-main-with-phones/. contains frameworks/base/services/core/java/com/android/server/pm/pkg/component/ParsedProviderImpl.java\n   \n```",
+      "revId": "e8430e37a754101c3d05eb5554cce560d5702150",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
