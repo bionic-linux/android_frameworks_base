@@ -33,6 +33,24 @@
       "message": "Please help review this modification if you have time, thank you.",
       "revId": "002e18f85afd95ecfecb1e03582c47a4ff00507e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e10b0cdb_d211d6f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2024-11-22T18:16:32Z",
+      "side": 1,
+      "message": "As mentioned in the bug, if you have more robust repro information we can investigate.\n\nThis change is just hiding the symptom which will only make it harder to find/fix the root cause. It shouldn\u0027t be possible to vanish a task that was never appeared.",
+      "parentUuid": "868c1335_9133619a",
+      "revId": "002e18f85afd95ecfecb1e03582c47a4ff00507e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
