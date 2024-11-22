@@ -80,6 +80,24 @@
       "message": "Curious why the code here wasn\u0027t reset the `supportsEnterPipOnTaskSwitch`? The activity state was not stopping/stopped? Perhaps it should always be done when the activity became invisible regardless of the activity state.  cc @gabiyev@google.com",
       "revId": "442e6d38ea854e2bbe942ab1b37ec76b939711a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ebf5cad_7f9fb671",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6339,
+      "author": {
+        "id": 2016083
+      },
+      "writtenOn": "2024-11-22T06:06:18Z",
+      "side": 1,
+      "message": "Hi @louischang@google.com @gabiyev@google.com Thank you for your comments.\n\nThe Code wasnt entering STOPPED case in makeInvisible() and it always returns from the first if cond as its Already invisible.\n\n    void makeInvisible() {\n        if (!mVisibleRequested) {\n            if (DEBUG_VISIBILITY) Slog.v(TAG_VISIBILITY, \"Already invisible: \" + this);\n            return;\n        }\n\nInitially i thought i will reset in this condition. But felt its better to depend on Activity lifecycle",
+      "parentUuid": "2315252f_83b9c605",
+      "revId": "442e6d38ea854e2bbe942ab1b37ec76b939711a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
