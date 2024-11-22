@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee3fdd34_7989892b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2016083
+      },
+      "writtenOn": "2024-11-22T18:05:33Z",
+      "side": 1,
+      "message": "could you please check my reasoning",
+      "revId": "442e6d38ea854e2bbe942ab1b37ec76b939711a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "24da7771_88774070",
@@ -96,6 +113,24 @@
       "side": 1,
       "message": "Hi @louischang@google.com @gabiyev@google.com Thank you for your comments.\n\nThe Code wasnt entering STOPPED case in makeInvisible() and it always returns from the first if cond as its Already invisible.\n\n    void makeInvisible() {\n        if (!mVisibleRequested) {\n            if (DEBUG_VISIBILITY) Slog.v(TAG_VISIBILITY, \"Already invisible: \" + this);\n            return;\n        }\n\nInitially i thought i will reset in this condition. But felt its better to depend on Activity lifecycle",
       "parentUuid": "2315252f_83b9c605",
+      "revId": "442e6d38ea854e2bbe942ab1b37ec76b939711a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de07d6e9_379da32b",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6339,
+      "author": {
+        "id": 2016083
+      },
+      "writtenOn": "2024-11-22T18:05:33Z",
+      "side": 1,
+      "message": "Back gesture flow is:\n---------------------\n- Enters makeInvisible from ensureActivitiesVisible when activity state is RESUMED\n- setVisibleRequested false \n- wm_pause_activity (mPauseImmediately is true)\n- wm_on_paused_called\n- Finish Transition\n- supportsEnterPipOnTaskSwitch  this is not set because activity state is not resume and returns from below\n\n        if (!mCanPipOnFinish || !ar.isVisible() || ar.getTask() \u003d\u003d null || !ar.isState(RESUMED)) {\n            return false;\n        }\n        \nHome Gesture flow is\n--------------------\n- Finish Transition\n- setVisibleRequested false\n- ar.supportsEnterPipOnTaskSwitch to true as activity is still in Resume state. It is set here\n\n        // Legacy pip-entry (not via isAutoEnterEnabled).\n        if ((!ar.getTask().isVisibleRequested() || didCommitTransientLaunch())\n                \u0026\u0026 ar.supportsPictureInPicture()) {\n            // force enable pip-on-task-switch now that we\u0027ve committed to actually launching to the\n            // transient activity, and then recalculate whether we can attempt pip.\n            ar.supportsEnterPipOnTaskSwitch \u003d true;\n        }\n        \n        \n- wm_pause_activity (will not pause immediately because mPauseImmediately is false as we have set supportsEnterPipOnTaskSwitch\n- wm_enter_pip\n- wm_on_paused_called\n- and then never enter stop unless pip is its closed\n\nSo i thought to place my logic when the activity is stopped.\n\nSo bascially the activities which support pip but doesnot enter pip and go to stop need to reset this variable",
+      "parentUuid": "6ebf5cad_7f9fb671",
       "revId": "442e6d38ea854e2bbe942ab1b37ec76b939711a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
