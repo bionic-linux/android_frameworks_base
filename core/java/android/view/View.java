@@ -30652,11 +30652,11 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
 
         // Note: A drawing tablet will have both SOURCE_MOUSE and SOURCE_STYLUS, but it would use
         // TOOL_TYPE_STYLUS. For now, treat drawing tablets the same way as a mouse or touchpad.
-        if (event.isFromSource(InputDevice.SOURCE_MOUSE)) {
-            return mMousePointerIcon;
+        if (event.isFromSource(InputDevice.SOURCE_STYLUS)) {
+            return null;
         }
 
-        return null;
+        return mMousePointerIcon;
     }
 
     /**
