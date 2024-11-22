@@ -1477,6 +1477,9 @@ public final class SystemServer implements Dumpable {
         boolean enableVrService = context.getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_VR_MODE_HIGH_PERFORMANCE);
 
+        boolean disableConsumerIrService =
+            SystemProperties.getBoolean("config.disable_consumerirservice", false);
+
         if (!Flags.recoverabilityDetection()) {
             // For debugging RescueParty
             if (Build.IS_DEBUGGABLE
@@ -1597,7 +1600,8 @@ public final class SystemServer implements Dumpable {
             ServiceManager.addService("dynamic_system", dynamicSystem);
             t.traceEnd();
 
-            if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CONSUMER_IR)) {
+            if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CONSUMER_IR)
+                    && !disableConsumerIrService) {
                 t.traceBegin("StartConsumerIrService");
                 consumerIr = new ConsumerIrService(context);
                 ServiceManager.addService(Context.CONSUMER_IR_SERVICE, consumerIr);
