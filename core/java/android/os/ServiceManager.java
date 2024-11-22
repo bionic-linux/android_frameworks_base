@@ -27,6 +27,7 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.os.BinderInternal;
 import com.android.internal.util.Preconditions;
 import com.android.internal.util.StatLogger;
+import android.os.Trace;
 
 import java.util.Map;
 
@@ -272,6 +273,7 @@ public final class ServiceManager {
      */
     @UnsupportedAppUsage
     public static IBinder checkService(String name) {
+      Trace.traceBegin(Trace.TRACE_TAG_AIDL, "ServiceManager.checkService(" + name + ")");
         try {
             IBinder service = sCache.get(name);
             if (service != null) {
@@ -282,6 +284,8 @@ public final class ServiceManager {
         } catch (RemoteException e) {
             Log.e(TAG, "error in checkService", e);
             return null;
+        } finally {
+            Trace.traceEnd(Trace.TRACE_TAG_AIDL);
         }
     }
 
