@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81ed3726_6757de9c",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 2156,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-23T00:35:05Z",
+      "side": 1,
+      "message": "these would need to access |this| so I suppose these shouldn\u0027t be static?",
+      "revId": "5df999a43e00d6f9ee6516ec0a488225577ab8a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
