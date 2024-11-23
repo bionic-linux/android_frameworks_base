@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69931772_95230cdb",
+        "filename": "media/jni/android_media_CodecCapabilities.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1895465
+      },
+      "writtenOn": "2024-11-23T00:59:00Z",
+      "side": 1,
+      "message": "Deleted",
+      "parentUuid": "6827e26a_09247ff3",
+      "revId": "9f1501b8ed854005bba76a11b7f3ad187fb6d425",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee974763_5b006780",
@@ -67,6 +85,24 @@
           ]
         }
       ],
+      "revId": "9f1501b8ed854005bba76a11b7f3ad187fb6d425",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6448e01f_79036e73",
+        "filename": "media/jni/android_media_CodecCapabilities.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1895465
+      },
+      "writtenOn": "2024-11-23T00:59:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee974763_5b006780",
       "revId": "9f1501b8ed854005bba76a11b7f3ad187fb6d425",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
