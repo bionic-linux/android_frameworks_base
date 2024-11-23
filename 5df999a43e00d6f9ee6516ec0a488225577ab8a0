@@ -16,6 +16,24 @@
       "message": "these would need to access |this| so I suppose these shouldn\u0027t be static?",
       "revId": "5df999a43e00d6f9ee6516ec0a488225577ab8a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "736bbbb4_e208f0b9",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 2156,
+      "author": {
+        "id": 1895465
+      },
+      "writtenOn": "2024-11-23T01:01:10Z",
+      "side": 1,
+      "message": "Yes, there was some git merging issues. This is in the old version of code. Updated to the latest.",
+      "parentUuid": "81ed3726_6757de9c",
+      "revId": "5df999a43e00d6f9ee6516ec0a488225577ab8a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
