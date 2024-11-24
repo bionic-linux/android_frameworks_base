@@ -16,6 +16,23 @@
       "message": "Could please somebody update the list of selectable languages (file locale_config.xml) to include languages with basic coverage in the current ICU?",
       "revId": "8a0dd0fb7e2a1bd6fbf84143746cad0346b5deea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c864899_3266e782",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1688644
+      },
+      "writtenOn": "2024-11-24T18:14:15Z",
+      "side": 1,
+      "message": "Android Baklava contains updated file locale_config.xml. Thanks.",
+      "revId": "8a0dd0fb7e2a1bd6fbf84143746cad0346b5deea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
