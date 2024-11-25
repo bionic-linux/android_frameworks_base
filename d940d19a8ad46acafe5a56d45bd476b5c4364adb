@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cac1bf1_83d48fc4",
+        "filename": "media/jni/android_media_CodecCapabilities.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-25T20:56:39Z",
+      "side": 1,
+      "message": "nit: add comment about the lifetime",
+      "fixSuggestions": [
+        {
+          "fixId": "cc1eaf1e_d8e1f070",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/jni/android_media_CodecCapabilities.cpp",
+              "range": {
+                "startLine": 288,
+                "startChar": 0,
+                "endLine": 288,
+                "endChar": 0
+              },
+              "replacement": "    // The native VideoCapabilities won\u0027t be destructed until process ends.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d940d19a8ad46acafe5a56d45bd476b5c4364adb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
