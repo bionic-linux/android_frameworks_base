@@ -133,6 +133,24 @@
       "parentUuid": "6ebf5cad_7f9fb671",
       "revId": "442e6d38ea854e2bbe942ab1b37ec76b939711a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e9be576_f5a549bf",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6339,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2024-11-25T03:21:07Z",
+      "side": 1,
+      "message": "I still don\u0027t think reseting the flag while updating the Activity state to STOPPED is a good idea. \n\nIn addition, it is still possible that an Activity becomes visible again before entering STOPPED state, i.e. RESUMED -\u003e PAUSED -\u003e add to stopping -\u003e RESUMED.",
+      "parentUuid": "de07d6e9_379da32b",
+      "revId": "442e6d38ea854e2bbe942ab1b37ec76b939711a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
