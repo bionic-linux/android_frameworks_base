@@ -102,6 +102,24 @@
       "message": "Kindly reminder",
       "revId": "6f417d5f97e0af70bc9f3ae55eab6c6fa64f2fc8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24b7a541_8326aaa3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2024-11-26T09:03:55Z",
+      "side": 1,
+      "message": "I prefer not to merge it unless we have a valid use case or requests, but feel free to do so in your branch.",
+      "parentUuid": "cb4dbd66_1ab384f7",
+      "revId": "6f417d5f97e0af70bc9f3ae55eab6c6fa64f2fc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
