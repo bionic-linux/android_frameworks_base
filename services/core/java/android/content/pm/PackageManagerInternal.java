@@ -90,6 +90,7 @@ public abstract class PackageManagerInternal {
      */
     public static final int RESOLVE_NON_RESOLVER_ONLY = 0x00000002;
 
+    @Deprecated
     @IntDef(value = {
             INTEGRITY_VERIFICATION_ALLOW,
             INTEGRITY_VERIFICATION_REJECT,
@@ -102,6 +103,7 @@ public abstract class PackageManagerInternal {
      * {@link PackageManagerInternal#setIntegrityVerificationResult(int, int)} to indicate that the
      * integrity component allows the install to proceed.
      */
+    @Deprecated
     public static final int INTEGRITY_VERIFICATION_ALLOW = 1;
 
     /**
@@ -109,6 +111,7 @@ public abstract class PackageManagerInternal {
      * {@link PackageManagerInternal#setIntegrityVerificationResult(int, int)} to indicate that the
      * integrity component does not allow install to proceed.
      */
+    @Deprecated
     public static final int INTEGRITY_VERIFICATION_REJECT = 0;
 
     /**
@@ -1142,6 +1145,7 @@ public abstract class PackageManagerInternal {
      * @param verificationResult either {@link #INTEGRITY_VERIFICATION_ALLOW}
      *            or {@link #INTEGRITY_VERIFICATION_REJECT}.
      */
+    @Deprecated
     public abstract void setIntegrityVerificationResult(int verificationId,
             @IntegrityVerificationResult int verificationResult);
 
