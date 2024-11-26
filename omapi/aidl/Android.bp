@@ -23,7 +23,7 @@ aidl_interface {
     stability: "vintf",
     backend: {
         java: {
-            sdk_version: "module_current",
+            sdk_version: "35", // Make it 36 once available.
             apex_available: [
                 "//apex_available:platform",
                 "com.android.nfcservices",
