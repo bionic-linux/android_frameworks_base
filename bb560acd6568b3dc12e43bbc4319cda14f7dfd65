@@ -16,6 +16,23 @@
       "message": "Upstream from Meta 😊",
       "revId": "bb560acd6568b3dc12e43bbc4319cda14f7dfd65",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fa21750_79a65b3d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2024-11-26T16:52:37Z",
+      "side": 1,
+      "message": "Why do we need two ways to exclude this service? Why not just exclude the FEATURE_CONSUMER_IR feature?",
+      "revId": "bb560acd6568b3dc12e43bbc4319cda14f7dfd65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
