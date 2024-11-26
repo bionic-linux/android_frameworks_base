@@ -90,6 +90,7 @@ public abstract class PackageManagerInternal {
      */
     public static final int RESOLVE_NON_RESOLVER_ONLY = 0x00000002;
 
+    @Deprecated
     @IntDef(value = {
             INTEGRITY_VERIFICATION_ALLOW,
             INTEGRITY_VERIFICATION_REJECT,
@@ -1142,6 +1143,7 @@ public abstract class PackageManagerInternal {
      * @param verificationResult either {@link #INTEGRITY_VERIFICATION_ALLOW}
      *            or {@link #INTEGRITY_VERIFICATION_REJECT}.
      */
+    @Deprecated
     public abstract void setIntegrityVerificationResult(int verificationId,
             @IntegrityVerificationResult int verificationResult);
 
