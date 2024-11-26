@@ -138,6 +138,24 @@
       "parentUuid": "24b7a541_8326aaa3",
       "revId": "6f417d5f97e0af70bc9f3ae55eab6c6fa64f2fc8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1feb0bd1_b0de34e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2024-11-26T12:03:49Z",
+      "side": 1,
+      "message": "I am curious about the use cases. Why the launch activity should be configurable?\nWe can\u0027t procceed on furthur review until we know about the purpose.",
+      "parentUuid": "60ccbbc7_cec8f6c8",
+      "revId": "6f417d5f97e0af70bc9f3ae55eab6c6fa64f2fc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
