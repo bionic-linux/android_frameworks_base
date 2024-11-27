@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da4990c3_a7e80b2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1319951
+      },
+      "writtenOn": "2024-11-27T01:36:30Z",
+      "side": 1,
+      "message": "I am not sure of the reason why these are exposed. Can you please clarify the usecase?",
+      "revId": "a898e97b10fb3eeee4621df1284e8229330114c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
