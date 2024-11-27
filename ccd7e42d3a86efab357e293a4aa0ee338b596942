@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3042d97_6d8cbcdc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1965132
+      },
+      "writtenOn": "2024-11-27T05:04:56Z",
+      "side": 1,
+      "message": "Ah... It is harder than expected to submit this CL because this will be backported into other repositories and cause merge conflicts... I need to manually apply the fix to each repository.\n\nI will be OOO for a while until 16th Dec. I think I can work on this again later.",
+      "revId": "ccd7e42d3a86efab357e293a4aa0ee338b596942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
