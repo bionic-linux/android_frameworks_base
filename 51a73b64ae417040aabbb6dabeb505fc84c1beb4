@@ -16,6 +16,23 @@
       "message": "Manual partial CP of ag/30583310",
       "revId": "51a73b64ae417040aabbb6dabeb505fc84c1beb4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa19bae5_7f0f81ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2024-11-27T13:10:05Z",
+      "side": 1,
+      "message": "+mpgroover +billyhuang FYI as actual feature owners",
+      "revId": "51a73b64ae417040aabbb6dabeb505fc84c1beb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
