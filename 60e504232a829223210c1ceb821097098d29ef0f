@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d43d7a72_f4170af4",
+        "filename": "packages/Vcn/framework-b/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2024-11-27T00:28:54Z",
+      "side": 1,
+      "message": "Can you have a TODO and/or file a bug to remove this once the test is moved ?",
+      "revId": "60e504232a829223210c1ceb821097098d29ef0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
