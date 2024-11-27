@@ -186,40 +186,6 @@ public class AppIntegrityManagerServiceImplTest {
         mTestApkSourceStamp.delete();
     }
 
-    @Test
-    public void broadcastReceiverRegistration() throws Exception {
-        allowlistUsAsRuleProvider();
-        makeUsSystemApp();
-        ArgumentCaptor<IntentFilter> intentFilterCaptor =
-                ArgumentCaptor.forClass(IntentFilter.class);
-
-        verify(mMockContext).registerReceiver(any(), intentFilterCaptor.capture(), any(), any());
-        assertEquals(1, intentFilterCaptor.getValue().countActions());
-        assertEquals(
-                Intent.ACTION_PACKAGE_NEEDS_INTEGRITY_VERIFICATION,
-                intentFilterCaptor.getValue().getAction(0));
-        assertEquals(1, intentFilterCaptor.getValue().countDataTypes());
-        assertEquals(PACKAGE_MIME_TYPE, intentFilterCaptor.getValue().getDataType(0));
-    }
-
-    @Test
-    public void handleBroadcast_allow() throws Exception {
-        allowlistUsAsRuleProvider();
-        makeUsSystemApp();
-        ArgumentCaptor<BroadcastReceiver> broadcastReceiverCaptor =
-                ArgumentCaptor.forClass(BroadcastReceiver.class);
-        verify(mMockContext)
-                .registerReceiver(broadcastReceiverCaptor.capture(), any(), any(), any());
-        Intent intent = makeVerificationIntent();
-
-        broadcastReceiverCaptor.getValue().onReceive(mMockContext, intent);
-        runJobInHandler();
-
-        verify(mPackageManagerInternal)
-                .setIntegrityVerificationResult(
-                        1, PackageManagerInternal.INTEGRITY_VERIFICATION_ALLOW);
-    }
-
     private void allowlistUsAsRuleProvider() {
         Resources mockResources = mock(Resources.class);
         when(mockResources.getStringArray(R.array.config_integrityRuleProviderPackages))
