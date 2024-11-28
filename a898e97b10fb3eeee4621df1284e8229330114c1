@@ -34,6 +34,24 @@
       "parentUuid": "da4990c3_a7e80b2f",
       "revId": "a898e97b10fb3eeee4621df1284e8229330114c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75c8757f_25b30b60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1319951
+      },
+      "writtenOn": "2024-11-28T00:43:50Z",
+      "side": 1,
+      "message": "we already have an API that provide the capacity degradation with respect to pack label. Why do you need to report the raw values?",
+      "parentUuid": "a48e2698_bd10a8e8",
+      "revId": "a898e97b10fb3eeee4621df1284e8229330114c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
