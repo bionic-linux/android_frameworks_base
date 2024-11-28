@@ -16,6 +16,24 @@
       "message": "I am not sure of the reason why these are exposed. Can you please clarify the usecase?",
       "revId": "a898e97b10fb3eeee4621df1284e8229330114c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a48e2698_bd10a8e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3545041
+      },
+      "writtenOn": "2024-11-28T00:40:23Z",
+      "side": 1,
+      "message": "I am using those here https://android-review.googlesource.com/c/platform/packages/apps/Settings/+/3199370\n\nto display the design and maximum capacity",
+      "parentUuid": "da4990c3_a7e80b2f",
+      "revId": "a898e97b10fb3eeee4621df1284e8229330114c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
