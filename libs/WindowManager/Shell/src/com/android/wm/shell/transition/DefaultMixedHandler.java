@@ -126,7 +126,7 @@ public class DefaultMixedHandler implements MixedTransitionHandler,
         protected final Transitions mPlayer;
         protected final MixedTransitionHandler mMixedHandler;
         protected final PipTransitionController mPipHandler;
-        protected final StageCoordinator mSplitHandler;
+        public final StageCoordinator mSplitHandler;
         protected final KeyguardTransitionHandler mKeyguardHandler;
 
         Transitions.TransitionHandler mLeftoversHandler = null;
@@ -347,6 +347,9 @@ public class DefaultMixedHandler implements MixedTransitionHandler,
     @Override
     public Consumer<IBinder> handleRecentsRequest(WindowContainerTransaction outWCT) {
         if (mRecentsHandler != null) {
+            if (mSplitHandler.isDividerUnstable()) {
+                 return null;
+            }
             if (mSplitHandler.isSplitScreenVisible()) {
                 return this::setRecentsTransitionDuringSplit;
             } else if (mKeyguardHandler.isKeyguardShowing()) {
@@ -358,6 +361,10 @@ public class DefaultMixedHandler implements MixedTransitionHandler,
             }
         }
         return null;
+    }
+
+    public boolean checkRecentsRequestWhetherInSplitDragging() {
+       return mRecentsHandler != null && mSplitHandler.isDividerUnstable();
     }
 
     private void setRecentsTransitionDuringSplit(IBinder transition) {

@@ -71,6 +71,7 @@ import com.android.wm.shell.shared.TransitionUtil;
 import com.android.wm.shell.sysui.ShellInit;
 import com.android.wm.shell.transition.HomeTransitionObserver;
 import com.android.wm.shell.transition.Transitions;
+import com.android.wm.shell.transition.DefaultMixedHandler;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -156,6 +157,10 @@ public class RecentsTransitionHandler implements Transitions.TransitionHandler {
             if (setTransitionForMixer != null) {
                 mixer = mMixers.get(i);
                 break;
+            } else if (((DefaultMixedHandler)mMixers.get(i)).checkRecentsRequestWhetherInSplitDragging()) {
+                setTransitionForMixer = null;
+                controller.cancel("startRecentsTransition");
+                return null;
             }
         }
         final IBinder transition = mTransitions.startTransition(TRANSIT_TO_FRONT, wct,
