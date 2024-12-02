@@ -1034,7 +1034,7 @@ class JobConcurrencyManager {
                 for (int p = preferredUidOnly.size() - 1; p >= 0; --p) {
                     final ContextAssignment assignment = preferredUidOnly.get(p);
                     final JobStatus runningJob = assignment.context.getRunningJobLocked();
-                    if (runningJob.getUid() != nextPending.getUid()) {
+                    if (runningJob == null || runningJob.getUid() != nextPending.getUid()) {
                         continue;
                     }
                     final int jobBias = mService.evaluateJobBiasLocked(runningJob);
