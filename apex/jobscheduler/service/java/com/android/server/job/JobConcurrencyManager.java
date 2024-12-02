@@ -994,12 +994,13 @@ class JobConcurrencyManager {
                     // 5. This new job could be waiting for too long for a slot to open up
                     boolean canReplace = hasImmediacyPrivilege; // Case 1
                     if (!canReplace && !isInOverage) {
-                        final int currentJobBias = mService.evaluateJobBiasLocked(runningJob);
-                        canReplace = runningJob.lastEvaluatedBias < JobInfo.BIAS_TOP_APP // Case 2
-                                || currentJobBias < JobInfo.BIAS_TOP_APP // Case 3
-                                // Case 4
-                                || info.numRunningImmediacyPrivileged
-                                        > (mWorkTypeConfig.getMaxTotal() / 2);
+                        if (runningJob != null) {
+                            final int currentJobBias = mService.evaluateJobBiasLocked(runningJob);
+                            canReplace = runningJob.lastEvaluatedBias < JobInfo.BIAS_TOP_APP // Case 2
+                                    || currentJobBias < JobInfo.BIAS_TOP_APP; // Case 3
+                        }
+                        canReplace = canReplace || info.numRunningImmediacyPrivileged
+                                > (mWorkTypeConfig.getMaxTotal() / 2); // Case 4
                     }
                     if (!canReplace && mMaxWaitTimeBypassEnabled) { // Case 5
                         if (nextPending.shouldTreatAsUserInitiatedJob()) {
@@ -1034,7 +1035,7 @@ class JobConcurrencyManager {
                 for (int p = preferredUidOnly.size() - 1; p >= 0; --p) {
                     final ContextAssignment assignment = preferredUidOnly.get(p);
                     final JobStatus runningJob = assignment.context.getRunningJobLocked();
-                    if (runningJob.getUid() != nextPending.getUid()) {
+                    if (runningJob == null || runningJob.getUid() != nextPending.getUid()) {
                         continue;
                     }
                     final int jobBias = mService.evaluateJobBiasLocked(runningJob);
@@ -1916,7 +1917,7 @@ class JobConcurrencyManager {
         for (int i = 0; i < mActiveServices.size(); i++) {
             final JobServiceContext jc = mActiveServices.get(i);
             final JobStatus js = jc.getRunningJobLocked();
-            if (jc.stopIfExecutingLocked(pkgName, userId, namespace, matchJobId, jobId,
+            if (js != null && jc.stopIfExecutingLocked(pkgName, userId, namespace, matchJobId, jobId,
                     stopReason, internalStopReason)) {
                 foundSome = true;
                 pw.print("Stopping job: ");
