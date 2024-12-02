@@ -353,6 +353,7 @@ public class DividerView extends FrameLayout implements View.OnTouchListener {
                     final int position = mSplitLayout.getDividerPosition() + touchPos - mStartPos;
                     mLastDraggingPosition = position;
                     mSplitLayout.updateDividerBounds(position, true /* shouldUseParallaxEffect */);
+                    mSplitLayout.setDragging(mMoving);
                 }
                 break;
             case MotionEvent.ACTION_UP:

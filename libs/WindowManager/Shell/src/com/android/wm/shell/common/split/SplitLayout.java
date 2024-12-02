@@ -129,6 +129,7 @@ public final class SplitLayout implements DisplayInsetsController.OnInsetsChange
     private int mDensity;
     private int mUiMode;
 
+    public boolean mDividerUnstable = false;
     private final boolean mDimNonImeSide;
     private final boolean mAllowLeftRightSplitInPortrait;
     private boolean mIsLeftRightSplit;
@@ -524,6 +525,10 @@ public final class SplitLayout implements DisplayInsetsController.OnInsetsChange
                 false /* applyLayoutChange */);
     }
 
+    public void setDragging(boolean dragging){
+        mDividerUnstable = dragging;
+    }
+
     /** Resets divider position. */
     public void resetDividerPosition() {
         mDividerPosition = mDividerSnapAlgorithm.getMiddleTarget().position;
@@ -637,6 +642,7 @@ public final class SplitLayout implements DisplayInsetsController.OnInsetsChange
         if (from == to) {
             if (flingFinishedCallback != null) {
                 flingFinishedCallback.run();
+                mDividerUnstable = false;
             }
             InteractionJankMonitorUtils.endTracing(
                     CUJ_SPLIT_SCREEN_RESIZE);
@@ -660,6 +666,7 @@ public final class SplitLayout implements DisplayInsetsController.OnInsetsChange
             public void onAnimationEnd(Animator animation) {
                 if (flingFinishedCallback != null) {
                     flingFinishedCallback.run();
+                    mDividerUnstable = false;
                 }
                 InteractionJankMonitorUtils.endTracing(
                         CUJ_SPLIT_SCREEN_RESIZE);
@@ -669,6 +676,7 @@ public final class SplitLayout implements DisplayInsetsController.OnInsetsChange
             @Override
             public void onAnimationCancel(Animator animation) {
                 mDividerFlingAnimator = null;
+                mDividerUnstable = false;
             }
         });
         mDividerFlingAnimator.start();

@@ -424,6 +424,10 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
         return mMainStage.isActive();
     }
 
+    public boolean isDividerUnstable() {
+        return mSplitLayout.mDividerUnstable || mSplitTransitions.mPendingDismiss != null;
+    }
+
     /** @return whether this transition-request has the launch-adjacent flag. */
     public boolean requestHasLaunchAdjacentFlag(TransitionRequestInfo request) {
         final ActivityManager.RunningTaskInfo triggerTask = request.getTriggerTask();

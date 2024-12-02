@@ -79,7 +79,7 @@ class SplitScreenTransitions {
     private final ArrayList<Animator> mAnimations = new ArrayList<>();
     private final StageCoordinator mStageCoordinator;
 
-    private Transitions.TransitionFinishCallback mFinishCallback = null;
+    public Transitions.TransitionFinishCallback mFinishCallback = null;
     private SurfaceControl.Transaction mFinishTransaction;
     private SplitScreen.SplitInvocationListener mSplitInvocationListener;
     private Executor mSplitInvocationListenerExecutor;
