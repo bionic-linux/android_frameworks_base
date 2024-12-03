@@ -50,6 +50,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "df923b25_fdfea486",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-12-03T14:17:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1934f56_6ddb9129",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "e185c6e6dbf9adc4dc661fc69adeb4618654c84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "59f996cc_a2b9b438",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -141,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc7b5244_985c786c",
+        "filename": "packages/Shell/src/com/android/shell/BugreportProgressService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-12-03T14:17:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ca78685_cb579403",
+      "range": {
+        "startLine": 799,
+        "startChar": 0,
+        "endLine": 799,
+        "endChar": 23
+      },
+      "revId": "e185c6e6dbf9adc4dc661fc69adeb4618654c84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bf6b71e3_79c45589",
@@ -178,6 +226,30 @@
           ]
         }
       ],
+      "revId": "e185c6e6dbf9adc4dc661fc69adeb4618654c84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1432f26_81be42d6",
+        "filename": "packages/Shell/src/com/android/shell/BugreportProgressService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-12-03T14:17:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf6b71e3_79c45589",
+      "range": {
+        "startLine": 803,
+        "startChar": 7,
+        "endLine": 806,
+        "endChar": 13
+      },
       "revId": "e185c6e6dbf9adc4dc661fc69adeb4618654c84a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
