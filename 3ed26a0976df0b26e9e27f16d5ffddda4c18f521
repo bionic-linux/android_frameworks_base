@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5c3099f1_3ec8eaa7",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8027,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-12-03T08:02:58Z",
+      "side": 1,
+      "message": "nit: add a `.` to the end",
+      "revId": "3ed26a0976df0b26e9e27f16d5ffddda4c18f521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b7496c72_2f5e308a",
         "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
         "patchSetId": 2
