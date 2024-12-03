@@ -16,6 +16,23 @@
       "message": "rebased",
       "revId": "17b5105406131092b2ccccfaa9999641273afffc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9321c677_329b15b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2024-12-03T20:29:26Z",
+      "side": 1,
+      "message": "Looks fine to me. However the reviewer that we originally assigned (flc) is away for the next month. I will just check internally if there\u0027s cover from the team.",
+      "revId": "17b5105406131092b2ccccfaa9999641273afffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
