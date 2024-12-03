@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "24fb20c8_20534663",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-12-03T08:00:26Z",
+      "side": 1,
+      "message": "There is a merge conflict, can you please add the following?\n```\nMerged-In: Ib57885c30d76bed06f5678f3f0b7078f61d0a1bc\n```",
+      "revId": "3ed26a0976df0b26e9e27f16d5ffddda4c18f521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b7496c72_2f5e308a",
         "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
         "patchSetId": 2
