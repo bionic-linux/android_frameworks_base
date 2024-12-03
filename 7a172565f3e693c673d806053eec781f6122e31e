@@ -85,6 +85,23 @@
       "parentUuid": "e3679513_5afd4464",
       "revId": "7a172565f3e693c673d806053eec781f6122e31e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aefb0a60_9e3d9dda",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3765868
+      },
+      "writtenOn": "2024-12-03T22:20:46Z",
+      "side": 1,
+      "message": "git fetch https://android.googlesource.com/platform/frameworks/base refs/changes/06/1353206/1 \u0026\u0026 git checkout -b change-1353206 FETCH_HEAD",
+      "revId": "7a172565f3e693c673d806053eec781f6122e31e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
