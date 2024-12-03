@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e355d2ee_442d56c5",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/JobConcurrencyManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1960915
+      },
+      "writtenOn": "2024-12-03T21:45:22Z",
+      "side": 1,
+      "message": "If the runningJob is null, could it be the case that the job just got finished for this context? which could belong to the unused case",
+      "fixSuggestions": [
+        {
+          "fixId": "163c51bb_1088382d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "apex/jobscheduler/service/java/com/android/server/job/JobConcurrencyManager.java",
+              "range": {
+                "startLine": 997,
+                "startChar": 0,
+                "endLine": 1003,
+                "endChar": 0
+              },
+              "replacement": "                        final int currentJobBias \u003d runningJob \u003d\u003d null\n                                ? JobInfo.BIAS_BACKGROUND_SERVICE\n                                : mService.evaluateJobBiasLocked(runningJob);\n                        canReplace \u003d runningJob.lastEvaluatedBias\n                                \u003c JobInfo.BIAS_TOP_APP // Case 2\n                                || currentJobBias \u003c JobInfo.BIAS_TOP_APP; // Case 3\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0c60d8e85b3846f14a6cd5ae0396dad6ca53f6f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
