@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef500ee4_b9435fee",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/JobConcurrencyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1923,
+      "author": {
+        "id": 1960915
+      },
+      "writtenOn": "2024-12-03T03:18:16Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 1923,
+        "startChar": 0,
+        "endLine": 1923,
+        "endChar": 101
+      },
+      "revId": "5d7d4f34c3aa1a23d71f8b765de6a92fed32e11a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
