@@ -67,6 +67,24 @@
       "message": "Allow",
       "revId": "7a172565f3e693c673d806053eec781f6122e31e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f652fc36_9391bdad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3765868
+      },
+      "writtenOn": "2024-12-03T22:19:55Z",
+      "side": 1,
+      "message": "\u003e Allowres/values/config.xml",
+      "parentUuid": "e3679513_5afd4464",
+      "revId": "7a172565f3e693c673d806053eec781f6122e31e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
