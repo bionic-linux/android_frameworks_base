@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7496c72_2f5e308a",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8047,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-12-03T07:59:33Z",
+      "side": 1,
+      "message": "There is an extra `}`?",
+      "range": {
+        "startLine": 8047,
+        "startChar": 0,
+        "endLine": 8047,
+        "endChar": 5
+      },
+      "revId": "3ed26a0976df0b26e9e27f16d5ffddda4c18f521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
