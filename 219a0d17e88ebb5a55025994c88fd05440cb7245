@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d95cf07_90b26211",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8026,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-12-03T07:28:55Z",
+      "side": 0,
+      "message": "This is missed. Looks like it should return false in `waitForAllWindowsDrawnLocked`",
+      "range": {
+        "startLine": 8023,
+        "startChar": 16,
+        "endLine": 8026,
+        "endChar": 17
+      },
+      "revId": "219a0d17e88ebb5a55025994c88fd05440cb7245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
