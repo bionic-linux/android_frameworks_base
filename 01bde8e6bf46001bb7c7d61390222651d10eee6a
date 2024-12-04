@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f4cc5db_452d0509",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 6820,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-12-04T17:02:21Z",
+      "side": 1,
+      "message": "As per a quick offline discussion, I believe this can be @SystemApi @hide since the expected use case is for priv-apps.",
+      "range": {
+        "startLine": 6820,
+        "startChar": 16,
+        "endLine": 6820,
+        "endChar": 23
+      },
+      "revId": "01bde8e6bf46001bb7c7d61390222651d10eee6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
