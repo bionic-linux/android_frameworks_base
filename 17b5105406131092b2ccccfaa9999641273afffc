@@ -33,6 +33,24 @@
       "message": "Looks fine to me. However the reviewer that we originally assigned (flc) is away for the next month. I will just check internally if there\u0027s cover from the team.",
       "revId": "17b5105406131092b2ccccfaa9999641273afffc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60bd8a67_e8a6da55",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-12-04T20:43:11Z",
+      "side": 1,
+      "message": "Thanks a lot @rgl@google.com",
+      "parentUuid": "9321c677_329b15b2",
+      "revId": "17b5105406131092b2ccccfaa9999641273afffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
