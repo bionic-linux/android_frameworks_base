@@ -4785,7 +4785,10 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
             return;
         }
         task.forAllActivities(fromActivity -> {
-            if (fromActivity == this) return true;
+            if (fromActivity == this || (mWmService.mFlags.mRespectNonTopVisibleFixedOrientation &&
+                    fromActivity.hasFixedRotationTransform())) {
+                return true;
+            }
             // The snapshot starting window could remove itself when receive resized request without
             // redraw, so transfer it to a different size activity could only cause flicker.
             // By schedule remove snapshot starting window, the remove process will happen when
