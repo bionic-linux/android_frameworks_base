@@ -22,6 +22,30 @@
       },
       "revId": "01bde8e6bf46001bb7c7d61390222651d10eee6a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82e6b033_36954ca7",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 6820,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2024-12-04T17:23:56Z",
+      "side": 1,
+      "message": "Done and thanks for the offline discusison!",
+      "parentUuid": "1f4cc5db_452d0509",
+      "range": {
+        "startLine": 6820,
+        "startChar": 16,
+        "endLine": 6820,
+        "endChar": 23
+      },
+      "revId": "01bde8e6bf46001bb7c7d61390222651d10eee6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
