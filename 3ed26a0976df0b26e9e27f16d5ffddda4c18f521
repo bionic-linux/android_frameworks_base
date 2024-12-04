@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d40ad04f_4908be1e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-12-04T05:32:50Z",
+      "side": 1,
+      "message": "Please add this so the tool can skip the conflict",
+      "parentUuid": "24fb20c8_20534663",
+      "revId": "3ed26a0976df0b26e9e27f16d5ffddda4c18f521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5c3099f1_3ec8eaa7",
         "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
         "patchSetId": 2
@@ -31,6 +49,24 @@
       "writtenOn": "2024-12-03T08:02:58Z",
       "side": 1,
       "message": "nit: add a `.` to the end",
+      "revId": "3ed26a0976df0b26e9e27f16d5ffddda4c18f521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "067d7764_b837a1d7",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8027,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-12-04T05:32:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c3099f1_3ec8eaa7",
       "revId": "3ed26a0976df0b26e9e27f16d5ffddda4c18f521",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -48,6 +84,30 @@
       "writtenOn": "2024-12-03T07:59:33Z",
       "side": 1,
       "message": "There is an extra `}`?",
+      "range": {
+        "startLine": 8047,
+        "startChar": 0,
+        "endLine": 8047,
+        "endChar": 5
+      },
+      "revId": "3ed26a0976df0b26e9e27f16d5ffddda4c18f521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a2065e9_c5b7a252",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8047,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-12-04T05:32:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7496c72_2f5e308a",
       "range": {
         "startLine": 8047,
         "startChar": 0,
