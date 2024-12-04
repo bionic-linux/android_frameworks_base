@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46fb4c36_2efab425",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 6819,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-12-04T17:30:32Z",
+      "side": 1,
+      "message": "nit: move to front.",
+      "range": {
+        "startLine": 6819,
+        "startChar": 9,
+        "endLine": 6819,
+        "endChar": 25
+      },
+      "revId": "c31e1b34a19186427fc83a1b1a1e451fbbaf412d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
