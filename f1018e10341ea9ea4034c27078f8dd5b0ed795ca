@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5995aabc_4b8eeb8c",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-12-04T23:28:52Z",
+      "side": 1,
+      "message": "nit: `and keys`. Remove \"on success\" since that is not mentioned in the values sentence above.",
+      "range": {
+        "startLine": 675,
+        "startChar": 15,
+        "endLine": 675,
+        "endChar": 30
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "9fdaf55d_a74d422c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 675,
+                "startChar": 0,
+                "endLine": 676,
+                "endChar": 0
+              },
+              "replacement": "     *         and keys can contain \"eSE\" and \"SIM\" with a number,\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f1018e10341ea9ea4034c27078f8dd5b0ed795ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
