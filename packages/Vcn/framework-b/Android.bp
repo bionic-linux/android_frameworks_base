@@ -122,7 +122,7 @@ framework_connectivity_b_java_sdk_library_defaults_soong_config {
 
                 // Use "android.net.connectivity" as prefix would trigger
                 // "Hidden API flags are inconsistent" build error
-                jarjar_rules: "framework-vcn-jarjar-rules-platform.txt",
+                jarjar_rules: "framework-vcn-jarjar-rules.txt",
             },
         },
     },
