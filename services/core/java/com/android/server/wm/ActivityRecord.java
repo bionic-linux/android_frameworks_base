@@ -6324,7 +6324,7 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
             // Defer telling the client it is hidden if it can enter Pip and isn't current paused,
             // stopped or stopping. This gives it a chance to enter Pip in onPause().
             final boolean deferHidingClient = canEnterPictureInPicture
-                    && !isState(STARTED, STOPPING, STOPPED, PAUSED);
+                    && !isState(STARTED, STOPPING, STOPPED, PAUSED, PAUSING);
             setDeferHidingClient(deferHidingClient);
             setVisibility(false);
 
