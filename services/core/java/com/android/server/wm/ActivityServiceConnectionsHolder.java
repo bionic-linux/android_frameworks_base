@@ -142,6 +142,10 @@ public class ActivityServiceConnectionsHolder<T> {
     /** Used by {@link ActivityRecord#dump}. */
     @Override
     public String toString() {
-        return String.valueOf(mConnections);
+        synchronized (mActivity) {
+            if (mConnections != null && !mConnections.isEmpty())
+                return String.valueOf(mConnections);
+        }
+        return null;
     }
 }
