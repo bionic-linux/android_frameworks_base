@@ -22,6 +22,30 @@
       },
       "revId": "1774997fdf48bde9e1252bc18515dfbaad349bca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5eb1e629_be231764",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1366584
+      },
+      "writtenOn": "2024-12-06T06:58:06Z",
+      "side": 1,
+      "message": "Actually, it feels like we can remove the ```mDeferHidingClient``` after migrate to shell transition. So the visibility state should always changed after transition finish.",
+      "parentUuid": "2520bc58_e5fa1329",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "1774997fdf48bde9e1252bc18515dfbaad349bca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
