@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2520bc58_e5fa1329",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2024-12-06T03:50:26Z",
+      "side": 1,
+      "message": "From the bug description, it seems that the issue can also happen on non-pip app. Meanwhile, the changes in this CL seems only work for activities that supports pip?",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "1774997fdf48bde9e1252bc18515dfbaad349bca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
