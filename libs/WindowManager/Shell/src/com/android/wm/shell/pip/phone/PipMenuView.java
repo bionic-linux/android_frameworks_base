@@ -52,6 +52,7 @@ import android.util.Size;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.SurfaceControl;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityManager;
@@ -314,6 +315,14 @@ public class PipMenuView extends FrameLayout {
             } else {
                 notifyMenuStateChangeStart(menuState, resizeMenuOnShow, null);
                 setVisibility(VISIBLE);
+                getViewRootImpl().registerRtFrameCallback((frame) -> {
+                    if (getViewRootImpl() != null && getViewRootImpl().getSurfaceControl() != null
+                            && getViewRootImpl().getSurfaceControl().isValid()) {
+                        SurfaceControl.Transaction transaction = new SurfaceControl.Transaction();
+                        transaction.show(getViewRootImpl().getSurfaceControl());
+                        getViewRootImpl().mergeWithNextTransaction(transaction, frame);
+                    }
+                });
                 mMenuContainerAnimator.start();
             }
             updateActionViews(menuState, stackBounds);
@@ -381,6 +390,13 @@ public class PipMenuView extends FrameLayout {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     setVisibility(GONE);
+                    if (getViewRootImpl() != null && getViewRootImpl().getSurfaceControl() != null
+                            && getViewRootImpl().getSurfaceControl().isValid()) {
+                        SurfaceControl.Transaction transaction = new SurfaceControl.Transaction();
+                        transaction.hide(getViewRootImpl().getSurfaceControl());
+                        transaction.apply();
+                    }
+
                     if (notifyMenuVisibility) {
                         notifyMenuStateChangeFinish(MENU_STATE_NONE);
                     }
